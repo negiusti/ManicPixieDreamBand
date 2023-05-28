@@ -41,9 +41,9 @@ public static class SaveSystem
         }
     }
 
-    public static PlayerData LoadPlayer()
-    {
-        string playerSavePath = Application.persistentDataPath + "/player.save";
-        return Load(playerSavePath);
-    }
+    //public static PlayerData LoadPlayer()
+    //{
+    //    string playerSavePath = Application.persistentDataPath + "/player.save";
+    //    return Load(playerSavePath);
+    //}
 }

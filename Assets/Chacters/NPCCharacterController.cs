@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour
+public class NPCCharacterController : MonoBehaviour
 {
     private Player character;
 
@@ -10,7 +8,7 @@ public class CharacterController : MonoBehaviour
     void Start()
     {
         character = this.GetComponentInChildren<Player>();
-        character.SetPlayerName(gameObject.name);
+        character.SetPlayerName(transform.name);
         character.LoadPlayer();
     }
 

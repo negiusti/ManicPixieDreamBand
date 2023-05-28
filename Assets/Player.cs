@@ -51,7 +51,8 @@ public class Player : MonoBehaviour
             libraryAsset = this.GetComponent<SpriteLibrary>().spriteLibraryAsset;
         }
         this.random = new System.Random();
-        LoadPlayer();
+        this.playerName = transform.parent.name;
+        //LoadPlayer();
     }
 
     // Update is called once per frame
@@ -84,6 +85,7 @@ public class Player : MonoBehaviour
 
     public void LoadPlayer()
     {
+        Debug.Log("Loading... " + playerName);
         PlayerData playerData = SaveSystem.LoadPlayer(playerName);
         isWearingPants = playerData.IsWearingPants();
         categoryToLabelMap = playerData.CategoryToLabelMap();
@@ -99,7 +101,9 @@ public class Player : MonoBehaviour
             if (targetResolver.GetCategory() != null && categoryToLabelMap.ContainsKey(targetResolver.GetCategory()) &&
                 libraryAsset.GetCategoryLabelNames(targetResolver.GetCategory()).Contains(categoryToLabelMap[targetResolver.GetCategory()]))
             {
+                Debug.Log(targetResolver.GetCategory() + " " + categoryToLabelMap[targetResolver.GetCategory()]);
                 targetResolver.SetCategoryAndLabel(targetResolver.GetCategory(), categoryToLabelMap[targetResolver.GetCategory()]);
+                targetResolver.ResolveSpriteToSpriteRenderer();
             }
         }
 
