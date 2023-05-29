@@ -64,7 +64,8 @@ public class Player : MonoBehaviour
     {
         foreach (var targetResolver in spriteResolvers)
         {
-            categoryToLabelMap[targetResolver.GetCategory()] = targetResolver.GetLabel();
+            if (targetResolver.GetCategory() != null)
+                categoryToLabelMap[targetResolver.GetCategory()] = targetResolver.GetLabel();
         }
     }
 
@@ -101,7 +102,6 @@ public class Player : MonoBehaviour
             if (targetResolver.GetCategory() != null && categoryToLabelMap.ContainsKey(targetResolver.GetCategory()) &&
                 libraryAsset.GetCategoryLabelNames(targetResolver.GetCategory()).Contains(categoryToLabelMap[targetResolver.GetCategory()]))
             {
-                Debug.Log(targetResolver.GetCategory() + " " + categoryToLabelMap[targetResolver.GetCategory()]);
                 targetResolver.SetCategoryAndLabel(targetResolver.GetCategory(), categoryToLabelMap[targetResolver.GetCategory()]);
                 targetResolver.ResolveSpriteToSpriteRenderer();
             }
@@ -162,6 +162,7 @@ public class Player : MonoBehaviour
             var options = libraryAsset.GetCategoryLabelNames(category).ToArray();
             if (options.Length == 0)
                 continue;
+
             var label = options[random.Next(options.Length)];
             if (femmeOnly)
             {
@@ -177,13 +178,13 @@ public class Player : MonoBehaviour
                     label = options[random.Next(options.Length)];
                 }
             }
-            categoryToLabelMap[category] = label;
             if (category.StartsWith("L_") || category.StartsWith("R_"))
             {
                 var subCategory = category.Split("_")[1];
                 var leftRight = category.Split("_")[0] == "R" ? "L" : "R";
                 categoryToLabelMap[leftRight + "_" + subCategory] = label;
             }
+            categoryToLabelMap[category] = label;
             if ((category == "Mustache" || category == "Beard") && femmeOnly)
             {
                 categoryToLabelMap[category] = options[0];
