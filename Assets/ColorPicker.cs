@@ -6,13 +6,13 @@ public class ColorPicker : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private int color = 0;
     private static Color pink = new Color(252/255f, 77 / 255f, 148/255f, 1f);
-    private static Color orange = new Color(250/255f, 117 / 255f, 0f, 1f);
+    private static Color orange = new Color(254/255f, 177 / 255f, 68/255f, 1f);
     private static Color purple = new Color(153 / 255f, 105/255f, 233/255f, 1f);
-    private static Color green = new Color(48 / 255f, 174 / 255f, 0f, 1f);
+    private static Color green = new Color(158 / 255f, 224 / 255f, 158/255f, 1f);
     private static Color black = new Color(0.3f, 0.3f, 0.3f, 1f);
-    private static Color red = new Color(254 /255f, 0f, 64/255f, 1f);
-    private static Color yellow = new Color(233/255f, 229/255f, 0f, 1f);
-    private static Color blue = new Color(0f, 201/255f, 1f, 1f);
+    private static Color red = new Color(1f, 102/255f, 99/255f, 1f);
+    private static Color yellow = new Color(253/255f, 253/255f, 151/255f, 1f);
+    private static Color blue = new Color(178/255f, 228/255f, 240/255f, 1f);
     private static Color brown = new Color(100 / 255f, 88 / 255f, 58 / 255f, 1f);
 
     private Color[] colors = {pink, black, green, blue, red, yellow, brown, Color.white, Color.gray, orange, purple };
