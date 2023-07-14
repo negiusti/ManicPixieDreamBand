@@ -3200,7 +3200,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: 'Player: I think we should do it! '
+        value: 'I think we should do it! '
         type: 0
         typeString: 
       - title: Sequence
@@ -3586,9 +3586,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "Inshallah! Yay!! Thank you both, I love you!!!! And thanks for this
-          opportunity Duke, we promise not to let you down! We\u2019ll warm the shit
-          out of that crowd for you!!!"
+        value: "Yay!! Thank you both, I love you!!!! And thanks for this opportunity
+          Duke, we promise not to let you down! We\u2019ll warm the shit out of that
+          crowd for you!!!"
         type: 0
         typeString: 
       - title: Sequence
@@ -3761,6 +3761,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: 
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -3772,19 +3776,7 @@ MonoBehaviour:
       - originConversationID: 3
         originDialogueID: 35
         destinationConversationID: 3
-        destinationDialogueID: 36
-        isConnector: 0
-        priority: 2
-      - originConversationID: 3
-        originDialogueID: 35
-        destinationConversationID: 3
-        destinationDialogueID: 37
-        isConnector: 0
-        priority: 2
-      - originConversationID: 3
-        originDialogueID: 35
-        destinationConversationID: 3
-        destinationDialogueID: 38
+        destinationDialogueID: 51
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -4274,7 +4266,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 3
+        originDialogueID: 44
+        destinationConversationID: 3
+        destinationDialogueID: 50
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -4491,7 +4489,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 3
+        originDialogueID: 48
+        destinationConversationID: 3
+        destinationDialogueID: 50
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -4540,7 +4544,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 3
+        originDialogueID: 49
+        destinationConversationID: 3
+        destinationDialogueID: 50
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -4552,9 +4562,129 @@ MonoBehaviour:
         y: 2036.6067
         width: 160
         height: 30
+    - id: 50
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 3
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 778.8995
+        y: 2086.6067
+        width: 160
+        height: 30
+    - id: 51
+      fields:
+      - title: Title
+        value: DUKE LEAVES
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 4
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      - title: EventGuid
+        value: 9c297275-9e79-437a-adee-e7c5d10c1161
+        type: 0
+        typeString: 
+      conversationID: 3
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 3
+        originDialogueID: 51
+        destinationConversationID: 3
+        destinationDialogueID: 36
+        isConnector: 0
+        priority: 2
+      - originConversationID: 3
+        originDialogueID: 51
+        destinationConversationID: 3
+        destinationDialogueID: 37
+        isConnector: 0
+        priority: 2
+      - originConversationID: 3
+        originDialogueID: 51
+        destinationConversationID: 3
+        destinationDialogueID: 38
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 569.2615
+        y: 1739.186
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 376.27966, y: 1610.767}
-    canvasZoom: 0.61050135
+    canvasScrollPosition: {x: 559.1367, y: 1671.9048}
+    canvasZoom: 0.9494995
   syncInfo:
     syncActors: 0
     syncItems: 0

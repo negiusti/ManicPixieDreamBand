@@ -60,6 +60,11 @@ public class Player : MonoBehaviour
     {
     }
 
+    public void Disappear()
+    {
+        this.gameObject.SetActive(false);
+    }
+
     private void updateSpriteResolverMap()
     {
         foreach (var targetResolver in spriteResolvers)
