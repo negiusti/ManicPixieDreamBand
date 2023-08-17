@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
+using PixelCrushers.DialogueSystem;
 
 public class Player : MonoBehaviour
 {
@@ -63,6 +64,10 @@ public class Player : MonoBehaviour
     public void Disappear()
     {
         this.gameObject.SetActive(false);
+    }
+
+    public void Test(Subtitle subtitle)
+    {
     }
 
     private void updateSpriteResolverMap()
