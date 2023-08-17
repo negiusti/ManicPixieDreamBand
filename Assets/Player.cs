@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
-using PixelCrushers.DialogueSystem;
 
 public class Player : MonoBehaviour
 {
@@ -58,15 +57,6 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-    }
-
-    public void Disappear()
-    {
-        this.gameObject.SetActive(false);
-    }
-
-    public void Test(Subtitle subtitle)
     {
     }
 
