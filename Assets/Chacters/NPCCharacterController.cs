@@ -1,4 +1,5 @@
 using UnityEngine;
+using PixelCrushers.DialogueSystem;
 
 public class NPCCharacterController : MonoBehaviour
 {
@@ -15,6 +16,5 @@ public class NPCCharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 }
