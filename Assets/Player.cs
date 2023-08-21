@@ -65,7 +65,11 @@ public class Player : MonoBehaviour
         foreach (var targetResolver in spriteResolvers)
         {
             if (targetResolver.GetCategory() != null)
+            {
                 categoryToLabelMap[targetResolver.GetCategory()] = targetResolver.GetLabel();
+                Debug.Log("category: " + targetResolver.GetCategory() + " label: " + targetResolver.GetLabel());
+                Debug.Log("category: " + targetResolver.GetCategory() + " label: " + categoryToLabelMap[targetResolver.GetCategory()]);
+            }
         }
     }
 
@@ -79,8 +83,9 @@ public class Player : MonoBehaviour
 
     public void SavePlayer()
     {
-        updateSpriteColorMap();
+        Debug.Log("Saving... " + playerName);
         updateSpriteResolverMap();
+        updateSpriteColorMap();
         SaveSystem.SavePlayer(this);
     }
 
@@ -91,7 +96,7 @@ public class Player : MonoBehaviour
         isWearingPants = playerData.IsWearingPants();
         categoryToLabelMap = playerData.CategoryToLabelMap();
         tagToColorIndexMap = playerData.TagToColorIndexMap();
-        playerName = playerData.GetName();
+        //playerName = playerData.GetName();
         UpdateAppearance();
     }
 
@@ -99,9 +104,13 @@ public class Player : MonoBehaviour
     {
         foreach (var targetResolver in spriteResolvers)
         {
-            if (targetResolver.GetCategory() != null && categoryToLabelMap.ContainsKey(targetResolver.GetCategory()) &&
-                libraryAsset.GetCategoryLabelNames(targetResolver.GetCategory()).Contains(categoryToLabelMap[targetResolver.GetCategory()]))
-            {
+            if (targetResolver.GetCategory() != null && categoryToLabelMap.ContainsKey(targetResolver.GetCategory())) {
+                Debug.Log("category: " + targetResolver.GetCategory() + " label: " + targetResolver.GetLabel());
+                Debug.Log("category: " + targetResolver.GetCategory() + " label: " + categoryToLabelMap[targetResolver.GetCategory()]);
+                //if (!categoryToLabelMap.ContainsKey(targetResolver.GetCategory()))
+                //{
+                //    categoryToLabelMap[targetResolver.GetCategory()] = targetResolver.GetLabel();
+                //}
                 targetResolver.SetCategoryAndLabel(targetResolver.GetCategory(), categoryToLabelMap[targetResolver.GetCategory()]);
                 targetResolver.ResolveSpriteToSpriteRenderer();
             }
