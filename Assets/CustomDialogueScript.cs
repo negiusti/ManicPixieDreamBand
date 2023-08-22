@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class CustomDialogueScript : MonoBehaviour
 {
-    AbstractDialogueUI dialogueUI;
+    //AbstractDialogueUI dialogueUI;
 
     // Start is called before the first frame update
     void Start()
     {
-        dialogueUI = GetComponentInChildren<AbstractDialogueUI>();
+        //dialogueUI = GetComponentInChildren<AbstractDialogueUI>();
     }
 
     // Update is called once per frame
@@ -20,10 +20,12 @@ public class CustomDialogueScript : MonoBehaviour
     }
 
     public void OnConversationLine(Subtitle subtitle)
-    {        
-        if (subtitle.dialogueEntry.DialogueText.Length == 0) {
-            Debug.Log("HELLOo!!");
-            dialogueUI.OnContinue();
+    {
+        //Debug.Log(subtitle.dialogueEntry.DialogueText);
+        if (subtitle.dialogueEntry.DialogueText.Length == 0 && subtitle.dialogueEntry.Title != "START") {
+            Debug.Log("Continuing after empty line of dialogue!!");
+            DialogueManager.standardDialogueUI.OnContinue();
+            //dialogueUI.OnContinue();
         }
     }
 
