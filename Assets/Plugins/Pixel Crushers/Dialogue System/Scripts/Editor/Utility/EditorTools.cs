@@ -53,7 +53,7 @@ namespace PixelCrushers.DialogueSystem
             return GetPopupWidth(new GUIContent(text));
         }
         public static GUILayoutOption GUILayoutPopupWidth(object obj)
-        {            
+        {
             return GUILayout.Width(GetPopupWidth(new GUIContent(obj.ToString())));
         }
 
@@ -92,7 +92,7 @@ namespace PixelCrushers.DialogueSystem
 
         public static DialogueDatabase FindInitialDatabase()
         {
-            var dialogueSystemController = Object.FindObjectOfType<DialogueSystemController>();
+            var dialogueSystemController = GameObjectUtility.FindFirstObjectByType<DialogueSystemController>();
             return (dialogueSystemController == null) ? null : dialogueSystemController.initialDatabase;
         }
 

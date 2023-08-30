@@ -202,7 +202,7 @@ namespace PixelCrushers.DialogueSystem
                 dialogueActor = DialogueActor.GetDialogueActorComponent(speakerTransform);
                 m_dialogueActorCache.Add(speakerTransform, dialogueActor);
             }
-            if (m_actorPanelCache.ContainsKey(speakerTransform)) return m_actorPanelCache[speakerTransform];
+            if (m_actorPanelCache.ContainsKey(speakerTransform) && m_actorPanelCache[speakerTransform] != null) return m_actorPanelCache[speakerTransform];
             if (m_useBarkUIs.Contains(speakerTransform)) return null;
             if (DialogueActorUsesBarkUI(dialogueActor))
             {
@@ -213,7 +213,8 @@ namespace PixelCrushers.DialogueSystem
             {
                 var panel = GetDialogueActorPanel(dialogueActor);
                 if (panel == null) panel = defaultPanel;
-                m_actorPanelCache.Add(speakerTransform, panel);
+                m_actorPanelCache[speakerTransform] = panel;
+                m_useBarkUIs.Remove(speakerTransform);
                 return panel;
             }
         }

@@ -30,7 +30,7 @@ namespace PixelCrushers.DialogueSystem
             {
                 if (m_sceneInstance == null)
                 {
-                    m_sceneInstance = FindObjectOfType<DialogueSystemSceneEvents>();
+                    m_sceneInstance = GameObjectUtility.FindFirstObjectByType<DialogueSystemSceneEvents>();
                 }
                 return m_sceneInstance;
             }

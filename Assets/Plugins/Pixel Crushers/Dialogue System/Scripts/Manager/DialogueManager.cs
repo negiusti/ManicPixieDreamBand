@@ -25,7 +25,7 @@ namespace PixelCrushers.DialogueSystem
         {
             get
             {
-                if (m_instance == null) m_instance = GameObject.FindObjectOfType<DialogueSystemController>();
+                if (m_instance == null) m_instance = GameObjectUtility.FindFirstObjectByType<DialogueSystemController>();
                 return m_instance;
             }
         }

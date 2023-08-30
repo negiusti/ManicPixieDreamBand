@@ -213,9 +213,9 @@ namespace PixelCrushers.DialogueSystem
         /// Gets the current selection.
         /// </summary>
         /// <value>The selection.</value>
-        public Usable CurrentUsable 
-        { 
-            get { return usable; } 
+        public Usable CurrentUsable
+        {
+            get { return usable; }
             set { SetCurrentUsable(value); }
         }
 
@@ -596,7 +596,7 @@ namespace PixelCrushers.DialogueSystem
             if ((useKey != KeyCode.None) && InputDeviceManager.IsKeyDown(useKey)) return true;
             if (!string.IsNullOrEmpty(useButton))
             {
-                if (DialogueManager.instance != null && 
+                if (DialogueManager.instance != null &&
                     DialogueManager.getInputButtonDown == DialogueManager.instance.StandardGetInputButtonDown && IsUsingDefaultInputManager())
                 {
                     return InputDeviceManager.IsButtonUp(useButton) && (selection == clickedDownOn);
@@ -616,7 +616,7 @@ namespace PixelCrushers.DialogueSystem
             {
                 hasCheckedDefaultInputManager = true;
                 var inputDeviceManagerRewiredType = RuntimeTypeUtility.GetTypeFromName("PixelCrushers.RewiredSupport.InputDeviceManagerRewired");
-                var isRewiredPresent = (inputDeviceManagerRewiredType != null) && (FindObjectOfType(inputDeviceManagerRewiredType) != null);
+                var isRewiredPresent = (inputDeviceManagerRewiredType != null) && (GameObjectUtility.FindFirstObjectByType(inputDeviceManagerRewiredType) != null);
                 isUsingDefaultInputManager = !isRewiredPresent;
             }
             return isUsingDefaultInputManager;

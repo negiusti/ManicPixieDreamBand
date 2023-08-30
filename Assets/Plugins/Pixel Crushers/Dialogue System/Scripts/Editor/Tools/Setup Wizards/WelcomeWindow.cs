@@ -202,7 +202,7 @@ namespace PixelCrushers.DialogueSystem
             var define_USE_YARN = false;
             var define_TMP_PRESENT = false;
             var define_USE_STM = false;
-            var defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup).Split(';');
+            var defines = MoreEditorUtility.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup).Split(';');
             for (int i = 0; i < defines.Length; i++)
             {
                 if (string.Equals(ScriptingSymbolNames.USE_PHYSICS2D, defines[i].Trim())) define_USE_PHYSICS2D = true;
@@ -221,10 +221,10 @@ namespace PixelCrushers.DialogueSystem
                 if (string.Equals(ScriptingSymbolNames.USE_STM, defines[i].Trim())) define_USE_STM = true;
             }
 #if EVALUATION_VERSION || ACADEMIC
-            define_USE_PHYSICS2D = true;
+            //define_USE_PHYSICS2D = true;
             define_USE_NEW_INPUT = false;
             define_USE_ADDRESSABLES = false;
-            define_TMP_PRESENT = true;
+            //define_TMP_PRESENT = true;
             define_USE_STM = false;
             define_USE_ARCWEAVE = false;
             define_USE_ARTICY = true;
@@ -238,13 +238,15 @@ namespace PixelCrushers.DialogueSystem
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.LabelField(new GUIContent("Enable support for:", "NOTE: Enables Dialogue System support. You must still enable each package in Package Manager."));
 #if EVALUATION_VERSION || ACADEMIC
+            var new_TMP_PRESENT = EditorGUILayout.ToggleLeft(new GUIContent(define_TMP_PRESENT ? "TextMesh Pro (TMP_PRESENT)" : "TextMesh Pro (TMP_PRESENT) <- USING TEXTMESH PRO?", "Enable Dialogue System support for TextMesh Pro. You must still enable TextMesh Pro in Package Manager."), define_TMP_PRESENT);
+            var new_USE_PHYSICS2D = EditorGUILayout.ToggleLeft(define_USE_PHYSICS2D ? "2D Physics (USE_PHYSICS2D)" : "2D Physics (USE_PHYSICS2D) <- MAKING A 2D GAME?", define_USE_PHYSICS2D);
             EditorGUI.BeginDisabledGroup(true);
-            EditorGUILayout.ToggleLeft(new GUIContent("TextMesh Pro (TMP_PRESENT)", "TextMesh Pro support is enabled in evaluation version. Your project must contain the TextMesh Pro package."), define_TMP_PRESENT);
-            EditorGUILayout.ToggleLeft(new GUIContent("2D Physics (USE_PHYSICS2D)", "Support is built in for evaluation version or Unity 2017 and earlier."), define_USE_PHYSICS2D);
+            //EditorGUILayout.ToggleLeft(new GUIContent("TextMesh Pro (TMP_PRESENT)", "TextMesh Pro support is enabled in evaluation version. Your project must contain the TextMesh Pro package."), define_TMP_PRESENT);
+            //EditorGUILayout.ToggleLeft(new GUIContent("2D Physics (USE_PHYSICS2D)", "Support is built in for evaluation version or Unity 2017 and earlier."), define_USE_PHYSICS2D);
             EditorGUILayout.ToggleLeft(new GUIContent("Addressables (USE_ADDRESSABLES)", "Addressables support not available in evaluation version."), define_USE_ADDRESSABLES);
             EditorGUILayout.ToggleLeft(new GUIContent("New Input System (USE_NEW_INPUT)", "New Input System support not available in evaluation version."), define_USE_NEW_INPUT);
             EditorGUI.EndDisabledGroup();
-            var new_USE_PHYSICS2D = define_USE_PHYSICS2D;
+            //var new_USE_PHYSICS2D = define_USE_PHYSICS2D;
             var new_USE_CINEMACHINE = define_USE_CINEMACHINE;
             var new_USE_NEW_INPUT = define_USE_NEW_INPUT;
             var new_USE_ADDRESSABLES = define_USE_ADDRESSABLES;
@@ -262,7 +264,7 @@ namespace PixelCrushers.DialogueSystem
             EditorGUI.BeginDisabledGroup(true);
             EditorGUILayout.ToggleLeft(new GUIContent("Super Text Mesh (USE_STM)", "Super Text Mesh support not available in evaluation version."), define_USE_STM);
             EditorGUI.EndDisabledGroup();
-            var new_TMP_PRESENT = define_TMP_PRESENT;
+            //var new_TMP_PRESENT = define_TMP_PRESENT;
             var new_USE_STM = define_USE_STM;
 #else
             var new_USE_STM = EditorGUILayout.ToggleLeft(new GUIContent("Super Text Mesh (USE_STM)", "Enable Dialogue System support for Super Text Mesh. Requires Super Text Mesh in project."), define_USE_STM);
@@ -463,7 +465,7 @@ namespace PixelCrushers.DialogueSystem
                 Application.OpenURL("https://assetstore.unity.com/packages/tools/ai/dialogue-system-addon-for-openai-249287");
             }
 
-            var newShowOnStart = EditorGUI.ToggleLeft(new Rect(5, position.height - 5 - EditorGUIUtility.singleLineHeight, position.width - (70+150), EditorGUIUtility.singleLineHeight), "Show at start", showOnStart);
+            var newShowOnStart = EditorGUI.ToggleLeft(new Rect(5, position.height - 5 - EditorGUIUtility.singleLineHeight, position.width - (70 + 150), EditorGUIUtility.singleLineHeight), "Show at start", showOnStart);
             if (newShowOnStart != showOnStart)
             {
                 showOnStart = newShowOnStart;

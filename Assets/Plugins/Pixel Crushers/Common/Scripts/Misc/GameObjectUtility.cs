@@ -12,6 +12,44 @@ namespace PixelCrushers
     public static class GameObjectUtility
     {
 
+        // These methods handle API differences:
+
+        public static T FindFirstObjectByType<T>() where T : UnityEngine.Object
+        {
+#if UNITY_2023_1_OR_NEWER
+            return UnityEngine.Object.FindFirstObjectByType<T>();
+#else
+            return UnityEngine.Object.FindObjectOfType<T>();
+#endif
+        }
+
+        public static UnityEngine.Object FindFirstObjectByType(System.Type type)
+        {
+#if UNITY_2023_1_OR_NEWER
+            return UnityEngine.Object.FindFirstObjectByType(type);
+#else
+            return UnityEngine.Object.FindObjectOfType(type);
+#endif
+        }
+
+        public static T[] FindObjectsByType<T>() where T : UnityEngine.Object
+        {
+#if UNITY_2023_1_OR_NEWER
+            return UnityEngine.Object.FindObjectsByType<T>(FindObjectsSortMode.None);
+#else
+            return UnityEngine.Object.FindObjectsOfType<T>();
+#endif
+        }
+
+        public static UnityEngine.Object[] FindObjectsByType(System.Type type)
+        {
+#if UNITY_2023_1_OR_NEWER
+            return UnityEngine.Object.FindObjectsByType(type, FindObjectsSortMode.None);
+#else
+            return UnityEngine.Object.FindObjectsOfType(type);
+#endif
+        }
+
         /// <summary>
         /// Determines if a GameObject reference is a non-instantiated prefab or a scene object.
         /// If `go` is `null`, active in the scene, or its parent is active in the scene, it's
@@ -25,12 +63,43 @@ namespace PixelCrushers
             if (go == null) return false;
             if (go.activeInHierarchy) return false;
             if ((go.transform.parent != null) && go.transform.parent.gameObject.activeSelf) return false;
-            var list = GameObject.FindObjectsOfType<GameObject>();
+            var list = FindObjectsByType<GameObject>();
             for (int i = 0; i < list.Length; i++)
             {
                 if (list[i] == go) return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Returns true if the end of a transform's hierarchy path matches a specified path.
+        /// For example, if the transform's hierarchy is A/B/C/D, it will match a 
+        /// requiredPath of C/D.
+        /// </summary>
+        public static bool DoesGameObjectPathMatch(Transform t, string requiredPath)
+        {
+            if (t == null) return false;
+            if (t.name.Contains("/"))
+            {
+                var fullPath = GetHierarchyPath(t);
+                return fullPath.EndsWith(requiredPath);
+            }
+            else
+            {
+                return string.Equals(t.name, requiredPath);
+            }
+        }
+
+        /// <summary>
+        /// Returns the full hierarchy path
+        /// </summary>
+        /// <param name="current"></param>
+        /// <returns></returns>
+        public static string GetHierarchyPath(Transform t)
+        {
+            if (t == null) return string.Empty;
+            if (t.parent == null) return t.name;
+            return GetHierarchyPath(t.parent) + "/" + t.name;
         }
 
         /// <summary>
@@ -135,6 +204,9 @@ namespace PixelCrushers
         /// </summary>
         public static T[] FindObjectsOfTypeAlsoInactive<T>(bool checkAllScenes = true) where T : Component
         {
+#if UNITY_2023_1_OR_NEWER
+            return UnityEngine.Object.FindObjectsByType<T>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+#else
             var list = new List<T>();
 
             var allT = Resources.FindObjectsOfTypeAll<T>();
@@ -147,22 +219,7 @@ namespace PixelCrushers
                 }
             }
             return list.ToArray();
-
-            //if (checkAllScenes)
-            //{
-            //    for (int i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
-            //    {
-            //        var rootGameObjects = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).GetRootGameObjects();
-            //        FindObjectsSearchRootObjects<T>(rootGameObjects, list);
-            //    }
-            //}
-            //else
-            //{
-            //    var activeSceneRootGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
-            //    FindObjectsSearchRootObjects<T>(activeSceneRootGameObjects, list);
-            //}
-
-            //return list.ToArray();
+#endif
         }
 
         private static void FindObjectsSearchRootObjects<T>(GameObject[] rootGameObjects, System.Collections.Generic.List<T> list) where T : Component

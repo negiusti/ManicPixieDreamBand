@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEngine.Assertions.Must;
 
 namespace PixelCrushers.DialogueSystem.ArcweaveSupport
 {
@@ -355,7 +354,10 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
             if (boardNode == null || boardNode.board == null) return;
             if (boardNode.board.children == null)
             {
-                leafBoards.Add(boardNode.guid, boardNode.board);
+                if (!leafBoards.ContainsKey(boardNode.guid))
+                {
+                    leafBoards.Add(boardNode.guid, boardNode.board);
+                }
             }
             else
             {
@@ -718,15 +720,11 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
                     {
                         var branch = LookupArcweave<Branch>(branchGuid);
                         if (branch == null) continue;
-                        var ifEntry = CreateConditionEntry(conversation, branch.conditions.ifCondition);
+                        var currentCumulativeCondition = string.Empty;
+                        var ifEntry = CreateConditionEntry(conversation, branch.conditions.ifCondition, ref currentCumulativeCondition);
                         if (ifEntry != null)
                         {
                             ifEntry.Title = "if " + (arcweaveLookup[branch.conditions.ifCondition] as Condition).script;
-                        }
-                        var elseEntry = CreateConditionEntry(conversation, branch.conditions.elseCondition);
-                        if (elseEntry != null)
-                        {
-                            elseEntry.Title = "else";
                         }
                         if (branch.conditions.elseIfConditions != null)
                         {
@@ -734,12 +732,17 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
                             foreach (var jToken in jArray)
                             {
                                 var elseIfConditionGuid = (string)(jToken as Newtonsoft.Json.Linq.JValue).Value;
-                                var elseIfEntry = CreateConditionEntry(conversation, elseIfConditionGuid);
+                                var elseIfEntry = CreateConditionEntry(conversation, elseIfConditionGuid, ref currentCumulativeCondition);
                                 if (elseIfEntry != null)
                                 {
                                     elseIfEntry.Title = "elseif " + (arcweaveLookup[elseIfConditionGuid] as Condition).script;
                                 }
                             }
+                        }
+                        var elseEntry = CreateConditionEntry(conversation, branch.conditions.elseCondition, ref currentCumulativeCondition);
+                        if (elseEntry != null)
+                        {
+                            elseEntry.Title = "else";
                         }
                     }
 
@@ -993,7 +996,7 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
             return entry;
         }
 
-        protected DialogueEntry CreateConditionEntry(Conversation conversation, string conditionGuid)
+        protected DialogueEntry CreateConditionEntry(Conversation conversation, string conditionGuid, ref string currentCumulativeCondition)
         {
             if (string.IsNullOrEmpty(conditionGuid)) return null;
             ArcweaveType value;
@@ -1003,7 +1006,50 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
             entry.ActorID = currentNpcID;
             entry.ConversantID = currentPlayerID;
             entry.isGroup = true;
-            entry.conditionsString = condition.script;
+            var doesThisNodeHaveCondition = !string.IsNullOrEmpty(condition.script);
+            var havePreviousConditions = !string.IsNullOrEmpty(currentCumulativeCondition);
+            var sanitizedConditionScript = doesThisNodeHaveCondition ? ConvertArcscriptToLua(condition.script) : string.Empty;
+            if (doesThisNodeHaveCondition && (sanitizedConditionScript.Contains(" and ") || sanitizedConditionScript.Contains(" or ")))
+            {
+                sanitizedConditionScript = $"({sanitizedConditionScript})";
+            }
+            var completeConditions = sanitizedConditionScript;
+            if (havePreviousConditions)
+            {
+                // We have previous conditions in this if..elseif..else block, so prepend them:
+                if (!doesThisNodeHaveCondition)
+                {
+                    // This node doesn't have conditions, so just require that it's not the previous conditions:
+                    completeConditions = $"not ({currentCumulativeCondition})";
+                }
+                else
+                {
+                    // This node has conditions, so require its conditions and that it's not the previous conditions:
+                    if (currentCumulativeCondition.StartsWith("("))
+                    {
+                        completeConditions = $"(not {currentCumulativeCondition}) and {sanitizedConditionScript}";
+                    }
+                    else
+                    {
+                        completeConditions = $"(not ({currentCumulativeCondition})) and {sanitizedConditionScript}";
+                    }
+                }
+            }
+            if (doesThisNodeHaveCondition)
+            {
+                // This node has conditions, so add then to the cumulative conditions for the next node:
+                if (!havePreviousConditions)
+                {
+                    // This is our first cumulative condition, so just set it:
+                    currentCumulativeCondition = sanitizedConditionScript;
+                }
+                else
+                {
+                    // We have previous cumulative conditions, so add this one:
+                    currentCumulativeCondition = $"{currentCumulativeCondition} or {sanitizedConditionScript}";
+                }
+            }
+            entry.conditionsString = completeConditions;
             return entry;
         }
 
@@ -1108,7 +1154,8 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
         protected static Regex CodeEndRegex = new Regex(@"</code></pre>");
         protected static Regex IdentifierRegex = new Regex(@"(?<![^\s+!*/-])\w+(?![^\s+*/-])");
         protected static Regex IncrementorRegex = new Regex(@"\+=|\-=");
-        protected static List<string> ReservedKeywords = new List<string>("if|elseif|else|endif|is|not|and|or|true|false|abs|sqr|sqrt|random|reset|resetAll|roll|show".Split('|'));
+        protected static Regex VisitsRegex = new Regex(@"visits\(<[^\)]+\)");
+        protected static List<string> ReservedKeywords = new List<string>("if|elseif|else|endif|is|not|and|or|true|false|abs|sqr|sqrt|random|reset|resetAll|roll|show|visits".Split('|'));
         protected static string[] CodeFieldPrefixes = new string[] { "_IF", "_ELSEIF", "_ELSE" };
 
         protected enum CodeState { None, InIf, InElseIf, InElse }
@@ -1140,17 +1187,26 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
         protected string TouchUpRichText(string s)
         {
             if (string.IsNullOrEmpty(s)) return string.Empty;
+
+            // Replace emphasis tags:
+            if (s.Contains("<em>"))
+            {
+                s = s.Replace("<em>", "<i>").Replace("</em>", "</i>");
+            }
+
             var matches = BlockRegex.Matches(s);
+
+            // Insert newlines for blocks containing <p>..</p>:
             foreach (var match in matches.Cast<Match>().Reverse())
             {
-                s = s.Insert(match.Index, "\n");
+                if (match.Value.StartsWith("<p>") || match.Value.StartsWith("</p>"))
+                {
+                    s = s.Insert(match.Index, "\n");
+                }
             }
+
             s = BlockRegex.Replace(s, string.Empty);
             return Tools.RemoveHtml(s).Trim();
-            //return s.Replace(@"&lt;", "<")
-            //    .Replace(@"&gt;", ">")
-            //    .Replace(@"<strong>", "<b>")
-            //    .Replace(@"</strong>", "</b>").Trim();
         }
 
         protected enum ContentPieceType { Text, Code }
@@ -1393,10 +1449,23 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
             return code;
         }
 
+        // Convert visits() function calls.
         protected string ConvertVisits(string code)
         {
-            return code.Replace("visits()", "visits(\"\")"); 
-            //[TODO] Fully process node identifiers in visits().
+            if (!code.Contains("visits(")) return code; ;
+
+            // Convert visits(...data-id="GUID"...) to visits("GUID")
+            var matches = VisitsRegex.Matches(code);
+            foreach (var match in matches.Cast<Match>().Reverse())
+            {
+                var visitsCall = code.Substring(match.Index, match.Length);
+                var dataIdPos = visitsCall.IndexOf("data-id") + match.Index;
+                var guid = code.Substring(dataIdPos + "data-id=\"".Length + 1);
+                guid = guid.Substring(0, guid.IndexOf("\""));
+                code = Replace(code, match.Index, match.Length, $"visits(\"{guid}\")");
+            }
+
+            return code.Replace("visits()", "visits(\"\")");
         }
 
         protected string ConvertIncrementors(string code)
@@ -1405,13 +1474,16 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
             var matches = IncrementorRegex.Matches(code);
             foreach (var match in matches.Cast<Match>().Reverse())
             {
-                // Get the string (variable name) prior to the incrementor:
-                var s = code.Substring(0, match.Index).TrimEnd(); ;
-                var variableName = s.Contains(' ') ? s.Substring(s.LastIndexOf(' ') + 1) : s;
-
-                // Replace "+=" with "= x +":
+                // Get '+' or '-' of '+=' or '-=':
                 var mathOp = match.Value.Substring(0, 1);
-                code = Replace(code, match.Index, match.Length, $"= {variableName} {mathOp}");
+
+                // Get the variable name prior to the incrementor:
+                var left = code.Substring(0, match.Index).TrimEnd();
+                var variableStartPos = Mathf.Max(0, Mathf.Max(left.LastIndexOf('\n'), left.LastIndexOf(';')));
+                var variableName = code.Substring(variableStartPos, match.Index - variableStartPos).Trim();
+
+                // Replace "+= " with "= x +":
+                code = Replace(code, match.Index, 2, $"= {variableName} {mathOp}");
             }
             return code;
         }

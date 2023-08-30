@@ -185,12 +185,28 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 menu.AddItem(new GUIContent("New Conversation"), false, AddNewConversationToOutlineEditor);
                 if (currentConversation != null)
                 {
-                    menu.AddItem(new GUIContent("Copy Conversation"), false, CopyConversationCallback, null);
+                    menu.AddItem(new GUIContent("Duplicate Conversation"), false, CopyConversationCallback, null);
+                }
+                else
+                {
+                    menu.AddDisabledItem(new GUIContent("Duplicate Conversation"));
+                }
+                menu.AddItem(new GUIContent("Templates/New From Template/Built-In/Quest Conversation"), false, CreateQuestConversationFromTemplate);
+                menu.AddItem(new GUIContent("Templates/New From Template/From Template JSON..."), false, CreateConversationFromTemplate);
+                if (currentConversation != null)
+                {
+                    menu.AddItem(new GUIContent("Templates/Save Template JSON..."), false, SaveConversationTemplate);
+                }
+                else
+                {
+                    menu.AddDisabledItem(new GUIContent("Templates/Save Template JSON..."));
+                }
+                if (currentConversation != null)
+                {
                     menu.AddItem(new GUIContent("Split Pipes Into Entries"), false, SplitPipesIntoEntries, null);
                 }
                 else
                 {
-                    menu.AddDisabledItem(new GUIContent("Copy Conversation"));
                     menu.AddDisabledItem(new GUIContent("Split Pipes Into Entries"));
                 }
                 menu.AddItem(new GUIContent("Sort/By Title"), false, SortConversationsByTitle);

@@ -26,6 +26,10 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         {
         }
 
+        public void DrawAIBranchingConversationButton(Conversation conversation)
+        {
+        }
+
         private void DrawAIReviseTextButton(Asset asset, DialogueEntry entry, Field field)
         {
         }

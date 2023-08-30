@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Pixel Crushers. All rights reserved.
 
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -64,6 +65,9 @@ namespace PixelCrushers.DialogueSystem
 
         [Tooltip("If non-zero, prevent input for this duration in seconds when opening menu.")]
         public float blockInputDuration = 0;
+
+        [Tooltip("During block input duration, keep selected response button in selected visual state.")]
+        public bool showSelectionWhileInputBlocked = false;
 
         [Tooltip("Log a warning if a response button text is blank.")]
         public bool warnOnEmptyResponseText = false;
@@ -199,7 +203,8 @@ namespace PixelCrushers.DialogueSystem
             if (blockInputDuration > 0)
             {
                 DisableInput();
-                Invoke("EnableInput", blockInputDuration);
+                if (InputDeviceManager.autoFocus) SetFocus(firstSelected);
+                Invoke(nameof(EnableInput), blockInputDuration);
             }
             else
             {
@@ -330,7 +335,7 @@ namespace PixelCrushers.DialogueSystem
 
         public virtual void HideImmediate()
         {
-            DeactivateUIElements();
+            OnHidden();
         }
 
         protected virtual void ClearResponseButtons()
@@ -658,6 +663,16 @@ namespace PixelCrushers.DialogueSystem
                 }
             }
             if (m_mainCanvasGroup != null) m_mainCanvasGroup.interactable = value;
+            if (value == false)
+            {
+                // If auto focus, show firstSelected in selected state:
+                if (InputDeviceManager.autoFocus && firstSelected != null)
+                {
+                    var button = firstSelected.GetComponent<UnityEngine.UI.Button>();
+                    MethodInfo methodInfo = typeof(UnityEngine.UI.Button).GetMethod("DoStateTransition", BindingFlags.Instance | BindingFlags.NonPublic);
+                    methodInfo.Invoke(button, new object[] { 3, true }); // 3 = SelectionState.Selected
+                }
+            }
             if (EventSystem.current != null)
             {
                 var inputModule = EventSystem.current.GetComponent<PointerInputModule>();

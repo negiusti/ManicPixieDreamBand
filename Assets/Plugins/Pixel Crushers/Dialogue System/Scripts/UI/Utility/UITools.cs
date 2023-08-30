@@ -116,6 +116,7 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public static void SendTextChangeMessage(UnityEngine.UI.Text text)
         {
+            if (!Application.isPlaying) return;
             if (text == null) return;
             if (dialogueUI == null) dialogueUI = text.GetComponentInParent<AbstractDialogueUI>();
             if (dialogueUI == null) return;
@@ -127,6 +128,7 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public static void SendTextChangeMessage(UITextField textField)
         {
+            if (!Application.isPlaying) return;
             if (textField.gameObject == null) return;
             textField.gameObject.SendMessage(DialogueSystemMessages.OnTextChange, textField, SendMessageOptions.DontRequireReceiver);
         }

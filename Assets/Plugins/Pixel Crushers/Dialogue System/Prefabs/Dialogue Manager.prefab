@@ -68,7 +68,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 125850}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 125850}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
@@ -164,6 +164,8 @@ MonoBehaviour:
       alwaysForceResponseMenu: 1
       includeInvalidEntries: 0
       responseTimeout: 0
+      emTagForOldResponses: 0
+      emTagForInvalidResponses: 0
       cancelSubtitle:
         key: 27
         buttonName: 
@@ -185,6 +187,7 @@ MonoBehaviour:
       subtitleCharsPerSecond: 30
       minSubtitleSeconds: 2
       continueButton: 0
+      requireContinueOnLastLine: 0
       richTextEmphases: 1
       informSequenceStartAndEnd: 0
     cameraSettings:
@@ -196,6 +199,7 @@ MonoBehaviour:
       defaultPlayerSequence: 
       defaultResponseMenuSequence: 
       entrytagFormat: 0
+      reportMissingAudioFiles: 0
       disableInternalSequencerCommands: 0
     inputSettings:
       alwaysForceResponseMenu: 1
@@ -208,22 +212,23 @@ MonoBehaviour:
       - Fire1
       - Fire2
       cancel:
-        key: 27
+        key: 0
         buttonName: 
       cancelConversation:
-        key: 27
+        key: 0
         buttonName: 
     barkSettings:
       allowBarksDuringConversations: 1
       barkCharsPerSecond: 0
       minBarkSeconds: 0
+      defaultBarkSequence: 
     alertSettings:
       allowAlertsDuringConversations: 0
       alertCheckFrequency: 0
       alertCharsPerSecond: 0
       minAlertSeconds: 0
   persistentDataSettings:
-    recordPersistentDataOn: 0
+    recordPersistentDataOn: 1
     includeActorData: 1
     includeAllItemData: 0
     includeLocationData: 0
@@ -243,6 +248,7 @@ MonoBehaviour:
   dontHideImmediateDuringWarmup: 0
   dontDestroyOnLoad: 1
   allowOnlyOneInstance: 1
+  onStartTriggerWaitForSaveDataApplied: 0
   dialogueTimeMode: 0
   debugLevel: 2
 --- !u!114 &11471062
@@ -297,20 +303,12 @@ MonoBehaviour:
   onUseKeyboard:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onUseJoystick:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onUseMouse:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onUseTouch:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null

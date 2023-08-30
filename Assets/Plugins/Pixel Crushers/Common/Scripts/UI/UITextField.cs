@@ -8,7 +8,7 @@ namespace PixelCrushers
 {
 
     /// <summary>
-    /// A UITextField can refer to a UI.Text or TMPro.TextMeshProUGUI.
+    /// A UITextField can refer to a UI.Text, TMPro.TextMeshProUGUI, or SuperTextMesh.
     /// </summary>
     [Serializable]
     public class UITextField

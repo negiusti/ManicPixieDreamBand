@@ -574,5 +574,43 @@ namespace PixelCrushers.DialogueSystem
         {
             records.Clear();
         }
+
+        /// <summary>
+        /// Saves the current conversation history to a Dialogue System variable.
+        /// </summary>
+        public virtual void SaveConversation()
+        {
+            if (!isOpen) return;
+            OnRecordPersistentData();
+        }
+
+        /// <summary>
+        /// Resumes or starts a conversation. If conversation is blank, tries to use the 
+        /// conversation title stored in the DS variable named "Conversation".
+        /// If the conversation's history was previously saved by a call to SaveConversation(),
+        /// resumes the conversation at that point. Otherwise starts from the beginning.
+        /// </summary>
+        /// <param name="conversation">The conversation title.</param>
+        public virtual void ResumeConversation(string conversation = null)
+        {
+            if (isOpen) return;
+            if (!string.IsNullOrEmpty(conversation))
+            {
+                DialogueLua.SetVariable("Conversation", conversation);
+            }
+            if (DialogueLua.DoesVariableExist(currentDialogueEntryRecords))
+            {
+                OnApplyPersistentData();
+            }
+            else 
+            {
+                if (string.IsNullOrEmpty(conversation))
+                {
+                    conversation = DialogueLua.GetVariable("Conversation").asString;
+                }
+                DialogueManager.StartConversation(conversation);
+            }
+        }
+
     }
 }

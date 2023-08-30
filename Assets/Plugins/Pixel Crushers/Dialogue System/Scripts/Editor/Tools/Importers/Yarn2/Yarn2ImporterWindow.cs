@@ -59,6 +59,8 @@ namespace PixelCrushers.DialogueSystem.Yarn
         /// </summary>
         public List<string> localizedStringFiles = new List<string>();
 
+        public string prefsPath;
+
         // /// <summary>
         // /// The path for the auto-generated custom commands source file.
         // /// </summary>
@@ -85,6 +87,9 @@ namespace PixelCrushers.DialogueSystem.Yarn
 
         public const string PrefsKeyName = "PixelCrushers.DialogueSystem.YarnConverterSettings";
         public override string prefsKey { get { return PrefsKeyName; } }
+
+        protected static GUIContent SavePrefsLabel = new GUIContent("Save Prefs...", "Save import settings to JSON file.");
+        protected static GUIContent LoadPrefsLabel = new GUIContent("Load Prefs...", "Load import settings from JSON file.");
 
         public static readonly string[] YarnExampleFiles = new string[]
         {
@@ -329,6 +334,49 @@ namespace PixelCrushers.DialogueSystem.Yarn
             //     prefs.merge = EditorGUILayout.Toggle(new GUIContent("Merge Variables", "Merge variables into existing database instead of overwriting"),
             //                                          prefs.merge);
             // }
+        }
+
+        protected override void DrawConversionButtons()
+        {
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            DrawSaveLoadPrefsButtons();
+            DrawClearButton();
+            DrawConvertButton();
+            EditorGUILayout.EndHorizontal();
+        }
+
+        protected void DrawSaveLoadPrefsButtons()
+        {
+            if (GUILayout.Button(SavePrefsLabel, GUILayout.Width(100)))
+            {
+                var path = EditorUtility.SaveFilePanel("Save Import Settings",
+                    System.IO.Path.GetDirectoryName(prefs.prefsPath), System.IO.Path.GetFileName(prefs.prefsPath), "json");
+                if (!string.IsNullOrEmpty(path))
+                {
+                    prefs.prefsPath = path;
+                    System.IO.File.WriteAllText(path, JsonUtility.ToJson(prefs));
+                }
+            }
+            if (GUILayout.Button(LoadPrefsLabel, GUILayout.Width(100)))
+            {
+                var path = EditorUtility.OpenFilePanel("Load Import Settings",
+                    System.IO.Path.GetDirectoryName(prefs.prefsPath), "json");
+                if (!string.IsNullOrEmpty(path))
+                {
+                    var newPrefs = JsonUtility.FromJson<YarnImporterPrefs>(System.IO.File.ReadAllText(path));
+                    if (newPrefs == null)
+                    {
+                        EditorUtility.DisplayDialog("Load Failed", $"Could not load Yarn import settings from {path}.", "OK");
+                    }
+                    else
+                    {
+                        prefs = newPrefs;
+                        prefs.prefsPath = path;
+                        InitializeReorderableLists();
+                    }
+                }
+            }
         }
 
         protected override DialogueDatabase LoadOrCreateDatabase()

@@ -196,6 +196,16 @@ namespace PixelCrushers.DialogueSystem
             standardSubtitleControls.ClearSubtitlesOnCustomPanels();
         }
 
+        public virtual void ClearSubtitleTextOnConversationStart()
+        {
+            // Clear all built-in panels:
+            for (int i = 0; i < subtitlePanels.Length; i++)
+            {
+                if (subtitlePanels[i] == null) continue;
+                if (subtitlePanels[i].clearTextOnConversationStart) subtitlePanels[i].ClearText();
+            }
+        }
+
         #endregion
 
     }

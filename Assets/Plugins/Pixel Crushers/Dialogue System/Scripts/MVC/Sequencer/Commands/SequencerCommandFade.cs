@@ -66,6 +66,8 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
                     faderImage.rectTransform.anchorMin = Vector2.zero;
                     faderImage.rectTransform.anchorMax = Vector2.one;
                     faderImage.sprite = null;
+                    var initializeAlpha = (fadeIn || unstay) ? 1 : 0;
+                    faderImage.color = new Color(color.r, color.g, color.b, initializeAlpha);
                 }
                 faderCanvas.gameObject.SetActive(true);
                 faderImage.gameObject.SetActive(true);

@@ -28,6 +28,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         private GUIStyle pcLinkButtonGUIStyle = null;
         private GUIStyle npcLinkButtonGUIStyle = null;
         private GUIStyle entryGroupHeadingStyle = null;
+        private GUIStyle entryGroupLabelStyle = null;
         private float entryGroupHeadingBaseFontSize;
         private float currentEntryGroupHeadingZoom;
 
@@ -55,6 +56,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             pcLinkButtonGUIStyle = NewDialogueGUIStyle(template.pcLineColor, EditorStyles.miniButton);
             npcLinkButtonGUIStyle = NewDialogueGUIStyle(template.npcLineColor, EditorStyles.miniButton);
             InitEntryGroupHeadingStyle();
+            InitEntryGroupLabelStyle();
         }
 
         private void InitEntryGroupHeadingStyle()
@@ -62,6 +64,12 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             entryGroupHeadingStyle = new GUIStyle(GUI.skin.button);
             entryGroupHeadingBaseFontSize = entryGroupHeadingStyle.fontSize;
             currentEntryGroupHeadingZoom = _zoom;
+        }
+
+        private void InitEntryGroupLabelStyle()
+        {
+            entryGroupLabelStyle = new GUIStyle(GUI.skin.label);
+            entryGroupLabelStyle.alignment = TextAnchor.MiddleCenter;
         }
 
         private GUIStyle NewDialogueGUIStyle(Color color, GUIStyle baseStyle)

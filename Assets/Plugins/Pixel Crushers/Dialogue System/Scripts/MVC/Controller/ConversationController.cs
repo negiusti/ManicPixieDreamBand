@@ -119,6 +119,7 @@ namespace PixelCrushers.DialogueSystem
             this.m_view = view;
             this.m_endConversationHandler = endConversationHandler;
             this.randomizeNextEntry = false;
+            DialogueManager.instance.currentConversationState = model.firstState;
             model.InformParticipants(DialogueSystemMessages.OnConversationStart);
             view.FinishedSubtitleHandler += OnFinishedSubtitle;
             view.SelectedResponseHandler += OnSelectedResponse;
@@ -147,6 +148,7 @@ namespace PixelCrushers.DialogueSystem
             this.m_view = view;
             this.m_endConversationHandler = endConversationHandler;
             this.randomizeNextEntry = false;
+            DialogueManager.instance.currentConversationState = model.firstState;
             model.InformParticipants(DialogueSystemMessages.OnConversationStart);
             view.FinishedSubtitleHandler += OnFinishedSubtitle;
             view.SelectedResponseHandler += OnSelectedResponse;

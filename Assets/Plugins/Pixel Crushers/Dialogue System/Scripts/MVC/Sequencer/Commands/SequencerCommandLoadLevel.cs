@@ -37,7 +37,7 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
             {
                 if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Sequencer: LoadLevel({1})", DialogueDebug.Prefix, GetParameters()));
                 DialogueLua.SetActorField("Player", "Spawnpoint", spawnpoint);
-                var saveSystem = FindObjectOfType<SaveSystem>();
+                var saveSystem = GameObjectUtility.FindFirstObjectByType<SaveSystem>();
                 if (saveSystem != null)
                 {
                     if (additive)
@@ -49,7 +49,7 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
                         PersistentDataManager.LevelWillBeUnloaded();
                         SaveSystem.LoadScene(string.IsNullOrEmpty(spawnpoint) ? levelName : levelName + "@" + spawnpoint);
                     }
-                    
+
                 }
                 else
                 {
@@ -59,7 +59,7 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
                     }
                     else
                     {
-                        var levelManager = FindObjectOfType<LevelManager>();
+                        var levelManager = GameObjectUtility.FindFirstObjectByType<LevelManager>();
                         if (levelManager != null)
                         {
                             levelManager.LoadLevel(levelName);

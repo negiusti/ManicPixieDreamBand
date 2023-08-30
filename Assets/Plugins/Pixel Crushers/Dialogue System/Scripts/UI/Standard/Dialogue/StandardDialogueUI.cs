@@ -103,6 +103,7 @@ namespace PixelCrushers.DialogueSystem
             }
             base.Open();
             conversationUIElements.OpenSubtitlePanelsOnStart(this);
+            conversationUIElements.ClearSubtitleTextOnConversationStart();
         }
 
         public override void Close()
@@ -132,7 +133,7 @@ namespace PixelCrushers.DialogueSystem
                 yield return null;
             }
             // Close main panel and wait for it to finish:
-            if (conversationUIElements.mainPanel != null)
+            if (conversationUIElements.mainPanel != null && !conversationUIElements.dontDeactivateMainPanel)
             {
                 if (DialogueSystemController.isWarmingUp)
                 {

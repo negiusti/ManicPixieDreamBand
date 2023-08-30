@@ -185,7 +185,6 @@ namespace PixelCrushers.DialogueSystem
             {
                 addSpeakerNameFormat = addSpeakerNameFormat.Replace("\\n", "\n").Replace("\\t", "\t");
             }
-            if (waitForClose) clearTextOnClose = false;
             m_panelAnimator = GetComponent<Animator>();
         }
 
@@ -329,12 +328,13 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public virtual void HideImmediate()
         {
-            DeactivateUIElements();
+            OnHidden();
         }
 
         protected override void OnHidden()
         {
             base.OnHidden();
+            if (clearTextOnClose) ClearText();
             if (deactivateOnHidden) DeactivateUIElements();
             currentSubtitle = null;
         }
@@ -354,7 +354,7 @@ namespace PixelCrushers.DialogueSystem
         {
             StopShowAfterClosingCoroutine();
             if (isOpen) base.Close();
-            if (clearTextOnClose) ClearText();
+            if (clearTextOnClose && !waitForClose) ClearText();
             hasFocus = false;
             isFocusing = false;
         }

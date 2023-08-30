@@ -185,8 +185,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             }
 
             EditorGUI.BeginChangeCheck();
-            variableFilter = EditorGUILayout.TextField(GUIContent.none, variableFilter, "ToolbarSeachTextField");
-            GUILayout.Label(string.Empty, "ToolbarSeachCancelButtonEmpty");
+            variableFilter = EditorGUILayout.TextField(GUIContent.none, variableFilter, MoreEditorGuiUtility.ToolbarSearchTextFieldName);
+            GUILayout.Label(string.Empty, MoreEditorGuiUtility.ToolbarSearchCancelButtonEmpty);
             if (EditorGUI.EndChangeCheck()) RefreshView();
 
             DrawVariableMenu();

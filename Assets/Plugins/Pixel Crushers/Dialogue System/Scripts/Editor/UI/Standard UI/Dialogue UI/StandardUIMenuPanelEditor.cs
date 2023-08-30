@@ -44,6 +44,7 @@ namespace PixelCrushers.DialogueSystem
             EditorGUILayout.PropertyField(serializedObject.FindProperty("loopExplicitNavigation"), true);
             EditorGUILayout.PropertyField(serializedObject.FindProperty("autonumber"), true);
             EditorGUILayout.PropertyField(serializedObject.FindProperty("blockInputDuration"), true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("showSelectionWhileInputBlocked"), true);
 
             EditorGUILayout.LabelField("Visibility", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(serializedObject.FindProperty("startState"), true);

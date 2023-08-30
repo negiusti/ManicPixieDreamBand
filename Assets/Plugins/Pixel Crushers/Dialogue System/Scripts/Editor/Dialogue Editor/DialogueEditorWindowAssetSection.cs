@@ -42,8 +42,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
             EditorGUI.BeginChangeCheck();
 
-            filter = EditorGUILayout.TextField(GUIContent.none, filter, "ToolbarSeachTextField");
-            GUILayout.Label(string.Empty, "ToolbarSeachCancelButtonEmpty");
+            filter = EditorGUILayout.TextField(GUIContent.none, filter, MoreEditorGuiUtility.ToolbarSearchTextFieldName);
+            GUILayout.Label(string.Empty, MoreEditorGuiUtility.ToolbarSearchCancelButtonEmpty);
 
             hideFilteredOutAssets = EditorGUILayout.Toggle(hideFilteredOutAssets, EditorStyles.radioButton, GUILayout.Width(22));
 
@@ -295,6 +295,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             startEntry.Title = "START";
             startEntry.currentSequence = "None()";
             startEntry.ActorID = database.playerID;
+            startEntry.canvasRect = new Rect(DialogueEntry.CanvasRectWidth, canvasRectHeight, canvasRectWidth, canvasRectHeight);
             conversation.dialogueEntries.Add(startEntry);
             SetDatabaseDirty("Initialize Conversation");
         }

@@ -396,8 +396,8 @@ namespace PixelCrushers.DialogueSystem
         {
             barkHistory = new BarkHistory(barkOrder);
             sequencer = null;
-            hasSaveSystem = FindObjectOfType<SaveSystem>() != null;
-            if (hasSaveSystem && 
+            hasSaveSystem = GameObjectUtility.FindFirstObjectByType<SaveSystem>() != null;
+            if (hasSaveSystem &&
                 ((trigger == DialogueSystemTriggerEvent.OnSaveDataApplied) ||
                  (trigger == DialogueSystemTriggerEvent.OnStart && DialogueManager.instance.onStartTriggerWaitForSaveDataApplied)))
             {

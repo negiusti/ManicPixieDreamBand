@@ -374,7 +374,7 @@ namespace PixelCrushers.DialogueSystem
                 case ComponentDragDropCommand.SetEnabledTrue:
                     return "SetEnabled(" + componentName + ",true," + goName + ")";
                 case ComponentDragDropCommand.SetEnabledFalse:
-                    return "SetEnabled(" + componentName+ ",false," + goName + ")";
+                    return "SetEnabled(" + componentName + ",false," + goName + ")";
                 case ComponentDragDropCommand.Nothing:
                     return string.Empty;
             }
@@ -509,7 +509,7 @@ namespace PixelCrushers.DialogueSystem
         {
             menu.AddItem(new GUIContent("Shortcuts/Help..."), false, OpenURL, "https://www.pixelcrushers.com/dialogue_system/manual2x/html/cutscene_sequences.html#shortcuts");
             var list = new List<string>();
-            var allSequencerShortcuts = GameObject.FindObjectsOfType<SequencerShortcuts>();
+            var allSequencerShortcuts = GameObjectUtility.FindObjectsByType<SequencerShortcuts>();
             foreach (var sequencerShortcuts in allSequencerShortcuts)
             {
                 foreach (var shortcut in sequencerShortcuts.shortcuts)
@@ -553,7 +553,7 @@ namespace PixelCrushers.DialogueSystem
             }
             var parser = new SequenceParser();
             var result = parser.Parse(sequenceToCheck);
-            return (result == null || result.Count == 0) ? SequenceSyntaxState.Error : SequenceSyntaxState.Valid; 
+            return (result == null || result.Count == 0) ? SequenceSyntaxState.Error : SequenceSyntaxState.Valid;
         }
 
         public static void SetSyntaxStateGUIColor(SequenceSyntaxState syntaxState)

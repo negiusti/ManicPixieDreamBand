@@ -154,7 +154,7 @@ namespace PixelCrushers.DialogueSystem
         }
 
         /// <summary>
-        /// Gets the type of the character (PC or NPC) of an actor.
+        /// Gets the type of the character (PC or NPC) of an actor based on the actor's IsPlayer value.
         /// </summary>
         /// <returns>
         /// The character type (PC or NPC)
@@ -162,10 +162,6 @@ namespace PixelCrushers.DialogueSystem
         /// <param name='actorID'>
         /// The Actor ID to check.
         /// </param>
-        /// <remarks>
-        /// The comparison is based on the value of playerID, not the actor's IsPlayer field. If more than one actor's
-        /// IsPlayer field is true, this will only identify the first one.
-        /// </remarks>
         public CharacterType GetCharacterType(int actorID)
         {
             return IsPlayerID(actorID) ? CharacterType.PC : CharacterType.NPC;

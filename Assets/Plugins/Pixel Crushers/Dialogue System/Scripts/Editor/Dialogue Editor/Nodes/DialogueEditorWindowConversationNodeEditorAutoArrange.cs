@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 
 namespace PixelCrushers.DialogueSystem.DialogueEditor
@@ -23,6 +22,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         [SerializeField]
         private int canvasRectWidthMultiplier = 1;
+
+        public enum AutoArrangeStyle { Vertically, VerticallyOld, Horizontally }
 
         private void CheckNodeWidths()
         {
@@ -49,32 +50,26 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         private void CheckNodeArrangement()
         {
             if (startEntry == null) return;
-            if ((startEntry.canvasRect.x == 0) && (startEntry.canvasRect.y == 0)) AutoArrangeNodes(!addNewNodesToRight);
+            if ((startEntry.canvasRect.x == 0) && (startEntry.canvasRect.y == 0)) AutoArrangeNodes(!prefs.addNewNodesToRight);
         }
 
-        private void ConfirmAndAutoArrangeNodes()
+        private void ConfirmAndAutoArrangeNodes(AutoArrangeStyle style)
         {
-            var result = EditorUtility.DisplayDialogComplex("Auto-Arrange Nodes",
-                (multinodeSelection.nodes.Count > 1) ? "Are you sure you want to auto-arrange the selected nodes in this conversation?"
-                : "Are you sure you want to auto-arrange the nodes in this conversation?", "Vertically", "Horizontally", "Cancel");
-            switch (result)
-            {
-                case 0:
-                    AutoArrangeNodes(true);
-                    break;
-                case 1:
-                    AutoArrangeNodes(false);
-                    break;
-            }
+            AutoArrangeNodes(style);
         }
 
-        private void AutoArrangeNodes(bool vertically)
+        public void AutoArrangeNodes(bool vertically)
+        {
+            AutoArrangeNodes(vertically ? AutoArrangeStyle.Vertically : AutoArrangeStyle.Horizontally);
+        }
+
+        public void AutoArrangeNodes(AutoArrangeStyle style)
         {
             InitializeDialogueTree();
             var tree = new List<List<DialogueEntry>>();
             ArrangeGatherChildren(dialogueTree, 0, tree);
-            ArrangeTree(tree, vertically);
-            ArrangeOrphans(vertically);
+            ArrangeTree(tree, style);
+            ArrangeOrphans(style != AutoArrangeStyle.Horizontally);
             SetDatabaseDirty("Auto-Arrange Nodes");
         }
 
@@ -121,21 +116,33 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             return maxHeight;
         }
 
-        private void ArrangeTree(List<List<DialogueEntry>> tree, bool vertically)
+        private void ArrangeTree(List<List<DialogueEntry>> tree, AutoArrangeStyle style)
         {
-            if (vertically)
+            if (style == AutoArrangeStyle.Horizontally)
+            {
+                float treeHeight = GetTreeHeight(tree);
+                float y = AutoStartY;
+                if (orphans.Count > 0) y += canvasRectHeight + AutoHeightBetweenNodes;
+                float x = AutoStartX;
+                for (int level = 0; level < tree.Count; level++)
+                {
+                    ArrangeLevel(tree[level], x, y, 0, treeHeight, false);
+                    x += canvasRectWidth + AutoWidthBetweenNodes;
+                }
+            }
+            else
             {
                 if (currentConversation == null || currentConversation.dialogueEntries == null || currentConversation.dialogueEntries.Count == 0) return;
-                if (multinodeSelection != null && multinodeSelection.nodes.Count > 1)
+                if (style == AutoArrangeStyle.VerticallyOld || (multinodeSelection != null && multinodeSelection.nodes.Count > 1))
                 {
-                    // Use old algorithm for subsections of conversation tree:
+                    // Use old algorithm if specified or for subsections of conversation tree:
                     float treeWidth = GetTreeWidth(tree);
                     float x = AutoStartX;
                     if (orphans.Count > 0) x += canvasRectWidth + AutoWidthBetweenNodes;
                     float y = AutoStartY;
                     for (int level = 0; level < tree.Count; level++)
                     {
-                        ArrangeLevel(tree[level], x, y, treeWidth, 0, vertically);
+                        ArrangeLevel(tree[level], x, y, treeWidth, 0, true);
                         y += canvasRectHeight + AutoHeightBetweenNodes;
                     }
                 }
@@ -146,18 +153,6 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                     visited.Clear();
                     subtreeVisited.Clear();
                     subTreeWidths.Clear();
-                }
-            }
-            else
-            {
-                float treeHeight = GetTreeHeight(tree);
-                float y = AutoStartY;
-                if (orphans.Count > 0) y += canvasRectHeight + AutoHeightBetweenNodes;
-                float x = AutoStartX;
-                for (int level = 0; level < tree.Count; level++)
-                {
-                    ArrangeLevel(tree[level], x, y, 0, treeHeight, vertically);
-                    x += canvasRectWidth + AutoWidthBetweenNodes;
                 }
             }
         }

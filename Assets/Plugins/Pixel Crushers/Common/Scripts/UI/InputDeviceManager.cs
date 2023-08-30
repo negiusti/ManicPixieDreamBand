@@ -265,7 +265,7 @@ namespace PixelCrushers
         private void SetGraphicRaycasters(bool deviceUsesCursor)
         {
             if (!controlGraphicRaycasters) return;
-            var raycasters = FindObjectsOfType<UnityEngine.UI.GraphicRaycaster>();
+            var raycasters = GameObjectUtility.FindObjectsByType<UnityEngine.UI.GraphicRaycaster>();
             for (int i = 0; i < raycasters.Length; i++)
             {
                 raycasters[i].enabled = deviceUsesCursor;

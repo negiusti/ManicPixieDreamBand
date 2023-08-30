@@ -1248,6 +1248,11 @@ namespace PixelCrushers.DialogueSystem
             return false;
         }
 
+        private string GetParameters(string[] args)
+        { 
+            return (args != null) ? string.Join(",", args) : string.Empty; 
+        }
+
         private bool HandleDelayInternally(string commandName, string[] args, out float duration)
         {
             duration = SequencerTools.GetParameterAsFloat(args, 0);
@@ -1906,10 +1911,10 @@ namespace PixelCrushers.DialogueSystem
                 : SequencerTools.GetSubject(SequencerTools.GetParameter(args, 2), m_speaker, m_listener);
             bool broadcast = string.Equals(SequencerTools.GetParameter(args, 3), "broadcast", StringComparison.OrdinalIgnoreCase);
             if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Sequencer: {1}({2}, {3}, {4}, {5})", new System.Object[] { DialogueDebug.Prefix, commandName, methodName, arg, subject, SequencerTools.GetParameter(args, 3) }));
-            if ((subject == null) && DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: {1}() command: subject is null.", new System.Object[] { DialogueDebug.Prefix, commandName }));
-            if (string.IsNullOrEmpty(methodName) && DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: {1}() command: message is blank.", new System.Object[] { DialogueDebug.Prefix, commandName }));
-            if (upwards && broadcast && DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: {1}() command: 'broadcast' is ignored by SendCommandUpwards.", new System.Object[] { DialogueDebug.Prefix, commandName }));
-            if (upwards && everyone && DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: {1}() command: 'everyone' is ignored by SendCommandUpwards.", new System.Object[] { DialogueDebug.Prefix, commandName }));
+            if ((subject == null) && DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: {1}({2}) command: subject is null.", new System.Object[] { DialogueDebug.Prefix, commandName, GetParameters(args) }));
+            if (string.IsNullOrEmpty(methodName) && DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: {1}({2}) command: message is blank.", new System.Object[] { DialogueDebug.Prefix, commandName, GetParameters(args) }));
+            if (upwards && broadcast && DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: {1}({2}) command: 'broadcast' is ignored by SendCommandUpwards.", new System.Object[] { DialogueDebug.Prefix, commandName, GetParameters(args) }));
+            if (upwards && everyone && DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: {1}({2}) command: 'everyone' is ignored by SendCommandUpwards.", new System.Object[] { DialogueDebug.Prefix, commandName, GetParameters(args) }));
             if (subject != null && !string.IsNullOrEmpty(methodName))
             {
                 if (upwards)
