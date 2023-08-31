@@ -47,13 +47,13 @@ public class StarSpawnerScript : MonoBehaviour
                 i = 0;
             //Random.Range(1, 4);
             if (r == 1)
-                Instantiate(pinkStar, pinkSpawnPosition, Quaternion.identity);
+                Instantiate(pinkStar, pinkSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f)));
             else if (r == 2)
-                Instantiate(blackStar, blackSpawnPosition, Quaternion.identity);
+                Instantiate(blackStar, blackSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f)));
             else if (r == 3)
-                Instantiate(purpleStar, purpleSpawnPosition, Quaternion.identity);
+                Instantiate(purpleStar, purpleSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f)));
             else if (r == 4)
-                Instantiate(redStar, redSpawnPosition, Quaternion.identity);
+                Instantiate(redStar, redSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f)));
             yield return new WaitForSecondsRealtime(t);
         }
         foreach (float t in notes)
@@ -64,13 +64,13 @@ public class StarSpawnerScript : MonoBehaviour
                 i = 0;
             //Random.Range(1, 4);
             if (r == 1)
-                Instantiate(pinkStar, pinkSpawnPosition, Quaternion.identity);
+                Instantiate(pinkStar, pinkSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f)));
             else if (r == 2)
-                Instantiate(blackStar, blackSpawnPosition, Quaternion.identity);
+                Instantiate(blackStar, blackSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f)));
             else if (r == 3)
-                Instantiate(purpleStar, purpleSpawnPosition, Quaternion.identity);
+                Instantiate(purpleStar, purpleSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f)));
             else if (r == 4)
-                Instantiate(redStar, redSpawnPosition, Quaternion.identity);
+                Instantiate(redStar, redSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f)));
             yield return new WaitForSecondsRealtime(t);
         }
     }
