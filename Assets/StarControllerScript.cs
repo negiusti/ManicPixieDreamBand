@@ -18,21 +18,18 @@ public class StarControllerScript : MonoBehaviour
     {
         if (Input.GetKeyDown(keyCode) && canHit)
         {
-            Debug.Log("Destroying...");
             Destroy(gameObject);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("canhit " + other.tag);
         if (other.CompareTag("Activator"))
             canHit = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("cant hit " + other.tag);
         if (other.CompareTag("Activator"))
             canHit = false;
     }

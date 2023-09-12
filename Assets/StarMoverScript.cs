@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class StarMoverScript : MonoBehaviour
 {
-    public float beatTempo;
-    public bool hasStarted;
+    private float beatTempo = 4f;
+    public bool hasStarted = false;
 
     // Start is called before the first frame update
     void Start()
