@@ -25,12 +25,16 @@ public class StarSpawnerScript : MonoBehaviour
     private float delay;
     private AudioSource hamster;
     private Queue<GameObject> spawnedStars;
+    private int hitNotes;
+    private int missedNotes;
 
     // Start is called before the first frame update
     void Start()
     {
         hamster = starter.GetComponent<AudioSource>();
         i = 0;
+        hitNotes = 0;
+        missedNotes = 0;
         spawnedStars = new Queue<GameObject>();
         try
         {
@@ -102,18 +106,27 @@ public class StarSpawnerScript : MonoBehaviour
         {
             if (spawnedStars.Count > 0)
             {
+                // This means the note was "hit"
                 if (spawnedStars.Peek() == null)
                 {
                     spawnedStars.Dequeue();
+                    hitNotes++;
                 }
+                // This means the note was "missed"
                 else if (spawnedStars.Peek().transform.position.x < -12)
                 {
                     GameObject starToDestroy = spawnedStars.Dequeue();
                     Destroy(starToDestroy);
+                    missedNotes++;
                 }
                     
             }
         }
+    }
+
+    public float GetScore()
+    {
+        return hitNotes / (hitNotes + missedNotes);
     }
 
     private void SpawnStar()
