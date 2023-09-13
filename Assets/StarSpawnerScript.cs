@@ -24,13 +24,14 @@ public class StarSpawnerScript : MonoBehaviour
     private int i;
     private float delay;
     private AudioSource hamster;
-    
+    private Queue<GameObject> spawnedStars;
 
     // Start is called before the first frame update
     void Start()
     {
         hamster = starter.GetComponent<AudioSource>();
         i = 0;
+        spawnedStars = new Queue<GameObject>();
         try
         {
             // Combine the relative path with the current working directory to get the full file path
@@ -97,6 +98,21 @@ public class StarSpawnerScript : MonoBehaviour
                 StartCoroutine(DelayedActions());
                 hasStarted = true;
             }
+        } else
+        {
+            if (spawnedStars.Count > 0)
+            {
+                if (spawnedStars.Peek() == null)
+                {
+                    spawnedStars.Dequeue();
+                }
+                else if (spawnedStars.Peek().transform.position.x < -12)
+                {
+                    GameObject starToDestroy = spawnedStars.Dequeue();
+                    Destroy(starToDestroy);
+                }
+                    
+            }
         }
     }
 
@@ -107,13 +123,13 @@ public class StarSpawnerScript : MonoBehaviour
         if (i == stringz.Length)
             i = 0;
         if (r == 1)
-            Instantiate(pinkStar, pinkSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f)));
+            spawnedStars.Enqueue(Instantiate(pinkStar, pinkSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f))));
         else if (r == 2)
-            Instantiate(blackStar, blackSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f)));
+            spawnedStars.Enqueue(Instantiate(blackStar, blackSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f))));
         else if (r == 3)
-            Instantiate(purpleStar, purpleSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f)));
+            spawnedStars.Enqueue(Instantiate(purpleStar, purpleSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f))));
         else if (r == 4)
-            Instantiate(redStar, redSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f)));
+            spawnedStars.Enqueue(Instantiate(redStar, redSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f))));
     }   
 
 }
