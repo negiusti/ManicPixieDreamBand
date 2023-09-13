@@ -59,6 +59,10 @@ public class StarSpawnerScript : MonoBehaviour
         {
             Debug.Log("An error occurred: " + ex.Message);
         }
+        pinkSpawnPosition = new Vector3(pinkSpawnPosition.x, pinkStar.transform.position.y, pinkSpawnPosition.z);
+        blackSpawnPosition = new Vector3(blackSpawnPosition.x, blackStar.transform.position.y, blackSpawnPosition.z);
+        purpleSpawnPosition = new Vector3(purpleSpawnPosition.x, purpleStar.transform.position.y, purpleSpawnPosition.z);
+        redSpawnPosition = new Vector3(redSpawnPosition.x, redStar.transform.position.y, redSpawnPosition.z);
     }
 
     private IEnumerator DelayedActions()
