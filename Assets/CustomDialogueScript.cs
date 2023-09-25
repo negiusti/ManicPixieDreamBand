@@ -6,17 +6,31 @@ using UnityEngine;
 public class CustomDialogueScript : MonoBehaviour
 {
     //AbstractDialogueUI dialogueUI;
+    public KeyCode keyCode;
+    private bool isCoolDown;
+    private int coolDown = 1;
 
     // Start is called before the first frame update
     void Start()
     {
+        isCoolDown = false;
         //dialogueUI = GetComponentInChildren<AbstractDialogueUI>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(keyCode) && !isCoolDown) {
+            DialogueManager.standardDialogueUI.OnContinue();
+            StartCoroutine(CoolDown());
+        }
+    }
+
+    IEnumerator CoolDown()
+    {
+        isCoolDown = true;
+        yield return new WaitForSeconds(coolDown);
+        isCoolDown = false;
     }
 
     public void OnConversationLine(Subtitle subtitle)
