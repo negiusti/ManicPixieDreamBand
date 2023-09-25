@@ -190,8 +190,8 @@ MonoBehaviour:
       showPCSubtitlesDuringLine: 1
       allowPCSubtitleReminders: 0
       skipPCSubtitleAfterResponseMenu: 0
-      subtitleCharsPerSecond: 20
-      minSubtitleSeconds: 3
+      subtitleCharsPerSecond: 100
+      minSubtitleSeconds: 1
       continueButton: 1
       requireContinueOnLastLine: 0
       richTextEmphases: 1
@@ -201,14 +201,16 @@ MonoBehaviour:
       alternateCameraObject: {fileID: 0}
       cameraAngles: {fileID: 0}
       keepCameraPositionAtConversationEnd: 0
-      defaultSequence: Delay({{end}})
+      defaultSequence: 'SetContinueMode(false);
+
+        SetContinueMode(true)@{{end}}'
       defaultPlayerSequence: 
       defaultResponseMenuSequence: 
       entrytagFormat: 0
       reportMissingAudioFiles: 0
       disableInternalSequencerCommands: 0
     inputSettings:
-      alwaysForceResponseMenu: 1
+      alwaysForceResponseMenu: 0
       includeInvalidEntries: 0
       responseTimeout: 0
       responseTimeoutAction: 0
@@ -287,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dddab24af7a02a54c9631fd5c532d7c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputDevice: 1
+  inputDevice: 2
   joystickKeyCodesToCheck: 4a0100004b0100004c01000051010000
   joystickButtonsToCheck: []
   joystickAxesToCheck: []
@@ -295,7 +297,7 @@ MonoBehaviour:
   keyButtonsToCheck: []
   keyCodesToCheck: 1b000000
   keyInputSwitchesModeTo: 1
-  alwaysAutoFocus: 0
+  alwaysAutoFocus: 1
   detectMouseControl: 1
   mouseMoveThreshold: 0.1
   controlCursorState: 1
