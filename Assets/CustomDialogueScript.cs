@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class CustomDialogueScript : MonoBehaviour
 {
-    //AbstractDialogueUI dialogueUI;
     public KeyCode keyCode;
     private bool isCoolDown;
     private int coolDown = 1;
@@ -14,7 +13,6 @@ public class CustomDialogueScript : MonoBehaviour
     void Start()
     {
         isCoolDown = false;
-        //dialogueUI = GetComponentInChildren<AbstractDialogueUI>();
     }
 
     // Update is called once per frame
@@ -35,20 +33,9 @@ public class CustomDialogueScript : MonoBehaviour
 
     public void OnConversationLine(Subtitle subtitle)
     {
-        //Debug.Log(subtitle.dialogueEntry.DialogueText);
         if (subtitle.dialogueEntry.DialogueText.Length == 0 && subtitle.dialogueEntry.Title != "START") {
             Debug.Log("Continuing after empty line of dialogue!!");
             DialogueManager.standardDialogueUI.OnContinue();
-            //dialogueUI.OnContinue();
         }
     }
-
-    //public void Test()
-    //{
-    //    Debug.Log("HELLO!!");
-    //    DialogueManager.standardDialogueUI.OnContinue();
-    //    //dialogueUI.OnContinue();
-    //    //dialogueUI.OnContinueConversation();
-    //    //DialogueManager.PlaySequence("Continue()");
-    //}
 }

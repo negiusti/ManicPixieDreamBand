@@ -8,17 +8,19 @@ public class AssetSwapper : MonoBehaviour
     public SpriteLibraryAsset LibraryAsset;
     public string targetCategory;
     private int index = 0;
-
+    private string[] labels;
     public void SelectRandom()
     {
-        string[] labels = LibraryAsset.GetCategoryLabelNames(targetCategory).ToArray();
-        index = (index + 1 >= labels.Length) ? index = 0 : index + 1;
+        index = (index + 1 >= labels.Length) ? 0 : index + 1;
         targetResolver.SetCategoryAndLabel(targetCategory, labels[index]);
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        SpriteLibrary fuck = this.GetComponentInParent<SpriteLibrary>();
+        LibraryAsset = fuck.spriteLibraryAsset;
+        labels = LibraryAsset.GetCategoryLabelNames(targetCategory).ToArray();
     }
 
     // Update is called once per frame

@@ -62,7 +62,6 @@ public class ColorPicker : MonoBehaviour
 
     public void SetColor(int index)
     {
-        color = index;
         if (isSkin)
         {
             if (index >= skinColors.Length)
@@ -79,6 +78,7 @@ public class ColorPicker : MonoBehaviour
             }
             spriteRenderer.color = colors[index];
         }
+        color = index;
     }
 
     public int GetColor()

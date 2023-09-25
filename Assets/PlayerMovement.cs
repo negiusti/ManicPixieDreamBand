@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private float moveSpeed = 4f;
     private float moveInput;
-    private Player player;
+    private Character player;
     private Animator animator;
     private bool isIdle = true;
     private string targetSortingLayer = "Player";
@@ -51,10 +51,10 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GetComponentInChildren<Player>();
+        player = GetComponentInChildren<Character>();
         animator = GetComponentInChildren<Animator>();
-        player.SetPlayerName("Nicole");
-        player.LoadPlayer();
+        player.SetCharacterName("Nicole");
+        player.LoadCharacter();
         ChangeChildSortingLayers(transform);
     }
 

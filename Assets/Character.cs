@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
-public class Player : MonoBehaviour
+public class Character : MonoBehaviour
 {
     private Dictionary<string, string> categoryToLabelMap;
     private SpriteResolver[] spriteResolvers;
@@ -14,21 +14,21 @@ public class Player : MonoBehaviour
     private ColorPicker[] colorPickers;
     private SpriteLibraryAsset libraryAsset;
     private System.Random random;
-    private string playerName;
+    private string characterName;
 
     public bool IsWearingPants()
     {
         return this.isWearingPants;
     }
 
-    public void SetPlayerName(string name)
+    public void SetCharacterName(string name)
     {
-        this.playerName = name;
+        this.characterName = name;
     }
 
-    public string PlayerName()
+    public string CharacterName()
     {
-        return playerName;
+        return characterName;
     }
 
     public void SetIsWearingPants(bool isWearingPants)
@@ -51,8 +51,9 @@ public class Player : MonoBehaviour
             libraryAsset = this.GetComponent<SpriteLibrary>().spriteLibraryAsset;
         }
         this.random = new System.Random();
-        this.playerName = transform.parent.name;
-        //LoadPlayer();
+        this.characterName = transform.parent.name;
+        //LoadCharacter();
+        //RandomizeAppearance();
     }
 
     // Update is called once per frame
@@ -81,22 +82,22 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SavePlayer()
+    public void SaveCharacter()
     {
-        Debug.Log("Saving... " + playerName);
+        Debug.Log("Saving... " + characterName);
         updateSpriteResolverMap();
         updateSpriteColorMap();
-        SaveSystem.SavePlayer(this);
+        SaveSystem.SaveCharacter(this);
     }
 
-    public void LoadPlayer()
+    public void LoadCharacter()
     {
-        Debug.Log("Loading... " + playerName);
-        PlayerData playerData = SaveSystem.LoadPlayer(playerName);
-        isWearingPants = playerData.IsWearingPants();
-        categoryToLabelMap = playerData.CategoryToLabelMap();
-        tagToColorIndexMap = playerData.TagToColorIndexMap();
-        //playerName = playerData.GetName();
+        Debug.Log("Loading... " + characterName);
+        CharacterData characterData = SaveSystem.LoadCharacter(characterName);
+        isWearingPants = characterData.IsWearingPants();
+        categoryToLabelMap = characterData.CategoryToLabelMap();
+        tagToColorIndexMap = characterData.TagToColorIndexMap();
+        //characterName = characterData.GetName();
         UpdateAppearance();
     }
 
@@ -230,7 +231,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void RandomizePlayer()
+    public void RandomizeCharacter()
     {
         RandomizeAppearance();
         RandomizeColors();

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class InputUIScript : MonoBehaviour
 {
-    public Player player;
+    public Character player;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +25,6 @@ public class InputUIScript : MonoBehaviour
         InputField getName = this.GetComponentInChildren<InputField>();
         string textMessage = getName.text;
         Debug.Log("You just typed " + textMessage);
-        player.SetPlayerName(getName.text);
+        player.SetCharacterName(getName.text);
     }
 }

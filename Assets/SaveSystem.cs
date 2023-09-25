@@ -4,46 +4,46 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
-    //static string playerSavePath = Application.persistentDataPath + "/player.save";
+    //static string characterSavePath = Application.persistentDataPath + "/character.save";
 
-    public static void SavePlayer(Player player)
+    public static void SaveCharacter(Character character)
     { 
-        string playerSavePath = Application.persistentDataPath + "/" + player.PlayerName()  + "/player.save";
+        string characterSavePath = Application.persistentDataPath + "/" + character.CharacterName()  + "/character.save";
         // Create the directory structure if it doesn't exist
-        string directoryPath = Path.GetDirectoryName(playerSavePath);
+        string directoryPath = Path.GetDirectoryName(characterSavePath);
         Directory.CreateDirectory(directoryPath);
         BinaryFormatter formatter = new BinaryFormatter();
-        FileStream stream = new FileStream(playerSavePath, FileMode.Create);
-        PlayerData playerData = new PlayerData(player);
-        formatter.Serialize(stream, playerData);
+        FileStream stream = new FileStream(characterSavePath, FileMode.Create);
+        CharacterData characterData = new CharacterData(character);
+        formatter.Serialize(stream, characterData);
         stream.Close();
     }
 
-    public static PlayerData LoadPlayer(string name)
+    public static CharacterData LoadCharacter(string name)
     {
-        string playerSavePath = Application.persistentDataPath + "/" + name + "/player.save";
-        return Load(playerSavePath);
+        string characterSavePath = Application.persistentDataPath + "/" + name + "/character.save";
+        return Load(characterSavePath);
     }
 
-    private static PlayerData Load(string playerSavePath)
+    private static CharacterData Load(string characterSavePath)
     {
-        if(File.Exists(playerSavePath))
+        if(File.Exists(characterSavePath))
         {
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(playerSavePath, FileMode.Open);
-            PlayerData data = formatter.Deserialize(stream) as PlayerData;
+            FileStream stream = new FileStream(characterSavePath, FileMode.Open);
+            CharacterData data = formatter.Deserialize(stream) as CharacterData;
             stream.Close();
             return data;
         } else
         {
-            Debug.LogError("Save file not found in" + playerSavePath);
+            Debug.LogError("Save file not found in" + characterSavePath);
             return null;
         }
     }
 
-    //public static PlayerData LoadPlayer()
+    //public static CharacterData LoadCharacter()
     //{
-    //    string playerSavePath = Application.persistentDataPath + "/player.save";
-    //    return Load(playerSavePath);
+    //    string characterSavePath = Application.persistentDataPath + "/character.save";
+    //    return Load(characterSavePath);
     //}
 }
