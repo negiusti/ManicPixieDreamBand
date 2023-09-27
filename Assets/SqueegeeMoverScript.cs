@@ -43,17 +43,26 @@ public class SqueegeeMoverScript : MonoBehaviour
 
             // Update the GameObject's position
             transform.position = new Vector3(newX, transform.position.y, transform.position.z);
-        }
 
-        if (Input.GetKeyDown(keyCode))
+            if (Input.GetKeyDown(keyCode))
+            {
+                moving = false;
+                if (isCentered)
+                {
+                    tm.text = "Nice";
+                }
+                else
+                {
+                    tm.text = "u suck";
+                }
+            }
+        } else
         {
-            moving = false;
-            if (isCentered)
+            // start over
+            if (Input.GetKeyDown(keyCode))
             {
-                tm.text = "Nice";
-            } else
-            {
-                tm.text = "u suck";
+                moving = true;
+                tm.text = "";
             }
         }
     }
