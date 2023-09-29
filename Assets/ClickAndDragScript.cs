@@ -5,11 +5,19 @@ public class ClickAndDrag : MonoBehaviour
     //private bool isDragging = false;
     private Vector3 mousePositionOffset;
     private bool selected;
+    private Rigidbody2D rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        //rb.velocity.magnitude
+    }
 
     private void OnMouseDown()
     {
         if (Input.GetMouseButtonDown(0))
         {
+            //rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             // Calculate the offset between the click point and the object's position
             mousePositionOffset = gameObject.transform.position - GetMouseWorldPosition();
             //isDragging = true;
@@ -18,10 +26,7 @@ public class ClickAndDrag : MonoBehaviour
 
     private void OnMouseUp()
     {
-        //if (Input.GetMouseButtonUp(0))
-        //{
-        //    isDragging = false;
-        //}
+        //rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
     }
 
     private Vector3 GetMouseWorldPosition()
