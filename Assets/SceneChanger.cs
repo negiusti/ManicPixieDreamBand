@@ -8,15 +8,16 @@ public class SceneChanger : MonoBehaviour
     //private GameObject player;
     public void ChangeScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
-        //if (sceneName == "MainStreet")
-        //{
-        //    player.transform.localScale *= 0.51f;
-        //    Vector3 currPosition = player.transform.position;
-        //    currPosition.y = -3.61f;
-        //    player.transform.position = currPosition;
-        //}
+        string currentScene = SceneManager.GetActiveScene().name;
+        Debug.Log("Loading scene: " + sceneName);
+        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneName);
+        loadOperation.completed += (operation) => OnLoadCompleted(operation, currentScene);
+    }
 
+    private void OnLoadCompleted(AsyncOperation operation, string scene)
+    {
+        Debug.Log("Unloading scene: " + scene);
+        SceneManager.UnloadSceneAsync(scene);
     }
 
     // Start is called before the first frame update
@@ -33,6 +34,6 @@ public class SceneChanger : MonoBehaviour
 
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 }
