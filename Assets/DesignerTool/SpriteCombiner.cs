@@ -120,18 +120,6 @@ public class SpriteCombiner : ScriptableObject
         //Camera captureCamera = GetComponent<Camera>();
         //captureCamera.enabled = true;
         Camera captureCamera = Instantiate<Camera>(cam);
-        GameObject[] designObjects = GameObject.FindGameObjectsWithTag("Design");
-
-        // Combine all design objects into one GameObject
-        //GameObject combinedDesign = new GameObject("CombinedDesign");
-
-        //foreach (GameObject obj in designObjects)
-        //{
-        //    if (obj != null)
-        //    {
-        //        obj.transform.parent = combinedDesign.transform;
-        //    }
-        //}
 
         // Position the camera to capture the combined design objects
         //captureCamera.transform.position = combinedDesign.transform.position + new Vector3(0, 0, -10);
@@ -156,54 +144,12 @@ public class SpriteCombiner : ScriptableObject
         // Combine the captured screenshot into one sprite
         Sprite combinedSprite = Sprite.Create(screenshot, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f));
 
-        //Destroy(combinedDesign);
         EnableNonDesignSprites();
-        Destroy(captureCamera);
-        // Use the combined sprite in a SpriteRenderer or save it to a file
-        return combinedSprite;
-
         // Deactivate the capture camera
-        //captureCamera.enabled = false;
+        captureCamera.enabled = false;
+        Destroy(captureCamera.gameObject);
 
-
-        //GameObject[] designCanvasObjects = GameObject.FindGameObjectsWithTag("designcanvas");
-
-        //// Loop through the found objects
-        //foreach (GameObject designCanvas in designCanvasObjects)
-        //{
-
-        //}
-        //if (sprites == null || sprites.Length == 0)
-        //{
-        //    Debug.LogWarning("No sprites to combine.");
-        //    return null;
-        //}
-
-        //int width = 0;
-        //int height = 0;
-
-        //// Calculate the width and height of the combined texture
-        //foreach (Sprite sprite in sprites)
-        //{
-        //    width += (int)sprite.rect.width;
-        //    height = Mathf.Max(height, (int)sprite.rect.height);
-        //}
-
-        //Texture2D combinedTexture = new Texture2D(width, height);
-
-        //int xOffset = 0;
-
-        //// Combine the sprites into the combined texture
-        //foreach (Sprite sprite in sprites)
-        //{
-        //    Color[] pixels = sprite.texture.GetPixels();
-        //    combinedTexture.SetPixels(xOffset, 0, (int)sprite.rect.width, (int)sprite.rect.height, pixels);
-        //    xOffset += (int)sprite.rect.width;
-        //}
-
-        //combinedTexture.Apply();
-
-        //return Sprite.Create(combinedTexture, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f));
+        return combinedSprite;
     }
 
 
