@@ -22,9 +22,41 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerInputActions"",
-    ""maps"": [],
+    ""maps"": [
+        {
+            ""name"": ""TimingMG_AM"",
+            ""id"": ""75c2fa6e-9697-4aed-b891-08bfa461f06d"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""f350e3c2-a7cd-42a2-a39b-c5661a17eb5b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""d86b0e4a-6d46-4ffd-aa27-ae31ef5c2561"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        }
+    ],
     ""controlSchemes"": []
 }");
+        // TimingMG_AM
+        m_TimingMG_AM = asset.FindActionMap("TimingMG_AM", throwIfNotFound: true);
+        m_TimingMG_AM_Newaction = m_TimingMG_AM.FindAction("New action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -81,5 +113,55 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public int FindBinding(InputBinding bindingMask, out InputAction action)
     {
         return asset.FindBinding(bindingMask, out action);
+    }
+
+    // TimingMG_AM
+    private readonly InputActionMap m_TimingMG_AM;
+    private List<ITimingMG_AMActions> m_TimingMG_AMActionsCallbackInterfaces = new List<ITimingMG_AMActions>();
+    private readonly InputAction m_TimingMG_AM_Newaction;
+    public struct TimingMG_AMActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public TimingMG_AMActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_TimingMG_AM_Newaction;
+        public InputActionMap Get() { return m_Wrapper.m_TimingMG_AM; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TimingMG_AMActions set) { return set.Get(); }
+        public void AddCallbacks(ITimingMG_AMActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TimingMG_AMActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TimingMG_AMActionsCallbackInterfaces.Add(instance);
+            @Newaction.started += instance.OnNewaction;
+            @Newaction.performed += instance.OnNewaction;
+            @Newaction.canceled += instance.OnNewaction;
+        }
+
+        private void UnregisterCallbacks(ITimingMG_AMActions instance)
+        {
+            @Newaction.started -= instance.OnNewaction;
+            @Newaction.performed -= instance.OnNewaction;
+            @Newaction.canceled -= instance.OnNewaction;
+        }
+
+        public void RemoveCallbacks(ITimingMG_AMActions instance)
+        {
+            if (m_Wrapper.m_TimingMG_AMActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ITimingMG_AMActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TimingMG_AMActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TimingMG_AMActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public TimingMG_AMActions @TimingMG_AM => new TimingMG_AMActions(this);
+    public interface ITimingMG_AMActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }

@@ -6,6 +6,7 @@ public class ClickAndDrag : MonoBehaviour
     private Vector3 mousePositionOffset;
     private bool selected;
     private Rigidbody2D rb;
+    
 
     void Start()
     {
@@ -41,6 +42,7 @@ public class ClickAndDrag : MonoBehaviour
     private void OnMouseDrag()
     {
         transform.position = GetMouseWorldPosition() + mousePositionOffset;
+
     }
 
     private void OnMouseEnter()
