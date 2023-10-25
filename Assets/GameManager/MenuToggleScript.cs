@@ -6,8 +6,7 @@ public class MenuToggleScript : MonoBehaviour
 
     private void Start()
     {
-        menuToToggle.SetActive(false);
-        Time.timeScale = 1f;
+        DisableMenu();
     }
     void Update()
     {
@@ -24,5 +23,10 @@ public class MenuToggleScript : MonoBehaviour
                 Time.timeScale = 1f;
             }
         }
+    }
+    public void DisableMenu()
+    {
+        menuToToggle.SetActive(false);
+        Time.timeScale = 1f;
     }
 }

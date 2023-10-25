@@ -6,6 +6,7 @@ using PixelCrushers.DialogueSystem;
 
 public class SceneChanger : MonoBehaviour
 {
+    MenuToggleScript menuToggle;
     //private GameObject player;
     public void ChangeScene(string sceneName)
     {
@@ -13,7 +14,8 @@ public class SceneChanger : MonoBehaviour
         //string currentScene = SceneManager.GetActiveScene().name;
         Debug.Log("Loading scene: " + sceneName);
         //AsyncOperation loadOperation =
-        SceneManager.LoadSceneAsync(sceneName);
+        SceneManager.LoadScene(sceneName);
+        menuToggle.DisableMenu();
         //loadOperation.completed += (operation) => OnLoadCompleted(operation, currentScene);
     }
 
@@ -42,6 +44,8 @@ public class SceneChanger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        menuToggle = GetComponent<MenuToggleScript>();
+        menuToggle.DisableMenu();
         //player = GameObject.Find("Player");
     }
 
