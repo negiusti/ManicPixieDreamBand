@@ -26,10 +26,10 @@ public class DrumRollScript : MonoBehaviour
             if (toggleAlternateSticks)
             {
                 leftDrumStick.transform.localScale = leftStartScale;
-                rightDrumStick.transform.localScale *= 0.75f;
+                rightDrumStick.transform.localScale *= 0.85f;
             } else
             {
-                leftDrumStick.transform.localScale *= 0.75f;
+                leftDrumStick.transform.localScale *= 0.85f;
                 rightDrumStick.transform.localScale = rightStartScale;
             }
             toggleAlternateSticks = !toggleAlternateSticks;

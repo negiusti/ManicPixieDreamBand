@@ -6,11 +6,11 @@ public class DrumstickScript : MonoBehaviour
     public bool isLeftStick;
     private Vector3 startPos;
     private Vector3 startScale;
-    private float inSpeed = 18f;
+    private float inSpeed = 19f;
     private float outSpeed = 2.5f;
     private bool onDrumPad = false;
 
-    private float shakeDuration = 0.5f;
+    private float shakeDuration = 0.3f;
     private float shakeMagnitude = 0.4f;
     private bool isShaking = false;
     // Start is called before the first frame update
