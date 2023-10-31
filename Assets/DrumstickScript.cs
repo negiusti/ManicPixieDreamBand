@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DrumstickScript : MonoBehaviour
@@ -11,9 +10,8 @@ public class DrumstickScript : MonoBehaviour
     private float outSpeed = 2.5f;
     private bool onDrumPad = false;
 
-    private float shakeDuration = 1.0f;
-    private float shakeMagnitude = 0.1f;
-    private float shakeSpeed = 30.0f;
+    private float shakeDuration = 0.5f;
+    private float shakeMagnitude = 0.4f;
     private bool isShaking = false;
     // Start is called before the first frame update
     void Start()
@@ -56,7 +54,7 @@ public class DrumstickScript : MonoBehaviour
         if (collision.gameObject.name.Contains("drumstick"))
         {
             isShaking = true;
-            startScale = transform.localScale;
+            transform.localScale = startScale;
             StartCoroutine(Shake());
         }
     }
