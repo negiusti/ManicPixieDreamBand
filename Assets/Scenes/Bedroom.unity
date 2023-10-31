@@ -243,9 +243,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.1906997, y: -1.1221935}
   serializedVersion: 2
-  m_Radius: 2.56
+  m_Radius: 0.93905365
 --- !u!114 &382965578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,11 +394,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4817830455318531005, guid: a1624049a9f284392bcc07e4cc230195, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.95
+      value: -1.92
       objectReference: {fileID: 0}
     - target: {fileID: 4817830455318531005, guid: a1624049a9f284392bcc07e4cc230195, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.76
+      value: 0.11
       objectReference: {fileID: 0}
     - target: {fileID: 4817830455318531005, guid: a1624049a9f284392bcc07e4cc230195, type: 3}
       propertyPath: m_LocalPosition.z
@@ -472,6 +472,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7119514319034971779, guid: a1624049a9f284392bcc07e4cc230195, type: 3}
+      propertyPath: m_AutoRebind
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7153048774468926908, guid: a1624049a9f284392bcc07e4cc230195, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -504,6 +508,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8357226896979368769, guid: a1624049a9f284392bcc07e4cc230195, type: 3}
+      propertyPath: m_Size.x
+      value: 0.5232582
+      objectReference: {fileID: 0}
+    - target: {fileID: 8357226896979368769, guid: a1624049a9f284392bcc07e4cc230195, type: 3}
+      propertyPath: m_Offset.x
+      value: -6.0094357
+      objectReference: {fileID: 0}
     - target: {fileID: 8424827061119974781, guid: a1624049a9f284392bcc07e4cc230195, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -515,7 +527,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4817830455318531006, guid: a1624049a9f284392bcc07e4cc230195, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1148945367}
   m_SourcePrefab: {fileID: 100100000, guid: a1624049a9f284392bcc07e4cc230195, type: 3}
 --- !u!1 &880286437
 GameObject:
@@ -826,6 +841,23 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e394a066ea554416f874f1453b9f77e5, type: 3}
+--- !u!1 &1148945362 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4817830455318531006, guid: a1624049a9f284392bcc07e4cc230195, type: 3}
+  m_PrefabInstance: {fileID: 835806374}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1148945367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148945362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15d3c5376bdf643a68259715d839418a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1254050797
 GameObject:
   m_ObjectHideFlags: 0
@@ -1149,7 +1181,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.2
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1174,7 +1206,7 @@ Transform:
   m_GameObject: {fileID: 1539173039}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: -0.21, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1300,9 +1332,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.16869557, y: 0.10268426}
   serializedVersion: 2
-  m_Radius: 1.8
+  m_Radius: 0.5164453
 --- !u!114 &1655206694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1316,8 +1348,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactHint: {fileID: 1427198866}
-  sceneToTrigger: 
-  keyToTrigger: 0
+  sceneToTrigger: DrumMiniGame
+  keyToTrigger: 32
 --- !u!50 &1655206695
 Rigidbody2D:
   serializedVersion: 4

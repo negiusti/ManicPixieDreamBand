@@ -15,6 +15,17 @@ public class AssetSwapper : MonoBehaviour
         targetResolver.SetCategoryAndLabel(targetCategory, labels[index]);
     }
 
+    public void SelectLeft()
+    {
+        index = (index - 1 < 0) ? 0 : index - 1;
+        targetResolver.SetCategoryAndLabel(targetCategory, labels[index]);
+    }
+    public void SelectRight()
+    {
+        index = (index + 1 >= labels.Length) ? labels.Length -1 : index + 1;
+        targetResolver.SetCategoryAndLabel(targetCategory, labels[index]);
+    }
+
     // Start is called before the first frame update
     void Start()
     {

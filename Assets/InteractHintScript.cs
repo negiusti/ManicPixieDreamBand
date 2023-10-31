@@ -8,9 +8,16 @@ public class InteractHintScript : MonoBehaviour
     public string sceneToTrigger;
     public KeyCode keyToTrigger;
     private SceneChanger sc;
+
+    private Vector3 originalScale;
+    //private bool isInsideTrigger = false;
+    public float scaleFactor = 0.1f; // 10% scale factor change
+    public float pulseSpeed = 2.0f; // Adjust the speed of the pulse
+
     // Start is called before the first frame update
     void Start()
     {
+        originalScale = transform.localScale;
         interactHint.SetActive(false);
         sc = FindObjectOfType<SceneChanger>();
     }
@@ -22,6 +29,13 @@ public class InteractHintScript : MonoBehaviour
         {
             if (sceneToTrigger != null && sceneToTrigger.Length > 0)
                 sc.ChangeScene(sceneToTrigger);
+        }
+        if (interactHint.activeSelf)
+        {
+            // Calculate the new scale based on a sine wave
+            float scaleChange = Mathf.Sin(Time.time * pulseSpeed) * scaleFactor;
+            Vector3 newScale = originalScale + Vector3.one * scaleChange;
+            transform.localScale = newScale;
         }
     }
 
@@ -38,6 +52,7 @@ public class InteractHintScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             interactHint.SetActive(false);
+            transform.localScale = originalScale;
         }
     }
 }
