@@ -9,9 +9,11 @@ public class DrawerSelectScript : MonoBehaviour
     public DrawerScript sockDrawer;
     public DrawerScript shoesDrawer;
     public DrawerScript hatDrawer;
+    private static int numDrawers = 5; // number of drawer categories
+    private static int numDrawerSlots = 4; // number of drawers shown at any given time
     private float shiftAmount = 2.13f;
-    DrawerScript[] drawers = new DrawerScript[5];
-    SpriteRenderer[] spriteRenderers = new SpriteRenderer[5];
+    DrawerScript[] drawers = new DrawerScript[numDrawers];
+    SpriteRenderer[] spriteRenderers = new SpriteRenderer[numDrawers];
     int selected = 0;
 
     // Start is called before the first frame update
@@ -41,7 +43,7 @@ public class DrawerSelectScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow) && selected < 4)
+        if (Input.GetKeyDown(KeyCode.DownArrow) && selected < numDrawers - 1)
         {
             drawers[selected].UnselectDrawer();
             selected++;
@@ -54,7 +56,8 @@ public class DrawerSelectScript : MonoBehaviour
                     d.gameObject.transform.position = new Vector3(d.gameObject.transform.position.x, d.gameObject.transform.position.y + shiftAmount, d.gameObject.transform.position.z);
                 }
                 // make top drawer(s) invisible
-                spriteRenderers[0].enabled = false;
+                hideDrawersAbove(selected - numDrawerSlots);
+                //spriteRenderers[0].enabled = false;
                 // make current drawer visible
                 spriteRenderers[selected].enabled = true;
             }
@@ -73,11 +76,32 @@ public class DrawerSelectScript : MonoBehaviour
                     d.gameObject.transform.position = new Vector3(d.gameObject.transform.position.x, d.gameObject.transform.position.y - shiftAmount, d.gameObject.transform.position.z);
                 }
                 // make bottom drawer(s) invisible
-                spriteRenderers[4].enabled = false;
+                hideDrawersBelow(numDrawerSlots - selected);
+                //spriteRenderers[4].enabled = false;
                 // make current drawer visible
                 spriteRenderers[selected].enabled = true;
             }
             drawers[selected].SelectDrawer();
+        }
+    }
+
+    private void hideDrawersAbove(int idx)
+    {
+        while (idx >= 0)
+        {
+            Debug.Log("Hiding drawer: " + idx);
+            spriteRenderers[idx].enabled = false;
+            idx--;
+        }
+    }
+
+    private void hideDrawersBelow(int idx)
+    {
+        while (idx < drawers.Length)
+        {
+            Debug.Log("Hiding drawer: " + idx);
+            spriteRenderers[idx].enabled = false;
+            idx++;
         }
     }
 }
