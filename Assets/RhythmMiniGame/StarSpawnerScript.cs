@@ -12,7 +12,7 @@ public class StarSpawnerScript : MonoBehaviour
     public GameObject blackStar;
     public GameObject purpleStar;
     public GameObject redStar;
-    public GameObject starter;
+    public StartSyncerScript starter;
     public Vector3 pinkSpawnPosition;
     public Vector3 blackSpawnPosition;
     public Vector3 purpleSpawnPosition;
@@ -20,13 +20,13 @@ public class StarSpawnerScript : MonoBehaviour
     private string relativePath = "hamster_notes";
     private StreamReader reader;
     private string line;
-    private float minY = -3.86f;
     private int i;
     private float delay;
     private AudioSource hamster;
     private Queue<GameObject> spawnedStars;
     private int hitNotes;
     private int missedNotes;
+    private float runwayDelay;
 
     // Start is called before the first frame update
     void Start()
@@ -78,7 +78,7 @@ public class StarSpawnerScript : MonoBehaviour
     {
         while ((line = reader.ReadLine()) != null)
         {
-            while (hamster.time < delay)
+            while (hamster.time < delay - runwayDelay)
             {
                 // Wait until the desired delay time has passed
                 yield return null;
@@ -101,8 +101,10 @@ public class StarSpawnerScript : MonoBehaviour
     {
         if (!hasStarted)
         {
-            if (starter.transform.position.y < minY)
+            if (hamster.isPlaying)
             {
+                runwayDelay = starter.GetRunwayDelay();
+                Debug.Log("runway delay is " + runwayDelay);
                 StartCoroutine(DelayedActions());
                 hasStarted = true;
             }
@@ -120,6 +122,7 @@ public class StarSpawnerScript : MonoBehaviour
                 else if (spawnedStars.Peek().transform.position.y < -7f)
                 {
                     GameObject starToDestroy = spawnedStars.Dequeue();
+                    runwayDelay = starToDestroy.GetComponent<StarMoverScript>().GetRunwayDelay();
                     Destroy(starToDestroy);
                     missedNotes++;
                 }
@@ -135,6 +138,7 @@ public class StarSpawnerScript : MonoBehaviour
 
     private void SpawnStar()
     {
+        Debug.Log("runway delay is " + runwayDelay);
         // spawn note
         int r = stringz[i++];
         if (i == stringz.Length)

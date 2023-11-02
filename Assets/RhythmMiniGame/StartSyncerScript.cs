@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class StartSyncerScript : MonoBehaviour
 {
-    private float minY = 0f;
     private AudioSource hamster;
-    private bool alreadyPlaying = false;
+    private float runwayDelay = 0f;
+    private float startTime;
+    private bool hasStarted = false;
+ 
     // Start is called before the first frame update
     void Start()
     {
@@ -16,11 +18,14 @@ public class StartSyncerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (!alreadyPlaying && this.transform.position.y < minY)
-        //{
-            //hamster.Play();
-            //alreadyPlaying = true;
-        //}
+        if (!hasStarted)
+        {
+            if (Input.anyKeyDown)
+            {
+                hasStarted = true;
+                startTime = Time.time;
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -28,6 +33,12 @@ public class StartSyncerScript : MonoBehaviour
         if (collision.CompareTag("Activator"))
         {
             hamster.Play();
+            runwayDelay = Time.time - startTime;
         }
+    }
+
+    public float GetRunwayDelay()
+    {
+        return runwayDelay;
     }
 }
