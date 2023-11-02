@@ -20,7 +20,7 @@ public class StarSpawnerScript : MonoBehaviour
     private string relativePath = "hamster_notes";
     private StreamReader reader;
     private string line;
-    private float minX = -7.47f;
+    private float minY = -3.86f;
     private int i;
     private float delay;
     private AudioSource hamster;
@@ -64,10 +64,14 @@ public class StarSpawnerScript : MonoBehaviour
         {
             Debug.Log("An error occurred: " + ex.Message);
         }
-        pinkSpawnPosition = new Vector3(pinkSpawnPosition.x, pinkStar.transform.position.y, pinkSpawnPosition.z);
-        blackSpawnPosition = new Vector3(blackSpawnPosition.x, blackStar.transform.position.y, blackSpawnPosition.z);
-        purpleSpawnPosition = new Vector3(purpleSpawnPosition.x, purpleStar.transform.position.y, purpleSpawnPosition.z);
-        redSpawnPosition = new Vector3(redSpawnPosition.x, redStar.transform.position.y, redSpawnPosition.z);
+        pinkSpawnPosition = pinkStar.transform.position;
+        pinkSpawnPosition.y = 7f;
+        blackSpawnPosition = blackStar.transform.position;
+        blackSpawnPosition.y = 7f;
+        purpleSpawnPosition = purpleStar.transform.position;
+        purpleSpawnPosition.y = 7f;
+        redSpawnPosition = redStar.transform.position;
+        redSpawnPosition.y = 7f;
     }
 
     private IEnumerator DelayedActions()
@@ -97,7 +101,7 @@ public class StarSpawnerScript : MonoBehaviour
     {
         if (!hasStarted)
         {
-            if (starter.transform.position.x < minX)
+            if (starter.transform.position.y < minY)
             {
                 StartCoroutine(DelayedActions());
                 hasStarted = true;
@@ -113,7 +117,7 @@ public class StarSpawnerScript : MonoBehaviour
                     hitNotes++;
                 }
                 // This means the note was "missed"
-                else if (spawnedStars.Peek().transform.position.x < -12)
+                else if (spawnedStars.Peek().transform.position.y < -7f)
                 {
                     GameObject starToDestroy = spawnedStars.Dequeue();
                     Destroy(starToDestroy);
@@ -136,13 +140,29 @@ public class StarSpawnerScript : MonoBehaviour
         if (i == stringz.Length)
             i = 0;
         if (r == 1)
-            spawnedStars.Enqueue(Instantiate(pinkStar, pinkSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f))));
+        {
+            GameObject p = Instantiate(pinkStar, pinkSpawnPosition, Quaternion.identity);
+            p.transform.parent = gameObject.transform;
+            spawnedStars.Enqueue(p);
+        }
         else if (r == 2)
-            spawnedStars.Enqueue(Instantiate(blackStar, blackSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f))));
+        {
+            GameObject b = Instantiate(blackStar, blackSpawnPosition, Quaternion.identity);
+            b.transform.parent = gameObject.transform;
+            spawnedStars.Enqueue(b);
+        }
         else if (r == 3)
-            spawnedStars.Enqueue(Instantiate(purpleStar, purpleSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f))));
+        {
+            GameObject p = Instantiate(purpleStar, purpleSpawnPosition, Quaternion.identity);
+            p.transform.parent = gameObject.transform;
+            spawnedStars.Enqueue(p);
+        }
         else if (r == 4)
-            spawnedStars.Enqueue(Instantiate(redStar, redSpawnPosition, Quaternion.Euler(new Vector3(0f, 0f, -90f))));
+        {
+            GameObject x = Instantiate(redStar, redSpawnPosition, Quaternion.identity);
+            x.transform.parent = gameObject.transform;
+            spawnedStars.Enqueue(x);
+        }
     }   
 
 }

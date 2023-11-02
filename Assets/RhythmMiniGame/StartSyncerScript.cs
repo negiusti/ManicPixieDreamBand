@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StartSyncerScript : MonoBehaviour
 {
-    private float minX = -7.47f;
+    private float minY = 0f;
     private AudioSource hamster;
     private bool alreadyPlaying = false;
     // Start is called before the first frame update
@@ -16,10 +16,18 @@ public class StartSyncerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!alreadyPlaying && this.transform.position.x < minX)
+        //if (!alreadyPlaying && this.transform.position.y < minY)
+        //{
+            //hamster.Play();
+            //alreadyPlaying = true;
+        //}
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Activator"))
         {
             hamster.Play();
-            alreadyPlaying = true;
         }
     }
 }
