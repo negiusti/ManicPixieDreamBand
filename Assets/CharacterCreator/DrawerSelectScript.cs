@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// This code made sense when we wanted "scrolling" drawers in the dresser but
+// we are going to not do that for now.
 public class DrawerSelectScript : MonoBehaviour
 {
     public DrawerScript topsDrawer;

@@ -34,6 +34,20 @@ public class DrawerScript : MonoBehaviour
         }
     }
 
+    void OnMouseEnter()
+    {
+        // Called when the cursor enters the collider
+        Debug.Log("Mouse entered the collider of " + gameObject.name);
+        SelectDrawer();
+    }
+
+    void OnMouseExit()
+    {
+        // Called when the cursor exits the collider
+        Debug.Log("Mouse exited the collider of " + gameObject.name);
+        UnselectDrawer();
+    }
+
     public void SelectDrawer()
     {
         selected = true;
