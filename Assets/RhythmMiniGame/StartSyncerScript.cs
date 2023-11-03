@@ -32,8 +32,8 @@ public class StartSyncerScript : MonoBehaviour
     {
         if (collision.CompareTag("Activator"))
         {
-            hamster.Play();
-            runwayDelay = Time.time - startTime;
+            runwayDelay = Time.time - startTime - .5f;
+            hamster.Play();            
         }
     }
 
