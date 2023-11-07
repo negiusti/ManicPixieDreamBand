@@ -9,8 +9,11 @@ public class Character : MonoBehaviour
     private Dictionary<string, string> categoryToLabelMap;
     private SpriteResolver[] spriteResolvers;
     private SpriteRenderer[] spriteRenderers;
-    private Dictionary<string, int> tagToColorIndexMap;
-    private bool isWearingPants;
+    private Dictionary<string, int> categoryToColorIndexMap;
+    private bool isWearingPants; // Crotch is always enabled, determines whether L_Pant and R_Pant are enabled
+    private bool hasSleeves; // Whether this outfit has sleeves
+    private bool isFullFit; // Set matching Top, Crotch, and (optional) sleeves, (optional) L_Pant and R_Pant
+
     private ColorPicker[] colorPickers;
     private SpriteLibraryAsset libraryAsset;
     private System.Random random;
@@ -43,7 +46,7 @@ public class Character : MonoBehaviour
         spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
         spriteResolvers = this.GetComponentsInChildren<SpriteResolver>();
         categoryToLabelMap = new Dictionary<string, string>();
-        tagToColorIndexMap = new Dictionary<string, int>();
+        categoryToColorIndexMap = new Dictionary<string, int>();
         colorPickers = this.GetComponentsInChildren<ColorPicker>();
         
         if (libraryAsset == null)
@@ -51,7 +54,7 @@ public class Character : MonoBehaviour
             libraryAsset = this.GetComponent<SpriteLibrary>().spriteLibraryAsset;
         }
         this.random = new System.Random();
-        this.characterName = transform.parent.name;
+        this.characterName = gameObject.name;
         //LoadCharacter();
         //RandomizeAppearance();
     }
@@ -78,7 +81,7 @@ public class Character : MonoBehaviour
     {
         foreach (var colorPicker in colorPickers)
         {
-            tagToColorIndexMap[colorPicker.tag] = colorPicker.GetColor();
+            categoryToColorIndexMap[colorPicker.gameObject.name] = colorPicker.GetColor();
         }
     }
 
@@ -96,7 +99,7 @@ public class Character : MonoBehaviour
         CharacterData characterData = SaveSystem.LoadCharacter(characterName);
         isWearingPants = characterData.IsWearingPants();
         categoryToLabelMap = characterData.CategoryToLabelMap();
-        tagToColorIndexMap = characterData.TagToColorIndexMap();
+        categoryToColorIndexMap = characterData.TagToColorIndexMap();
         //characterName = characterData.GetName();
         UpdateAppearance();
     }
@@ -119,15 +122,15 @@ public class Character : MonoBehaviour
 
         foreach (var colorPicker in colorPickers)
         {
-            if (tagToColorIndexMap.ContainsKey(colorPicker.tag))
-                colorPicker.SetColor(tagToColorIndexMap[colorPicker.tag]);
+            if (categoryToColorIndexMap.ContainsKey(colorPicker.gameObject.name))
+                colorPicker.SetColor(categoryToColorIndexMap[colorPicker.gameObject.name]);
         }
 
         foreach (var spriteRenderer in spriteRenderers)
         {
-            if (spriteRenderer.tag == "L_Pants" || spriteRenderer.tag == "R_Pants")
+            if (spriteRenderer.gameObject.name == "L_Pants" || spriteRenderer.gameObject.name  == "R_Pants")
                 spriteRenderer.enabled = isWearingPants;
-            if (spriteRenderer.tag == "Skirt")
+            if (spriteRenderer.gameObject.name == "Skirt")
                 spriteRenderer.enabled = !isWearingPants;
         }
     }
@@ -202,50 +205,50 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void RandomizeColors()
-    {
-        var color1 = random.Next(colorPickers[1].NumColors());
-        var color2 = random.Next(colorPickers[1].NumColors());
-        var hairCategories = new HashSet<String> { "Hair", "Bangs", "Brow", "Mustache", "Beard"};
+    //private void RandomizeColors()
+    //{
+    //    var color1 = random.Next(colorPickers[1].NumColors());
+    //    var color2 = random.Next(colorPickers[1].NumColors());
+    //    var hairCategories = new HashSet<String> { "Hair", "Bangs", "Brow", "Mustache", "Beard"};
 
-        foreach (var colorPicker in colorPickers)
-        {
-            if (colorPicker.tag == "BodyPart")
-                continue;
-            tagToColorIndexMap[colorPicker.tag] = random.Next(2) == 1 ? color2 : color1;
-            if (colorPicker.tag.StartsWith("L_") || colorPicker.tag.StartsWith("R_"))
-            {
-                var subCategory = colorPicker.tag.Split("_")[1];
-                var leftRight = colorPicker.tag.Split("_")[0] == "R" ? "L" : "R";
-                tagToColorIndexMap[leftRight + "_" + subCategory] = tagToColorIndexMap[colorPicker.tag];
-            }
-            if (hairCategories.Contains(colorPicker.tag))
-            {
-                //var hairColor = random.Next(colorPicker.NumColors());
-                tagToColorIndexMap["Hair"] = tagToColorIndexMap[colorPicker.tag];
-                tagToColorIndexMap["Bangs"] = tagToColorIndexMap["Hair"] = tagToColorIndexMap[colorPicker.tag];
-                tagToColorIndexMap["Brow"] = tagToColorIndexMap["Hair"] = tagToColorIndexMap[colorPicker.tag];
-                tagToColorIndexMap["Mustache"] = tagToColorIndexMap[colorPicker.tag];
-                tagToColorIndexMap["Beard"] = tagToColorIndexMap[colorPicker.tag];
-            }
-        }
-    }
+    //    foreach (var colorPicker in colorPickers)
+    //    {
+    //        if (colorPicker.tag == "BodyPart")
+    //            continue;
+    //        categoryToColorIndexMap[colorPicker.gameObject.name] = random.Next(2) == 1 ? color2 : color1;
+    //        if (colorPicker.gameObject.name.StartsWith("L_") || colorPicker.gameObject.name.StartsWith("R_"))
+    //        {
+    //            var subCategory = colorPicker.gameObject.name.Split("_")[1];
+    //            var leftRight = colorPicker.gameObject.name.Split("_")[0] == "R" ? "L" : "R";
+    //            categoryToColorIndexMap[leftRight + "_" + subCategory] = categoryToColorIndexMap[colorPicker.gameObject.name];
+    //        }
+    //        if (hairCategories.Contains(colorPicker.gameObject.name))
+    //        {
+    //            //var hairColor = random.Next(colorPicker.NumColors());
+    //            categoryToColorIndexMap["Hair"] = categoryToColorIndexMap[colorPicker.gameObject.name];
+    //            categoryToColorIndexMap["Bangs"] = categoryToColorIndexMap["Hair"] = categoryToColorIndexMap[colorPicker.gameObject.name];
+    //            categoryToColorIndexMap["Brow"] = categoryToColorIndexMap["Hair"] = categoryToColorIndexMap[colorPicker.gameObject.name];
+    //            categoryToColorIndexMap["Mustache"] = categoryToColorIndexMap[colorPicker.gameObject.name];
+    //            categoryToColorIndexMap["Beard"] = categoryToColorIndexMap[colorPicker.gameObject.name];
+    //        }
+    //    }
+    //}
 
-    public void RandomizeCharacter()
-    {
-        RandomizeAppearance();
-        RandomizeColors();
-        UpdateAppearance();
-    }
+    //public void RandomizeCharacter()
+    //{
+    //    RandomizeAppearance();
+    //    RandomizeColors();
+    //    UpdateAppearance();
+    //}
 
     public Dictionary<string, string> CategoryToLabelMap()
     {
         return categoryToLabelMap;
     }
 
-    public Dictionary<string, int> TagToColorIndexMap()
+    public Dictionary<string, int> CategoryToColorIndexMap()
     {
-        return tagToColorIndexMap;
+        return categoryToColorIndexMap;
     }
 
     public SpriteLibraryAsset LibraryAsset()

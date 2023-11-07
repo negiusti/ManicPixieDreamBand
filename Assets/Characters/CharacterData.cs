@@ -12,7 +12,7 @@ public class CharacterData
     public CharacterData(Character character)
     {
         this.categoryToLabelMap = character.CategoryToLabelMap();
-        this.tagToColorIndexMap = character.TagToColorIndexMap();
+        this.tagToColorIndexMap = character.CategoryToColorIndexMap();
         this.isWearingPants = character.IsWearingPants();
         this.name = character.CharacterName();
     }
