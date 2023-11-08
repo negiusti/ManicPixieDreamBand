@@ -56,11 +56,11 @@ def play_wav_file2(file_path):
     p.terminate()
 
 def play():
-    print(playsound.playsound('HamsterBaby.wav',False))
+    playsound.playsound('HamsterBaby.wav',False)
     # play_wav_file("HamsterBaby.wav")
 
 def main():
-    print("Press any key to start. Press 'q' to quit.")
+    # Press any key to start. Press 'q' to quit
     audio_file = "Hamster Baby.m4a" 
     
     start_time = None
@@ -79,10 +79,13 @@ def main():
 
         if start_time is not None:
             elapsed_time = current_time - start_time
-            print(f"Time since last 1 key press: {elapsed_time:.4f} seconds")
+#            print(f"Time since last 1 key press: {elapsed_time:.4f} seconds")
             time_diffs.append(elapsed_time)    
         start_time = current_time
-    print (time_diffs)
+    i = 0
+    while i < len(time_diffs):
+      print (time_diffs[i])
+      i += 1
 
 
 if __name__ == "__main__":

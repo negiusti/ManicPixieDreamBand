@@ -78,7 +78,7 @@ public class StarSpawnerScript : MonoBehaviour
     {
         while ((line = reader.ReadLine()) != null)
         {
-            while (hamster.time < delay - runwayDelay)
+            while (hamster.time < delay - runwayDelay)// - .2f)
             {
                 // Wait until the desired delay time has passed
                 yield return null;
