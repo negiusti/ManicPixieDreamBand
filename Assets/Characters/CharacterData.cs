@@ -6,14 +6,16 @@ public class CharacterData
 {
     private Dictionary<string, string> categoryToLabelMap;
     private Dictionary<string, int> tagToColorIndexMap;
-    private bool isWearingPants;
+    private Dictionary<string, bool> categoryToEnabled;
+    private bool isWearingFullFit;
     private string name;
 
     public CharacterData(Character character)
     {
         this.categoryToLabelMap = character.CategoryToLabelMap();
         this.tagToColorIndexMap = character.CategoryToColorIndexMap();
-        this.isWearingPants = character.IsWearingPants();
+        this.isWearingFullFit = character.IsWearingFullFit();
+        this.categoryToEnabled = character.CategoryToEnabled();
         this.name = character.CharacterName();
     }
 
@@ -27,10 +29,16 @@ public class CharacterData
         return tagToColorIndexMap;
     }
 
-    public bool IsWearingPants()
+    public Dictionary<string, bool> CategoryToEnabled()
     {
-        return this.isWearingPants;
+        return categoryToEnabled;
     }
+
+    public bool IsWearingFullFit()
+    {
+        return this.isWearingFullFit;
+    }
+
 
     public String GetName()
     {

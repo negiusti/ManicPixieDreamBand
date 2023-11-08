@@ -10,18 +10,19 @@ public class Character : MonoBehaviour
     private SpriteResolver[] spriteResolvers;
     private SpriteRenderer[] spriteRenderers;
     private Dictionary<string, int> categoryToColorIndexMap;
-    private bool isWearingPants; // Crotch is always enabled, determines whether L_Pant and R_Pant are enabled
-    private bool hasSleeves; // Whether this outfit has sleeves
-    private bool isFullFit; // Set matching Top, Crotch, and (optional) sleeves, (optional) L_Pant and R_Pant
+    private Dictionary<string, bool> categoryToEnabled;
+    //private bool isWearingPants; // Crotch is always enabled, determines whether L_Pant and R_Pant are enabled
+    //private bool hasSleeves; // Whether this outfit has sleeves
+    private bool isWearingFullFit; // Set matching Top, Crotch, and (optional) sleeves, (optional) L_Pant and R_Pant
 
-    private ColorPicker[] colorPickers;
+    //private ColorPicker[] colorPickers;
     private SpriteLibraryAsset libraryAsset;
     private System.Random random;
     private string characterName;
 
-    public bool IsWearingPants()
+    public bool IsWearingFullFit()
     {
-        return this.isWearingPants;
+        return this.isWearingFullFit;
     }
 
     public void SetCharacterName(string name)
@@ -34,20 +35,20 @@ public class Character : MonoBehaviour
         return characterName;
     }
 
-    public void SetIsWearingPants(bool isWearingPants)
+    public void SetIsWearingFullFit(bool isWearingFullFit)
     {
-        this.isWearingPants = isWearingPants;
+        this.isWearingFullFit = isWearingFullFit;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        isWearingPants = true;
         spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
         spriteResolvers = this.GetComponentsInChildren<SpriteResolver>();
+        categoryToEnabled = new Dictionary<string, bool>();
         categoryToLabelMap = new Dictionary<string, string>();
         categoryToColorIndexMap = new Dictionary<string, int>();
-        colorPickers = this.GetComponentsInChildren<ColorPicker>();
+        //colorPickers = this.GetComponentsInChildren<ColorPicker>();
         
         if (libraryAsset == null)
         {
@@ -55,7 +56,7 @@ public class Character : MonoBehaviour
         }
         this.random = new System.Random();
         this.characterName = gameObject.name;
-        //LoadCharacter();
+        LoadCharacter();
         //RandomizeAppearance();
     }
 
@@ -75,21 +76,26 @@ public class Character : MonoBehaviour
                 Debug.Log("category: " + targetResolver.GetCategory() + " label: " + categoryToLabelMap[targetResolver.GetCategory()]);
             }
         }
-    }
 
-    public void updateSpriteColorMap()
-    {
-        foreach (var colorPicker in colorPickers)
+        foreach (var spriteRenderer in spriteRenderers)
         {
-            categoryToColorIndexMap[colorPicker.gameObject.name] = colorPicker.GetColor();
+            categoryToEnabled[spriteRenderer.gameObject.name] = spriteRenderer.enabled;
         }
     }
+
+    //public void updateSpriteColorMap()
+    //{
+    //    foreach (var colorPicker in colorPickers)
+    //    {
+    //        categoryToColorIndexMap[colorPicker.gameObject.name] = colorPicker.GetColor();
+    //    }
+    //}
 
     public void SaveCharacter()
     {
         Debug.Log("Saving... " + characterName);
         updateSpriteResolverMap();
-        updateSpriteColorMap();
+        //updateSpriteColorMap();
         SaveSystem.SaveCharacter(this);
     }
 
@@ -97,10 +103,16 @@ public class Character : MonoBehaviour
     {
         Debug.Log("Loading... " + characterName);
         CharacterData characterData = SaveSystem.LoadCharacter(characterName);
-        isWearingPants = characterData.IsWearingPants();
+        if (characterData == null)
+        {
+            // Character does not exist yet...
+            return;
+        }
+        isWearingFullFit = characterData.IsWearingFullFit();
         categoryToLabelMap = characterData.CategoryToLabelMap();
         categoryToColorIndexMap = characterData.TagToColorIndexMap();
-        //characterName = characterData.GetName();
+        characterName = characterData.GetName();
+        categoryToEnabled = characterData.CategoryToEnabled();
         UpdateAppearance();
     }
 
@@ -120,27 +132,24 @@ public class Character : MonoBehaviour
             }
         }
 
-        foreach (var colorPicker in colorPickers)
-        {
-            if (categoryToColorIndexMap.ContainsKey(colorPicker.gameObject.name))
-                colorPicker.SetColor(categoryToColorIndexMap[colorPicker.gameObject.name]);
-        }
+        //foreach (var colorPicker in colorPickers)
+        //{
+        //    if (categoryToColorIndexMap.ContainsKey(colorPicker.gameObject.name))
+        //        colorPicker.SetColor(categoryToColorIndexMap[colorPicker.gameObject.name]);
+        //}
 
         foreach (var spriteRenderer in spriteRenderers)
         {
-            if (spriteRenderer.gameObject.name == "L_Pants" || spriteRenderer.gameObject.name  == "R_Pants")
-                spriteRenderer.enabled = isWearingPants;
-            if (spriteRenderer.gameObject.name == "Skirt")
-                spriteRenderer.enabled = !isWearingPants;
+           spriteRenderer.enabled = categoryToEnabled[spriteRenderer.gameObject.name];
         }
     }
 
-    public void RandomizeAppearance()
-    {
-        updateSpriteResolverMap();
-        updateSpriteColorMap();
-        RandomizeAppearance(true, false);
-    }
+    //public void RandomizeAppearance()
+    //{
+    //    updateSpriteResolverMap();
+    //    updateSpriteColorMap();
+    //    RandomizeAppearance(true, false);
+    //}
 
     // Bangs
     // Hair
@@ -167,43 +176,43 @@ public class Character : MonoBehaviour
     // R_Leg
     // L_Leg
 
-    public void RandomizeAppearance(bool femmeOnly, bool mascOnly)
-    {
-        var keys = categoryToLabelMap.Keys.ToArray<String>();
-        foreach (var category in keys)
-        {
-            var options = libraryAsset.GetCategoryLabelNames(category).ToArray();
-            if (options.Length == 0)
-                continue;
+    //public void RandomizeAppearance(bool femmeOnly, bool mascOnly)
+    //{
+    //    var keys = categoryToLabelMap.Keys.ToArray<String>();
+    //    foreach (var category in keys)
+    //    {
+    //        var options = libraryAsset.GetCategoryLabelNames(category).ToArray();
+    //        if (options.Length == 0)
+    //            continue;
 
-            var label = options[random.Next(options.Length)];
-            if (femmeOnly)
-            {
-                while (label.EndsWith("M"))
-                {
-                    label = options[random.Next(options.Length)];
-                }
-            }
-            if (mascOnly)
-            {
-                while (label.EndsWith("F"))
-                {
-                    label = options[random.Next(options.Length)];
-                }
-            }
-            if (category.StartsWith("L_") || category.StartsWith("R_"))
-            {
-                var subCategory = category.Split("_")[1];
-                var leftRight = category.Split("_")[0] == "R" ? "L" : "R";
-                categoryToLabelMap[leftRight + "_" + subCategory] = label;
-            }
-            categoryToLabelMap[category] = label;
-            if ((category == "Mustache" || category == "Beard") && femmeOnly)
-            {
-                categoryToLabelMap[category] = options[0];
-            }
-        }
-    }
+    //        var label = options[random.Next(options.Length)];
+    //        if (femmeOnly)
+    //        {
+    //            while (label.EndsWith("M"))
+    //            {
+    //                label = options[random.Next(options.Length)];
+    //            }
+    //        }
+    //        if (mascOnly)
+    //        {
+    //            while (label.EndsWith("F"))
+    //            {
+    //                label = options[random.Next(options.Length)];
+    //            }
+    //        }
+    //        if (category.StartsWith("L_") || category.StartsWith("R_"))
+    //        {
+    //            var subCategory = category.Split("_")[1];
+    //            var leftRight = category.Split("_")[0] == "R" ? "L" : "R";
+    //            categoryToLabelMap[leftRight + "_" + subCategory] = label;
+    //        }
+    //        categoryToLabelMap[category] = label;
+    //        if ((category == "Mustache" || category == "Beard") && femmeOnly)
+    //        {
+    //            categoryToLabelMap[category] = options[0];
+    //        }
+    //    }
+    //}
 
     //private void RandomizeColors()
     //{
@@ -249,6 +258,11 @@ public class Character : MonoBehaviour
     public Dictionary<string, int> CategoryToColorIndexMap()
     {
         return categoryToColorIndexMap;
+    }
+
+    public Dictionary<string, bool> CategoryToEnabled()
+    {
+        return categoryToEnabled;
     }
 
     public SpriteLibraryAsset LibraryAsset()

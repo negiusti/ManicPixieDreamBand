@@ -81,6 +81,7 @@ public class CharacterEditor : MonoBehaviour
     private Dictionary<string, SpriteRenderer> categoryToRenderer = new Dictionary<string, SpriteRenderer>();
     private Dictionary<string, string[]> categoryToLabels = new Dictionary<string, string[]>();
     private Dictionary<string, int> categoryToLabelIdx = new Dictionary<string, int>();
+    private Character character;
     private bool isFullBody;
     //private string[] FBLabels;
     //private string[] TopLabels;
@@ -92,7 +93,6 @@ public class CharacterEditor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         SpriteResolver[] resolvers = this.GetComponentsInChildren<SpriteResolver>();
         foreach (SpriteResolver resolver in resolvers)
         {
@@ -121,7 +121,12 @@ public class CharacterEditor : MonoBehaviour
             //    BottomLabels = labels.ToList().Where(l => !l.StartsWith("FB_")).ToArray();
             //}
         }
-        SelectTopAndBottom();
+        character = this.GetComponent<Character>();
+        character.LoadCharacter();
+        if (character.IsWearingFullFit())
+            SelectFB();
+        else
+            SelectTopAndBottom();
     }
     
     // Update is called once per frame
