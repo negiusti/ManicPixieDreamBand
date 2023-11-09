@@ -7,7 +7,7 @@ using UnityEngine;
 public class StarSpawnerScript : MonoBehaviour
 {
     //private int[] stringz = { 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 2, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1 };
-    private int[] stringz = { 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 4, 4, 4, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 4, 4, 4, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 4, 4, 4, 3, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1 };
+    //private int[] stringz = { 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 4, 4, 4, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 4, 4, 4, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 4, 4, 4, 3, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1 };
     private bool hasStarted = false;
     public GameObject pinkStar;
     public GameObject blackStar;
@@ -19,11 +19,15 @@ public class StarSpawnerScript : MonoBehaviour
     public Vector3 purpleSpawnPosition;
     public Vector3 redSpawnPosition;
     //private string relativePath = "hamster_notes";
-    private string relativePath = "hamster_easy";
-    private StreamReader reader;
-    private string line;
+    private string timesRelativePath = "hamster_easy";
+    private string notesRelativePath = "hamster_easy_notes";
+    private StreamReader timesReader;
+    private StreamReader notesReader;
+    private string currTimeLine;
+    private string currNoteLine;
     private int i;
     private float delay;
+    private int note;
     private AudioSource hamster;
     private Queue<GameObject> spawnedStars;
     private int hitNotes;
@@ -41,16 +45,17 @@ public class StarSpawnerScript : MonoBehaviour
         try
         {
             // Combine the relative path with the current working directory to get the full file path
-            string fullPath = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
-            Debug.Log("PATH: " + fullPath);
+            string timesFullPath = Path.Combine(Directory.GetCurrentDirectory(), timesRelativePath);
+            string notesFullPath = Path.Combine(Directory.GetCurrentDirectory(), notesRelativePath);
+            Debug.Log("PATH: " + timesFullPath);
             // Check if the file exists
-            if (File.Exists(fullPath))
+            if (File.Exists(timesFullPath))
             {
-                reader = new StreamReader(fullPath);
-                line = reader.ReadLine();
+                timesReader = new StreamReader(timesFullPath);
+                currTimeLine = timesReader.ReadLine();
                 try
                 {
-                    delay = float.Parse(line);
+                    delay = float.Parse(currTimeLine);
                 }
                 catch (FormatException)
                 {
@@ -59,13 +64,31 @@ public class StarSpawnerScript : MonoBehaviour
             }
             else
             {
-                Debug.Log("File not found: " + fullPath);
+                Debug.Log("File not found: " + timesFullPath);
+            }
+            if (File.Exists(notesFullPath))
+            {
+                notesReader = new StreamReader(notesFullPath);
+                currNoteLine = notesReader.ReadLine();
+                try
+                {
+                    note = int.Parse(currNoteLine);
+                }
+                catch (FormatException)
+                {
+                    Debug.LogError("Invalid int format.");
+                }
+            }
+            else
+            {
+                Debug.Log("File not found: " + notesFullPath);
             }
         }
         catch (Exception ex)
         {
             Debug.Log("An error occurred: " + ex.Message);
         }
+
         pinkSpawnPosition = pinkStar.transform.position;
         pinkSpawnPosition.y = 7f;
         blackSpawnPosition = blackStar.transform.position;
@@ -78,7 +101,7 @@ public class StarSpawnerScript : MonoBehaviour
 
     private IEnumerator DelayedActions()
     {
-        while ((line = reader.ReadLine()) != null)
+        while ((currTimeLine = timesReader.ReadLine()) != null)
         {
             while (hamster.time < delay - runwayDelay)
             {
@@ -90,7 +113,7 @@ public class StarSpawnerScript : MonoBehaviour
             SpawnStar();
             try
             {
-                delay = float.Parse(line);
+                delay = float.Parse(currTimeLine);
             }
             catch (FormatException)
             {
@@ -141,29 +164,34 @@ public class StarSpawnerScript : MonoBehaviour
     private void SpawnStar()
     {
         Debug.Log("runway delay is " + runwayDelay);
+        if ((currNoteLine = notesReader.ReadLine()) != null)
+        {
+            note = int.Parse(currNoteLine);
+        }
+
         // spawn note
-        int r = stringz[i++];
-        if (i == stringz.Length)
-            i = 0;
-        if (r == 1)
+        //int r = stringz[i++];
+        //if (i == stringz.Length)
+        //    i = 0;
+        if (note == 1)
         {
             GameObject p = Instantiate(pinkStar, pinkSpawnPosition, Quaternion.identity);
             p.transform.parent = gameObject.transform;
             spawnedStars.Enqueue(p);
         }
-        else if (r == 2)
+        else if (note == 2)
         {
             GameObject b = Instantiate(blackStar, blackSpawnPosition, Quaternion.identity);
             b.transform.parent = gameObject.transform;
             spawnedStars.Enqueue(b);
         }
-        else if (r == 3)
+        else if (note == 3)
         {
             GameObject p = Instantiate(purpleStar, purpleSpawnPosition, Quaternion.identity);
             p.transform.parent = gameObject.transform;
             spawnedStars.Enqueue(p);
         }
-        else if (r == 4)
+        else if (note == 4)
         {
             GameObject x = Instantiate(redStar, redSpawnPosition, Quaternion.identity);
             x.transform.parent = gameObject.transform;

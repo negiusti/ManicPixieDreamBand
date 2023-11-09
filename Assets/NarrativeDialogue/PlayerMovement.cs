@@ -23,12 +23,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (moveInput == 0f && !isIdle)
         {
-            animator.CrossFade("Idle", .1f);
+            //animator.CrossFade("Idle", .1f);
             isIdle = true;
         }
         else if (moveInput != 0f && isIdle)
         {
-            animator.CrossFade("Walk", .1f);
+            //animator.CrossFade("Walk", .1f);
             isIdle = false;
         }
 
@@ -51,8 +51,8 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GetComponentInChildren<Character>();
-        animator = GetComponentInChildren<Animator>();
+        player = GetComponent<Character>();
+        //animator = GetComponentInChildren<Animator>();
         player.SetCharacterName("Nicole");
         player.LoadCharacter();
         ChangeChildSortingLayers(transform);
