@@ -25,7 +25,7 @@ public class StarSpawnerScript : MonoBehaviour
     private StreamReader notesReader;
     private string currTimeLine;
     private string currNoteLine;
-    private int i;
+    //private int i;
     private float delay;
     private int note;
     private AudioSource hamster;
@@ -38,7 +38,7 @@ public class StarSpawnerScript : MonoBehaviour
     void Start()
     {
         hamster = starter.GetComponent<AudioSource>();
-        i = 0;
+        //i = 0;
         hitNotes = 0;
         missedNotes = 0;
         spawnedStars = new Queue<GameObject>();
