@@ -83,6 +83,7 @@ public class CharacterEditor : MonoBehaviour
     private Dictionary<string, int> categoryToLabelIdx = new Dictionary<string, int>();
     private Character character;
     private bool isFullBody;
+    private string currentFaceCategory;
     //private string[] FBLabels;
     //private string[] TopLabels;
     //private string[] BottomLabels;
@@ -93,6 +94,7 @@ public class CharacterEditor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentFaceCategory = "Hair";
         SpriteResolver[] resolvers = this.GetComponentsInChildren<SpriteResolver>();
         foreach (SpriteResolver resolver in resolvers)
         {
@@ -342,5 +344,24 @@ public class CharacterEditor : MonoBehaviour
         headSRen.color = new Color(r, g, b, a);
         neckSRen.color = new Color(r, g, b, a);
         torsoSRen.color = new Color(r, g, b, a);
+    }
+
+    public void ChangeFace(int idxDelta)
+    {
+        int idx = categoryToLabelIdx.GetValueOrDefault(currentFaceCategory) + idxDelta;
+        string[] labels = categoryToLabels.GetValueOrDefault(currentFaceCategory);
+        if (idx > labels.Length - 1)
+            idx = 0;
+        else if (idx < 0)
+            idx = labels.Length - 1;
+        string label = labels[idx];
+        categoryToLabelIdx[currentFaceCategory] = idx;
+        SetCategory(currentFaceCategory, label);
+    }
+
+    public void SetCurrentFaceCategory(string category)
+    {
+        currentFaceCategory = category;
+        Debug.Log("SETTING CATEGORY: " + category);
     }
 }

@@ -12,7 +12,7 @@ public class HairAndMakeupEditor : MonoBehaviour
     public DrawerScript[] otherDrawers;
     public GameObject makeupMenu;
     private Camera mainCamera;
-    public float panDuration = 32f;
+    private float panDuration = 0.5f;
     bool panToCloseup = false;
     bool panToDefault = false;
     private CapsuleCollider2D capCollider;
