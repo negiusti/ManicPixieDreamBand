@@ -9,6 +9,7 @@ public class Phone : MonoBehaviour
     public GameObject background;
     public GameObject backButton;
     private SpriteResolver backgroundResolver;
+    private List<string> contactsList;
     enum PhoneState
     {
         Home,
@@ -27,6 +28,7 @@ public class Phone : MonoBehaviour
         backgroundResolver = background.GetComponent<SpriteResolver>();
         phoneStateStack = new Stack<PhoneState>();
         phoneStateStack.Push(PhoneState.Home);
+        contactsList = SaveSystem.LoadContactsList();
         GoHome();
     }
 
@@ -47,11 +49,16 @@ public class Phone : MonoBehaviour
     public void OpenMessages()
     {
         // Show messages interface
-
+        ShowContacts();
         // Hide icons
         HideIcons();
         // Change background
         backgroundResolver.SetCategoryAndLabel("Background", "Messages");
+    }
+
+    private void ShowContacts()
+    {
+
     }
 
     public void OpenMap()

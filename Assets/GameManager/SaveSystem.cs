@@ -1,10 +1,12 @@
 using UnityEngine;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
     //static string characterSavePath = Application.persistentDataPath + "/character.save";
+    private static string contactsSavePath = Application.persistentDataPath + "/contacts.save";
 
     public static void SaveCharacter(Character character)
     { 
@@ -37,6 +39,33 @@ public static class SaveSystem
         } else
         {
             Debug.LogError("Save file not found in" + characterSavePath);
+            return null;
+        }
+    }
+
+    public static void SaveContactsList(List<string> contacts)
+    {
+        string directoryPath = Path.GetDirectoryName(contactsSavePath);
+        Directory.CreateDirectory(directoryPath);
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream stream = new FileStream(contactsSavePath, FileMode.Create);
+        formatter.Serialize(stream, contacts);
+        stream.Close();
+    }
+
+    public static List<string> LoadContactsList()
+    {
+        if (File.Exists(contactsSavePath))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(contactsSavePath, FileMode.Open);
+            List<string> data = formatter.Deserialize(stream) as List<string>;
+            stream.Close();
+            return data;
+        }
+        else
+        {
+            Debug.LogError("Save file not found in" + contactsSavePath);
             return null;
         }
     }
