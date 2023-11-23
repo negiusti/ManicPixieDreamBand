@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PixelCrushers.DialogueSystem;
 using UnityEngine.U2D.Animation;
 
 public class Phone : MonoBehaviour
@@ -8,6 +9,8 @@ public class Phone : MonoBehaviour
     public GameObject icons;
     public GameObject background;
     public GameObject backButton;
+    public GameObject messagesApp;
+    public PhoneMessages messages;
     private SpriteResolver backgroundResolver;
     private List<string> contactsList;
     enum PhoneState
@@ -28,7 +31,7 @@ public class Phone : MonoBehaviour
         backgroundResolver = background.GetComponent<SpriteResolver>();
         phoneStateStack = new Stack<PhoneState>();
         phoneStateStack.Push(PhoneState.Home);
-        contactsList = SaveSystem.LoadContactsList();
+        //contactsList = SaveSystem.LoadContactsList();
         GoHome();
     }
 
@@ -42,6 +45,7 @@ public class Phone : MonoBehaviour
     {
         // Hide all app content and show icons
         CloseApps();
+        //DialogueManager.
         // Change background
         backgroundResolver.SetCategoryAndLabel("Background", "Home");
     }
@@ -49,16 +53,22 @@ public class Phone : MonoBehaviour
     public void OpenMessages()
     {
         // Show messages interface
-        ShowContacts();
+        //ShowContacts();
+        messagesApp.SetActive(true);
         // Hide icons
         HideIcons();
+        //Testing!!!! TODO change this
+        messages.StartTestConvo();
         // Change background
         backgroundResolver.SetCategoryAndLabel("Background", "Messages");
     }
 
     private void ShowContacts()
     {
+        foreach (string contact in contactsList)
+        {
 
+        }
     }
 
     public void OpenMap()
@@ -127,6 +137,7 @@ public class Phone : MonoBehaviour
 
     private void CloseApps()
     {
+        messagesApp.SetActive(false);
         backButton.SetActive(false);
         ShowIcons();
     }
