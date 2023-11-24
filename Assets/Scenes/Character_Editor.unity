@@ -1277,6 +1277,7 @@ GameObject:
   - component: {fileID: 359453943}
   - component: {fileID: 359453944}
   - component: {fileID: 359453945}
+  - component: {fileID: 359453946}
   m_Layer: 0
   m_Name: T_SunglassesCase_Eyeglasses
   m_TagString: Untagged
@@ -1510,6 +1511,35 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &359453946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359453941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1062660912}
+          m_TargetAssemblyTypeName: CharacterEditor, Assembly-CSharp
+          m_MethodName: SetCurrentFaceCategory
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Glasses
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &389215731
 GameObject:
   m_ObjectHideFlags: 0
@@ -3437,46 +3467,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 695064229826649348, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 634262268204254857, guid: 9518c6e866ee641b5ad69b22f0336d5d, type: 3}
-    - target: {fileID: 1025506054299569250, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_Library.Array.size
-      value: 2
+    - target: {fileID: 2568620282467209943, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
+      propertyPath: m_labelHash
+      value: 9.987305e-33
       objectReference: {fileID: 0}
-    - target: {fileID: 1025506054299569250, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_Library.Array.data[0].m_Name
-      value: R_Sock
+    - target: {fileID: 2568620282467209943, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
+      propertyPath: m_CategoryHash
+      value: 0.0001520041
       objectReference: {fileID: 0}
-    - target: {fileID: 1025506054299569250, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_Library.Array.data[1].m_Name
-      value: L_Sock
-      objectReference: {fileID: 0}
-    - target: {fileID: 1025506054299569250, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_Library.Array.data[0].m_CategoryList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1025506054299569250, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_Library.Array.data[1].m_CategoryList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1025506054299569250, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_Library.Array.data[0].m_CategoryList.Array.data[0].m_Name
-      value: Frilly
-      objectReference: {fileID: 0}
-    - target: {fileID: 1025506054299569250, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_Library.Array.data[1].m_CategoryList.Array.data[0].m_Name
-      value: Frilly
-      objectReference: {fileID: 0}
-    - target: {fileID: 1025506054299569250, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_Library.Array.data[0].m_CategoryList.Array.data[0].m_Sprite
-      value: 
-      objectReference: {fileID: 449107738674648233, guid: 9518c6e866ee641b5ad69b22f0336d5d, type: 3}
-    - target: {fileID: 1025506054299569250, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_Library.Array.data[1].m_CategoryList.Array.data[0].m_Sprite
-      value: 
-      objectReference: {fileID: 5520104567105856904, guid: 9518c6e866ee641b5ad69b22f0336d5d, type: 3}
     - target: {fileID: 4878472165645304230, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
       propertyPath: m_Name
       value: MainCharacter
@@ -3521,9 +3519,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7993361804467340380, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_SpriteHash
-      value: 806086654
+    - target: {fileID: 7746011642984058258, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
+      propertyPath: m_labelHash
+      value: 1.4773109e-38
+      objectReference: {fileID: 0}
+    - target: {fileID: 7746011642984058258, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
+      propertyPath: m_CategoryHash
+      value: 1.7152658e-22
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3931,6 +3933,7 @@ GameObject:
   - component: {fileID: 1220388783}
   - component: {fileID: 1220388784}
   - component: {fileID: 1220388785}
+  - component: {fileID: 1220388786}
   m_Layer: 0
   m_Name: T_Scrunchie_Pigtails
   m_TagString: Untagged
@@ -4067,6 +4070,35 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &1220388786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220388781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1062660912}
+          m_TargetAssemblyTypeName: CharacterEditor, Assembly-CSharp
+          m_MethodName: SetCurrentFaceCategory
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Necklace
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1270606415
 GameObject:
   m_ObjectHideFlags: 0
@@ -4964,7 +4996,7 @@ MonoBehaviour:
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: Necklace
+            m_StringArgument: Earrings
             m_BoolArgument: 0
           m_CallState: 2
 --- !u!1 &1510934933
@@ -6945,7 +6977,7 @@ MonoBehaviour:
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: Nose
+            m_StringArgument: Face_Detail
             m_BoolArgument: 0
           m_CallState: 2
 --- !u!1 &2106687004

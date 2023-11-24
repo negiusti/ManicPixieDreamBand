@@ -348,6 +348,35 @@ public class CharacterEditor : MonoBehaviour
 
     public void ChangeFace(int idxDelta)
     {
+        if (currentFaceCategory.Equals("Eyes") || currentFaceCategory.Equals("Mouth"))
+        {
+            ChangeEyesOrMouth(idxDelta);
+            return;
+        }
+        int idx = categoryToLabelIdx.GetValueOrDefault(currentFaceCategory) + idxDelta;
+        string[] labels = categoryToLabels.GetValueOrDefault(currentFaceCategory);
+
+        if (idx > labels.Length)
+            idx = 0;
+        else if (idx < 0)
+            idx = labels.Length;
+
+        categoryToLabelIdx[currentFaceCategory] = idx;
+
+        if (idx == labels.Length)
+        {
+            // NONE OPTION
+            categoryToRenderer[currentFaceCategory].enabled = false;
+        } else
+        {
+            string label = labels[idx];
+            categoryToRenderer[currentFaceCategory].enabled = true;
+            SetCategory(currentFaceCategory, label);
+        }
+    }
+
+    private void ChangeEyesOrMouth(int idxDelta)
+    {
         int idx = categoryToLabelIdx.GetValueOrDefault(currentFaceCategory) + idxDelta;
         string[] labels = categoryToLabels.GetValueOrDefault(currentFaceCategory);
         if (idx > labels.Length - 1)
