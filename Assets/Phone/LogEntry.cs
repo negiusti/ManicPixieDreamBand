@@ -14,5 +14,7 @@ public class LogEntry : MonoBehaviour
     {
         speakerName.text = subtitle.speakerInfo.Name;
         dialogueText.text = subtitle.formattedText.text;
+        speakerName.rectTransform.sizeDelta = new Vector2(speakerName.preferredWidth, speakerName.preferredHeight);
+        dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x, dialogueText.preferredHeight);
     }
 }

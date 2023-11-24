@@ -30,6 +30,7 @@ public class BackLog : MonoBehaviour
             instances.Add(instance.gameObject);
             instance.gameObject.SetActive(true);
             instance.Assign(subtitle);
+            Image image = instance.GetComponent<Image>();
             RectTransform rectTransform = instance.GetComponent<RectTransform>();
             Text[] texts = instance.GetComponentsInChildren<Text>();
             float preferredWidth = 0f;
@@ -41,7 +42,11 @@ public class BackLog : MonoBehaviour
                 if (preferredWidth < t.preferredWidth)
                     preferredWidth = t.preferredWidth;
             }
-            rectTransform.sizeDelta = new Vector2(preferredWidth, preferredHeight);
+            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, preferredWidth);
+            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, preferredHeight);
+            //rectTransform.sizeDelta = new Vector2(preferredWidth, preferredHeight);
+
+            // TODO use different bubble image for PLAYER
         }
     }
 
