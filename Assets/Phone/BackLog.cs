@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using PixelCrushers.DialogueSystem;
 
 /// <summary>
@@ -25,10 +26,22 @@ public class BackLog : MonoBehaviour
         if (!string.IsNullOrEmpty(subtitle.formattedText.text))
         {
             log.Add(subtitle);
-            var instance = Instantiate(logEntryTemplate, logEntryContainer);
+            LogEntry instance = Instantiate(logEntryTemplate, logEntryContainer);
             instances.Add(instance.gameObject);
             instance.gameObject.SetActive(true);
             instance.Assign(subtitle);
+            RectTransform rectTransform = instance.GetComponent<RectTransform>();
+            Text[] texts = instance.GetComponentsInChildren<Text>();
+            float preferredWidth = 0f;
+            float preferredHeight = 10f;
+            foreach (Text t in texts)
+            {
+                //if (preferredHeight < t.preferredHeight)
+                preferredHeight += t.preferredHeight;
+                if (preferredWidth < t.preferredWidth)
+                    preferredWidth = t.preferredWidth;
+            }
+            rectTransform.sizeDelta = new Vector2(preferredWidth, preferredHeight);
         }
     }
 
