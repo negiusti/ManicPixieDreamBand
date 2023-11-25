@@ -12,6 +12,9 @@ public class BackLog : MonoBehaviour
 
     public Transform logEntryContainer;
     public LogEntry logEntryTemplate;
+    public ScrollRect scrollView;
+    public Sprite pinkSprite;
+    public Sprite greenSprite;
 
     private List<Subtitle> log = new List<Subtitle>();
     private List<GameObject> instances = new List<GameObject>();
@@ -23,6 +26,7 @@ public class BackLog : MonoBehaviour
 
     public void OnConversationLine(Subtitle subtitle)
     {
+        ScrollToBottomOfScrollView();
         if (!string.IsNullOrEmpty(subtitle.formattedText.text))
         {
             log.Add(subtitle);
@@ -34,7 +38,7 @@ public class BackLog : MonoBehaviour
             RectTransform rectTransform = instance.GetComponent<RectTransform>();
             Text[] texts = instance.GetComponentsInChildren<Text>();
             float preferredWidth = 0f;
-            float preferredHeight = 10f;
+            float preferredHeight = 100f;
             foreach (Text t in texts)
             {
                 //if (preferredHeight < t.preferredHeight)
@@ -42,11 +46,33 @@ public class BackLog : MonoBehaviour
                 if (preferredWidth < t.preferredWidth)
                     preferredWidth = t.preferredWidth;
             }
-            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, preferredWidth);
+            //rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, preferredWidth);
             rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, preferredHeight);
             //rectTransform.sizeDelta = new Vector2(preferredWidth, preferredHeight);
 
             // TODO use different bubble image for PLAYER
+            if (subtitle.speakerInfo.IsPlayer)
+            {
+                image.sprite = greenSprite;
+            } else
+            {
+                image.sprite = pinkSprite;
+            }
+
+            // Move scroll to bottom
+        }
+        ScrollToBottomOfScrollView();
+    }
+
+    void ScrollToBottomOfScrollView()
+    {
+        if (scrollView != null && scrollView.verticalScrollbar != null)
+        {
+            scrollView.verticalScrollbar.value = 0f;
+        }
+        else
+        {
+            Debug.LogWarning("ScrollView or its verticalScrollbar is not assigned.");
         }
     }
 
