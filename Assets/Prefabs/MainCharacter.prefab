@@ -440,7 +440,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 55
+  m_SortingOrder: 56
   m_Sprite: {fileID: -9215914080504506609, guid: 9518c6e866ee641b5ad69b22f0336d5d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1307,6 +1307,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: -8653719598885068355, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: -8268850066648301821, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
       propertyPath: m_Name
       value: Eyebrows
@@ -1337,11 +1341,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.65
+      value: -6.74
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.69
+      value: -6.77
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1349,7 +1353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1357,7 +1361,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
       propertyPath: m_LocalRotation.z
@@ -1369,7 +1373,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -1893,6 +1897,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8953490517903863834}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 549012810661651438}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1515595405584096377}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4145060336710360487}
     - targetCorrespondingSourceObject: {fileID: -8148434316799336688, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1353518785294554574}
@@ -1963,7 +1976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CategoryHash: 2.8702705e-35
-  m_labelHash: 3.4074552e-20
+  m_labelHash: 1.6167853e-31
   m_SpriteKey: 0
   m_SpriteHash: 889112601
 --- !u!1 &1431029149817519702 stripped
@@ -2193,6 +2206,90 @@ MonoBehaviour:
   headSRen: {fileID: 0}
   neckSRen: {fileID: 0}
   torsoSRen: {fileID: 0}
+--- !u!114 &549012810661651438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878472165645304230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15d3c5376bdf643a68259715d839418a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &1515595405584096377
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878472165645304230}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -1.746789, y: 6.346761}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.1082263, y: 8.671172}
+  m_EdgeRadius: 0
+--- !u!50 &4145060336710360487
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4878472165645304230}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!4 &4893149789929116202 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8668326994347986383, guid: 3c98c75a06e3e47e9958230c00110cb2, type: 3}
