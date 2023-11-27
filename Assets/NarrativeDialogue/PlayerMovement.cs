@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     //    DontDestroyOnLoad(gameObject);
     //}
 
-    void FixedUpdate()
+    void Update()
     {
         moveInput = Input.GetAxis("Horizontal");
 
@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Vector3 position = transform.position;
-        position.x += moveInput * moveSpeed * Time.fixedDeltaTime;
+        position.x += moveInput * moveSpeed * Time.deltaTime;
         transform.position = position;
     }
 
@@ -77,9 +77,4 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
