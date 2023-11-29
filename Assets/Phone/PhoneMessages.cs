@@ -7,10 +7,11 @@ public class PhoneMessages : MonoBehaviour
 {
     //public Canvas canvas;
     public GameObject contacts;
-    public GameObject convo;
+    //public GameObject convo;
     public Phone phone;
     public Contact contactTemplate;
     private HashSet<string> contactsList;
+    public CustomDialogueScript customDialogue;
     private List<GameObject> instances = new List<GameObject>();
 
     // Start is called before the first frame update
@@ -18,7 +19,7 @@ public class PhoneMessages : MonoBehaviour
     {
         // wait until message app is opened before enabling the canvas
         //canvas.enabled = false;
-        convo.SetActive(false);
+        customDialogue.CloseBacklogs();
 
         // load contacts
         contactsList = new HashSet<string> { "Ricki", "Max", "Band" };//SaveSystem.LoadContactsList();
@@ -30,6 +31,7 @@ public class PhoneMessages : MonoBehaviour
             instance.gameObject.SetActive(true);
             instance.setContact(c);
             instances.Add(instance.gameObject);
+            customDialogue.AddBackLog(c);
         }
     }
 
@@ -42,7 +44,7 @@ public class PhoneMessages : MonoBehaviour
     {
         CloseContacts();
         phone.OpenConvo();
-        convo.SetActive(true);
+        customDialogue.FocusBackLog(contact);
         DialogueManager.StartConversation("TXT_" + contact);
     }
 
@@ -55,7 +57,7 @@ public class PhoneMessages : MonoBehaviour
     public void OpenContacts()
     {
         contacts.SetActive(true);
-        convo.SetActive(false);
+        customDialogue.CloseBacklogs();
     }
 
     void CloseContacts()

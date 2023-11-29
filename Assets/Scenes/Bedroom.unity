@@ -3084,6 +3084,7 @@ GameObject:
   - component: {fileID: 1445876280}
   - component: {fileID: 1445876279}
   - component: {fileID: 1445876278}
+  - component: {fileID: 1445876281}
   m_Layer: 7
   m_Name: Convo
   m_TagString: Untagged
@@ -3180,6 +3181,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1445876276}
   m_CullTransparentMesh: 1
+--- !u!114 &1445876281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445876276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895b832780505b8449a85265e5ee963e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logEntryContainer: {fileID: 186172375}
+  logEntryTemplate: {fileID: 791756875}
+  scrollView: {fileID: 1445876278}
+  pinkSprite: {fileID: 21300000, guid: 6d2f6d3e451f0437dbb762fc411f8303, type: 3}
+  greenSprite: {fileID: 21300000, guid: f127e5e2561fd4dbb8c9adec44617c2a, type: 3}
 --- !u!1 &1459903662
 GameObject:
   m_ObjectHideFlags: 0
@@ -3515,7 +3533,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1669331614}
-  - component: {fileID: 1669331616}
   - component: {fileID: 1669331615}
   m_Layer: 7
   m_Name: Messages
@@ -3554,26 +3571,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contacts: {fileID: 347726491}
-  convo: {fileID: 1445876276}
   phone: {fileID: 1853167626}
   contactTemplate: {fileID: 2080810380}
---- !u!114 &1669331616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1669331613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 895b832780505b8449a85265e5ee963e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  logEntryContainer: {fileID: 186172375}
-  logEntryTemplate: {fileID: 791756875}
-  scrollView: {fileID: 1445876278}
-  pinkSprite: {fileID: 21300000, guid: 6d2f6d3e451f0437dbb762fc411f8303, type: 3}
-  greenSprite: {fileID: 21300000, guid: f127e5e2561fd4dbb8c9adec44617c2a, type: 3}
+  customDialogue: {fileID: 7831581502422820511}
 --- !u!1 &1773261261
 GameObject:
   m_ObjectHideFlags: 0
@@ -4848,7 +4848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyCode: 32
-  backLog: {fileID: 1669331616}
+  backLogTemplate: {fileID: 1445876281}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
