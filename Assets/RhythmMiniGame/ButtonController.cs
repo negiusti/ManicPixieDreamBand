@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public class ButtonController : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     public Sprite defaultSprite;
     public Sprite pressedSprite;
+    public SpriteResolver guitarString;
     public KeyCode keyCode;
 
     // Start is called before the first frame update
@@ -22,10 +24,12 @@ public class ButtonController : MonoBehaviour
         if (Input.GetKeyDown(keyCode))
         {
             spriteRenderer.sprite = pressedSprite;
+            guitarString.SetCategoryAndLabel("String", "Wiggly");
         }
         if (Input.GetKeyUp(keyCode))
         {
             spriteRenderer.sprite = defaultSprite;
+            guitarString.SetCategoryAndLabel("String", "Still");
         }
     }
 }
