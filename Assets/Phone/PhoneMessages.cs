@@ -8,7 +8,7 @@ public class PhoneMessages : MonoBehaviour
     public Canvas canvas;
     public GameObject contacts;
     public Contact contactTemplate;
-    private List<string> contactsList;
+    private HashSet<string> contactsList;
 
     // Start is called before the first frame update
     void Start()
