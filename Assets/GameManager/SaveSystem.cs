@@ -43,7 +43,7 @@ public static class SaveSystem
         }
     }
 
-    public static void SaveContactsList(List<string> contacts)
+    public static void SaveContactsList(HashSet<string> contacts)
     {
         string directoryPath = Path.GetDirectoryName(contactsSavePath);
         Directory.CreateDirectory(directoryPath);
@@ -53,13 +53,13 @@ public static class SaveSystem
         stream.Close();
     }
 
-    public static List<string> LoadContactsList()
+    public static HashSet<string> LoadContactsList()
     {
         if (File.Exists(contactsSavePath))
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(contactsSavePath, FileMode.Open);
-            List<string> data = formatter.Deserialize(stream) as List<string>;
+            HashSet<string> data = formatter.Deserialize(stream) as HashSet<string>;
             stream.Close();
             return data;
         }

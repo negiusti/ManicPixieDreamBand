@@ -25,4 +25,13 @@ public class GameManagerScript : MonoBehaviour
     {
         
     }
+
+    private void OnDestroy()
+    {
+        // SAVE THE CURRENT STATE OF EVERYTHING
+        // phone: contacts, messages, money
+        // conversations
+        // worn outfits
+        // unlocked objects
+    }
 }
