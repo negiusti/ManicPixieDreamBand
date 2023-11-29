@@ -8,6 +8,7 @@ public class CustomDialogueScript : MonoBehaviour
     public KeyCode keyCode;
     private bool isCoolDown;
     private int coolDown = 1;
+    public BackLog backLog;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +37,9 @@ public class CustomDialogueScript : MonoBehaviour
         if (subtitle.dialogueEntry.DialogueText.Length == 0 && subtitle.dialogueEntry.Title != "START") {
             Debug.Log("Continuing after empty line of dialogue!!");
             DialogueManager.standardDialogueUI.OnContinue();
+        }
+        if (DialogueManager.LastConversationStarted.Contains("TXT_")) {
+            backLog.AddToBacklog(subtitle);
         }
     }
 }
