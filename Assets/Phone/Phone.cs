@@ -13,6 +13,7 @@ public class Phone : MonoBehaviour
     public PhoneMessages messages;
     private SpriteResolver backgroundResolver;
     private List<string> contactsList;
+    private bool isLocked;
     enum PhoneState
     {
         Home,
@@ -33,6 +34,7 @@ public class Phone : MonoBehaviour
         phoneStateStack.Push(PhoneState.Home);
         //contactsList = SaveSystem.LoadContactsList();
         GoHome();
+        Lock();
     }
 
     // Update is called once per frame
@@ -145,6 +147,24 @@ public class Phone : MonoBehaviour
     private void ShowIcons()
     {   
         icons.SetActive(true);
+    }
+    public void ToggleLock()
+    {
+        isLocked = !isLocked;
+        if (isLocked)
+            Lock();
+        else
+            Unlock();
+    }
+    private void Lock()
+    {
+        
+        this.transform.position = new Vector3(-1.141271f, -6.38f, -0.5258861f);
+    }
+
+    private void Unlock()
+    {
+        this.transform.position = new Vector3(-1.141271f, 0.140902f, -0.5258861f);
     }
 
     //private class PhoneState

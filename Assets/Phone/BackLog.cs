@@ -54,6 +54,7 @@ public class BackLog : MonoBehaviour
             if (subtitle.speakerInfo.IsPlayer)
             {
                 image.sprite = greenSprite;
+                instance.speakerName.enabled = false;
             } else
             {
                 image.sprite = pinkSprite;

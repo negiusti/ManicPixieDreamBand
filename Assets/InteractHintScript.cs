@@ -8,6 +8,7 @@ public class InteractHintScript : MonoBehaviour
     public string sceneToTrigger;
     public KeyCode keyToTrigger;
     private SceneChanger sc;
+    public GameObject objToEnable;
 
     private Vector3 originalScale;
     //private bool isInsideTrigger = false;
@@ -20,6 +21,7 @@ public class InteractHintScript : MonoBehaviour
         originalScale = transform.localScale;
         interactHint.SetActive(false);
         sc = FindObjectOfType<SceneChanger>();
+        objToEnable.SetActive(false);
     }
 
     // Update is called once per frame
@@ -27,8 +29,9 @@ public class InteractHintScript : MonoBehaviour
     {
         if (interactHint.activeSelf && Input.GetKey(keyToTrigger))
         {
-            if (sceneToTrigger != null && sceneToTrigger.Length > 0)
-                sc.ChangeScene(sceneToTrigger);
+            objToEnable.SetActive(true);
+            //if (sceneToTrigger != null && sceneToTrigger.Length > 0)
+            //    sc.ChangeScene(sceneToTrigger);
         }
         if (interactHint.activeSelf)
         {

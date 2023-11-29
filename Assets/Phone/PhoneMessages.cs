@@ -22,6 +22,7 @@ public class PhoneMessages : MonoBehaviour
     public void StartTestConvo()
     {
         canvas.enabled = true;
-        DialogueManager.StartConversation("Booking Our First Show");
+        DialogueManager.StartConversation("TXT_Group_Band");
+        //DialogueManager.conversationController.
     }
 }
