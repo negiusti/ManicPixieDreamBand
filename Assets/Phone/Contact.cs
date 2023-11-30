@@ -8,11 +8,13 @@ public class Contact : MonoBehaviour
 {
     private string contactName;
     private SpriteResolver spriteResolver;
+    public PhoneMessages messages;
+    public Phone phone;
 
     // Start is called before the first frame update
     void Start()
     {
-        this.spriteResolver = this.GetComponent<SpriteResolver>();
+        
     }
 
     // Update is called once per frame
@@ -21,14 +23,20 @@ public class Contact : MonoBehaviour
         
     }
 
-    public void setContact(string name)
+    public void setContact(string contactName)
     {
-        this.name = name;
+        this.spriteResolver = this.GetComponent<SpriteResolver>();
+        this.contactName = contactName;
         spriteResolver.SetCategoryAndLabel("Pic", contactName);
     }
 
-    public void startConvo()
+    private void startConvo()
     {
-        DialogueManager.StartConversation("TXT_" + name);
+        messages.OpenTxtConvoWith(contactName);
+    }
+
+    private void OnMouseDown()
+    {
+        startConvo();
     }
 }

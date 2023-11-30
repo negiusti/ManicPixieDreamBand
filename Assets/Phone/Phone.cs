@@ -9,10 +9,8 @@ public class Phone : MonoBehaviour
     public GameObject icons;
     public GameObject background;
     public GameObject backButton;
-    public GameObject messagesApp;
     public PhoneMessages messages;
     private SpriteResolver backgroundResolver;
-    private List<string> contactsList;
     private bool isLocked;
     enum PhoneState
     {
@@ -20,7 +18,8 @@ public class Phone : MonoBehaviour
         Messages,
         Map,
         Settings,
-        Photos
+        Photos,
+        Convo
     };
 
     // State stack
@@ -47,34 +46,32 @@ public class Phone : MonoBehaviour
     {
         // Hide all app content and show icons
         CloseApps();
-        //DialogueManager.
         // Change background
         backgroundResolver.SetCategoryAndLabel("Background", "Home");
     }
 
     public void OpenMessages()
     {
+        if (phoneStateStack.Peek() != PhoneState.Messages)
+            phoneStateStack.Push(PhoneState.Messages);
         // Show messages interface
-        //ShowContacts();
-        messagesApp.SetActive(true);
+        messages.gameObject.SetActive(true);
+        messages.OpenContacts();
         // Hide icons
         HideIcons();
-        //Testing!!!! TODO change this
-        messages.StartTestConvo();
         // Change background
         backgroundResolver.SetCategoryAndLabel("Background", "Messages");
     }
 
-    private void ShowContacts()
+    public void OpenConvo()
     {
-        foreach (string contact in contactsList)
-        {
-
-        }
+        // TODO PHONE UI CHANGES HERE
+        phoneStateStack.Push(PhoneState.Convo);
     }
 
     public void OpenMap()
     {
+        phoneStateStack.Push(PhoneState.Map);
         // Show messages interface
         // Hide icons
         HideIcons();
@@ -83,6 +80,7 @@ public class Phone : MonoBehaviour
 
     public void OpenSettings()
     {
+        phoneStateStack.Push(PhoneState.Settings);
         // Show messages interface
         // Hide icons
         HideIcons();
@@ -91,6 +89,7 @@ public class Phone : MonoBehaviour
 
     public void OpenPhotos()
     {
+        phoneStateStack.Push(PhoneState.Photos);
         // Show messages interface
         // Hide icons
         HideIcons();
@@ -106,7 +105,8 @@ public class Phone : MonoBehaviour
             return;
         }
 
-        state = phoneStateStack.Pop();
+        phoneStateStack.Pop();
+        state = phoneStateStack.Peek();
         switch (state)
         {
             case PhoneState.Messages:
@@ -125,6 +125,10 @@ public class Phone : MonoBehaviour
                 OpenPhotos();
                 break;
 
+            case PhoneState.Home:
+                GoHome();
+                break;
+
             default:
                 Debug.Log("State not found: " + state.ToString());
                 break;
@@ -139,7 +143,7 @@ public class Phone : MonoBehaviour
 
     private void CloseApps()
     {
-        messagesApp.SetActive(false);
+        messages.gameObject.SetActive(false);
         backButton.SetActive(false);
         ShowIcons();
     }
@@ -166,9 +170,4 @@ public class Phone : MonoBehaviour
     {
         this.transform.position = new Vector3(-1.141271f, 0.140902f, -0.5258861f);
     }
-
-    //private class PhoneState
-    //{
-
-    //}
 }

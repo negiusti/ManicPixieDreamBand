@@ -24,7 +24,7 @@ public class BackLog : MonoBehaviour
         logEntryTemplate.gameObject.SetActive(false);
     }
 
-    public void OnConversationLine(Subtitle subtitle)
+    public void AddToBacklog(Subtitle subtitle)
     {
         ScrollToBottomOfScrollView();
         if (!string.IsNullOrEmpty(subtitle.formattedText.text))
