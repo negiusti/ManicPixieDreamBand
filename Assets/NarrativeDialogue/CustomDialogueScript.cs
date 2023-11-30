@@ -59,6 +59,17 @@ public class CustomDialogueScript : MonoBehaviour
         }
     }
 
+    public void StopCurrentConvo()
+    {
+        DialogueManager.StopConversation();
+    }
+
+    public void ResumeTxtConvo(string contactName)
+    {
+        DialogueManager.StartConversation("TXT_" + contactName, DialogueManager.currentActor, DialogueManager.currentConversant, backLogs[contactName].GetCurrEntryID());
+
+    }
+
     public void FocusBackLog(string contactName)
     {
         foreach (string c in backLogs.Keys)
@@ -73,5 +84,27 @@ public class CustomDialogueScript : MonoBehaviour
         {
             backLogs[c].gameObject.SetActive(false);
         }
+    }
+
+    void OnEnable()
+    {
+        // Make the functions available to Lua: (Replace these lines with your own.)
+        Lua.RegisterFunction(nameof(DebugLog), this, SymbolExtensions.GetMethodInfo(() => DebugLog(string.Empty)));
+        Lua.RegisterFunction(nameof(StopCurrentConvo), this, SymbolExtensions.GetMethodInfo(() => StopCurrentConvo()));
+    }
+
+    void OnDisable()
+    {
+        //if (unregisterOnDisable)
+        //{
+        // Remove the functions from Lua: (Replace these lines with your own.)
+        Lua.UnregisterFunction(nameof(DebugLog));
+        Lua.UnregisterFunction(nameof(StopCurrentConvo));
+        //}
+    }
+
+    public void DebugLog(string message)
+    {
+        Debug.Log(message);
     }
 }

@@ -45,7 +45,8 @@ public class PhoneMessages : MonoBehaviour
         CloseContacts();
         phone.OpenConvo();
         customDialogue.FocusBackLog(contact);
-        DialogueManager.StartConversation("TXT_" + contact);
+        customDialogue.ResumeTxtConvo(contact);
+        //DialogueManager.StartConversation("TXT_" + contact);
     }
 
     // Update is called once per frame

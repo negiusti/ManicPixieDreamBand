@@ -15,15 +15,26 @@ public class BackLog : MonoBehaviour
     public ScrollRect scrollView;
     public Sprite pinkSprite;
     public Sprite greenSprite;
+    private int currentEntryID;
 
     private List<Subtitle> log = new List<Subtitle>();
     private List<GameObject> instances = new List<GameObject>();
+
+    private void Start()
+    {
+        currentEntryID = 0;
+    }
 
     private void Awake()
     {
         logEntryTemplate.gameObject.SetActive(false);
     }
 
+    public int GetCurrEntryID()
+    {
+        return currentEntryID;
+    }
+    
     public void AddToBacklog(Subtitle subtitle)
     {
         ScrollToBottomOfScrollView();
@@ -62,6 +73,7 @@ public class BackLog : MonoBehaviour
 
             // Move scroll to bottom
         }
+        currentEntryID = subtitle.dialogueEntry.id;
         ScrollToBottomOfScrollView();
     }
 
