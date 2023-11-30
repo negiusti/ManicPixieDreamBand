@@ -37,6 +37,7 @@ public class BackLog : MonoBehaviour
     
     public void AddToBacklog(Subtitle subtitle)
     {
+        Debug.Log("AddToBacklog: " + subtitle.dialogueEntry.DialogueText);
         ScrollToBottomOfScrollView();
         if (!string.IsNullOrEmpty(subtitle.formattedText.text))
         {

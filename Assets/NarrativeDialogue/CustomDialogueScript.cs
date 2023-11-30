@@ -46,28 +46,30 @@ public class CustomDialogueScript : MonoBehaviour
         isCoolDown = false;
     }
 
-    public void OnConversationLine(Subtitle subtitle)
+    void OnConversationLine(Subtitle subtitle)
     {
-        if (subtitle.dialogueEntry.DialogueText.Length == 0 && subtitle.dialogueEntry.Title != "START") {
-            Debug.Log("Continuing after empty line of dialogue!!");
-            DialogueManager.standardDialogueUI.OnContinue();
-        }
+        Debug.Log("OnConversationLine: " + subtitle.dialogueEntry.DialogueText);
         string convoName = DialogueManager.LastConversationStarted;
         if (convoName.Contains("TXT_")) {
             string contactName = convoName.Substring(4);
             backLogs[contactName].AddToBacklog(subtitle);
+            return;
+        }
+        if (subtitle.dialogueEntry.DialogueText.Length == 0 && subtitle.dialogueEntry.Title != "START")
+        {
+            Debug.Log("Continuing after empty line of dialogue!!");
+            DialogueManager.standardDialogueUI.OnContinue();
         }
     }
 
     public void StopCurrentConvo()
     {
-        DialogueManager.StopConversation();
+        DialogueManager.StopAllConversations();
     }
 
     public void ResumeTxtConvo(string contactName)
     {
-        DialogueManager.StartConversation("TXT_" + contactName, DialogueManager.currentActor, DialogueManager.currentConversant, backLogs[contactName].GetCurrEntryID());
-
+        DialogueManager.StartConversation("TXT_" + contactName, null, null, backLogs[contactName].GetCurrEntryID());
     }
 
     public void FocusBackLog(string contactName)
