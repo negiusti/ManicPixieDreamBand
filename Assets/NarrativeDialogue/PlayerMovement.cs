@@ -23,12 +23,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (moveInput == 0f && !isIdle)
         {
-            //animator.CrossFade("Idle", .1f);
+            animator.CrossFade("BaseCharacter_Idle", .1f);
             isIdle = true;
         }
         else if (moveInput != 0f && isIdle)
         {
-            //animator.CrossFade("Walk", .1f);
+            animator.CrossFade("BaseCharacter_Walk", .1f);
             isIdle = false;
         }
 
@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         player = GetComponent<Character>();
-        //animator = GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>();
         player.SetCharacterName("Nicole");
         player.LoadCharacter();
         ChangeChildSortingLayers(transform);
