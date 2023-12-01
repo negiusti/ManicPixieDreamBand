@@ -6,7 +6,6 @@ public class MakeupSelector : MonoBehaviour
 {
     public string categoryName;
     public CharacterEditor characterEditor;
-    public ColorPalette palette;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +22,5 @@ public class MakeupSelector : MonoBehaviour
     private void OnMouseDown()
     {
         characterEditor.SetCurrentFaceCategory(categoryName);
-        palette.SetCurrentFaceCategory(categoryName);
     }
 }

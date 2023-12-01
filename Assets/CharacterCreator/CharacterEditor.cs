@@ -6,68 +6,28 @@ using UnityEngine.U2D.Animation;
 
 public class CharacterEditor : MonoBehaviour
 {
-    // SPRITE RESOLVERS
-
-    //public SpriteResolver rShoeSRes;
-    //public SpriteResolver lShoeSRes;
-    //public SpriteResolver rSockSRes;
-    //public SpriteResolver lSockSRes;
-    //public SpriteResolver mouthSRes;
-    //public SpriteResolver noseSRes;
-    //public SpriteResolver eyesSRes;
-    //public SpriteResolver eyebrowsSRes;
-    //public SpriteResolver bangsSRes;
-    //public SpriteResolver hairSRes;
-    //public SpriteResolver necklaceSRes;
-    static string top = "Top";
-    static string lSleeve = "L_Sleeve";
-    static string rSleeve = "R_Sleeve";
-    static string crotch = "Crotch";
-    static string rPant = "R_Pant";
-    static string lPant = "L_Pant";
-    static string rSock = "R_Sock";
-    static string lSock = "L_Sock";
-    static string rShoe = "R_Shoe";
-    static string lShoe = "L_Shoe";
-    //public SpriteResolver topSRes;
-    //public SpriteResolver lSleeveSRes;
-    //public SpriteResolver rSleeveSRes;
-    //public SpriteResolver crotchSRes;
-    //public SpriteResolver rPantSRes;
-    //public SpriteResolver lPantSRes;
-
-    // Body parts
-    //public SpriteResolver lArmSRes;
-    //public SpriteResolver rArmSRes;
-    //public SpriteResolver lLegSRes;
-    //public SpriteResolver rLegSRes;
-    //public SpriteResolver headSRes;
-    //public SpriteResolver neckSRes;
-    //public SpriteResolver torsoSRes;
-
-    // SPRITE RENDERERS
+    private static string top = "Top";
+    private static string lSleeve = "L_Sleeve";
+    private static string rSleeve = "R_Sleeve";
+    private static string crotch = "Crotch";
+    private static string rPant = "R_Pant";
+    private static string lPant = "L_Pant";
+    private static string rSock = "R_Sock";
+    private static string lSock = "L_Sock";
+    private static string rShoe = "R_Shoe";
+    private static string lShoe = "L_Shoe";
 
     // Hair
-    public SpriteRenderer eyebrowsSRen;
     public SpriteRenderer bangsSRen;
     public SpriteRenderer hairSRen;
+    public SpriteRenderer tailsSRen;
 
-    //public SpriteRenderer rShoeSRen;
-    //public SpriteRenderer lShoeSRen;
-    //public SpriteRenderer rSockSRen;
-    //public SpriteRenderer lSockSRen;
-    //public SpriteRenderer mouthSRen;
-    //public SpriteRenderer noseSRen;
-    //public SpriteRenderer eyesSRen;
-    //public SpriteRenderer necklaceSRen;
-    //public SpriteRenderer topSRen;
-    //public SpriteRenderer lSleeveSRen;
-    //public SpriteRenderer rSleeveSRen;
-    //public SpriteRenderer crotchSRen;
-    //public SpriteRenderer rPantSRen;
-    //public SpriteRenderer lPantSRen;
-
-    // Body parts
+    public SpriteRenderer eyebrowsSRen;
+    public SpriteRenderer mouthSRen;
+    public SpriteRenderer faceDetailSRen;
+    public SpriteRenderer eyesShadowSRen;
+    
+    // Skin
     public SpriteRenderer lArmSRen;
     public SpriteRenderer rArmSRen;
     public SpriteRenderer lLegSRen;
@@ -75,6 +35,7 @@ public class CharacterEditor : MonoBehaviour
     public SpriteRenderer headSRen;
     public SpriteRenderer neckSRen;
     public SpriteRenderer torsoSRen;
+    public SpriteRenderer crotchSRen;
 
     private SpriteLibraryAsset spriteLib;
     private Dictionary<string, SpriteResolver> categoryToResolver = new Dictionary<string, SpriteResolver>();
@@ -84,17 +45,20 @@ public class CharacterEditor : MonoBehaviour
     private Character character;
     private bool isFullBody;
     private string currentFaceCategory;
-    //private string[] FBLabels;
-    //private string[] TopLabels;
-    //private string[] BottomLabels;
-    //private int FBLabelIdx = 0;
-    //private int TopLabelIdx = 0;
-    //private int BottomLabelIdx = 0;
+
+    public ColorPalette hairPalette;
+    public ColorPalette tailsPalette;
+    public ColorPalette bangsPalette;
+    public ColorPalette browPalette;
+    public ColorPalette mouthPalette;
+    public ColorPalette shadowPalette;
+    public ColorPalette faceDetailPalette;
+    private Dictionary<string, ColorPalette> categoryToColorPalette;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentFaceCategory = "Hair";
+        
         SpriteResolver[] resolvers = this.GetComponentsInChildren<SpriteResolver>();
         foreach (SpriteResolver resolver in resolvers)
         {
@@ -114,14 +78,6 @@ public class CharacterEditor : MonoBehaviour
 
             categoryToLabels[category] = labels;
             categoryToLabelIdx[category] = 0;
-            //if (category.Equals(top))
-            //{
-            //    FBLabels = labels.ToList().Where(l => l.StartsWith("FB_")).ToArray();
-            //    TopLabels = labels.ToList().Where(l => !l.StartsWith("FB_")).ToArray();
-            //} else if (category.Equals(lPant))
-            //{
-            //    BottomLabels = labels.ToList().Where(l => !l.StartsWith("FB_")).ToArray();
-            //}
         }
         character = this.GetComponent<Character>();
         character.LoadCharacter();
@@ -129,8 +85,24 @@ public class CharacterEditor : MonoBehaviour
             SelectFB();
         else
             SelectTopAndBottom();
+
+        categoryToColorPalette = new Dictionary<string, ColorPalette>();
+        categoryToColorPalette.Add("Hair", hairPalette);
+        categoryToColorPalette.Add("Tails", tailsPalette);
+        categoryToColorPalette.Add("Bangs", bangsPalette);
+        categoryToColorPalette.Add("FaceDetail", faceDetailPalette);
+        categoryToColorPalette.Add("Eyebrows", browPalette);
+        categoryToColorPalette.Add("Mouth", mouthPalette);
+        categoryToColorPalette.Add("Eyeshadow", shadowPalette);
+
+        SetCurrentFaceCategory("Hair");
     }
-    
+
+    public void SetCurrentFaceCategoryColor(Color c)
+    {
+        categoryToRenderer[currentFaceCategory].color = c;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -306,20 +278,6 @@ public class CharacterEditor : MonoBehaviour
         }
     }
 
-    //public void ChangeCategory(string category, int idxDelta)
-    //{
-    //    int idx = categoryToLabelIdx.GetValueOrDefault(category);
-    //    idx+= idxDelta;
-    //    string[] labels;
-    //    labels = categoryToLabels.GetValueOrDefault(category);
-    //    if (idx > labels.Length -1)
-    //        idx = 0;
-    //    else if (idx < 0)
-    //        idx = labels.Length - 1;
-    //    categoryToLabelIdx.Add(category, idx);
-    //    SetCategory(category, labels[idx]);
-    //}
-
     private void SetCategory(string category, string label)
     {
         SpriteResolver res = categoryToResolver.GetValueOrDefault(category);
@@ -392,5 +350,9 @@ public class CharacterEditor : MonoBehaviour
     {
         currentFaceCategory = category;
         Debug.Log("SETTING CATEGORY: " + category);
+        foreach (ColorPalette cp in categoryToColorPalette.Values)
+        {
+            cp.gameObject.SetActive(cp.category.Equals(category));    
+        }
     }
 }

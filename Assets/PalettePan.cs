@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class PalettePan : MonoBehaviour
 {
-    //public ColorPalette palette;
+    private ColorPalette palette;
     private Image image;
     // Start is called before the first frame update
     void Start()
     {
         image = this.GetComponent<Image>();
+        palette = this.GetComponentInParent<ColorPalette>();
     }
 
     // Update is called once per frame
@@ -27,5 +28,10 @@ public class PalettePan : MonoBehaviour
     public Color GetColor()
     {
         return image.color;
+    }
+
+    private void OnMouseDown()
+    {
+        palette.SetColor(image.color);
     }
 }
