@@ -11,6 +11,7 @@ public class HairAndMakeupEditor : MonoBehaviour
     private bool makeupView = false;
     public DrawerScript[] otherDrawers;
     public GameObject makeupMenu;
+    public GameObject skinPalette;
     private Camera mainCamera;
     private float panDuration = 0.5f;
     bool panToCloseup = false;
@@ -65,8 +66,7 @@ public class HairAndMakeupEditor : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (!makeupView)
-            EnterMakeupView();
+       EnterMakeupView();
     }
 
     void OnMouseEnter()
@@ -81,6 +81,8 @@ public class HairAndMakeupEditor : MonoBehaviour
 
     void EnterMakeupView()
     {
+        if (makeupView)
+            return;
         spriteRenderer.enabled = false;
         capCollider.enabled = false;
         wardrobe.SetActive(false);
@@ -88,10 +90,13 @@ public class HairAndMakeupEditor : MonoBehaviour
         makeupMenu.SetActive(true);
         startTime = Time.time;
         panToCloseup = true;
+        skinPalette.SetActive(false);
     }
 
     void ExitMakeupView()
     {
+        if (!makeupView)
+            return;
         spriteRenderer.enabled = true;
         capCollider.enabled = true;
         wardrobe.SetActive(true);
@@ -99,6 +104,7 @@ public class HairAndMakeupEditor : MonoBehaviour
         makeupMenu.SetActive(false);
         startTime = Time.time;
         panToDefault = true;
+        skinPalette.SetActive(true);
     }
 
 

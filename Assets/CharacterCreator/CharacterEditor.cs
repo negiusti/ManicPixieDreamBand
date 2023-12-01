@@ -293,8 +293,9 @@ public class CharacterEditor : MonoBehaviour
     private void HideTailsWithHijab()
     {
         SpriteResolver res = categoryToResolver.GetValueOrDefault("Hair");
+        SpriteRenderer sr = categoryToRenderer.GetValueOrDefault("Hair");
         string label = res.GetLabel();
-        if (label.Contains("Hijab"))
+        if (label.Contains("Hijab") && sr.enabled)
         {
             tailsSRen.enabled = false;
         }
