@@ -193,7 +193,6 @@ public class CharacterEditor : MonoBehaviour
         if (isFullBody)
             SelectTopAndBottom();
         int idx = categoryToLabelIdx.GetValueOrDefault(top) + idxDelta;
-        
         string[] labels = categoryToLabels.GetValueOrDefault(top);
         if (idx > labels.Length - 1)
             idx = 0;
