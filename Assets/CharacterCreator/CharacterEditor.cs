@@ -26,16 +26,8 @@ public class CharacterEditor : MonoBehaviour
     public SpriteRenderer mouthSRen;
     public SpriteRenderer faceDetailSRen;
     public SpriteRenderer eyesShadowSRen;
-    
-    // Skin
-    public SpriteRenderer lArmSRen;
-    public SpriteRenderer rArmSRen;
-    public SpriteRenderer lLegSRen;
-    public SpriteRenderer rLegSRen;
-    public SpriteRenderer headSRen;
-    public SpriteRenderer neckSRen;
-    public SpriteRenderer torsoSRen;
-    public SpriteRenderer crotchSRen;
+
+    private List<SpriteRenderer> skinRenderers;
 
     private SpriteLibraryAsset spriteLib;
     private Dictionary<string, SpriteResolver> categoryToResolver = new Dictionary<string, SpriteResolver>();
@@ -58,7 +50,8 @@ public class CharacterEditor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        skinRenderers = new List<SpriteRenderer>();
+
         SpriteResolver[] resolvers = this.GetComponentsInChildren<SpriteResolver>();
         foreach (SpriteResolver resolver in resolvers)
         {
@@ -68,6 +61,8 @@ public class CharacterEditor : MonoBehaviour
         foreach (SpriteRenderer renderer in renderers)
         {
             categoryToRenderer[renderer.gameObject.name] = renderer;
+            if (renderer.CompareTag("BodyPart"))
+                skinRenderers.Add(renderer);
         }
         string[] labels;
         SpriteLibrary fuck = this.GetComponent<SpriteLibrary>();
@@ -102,6 +97,14 @@ public class CharacterEditor : MonoBehaviour
     public void SetCurrentFaceCategoryColor(Color c)
     {
         categoryToRenderer[currentFaceCategory].color = c;
+    }
+
+    public void SetSkinColor(Color c)
+    {
+        foreach (SpriteRenderer sr in skinRenderers)
+        {
+            sr.color = c;
+        }
     }
 
     // Update is called once per frame
@@ -285,24 +288,6 @@ public class CharacterEditor : MonoBehaviour
         res.SetCategoryAndLabel(category, label);
         SpriteRenderer ren = categoryToRenderer.GetValueOrDefault(category);
         ren.enabled = true;
-    }
-
-    void SetHairColor(float r, float g, float b, float a)
-    {
-        eyebrowsSRen.color = new Color(r, g, b, a);
-        bangsSRen.color = new Color(r, g, b, a);
-        hairSRen.color = new Color(r, g, b, a);
-    }
-
-    void SetSkinColor(float r, float g, float b, float a)
-    {
-        lArmSRen.color = new Color(r, g, b, a);
-        rArmSRen.color = new Color(r, g, b, a);
-        lLegSRen.color = new Color(r, g, b, a);
-        rLegSRen.color = new Color(r, g, b, a);
-        headSRen.color = new Color(r, g, b, a);
-        neckSRen.color = new Color(r, g, b, a);
-        torsoSRen.color = new Color(r, g, b, a);
     }
 
     private void HideTailsWithHijab()

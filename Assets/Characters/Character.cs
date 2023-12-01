@@ -57,7 +57,6 @@ public class Character : MonoBehaviour
         this.random = new System.Random();
         this.characterName = gameObject.name;
         LoadCharacter();
-        //RandomizeAppearance();
     }
 
     // Update is called once per frame
@@ -143,112 +142,6 @@ public class Character : MonoBehaviour
            spriteRenderer.enabled = categoryToEnabled[spriteRenderer.gameObject.name];
         }
     }
-
-    //public void RandomizeAppearance()
-    //{
-    //    updateSpriteResolverMap();
-    //    updateSpriteColorMap();
-    //    RandomizeAppearance(true, false);
-    //}
-
-    // Bangs
-    // Hair
-    // Brows
-    // Eyes
-    // Nose
-    // Lips
-    // L_Sleeve
-    // R_Sleeve
-    // Shirt
-    // Bottom
-    // L_Shoe
-    // R_Shoe
-    // L_Bottom
-    // R_Bottom
-    // Face_Details
-    // L_Bottom_U
-    // R_Bottom_U
-    // Mustache
-    // Beard
-    // Glasses
-    // R_Arm
-    // L_Arm
-    // R_Leg
-    // L_Leg
-
-    //public void RandomizeAppearance(bool femmeOnly, bool mascOnly)
-    //{
-    //    var keys = categoryToLabelMap.Keys.ToArray<String>();
-    //    foreach (var category in keys)
-    //    {
-    //        var options = libraryAsset.GetCategoryLabelNames(category).ToArray();
-    //        if (options.Length == 0)
-    //            continue;
-
-    //        var label = options[random.Next(options.Length)];
-    //        if (femmeOnly)
-    //        {
-    //            while (label.EndsWith("M"))
-    //            {
-    //                label = options[random.Next(options.Length)];
-    //            }
-    //        }
-    //        if (mascOnly)
-    //        {
-    //            while (label.EndsWith("F"))
-    //            {
-    //                label = options[random.Next(options.Length)];
-    //            }
-    //        }
-    //        if (category.StartsWith("L_") || category.StartsWith("R_"))
-    //        {
-    //            var subCategory = category.Split("_")[1];
-    //            var leftRight = category.Split("_")[0] == "R" ? "L" : "R";
-    //            categoryToLabelMap[leftRight + "_" + subCategory] = label;
-    //        }
-    //        categoryToLabelMap[category] = label;
-    //        if ((category == "Mustache" || category == "Beard") && femmeOnly)
-    //        {
-    //            categoryToLabelMap[category] = options[0];
-    //        }
-    //    }
-    //}
-
-    //private void RandomizeColors()
-    //{
-    //    var color1 = random.Next(colorPickers[1].NumColors());
-    //    var color2 = random.Next(colorPickers[1].NumColors());
-    //    var hairCategories = new HashSet<String> { "Hair", "Bangs", "Brow", "Mustache", "Beard"};
-
-    //    foreach (var colorPicker in colorPickers)
-    //    {
-    //        if (colorPicker.tag == "BodyPart")
-    //            continue;
-    //        categoryToColorIndexMap[colorPicker.gameObject.name] = random.Next(2) == 1 ? color2 : color1;
-    //        if (colorPicker.gameObject.name.StartsWith("L_") || colorPicker.gameObject.name.StartsWith("R_"))
-    //        {
-    //            var subCategory = colorPicker.gameObject.name.Split("_")[1];
-    //            var leftRight = colorPicker.gameObject.name.Split("_")[0] == "R" ? "L" : "R";
-    //            categoryToColorIndexMap[leftRight + "_" + subCategory] = categoryToColorIndexMap[colorPicker.gameObject.name];
-    //        }
-    //        if (hairCategories.Contains(colorPicker.gameObject.name))
-    //        {
-    //            //var hairColor = random.Next(colorPicker.NumColors());
-    //            categoryToColorIndexMap["Hair"] = categoryToColorIndexMap[colorPicker.gameObject.name];
-    //            categoryToColorIndexMap["Bangs"] = categoryToColorIndexMap["Hair"] = categoryToColorIndexMap[colorPicker.gameObject.name];
-    //            categoryToColorIndexMap["Brow"] = categoryToColorIndexMap["Hair"] = categoryToColorIndexMap[colorPicker.gameObject.name];
-    //            categoryToColorIndexMap["Mustache"] = categoryToColorIndexMap[colorPicker.gameObject.name];
-    //            categoryToColorIndexMap["Beard"] = categoryToColorIndexMap[colorPicker.gameObject.name];
-    //        }
-    //    }
-    //}
-
-    //public void RandomizeCharacter()
-    //{
-    //    RandomizeAppearance();
-    //    RandomizeColors();
-    //    UpdateAppearance();
-    //}
 
     public Dictionary<string, string> CategoryToLabelMap()
     {

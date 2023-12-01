@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ColorPalette : MonoBehaviour
 {
-    public string category;
     public CharacterEditor characterEditor;
+    public string category;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +21,10 @@ public class ColorPalette : MonoBehaviour
 
     public void SetColor(Color c)
     {
-        characterEditor.SetCurrentFaceCategoryColor(c);
+        if (category.Equals("Skin"))
+            characterEditor.SetSkinColor(c);
+        else
+            characterEditor.SetCurrentFaceCategoryColor(c);
     }
 
 }

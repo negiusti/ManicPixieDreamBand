@@ -7,6 +7,7 @@ public class PalettePan : MonoBehaviour
 {
     private ColorPalette palette;
     private Image image;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +33,6 @@ public class PalettePan : MonoBehaviour
 
     private void OnMouseDown()
     {
-        palette.SetColor(image.color);
+       palette.SetColor(image.color);
     }
 }
