@@ -96,6 +96,7 @@ public class CharacterEditor : MonoBehaviour
         categoryToColorPalette.Add("Eyeshadow", shadowPalette);
 
         SetCurrentFaceCategory("Hair");
+        HideTailsWithHijab();
     }
 
     public void SetCurrentFaceCategoryColor(Color c)
@@ -304,6 +305,16 @@ public class CharacterEditor : MonoBehaviour
         torsoSRen.color = new Color(r, g, b, a);
     }
 
+    private void HideTailsWithHijab()
+    {
+        SpriteResolver res = categoryToResolver.GetValueOrDefault("Hair");
+        string label = res.GetLabel();
+        if (label.Contains("Hijab"))
+        {
+            tailsSRen.enabled = false;
+        }
+    }
+
     public void ChangeFace(int idxDelta)
     {
         if (currentFaceCategory.Equals("Eyes") || currentFaceCategory.Equals("Mouth"))
@@ -311,7 +322,7 @@ public class CharacterEditor : MonoBehaviour
             ChangeEyesOrMouth(idxDelta);
             return;
         }
-        int idx = categoryToLabelIdx.GetValueOrDefault(currentFaceCategory) + idxDelta;
+        int idx = categoryToLabelIdx.GetValueOrDefault(currentFaceCategory,0) + idxDelta;
         string[] labels = categoryToLabels.GetValueOrDefault(currentFaceCategory);
 
         if (idx > labels.Length)
@@ -331,6 +342,7 @@ public class CharacterEditor : MonoBehaviour
             categoryToRenderer[currentFaceCategory].enabled = true;
             SetCategory(currentFaceCategory, label);
         }
+        HideTailsWithHijab();
     }
 
     private void ChangeEyesOrMouth(int idxDelta)
