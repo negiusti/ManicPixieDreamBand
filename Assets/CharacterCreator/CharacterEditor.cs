@@ -209,16 +209,26 @@ public class CharacterEditor : MonoBehaviour
     {
         int idx = categoryToLabelIdx.GetValueOrDefault(lSock) + idxDelta;
         string[] labels = GetUnlockedLabels(lSock);
-        if (idx > labels.Length - 1)
+        if (idx > labels.Length)
             idx = 0;
         else if (idx < 0)
-            idx = labels.Length - 1;
-        string label = labels[idx];
+            idx = labels.Length;
 
         categoryToLabelIdx[lSock] = idx;
         categoryToLabelIdx[rSock] = idx;
-        SetCategory(lSock, label);
-        SetCategory(rSock, label);
+
+        if (idx == labels.Length)
+        {
+            // NONE OPTION
+            categoryToRenderer[lSock].enabled = false;
+            categoryToRenderer[rSock].enabled = false;
+        }
+        else
+        {
+            string label = labels[idx];
+            SetCategory(lSock, label);
+            SetCategory(rSock, label);
+        }
     }
 
     public void ChangeShoes(int idxDelta)
