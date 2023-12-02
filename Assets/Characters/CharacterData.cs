@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class CharacterData
 {
     private Dictionary<string, string> categoryToLabelMap;
-    private Dictionary<string, int> tagToColorIndexMap;
+    private Dictionary<string, float[]> categoryToColorMap;
     private Dictionary<string, bool> categoryToEnabled;
     private bool isWearingFullFit;
     private string name;
@@ -13,7 +14,7 @@ public class CharacterData
     public CharacterData(Character character)
     {
         this.categoryToLabelMap = character.CategoryToLabelMap();
-        this.tagToColorIndexMap = character.CategoryToColorIndexMap();
+        this.categoryToColorMap = character.CategoryToColorMap();
         this.isWearingFullFit = character.IsWearingFullFit();
         this.categoryToEnabled = character.CategoryToEnabled();
         this.name = character.CharacterName();
@@ -24,9 +25,9 @@ public class CharacterData
         return categoryToLabelMap;
     }
 
-    public Dictionary<string, int> TagToColorIndexMap()
+    public Dictionary<string, float[]> CategoryToColorMap()
     {
-        return tagToColorIndexMap;
+        return categoryToColorMap;
     }
 
     public Dictionary<string, bool> CategoryToEnabled()

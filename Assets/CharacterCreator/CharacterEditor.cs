@@ -75,7 +75,6 @@ public class CharacterEditor : MonoBehaviour
             categoryToLabelIdx[category] = 0;
         }
         character = this.GetComponent<Character>();
-        character.LoadCharacter();
         if (character.IsWearingFullFit())
             SelectFB();
         else
@@ -89,7 +88,7 @@ public class CharacterEditor : MonoBehaviour
         categoryToColorPalette.Add("Eyebrows", browPalette);
         categoryToColorPalette.Add("Mouth", mouthPalette);
         categoryToColorPalette.Add("Eyeshadow", shadowPalette);
-
+        Debug.Log("categoryToColorPalette is " + categoryToColorPalette.Keys);
         SetCurrentFaceCategory("Hair");
         HideTailsWithHijab();
     }
@@ -139,6 +138,7 @@ public class CharacterEditor : MonoBehaviour
         ChangeTop(0);
         ChangeBottom(0);
         DisableFBRenderers();
+        character.SetIsWearingFullFit(isFullBody);
     }
 
     public void SelectFB()
@@ -146,6 +146,7 @@ public class CharacterEditor : MonoBehaviour
         isFullBody = true;
         ChangeFB(0);
         DisableNonFBRenderers();
+        character.SetIsWearingFullFit(isFullBody);
     }
 
     public void ChangeFB(int idxDelta)
@@ -153,7 +154,7 @@ public class CharacterEditor : MonoBehaviour
         if (!isFullBody)
             SelectFB();
         int idx = categoryToLabelIdx.GetValueOrDefault("FB_" + top) + idxDelta;
-        string[] labels = categoryToLabels.GetValueOrDefault("FB_" + top);
+        string[] labels = GetUnlockedLabels("FB_" + top);
         if (idx > labels.Length -1)
             idx = 0;
         else if (idx < 0)
@@ -163,7 +164,7 @@ public class CharacterEditor : MonoBehaviour
         SetCategory("FB_" + top, label);
         SetCategory("FB_" + crotch, label);
         // TO DO (later)
-        //string[] sleeveCategories = categoryToLabels.GetValueOrDefault("FB_" + lSleeve);
+        //string[] sleeveCategories = GetUnlockedLabels("FB_" + lSleeve);
         //if (sleeveCategories.Contains(label))
         //{
         //    SetCategory("FB_" + lSleeve, label);
@@ -174,7 +175,7 @@ public class CharacterEditor : MonoBehaviour
         //    categoryToRenderer.GetValueOrDefault("FB_" + rSleeve).enabled = false;
         //}
 
-        string[] pantCategories = categoryToLabels.GetValueOrDefault("FB_" + lPant);
+        string[] pantCategories = GetUnlockedLabels("FB_" + lPant);
         if (pantCategories.Contains(label))
         {
             SetCategory("FB_" + lPant, label);
@@ -193,7 +194,7 @@ public class CharacterEditor : MonoBehaviour
         if (isFullBody)
             SelectTopAndBottom();
         int idx = categoryToLabelIdx.GetValueOrDefault(top) + idxDelta;
-        string[] labels = categoryToLabels.GetValueOrDefault(top);
+        string[] labels = GetUnlockedLabels(top);
         if (idx > labels.Length - 1)
             idx = 0;
         else if (idx < 0)
@@ -207,7 +208,7 @@ public class CharacterEditor : MonoBehaviour
     public void ChangeSocks(int idxDelta)
     {
         int idx = categoryToLabelIdx.GetValueOrDefault(lSock) + idxDelta;
-        string[] labels = categoryToLabels.GetValueOrDefault(lSock);
+        string[] labels = GetUnlockedLabels(lSock);
         if (idx > labels.Length - 1)
             idx = 0;
         else if (idx < 0)
@@ -223,7 +224,7 @@ public class CharacterEditor : MonoBehaviour
     public void ChangeShoes(int idxDelta)
     {
         int idx = categoryToLabelIdx.GetValueOrDefault(lShoe) + idxDelta;
-        string[] labels = categoryToLabels.GetValueOrDefault(lShoe);
+        string[] labels = GetUnlockedLabels(lShoe);
         if (idx > labels.Length - 1)
             idx = 0;
         else if (idx < 0)
@@ -240,7 +241,7 @@ public class CharacterEditor : MonoBehaviour
         if (isFullBody)
             SelectTopAndBottom();
         int idx = categoryToLabelIdx.GetValueOrDefault(crotch) + idxDelta;
-        string[] labels = categoryToLabels.GetValueOrDefault(crotch);
+        string[] labels = GetUnlockedLabels(crotch);
         if (idx > labels.Length - 1)
             idx = 0;
         else if (idx < 0)
@@ -253,7 +254,7 @@ public class CharacterEditor : MonoBehaviour
 
     private void SetSleevesIfPresent(string label)
     {
-        string[] sleeveCategories = categoryToLabels.GetValueOrDefault(lSleeve);
+        string[] sleeveCategories = GetUnlockedLabels(lSleeve);
         if (sleeveCategories.Contains(label))
         {
             SetCategory(lSleeve, label);
@@ -268,7 +269,7 @@ public class CharacterEditor : MonoBehaviour
 
     private void SetPantsIfPresent(string label)
     {
-        string[] pantCategories = categoryToLabels.GetValueOrDefault(lPant);
+        string[] pantCategories = GetUnlockedLabels(lPant);
         if (pantCategories.Contains(label))
         {
             SetCategory(lPant, label);
@@ -308,7 +309,7 @@ public class CharacterEditor : MonoBehaviour
             return;
         }
         int idx = categoryToLabelIdx.GetValueOrDefault(currentFaceCategory,0) + idxDelta;
-        string[] labels = categoryToLabels.GetValueOrDefault(currentFaceCategory);
+        string[] labels = GetUnlockedLabels(currentFaceCategory);
 
         if (idx > labels.Length)
             idx = 0;
@@ -333,7 +334,7 @@ public class CharacterEditor : MonoBehaviour
     private void ChangeEyesOrMouth(int idxDelta)
     {
         int idx = categoryToLabelIdx.GetValueOrDefault(currentFaceCategory) + idxDelta;
-        string[] labels = categoryToLabels.GetValueOrDefault(currentFaceCategory);
+        string[] labels = GetUnlockedLabels(currentFaceCategory);
         if (idx > labels.Length - 1)
             idx = 0;
         else if (idx < 0)
@@ -345,11 +346,17 @@ public class CharacterEditor : MonoBehaviour
 
     public void SetCurrentFaceCategory(string category)
     {
+        Debug.Log("categoryToColorPalette is " + categoryToColorPalette.Keys);
         currentFaceCategory = category;
         Debug.Log("SETTING CATEGORY: " + category);
         foreach (ColorPalette cp in categoryToColorPalette.Values)
         {
             cp.gameObject.SetActive(cp.category.Equals(category));    
         }
+    }
+
+    private string[] GetUnlockedLabels(string category)
+    {
+        return categoryToLabels.GetValueOrDefault(category).Where(l => !l.StartsWith("X_") || l.Equals("X_" + gameObject.name)).ToArray();
     }
 }

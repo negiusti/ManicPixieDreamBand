@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &37850246 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5096461685910907619, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-  m_PrefabInstance: {fileID: 1062660909}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &47822906
 GameObject:
   m_ObjectHideFlags: 0
@@ -4204,6 +4199,7 @@ GameObject:
   - component: {fileID: 815068654}
   - component: {fileID: 815068658}
   - component: {fileID: 815068659}
+  - component: {fileID: 815068660}
   m_Layer: 0
   m_Name: ShirtDrawer
   m_TagString: Untagged
@@ -4381,6 +4377,35 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.26, y: 1.93}
   m_EdgeRadius: 0
+--- !u!114 &815068660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815068653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1062660910}
+          m_TargetAssemblyTypeName: CharacterEditor, Assembly-CSharp
+          m_MethodName: SelectTopAndBottom
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &818524752
 GameObject:
   m_ObjectHideFlags: 0
@@ -5092,29 +5117,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3098617175716647122, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.4571055
+    - target: {fileID: 2542811767039952235, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
+      propertyPath: m_labelHash
+      value: 0.0000000033399223
       objectReference: {fileID: 0}
-    - target: {fileID: 3098617175716647122, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.0000004226935
-      objectReference: {fileID: 0}
-    - target: {fileID: 3098617175716647122, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.99990714
-      objectReference: {fileID: 0}
-    - target: {fileID: 3098617175716647122, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3098617175716647122, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3098617175716647122, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.013632566
+    - target: {fileID: 2772295330575864975, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
+      propertyPath: m_labelHash
+      value: 0.0000000033399223
       objectReference: {fileID: 0}
     - target: {fileID: 3752284488493883590, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
       propertyPath: browPalette
@@ -5144,14 +5153,6 @@ PrefabInstance:
       propertyPath: faceDetailPalette
       value: 
       objectReference: {fileID: 2065754178}
-    - target: {fileID: 3770722970649034607, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.76788825
-      objectReference: {fileID: 0}
-    - target: {fileID: 3770722970649034607, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.00000046164388
-      objectReference: {fileID: 0}
     - target: {fileID: 5218817652615425182, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.69
@@ -5192,49 +5193,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5462371836556661839, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.1809682
-      objectReference: {fileID: 0}
-    - target: {fileID: 5462371836556661839, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.8884629
-      objectReference: {fileID: 0}
     - target: {fileID: 6088849421577856185, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
       propertyPath: m_Name
       value: MainCharacter
-      objectReference: {fileID: 0}
-    - target: {fileID: 8742426635796796790, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_AutoRebind
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8742426635796796790, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_BoneTransforms.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8742426635796796790, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_BoneTransforms.Array.data[0]
-      value: 
-      objectReference: {fileID: 1899740573}
-    - target: {fileID: 8742426635796796790, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_BoneTransforms.Array.data[1]
-      value: 
-      objectReference: {fileID: 1774691588}
-    - target: {fileID: 8742426635796796790, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_BoneTransforms.Array.data[3]
-      value: 
-      objectReference: {fileID: 37850246}
-    - target: {fileID: 8742426635796796790, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_BoneTransforms.Array.data[4]
-      value: 
-      objectReference: {fileID: 1138714809}
-    - target: {fileID: 9106752540388642482, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.17840692
-      objectReference: {fileID: 0}
-    - target: {fileID: 9106752540388642482, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.9296125
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5384,11 +5345,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1066292233}
   m_CullTransparentMesh: 1
---- !u!4 &1138714809 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9106752540388642482, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-  m_PrefabInstance: {fileID: 1062660909}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1151500267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8597,6 +8553,7 @@ GameObject:
   - component: {fileID: 1643361292}
   - component: {fileID: 1643361293}
   - component: {fileID: 1643361294}
+  - component: {fileID: 1643361295}
   m_Layer: 0
   m_Name: Wardrobe
   m_TagString: Untagged
@@ -8774,6 +8731,35 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.37, y: 7.84}
   m_EdgeRadius: 0
+--- !u!114 &1643361295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643361288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1062660910}
+          m_TargetAssemblyTypeName: CharacterEditor, Assembly-CSharp
+          m_MethodName: SelectFB
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1678881735
 GameObject:
   m_ObjectHideFlags: 0
@@ -9186,11 +9172,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1753214902}
   m_CullTransparentMesh: 1
---- !u!4 &1774691588 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5209546574318079689, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-  m_PrefabInstance: {fileID: 1062660909}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1882600609
 GameObject:
   m_ObjectHideFlags: 0
@@ -9419,11 +9400,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   categoryName: Mouth
   characterEditor: {fileID: 1062660910}
---- !u!4 &1899740573 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3520859394665130339, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
-  m_PrefabInstance: {fileID: 1062660909}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1919030707
 GameObject:
   m_ObjectHideFlags: 0
@@ -11427,6 +11403,7 @@ GameObject:
   - component: {fileID: 2139386045}
   - component: {fileID: 2139386049}
   - component: {fileID: 2139386050}
+  - component: {fileID: 2139386051}
   m_Layer: 0
   m_Name: PantsDrawer
   m_TagString: Untagged
@@ -11604,6 +11581,35 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.26, y: 1.93}
   m_EdgeRadius: 0
+--- !u!114 &2139386051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139386044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1062660910}
+          m_TargetAssemblyTypeName: CharacterEditor, Assembly-CSharp
+          m_MethodName: SelectTopAndBottom
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &41697687023548945
 PrefabInstance:
   m_ObjectHideFlags: 0

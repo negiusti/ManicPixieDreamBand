@@ -53,9 +53,10 @@ public class PlayerMovement : MonoBehaviour
     {
         player = GetComponent<Character>();
         animator = GetComponentInChildren<Animator>();
-        player.SetCharacterName("Nicole");
-        player.LoadCharacter();
+        //player.SetCharacterName("Nicole");
+        //player.LoadCharacter();
         ChangeChildSortingLayers(transform);
+        animator.Play("BaseCharacter_Idle");
     }
 
     private void ChangeChildSortingLayers(Transform parent)
