@@ -19,6 +19,7 @@ public class Character : MonoBehaviour
     private SpriteLibraryAsset libraryAsset;
     private System.Random random;
     private string characterName;
+    private Animator animator;
 
     public bool IsWearingFullFit()
     {
@@ -57,6 +58,8 @@ public class Character : MonoBehaviour
         this.random = new System.Random();
         this.characterName = gameObject.name;
         LoadCharacter();
+        animator = this.GetComponent<Animator>();
+        animator.Play("BaseCharacter_Idle");
     }
 
     // Update is called once per frame
