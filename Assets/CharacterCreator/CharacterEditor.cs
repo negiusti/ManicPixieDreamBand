@@ -47,6 +47,11 @@ public class CharacterEditor : MonoBehaviour
     public ColorPalette faceDetailPalette;
     private Dictionary<string, ColorPalette> categoryToColorPalette;
 
+    public Icons shirtIcons;
+    public Icons bottomsIcons;
+    public Icons socksIcons;
+    public Icons shoesIcons;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -195,24 +200,33 @@ public class CharacterEditor : MonoBehaviour
             SelectTopAndBottom();
         int idx = categoryToLabelIdx.GetValueOrDefault(top) + idxDelta;
         string[] labels = GetUnlockedLabels(top);
-        if (idx > labels.Length - 1)
-            idx = 0;
-        else if (idx < 0)
-            idx = labels.Length - 1;
+        idx = GetWrapAroundIndex(idx, labels.Length - 1);
+        int leftIdx = GetWrapAroundIndex(idx - 1 , labels.Length - 1);
+        int rightIdx = GetWrapAroundIndex(idx + 1, labels.Length - 1);
         string label = labels[idx];
         categoryToLabelIdx[top] = idx;
         SetCategory(top, label);
         SetSleevesIfPresent(label);
+
+        shirtIcons.UpdateIcons(labels[leftIdx], labels[idx], labels[rightIdx]);
+    }
+
+    private int GetWrapAroundIndex(int idx, int maxIdx)
+    {
+        if (idx > maxIdx)
+            idx = 0;
+        else if (idx < 0)
+            idx = maxIdx;
+        return idx;
     }
 
     public void ChangeSocks(int idxDelta)
     {
         int idx = categoryToLabelIdx.GetValueOrDefault(lSock) + idxDelta;
         string[] labels = GetUnlockedLabels(lSock);
-        if (idx > labels.Length)
-            idx = 0;
-        else if (idx < 0)
-            idx = labels.Length;
+        idx = GetWrapAroundIndex(idx, labels.Length);
+        int leftIdx = GetWrapAroundIndex(idx - 1, labels.Length);
+        int rightIdx = GetWrapAroundIndex(idx + 1, labels.Length);
 
         categoryToLabelIdx[lSock] = idx;
         categoryToLabelIdx[rSock] = idx;
@@ -229,21 +243,22 @@ public class CharacterEditor : MonoBehaviour
             SetCategory(lSock, label);
             SetCategory(rSock, label);
         }
+        socksIcons.UpdateIcons(labels.ElementAtOrDefault(leftIdx) ?? "None", labels.ElementAtOrDefault(idx) ?? "None", labels.ElementAtOrDefault(rightIdx) ?? "None");
     }
 
     public void ChangeShoes(int idxDelta)
     {
         int idx = categoryToLabelIdx.GetValueOrDefault(lShoe) + idxDelta;
         string[] labels = GetUnlockedLabels(lShoe);
-        if (idx > labels.Length - 1)
-            idx = 0;
-        else if (idx < 0)
-            idx = labels.Length - 1;
+        idx = GetWrapAroundIndex(idx, labels.Length - 1);
+        int leftIdx = GetWrapAroundIndex(idx - 1, labels.Length - 1);
+        int rightIdx = GetWrapAroundIndex(idx + 1, labels.Length - 1);
         string label = labels[idx];
         categoryToLabelIdx[lShoe] = idx;
         categoryToLabelIdx[rShoe] = idx;
         SetCategory(lShoe, label);
         SetCategory(rShoe, label);
+        shoesIcons.UpdateIcons(labels[leftIdx], labels[idx], labels[rightIdx]);
     }
 
     public void ChangeBottom(int idxDelta)
@@ -252,14 +267,14 @@ public class CharacterEditor : MonoBehaviour
             SelectTopAndBottom();
         int idx = categoryToLabelIdx.GetValueOrDefault(crotch) + idxDelta;
         string[] labels = GetUnlockedLabels(crotch);
-        if (idx > labels.Length - 1)
-            idx = 0;
-        else if (idx < 0)
-            idx = labels.Length - 1;
+        idx = GetWrapAroundIndex(idx, labels.Length - 1);
+        int leftIdx = GetWrapAroundIndex(idx - 1, labels.Length - 1);
+        int rightIdx = GetWrapAroundIndex(idx + 1, labels.Length - 1);
         string label = labels[idx];
         categoryToLabelIdx[crotch] = idx;
         SetCategory(crotch, label);
         SetPantsIfPresent(label);
+        bottomsIcons.UpdateIcons(labels[leftIdx], labels[idx], labels[rightIdx]);
     }
 
     private void SetSleevesIfPresent(string label)
