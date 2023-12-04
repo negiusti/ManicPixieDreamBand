@@ -57,6 +57,7 @@ public class SceneChanger : MonoBehaviour
         menuToggle = GetComponent<MenuToggleScript>();
         menuToggle.DisableMenu();
         sceneStack = new Stack<string>();
+        sceneStack.Push("Bedroom");
         //player = GameObject.Find("Player");
     }
 

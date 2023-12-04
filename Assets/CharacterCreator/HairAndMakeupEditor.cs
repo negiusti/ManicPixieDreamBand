@@ -31,8 +31,8 @@ public class HairAndMakeupEditor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpriteLibrary fuck = this.GetComponentInParent<SpriteLibrary>();
-        LibraryAsset = fuck.spriteLibraryAsset;
+        //SpriteLibrary fuck = this.GetComponentInParent<SpriteLibrary>();
+        //LibraryAsset = fuck.spriteLibraryAsset;
         targetResolver = GetComponent<SpriteResolver>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         capCollider = GetComponent<CapsuleCollider2D>();
