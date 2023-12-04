@@ -7,6 +7,7 @@ using PixelCrushers.DialogueSystem;
 public class SceneChanger : MonoBehaviour
 {
     MenuToggleScript menuToggle;
+    Stack<string> sceneStack;
     //private GameObject player;
     public void ChangeScene(string sceneName)
     {
@@ -16,7 +17,16 @@ public class SceneChanger : MonoBehaviour
         //AsyncOperation loadOperation =
         SceneManager.LoadScene(sceneName);
         menuToggle.DisableMenu();
+        sceneStack.Push(sceneName);
         //loadOperation.completed += (operation) => OnLoadCompleted(operation, currentScene);
+    }
+
+    public void GoToPreviousScene()
+    {
+        if (sceneStack.Peek() != null)
+            sceneStack.Pop();
+        if (sceneStack.Peek() != null)
+            ChangeScene(sceneStack.Peek());
     }
 
     void OnEnable()
@@ -46,6 +56,7 @@ public class SceneChanger : MonoBehaviour
     {
         menuToggle = GetComponent<MenuToggleScript>();
         menuToggle.DisableMenu();
+        sceneStack = new Stack<string>();
         //player = GameObject.Find("Player");
     }
 
