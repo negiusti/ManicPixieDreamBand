@@ -33,10 +33,12 @@ public class StarSpawnerScript : MonoBehaviour
     private int hitNotes;
     private int missedNotes;
     private float runwayDelay;
+    private GameObject miniGame;
 
     // Start is called before the first frame update
     void Start()
     {
+        miniGame = this.transform.parent.gameObject;
         hamster = starter.GetComponent<AudioSource>();
         //i = 0;
         hitNotes = 0;
@@ -120,6 +122,11 @@ public class StarSpawnerScript : MonoBehaviour
                 Debug.LogError("Invalid float format.");
             }
         }
+        while(hamster.time < hamster.clip.length - 2)
+            yield return null;
+
+        miniGame.SetActive(false);
+        
     }
 
     void Update()
