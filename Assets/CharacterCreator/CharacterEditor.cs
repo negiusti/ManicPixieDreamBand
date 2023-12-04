@@ -75,9 +75,26 @@ public class CharacterEditor : MonoBehaviour
         spriteLib = fuck.spriteLibraryAsset;
         foreach (string category in spriteLib.GetCategoryNames())
         {
-            labels = spriteLib.GetCategoryLabelNames(category).ToArray();
+            labels = spriteLib.GetCategoryLabelNames(category).Where(l => !l.StartsWith("X_") || l.Equals("X_" + gameObject.name)).ToArray();
             categoryToLabels[category] = labels;
-            categoryToLabelIdx[category] = System.Array.IndexOf(labels, character.CategoryToLabelMap()[category]);
+            categoryToLabelIdx[category] = System.Array.IndexOf(labels, character.CategoryToLabelMap().GetValueOrDefault(category));
+            if (category.Equals(lSock))
+            {
+                UpdateIcons(socksIcons, categoryToLabelIdx[category], labels);
+            } else if (category.Equals(lShoe))
+            {
+                UpdateIcons(shoesIcons, categoryToLabelIdx[category], labels);
+            } else if (category.Equals("FB_" + top))
+            {
+                UpdateIcons(FBIcons, categoryToLabelIdx[category], labels);
+            } else if (category.Equals(top))
+            {
+                UpdateIcons(shirtIcons, categoryToLabelIdx[category], labels);
+            }
+            else if (category.Equals(crotch))
+            {
+                UpdateIcons(bottomsIcons, categoryToLabelIdx[category], labels);
+            }
         }
         
         if (character.IsWearingFullFit())
@@ -200,14 +217,20 @@ public class CharacterEditor : MonoBehaviour
         int idx = categoryToLabelIdx.GetValueOrDefault(top) + idxDelta;
         string[] labels = GetUnlockedLabels(top);
         idx = GetWrapAroundIndex(idx, labels.Length - 1);
-        int leftIdx = GetWrapAroundIndex(idx - 1 , labels.Length - 1);
-        int rightIdx = GetWrapAroundIndex(idx + 1, labels.Length - 1);
+        
         string label = labels[idx];
         categoryToLabelIdx[top] = idx;
         SetCategory(top, label);
         SetSleevesIfPresent(label);
 
-        shirtIcons.UpdateIcons(labels[leftIdx], labels[idx], labels[rightIdx]);
+        //shirtIcons.UpdateIcons(labels[leftIdx], labels[idx], labels[rightIdx]);
+    }
+
+    private void UpdateIcons(Icons icons, int idx, string[] labels)
+    {
+        int leftIdx = GetWrapAroundIndex(idx - 1, labels.Length - 1);
+        int rightIdx = GetWrapAroundIndex(idx + 1, labels.Length - 1);
+        icons.UpdateIcons(labels[leftIdx], labels[idx], labels[rightIdx]);
     }
 
     private int GetWrapAroundIndex(int idx, int maxIdx)
@@ -223,26 +246,26 @@ public class CharacterEditor : MonoBehaviour
     {
         int idx = categoryToLabelIdx.GetValueOrDefault(lSock) + idxDelta;
         string[] labels = GetUnlockedLabels(lSock);
-        idx = GetWrapAroundIndex(idx, labels.Length);
-        int leftIdx = GetWrapAroundIndex(idx - 1, labels.Length);
-        int rightIdx = GetWrapAroundIndex(idx + 1, labels.Length);
+        idx = GetWrapAroundIndex(idx, labels.Length -1);
+        int leftIdx = GetWrapAroundIndex(idx - 1, labels.Length -1);
+        int rightIdx = GetWrapAroundIndex(idx + 1, labels.Length -1);
 
         categoryToLabelIdx[lSock] = idx;
         categoryToLabelIdx[rSock] = idx;
 
-        if (idx == labels.Length)
-        {
-            // NONE OPTION
-            categoryToRenderer[lSock].enabled = false;
-            categoryToRenderer[rSock].enabled = false;
-        }
-        else
-        {
+        //if (idx == labels.Length)
+        //{
+        //    // NONE OPTION
+        //    categoryToRenderer[lSock].enabled = false;
+        //    categoryToRenderer[rSock].enabled = false;
+        //}
+        //else
+        //{
             string label = labels[idx];
             SetCategory(lSock, label);
             SetCategory(rSock, label);
-        }
-        socksIcons.UpdateIcons(labels.ElementAtOrDefault(leftIdx) ?? "None", labels.ElementAtOrDefault(idx) ?? "None", labels.ElementAtOrDefault(rightIdx) ?? "None");
+        //}
+        socksIcons.UpdateIcons(labels.ElementAtOrDefault(leftIdx), labels.ElementAtOrDefault(idx), labels.ElementAtOrDefault(rightIdx));
     }
 
     public void ChangeShoes(int idxDelta)
@@ -317,56 +340,56 @@ public class CharacterEditor : MonoBehaviour
     private void HideTailsWithHijab()
     {
         SpriteResolver res = categoryToResolver.GetValueOrDefault("Hair");
-        SpriteRenderer sr = categoryToRenderer.GetValueOrDefault("Hair");
+        //SpriteRenderer sr = categoryToRenderer.GetValueOrDefault("Hair");
         string label = res.GetLabel();
-        if (label.Contains("Hijab") && sr.enabled)
+        if (label.Contains("Hijab"))
         {
-            tailsSRen.enabled = false;
+            SetCategory("Tails", "None");
         }
     }
 
     public void ChangeFace(int idxDelta)
     {
-        if (currentFaceCategory.Equals("Eyes") || currentFaceCategory.Equals("Mouth"))
-        {
-            ChangeEyesOrMouth(idxDelta);
-            return;
-        }
+        //if (currentFaceCategory.Equals("Eyes") || currentFaceCategory.Equals("Mouth"))
+        //{
+        //    ChangeEyesOrMouth(idxDelta);
+        //    return;
+        //}
         int idx = categoryToLabelIdx.GetValueOrDefault(currentFaceCategory,0) + idxDelta;
         string[] labels = GetUnlockedLabels(currentFaceCategory);
 
-        if (idx > labels.Length)
-            idx = 0;
+        if (idx > labels.Length - 1)
+            idx = 0; 
         else if (idx < 0)
-            idx = labels.Length;
+            idx = labels.Length - 1;
 
         categoryToLabelIdx[currentFaceCategory] = idx;
 
-        if (idx == labels.Length)
-        {
-            // NONE OPTION
-            categoryToRenderer[currentFaceCategory].enabled = false;
-        } else
-        {
+        //if (idx == labels.Length)
+        //{
+        //    // NONE OPTION
+        //    categoryToRenderer[currentFaceCategory].enabled = false;
+        //} else
+        //{
             string label = labels[idx];
-            categoryToRenderer[currentFaceCategory].enabled = true;
+            //categoryToRenderer[currentFaceCategory].enabled = true;
             SetCategory(currentFaceCategory, label);
-        }
+        //}
         HideTailsWithHijab();
     }
 
-    private void ChangeEyesOrMouth(int idxDelta)
-    {
-        int idx = categoryToLabelIdx.GetValueOrDefault(currentFaceCategory) + idxDelta;
-        string[] labels = GetUnlockedLabels(currentFaceCategory);
-        if (idx > labels.Length - 1)
-            idx = 0;
-        else if (idx < 0)
-            idx = labels.Length - 1;
-        string label = labels[idx];
-        categoryToLabelIdx[currentFaceCategory] = idx;
-        SetCategory(currentFaceCategory, label);
-    }
+    //private void ChangeEyesOrMouth(int idxDelta)
+    //{
+    //    int idx = categoryToLabelIdx.GetValueOrDefault(currentFaceCategory) + idxDelta;
+    //    string[] labels = GetUnlockedLabels(currentFaceCategory);
+    //    if (idx > labels.Length - 1)
+    //        idx = 0;
+    //    else if (idx < 0)
+    //        idx = labels.Length - 1;
+    //    string label = labels[idx];
+    //    categoryToLabelIdx[currentFaceCategory] = idx;
+    //    SetCategory(currentFaceCategory, label);
+    //}
 
     public void SetCurrentFaceCategory(string category)
     {
