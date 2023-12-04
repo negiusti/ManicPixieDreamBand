@@ -20,7 +20,18 @@ public class DrawerScript : MonoBehaviour
         //canvas = this.GetComponentInChildren<Canvas>();
         canvas.enabled = false;
         icons = this.GetComponentInChildren<Icons>();
-        icons.gameObject.SetActive(false);
+        HideIcons();
+    }
+
+    private void ShowIcons()
+    {
+        icons.gameObject.SetActive(true);
+    }
+
+    private void HideIcons()
+    {
+        // Dont hide the shoe icons
+        icons.gameObject.SetActive(icons.gameObject.name.Contains("Shoe"));
     }
 
     // Update is called once per frame
@@ -51,7 +62,7 @@ public class DrawerScript : MonoBehaviour
         // Called when the cursor enters the collider
         Debug.Log("Mouse entered the collider of " + gameObject.name);
         targetResolver.SetCategoryAndLabel("Drawer", "Open");
-        icons.gameObject.SetActive(true);
+        ShowIcons();
     }
 
     void OnMouseExit()
@@ -63,7 +74,7 @@ public class DrawerScript : MonoBehaviour
         {
             targetResolver.SetCategoryAndLabel("Drawer", "Closed");
             canvas.enabled = false;
-            icons.gameObject.SetActive(false);
+            HideIcons();
         }
     }
 
@@ -77,7 +88,7 @@ public class DrawerScript : MonoBehaviour
         selected = true;
         canvas.enabled = true;
         targetResolver.SetCategoryAndLabel("Drawer", "Open");
-        icons.gameObject.SetActive(true);
+        ShowIcons();
         foreach (DrawerScript drawer in otherDrawers)
         {
             drawer.UnselectDrawer();
@@ -89,6 +100,6 @@ public class DrawerScript : MonoBehaviour
         selected = false;
         canvas.enabled = false;
         targetResolver.SetCategoryAndLabel("Drawer", "Closed");
-        icons.gameObject.SetActive(false);
+        HideIcons();
     }
 }

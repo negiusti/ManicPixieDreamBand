@@ -78,23 +78,7 @@ public class CharacterEditor : MonoBehaviour
             labels = spriteLib.GetCategoryLabelNames(category).Where(l => !l.StartsWith("X_") || l.Equals("X_" + gameObject.name)).ToArray();
             categoryToLabels[category] = labels;
             categoryToLabelIdx[category] = System.Array.IndexOf(labels, character.CategoryToLabelMap().GetValueOrDefault(category));
-            if (category.Equals(lSock))
-            {
-                UpdateIcons(socksIcons, categoryToLabelIdx[category], labels);
-            } else if (category.Equals(lShoe))
-            {
-                UpdateIcons(shoesIcons, categoryToLabelIdx[category], labels);
-            } else if (category.Equals("FB_" + top))
-            {
-                UpdateIcons(FBIcons, categoryToLabelIdx[category], labels);
-            } else if (category.Equals(top))
-            {
-                UpdateIcons(shirtIcons, categoryToLabelIdx[category], labels);
-            }
-            else if (category.Equals(crotch))
-            {
-                UpdateIcons(bottomsIcons, categoryToLabelIdx[category], labels);
-            }
+            UpdateIcons(category, labels);
         }
         
         if (character.IsWearingFullFit())
@@ -113,6 +97,30 @@ public class CharacterEditor : MonoBehaviour
         Debug.Log("categoryToColorPalette is " + categoryToColorPalette.Keys);
         SetCurrentFaceCategory("Hair");
         HideTailsWithHijab();
+    }
+
+    private void UpdateIcons(string category, string[] labels)
+    {
+        if (category.Equals(lSock))
+        {
+            UpdateIcons(socksIcons, categoryToLabelIdx[category], labels);
+        }
+        else if (category.Equals(lShoe))
+        {
+            UpdateIcons(shoesIcons, categoryToLabelIdx[category], labels);
+        }
+        else if (category.Equals("FB_" + top))
+        {
+            UpdateIcons(FBIcons, categoryToLabelIdx[category], labels);
+        }
+        else if (category.Equals(top))
+        {
+            UpdateIcons(shirtIcons, categoryToLabelIdx[category], labels);
+        }
+        else if (category.Equals(crotch))
+        {
+            UpdateIcons(bottomsIcons, categoryToLabelIdx[category], labels);
+        }
     }
 
     public void SetCurrentFaceCategoryColor(Color c)
@@ -178,8 +186,6 @@ public class CharacterEditor : MonoBehaviour
         int idx = categoryToLabelIdx.GetValueOrDefault("FB_" + top) + idxDelta;
         string[] labels = GetUnlockedLabels("FB_" + top);
         idx = GetWrapAroundIndex(idx, labels.Length - 1);
-        int leftIdx = GetWrapAroundIndex(idx - 1, labels.Length - 1);
-        int rightIdx = GetWrapAroundIndex(idx + 1, labels.Length - 1);
         string label = labels[idx];
         categoryToLabelIdx["FB_" + top] = idx;
         SetCategory("FB_" + top, label);
@@ -207,7 +213,7 @@ public class CharacterEditor : MonoBehaviour
             categoryToRenderer.GetValueOrDefault("FB_" + lPant).enabled = false;
             categoryToRenderer.GetValueOrDefault("FB_" + rPant).enabled = false;
         }
-        FBIcons.UpdateIcons(labels[leftIdx], labels[idx], labels[rightIdx]);
+        UpdateIcons(FBIcons, idx, labels);
     }
 
     public void ChangeTop(int idxDelta)
@@ -222,8 +228,7 @@ public class CharacterEditor : MonoBehaviour
         categoryToLabelIdx[top] = idx;
         SetCategory(top, label);
         SetSleevesIfPresent(label);
-
-        //shirtIcons.UpdateIcons(labels[leftIdx], labels[idx], labels[rightIdx]);
+        UpdateIcons(shirtIcons, idx, labels);
     }
 
     private void UpdateIcons(Icons icons, int idx, string[] labels)
@@ -247,25 +252,12 @@ public class CharacterEditor : MonoBehaviour
         int idx = categoryToLabelIdx.GetValueOrDefault(lSock) + idxDelta;
         string[] labels = GetUnlockedLabels(lSock);
         idx = GetWrapAroundIndex(idx, labels.Length -1);
-        int leftIdx = GetWrapAroundIndex(idx - 1, labels.Length -1);
-        int rightIdx = GetWrapAroundIndex(idx + 1, labels.Length -1);
-
         categoryToLabelIdx[lSock] = idx;
         categoryToLabelIdx[rSock] = idx;
-
-        //if (idx == labels.Length)
-        //{
-        //    // NONE OPTION
-        //    categoryToRenderer[lSock].enabled = false;
-        //    categoryToRenderer[rSock].enabled = false;
-        //}
-        //else
-        //{
-            string label = labels[idx];
-            SetCategory(lSock, label);
-            SetCategory(rSock, label);
-        //}
-        socksIcons.UpdateIcons(labels.ElementAtOrDefault(leftIdx), labels.ElementAtOrDefault(idx), labels.ElementAtOrDefault(rightIdx));
+        string label = labels[idx];
+        SetCategory(lSock, label);
+        SetCategory(rSock, label);
+        UpdateIcons(socksIcons, idx, labels);
     }
 
     public void ChangeShoes(int idxDelta)
@@ -273,14 +265,12 @@ public class CharacterEditor : MonoBehaviour
         int idx = categoryToLabelIdx.GetValueOrDefault(lShoe) + idxDelta;
         string[] labels = GetUnlockedLabels(lShoe);
         idx = GetWrapAroundIndex(idx, labels.Length - 1);
-        int leftIdx = GetWrapAroundIndex(idx - 1, labels.Length - 1);
-        int rightIdx = GetWrapAroundIndex(idx + 1, labels.Length - 1);
         string label = labels[idx];
         categoryToLabelIdx[lShoe] = idx;
         categoryToLabelIdx[rShoe] = idx;
         SetCategory(lShoe, label);
         SetCategory(rShoe, label);
-        shoesIcons.UpdateIcons(labels[leftIdx], labels[idx], labels[rightIdx]);
+        UpdateIcons(shoesIcons, idx, labels);
     }
 
     public void ChangeBottom(int idxDelta)
@@ -290,13 +280,11 @@ public class CharacterEditor : MonoBehaviour
         int idx = categoryToLabelIdx.GetValueOrDefault(crotch) + idxDelta;
         string[] labels = GetUnlockedLabels(crotch);
         idx = GetWrapAroundIndex(idx, labels.Length - 1);
-        int leftIdx = GetWrapAroundIndex(idx - 1, labels.Length - 1);
-        int rightIdx = GetWrapAroundIndex(idx + 1, labels.Length - 1);
         string label = labels[idx];
         categoryToLabelIdx[crotch] = idx;
         SetCategory(crotch, label);
         SetPantsIfPresent(label);
-        bottomsIcons.UpdateIcons(labels[leftIdx], labels[idx], labels[rightIdx]);
+        UpdateIcons(bottomsIcons, idx, labels);
     }
 
     private void SetSleevesIfPresent(string label)
@@ -340,7 +328,6 @@ public class CharacterEditor : MonoBehaviour
     private void HideTailsWithHijab()
     {
         SpriteResolver res = categoryToResolver.GetValueOrDefault("Hair");
-        //SpriteRenderer sr = categoryToRenderer.GetValueOrDefault("Hair");
         string label = res.GetLabel();
         if (label.Contains("Hijab"))
         {
@@ -350,11 +337,6 @@ public class CharacterEditor : MonoBehaviour
 
     public void ChangeFace(int idxDelta)
     {
-        //if (currentFaceCategory.Equals("Eyes") || currentFaceCategory.Equals("Mouth"))
-        //{
-        //    ChangeEyesOrMouth(idxDelta);
-        //    return;
-        //}
         int idx = categoryToLabelIdx.GetValueOrDefault(currentFaceCategory,0) + idxDelta;
         string[] labels = GetUnlockedLabels(currentFaceCategory);
 
@@ -364,32 +346,10 @@ public class CharacterEditor : MonoBehaviour
             idx = labels.Length - 1;
 
         categoryToLabelIdx[currentFaceCategory] = idx;
-
-        //if (idx == labels.Length)
-        //{
-        //    // NONE OPTION
-        //    categoryToRenderer[currentFaceCategory].enabled = false;
-        //} else
-        //{
-            string label = labels[idx];
-            //categoryToRenderer[currentFaceCategory].enabled = true;
-            SetCategory(currentFaceCategory, label);
-        //}
+        string label = labels[idx];
+        SetCategory(currentFaceCategory, label);
         HideTailsWithHijab();
     }
-
-    //private void ChangeEyesOrMouth(int idxDelta)
-    //{
-    //    int idx = categoryToLabelIdx.GetValueOrDefault(currentFaceCategory) + idxDelta;
-    //    string[] labels = GetUnlockedLabels(currentFaceCategory);
-    //    if (idx > labels.Length - 1)
-    //        idx = 0;
-    //    else if (idx < 0)
-    //        idx = labels.Length - 1;
-    //    string label = labels[idx];
-    //    categoryToLabelIdx[currentFaceCategory] = idx;
-    //    SetCategory(currentFaceCategory, label);
-    //}
 
     public void SetCurrentFaceCategory(string category)
     {
