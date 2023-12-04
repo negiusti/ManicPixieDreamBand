@@ -51,12 +51,13 @@ public class CharacterEditor : MonoBehaviour
     public Icons bottomsIcons;
     public Icons socksIcons;
     public Icons shoesIcons;
+    public Icons FBIcons;
 
     // Start is called before the first frame update
     void Start()
     {
         skinRenderers = new List<SpriteRenderer>();
-
+        character = this.GetComponent<Character>();
         SpriteResolver[] resolvers = this.GetComponentsInChildren<SpriteResolver>();
         foreach (SpriteResolver resolver in resolvers)
         {
@@ -75,11 +76,10 @@ public class CharacterEditor : MonoBehaviour
         foreach (string category in spriteLib.GetCategoryNames())
         {
             labels = spriteLib.GetCategoryLabelNames(category).ToArray();
-
             categoryToLabels[category] = labels;
-            categoryToLabelIdx[category] = 0;
+            categoryToLabelIdx[category] = System.Array.IndexOf(labels, character.CategoryToLabelMap()[category]);
         }
-        character = this.GetComponent<Character>();
+        
         if (character.IsWearingFullFit())
             SelectFB();
         else
@@ -160,10 +160,9 @@ public class CharacterEditor : MonoBehaviour
             SelectFB();
         int idx = categoryToLabelIdx.GetValueOrDefault("FB_" + top) + idxDelta;
         string[] labels = GetUnlockedLabels("FB_" + top);
-        if (idx > labels.Length -1)
-            idx = 0;
-        else if (idx < 0)
-            idx = labels.Length - 1;
+        idx = GetWrapAroundIndex(idx, labels.Length - 1);
+        int leftIdx = GetWrapAroundIndex(idx - 1, labels.Length - 1);
+        int rightIdx = GetWrapAroundIndex(idx + 1, labels.Length - 1);
         string label = labels[idx];
         categoryToLabelIdx["FB_" + top] = idx;
         SetCategory("FB_" + top, label);
@@ -191,7 +190,7 @@ public class CharacterEditor : MonoBehaviour
             categoryToRenderer.GetValueOrDefault("FB_" + lPant).enabled = false;
             categoryToRenderer.GetValueOrDefault("FB_" + rPant).enabled = false;
         }
-        
+        FBIcons.UpdateIcons(labels[leftIdx], labels[idx], labels[rightIdx]);
     }
 
     public void ChangeTop(int idxDelta)
