@@ -19,7 +19,6 @@ public class PhoneMessages : MonoBehaviour
     {
         // wait until message app is opened before enabling the canvas
         //canvas.enabled = false;
-        customDialogue.CloseBacklogs();
 
         // load contacts
         contactsList = new HashSet<string> { "Ricki", "Max", "Band" };//SaveSystem.LoadContactsList();
@@ -33,6 +32,8 @@ public class PhoneMessages : MonoBehaviour
             instances.Add(instance.gameObject);
             customDialogue.AddBackLog(c);
         }
+
+        customDialogue.CloseBacklogs();
     }
 
     private void Awake()
