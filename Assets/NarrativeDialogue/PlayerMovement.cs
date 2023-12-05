@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private bool isIdle = true;
     private string targetSortingLayer = "Player";
+    private float minX, maxX;
+    public GameObject background;
 
     //void Awake()
     //{
@@ -45,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 position = transform.position;
         position.x += moveInput * moveSpeed * Time.deltaTime;
+        position.x = Mathf.Clamp(position.x, minX, maxX);
         transform.position = position;
     }
 
@@ -57,6 +60,15 @@ public class PlayerMovement : MonoBehaviour
         //player.LoadCharacter();
         ChangeChildSortingLayers(transform);
         animator.Play("BaseCharacter_Idle");
+        if (background != null)
+        {
+            // Calculate the movement bounds based on the background's collider
+            Bounds backgroundBounds = background.GetComponent<Collider2D>().bounds;
+            float objectHalfWidth = GetComponent<Collider2D>().bounds.extents.x;
+
+            minX = backgroundBounds.min.x + objectHalfWidth;
+            maxX = backgroundBounds.max.x - objectHalfWidth;
+        }
     }
 
     private void ChangeChildSortingLayers(Transform parent)
