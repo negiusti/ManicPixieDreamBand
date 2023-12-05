@@ -9,17 +9,17 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManager[] objects = FindObjectsOfType<GameManager>();
+        //GameManager[] objects = FindObjectsOfType<GameManager>();
 
-        // If there is more than one instance, destroy the current object
-        if (objects.Length > 1)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            DontDestroyOnLoad(gameObject);
-        }
+        //// If there is more than one instance, destroy the current object
+        //if (objects.Length > 1)
+        //{
+        //    Destroy(gameObject);
+        //}
+        //else
+        //{
+        //    DontDestroyOnLoad(gameObject);
+        //}
     }
 
     // Update is called once per frame

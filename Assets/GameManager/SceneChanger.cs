@@ -11,6 +11,7 @@ public class SceneChanger : MonoBehaviour
     //private GameObject player;
     public void ChangeScene(string sceneName)
     {
+        SaveCharacters();
         DialogueManager.StopAllConversations();
         //string currentScene = SceneManager.GetActiveScene().name;
         Debug.Log("Loading scene: " + sceneName);
@@ -27,6 +28,15 @@ public class SceneChanger : MonoBehaviour
             sceneStack.Pop();
         if (sceneStack.Peek() != null)
             ChangeScene(sceneStack.Peek());
+    }
+
+    private void SaveCharacters()
+    {
+        Character[] characters = FindObjectsOfType<Character>();
+        foreach (Character c in characters)
+        {
+            c.SaveCharacter();
+        }
     }
 
     void OnEnable()
