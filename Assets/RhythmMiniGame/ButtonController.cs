@@ -24,11 +24,13 @@ public class ButtonController : MonoBehaviour
         if (Input.GetKeyDown(keyCode))
         {
             spriteRenderer.sprite = pressedSprite;
+            spriteRenderer.color = Color.green;
             guitarString.SetCategoryAndLabel("String", "Wiggly");
         }
         if (Input.GetKeyUp(keyCode))
         {
             spriteRenderer.sprite = defaultSprite;
+            spriteRenderer.color = Color.cyan;
             guitarString.SetCategoryAndLabel("String", "Still");
         }
     }
