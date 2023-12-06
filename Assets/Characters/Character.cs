@@ -171,7 +171,8 @@ public class Character : MonoBehaviour
 
         foreach (var spriteRenderer in spriteRenderers)
         {
-            spriteRenderer.color = categoryToColorMap.GetValueOrDefault(spriteRenderer.gameObject.name);
+            //spriteRenderer.color = categoryToColorMap[spriteRenderer.gameObject.name];
+            spriteRenderer.color = categoryToColorMap.TryGetValue(spriteRenderer.gameObject.name, out Color value) ? value : Color.white;
             spriteRenderer.enabled = categoryToEnabled.GetValueOrDefault(spriteRenderer.gameObject.name);
         }
     }
