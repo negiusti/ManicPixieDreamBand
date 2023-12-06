@@ -13,14 +13,16 @@ public class PlayerMovement : MonoBehaviour
     private string targetSortingLayer = "Player";
     private float minX, maxX;
     public GameObject background;
-
-    //void Awake()
-    //{
-    //    DontDestroyOnLoad(gameObject);
-    //}
+    bool isPlayingGuitar;
 
     void Update()
     {
+        if (isPlayingGuitar)
+        {
+            animator.CrossFade("BaseCharacter_Guitar", .1f);
+            return;
+        }
+
         moveInput = Input.GetAxis("Horizontal");
 
         if (moveInput == 0f && !isIdle)
@@ -33,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
             animator.CrossFade("BaseCharacter_Walk", .1f);
             isIdle = false;
         }
-
 
         Vector3 currentScale = player.transform.localScale;
         Quaternion currentRotation = player.transform.localRotation;
@@ -49,6 +50,18 @@ public class PlayerMovement : MonoBehaviour
         position.x += moveInput * moveSpeed * Time.deltaTime;
         position.x = Mathf.Clamp(position.x, minX, maxX);
         transform.position = position;
+    }
+
+    public void PlayGuitar()
+    {
+        isPlayingGuitar = true;
+        //player.ShowHoldingSprite();
+    }
+
+    public void StopPlayingGuitar()
+    {
+        isPlayingGuitar = false;
+        player.HideHoldingSprite();
     }
 
     // Start is called before the first frame update

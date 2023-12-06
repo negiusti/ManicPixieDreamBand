@@ -610,13 +610,15 @@ GameObject:
   m_Component:
   - component: {fileID: 337618610}
   - component: {fileID: 337618611}
+  - component: {fileID: 337618613}
+  - component: {fileID: 337618612}
   m_Layer: 0
-  m_Name: Guitar
+  m_Name: Holding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &337618610
 Transform:
   m_ObjectHideFlags: 0
@@ -673,7 +675,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 66
-  m_Sprite: {fileID: 21300000, guid: e36c1bb7e0613e249b2ea89331b8ce09, type: 3}
+  m_Sprite: {fileID: -2726209649630406333, guid: 8278d1a0eefdc468eb237d8625d263c4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -684,6 +686,45 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &337618612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337618609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: Holding
+    m_Hash: 0
+    m_CategoryList:
+    - m_Name: None
+      m_Hash: 0
+      m_Sprite: {fileID: -2726209649630406333, guid: 8278d1a0eefdc468eb237d8625d263c4, type: 3}
+    - m_Name: Bass
+      m_Hash: 0
+      m_Sprite: {fileID: 21300000, guid: e36c1bb7e0613e249b2ea89331b8ce09, type: 3}
+  m_SpriteLibraryAsset: {fileID: 0}
+--- !u!114 &337618613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337618609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CategoryHash: 6.6078025e-27
+  m_labelHash: 6.890074e-20
+  m_SpriteKey: 0
+  m_SpriteHash: 29084404
 --- !u!1 &343684357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1614,6 +1655,7 @@ GameObject:
   - component: {fileID: 887566720}
   - component: {fileID: 887566722}
   - component: {fileID: 887566721}
+  - component: {fileID: 887566723}
   m_Layer: 0
   m_Name: T_Bass_Practice
   m_TagString: Untagged
@@ -1769,6 +1811,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
+--- !u!114 &887566723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 887566717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d669e64f476864ecf83da0acfbc81613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyToTrigger: 32
+  minigame: {fileID: 1780412640}
 --- !u!1001 &933372295
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4466,6 +4522,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 10117372170962060, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 3752284488493883590, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
       propertyPath: m_Enabled
       value: 0

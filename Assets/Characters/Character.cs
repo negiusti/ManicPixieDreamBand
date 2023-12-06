@@ -11,6 +11,8 @@ public class Character : MonoBehaviour
     private SpriteRenderer[] spriteRenderers;
     private Dictionary<string, Color> categoryToColorMap;
     private Dictionary<string, bool> categoryToEnabled;
+    private SpriteResolver holdingResolver;
+    private SpriteRenderer holdingRenderer;
     //private bool isWearingPants; // Crotch is always enabled, determines whether L_Pant and R_Pant are enabled
     //private bool hasSleeves; // Whether this outfit has sleeves
     private bool isWearingFullFit; // Set matching Top, Crotch, and (optional) sleeves, (optional) L_Pant and R_Pant
@@ -60,11 +62,48 @@ public class Character : MonoBehaviour
         LoadCharacter();
         animator = this.GetComponent<Animator>();
         animator.Play("BaseCharacter_Idle");
+
+        foreach (var targetResolver in spriteResolvers)
+        {
+            if (targetResolver.GetCategory() != null)
+            {
+                if (targetResolver.gameObject.name.Equals("Holding"))
+                    holdingResolver = targetResolver;
+                Debug.Log("spriteRenderer GO name " + targetResolver.gameObject.name);
+            }
+        }
+        foreach (var targetRenderer in spriteRenderers)
+        {
+            if (targetRenderer.gameObject.name.Equals("Holding"))
+            {
+                
+                holdingRenderer = targetRenderer;
+                Debug.Log("spriteRenderer GO name " + targetRenderer.gameObject.name);
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public void SetHoldingSprite(string s)
+    {
+        holdingRenderer.enabled = true;
+        holdingResolver.SetCategoryAndLabel("Holding", s);
+        holdingResolver.ResolveSpriteToSpriteRenderer();
+    }
+
+    //public void ShowHoldingSprite()
+    //{
+    //    holdingResolver.enabled = true;
+    //}
+
+    public void HideHoldingSprite()
+    {
+        holdingResolver.SetCategoryAndLabel("Holding", "None");
+        holdingResolver.ResolveSpriteToSpriteRenderer();
     }
 
     private void updateSpriteResolverMap()
@@ -126,14 +165,14 @@ public class Character : MonoBehaviour
                 Debug.Log("category: " + targetResolver.GetCategory() + " label: " + targetResolver.GetLabel());
                 Debug.Log("category: " + targetResolver.GetCategory() + " label: " + categoryToLabelMap[targetResolver.GetCategory()]);
                 targetResolver.SetCategoryAndLabel(targetResolver.GetCategory(), categoryToLabelMap[targetResolver.GetCategory()]);
-                targetResolver.ResolveSpriteToSpriteRenderer();
+                targetResolver.ResolveSpriteToSpriteRenderer(); 
             }
         }
 
         foreach (var spriteRenderer in spriteRenderers)
         {
-            spriteRenderer.color = categoryToColorMap[spriteRenderer.gameObject.name];
-            spriteRenderer.enabled = categoryToEnabled[spriteRenderer.gameObject.name];
+            spriteRenderer.color = categoryToColorMap.GetValueOrDefault(spriteRenderer.gameObject.name);
+            spriteRenderer.enabled = categoryToEnabled.GetValueOrDefault(spriteRenderer.gameObject.name);
         }
     }
 
