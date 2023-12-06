@@ -6,12 +6,15 @@ using UnityEngine.U2D.Animation;
 
 public class Phone : MonoBehaviour
 {
+    public static Phone Instance;
     public GameObject icons;
     public GameObject background;
     public GameObject backButton;
+    public AppHeader appHeader;
     public PhoneMessages messages;
     private SpriteResolver backgroundResolver;
     private bool isLocked;
+    
     enum PhoneState
     {
         Home,
@@ -53,6 +56,7 @@ public class Phone : MonoBehaviour
 
     public void OpenMessages()
     {
+        SetAppHeader("Messages");
         if (phoneStateStack.Peek() != PhoneState.Messages)
             phoneStateStack.Push(PhoneState.Messages);
         // Show messages interface
@@ -67,11 +71,13 @@ public class Phone : MonoBehaviour
     public void OpenConvo()
     {
         // TODO PHONE UI CHANGES HERE
+        appHeader.gameObject.SetActive(false);
         phoneStateStack.Push(PhoneState.Convo);
     }
 
     public void OpenMap()
     {
+        SetAppHeader("Map");
         phoneStateStack.Push(PhoneState.Map);
         // Show messages interface
         // Hide icons
@@ -81,6 +87,7 @@ public class Phone : MonoBehaviour
 
     public void OpenSettings()
     {
+        SetAppHeader("Settings");
         phoneStateStack.Push(PhoneState.Settings);
         // Show messages interface
         // Hide icons
@@ -90,6 +97,7 @@ public class Phone : MonoBehaviour
 
     public void OpenPhotos()
     {
+        SetAppHeader("Photos");
         phoneStateStack.Push(PhoneState.Photos);
         // Show messages interface
         // Hide icons
@@ -136,6 +144,12 @@ public class Phone : MonoBehaviour
         }
     }
 
+    private void SetAppHeader(string appName)
+    {
+        appHeader.gameObject.SetActive(true);
+        appHeader.SetAppHeader(appName);
+    }
+
     private void HideIcons()
     {
         backButton.SetActive(true);
@@ -144,6 +158,7 @@ public class Phone : MonoBehaviour
 
     private void CloseApps()
     {
+        appHeader.gameObject.SetActive(false);
         messages.gameObject.SetActive(false);
         backButton.SetActive(false);
         ShowIcons();
@@ -181,5 +196,19 @@ public class Phone : MonoBehaviour
         }
         transform.Translate(Vector3.up * 7);
         //this.transform.position = new Vector3(-1.141271f, 0.140902f, -0.5258861f);
+    }
+
+    private void Awake()
+    {
+        // Ensure only one instance exists
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Optional: Keeps the object alive across scene changes
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
