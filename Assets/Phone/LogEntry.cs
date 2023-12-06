@@ -7,14 +7,14 @@ using PixelCrushers.DialogueSystem;
 /// </summary>
 public class LogEntry : MonoBehaviour
 {
-    public Text speakerName;
+    //public Text speakerName;
     public Text dialogueText;
 
     public void Assign(Subtitle subtitle)
     {
-        speakerName.text = subtitle.speakerInfo.Name;
+        //speakerName.text = subtitle.speakerInfo.Name;
         dialogueText.text = subtitle.formattedText.text;
-        speakerName.rectTransform.sizeDelta = new Vector2(speakerName.preferredWidth, speakerName.preferredHeight);
+        //speakerName.rectTransform.sizeDelta = new Vector2(speakerName.preferredWidth, speakerName.preferredHeight);
         dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x, dialogueText.preferredHeight);
     }
 }

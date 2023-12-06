@@ -24,6 +24,7 @@ public class PlayGuitar : MonoBehaviour
         if (!isPlayingGuitar && withinRange && Input.GetKey(keyToTrigger))
         {
             spriteRenderer.enabled = false;
+            isPlayingGuitar = true;
             character.SetHoldingSprite("Bass");
             playerMovement.PlayGuitar();
         }

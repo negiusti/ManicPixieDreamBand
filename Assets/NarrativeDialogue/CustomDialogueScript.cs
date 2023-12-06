@@ -9,11 +9,14 @@ public class CustomDialogueScript : MonoBehaviour
     private bool isCoolDown;
     private int coolDown = 1;
     public BackLog backLogTemplate;
+    public ConvoHeader convoHeaderTemplate;
     private Dictionary<string, BackLog> backLogs;
+    private Dictionary<string, ConvoHeader> convoHeaders;
 
     private void Awake()
     {
         backLogTemplate.gameObject.SetActive(false);
+        convoHeaderTemplate.gameObject.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -21,6 +24,7 @@ public class CustomDialogueScript : MonoBehaviour
     {
         isCoolDown = false;
         backLogs = new Dictionary<string, BackLog>();
+        convoHeaders = new Dictionary<string, ConvoHeader>();
     }
 
     // Update is called once per frame
@@ -37,6 +41,10 @@ public class CustomDialogueScript : MonoBehaviour
         BackLog instance = Instantiate(backLogTemplate, backLogTemplate.transform.parent.transform);
         instance.gameObject.SetActive(true);
         backLogs.Add(contactName, instance);
+        ConvoHeader instance2 = Instantiate(convoHeaderTemplate, convoHeaderTemplate.transform.parent.transform);
+        instance2.gameObject.SetActive(true);
+        instance2.SetConvoHeader(contactName);
+        convoHeaders.Add(contactName, instance2);
     }
 
     IEnumerator CoolDown()
@@ -77,6 +85,7 @@ public class CustomDialogueScript : MonoBehaviour
         foreach (string c in backLogs.Keys)
         {
             backLogs[c].gameObject.SetActive(c.Equals(contactName));
+            convoHeaders[c].gameObject.SetActive(c.Equals(contactName));
         }
     }
 
@@ -85,6 +94,7 @@ public class CustomDialogueScript : MonoBehaviour
         foreach (string c in backLogs.Keys)
         {
             backLogs[c].gameObject.SetActive(false);
+            convoHeaders[c].gameObject.SetActive(false);
         }
     }
 

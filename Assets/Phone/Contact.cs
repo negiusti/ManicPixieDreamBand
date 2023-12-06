@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using PixelCrushers.DialogueSystem;
+using TMPro;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -10,11 +11,11 @@ public class Contact : MonoBehaviour
     private SpriteResolver spriteResolver;
     public PhoneMessages messages;
     public Phone phone;
+    private TextMeshPro contactNameTM;
 
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -27,6 +28,8 @@ public class Contact : MonoBehaviour
     {
         this.spriteResolver = this.GetComponent<SpriteResolver>();
         this.contactName = contactName;
+        this.contactNameTM = this.GetComponentInChildren<TextMeshPro>();
+        contactNameTM.text = contactName;
         spriteResolver.SetCategoryAndLabel("Pic", contactName);
     }
 

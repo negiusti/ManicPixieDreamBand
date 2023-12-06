@@ -33,7 +33,8 @@ public class Phone : MonoBehaviour
         phoneStateStack.Push(PhoneState.Home);
         //contactsList = SaveSystem.LoadContactsList();
         GoHome();
-        Lock();
+        isLocked = true;
+        //Lock();
     }
 
     // Update is called once per frame
@@ -162,12 +163,23 @@ public class Phone : MonoBehaviour
     }
     private void Lock()
     {
-        
-        this.transform.position = new Vector3(-1.141271f, -6.38f, -0.5258861f);
+        foreach (Transform child in transform)
+        {
+            // Move each child object
+            child.Translate(Vector3.down * 7);
+        }
+        transform.Translate(Vector3.down * 7);
+        //this.transform.position = new Vector3(-1.141271f, -6.38f, -0.5258861f);
     }
 
     private void Unlock()
     {
-        this.transform.position = new Vector3(-1.141271f, 0.140902f, -0.5258861f);
+        foreach (Transform child in transform)
+        {
+            // Move each child object
+            child.Translate(Vector3.up * 7);
+        }
+        transform.Translate(Vector3.up * 7);
+        //this.transform.position = new Vector3(-1.141271f, 0.140902f, -0.5258861f);
     }
 }

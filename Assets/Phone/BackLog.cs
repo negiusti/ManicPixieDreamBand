@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using PixelCrushers.DialogueSystem;
+using TMPro;
 
 /// <summary>
 /// This script runs the back log. It records dialogue lines as they're played.
@@ -9,15 +10,15 @@ using PixelCrushers.DialogueSystem;
 /// </summary>
 public class BackLog : MonoBehaviour
 {
-
     public Transform logEntryContainer;
     public LogEntry logEntryTemplate;
+    public Text speakerNameTemplate;
     public ScrollRect scrollView;
-    public Sprite pinkSprite;
-    public Sprite greenSprite;
     private int currentEntryID;
+    private static HashSet<string> groupChats = new HashSet<string> { "TXT_Band" };
 
     private List<Subtitle> log = new List<Subtitle>();
+
     private List<GameObject> instances = new List<GameObject>();
 
     private void Start()
@@ -28,6 +29,7 @@ public class BackLog : MonoBehaviour
     private void Awake()
     {
         logEntryTemplate.gameObject.SetActive(false);
+        speakerNameTemplate.gameObject.SetActive(false);
     }
 
     public int GetCurrEntryID()
@@ -37,10 +39,19 @@ public class BackLog : MonoBehaviour
     
     public void AddToBacklog(Subtitle subtitle)
     {
+        bool isGroupChat = groupChats.Contains(DialogueManager.LastConversationStarted);
         Debug.Log("AddToBacklog: " + subtitle.dialogueEntry.DialogueText);
         ScrollToBottomOfScrollView();
         if (!string.IsNullOrEmpty(subtitle.formattedText.text))
         {
+            if (isGroupChat && !subtitle.speakerInfo.IsPlayer)
+            {
+                // add a name header
+                Text speakerName = Instantiate(speakerNameTemplate, logEntryContainer);
+                speakerName.text = subtitle.speakerInfo.Name;
+                speakerName.gameObject.SetActive(true);
+            }
+
             log.Add(subtitle);
             LogEntry instance = Instantiate(logEntryTemplate, logEntryContainer);
             instances.Add(instance.gameObject);
@@ -65,11 +76,10 @@ public class BackLog : MonoBehaviour
             // TODO use different bubble image for PLAYER
             if (subtitle.speakerInfo.IsPlayer)
             {
-                image.sprite = greenSprite;
-                instance.speakerName.enabled = false;
+                image.color = Color.yellow;
             } else
             {
-                image.sprite = pinkSprite;
+                image.color = Color.cyan;
             }
 
             // Move scroll to bottom
