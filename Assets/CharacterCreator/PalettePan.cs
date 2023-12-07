@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +18,7 @@ public class PalettePan : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void SetColor(Color c)
@@ -33,6 +33,6 @@ public class PalettePan : MonoBehaviour
 
     private void OnMouseDown()
     {
-       palette.SetColor(image.color);
+        palette.SetColor(image.color);
     }
 }

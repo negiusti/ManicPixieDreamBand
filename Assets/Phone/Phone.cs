@@ -12,7 +12,9 @@ public class Phone : MonoBehaviour
     public GameObject backButton;
     public AppHeader appHeader;
     public PhoneMessages messages;
+    public BankApp bankApp;
     private SpriteResolver backgroundResolver;
+    private MainCharacter mainCharacter;
     private bool isLocked;
     
     enum PhoneState
@@ -22,6 +24,7 @@ public class Phone : MonoBehaviour
         Map,
         Settings,
         Photos,
+        Bank,
         Convo
     };
 
@@ -38,6 +41,7 @@ public class Phone : MonoBehaviour
         GoHome();
         isLocked = true;
         //Lock();
+        mainCharacter = GameObject.FindFirstObjectByType<MainCharacter>();
     }
 
     // Update is called once per frame
@@ -73,6 +77,21 @@ public class Phone : MonoBehaviour
         // TODO PHONE UI CHANGES HERE
         appHeader.gameObject.SetActive(false);
         phoneStateStack.Push(PhoneState.Convo);
+    }
+
+    public void OpenBank()
+    {
+        SetAppHeader("Hellcorp Bank");
+        bankApp.gameObject.SetActive(true);
+        bankApp.UpdateBankBalance();
+        phoneStateStack.Push(PhoneState.Bank);
+        HideIcons();
+        backgroundResolver.SetCategoryAndLabel("Background", "Bank");
+    }
+
+    public MainCharacter GetMainCharacter()
+    {
+        return mainCharacter;
     }
 
     public void OpenMap()
@@ -134,6 +153,10 @@ public class Phone : MonoBehaviour
                 OpenPhotos();
                 break;
 
+            case PhoneState.Bank:
+                OpenBank();
+                break;
+
             case PhoneState.Home:
                 GoHome();
                 break;
@@ -158,6 +181,7 @@ public class Phone : MonoBehaviour
 
     private void CloseApps()
     {
+        bankApp.gameObject.SetActive(false);
         appHeader.gameObject.SetActive(false);
         messages.gameObject.SetActive(false);
         backButton.SetActive(false);
