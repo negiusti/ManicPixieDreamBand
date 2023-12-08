@@ -36,20 +36,21 @@ public class PlayerMovement : MonoBehaviour
             isIdle = false;
         }
 
-        Vector3 currentScale = player.transform.localScale;
         Quaternion currentRotation = player.transform.localRotation;
-        if ((moveInput < 0 && currentScale.x > 0) || (moveInput > 0 && currentScale.x < 0))
+        if (moveInput < 0 && currentRotation.y > 0)
         {
-            currentScale.x *= -1;
-            currentRotation.z *= -1;
-            player.transform.localScale = currentScale;
-            player.transform.localRotation = currentRotation;
+            currentRotation.y = 0;
+            
+        } else if (moveInput > 0 && currentRotation.y < 180)
+        {
+            currentRotation.y = 180;
         }
 
         Vector3 position = transform.position;
         position.x += moveInput * moveSpeed * Time.deltaTime;
         position.x = Mathf.Clamp(position.x, minX, maxX);
         transform.position = position;
+        transform.rotation = currentRotation;
     }
 
     public void PlayGuitar()
