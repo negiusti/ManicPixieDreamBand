@@ -54,6 +54,23 @@ public class CustomDialogueScript : MonoBehaviour
         isCoolDown = false;
     }
 
+    void OnConversationStart(Transform actor)
+    {
+        string convoName = DialogueManager.LastConversationStarted;
+        if (convoName.Contains("TXT_"))
+        {
+            //DialogueManager.SetDialoguePanel(false);
+            //DialogueManager.standardDialogueUI.OverrideActorMenuPanel();
+            //DialogueManager.standardDialogueUI.overr
+            DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Never;
+        }
+        else
+        {
+            //DialogueManager.SetDialoguePanel(true);
+            DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Always;
+        }
+    }
+
     void OnConversationLine(Subtitle subtitle)
     {
         Debug.Log("OnConversationLine: " + subtitle.dialogueEntry.DialogueText);
@@ -61,6 +78,7 @@ public class CustomDialogueScript : MonoBehaviour
         if (convoName.Contains("TXT_")) {
             string contactName = convoName.Substring(4);
             backLogs[contactName].AddToBacklog(subtitle);
+            //DialogueManager.DialogueUI.HideSubtitle(subtitle);
             return;
         }
         if (subtitle.dialogueEntry.DialogueText.Length == 0 && subtitle.dialogueEntry.Title != "START")

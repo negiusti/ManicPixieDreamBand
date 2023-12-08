@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.U2D.Animation;
+using UnityEngine.SceneManagement;
 
 public class Phone : MonoBehaviour
 {
@@ -14,7 +15,6 @@ public class Phone : MonoBehaviour
     public PhoneMessages messages;
     public BankApp bankApp;
     private SpriteResolver backgroundResolver;
-    private MainCharacter mainCharacter;
     private bool isLocked;
     
     enum PhoneState
@@ -34,6 +34,7 @@ public class Phone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SceneManager.activeSceneChanged += ChangedActiveScene;
         backgroundResolver = background.GetComponent<SpriteResolver>();
         phoneStateStack = new Stack<PhoneState>();
         phoneStateStack.Push(PhoneState.Home);
@@ -41,13 +42,28 @@ public class Phone : MonoBehaviour
         GoHome();
         isLocked = true;
         //Lock();
-        mainCharacter = GameObject.FindFirstObjectByType<MainCharacter>();
     }
 
     // Update is called once per frame
     void Update()
     {
       
+    }
+
+    private void ChangedActiveScene(Scene current, Scene next)
+    {
+        string currentName = current.name;
+
+        if (currentName == null)
+        {
+            // Scene1 has been removed
+            currentName = "Replaced";
+        }
+
+        Canvas c = this.GetComponent<Canvas>();
+        c.worldCamera = Camera.main;
+
+        Debug.Log("Scenes: " + currentName + ", " + next.name);
     }
 
     public void GoHome()
@@ -91,7 +107,7 @@ public class Phone : MonoBehaviour
 
     public MainCharacter GetMainCharacter()
     {
-        return mainCharacter;
+        return GameObject.FindFirstObjectByType<MainCharacter>();
     }
 
     public void OpenMap()

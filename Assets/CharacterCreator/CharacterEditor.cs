@@ -52,10 +52,14 @@ public class CharacterEditor : MonoBehaviour
     public Icons socksIcons;
     public Icons shoesIcons;
     public Icons FBIcons;
+    private Phone phone;
 
     // Start is called before the first frame update
     void Start()
     {
+        phone = GameObject.FindFirstObjectByType<Phone>();
+        if (phone != null)
+            phone.gameObject.SetActive(false);
         skinRenderers = new List<SpriteRenderer>();
         character = this.GetComponent<Character>();
         SpriteResolver[] resolvers = this.GetComponentsInChildren<SpriteResolver>();
@@ -78,6 +82,8 @@ public class CharacterEditor : MonoBehaviour
             labels = spriteLib.GetCategoryLabelNames(category).Where(l => !l.StartsWith("X_") || l.Equals("X_" + gameObject.name)).ToArray();
             categoryToLabels[category] = labels;
             categoryToLabelIdx[category] = System.Array.IndexOf(labels, character.CategoryToLabelMap().GetValueOrDefault(category));
+            categoryToLabelIdx[category] = categoryToLabelIdx[category] < 0 ? 0 : categoryToLabelIdx[category];
+            Debug.Log("idx " + categoryToLabelIdx[category] + " category " + category);
             UpdateIcons(category, labels);
         }
         
@@ -97,6 +103,12 @@ public class CharacterEditor : MonoBehaviour
         Debug.Log("categoryToColorPalette is " + categoryToColorPalette.Keys);
         SetCurrentFaceCategory("Hair");
         HideTailsWithHijab();
+    }
+
+    private void OnDestroy()
+    {
+        if (phone != null)
+            phone.gameObject.SetActive(true);
     }
 
     private void UpdateIcons(string category, string[] labels)
