@@ -708,6 +708,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 183334, guid: 9052074e55e1f964c8c25e4b6d86be6c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 697884400}
+    - targetCorrespondingSourceObject: {fileID: 183334, guid: 9052074e55e1f964c8c25e4b6d86be6c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 697884404}
   m_SourcePrefab: {fileID: 100100000, guid: 9052074e55e1f964c8c25e4b6d86be6c, type: 3}
 --- !u!114 &458101805 stripped
 MonoBehaviour:
@@ -910,6 +913,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_yAxisOnly: 0
   m_rotate180: 1
+--- !u!114 &697884404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 697884396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf59e9c601bf0354baa2d3daac7d491e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightToLeft: 0
+  charactersPerSecond: 30
+  audioClip: {fileID: 0}
+  alternateAudioClips: []
+  audioSource: {fileID: 0}
+  usePlayOneShot: 0
+  interruptAudioClip: 0
+  stopAudioOnSilentCharacters: 0
+  stopAudioOnPauseCodes: 0
+  silentCharacters: 
+  fullPauseCharacters: 
+  quarterPauseCharacters: 
+  fullPauseDuration: 1
+  quarterPauseDuration: 0.25
+  removeDuplicateTypewriterEffects: 1
+  playOnEnable: 1
+  waitOneFrameBeforeStarting: 0
+  stopOnConversationEnd: 0
+  autoScrollSettings:
+    autoScrollEnabled: 0
+    scrollRect: {fileID: 0}
+    scrollbarEnabler: {fileID: 0}
+    sizerText: {fileID: 0}
+  onBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  onCharacter:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &800005973
 GameObject:
   m_ObjectHideFlags: 0
@@ -3688,7 +3735,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 183334, guid: 9052074e55e1f964c8c25e4b6d86be6c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1620289344}
   m_SourcePrefab: {fileID: 100100000, guid: 9052074e55e1f964c8c25e4b6d86be6c, type: 3}
 --- !u!114 &1606006237 stripped
 MonoBehaviour:
@@ -3706,6 +3756,55 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 22487592, guid: 9052074e55e1f964c8c25e4b6d86be6c, type: 3}
   m_PrefabInstance: {fileID: 1606006236}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1620289340 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 183334, guid: 9052074e55e1f964c8c25e4b6d86be6c, type: 3}
+  m_PrefabInstance: {fileID: 1606006236}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1620289344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620289340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf59e9c601bf0354baa2d3daac7d491e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightToLeft: 0
+  charactersPerSecond: 30
+  audioClip: {fileID: 0}
+  alternateAudioClips: []
+  audioSource: {fileID: 0}
+  usePlayOneShot: 0
+  interruptAudioClip: 0
+  stopAudioOnSilentCharacters: 0
+  stopAudioOnPauseCodes: 0
+  silentCharacters: 
+  fullPauseCharacters: 
+  quarterPauseCharacters: 
+  fullPauseDuration: 1
+  quarterPauseDuration: 0.25
+  removeDuplicateTypewriterEffects: 1
+  playOnEnable: 1
+  waitOneFrameBeforeStarting: 0
+  stopOnConversationEnd: 0
+  autoScrollSettings:
+    autoScrollEnabled: 0
+    scrollRect: {fileID: 0}
+    scrollbarEnabler: {fileID: 0}
+    sizerText: {fileID: 0}
+  onBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  onCharacter:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1680489582
 GameObject:
   m_ObjectHideFlags: 0
