@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -10,7 +11,7 @@ public class ButtonNavigation : MonoBehaviour
     void Start()
     {
         // Get all Selectable components in the GameObject's children
-        selectables = GetComponentsInChildren<Button>();
+        selectables = GetComponentsInChildren<Button>().Where(b => b.enabled).ToArray();
 
         // Ensure there is at least one selectable
         if (selectables.Length > 0)
@@ -24,6 +25,8 @@ public class ButtonNavigation : MonoBehaviour
 
     private void OnEnable()
     {
+        selectables = GetComponentsInChildren<Button>().Where(b => b.enabled).ToArray();
+        currentIndex = 0;
         EventSystem.current.SetSelectedGameObject(selectables[currentIndex].gameObject);
         selectables[currentIndex].OnSelect(null);
         selectables[currentIndex].Select();
