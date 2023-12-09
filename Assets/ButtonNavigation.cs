@@ -7,6 +7,8 @@ public class ButtonNavigation : MonoBehaviour
 {
     private Button[] selectables;
     private int currentIndex = 0;
+    private int topIdx;
+    private int bottomIdx;
 
     void Start()
     {
@@ -17,9 +19,7 @@ public class ButtonNavigation : MonoBehaviour
         if (selectables.Length > 0)
         {
             // Set the initial selection
-            EventSystem.current.SetSelectedGameObject(selectables[currentIndex].gameObject);
-            selectables[currentIndex].OnSelect(null);
-            selectables[currentIndex].Select();
+            Select(currentIndex);
         }
     }
 
@@ -27,9 +27,7 @@ public class ButtonNavigation : MonoBehaviour
     {
         selectables = GetComponentsInChildren<Button>().Where(b => b.enabled).ToArray();
         currentIndex = 0;
-        EventSystem.current.SetSelectedGameObject(selectables[currentIndex].gameObject);
-        selectables[currentIndex].OnSelect(null);
-        selectables[currentIndex].Select();
+        Select(currentIndex);
     }
 
     void Update()
@@ -58,15 +56,24 @@ public class ButtonNavigation : MonoBehaviour
     void SelectNext(int direction)
     {
         // Deselect the current button
-        //selectables[currentIndex].OnDeselect(null);
-        selectables[currentIndex].OnDeselect(null);
+        Unselect(currentIndex);
         
         // Update the current index
         currentIndex = (currentIndex + direction + selectables.Length) % selectables.Length;
 
         // Select the new button
-        EventSystem.current.SetSelectedGameObject(selectables[currentIndex].gameObject);
-        selectables[currentIndex].OnSelect(null);
-        selectables[currentIndex].Select();
+        Select(currentIndex);
+    }
+
+    private void Select(int idx)
+    {
+        EventSystem.current.SetSelectedGameObject(selectables[idx].gameObject);
+        selectables[idx].OnSelect(null);
+        selectables[idx].Select();
+    }
+
+    private void Unselect(int idx)
+    {
+        selectables[idx].OnDeselect(null);
     }
 }
