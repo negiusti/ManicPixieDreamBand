@@ -12,6 +12,7 @@ public class CustomDialogueScript : MonoBehaviour
     public ConvoHeader convoHeaderTemplate;
     private Dictionary<string, BackLog> backLogs;
     private Dictionary<string, ConvoHeader> convoHeaders;
+    public StandardUIMenuPanel phoneResponsePanel;
 
     private void Awake()
     {
@@ -59,14 +60,14 @@ public class CustomDialogueScript : MonoBehaviour
         string convoName = DialogueManager.LastConversationStarted;
         if (convoName.Contains("TXT_"))
         {
-            //DialogueManager.SetDialoguePanel(false);
-            //DialogueManager.standardDialogueUI.OverrideActorMenuPanel();
-            //DialogueManager.standardDialogueUI.overr
+            DialogueManager.SetDialoguePanel(false);
+            DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(phoneResponsePanel);
             DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Never;
         }
         else
         {
-            //DialogueManager.SetDialoguePanel(true);
+            DialogueManager.SetDialoguePanel(true);
+            DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<StandardUIMenuPanel>());
             DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Always;
         }
     }
@@ -78,7 +79,6 @@ public class CustomDialogueScript : MonoBehaviour
         if (convoName.Contains("TXT_")) {
             string contactName = convoName.Substring(4);
             backLogs[contactName].AddToBacklog(subtitle);
-            //DialogueManager.DialogueUI.HideSubtitle(subtitle);
             return;
         }
         if (subtitle.dialogueEntry.DialogueText.Length == 0 && subtitle.dialogueEntry.Title != "START")
