@@ -7,8 +7,10 @@ public class ButtonNavigation : MonoBehaviour
 {
     private Button[] selectables;
     private int currentIndex = 0;
-    private int topIdx;
-    private int bottomIdx;
+    public GameObject UpArrow;
+    public GameObject DownArrow;
+    //private int topIdx;
+    //private int bottomIdx;
 
     void Start()
     {
@@ -57,16 +59,19 @@ public class ButtonNavigation : MonoBehaviour
     {
         // Deselect the current button
         Unselect(currentIndex);
-        
-        // Update the current index
-        currentIndex = (currentIndex + direction + selectables.Length) % selectables.Length;
 
+        // Update the current index
+        //currentIndex = (currentIndex + direction + selectables.Length) % selectables.Length;
+        int proposedIdx = currentIndex + direction;
+        currentIndex = proposedIdx < selectables.Length && proposedIdx >= 0 ? proposedIdx : currentIndex;
         // Select the new button
         Select(currentIndex);
     }
 
     private void Select(int idx)
     {
+        HideAll();
+        Show2Options(idx);
         EventSystem.current.SetSelectedGameObject(selectables[idx].gameObject);
         selectables[idx].OnSelect(null);
         selectables[idx].Select();
@@ -75,5 +80,47 @@ public class ButtonNavigation : MonoBehaviour
     private void Unselect(int idx)
     {
         selectables[idx].OnDeselect(null);
+    }
+
+    private void HideAll()
+    {
+        foreach (Button b in selectables)
+        {
+            b.gameObject.SetActive(false);
+        }
+    }
+
+    private void ShowArrows(int topIdx, int bottomIdx)
+    {
+        UpArrow.SetActive(false);
+        DownArrow.SetActive(false);
+
+        // if not at the bottom, show down arrow
+        if (bottomIdx < selectables.Length - 1)
+        {
+            DownArrow.SetActive(true);
+        }
+        //if not at the top, show up arrow
+        if (topIdx > 0)
+        {
+            UpArrow.SetActive(true);
+        }
+    }
+
+    private void Show2Options(int idx)
+    {
+        // not at the bottom
+        if (idx < selectables.Length - 1)
+        {
+            selectables[idx].gameObject.SetActive(true);
+            selectables[idx + 1].gameObject.SetActive(true);
+            ShowArrows(idx, idx + 1);
+        }
+        else
+        {
+            selectables[idx].gameObject.SetActive(true);
+            selectables[idx - 1].gameObject.SetActive(true);
+            ShowArrows(idx - 1, idx);
+        }
     }
 }
