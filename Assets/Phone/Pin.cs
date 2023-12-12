@@ -47,8 +47,10 @@ public class Pin : MonoBehaviour
 
     public void UnHover()
     {
-        this.tm.enabled = false;
-        this.spriteRenderer.gameObject.transform.localScale = originalScale;
+        if (tm!= null)
+            tm.enabled = false;
+        if (spriteRenderer != null)
+            spriteRenderer.gameObject.transform.localScale = originalScale;
     }
 
     void OnMouseExit()
