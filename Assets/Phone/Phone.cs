@@ -12,8 +12,9 @@ public class Phone : MonoBehaviour
     public GameObject background;
     public GameObject backButton;
     public AppHeader appHeader;
-    public PhoneMessages messages;
-    public BankApp bankApp;
+    private PhoneMessages messagesApp;
+    private BankApp bankApp;
+    private MapsApp mapsApp;
     private SpriteResolver backgroundResolver;
     private bool isLocked;
     
@@ -22,6 +23,7 @@ public class Phone : MonoBehaviour
         Home,
         Messages,
         Map,
+        Pin,
         Settings,
         Photos,
         Bank,
@@ -39,9 +41,12 @@ public class Phone : MonoBehaviour
         phoneStateStack = new Stack<PhoneState>();
         phoneStateStack.Push(PhoneState.Home);
         //contactsList = SaveSystem.LoadContactsList();
+        bankApp = this.GetComponentInChildren<BankApp>();
+        mapsApp = this.GetComponentInChildren<MapsApp>();
+        messagesApp = this.GetComponentInChildren<PhoneMessages>();
         GoHome();
         isLocked = true;
-        //Lock();
+        Lock();
     }
 
     // Update is called once per frame
@@ -80,8 +85,8 @@ public class Phone : MonoBehaviour
         if (phoneStateStack.Peek() != PhoneState.Messages)
             phoneStateStack.Push(PhoneState.Messages);
         // Show messages interface
-        messages.gameObject.SetActive(true);
-        messages.OpenContacts();
+        messagesApp.gameObject.SetActive(true);
+        messagesApp.OpenContacts();
         // Hide icons
         HideIcons();
         // Change background
@@ -90,9 +95,16 @@ public class Phone : MonoBehaviour
 
     public void OpenConvo()
     {
-        // TODO PHONE UI CHANGES HERE
         appHeader.gameObject.SetActive(false);
-        phoneStateStack.Push(PhoneState.Convo);
+        if (phoneStateStack.Peek() != PhoneState.Convo)
+            phoneStateStack.Push(PhoneState.Convo);
+    }
+
+    public void OpenPin()
+    {
+        backgroundResolver.SetCategoryAndLabel("Background", "Maps2");
+        if (phoneStateStack.Peek() != PhoneState.Pin)
+            phoneStateStack.Push(PhoneState.Pin);
     }
 
     public void OpenBank()
@@ -100,7 +112,8 @@ public class Phone : MonoBehaviour
         SetAppHeader("Hellcorp Bank");
         bankApp.gameObject.SetActive(true);
         bankApp.UpdateBankBalance();
-        phoneStateStack.Push(PhoneState.Bank);
+        if (phoneStateStack.Peek() != PhoneState.Bank)
+            phoneStateStack.Push(PhoneState.Bank);
         HideIcons();
         backgroundResolver.SetCategoryAndLabel("Background", "Bank");
     }
@@ -112,8 +125,12 @@ public class Phone : MonoBehaviour
 
     public void OpenMap()
     {
-        SetAppHeader("Map");
-        phoneStateStack.Push(PhoneState.Map);
+        backgroundResolver.SetCategoryAndLabel("Background", "Maps1");
+        mapsApp.gameObject.SetActive(true);
+        mapsApp.Open();
+        SetAppHeader("");
+        if (phoneStateStack.Peek() != PhoneState.Map)
+            phoneStateStack.Push(PhoneState.Map);
         // Show messages interface
         // Hide icons
         HideIcons();
@@ -123,7 +140,8 @@ public class Phone : MonoBehaviour
     public void OpenSettings()
     {
         SetAppHeader("Settings");
-        phoneStateStack.Push(PhoneState.Settings);
+        if (phoneStateStack.Peek() != PhoneState.Settings)
+            phoneStateStack.Push(PhoneState.Settings);
         // Show messages interface
         // Hide icons
         HideIcons();
@@ -133,7 +151,8 @@ public class Phone : MonoBehaviour
     public void OpenPhotos()
     {
         SetAppHeader("Photos");
-        phoneStateStack.Push(PhoneState.Photos);
+        if (phoneStateStack.Peek() != PhoneState.Photos)
+            phoneStateStack.Push(PhoneState.Photos);
         // Show messages interface
         // Hide icons
         HideIcons();
@@ -151,6 +170,7 @@ public class Phone : MonoBehaviour
 
         phoneStateStack.Pop();
         state = phoneStateStack.Peek();
+        Debug.Log("poppin " + state.ToString());
         switch (state)
         {
             case PhoneState.Messages:
@@ -199,7 +219,8 @@ public class Phone : MonoBehaviour
     {
         bankApp.gameObject.SetActive(false);
         appHeader.gameObject.SetActive(false);
-        messages.gameObject.SetActive(false);
+        messagesApp.gameObject.SetActive(false);
+        mapsApp.gameObject.SetActive(false);
         backButton.SetActive(false);
         ShowIcons();
     }
