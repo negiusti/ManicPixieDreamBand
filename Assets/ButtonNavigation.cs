@@ -6,9 +6,9 @@ using UnityEngine.EventSystems;
 public class ButtonNavigation : MonoBehaviour
 {
     private Button[] selectables;
+    private DialogueResponseOption[] responses;
     private int currentIndex = 0;
-    public GameObject UpArrow;
-    public GameObject DownArrow;
+
     //private int topIdx;
     //private int bottomIdx;
 
@@ -16,7 +16,9 @@ public class ButtonNavigation : MonoBehaviour
     {
         // Get all Selectable components in the GameObject's children
         selectables = GetComponentsInChildren<Button>().Where(b => b.enabled).ToArray();
+        responses = selectables.Select(b => b.gameObject.GetComponent<DialogueResponseOption>()).ToArray();
 
+        UnselectAll();
         // Ensure there is at least one selectable
         if (selectables.Length > 0)
         {
@@ -29,6 +31,7 @@ public class ButtonNavigation : MonoBehaviour
     {
         selectables = GetComponentsInChildren<Button>().Where(b => b.enabled).ToArray();
         currentIndex = 0;
+        UnselectAll();
         Select(currentIndex);
     }
 
@@ -70,57 +73,108 @@ public class ButtonNavigation : MonoBehaviour
 
     private void Select(int idx)
     {
-        HideAll();
-        Show2Options(idx);
+        ShowUpTo3Options(idx);
         EventSystem.current.SetSelectedGameObject(selectables[idx].gameObject);
         selectables[idx].OnSelect(null);
         selectables[idx].Select();
+        responses[idx].Select();
+        if (idx > 0)
+        {
+            responses[idx].ShowUpArrow();
+        }
+        if (idx < selectables.Length - 1)
+        {
+            responses[idx].ShowDownArrow();
+        }
     }
 
     private void Unselect(int idx)
     {
+        responses[idx].Deselect();
         selectables[idx].OnDeselect(null);
     }
 
-    private void HideAll()
+    private void UnselectAll()
     {
+        foreach (DialogueResponseOption r in responses) {
+            r.Deselect();
+        }
         foreach (Button b in selectables)
         {
-            b.gameObject.SetActive(false);
+            b.OnDeselect(null);
         }
     }
 
-    private void ShowArrows(int topIdx, int bottomIdx)
+    private void HideAbove(int idx)
     {
-        UpArrow.SetActive(false);
-        DownArrow.SetActive(false);
-
-        // if not at the bottom, show down arrow
-        if (bottomIdx < selectables.Length - 1)
+        idx--;
+        while (idx >= 0)
         {
-            DownArrow.SetActive(true);
-        }
-        //if not at the top, show up arrow
-        if (topIdx > 0)
-        {
-            UpArrow.SetActive(true);
+            selectables[idx].gameObject.SetActive(false);
+            idx--;
         }
     }
 
-    private void Show2Options(int idx)
+    private void HideBelow(int idx)
     {
+        idx++;
+        while (idx < selectables.Length)
+        {
+            selectables[idx].gameObject.SetActive(false);
+            idx++;
+        }
+    }
+
+    private void ShowUpTo3Options(int idx)
+    {
+        if (selectables.Length == 2)
+        {
+            selectables[0].gameObject.SetActive(true);
+            responses[0].SetTop();
+
+            selectables[1].gameObject.SetActive(true);
+            responses[1].SetBottom();
+            return;
+        }
+
         // not at the bottom
-        if (idx < selectables.Length - 1)
+        if (idx < selectables.Length - 2)
         {
+            HideAbove(idx);
             selectables[idx].gameObject.SetActive(true);
+            responses[idx].SetTop();
+
             selectables[idx + 1].gameObject.SetActive(true);
-            ShowArrows(idx, idx + 1);
+            responses[idx + 1].SetMiddle();
+
+            selectables[idx + 2].gameObject.SetActive(true);
+            responses[idx + 2].SetBottom();
+            HideBelow(idx + 2);
+        } else if (idx < selectables.Length - 1)
+        {
+            HideAbove(idx - 1);
+            selectables[idx - 1].gameObject.SetActive(true);
+            responses[idx - 1].SetTop();
+
+            selectables[idx].gameObject.SetActive(true);
+            responses[idx].SetMiddle();
+
+            selectables[idx + 1].gameObject.SetActive(true);
+            responses[idx + 1].SetBottom();
+            HideBelow(idx + 1);
         }
         else
         {
+            HideAbove(idx - 2);
             selectables[idx].gameObject.SetActive(true);
+            responses[idx].SetBottom();
+
             selectables[idx - 1].gameObject.SetActive(true);
-            ShowArrows(idx - 1, idx);
+            responses[idx - 1].SetMiddle();
+
+            selectables[idx - 2].gameObject.SetActive(true);
+            responses[idx - 2].SetTop();
+            HideBelow(idx);
         }
     }
 }

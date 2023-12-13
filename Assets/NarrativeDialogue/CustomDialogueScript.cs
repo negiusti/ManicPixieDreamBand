@@ -43,6 +43,7 @@ public class CustomDialogueScript : MonoBehaviour
         } else if (Input.GetKeyDown(keyCode) && isCoolDown)
         {
             Debug.Log("cooling down");
+            isCoolDown = false;
         }
 
     }
