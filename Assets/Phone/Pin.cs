@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class Pin : MonoBehaviour
 {
-    public string LocationName;
+    public MapsApp.Location location;
     private TextMeshPro tm;
     private SpriteRenderer spriteRenderer;
     private Vector3 originalScale;
     private MapsApp app;
+    private bool alreadyHere;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,7 @@ public class Pin : MonoBehaviour
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         originalScale = this.spriteRenderer.gameObject.transform.localScale;
         app = this.GetComponentInParent<MapsApp>();
-        Debug.Log("hi");
+        alreadyHere = false;
     }
 
     private void OnEnable()
@@ -32,12 +33,26 @@ public class Pin : MonoBehaviour
         
     }
 
+    public void SetHere()
+    {
+        alreadyHere = true;
+        this.spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+        tm.text = location.ToString() + " (already here)";
+    }
+
+    public void SetNotHere()
+    {
+        alreadyHere = false;
+        this.spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+        tm.text = location.ToString();
+    }
+
     public void Hover()
     {
         Vector3 newScale = originalScale + Vector3.one * 5f;
         this.spriteRenderer.gameObject.transform.localScale = newScale;
         this.tm.enabled = true;
-        Debug.Log("hovering pin: " + LocationName);
+        Debug.Log("hovering pin: " + location.ToString());
     }
 
     void OnMouseEnter()
@@ -60,8 +75,10 @@ public class Pin : MonoBehaviour
 
     public void Click()
     {
-        Debug.Log("hovering pin: " + LocationName);
-        app.SetLocation(LocationName);
+        if (alreadyHere)
+            return;
+        Debug.Log("hovering pin: " + location.ToString());
+        app.SetLocation(location);
         app.OpenPin();
     }
 

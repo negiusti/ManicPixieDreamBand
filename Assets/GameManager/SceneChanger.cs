@@ -22,6 +22,11 @@ public class SceneChanger : MonoBehaviour
         //loadOperation.completed += (operation) => OnLoadCompleted(operation, currentScene);
     }
 
+    public string GetCurrentScene()
+    {
+        return SceneManager.GetActiveScene().name;
+    }
+
     public void GoToPreviousScene()
     {
         if (sceneStack.Peek() != null)

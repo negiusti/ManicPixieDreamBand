@@ -73,6 +73,8 @@ public class Phone : MonoBehaviour
 
     public void GoHome()
     {
+        phoneStateStack = new Stack<PhoneState>();
+        phoneStateStack.Push(PhoneState.Home);
         // Hide all app content and show icons
         CloseApps();
         // Change background
