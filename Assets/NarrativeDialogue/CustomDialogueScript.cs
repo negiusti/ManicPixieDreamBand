@@ -7,12 +7,13 @@ public class CustomDialogueScript : MonoBehaviour
 {
     public KeyCode keyCode;
     private bool isCoolDown;
-    private int coolDown = 1;
+    private float coolDown = 0.5f;
     public BackLog backLogTemplate;
     public ConvoHeader convoHeaderTemplate;
     private Dictionary<string, BackLog> backLogs;
     private Dictionary<string, ConvoHeader> convoHeaders;
     public StandardUIMenuPanel phoneResponsePanel;
+    private StandardUIMenuPanel responsePanel;
 
     private void Awake()
     {
@@ -31,10 +32,19 @@ public class CustomDialogueScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(keyCode) && !isCoolDown) {
+        responsePanel = GameObject.FindFirstObjectByType<MainCharacter>().gameObject.GetComponentInChildren<PixelCrushers.DialogueSystem.Wrappers.StandardUIMenuPanel>();
+
+        if (Input.GetKeyDown(keyCode) && !isCoolDown &&
+            (responsePanel == null || !responsePanel.gameObject.activeSelf))
+        {
             DialogueManager.standardDialogueUI.OnContinue();
             StartCoroutine(CoolDown());
+            Debug.Log("continuing");
+        } else if (Input.GetKeyDown(keyCode) && isCoolDown)
+        {
+            Debug.Log("cooling down");
         }
+
     }
 
     public void AddBackLog(string contactName)
@@ -67,7 +77,8 @@ public class CustomDialogueScript : MonoBehaviour
         else
         {
             DialogueManager.SetDialoguePanel(true);
-            DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<StandardUIMenuPanel>());
+            //responsePanel = GameObject.FindObjectOfType<MainCharacter>().GetComponentInChildren<StandardUIMenuPanel>();
+            //DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(responsePanel);
             DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Always;
         }
     }
