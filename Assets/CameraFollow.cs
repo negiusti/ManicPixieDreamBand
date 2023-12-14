@@ -18,6 +18,7 @@ public class CameraFollow : MonoBehaviour
             float cameraHalfWidth = mainCamera.orthographicSize * mainCamera.aspect;
             minX = backgroundBounds.min.x + cameraHalfWidth;
             maxX = backgroundBounds.max.x - cameraHalfWidth;
+            Follow();
         }
         else
         {
@@ -25,7 +26,7 @@ public class CameraFollow : MonoBehaviour
         }
     }
 
-    void LateUpdate()
+    private void Follow()
     {
         // Get the current position of the GameObject
         Vector3 desiredPosition = new Vector3(transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
@@ -38,5 +39,10 @@ public class CameraFollow : MonoBehaviour
         Camera.main.transform.position = new Vector3(Mathf.Clamp(Camera.main.transform.position.x, minX, maxX),
                                                      Camera.main.transform.position.y,
                                                      Camera.main.transform.position.z);
+    }
+
+    void LateUpdate()
+    {
+        Follow();
     }
 }
