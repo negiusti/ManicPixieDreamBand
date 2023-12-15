@@ -28,7 +28,7 @@ public class PhoneMessages : MonoBehaviour
             Debug.Log("Create contact for: " + c);
             Contact instance = Instantiate(contactTemplate, contacts.transform);
             instance.gameObject.SetActive(true);
-            instance.setContact(c);
+            instance.SetContact(c);
             instances.Add(instance.gameObject);
             customDialogue.AddBackLog(c);
         }

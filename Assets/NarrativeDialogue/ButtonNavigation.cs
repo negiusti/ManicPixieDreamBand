@@ -31,8 +31,8 @@ public class ButtonNavigation : MonoBehaviour
     {
         selectables = GetComponentsInChildren<Button>().Where(b => b.enabled).ToArray();
         responses = selectables.Select(b => b.gameObject.GetComponent<DialogueResponseOption>()).ToArray();
-        UnselectAll();
         currentIndex = 0;
+        UnselectAll();
         Select(currentIndex);
     }
 

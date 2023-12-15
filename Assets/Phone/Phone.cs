@@ -17,6 +17,7 @@ public class Phone : MonoBehaviour
     private MapsApp mapsApp;
     private SpriteResolver backgroundResolver;
     private bool isLocked;
+    private Animator animator;
     
     enum PhoneState
     {
@@ -44,6 +45,7 @@ public class Phone : MonoBehaviour
         bankApp = this.GetComponentInChildren<BankApp>();
         mapsApp = this.GetComponentInChildren<MapsApp>();
         messagesApp = this.GetComponentInChildren<PhoneMessages>();
+        animator = this.GetComponent<Animator>();
         GoHome();
         isLocked = true;
         Lock();
@@ -52,7 +54,10 @@ public class Phone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
+        //if (animator.enabled && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        //{
+        //    animator.enabled = false;
+        //}
     }
 
     private void ChangedActiveScene(Scene current, Scene next)
@@ -252,13 +257,17 @@ public class Phone : MonoBehaviour
 
     private void Unlock()
     {
+        //animator.enabled = true;
+        //animator.ResetTrigger("UnlockPhone");
+        //animator.Play("Phone_Open_Anim", 0, 0f);
+        //animator.SetTrigger("UnlockPhone");
+
         foreach (Transform child in transform)
         {
             // Move each child object
             child.Translate(Vector3.up * 7);
         }
         transform.Translate(Vector3.up * 7);
-        //this.transform.position = new Vector3(-1.141271f, 0.140902f, -0.5258861f);
     }
 
     private void Awake()

@@ -17,6 +17,7 @@ public class DialogueResponseOption : MonoBehaviour
     {
         text = this.GetComponentInChildren<Text>();
         button = this.GetComponent<Button>();
+        Deselect();
     }
 
     // Update is called once per frame
@@ -27,31 +28,38 @@ public class DialogueResponseOption : MonoBehaviour
 
     public void Select()
     {
-        button.image.color = new Color(0, 0, 1, 1);
-        text.color = new Color(1, 1, 1, 1);
+        if (button != null)
+            button.image.color = new Color(0, 0, 1, 1);
+        if (text != null)
+            text.color = new Color(1, 1, 1, 1);
     }
 
     public void SetTop()
     {
-        button.image.sprite = top;
+        if (button != null)
+            button.image.sprite = top;
     }
 
     public void SetMiddle()
     {
-        button.image.sprite = middle;
+        if (button != null)
+            button.image.sprite = middle;
     }
 
     public void SetBottom()
     {
-        button.image.sprite = bottom;
+        if (button != null)
+            button.image.sprite = bottom;
     }
 
     public void Deselect()
     {
         UpArrow.SetActive(false);
         DownArrow.SetActive(false);
-        button.image.color = new Color(0, 0, 0, 0);
-        text.color = new Color(0, 0, 0, 1);
+        if (button != null)
+            button.image.color = new Color(0, 0, 0, 0);
+        if (text != null)
+            text.color = new Color(0, 0, 0, 1);
     }
 
     public void ShowDownArrow()

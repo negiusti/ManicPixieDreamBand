@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
 public class MainCharacter : MonoBehaviour
@@ -8,17 +9,25 @@ public class MainCharacter : MonoBehaviour
     // money, unlocked clothes/furniture/instruments, inventory, etc
     private string characterName;
     private float bankBalance;
+    private ProximitySelector ps;
 
     // Start is called before the first frame update
     void Start()
     {
         LoadMainCharacter();
+        ps = this.GetComponent<ProximitySelector>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (DialogueManager.isConversationActive && ps.enabled)
+        {
+            ps.enabled = false;
+        } else if (!DialogueManager.isConversationActive && !ps.enabled)
+        {
+            ps.enabled = true;
+        }
     }
 
     public void SetCharacterName(string name)

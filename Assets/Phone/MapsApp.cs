@@ -36,9 +36,10 @@ public class MapsApp : MonoBehaviour
         sc = gm.gameObject.GetComponent<SceneChanger>();
         phone = this.GetComponentInParent<Phone>();
         travelScreen = this.GetComponentInChildren<TravelScreen>();
+        SetCurrentLocation();
     }
 
-    private void OnEnable()
+    private void SetCurrentLocation()
     {
         currentSceneName = sc.GetCurrentScene();
         if (sceneNameToLocation.ContainsKey(currentSceneName))
@@ -49,15 +50,24 @@ public class MapsApp : MonoBehaviour
                 if (p.location == l)
                 {
                     p.SetHere();
-                } else
+                }
+                else
                 {
                     p.SetNotHere();
                 }
             }
-        } else
+        }
+        else
         {
             Debug.LogError(currentSceneName + " is not inside sceneNameToLocationMap");
         }
+    }
+
+    private void OnEnable()
+    {
+        if (sc == null)
+            return;
+        SetCurrentLocation();
     }
 
     // Update is called once per frame

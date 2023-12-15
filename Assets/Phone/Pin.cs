@@ -37,14 +37,12 @@ public class Pin : MonoBehaviour
     {
         alreadyHere = true;
         this.spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
-        tm.text = location.ToString() + " (already here)";
     }
 
     public void SetNotHere()
     {
         alreadyHere = false;
         this.spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
-        tm.text = location.ToString();
     }
 
     public void Hover()
@@ -55,7 +53,7 @@ public class Pin : MonoBehaviour
         Debug.Log("hovering pin: " + location.ToString());
     }
 
-    void OnMouseEnter()
+    private void OnMouseEnter()
     {
         Hover();
     }
@@ -68,7 +66,7 @@ public class Pin : MonoBehaviour
             spriteRenderer.gameObject.transform.localScale = originalScale;
     }
 
-    void OnMouseExit()
+    private void OnMouseExit()
     {
         UnHover();
     }
@@ -82,7 +80,7 @@ public class Pin : MonoBehaviour
         app.OpenPin();
     }
 
-    void OnMouseDown()
+    private void OnMouseDown()
     {
         Click();
     }

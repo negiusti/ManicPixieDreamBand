@@ -24,7 +24,7 @@ public class Contact : MonoBehaviour
         
     }
 
-    public void setContact(string contactName)
+    public void SetContact(string contactName)
     {
         this.spriteResolver = this.GetComponent<SpriteResolver>();
         this.contactName = contactName;
@@ -33,13 +33,15 @@ public class Contact : MonoBehaviour
         spriteResolver.SetCategoryAndLabel("Pic", contactName);
     }
 
-    private void startConvo()
+    public void StartConvo()
     {
         messages.OpenTxtConvoWith(contactName);
     }
 
     private void OnMouseDown()
     {
-        startConvo();
+        StartConvo();
     }
+
+    
 }

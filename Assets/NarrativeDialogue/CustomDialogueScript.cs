@@ -32,15 +32,16 @@ public class CustomDialogueScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // the reason I do this is so that the space button selects the dialogue option without also continuing
         responsePanel = GameObject.FindFirstObjectByType<MainCharacter>().gameObject.GetComponentInChildren<PixelCrushers.DialogueSystem.Wrappers.StandardUIMenuPanel>();
 
-        if (Input.GetKeyDown(keyCode) && !isCoolDown &&
+        if (Input.GetKeyDown(keyCode) && DialogueManager.IsConversationActive && !isCoolDown &&
             (responsePanel == null || !responsePanel.gameObject.activeSelf))
         {
             DialogueManager.standardDialogueUI.OnContinue();
             StartCoroutine(CoolDown());
             Debug.Log("continuing");
-        } else if (Input.GetKeyDown(keyCode) && isCoolDown)
+        } else if (Input.GetKeyDown(keyCode) && DialogueManager.IsConversationActive && isCoolDown)
         {
             Debug.Log("cooling down");
             isCoolDown = false;
@@ -78,8 +79,8 @@ public class CustomDialogueScript : MonoBehaviour
         else
         {
             DialogueManager.SetDialoguePanel(true);
-            //responsePanel = GameObject.FindObjectOfType<MainCharacter>().GetComponentInChildren<StandardUIMenuPanel>();
-            //DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(responsePanel);
+            responsePanel = GameObject.FindObjectOfType<MainCharacter>().GetComponentInChildren<StandardUIMenuPanel>();
+            DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(responsePanel);
             DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Always;
         }
     }
