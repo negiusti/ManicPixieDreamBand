@@ -18,7 +18,9 @@ public class Phone : MonoBehaviour
     private SpriteResolver backgroundResolver;
     private bool isLocked;
     private Animator animator;
-    
+    private CustomDialogueScript customDialogue;
+    public StandardUIMenuPanel txtResponsePanel;
+
     enum PhoneState
     {
         Home,
@@ -49,15 +51,27 @@ public class Phone : MonoBehaviour
         GoHome();
         isLocked = true;
         Lock();
+        customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
+        //txtResponsePanel = this.GetComponentInChildren<PixelCrushers.DialogueSystem.Wrappers.StandardUIMenuPanel>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (animator.enabled && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        //{
-        //    animator.enabled = false;
-        //}
+
+        // if we don't have the convo open rn, stop the convo when it needs our response
+        if (!phoneStateStack.Peek().Equals(PhoneState.Convo) && IsTxtResponseMenuOpen())
+        {
+            //backButton.SetActive(false);
+            DialogueManager.StopAllConversations();
+            txtResponsePanel.Close();
+            //txtResponsePanel.gameObject.SetActive(false);
+        }
+    }
+
+    private bool IsTxtResponseMenuOpen()
+    {
+        return txtResponsePanel != null && txtResponsePanel.gameObject.activeSelf;
     }
 
     private void ChangedActiveScene(Scene current, Scene next)
@@ -80,9 +94,7 @@ public class Phone : MonoBehaviour
     {
         phoneStateStack = new Stack<PhoneState>();
         phoneStateStack.Push(PhoneState.Home);
-        // Hide all app content and show icons
         CloseApps();
-        // Change background
         backgroundResolver.SetCategoryAndLabel("Background", "Home");
     }
 
@@ -91,12 +103,9 @@ public class Phone : MonoBehaviour
         SetAppHeader("Messages");
         if (phoneStateStack.Peek() != PhoneState.Messages)
             phoneStateStack.Push(PhoneState.Messages);
-        // Show messages interface
         messagesApp.gameObject.SetActive(true);
         messagesApp.OpenContacts();
-        // Hide icons
         HideIcons();
-        // Change background
         backgroundResolver.SetCategoryAndLabel("Background", "Messages");
     }
 
@@ -138,10 +147,7 @@ public class Phone : MonoBehaviour
         SetAppHeader("");
         if (phoneStateStack.Peek() != PhoneState.Map)
             phoneStateStack.Push(PhoneState.Map);
-        // Show messages interface
-        // Hide icons
         HideIcons();
-        // Change background
     }
 
     public void OpenSettings()
@@ -149,10 +155,7 @@ public class Phone : MonoBehaviour
         SetAppHeader("Settings");
         if (phoneStateStack.Peek() != PhoneState.Settings)
             phoneStateStack.Push(PhoneState.Settings);
-        // Show messages interface
-        // Hide icons
         HideIcons();
-        // Change background
     }
 
     public void OpenPhotos()
@@ -160,10 +163,7 @@ public class Phone : MonoBehaviour
         SetAppHeader("Photos");
         if (phoneStateStack.Peek() != PhoneState.Photos)
             phoneStateStack.Push(PhoneState.Photos);
-        // Show messages interface
-        // Hide icons
         HideIcons();
-        // Change background
     }
 
     public void GoBack()
@@ -252,7 +252,6 @@ public class Phone : MonoBehaviour
             child.Translate(Vector3.down * 7);
         }
         transform.Translate(Vector3.down * 7);
-        //this.transform.position = new Vector3(-1.141271f, -6.38f, -0.5258861f);
     }
 
     private void Unlock()

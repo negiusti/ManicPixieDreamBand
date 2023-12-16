@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using System.Linq;
 
 public class CustomDialogueScript : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class CustomDialogueScript : MonoBehaviour
     private Dictionary<string, ConvoHeader> convoHeaders;
     public StandardUIMenuPanel phoneResponsePanel;
     private StandardUIMenuPanel responsePanel;
+    private List<Conversation> conversations;
+    private Canvas phoneResponsePanelCanvas;
 
     private void Awake()
     {
@@ -27,16 +30,29 @@ public class CustomDialogueScript : MonoBehaviour
         isCoolDown = false;
         backLogs = new Dictionary<string, BackLog>();
         convoHeaders = new Dictionary<string, ConvoHeader>();
+        GetAllConversations();
+        phoneResponsePanelCanvas = phoneResponsePanel.gameObject.GetComponent<Canvas>();
+    }
+
+    private void GetAllConversations()
+    {
+        // TODO sort conversations into trivial, plot, text, etc
+        conversations = DialogueManager.masterDatabase.conversations;
+        //conversations.Where(c => c.Name.e)
+    }
+
+    public bool IsPCResponseMenuOpen()
+    {
+        responsePanel = GameObject.FindFirstObjectByType<MainCharacter>().gameObject.GetComponentInChildren<PixelCrushers.DialogueSystem.Wrappers.StandardUIMenuPanel>();
+        return responsePanel != null && responsePanel.gameObject.activeSelf;
     }
 
     // Update is called once per frame
     void Update()
     {
         // the reason I do this is so that the space button selects the dialogue option without also continuing
-        responsePanel = GameObject.FindFirstObjectByType<MainCharacter>().gameObject.GetComponentInChildren<PixelCrushers.DialogueSystem.Wrappers.StandardUIMenuPanel>();
-
         if (Input.GetKeyDown(keyCode) && DialogueManager.IsConversationActive && !isCoolDown &&
-            (responsePanel == null || !responsePanel.gameObject.activeSelf))
+            !IsPCResponseMenuOpen())
         {
             DialogueManager.standardDialogueUI.OnContinue();
             StartCoroutine(CoolDown());
@@ -70,26 +86,51 @@ public class CustomDialogueScript : MonoBehaviour
     void OnConversationStart(Transform actor)
     {
         string convoName = DialogueManager.LastConversationStarted;
-        if (convoName.Contains("TXT_"))
+        if (IsTxtConvo(convoName))
         {
-            DialogueManager.SetDialoguePanel(false);
+            DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = true;
+            DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = false;
+            DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = false;
+            DialogueManager.SetDialoguePanel(false, true);
+            //phoneResponsePanel.gameObject.SetActive(true);            
+            //phoneResponsePanelCanvas.enabled = true;
             DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(phoneResponsePanel);
             DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Never;
         }
         else
         {
-            DialogueManager.SetDialoguePanel(true);
-            responsePanel = GameObject.FindObjectOfType<MainCharacter>().GetComponentInChildren<StandardUIMenuPanel>();
+            DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = false;
+            DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = true;
+            DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = true;
+            DialogueManager.SetDialoguePanel(true, true);
+            responsePanel = GameObject.FindObjectOfType<MainCharacter>().gameObject.GetComponentInChildren<StandardUIMenuPanel>();
             DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(responsePanel);
             DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Always;
         }
+    }
+
+    void OnConversationEnd(Transform actor)
+    {
+        //phoneResponsePanelCanvas.enabled = false;
+        //phoneResponsePanel.gameObject.SetActive(false);
+    }
+
+    public bool IsCurrentConvoTxt()
+    {
+        string convoName = DialogueManager.LastConversationStarted;
+        return IsTxtConvo(convoName);
+    }
+
+    private bool IsTxtConvo(string convoName)
+    {
+        return convoName.Contains("TXT");
     }
 
     void OnConversationLine(Subtitle subtitle)
     {
         Debug.Log("OnConversationLine: " + subtitle.dialogueEntry.DialogueText);
         string convoName = DialogueManager.LastConversationStarted;
-        if (convoName.Contains("TXT_")) {
+        if (IsTxtConvo(convoName)) {
             string contactName = convoName.Substring(4);
             backLogs[contactName].AddToBacklog(subtitle);
             return;
@@ -108,7 +149,11 @@ public class CustomDialogueScript : MonoBehaviour
 
     public void ResumeTxtConvo(string contactName)
     {
+        // TODO check if conversation was completed or else resume it
+        //conversations[0].dialogueEntries.LastOrDefault().id;
+        // check if convo name is group or singular
         DialogueManager.StartConversation("TXT_" + contactName, null, null, backLogs[contactName].GetCurrEntryID());
+        DialogueManager.SetDialoguePanel(false, true);
     }
 
     public void FocusBackLog(string contactName)
