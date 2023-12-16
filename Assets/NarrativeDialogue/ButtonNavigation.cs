@@ -53,7 +53,7 @@ public class ButtonNavigation : MonoBehaviour
             SelectNext(1);
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             selectables[currentIndex].OnSubmit(null);
         }
