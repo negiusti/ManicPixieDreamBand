@@ -42,6 +42,8 @@ public class BackLog : MonoBehaviour
         bool isGroupChat = groupChats.Contains(DialogueManager.LastConversationStarted);
         Debug.Log("AddToBacklog: " + subtitle.dialogueEntry.DialogueText);
         ScrollToBottomOfScrollView();
+        if (subtitle.dialogueEntry.id == currentEntryID)
+            return;
         if (!string.IsNullOrEmpty(subtitle.formattedText.text))
         {
             if (isGroupChat && !subtitle.speakerInfo.IsPlayer)
