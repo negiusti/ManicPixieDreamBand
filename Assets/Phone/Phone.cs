@@ -60,12 +60,11 @@ public class Phone : MonoBehaviour
     {
 
         // if we don't have the convo open rn, stop the convo when it needs our response
-        if (!phoneStateStack.Peek().Equals(PhoneState.Convo) && IsTxtResponseMenuOpen())
+        //if (!phoneStateStack.Peek().Equals(PhoneState.Convo) && IsTxtResponseMenuOpen())
+        if (!phoneStateStack.Peek().Equals(PhoneState.Convo) && customDialogue.IsTxtConvoActive())
         {
-            //backButton.SetActive(false);
             DialogueManager.StopAllConversations();
             txtResponsePanel.Close();
-            //txtResponsePanel.gameObject.SetActive(false);
         }
     }
 

@@ -121,6 +121,11 @@ public class CustomDialogueScript : MonoBehaviour
         return IsTxtConvo(convoName);
     }
 
+    public bool IsTxtConvoActive()
+    {
+        return DialogueManager.IsConversationActive && IsCurrentConvoTxt();
+    }
+
     private bool IsTxtConvo(string convoName)
     {
         return convoName.Contains("TXT");
