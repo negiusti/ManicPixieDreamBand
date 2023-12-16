@@ -248,9 +248,9 @@ public class Phone : MonoBehaviour
         foreach (Transform child in transform)
         {
             // Move each child object
-            child.Translate(Vector3.down * 7);
+            child.Translate(Vector3.down * 4f);
         }
-        transform.Translate(Vector3.down * 7);
+        transform.Translate(Vector3.down * 4f);
     }
 
     private void Unlock()
@@ -263,9 +263,9 @@ public class Phone : MonoBehaviour
         foreach (Transform child in transform)
         {
             // Move each child object
-            child.Translate(Vector3.up * 7);
+            child.Translate(Vector3.up * 4f);
         }
-        transform.Translate(Vector3.up * 7);
+        transform.Translate(Vector3.up * 4f);
     }
 
     private void Awake()
