@@ -21,7 +21,7 @@ public class HairAndMakeupEditor : MonoBehaviour
 
     private Vector3 defaultPosition;
     private Vector3 closeupPosition;
-    private float closeupSize = 2.7f;
+    private float closeupSize = 2.8f;
     private float startTime;
     private float defaultSize;
     // size 2.7
@@ -42,7 +42,7 @@ public class HairAndMakeupEditor : MonoBehaviour
         // Save the initial and target positions of the camera
         defaultSize = mainCamera.orthographicSize;
         defaultPosition = mainCamera.transform.position;
-        closeupPosition = new Vector3(2.44f, 2.56f, mainCamera.transform.position.z);
+        closeupPosition = new Vector3(2.88f, 2.56f, mainCamera.transform.position.z);
 
 
     }
