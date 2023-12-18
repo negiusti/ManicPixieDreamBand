@@ -22,6 +22,14 @@ public class VideoControl : MonoBehaviour
         sr.enabled = false;
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            videoPlayer.Stop();
+        }
+    }
+
     public void PlayPauseVideo()
     {
         if (videoPlayer.isPlaying)
