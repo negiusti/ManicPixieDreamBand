@@ -6,7 +6,7 @@ public class SplashScreen : MonoBehaviour
 {
     private GameManager gm;
     private SceneChanger sc;
-    public VideoControl vc;
+    //public VideoControl vc;
     
 
     // Start is called before the first frame update
@@ -21,7 +21,8 @@ public class SplashScreen : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            vc.Play();
+            //vc.Play();
+            sc.ChangeScene("Trailer");
         }
     }
 

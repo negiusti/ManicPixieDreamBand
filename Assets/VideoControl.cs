@@ -5,10 +5,10 @@ using UnityEngine.Video;
 public class VideoControl : MonoBehaviour
 {
     public VideoPlayer videoPlayer;
-    public MenuToggleScript menu;
-    public GameObject screen;
-    private SpriteRenderer sr;
-    public SplashScreen splash;
+    //public MenuToggleScript menu;
+    //public GameObject screen;
+    //private SpriteRenderer sr;
+    //public SplashScreen splash;
     private GameManager gm;
     private SceneChanger sc;
 
@@ -21,18 +21,17 @@ public class VideoControl : MonoBehaviour
         // Attach a callback for when the video completes
         videoPlayer.loopPointReached += OnVideoEnd;
         //screen.SetActive(false);
-        sr = screen.GetComponent<SpriteRenderer>();
-        sr.enabled = false;
+        //sr = screen.GetComponent<SpriteRenderer>();
+        //sr.enabled = false;
         gm = GameManager.Instance;
         sc = gm.GetComponent<SceneChanger>();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            videoPlayer.Stop();
-            sr.enabled = false;
+            sc.ChangeScene("Character_Editor");
         }
     }
 
@@ -46,18 +45,18 @@ public class VideoControl : MonoBehaviour
 
     void OnVideoEnd(VideoPlayer vp)
     {
-        //screen.SetActive(false);
-        sr.enabled = false;
-        if (splash != null)
-            splash.TrailerDone();
+        //sr.enabled = false;
+        //if (splash != null)
+        //    splash.TrailerDone();
+        sc.ChangeScene("Character_Editor");
         Debug.Log("Video has ended!");
     }
 
     public void Play()
     {
-        menu.DisableMenu();
+        //menu.DisableMenu();
         //screen.SetActive(true);
-        sr.enabled = true;
+        //sr.enabled = true;
         videoPlayer.Play();
     }
 
