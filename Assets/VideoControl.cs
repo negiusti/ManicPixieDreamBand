@@ -8,6 +8,9 @@ public class VideoControl : MonoBehaviour
     public MenuToggleScript menu;
     public GameObject screen;
     private SpriteRenderer sr;
+    public SplashScreen splash;
+    private GameManager gm;
+    private SceneChanger sc;
 
     void Start()
     {
@@ -20,6 +23,8 @@ public class VideoControl : MonoBehaviour
         //screen.SetActive(false);
         sr = screen.GetComponent<SpriteRenderer>();
         sr.enabled = false;
+        gm = GameManager.Instance;
+        sc = gm.GetComponent<SceneChanger>();
     }
 
     void Update()
@@ -27,6 +32,7 @@ public class VideoControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             videoPlayer.Stop();
+            sr.enabled = false;
         }
     }
 
@@ -42,6 +48,8 @@ public class VideoControl : MonoBehaviour
     {
         //screen.SetActive(false);
         sr.enabled = false;
+        if (splash != null)
+            splash.TrailerDone();
         Debug.Log("Video has ended!");
     }
 
@@ -51,5 +59,10 @@ public class VideoControl : MonoBehaviour
         //screen.SetActive(true);
         sr.enabled = true;
         videoPlayer.Play();
+    }
+
+    public void GoToDemoPortrait()
+    {
+        sc.ChangeScene("DemoPortrait");
     }
 }
