@@ -9,15 +9,17 @@ public class MakeupSelector : MonoBehaviour
     private Vector3 originalScale;
     private SpriteRenderer spriteRenderer;
     private MakeupSelector[] selectors;
-
+    public Material defaultMat;
+    public Material outlineMat;
+    private bool isSelected;
 
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         originalScale = this.spriteRenderer.gameObject.transform.localScale;
-        selectors = FindObjectsOfType<MakeupSelector>();
-        //spriteRenderer.material.
+        selectors = this.transform.parent.gameObject.GetComponentsInChildren<MakeupSelector>();
+        spriteRenderer.material = defaultMat;
     }
 
     // Update is called once per frame
@@ -28,7 +30,7 @@ public class MakeupSelector : MonoBehaviour
 
     private void OnMouseDown()
     {
-        characterEditor.SetCurrentFaceCategory(categoryName);
+        Select();
     }
 
     private void OnMouseEnter()
@@ -44,6 +46,21 @@ public class MakeupSelector : MonoBehaviour
 
     public void UnSelect()
     {
+        spriteRenderer.material = defaultMat;
+    }
 
+    private void UnSelectAll()
+    {
+        foreach (MakeupSelector selector in selectors)
+        {
+            selector.UnSelect();
+        }
+    }
+
+    public void Select()
+    {
+        UnSelectAll();
+        characterEditor.SetCurrentFaceCategory(categoryName);
+        spriteRenderer.material = outlineMat;
     }
 }

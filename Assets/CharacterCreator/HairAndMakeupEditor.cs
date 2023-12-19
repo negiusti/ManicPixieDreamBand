@@ -43,8 +43,6 @@ public class HairAndMakeupEditor : MonoBehaviour
         defaultSize = mainCamera.orthographicSize;
         defaultPosition = mainCamera.transform.position;
         closeupPosition = new Vector3(2.88f, 2.56f, mainCamera.transform.position.z);
-
-
     }
 
     // Update is called once per frame
