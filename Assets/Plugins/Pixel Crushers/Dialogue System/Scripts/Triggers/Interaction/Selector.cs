@@ -27,7 +27,7 @@ namespace PixelCrushers.DialogueSystem
     /// enabled or disabled.
     /// </summary>
     [AddComponentMenu("")] // Use wrapper.
-    public class Selector : MonoBehaviour
+    public class Selector : MonoBehaviour, IEventSystemUser
     {
 
         /// <summary>
@@ -231,6 +231,17 @@ namespace PixelCrushers.DialogueSystem
         /// <value>The GUI style.</value>
         public GUIStyle GuiStyle { get { SetGuiStyle(); return guiStyle; } }
 
+        private UnityEngine.EventSystems.EventSystem m_eventSystem = null;
+        public UnityEngine.EventSystems.EventSystem eventSystem
+        {
+            get
+            {
+                if (m_eventSystem != null) return m_eventSystem;
+                return UnityEngine.EventSystems.EventSystem.current;
+            }
+            set { m_eventSystem = value; }
+        }
+
         /// <summary>
         /// Occurs when the selector has targeted a usable object.
         /// </summary>
@@ -310,7 +321,7 @@ namespace PixelCrushers.DialogueSystem
 
 #if !USE_NEW_INPUT // (In new Input System, IsPointerOverGameObject returns true for all GameObjects, not just UI objects, so skip this check until Input System is fixed.)
             // Exit if using mouse selection and is over a UI element:
-            if ((selectAt == SelectAt.MousePosition) && (UnityEngine.EventSystems.EventSystem.current != null) && UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
+            if ((selectAt == SelectAt.MousePosition) && (eventSystem != null) && eventSystem.IsPointerOverGameObject()) return;
 #endif
 
             // Raycast 2D or 3D:

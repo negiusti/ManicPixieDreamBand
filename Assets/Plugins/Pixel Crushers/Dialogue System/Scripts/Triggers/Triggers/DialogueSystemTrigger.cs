@@ -248,7 +248,7 @@ namespace PixelCrushers.DialogueSystem
         [Tooltip("Start at this entry ID.")]
         public int startConversationEntryID = -1;
 
-        [Tooltip("Start at entry with this Title.")]
+        [Tooltip("Start at entry with this Title. If set, this takes precedence over Start Conversation Entry ID.")]
         public string startConversationEntryTitle;
 
         /// <summary>
@@ -262,6 +262,12 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         [Tooltip("Stop other conversation if one is active.")]
         public bool replace = false;
+
+        /// <summary>
+        /// If another conversation is active and simultaneous conversations aren't allowed, queue this conversation to start as soon as active one ends.
+        /// </summary>
+        [Tooltip("If another conversation is active and simultaneous conversations aren't allowed, queue this conversation to start as soon as active one ends.")]
+        public bool queue = false;
 
         /// <summary>
         /// If this is <c>true</c> and no valid entries currently link from the start entry,
@@ -375,6 +381,8 @@ namespace PixelCrushers.DialogueSystem
         protected ConversationState cachedState = null;
         protected BarkGroupMember barkGroupMember = null;
         protected IBarkUI barkUI = null;
+        protected bool isConversationQueued = false;
+        protected Transform queuedActor = null;
         protected float earliestTimeToAllowTriggerExit = 0;
         protected const float MarginToAllowTriggerExit = 0.2f;
         protected Coroutine monitorDistanceCoroutine = null;
@@ -504,7 +512,7 @@ namespace PixelCrushers.DialogueSystem
                 (activeConversation == null) || !activeConversation.conversationController.isActive;
             if (didMyConversationEnd)
             {
-                DialogueManager.instance.conversationEnded -= OnConversationEndAnywhere;
+                DialogueManager.instance.conversationEnded -= OnConversationEndAnywhere;                
                 StopMonitoringConversationDistance();
                 if (showCursorDuringConversation)
                 {
@@ -517,6 +525,16 @@ namespace PixelCrushers.DialogueSystem
                     Time.timeScale = preConversationTimeScale;
                 }
                 frameConversationEnded = Time.frameCount;
+            }
+        }
+
+        private void OnConversationEndCheckQueue(Transform actor)
+        {
+            if (isConversationQueued && !DialogueManager.isConversationActive)
+            {
+                DialogueManager.instance.conversationEnded -= OnConversationEndAnywhere;
+                isConversationQueued = false;
+                DoConversationAction(queuedActor);
             }
         }
 
@@ -725,6 +743,11 @@ namespace PixelCrushers.DialogueSystem
 
         public virtual void Fire(Transform actor)
         {
+            if (!DialogueManager.hasInstance)
+            {
+                Debug.LogError($"Dialogue System: Dialogue System Trigger '{name}' can't fire. There is no Dialogue Manager GameObject.", this);
+                return;
+            }
             if (DialogueDebug.logInfo) Debug.Log("Dialogue System: Dialogue System Trigger is firing " + trigger + ".", this);
             DoQuestAction();
             DoLuaAction(actor);
@@ -964,7 +987,14 @@ namespace PixelCrushers.DialogueSystem
                 if (DialogueDebug.logInfo) Debug.Log("Dialogue System: Stopping current active conversation " + DialogueManager.lastConversationStarted + " and starting " + conversation + ".", this);
                 DialogueManager.StopAllConversations();
             }
-            if (exclusive && DialogueManager.isConversationActive)
+            if (queue && !DialogueManager.allowSimultaneousConversations && DialogueManager.isConversationActive)
+            {
+                isConversationQueued = true;
+                queuedActor = actor;
+                DialogueManager.instance.conversationEnded += OnConversationEndCheckQueue;
+                if (DialogueDebug.logInfo) Debug.Log("Dialogue System: Conversation triggered on " + name + " is queued to play as soon as the current conversation ends.", this);
+            }
+            else if (exclusive && DialogueManager.isConversationActive)
             {
                 if (DialogueDebug.logInfo) Debug.Log("Dialogue System: Conversation triggered on " + name + " but skipping because another conversation is active.", this);
             }

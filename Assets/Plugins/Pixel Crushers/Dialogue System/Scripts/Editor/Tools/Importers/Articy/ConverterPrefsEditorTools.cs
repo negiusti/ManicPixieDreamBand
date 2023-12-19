@@ -37,6 +37,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         private const string ArticyDirectConversationLinksToEntry1Key = "PixelCrushers.DialogueSystem.DirectConversationLinksToEntry1";
         private const string ArticyConvertMarkupToRichTextKey = "PixelCrushers.DialogueSystem.ArticyConvertMarkupToRichText";
         private const string ArticySplitTextOnPipesKey = "PixelCrushers.DialogueSystem.SplitTextOnPipes";
+        private const string ArticyTrimWhitespaceKey = "PixelCrushers.DialogueSystem.TrimWhitespace";
         private const string ArticyFlowFragmentScriptKey = "PixelCrushers.DialogueSystem.ArticyFlowFragmentScript";
         private const string ArticyVoiceOverPropertyKey = "PixelCrushers.DialogueSystem.ArticyVoiceOverPropertyKey";
         private const string ArticyLocalizationXlsKey = "PixelCrushers.DialogueSystem.ArticyLocalizationXlsxKey";
@@ -67,6 +68,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             converterPrefs.DirectConversationLinksToEntry1 = EditorPrefs.GetBool(ArticyDirectConversationLinksToEntry1Key, false);
             converterPrefs.ConvertMarkupToRichText = EditorPrefs.GetBool(ArticyConvertMarkupToRichTextKey, true);
             converterPrefs.SplitTextOnPipes = EditorPrefs.GetBool(ArticySplitTextOnPipesKey, true);
+            converterPrefs.TrimWhitespace = EditorPrefs.GetBool(ArticyTrimWhitespaceKey, true);
             converterPrefs.FlowFragmentScript = EditorPrefs.GetString(ArticyFlowFragmentScriptKey, ConverterPrefs.DefaultFlowFragmentScript);
             converterPrefs.VoiceOverProperty = EditorPrefs.GetString(ArticyVoiceOverPropertyKey, ConverterPrefs.DefaultVoiceOverProperty);
             converterPrefs.LocalizationXlsx = EditorPrefs.GetString(ArticyLocalizationXlsKey);
@@ -98,6 +100,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             EditorPrefs.SetBool(ArticyDirectConversationLinksToEntry1Key, converterPrefs.DirectConversationLinksToEntry1);
             EditorPrefs.SetBool(ArticyConvertMarkupToRichTextKey, converterPrefs.ConvertMarkupToRichText);
             EditorPrefs.SetBool(ArticySplitTextOnPipesKey, converterPrefs.SplitTextOnPipes);
+            EditorPrefs.SetBool(ArticyTrimWhitespaceKey, converterPrefs.TrimWhitespace);
             EditorPrefs.SetString(ArticyFlowFragmentScriptKey, converterPrefs.FlowFragmentScript);
             EditorPrefs.SetString(ArticyVoiceOverPropertyKey, converterPrefs.VoiceOverProperty);
             EditorPrefs.SetString(ArticyLocalizationXlsKey, converterPrefs.LocalizationXlsx);
@@ -128,6 +131,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             EditorPrefs.DeleteKey(ArticyDirectConversationLinksToEntry1Key);
             EditorPrefs.DeleteKey(ArticyConvertMarkupToRichTextKey);
             EditorPrefs.DeleteKey(ArticySplitTextOnPipesKey);
+            EditorPrefs.DeleteKey(ArticyTrimWhitespaceKey);
             EditorPrefs.DeleteKey(ArticyFlowFragmentScriptKey);
             EditorPrefs.DeleteKey(ArticyVoiceOverPropertyKey);
             EditorPrefs.DeleteKey(ArticyLocalizationXlsKey);

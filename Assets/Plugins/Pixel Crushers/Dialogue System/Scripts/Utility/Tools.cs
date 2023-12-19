@@ -352,8 +352,8 @@ namespace PixelCrushers.DialogueSystem
                 @"<align=\w+>|</align>|<font=[^>]+>|</font>|<indent=\w+\%>|<indent=\w+>|</indent>|" +
                 @"<line-height=\w+%>|<line-height=\w+>|</line-height>|<line-indent=\w+\%>|<line-ident=\w+>|</line-ident>|" +
                 @"<link=""[^""]+"">|</link>|<lowercase>|</lowercase>|<uppercase>|</uppercase>|" +
-                @"<smallcaps>|</smallcaps>|<margin=.+>|<margin-?\w+=.+>|</margin>|<mark=#\w+>|</mark>|" +
-                @"<nobr>|</nobr>|<size=\w+\%>|<size=\w+>|</size>|<sprite=.+>|<[Ss]>|</[Ss]>|<[Uu]>|</[Uu]>|" +
+                @"<smallcaps>|</smallcaps>|<margin=.+?>|<margin-?\w+=.+?>|</margin>|<mark=#\w+>|</mark>|" +
+                @"<nobr>|</nobr>|<size=\w+\%>|<size=\w+>|</size>|<sprite=.+?>|<[Ss]>|</[Ss]>|<[Uu]>|</[Uu]>|" +
                 @"<sup>|</sup>|<sub>|</sub>|<p>|</p>|<\\/p>", string.Empty);
         }
 

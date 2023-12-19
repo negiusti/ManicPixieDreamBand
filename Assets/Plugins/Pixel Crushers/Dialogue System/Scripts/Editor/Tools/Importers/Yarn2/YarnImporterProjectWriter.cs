@@ -877,6 +877,12 @@ $@"local {RunCommandRuntimeArgumentList} = {Lua.EvaluateYarnExpression}({{1}})
                 if (mc.Count == 1 && mc[0].Groups.Count == 2)
                 {
                     lineEntry.Sequence = mc[0].Groups[1].Captures[0].Value;
+                    var dialogueText = lineEntry.DialogueText;
+                    var seqPos = dialogueText.IndexOf("[seq");
+                    if (seqPos != -1)
+                    {
+                        lineEntry.DialogueText = dialogueText.Substring(0, seqPos);
+                    }
                     return;
                 }
             }

@@ -154,20 +154,34 @@ namespace PixelCrushers.DialogueSystem.Yarn
             }
         }
 
-        public virtual void OnConversationEnd(Transform actor)
+        public virtual void OnConversationStart(Transform actor)
         {
-            // Debug.Log($"YarnCustomCommands::OnConversationEnd() - {DialogueManager.instance.LastConversationStarted}");
-            ClearConversationStringArgumentsMap(DialogueManager.instance.lastConversationID);
+            // Debug.Log($"YarnCustomCommands::OnConversationStart() - {DialogueManager.instance.LastConversationStarted}");
+            RecordVisited(DialogueManager.instance.lastConversationID, DialogueManager.instance.lastConversationStarted);
+        }
 
-            // NOTE: Why would this ever be null, I could see if it's OnConversationStart()
-            //       Should I remove the null check?
-            var conversationName = DialogueManager.instance.LastConversationStarted;
+        public virtual void OnLinkedConversationStart(Transform actor) 
+        {
+            // Debug.Log($"YarnCustomCommands::OnLinkedConversationStart() - {DialogueManager.currentConversationState.subtitle.dialogueEntry.conversationID}");
+            int conversationID = DialogueManager.currentConversationState.subtitle.dialogueEntry.conversationID;
+            var conversation = DialogueManager.masterDatabase.GetConversation(conversationID);
+            if (conversation != null)
+            {
+                RecordVisited(conversationID, conversation.Title);
+            }
+        }
+
+        protected virtual void RecordVisited(int conversationID, string conversationTitle)
+        { 
+            ClearConversationStringArgumentsMap(conversationID);
+
+            var conversationName = conversationTitle;
             if (conversationName != null)
             {
                 int visitCnt = 0;
                 _visitedCount.TryGetValue(conversationName, out visitCnt);
                 _visitedCount[conversationName] = visitCnt + 1;
-                // Debug.Log($"YarnCustomCommands::OnConversationEnd() - updated visited count to: {_visitedCount[conversationName]}");
+                // Debug.Log($"YarnCustomCommands::RecordVisited() - updated visited count to: {_visitedCount[conversationName]}");
             }
         }
 
@@ -269,13 +283,12 @@ namespace PixelCrushers.DialogueSystem.Yarn
 
         // These methods do nothing, but are implemented as placeholders
         // in case functionality needs to be added in the future.
-        public virtual void OnConversationStart(Transform actor) { }
+        public virtual void OnConversationEnd(Transform actor) { }
         public virtual void OnConversationCancelled(Transform actor) { }
         public virtual void OnPrepareConversationLine(DialogueEntry entry) { }
         public virtual void OnConversationLineEnd(Subtitle subtitle) { }
         public virtual void OnConversationLineCancelled(Subtitle subtitle) { }
         public virtual void OnConversationTimeout() { }
-        public virtual void OnLinkedConversationStart(Transform actor) { }
         public virtual void OnTextChange(UnityEngine.UI.Text text) { }
 
         public virtual void OnBarkStart(Transform actor) { }

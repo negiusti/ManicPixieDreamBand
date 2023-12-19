@@ -488,7 +488,7 @@ namespace PixelCrushers.DialogueSystem
             selectedQuest = (deselectQuestOnSecondClick && string.Equals(selectedQuest, clickedQuest)) ? string.Empty : clickedQuest;
 
             // Mark viewed:
-            if (!string.IsNullOrEmpty(newQuestText))
+            if (!string.IsNullOrEmpty(newQuestText) && !string.IsNullOrEmpty(selectedQuest))
             {
                 QuestLog.MarkQuestViewed(selectedQuest);
                 foreach (var quest in quests)

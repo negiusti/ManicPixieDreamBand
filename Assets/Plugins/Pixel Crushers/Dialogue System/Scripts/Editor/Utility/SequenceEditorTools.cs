@@ -178,7 +178,11 @@ namespace PixelCrushers.DialogueSystem
                                     if (string.IsNullOrEmpty(currentAudioCommand)) continue;
                                     var clip = obj as AudioClip;
                                     var path = AssetDatabase.GetAssetPath(clip);
+#if USE_ADDRESSABLES
+                                    if (true) // If using addressables, doesn't need to be in Resources
+#else
                                     if (path.Contains("Resources"))
+#endif
                                     {
                                         sequence = AddCommandToSequence(sequence, currentAudioCommand + "(" + GetResourceName(path) + ")");
                                         GUI.changed = true;
@@ -190,7 +194,7 @@ namespace PixelCrushers.DialogueSystem
                                     }
                                     else
                                     {
-                                        EditorUtility.DisplayDialog("Not in Resources Folder", "To use drag-n-drop, audio clips must be located in the hierarchy of a Resources folder.", "OK");
+                                        EditorUtility.DisplayDialog("Not in Resources Folder", "To use drag-n-drop, audio clips must be located in the hierarchy of a Resources folder or must be marked Addressable.", "OK");
                                     }
                                 }
                                 else if (obj is GameObject)
@@ -493,6 +497,13 @@ namespace PixelCrushers.DialogueSystem
                     foreach (var type in assembly.GetTypes().Where(t => typeof(PixelCrushers.DialogueSystem.SequencerCommands.SequencerCommand).IsAssignableFrom(t)))
                     {
                         var commandName = type.Name.Substring("SequencerCommand".Length);
+
+                        var attr = Attribute.GetCustomAttribute(type, typeof(SequencerCommandGroupAttribute)) as SequencerCommandGroupAttribute;
+                        if (attr != null && !string.IsNullOrEmpty(attr.submenu))
+                        {
+                            menu.AddItem(new GUIContent(attr.submenu + "/" + commandName), false, StartSequencerCommand, commandName);
+                        }
+
                         list.Add(commandName);
                     }
                 }

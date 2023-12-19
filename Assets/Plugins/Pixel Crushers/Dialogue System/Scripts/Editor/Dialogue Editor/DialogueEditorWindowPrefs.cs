@@ -11,6 +11,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
     public class DialogueEditorPrefs
     {
         public bool preferTitlesForLinksTo = false;
+        public bool showConversationIDs = false;
         public bool showNodeIDs = false;
         public bool showTitlesInsteadOfText = false;
         public bool showAllActorNames = false;

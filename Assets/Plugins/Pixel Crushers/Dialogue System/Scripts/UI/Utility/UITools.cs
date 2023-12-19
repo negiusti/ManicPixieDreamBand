@@ -138,9 +138,10 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         /// <param name="selectable"></param>
         /// <param name="allowStealFocus"></param>
-        public static void Select(UnityEngine.UI.Selectable selectable, bool allowStealFocus = true)
+        public static void Select(UnityEngine.UI.Selectable selectable, bool allowStealFocus = true,
+            UnityEngine.EventSystems.EventSystem eventSystem = null)
         {
-            UIUtility.Select(selectable, allowStealFocus);
+            UIUtility.Select(selectable, allowStealFocus, eventSystem);
         }
 
         public const string RPGMakerCodeQuarterPause = @"\,";

@@ -61,6 +61,8 @@ namespace PixelCrushers.DialogueSystem
 
         protected SequenceSyntaxState sequenceSyntaxState = SequenceSyntaxState.Unchecked;
 
+        protected Color originalColor = Color.white;
+
         public virtual void OnEnable()
         {
             var trigger = target as DialogueSystemTrigger;
@@ -121,6 +123,7 @@ namespace PixelCrushers.DialogueSystem
             trigger = target as DialogueSystemTrigger;
             if (trigger == null) return;
             serializedObject.Update();
+            originalColor = GUI.color;
             DrawTopInfo();
             DrawConditions();
             DrawActions();
@@ -331,7 +334,9 @@ namespace PixelCrushers.DialogueSystem
                     if (questPicker != null)
                     {
                         serializedObject.ApplyModifiedProperties();
+                        if (string.IsNullOrEmpty(trigger.questName)) GUI.color = Color.red;
                         questPicker.Draw();
+                        GUI.color = originalColor;
                         var hadQuestName = !string.IsNullOrEmpty(trigger.questName);
                         trigger.questName = questPicker.currentQuest;
                         trigger.useQuestNamePicker = questPicker.usePicker;
@@ -491,7 +496,9 @@ namespace PixelCrushers.DialogueSystem
                     EditorWindowTools.EditorGUILayoutBeginGroup();
                     EditorGUILayout.BeginHorizontal();
                     var barkSourceProperty = serializedObject.FindProperty("barkSource");
+                    if (barkSourceProperty.enumValueIndex < 0) GUI.color = Color.red;                         
                     EditorGUILayout.PropertyField(barkSourceProperty, true);
+                    GUI.color = originalColor;
                     if (GUILayout.Button("x", GUILayout.Width(18), GUILayout.Height(14)))
                     {
                         serializedObject.FindProperty("barkSource").enumValueIndex = 0;
@@ -505,7 +512,9 @@ namespace PixelCrushers.DialogueSystem
                     {
                         case DialogueSystemTrigger.BarkSource.Conversation:
                             var barkConversationProperty = serializedObject.FindProperty("barkConversation");
+                            if (string.IsNullOrEmpty(barkConversationProperty.stringValue)) GUI.color = Color.red;
                             EditorGUILayout.PropertyField(barkConversationProperty, true);
+                            GUI.color = originalColor;
                             if (!string.IsNullOrEmpty(barkConversationProperty.stringValue))
                             {
                                 EditorGUILayout.PropertyField(serializedObject.FindProperty("barkOrder"), true);
@@ -543,7 +552,9 @@ namespace PixelCrushers.DialogueSystem
                     var hadConversation = !string.IsNullOrEmpty(conversationProperty.stringValue);
                     EditorWindowTools.EditorGUILayoutBeginGroup();
                     EditorGUI.BeginChangeCheck();
+                    if (string.IsNullOrEmpty(conversationProperty.stringValue)) GUI.color = Color.red;
                     EditorGUILayout.PropertyField(conversationProperty, true);
+                    GUI.color = originalColor;
                     if (EditorGUI.EndChangeCheck())
                     {
                         conversationTitles = null;
@@ -602,6 +613,7 @@ namespace PixelCrushers.DialogueSystem
 
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("exclusive"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("replace"), true);
+                        EditorGUILayout.PropertyField(serializedObject.FindProperty("queue"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("skipIfNoValidEntries"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("preventRestartOnSameFrameEnded"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("stopConversationOnTriggerExit"), true);

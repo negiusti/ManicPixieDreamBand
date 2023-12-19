@@ -518,8 +518,8 @@ namespace PixelCrushers.DialogueSystem
                                                     openParen,
                                                     DialogueLua.StringToTableIndex(variableName),
                                                     GetWizardComparisonText(item.comparisonType),
-                                                    item.floatValue,
-                                                    item.floatValue2,
+                                                    item.floatValue.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                                                    item.floatValue2.ToString(System.Globalization.CultureInfo.InvariantCulture),
                                                     closeParen);
                                 }
                                 else
@@ -528,7 +528,7 @@ namespace PixelCrushers.DialogueSystem
                                                     openParen,
                                                     DialogueLua.StringToTableIndex(variableName),
                                                     GetWizardComparisonText(item.comparisonType),
-                                                    item.floatValue,
+                                                    item.floatValue.ToString(System.Globalization.CultureInfo.InvariantCulture),
                                                     closeParen);
                                 }
                                 break;
@@ -635,7 +635,7 @@ namespace PixelCrushers.DialogueSystem
                                         break;
                                     case CustomLuaParameterType.Double:
                                         if (item.customParamValues[p] == null) item.customParamValues[p] = (float)0;
-                                        sb.Append((float)item.customParamValues[p]);
+                                        sb.Append(((float)item.customParamValues[p]).ToString(System.Globalization.CultureInfo.InvariantCulture));
                                         break;
                                     case CustomLuaParameterType.String:
                                         if (item.customParamValues[p] == null) item.customParamValues[p] = string.Empty;
@@ -685,7 +685,7 @@ namespace PixelCrushers.DialogueSystem
                                         ((item.booleanValue == BooleanType.True) ? "true" : "false"));
                                     break;
                                 case CustomLuaReturnType.Double:
-                                    sb.Append(GetWizardComparisonText(item.comparisonType) + " " + item.floatValue);
+                                    sb.Append(GetWizardComparisonText(item.comparisonType) + " " + item.floatValue.ToString(System.Globalization.CultureInfo.InvariantCulture));
                                     break;
                                 case CustomLuaReturnType.String:
                                     sb.Append(((item.equalityType == EqualityType.Is) ? " == " : " ~= ") +
@@ -734,8 +734,8 @@ namespace PixelCrushers.DialogueSystem
                                         DialogueLua.StringToTableIndex(elementName),
                                         DialogueLua.StringToFieldName(fieldName),
                                         GetWizardComparisonText(item.comparisonType),
-                                        item.floatValue,
-                                        item.floatValue2,
+                                        item.floatValue.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                                        item.floatValue2.ToString(System.Globalization.CultureInfo.InvariantCulture),
                                         closeParen);
                     }
                     else
@@ -746,7 +746,7 @@ namespace PixelCrushers.DialogueSystem
                                         DialogueLua.StringToTableIndex(elementName),
                                         DialogueLua.StringToFieldName(fieldName),
                                         GetWizardComparisonText(item.comparisonType),
-                                        item.floatValue,
+                                        item.floatValue.ToString(System.Globalization.CultureInfo.InvariantCulture),
                                         closeParen);
                     }
                     break;

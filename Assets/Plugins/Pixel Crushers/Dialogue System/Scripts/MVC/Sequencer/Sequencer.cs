@@ -1,3 +1,4 @@
+// Recompile at 9/25/2023 11:33:17 AM
 // Copyright (c) Pixel Crushers. All rights reserved.
 
 using PixelCrushers.DialogueSystem.SequencerCommands;
@@ -780,6 +781,11 @@ namespace PixelCrushers.DialogueSystem
                 }
             }
             m_isPlaying = true;
+            if (commandName == "Continue") // Don't use 'required' in front of Continue()
+            {
+                required = false;
+                commandRecord.required = false;
+            }
             if ((time <= InstantThreshold) && !IsTimePaused() && string.IsNullOrEmpty(message))
             {
                 ActivateCommand(commandName, endMessage, speaker, listener, args);
@@ -1289,7 +1295,7 @@ namespace PixelCrushers.DialogueSystem
                 // Log:
                 if (DialogueDebug.logInfo) Debug.Log(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}: Sequencer: Camera({1}, {2}, {3}s)", new System.Object[] { DialogueDebug.Prefix, angle, Tools.GetObjectName(subject), duration }));
                 if ((angleTransform == null) && DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: Camera angle '{1}' wasn't found.", new System.Object[] { DialogueDebug.Prefix, angle }));
-                if ((subject == null) && DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: Camera subject '{1}' wasn't found.", new System.Object[] { DialogueDebug.Prefix, SequencerTools.GetParameter(args, 1) }));
+                if ((subject == null) && DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: Camera({1}): Camera subject '{2}' wasn't found.", new System.Object[] { DialogueDebug.Prefix, GetParameters(args), SequencerTools.GetParameter(args, 1) }));
 
                 // If we have a camera angle and subject, move the camera to it:
                 TakeCameraControl();
@@ -1577,18 +1583,20 @@ namespace PixelCrushers.DialogueSystem
         }
 
         /// <summary>
-        /// Handles the "AnimatorTrigger(animatorParameter[, gameobject|speaker|listener])" action,
+        /// Handles the "AnimatorTrigger(animatorParameter[, gameobject|speaker|listener[, resetParameter]])" action,
         /// which sets a trigger parameter on a subject's Animator.
         /// 
         /// Arguments:
-        /// -# Name of a Mecanim animator state.
+        /// -# Name of a Mecanim animator parameter.
         /// -# (Optional) The subject; can be speaker, listener, or the name of a game object. Default: speaker.
+        /// -# (Optional) Another animator parameter to reset.
         /// </summary>
         private bool HandleAnimatorTriggerInternally(string commandName, string[] args)
         {
             string animatorParameter = SequencerTools.GetParameter(args, 0);
             Transform subject = SequencerTools.GetSubject(SequencerTools.GetParameter(args, 1), m_speaker, m_listener);
             Animator animator = (subject != null) ? subject.GetComponentInChildren<Animator>() : null;
+            string resetParameter = SequencerTools.GetParameter(args, 2);
             if (animator == null)
             {
                 if (DialogueDebug.logWarnings) Debug.Log(string.Format("{0}: Sequencer: AnimatorTrigger({1}, {2}): No Animator found on {2}", new System.Object[] { DialogueDebug.Prefix, animatorParameter, (subject != null) ? subject.name : SequencerTools.GetParameter(args, 1) }));
@@ -1597,8 +1605,23 @@ namespace PixelCrushers.DialogueSystem
             {
                 if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Sequencer: AnimatorTrigger({1}, {2})", new System.Object[] { DialogueDebug.Prefix, animatorParameter, subject }));
             }
-            if (animator != null) animator.SetTrigger(animatorParameter);
+            if (animator != null)
+            {
+                animator.SetTrigger(animatorParameter);
+                if (!string.IsNullOrEmpty(resetParameter))
+                {
+                    animator.ResetTrigger(resetParameter);
+                    StartCoroutine(ResetAnimatorParameterAtEndOfFrame(animator, resetParameter));
+                }
+            }
             return true;
+        }
+
+        private IEnumerator ResetAnimatorParameterAtEndOfFrame(Animator animator, string resetParameter)
+        {
+            if (animator == null || string.IsNullOrEmpty(resetParameter)) yield break;
+            yield return new WaitForEndOfFrame();
+            animator.ResetTrigger(resetParameter);
         }
 
         /// <summary>
@@ -1692,7 +1715,7 @@ namespace PixelCrushers.DialogueSystem
                 (asset) =>
                 {
                     var clip = asset as AudioClip;
-                    if ((clip == null) && DialogueDebug.logWarnings && reportMissingAudioFiles) Debug.LogWarning(string.Format("{0}: Sequencer: Audio() command: clip '{1}' could not be found or loaded.", new System.Object[] { DialogueDebug.Prefix, clipName }));
+                    if ((clip == null) && DialogueDebug.logWarnings && reportMissingAudioFiles) Debug.LogWarning(string.Format("{0}: Sequencer: Audio({1}) command: clip '{2}' could not be found or loaded.", new System.Object[] { DialogueDebug.Prefix, GetParameters(args), clipName }));
 
                     // Play clip:
                     if (clip != null)
@@ -1700,7 +1723,7 @@ namespace PixelCrushers.DialogueSystem
                         AudioSource audioSource = SequencerTools.GetAudioSource(subject);
                         if (audioSource == null)
                         {
-                            if (DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: Audio() command: can't find or add AudioSource to {1}.", new System.Object[] { DialogueDebug.Prefix, subject.name }));
+                            if (DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: Audio({1}) command: can't find or add AudioSource to {2}.", new System.Object[] { DialogueDebug.Prefix, GetParameters(args), subject.name }));
                         }
                         else if (oneshot)
                         {
@@ -1758,6 +1781,7 @@ namespace PixelCrushers.DialogueSystem
                 if (subject != null && target != null)
                 {
                     var subjectRigidbody = subject.GetComponent<Rigidbody>();
+#if USE_NAVMESH
                     var navMeshAgent = subject.GetComponent<UnityEngine.AI.NavMeshAgent>();
                     if (navMeshAgent != null)
                     {
@@ -1771,6 +1795,7 @@ namespace PixelCrushers.DialogueSystem
                             subject.rotation = target.rotation;
                         }
                     }
+#endif
                     if (subjectRigidbody != null && !subjectRigidbody.isKinematic)
                     {
                         subjectRigidbody.MoveRotation(target.rotation);
@@ -1862,6 +1887,7 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         private bool HandleNavMeshAgentInternally(string commandName, string[] args)
         {
+#if USE_NAVMESH
             var stop = string.Equals(SequencerTools.GetParameter(args, 0), "stop", System.StringComparison.OrdinalIgnoreCase);
             var destination = stop ? null : SequencerTools.GetSubject(SequencerTools.GetParameter(args, 0), m_speaker, m_listener);
             var subject = SequencerTools.GetSubject(SequencerTools.GetParameter(args, 1), m_speaker, m_listener);
@@ -1888,6 +1914,9 @@ namespace PixelCrushers.DialogueSystem
                 navMeshAgent.isStopped = stop;
 #endif
             }
+#else
+            if (DialogueDebug.logWarnings) Debug.LogWarning("Dialogue System: Sequencer: NavMeshAgent() support isn't enabled. Select menu item Tools > Pixel Crushers > Common > Misc > Use NavMesh");
+#endif
             return true;
         }
 
@@ -2383,7 +2412,7 @@ namespace PixelCrushers.DialogueSystem
         }
 
         /// <summary>
-        /// Handles the "SetPanel(actorName, panelNum)" action.
+        /// Handles the "SetPanel(actorName, panelNum, [immediate])" action.
         /// 
         /// Arguments:
         /// -# The name of a GameObject or actor in the dialogue database. Default: speaker.
@@ -2394,6 +2423,7 @@ namespace PixelCrushers.DialogueSystem
             string actorName = SequencerTools.GetParameter(args, 0);
             var actorTransform = CharacterInfo.GetRegisteredActorTransform(actorName) ?? SequencerTools.GetSubject(actorName, speaker, listener, speaker);
             string panelID = SequencerTools.GetParameter(args, 1);
+            bool immediate = string.Equals("immediate", SequencerTools.GetParameter(args, 2), StringComparison.OrdinalIgnoreCase);
             var subtitlePanelNumber = string.Equals(panelID, "default", StringComparison.OrdinalIgnoreCase) ? SubtitlePanelNumber.Default
                             : string.Equals(panelID, "bark", StringComparison.OrdinalIgnoreCase) ? SubtitlePanelNumber.UseBarkUI
                             : PanelNumberUtility.IntToSubtitlePanelNumber(Tools.StringToInt(panelID));
@@ -2414,7 +2444,7 @@ namespace PixelCrushers.DialogueSystem
                 var standardDialogueUI = DialogueManager.dialogueUI as IStandardDialogueUI;
                 if (standardDialogueUI != null)
                 {
-                    standardDialogueUI.OverrideActorPanel(actor, subtitlePanelNumber);
+                    standardDialogueUI.OverrideActorPanel(actor, subtitlePanelNumber, immediate);
                 }
             }
             return true;
@@ -2598,6 +2628,21 @@ namespace PixelCrushers.DialogueSystem
             return true;
         }
 
+        private DisplaySettings currentDisplaySettings
+        {
+            get
+            {
+                if (conversationView != null && conversationView.displaySettings != null)
+                {
+                    return conversationView.displaySettings;
+                }
+                else
+                {
+                    return DialogueManager.displaySettings;
+                }
+            }
+        }
+
         /// <summary>
         /// Handles the "SetMenuPanel(actorName, panelNum)" action.
         /// 
@@ -2609,9 +2654,9 @@ namespace PixelCrushers.DialogueSystem
         {
             float duration = SequencerTools.GetParameterAsFloat(args, 0);
             if (DialogueDebug.logInfo) Debug.Log(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}: Sequencer: SetTimeout({1})", DialogueDebug.Prefix, duration));
-            if (DialogueManager.displaySettings != null && DialogueManager.displaySettings.inputSettings != null)
+            if (currentDisplaySettings != null && currentDisplaySettings.inputSettings != null)
             {
-                DialogueManager.displaySettings.inputSettings.responseTimeout = duration;
+                currentDisplaySettings.inputSettings.responseTimeout = duration;
             }
             return true;
         }

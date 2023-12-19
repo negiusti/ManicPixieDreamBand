@@ -237,7 +237,7 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public virtual IEnumerator Play(int fromIndex)
         {
-            if ((textComponent != null) && (charactersPerSecond > 0))
+            if ((textComponent != null) && (charactersPerSecond > 0) && !string.IsNullOrEmpty(textComponent.text))
             {
                 if (waitOneFrameBeforeStarting) yield return null;
                 textComponent.text = textComponent.text.Replace("<br>", "\n");

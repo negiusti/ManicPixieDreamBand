@@ -2,7 +2,6 @@
 
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -141,9 +140,9 @@ namespace PixelCrushers.DialogueSystem
             if (inputField != null)
             {
                 inputField.ActivateInputField();
-                if (EventSystem.current != null)
+                if (eventSystem != null)
                 {
-                    EventSystem.current.SetSelectedGameObject(inputField.gameObject);
+                    eventSystem.SetSelectedGameObject(inputField.gameObject);
                 }
             }
         }

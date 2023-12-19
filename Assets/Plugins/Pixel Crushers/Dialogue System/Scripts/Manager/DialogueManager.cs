@@ -986,7 +986,7 @@ namespace PixelCrushers.DialogueSystem
 
         /// <summary>
         /// Loads a named asset from the registered asset bundles or from Resources.
-        /// Note: This version of LoadAsset does not load from Addressables.
+        /// Note: This version now also works with Addressables, and works synchronously.
         /// </summary>
         /// <returns>The asset, or <c>null</c> if not found.</returns>
         /// <param name="name">Name of the asset.</param>
@@ -997,7 +997,7 @@ namespace PixelCrushers.DialogueSystem
 
         /// <summary>
         /// Loads a named asset from the registered asset bundles or from Resources.
-        /// Note: This version of LoadAsset does not load from Addressables.
+        /// Note: This version now also works with Addressables, and works synchronously.
         /// </summary>
         /// <returns>The asset, or <c>null</c> if not found.</returns>
         /// <param name="name">Name of the asset.</param>

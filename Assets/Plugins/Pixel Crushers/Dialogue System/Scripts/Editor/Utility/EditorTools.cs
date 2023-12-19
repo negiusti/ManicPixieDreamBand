@@ -218,7 +218,18 @@ namespace PixelCrushers.DialogueSystem
 
             if (asset == null || string.IsNullOrEmpty(filter)) return true;
             var assetName = asset.Name;
-            return string.IsNullOrEmpty(assetName) ? false : (assetName.IndexOf(filter, System.StringComparison.OrdinalIgnoreCase) >= 0);
+            return string.IsNullOrEmpty(assetName) ? false :
+                ((assetName.IndexOf(filter, System.StringComparison.OrdinalIgnoreCase) >= 0) ||
+                 IsQuestGroupInFilter(asset, filter));
+        }
+
+        private static bool IsQuestGroupInFilter(Asset asset, string filter)
+        {
+            var quest = asset as Item;
+            if (quest == null) return false;
+            var group = quest.Group;
+            return !string.IsNullOrEmpty(group) &&
+                (group.IndexOf(filter, System.StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         private static string[] imageExtensions = { ".png", ".tga", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff", ".psd", ".psb", ".gif", ".pict" };

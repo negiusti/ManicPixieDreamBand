@@ -44,6 +44,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         private int isAddingNewFieldToEntryNumber = -1;
         private Field newEntryField;
 
+        private List<Item> filteredItems;
+
         private static GUIContent questDescriptionLabel = new GUIContent("Description", "The description when the quest is active.");
         private static GUIContent questSuccessDescriptionLabel = new GUIContent("Success Description", "The description when the quest has been completed successfully. If blank, the Description field is used.");
         private static GUIContent questFailureDescriptionLabel = new GUIContent("Failure Description", "The description when the quest has failed. If blank, the Description field is used.");
@@ -82,7 +84,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             {
                 if (needToBuildLanguageListFromItems) BuildLanguageListFromItems();
                 if (itemReorderableList == null) InitializeItemReorderableList();
-                DrawFilterMenuBar("Quests/Item", DrawItemMenu, ref itemFilter, ref hideFilteredOutItems);
+                var filterChanged = DrawFilterMenuBar("Quests/Item", DrawItemMenu, ref itemFilter, ref hideFilteredOutItems);
+                if (filterChanged) InitializeItemReorderableList();
                 if (database.syncInfo.syncItems)
                 {
                     DrawItemSyncDatabase();
@@ -93,15 +96,31 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             else
             {
                 if (itemReorderableList == null) InitializeItemReorderableList();
-                DrawFilterMenuBar("Item", DrawItemMenu, ref itemFilter, ref hideFilteredOutItems);
+                var filterChanged = DrawFilterMenuBar("Item", DrawItemMenu, ref itemFilter, ref hideFilteredOutItems);
+                if (filterChanged) InitializeItemReorderableList();
                 if (database.syncInfo.syncItems) DrawItemSyncDatabase();
                 itemReorderableList.DoLayoutList();
             }
         }
 
+        private bool HideFilteredOutItems()
+        {
+            return hideFilteredOutItems && !string.IsNullOrEmpty(itemFilter);
+        }
+
         private void InitializeItemReorderableList()
         {
-            itemReorderableList = new ReorderableList(database.items, typeof(Item), true, true, true, true);
+            if (HideFilteredOutItems())
+            {
+                filteredItems = database.items.FindAll(item => EditorTools.IsAssetInFilter(item, itemFilter));
+                itemReorderableList = new ReorderableList(filteredItems, typeof(Item), true, true, true, true);
+            }
+            else
+            {
+                filteredItems = database.items;
+                itemReorderableList = new ReorderableList(database.items, typeof(Item), true, true, true, true);
+            }
+            
             itemReorderableList.drawHeaderCallback = DrawItemListHeader;
             itemReorderableList.drawElementCallback = DrawItemListElement;
             itemReorderableList.drawElementBackgroundCallback = DrawItemListElementBackground;
@@ -139,10 +158,10 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         private void DrawItemListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
-            if (!(0 <= index && index < database.items.Count)) return;
+            if (!(0 <= index && index < filteredItems.Count)) return;
             var nameControl = "ItemName" + index;
             var descriptionControl = "ItemDescription" + index;
-            var item = database.items[index];
+            var item = filteredItems[index];
             var itemName = item.Name;
             var description = item.Description;
             EditorGUI.BeginDisabledGroup(!EditorTools.IsAssetInFilter(item, itemFilter) || IsItemSyncedFromOtherDB(item));
@@ -181,8 +200,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         private void DrawItemListElementBackground(Rect rect, int index, bool isActive, bool isFocused)
         {
-            if (!(0 <= index && index < database.items.Count)) return;
-            var item = database.items[index];
+            if (!(0 <= index && index < filteredItems.Count)) return;
+            var item = filteredItems[index];
             if (EditorTools.IsAssetInFilter(item, itemFilter))
             {
                 ReorderableList.defaultBehaviours.DrawElementBackground(rect, index, isActive, isFocused, true);

@@ -12,7 +12,7 @@ namespace PixelCrushers
     /// </summary>
     [AddComponentMenu("")] // Use wrapper.
     [RequireComponent(typeof(UnityEngine.UI.Selectable))]
-    public class UIButtonKeyTrigger : MonoBehaviour
+    public class UIButtonKeyTrigger : MonoBehaviour, IEventSystemUser
     {
 
         [Tooltip("Trigger the selectable when this key is pressed.")]
@@ -35,6 +35,17 @@ namespace PixelCrushers
 
         private UnityEngine.UI.Selectable m_selectable;
         protected UnityEngine.UI.Selectable selectable { get { return m_selectable; } set { m_selectable = value; } }
+
+        private UnityEngine.EventSystems.EventSystem m_eventSystem = null;
+        public UnityEngine.EventSystems.EventSystem eventSystem
+        {
+            get
+            {
+                if (m_eventSystem != null) return m_eventSystem;
+                return UnityEngine.EventSystems.EventSystem.current;
+            }
+            set { m_eventSystem = value; }
+        }
 
         /// <summary>
         /// Set false to prevent all UIButtonKeyTrigger components from listening for input.
@@ -62,8 +73,8 @@ namespace PixelCrushers
 
         protected virtual bool IsBeingClickedBySubmit()
         {
-            return EventSystem.current != null &&
-                EventSystem.current.currentSelectedGameObject == m_selectable.gameObject &&
+            return eventSystem  != null &&
+                eventSystem.currentSelectedGameObject == m_selectable.gameObject &&
                 InputDeviceManager.instance != null &&
                 InputDeviceManager.IsButtonDown(InputDeviceManager.instance.submitButton);
         }
@@ -76,22 +87,22 @@ namespace PixelCrushers
             }
             else
             {
-                ExecuteEvents.Execute(m_selectable.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.submitHandler);
+                ExecuteEvents.Execute(m_selectable.gameObject, new PointerEventData(eventSystem), ExecuteEvents.submitHandler);
             }
         }
 
         protected IEnumerator SimulateButtonClick()
         {
-            m_selectable.OnPointerDown(new PointerEventData(EventSystem.current));
+            m_selectable.OnPointerDown(new PointerEventData(eventSystem ));
             var timeLeft = simulateButtonDownDuration;
             while (timeLeft > 0)
             {
                 yield return null;
                 timeLeft -= Time.unscaledDeltaTime;
             }
-            m_selectable.OnPointerUp(new PointerEventData(EventSystem.current));
+            m_selectable.OnPointerUp(new PointerEventData(eventSystem ));
             m_selectable.OnDeselect(null);
-            ExecuteEvents.Execute(m_selectable.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.submitHandler);
+            ExecuteEvents.Execute(m_selectable.gameObject, new PointerEventData(eventSystem ), ExecuteEvents.submitHandler);
         }
 
     }

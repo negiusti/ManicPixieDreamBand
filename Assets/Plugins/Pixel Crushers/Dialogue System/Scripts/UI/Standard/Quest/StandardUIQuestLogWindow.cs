@@ -12,7 +12,7 @@ namespace PixelCrushers.DialogueSystem
     /// This is the Standard UI implementation of the abstract QuestLogWindow class.
     /// </summary>
     [AddComponentMenu("")] // Use wrapper.
-    public class StandardUIQuestLogWindow : QuestLogWindow
+    public class StandardUIQuestLogWindow : QuestLogWindow, IEventSystemUser
     {
 
         #region Serialized Fields
@@ -86,6 +86,17 @@ namespace PixelCrushers.DialogueSystem
         {
             get { return m_detailsPanelContentManager; }
             set { m_detailsPanelContentManager = value; }
+        }
+
+        private UnityEngine.EventSystems.EventSystem m_eventSystem = null;
+        public UnityEngine.EventSystems.EventSystem eventSystem
+        {
+            get
+            {
+                if (m_eventSystem != null) return m_eventSystem;
+                return UnityEngine.EventSystems.EventSystem.current;
+            }
+            set { m_eventSystem = value; }
         }
 
         protected List<string> expandedGroupNames = new List<string>();
@@ -323,9 +334,9 @@ namespace PixelCrushers.DialogueSystem
             {
                 StartCoroutine(SelectElement(elementToSelect));
             }
-            else if (UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject == null && mainPanel != null && mainPanel.firstSelected != null && InputDeviceManager.autoFocus)
+            else if (eventSystem.currentSelectedGameObject == null && mainPanel != null && mainPanel.firstSelected != null && InputDeviceManager.autoFocus)
             {
-                UITools.Select(mainPanel.firstSelected.GetComponent<UnityEngine.UI.Selectable>());
+                UITools.Select(mainPanel.firstSelected.GetComponent<UnityEngine.UI.Selectable>(), true, eventSystem);
             }
         }
 
@@ -346,7 +357,7 @@ namespace PixelCrushers.DialogueSystem
         protected IEnumerator SelectElement(UnityEngine.UI.Selectable elementToSelect)
         {
             yield return null;
-            UITools.Select(elementToSelect);
+            UITools.Select(elementToSelect, true, eventSystem);
         }
 
         protected virtual void AddShowDetailsOnSelect(UnityEngine.UI.Button button, string target)

@@ -210,6 +210,18 @@ namespace PixelCrushers.DialogueSystem
 
         #endregion
 
+        public delegate string GetCustomEntrytagDelegate(Conversation conversation, DialogueEntry entry);
+        public static GetCustomEntrytagDelegate getCustomEntrytag = null;
+
+#if UNITY_2019_3_OR_NEWER && UNITY_EDITOR
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void InitStaticVariables()
+        {
+            getCustomEntrytag = null;
+        }
+#endif
+
+
         /// <summary>
         /// Gets the actor by name.
         /// </summary>
@@ -959,14 +971,9 @@ namespace PixelCrushers.DialogueSystem
         public const string InvalidEntrytag = "invalid_entrytag";
         public const string VoiceOverFileFieldName = DialogueSystemFields.VoiceOverFile;
 
-        public delegate string GetCustomEntrytagDelegate(Conversation conversation, DialogueEntry entry);
-        public static GetCustomEntrytagDelegate getCustomEntrytag = null;
-
-
         //--- Was manually specifying invalid filename chars: private static Regex entrytagRegex = new Regex("[;:,!\'\"\t\r\n\\/\\?\\[\\] ]");
         private static Regex entrytagRegex = new Regex(string.Format("[{0}]", Regex.Escape(" " + new string(System.IO.Path.GetInvalidFileNameChars()) + new string(System.IO.Path.GetInvalidPathChars()))));
         private static Regex actorNameLineNumberEntrytagRegex = new Regex("[,\"\t\r\n\\/<>?]");
-
 
         /// <summary>
         /// Gets the entrytag string of a dialogue entry.

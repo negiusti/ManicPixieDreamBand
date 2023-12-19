@@ -76,6 +76,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         public bool DirectConversationLinksToEntry1 { get; set; }
         public bool ConvertMarkupToRichText { get; set; }
         public bool SplitTextOnPipes { get; set; }
+        public bool TrimWhitespace { get; set; } = true;
         public string FlowFragmentScript { get; set; }
         public string VoiceOverProperty { get; set; }
         public string LocalizationXlsx { get; set; }
@@ -112,6 +113,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             DirectConversationLinksToEntry1 = false;
             ConvertMarkupToRichText = true;
             SplitTextOnPipes = true;
+            TrimWhitespace = true;
             FlowFragmentScript = DefaultFlowFragmentScript;
             VoiceOverProperty = DefaultVoiceOverProperty;
             LocalizationXlsx = string.Empty;

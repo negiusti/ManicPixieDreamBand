@@ -289,7 +289,13 @@ namespace PixelCrushers.DialogueSystem.Articy
         {
             prefs.SplitTextOnPipes = EditorGUILayout.Toggle(new GUIContent("Split Text On Pipes",
                 "When dialogue text contains pipe characters ( | ), split into separate dialogue entry nodes."),
-                prefs.ConvertMarkupToRichText);
+                prefs.SplitTextOnPipes);
+            if (prefs.SplitTextOnPipes)
+            {
+                prefs.TrimWhitespace = EditorGUILayout.Toggle(new GUIContent("  Trim Whitespace",
+                "Trim whitespace around pipes."),
+                prefs.TrimWhitespace);
+            }
         }
 
         /// <summary>

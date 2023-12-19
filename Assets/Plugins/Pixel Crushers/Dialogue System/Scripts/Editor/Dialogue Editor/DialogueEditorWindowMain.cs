@@ -85,6 +85,26 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         private const float MinWidth = 720f;
         private const float MinHeight = 240f;
 
+#if !(UNITY_2023_1_OR_NEWER || UNITY_2022_3_OR_NEWER)
+        // Expose focusChanged event in pre-Unity 2023 versions.
+        // Technically it's exposed in 2022.3, but docs say otherwise.
+        public static System.Action<bool> UnityEditorFocusChanged
+        {
+            get
+            {
+                var fieldInfo = typeof(EditorApplication).GetField("focusChanged",
+                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+                return (System.Action<bool>)fieldInfo.GetValue(null);
+            }
+            set
+            {
+                var fieldInfo = typeof(EditorApplication).GetField("focusChanged",
+                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+                fieldInfo.SetValue(null, value);
+            }
+        }
+#endif
+
         public static void ResetPosition()
         {
             if (instance == null)
@@ -120,6 +140,11 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             EditorApplication.playmodeStateChanged -= OnPlaymodeStateChanged;
             EditorApplication.playmodeStateChanged += OnPlaymodeStateChanged;
 #endif
+#if UNITY_2023_1_OR_NEWER || UNITY_2022_3_OR_NEWER
+            EditorApplication.focusChanged += OnFocusChanged;
+#else
+            UnityEditorFocusChanged += OnFocusChanged;
+#endif
             showQuickDialogueTextEntry = false;
             LoadEditorSettings();
             if (database == null) template = TemplateTools.LoadFromEditorPrefs();
@@ -132,6 +157,11 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
 #else
             EditorApplication.playmodeStateChanged -= OnPlaymodeStateChanged;
+#endif
+#if UNITY_2023_1_OR_NEWER || UNITY_2022_3_OR_NEWER
+            EditorApplication.focusChanged -= OnFocusChanged;
+#else
+            UnityEditorFocusChanged += OnFocusChanged;
 #endif
             //--- No need to save assets after entering play mode? This was a workaround for Asset Database bugs.
             //try
@@ -193,6 +223,11 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             SetDatabaseDirty("Save template");
         }
 
+        private void OnFocusChanged(bool isFocused)
+        {
+            if (!isFocused) SetDatabaseDirty("Lost focus");
+        }
+
 #if UNITY_2017_2_OR_NEWER
         private void OnPlayModeStateChanged(PlayModeStateChange obj)
         {
@@ -208,7 +243,10 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         private void HandlePlayModeStateChanged()
         {
             if (debug) Debug.Log("<color=cyan>Dialogue Editor: OnPlaymodeStateChanged - isPlaying=" + EditorApplication.isPlaying + "/" + EditorApplication.isPlayingOrWillChangePlaymode + "</color>");
-            if (!EditorApplication.isPlaying) AssetDatabase.SaveAssets();
+            if (!EditorApplication.isPlaying && EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                AssetDatabase.SaveAssets();
+            }
             toolbar.UpdateTabNames(template.treatItemsAsQuests);
             currentConversationState = null;
             currentRuntimeEntry = null;

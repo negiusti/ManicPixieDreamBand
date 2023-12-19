@@ -214,6 +214,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 menu.AddItem(new GUIContent("Sort/Reorder IDs/This Conversation"), false, ConfirmReorderIDsThisConversation);
                 menu.AddItem(new GUIContent("Sort/Reorder IDs/All Conversations"), false, ConfirmReorderIDsAllConversations);
                 menu.AddItem(new GUIContent("Sort/Reorder IDs/Depth First Reordering"), reorderIDsDepthFirst, () => { reorderIDsDepthFirst = !reorderIDsDepthFirst; });
+                menu.AddItem(new GUIContent("Show/Show Conversation IDs"), prefs.showConversationIDs, ToggleShowConversationIDs);
                 menu.AddItem(new GUIContent("Show/Prefer Titles For 'Links To' Menus"), prefs.preferTitlesForLinksTo, TogglePreferTitlesForLinksTo);
                 menu.AddItem(new GUIContent("Search Bar"), isSearchBarOpen, ToggleDialogueTreeSearchBar);
                 menu.AddItem(new GUIContent("Nodes"), false, ActivateNodeEditorMode);
@@ -228,6 +229,12 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 AddRelationsInspectorMenuItems(menu);
                 menu.ShowAsContext();
             }
+        }
+
+        private void ToggleShowConversationIDs()
+        {
+            prefs.showConversationIDs = !prefs.showConversationIDs;
+            ResetNodeEditorConversationList();
         }
 
         private void TogglePreferTitlesForLinksTo()
@@ -321,11 +328,9 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 conversationReorderableList = new ReorderableList(database.conversations, typeof(Conversation), true, true, true, true);
                 conversationReorderableList.drawHeaderCallback = DrawConversationListHeader;
                 conversationReorderableList.drawElementCallback = DrawConversationListElement;
-                //conversationReorderableList.drawElementBackgroundCallback = DrawConversationListElementBackground;
                 conversationReorderableList.onAddCallback = OnConversationListAdd;
                 conversationReorderableList.onRemoveCallback = OnConversationListRemove;
                 conversationReorderableList.onSelectCallback = OnConversationListSelect;
-                //conversationReorderableList.onReorderCallback = OnConversationListReorder;
                 conversationReorderableList.onReorderCallbackWithDetails = OnConversationListReorderWithDetails; // Unity 2018+
             }
             conversationReorderableList.DoLayoutList();
@@ -333,7 +338,13 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         private void DrawConversationListHeader(Rect rect)
         {
-            EditorGUI.LabelField(new Rect(rect.x + 32f, rect.y, rect.width, rect.height), "Title");
+            float offset = 32f;
+            if (prefs.showConversationIDs)
+            {
+                offset += 32f;
+                EditorGUI.LabelField(new Rect(rect.x + 32f, rect.y, 32f, rect.height), "ID");
+            }
+            EditorGUI.LabelField(new Rect(rect.x + offset, rect.y, rect.width, rect.height), "Title");
             float buttonWidth = 128f;
             EditorGUI.BeginDisabledGroup(!(database != null && conversationOutlineSelections.Count < database.conversations.Count));
             if (GUI.Button(new Rect(rect.x + rect.width - 2 * buttonWidth, rect.y, buttonWidth, EditorGUIUtility.singleLineHeight), "Select All"))
@@ -368,9 +379,17 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 else conversationOutlineSelections.Remove(conversation);
             }
 
+            float idWidth = prefs.showConversationIDs ? 32f : 0f;
+            if (prefs.showConversationIDs)
+            {
+                EditorGUI.BeginDisabledGroup(true);
+                EditorGUI.IntField(new Rect(rect.x + checkboxWidth, rect.y, idWidth, EditorGUIUtility.singleLineHeight), conversation.id);
+                EditorGUI.EndDisabledGroup();
+            }
+
             EditorGUI.BeginChangeCheck();
             GUI.SetNextControlName(nameControl);
-            conversationTitle = EditorGUI.TextField(new Rect(rect.x + checkboxWidth, rect.y, rect.width - checkboxWidth, EditorGUIUtility.singleLineHeight), GUIContent.none, conversationTitle);
+            conversationTitle = EditorGUI.TextField(new Rect(rect.x + checkboxWidth + idWidth, rect.y, rect.width - checkboxWidth, EditorGUIUtility.singleLineHeight), GUIContent.none, conversationTitle);
             if (EditorGUI.EndChangeCheck()) conversation.Title = conversationTitle;
             var focusedControl = GUI.GetNameOfFocusedControl();
             if (string.Equals(nameControl, focusedControl))
@@ -781,6 +800,13 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             }
 
             EditorWindowTools.EndIndentedSection();
+        }
+
+        private void PlayConversationFromEntry(object o)
+        {
+            if (o == null || o.GetType() != typeof(int)) return;
+            int entryID = (int)o;
+            EditModePlayerWindow.Open(database, currentConversation.id, entryID);
         }
 
     }

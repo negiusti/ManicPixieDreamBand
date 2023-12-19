@@ -307,9 +307,9 @@ namespace PixelCrushers.DialogueSystem
             conversationUIElements.standardMenuControls.SetActorMenuPanelNumber(dialogueActor, menuPanelNumber);
         }
 
-        public virtual void OverrideActorPanel(Actor actor, SubtitlePanelNumber subtitlePanelNumber)
+        public virtual void OverrideActorPanel(Actor actor, SubtitlePanelNumber subtitlePanelNumber, bool immediate = false)
         {
-            conversationUIElements.standardSubtitleControls.OverrideActorPanel(actor, subtitlePanelNumber);
+            conversationUIElements.standardSubtitleControls.OverrideActorPanel(actor, subtitlePanelNumber, null, immediate);
         }
 
         public virtual void ForceOverrideSubtitlePanel(StandardUISubtitlePanel customPanel)

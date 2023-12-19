@@ -41,9 +41,9 @@ namespace PixelCrushers.DialogueSystem
         {
             var window = GetWindow<WelcomeWindow>(false, "Welcome");
 #if EVALUATION_VERSION || ACADEMIC
-            window.minSize = new Vector2(370, 650);
+            window.minSize = new Vector2(370, 680);
 #else
-            window.minSize = new Vector2(370, 620);
+            window.minSize = new Vector2(370, 650);
 #endif
             window.showOnStart = true; // Can't check EditorPrefs when constructing window: showOnStartPrefs;
             return window;
@@ -200,8 +200,10 @@ namespace PixelCrushers.DialogueSystem
             var define_USE_CELTX3 = false;
             var define_USE_TWINE = false;
             var define_USE_YARN = false;
+            var define_USE_YARN2 = false;
             var define_TMP_PRESENT = false;
             var define_USE_STM = false;
+            var define_USE_NAVMESH = false;
             var defines = MoreEditorUtility.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup).Split(';');
             for (int i = 0; i < defines.Length; i++)
             {
@@ -217,8 +219,10 @@ namespace PixelCrushers.DialogueSystem
                 if (string.Equals(ScriptingSymbolNames.USE_CELTX3, defines[i].Trim())) define_USE_CELTX3 = true;
                 if (string.Equals(ScriptingSymbolNames.USE_TWINE, defines[i].Trim())) define_USE_TWINE = true;
                 if (string.Equals(ScriptingSymbolNames.USE_YARN, defines[i].Trim())) define_USE_YARN = true;
+                if (string.Equals(ScriptingSymbolNames.USE_YARN2, defines[i].Trim())) define_USE_YARN2 = true;
                 if (string.Equals(ScriptingSymbolNames.TMP_PRESENT, defines[i].Trim())) define_TMP_PRESENT = true;
                 if (string.Equals(ScriptingSymbolNames.USE_STM, defines[i].Trim())) define_USE_STM = true;
+                if (string.Equals(ScriptingSymbolNames.USE_NAVMESH, defines[i].Trim())) define_USE_NAVMESH = true;
             }
 #if EVALUATION_VERSION || ACADEMIC
             //define_USE_PHYSICS2D = true;
@@ -226,6 +230,7 @@ namespace PixelCrushers.DialogueSystem
             define_USE_ADDRESSABLES = false;
             //define_TMP_PRESENT = true;
             define_USE_STM = false;
+            define_USE_NAVMESH = true;
             define_USE_ARCWEAVE = false;
             define_USE_ARTICY = true;
             define_USE_AURORA = true;
@@ -233,16 +238,16 @@ namespace PixelCrushers.DialogueSystem
             define_USE_CELTX3 = false;
             define_USE_TWINE = true;
             define_USE_YARN = false;
+            define_USE_YARN2 = false;
 #endif
 
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.LabelField(new GUIContent("Enable support for:", "NOTE: Enables Dialogue System support. You must still enable each package in Package Manager."));
 #if EVALUATION_VERSION || ACADEMIC
+            EditorGUI.BeginDisabledGroup(true);
             var new_TMP_PRESENT = EditorGUILayout.ToggleLeft(new GUIContent(define_TMP_PRESENT ? "TextMesh Pro (TMP_PRESENT)" : "TextMesh Pro (TMP_PRESENT) <- USING TEXTMESH PRO?", "Enable Dialogue System support for TextMesh Pro. You must still enable TextMesh Pro in Package Manager."), define_TMP_PRESENT);
             var new_USE_PHYSICS2D = EditorGUILayout.ToggleLeft(define_USE_PHYSICS2D ? "2D Physics (USE_PHYSICS2D)" : "2D Physics (USE_PHYSICS2D) <- MAKING A 2D GAME?", define_USE_PHYSICS2D);
-            EditorGUI.BeginDisabledGroup(true);
-            //EditorGUILayout.ToggleLeft(new GUIContent("TextMesh Pro (TMP_PRESENT)", "TextMesh Pro support is enabled in evaluation version. Your project must contain the TextMesh Pro package."), define_TMP_PRESENT);
-            //EditorGUILayout.ToggleLeft(new GUIContent("2D Physics (USE_PHYSICS2D)", "Support is built in for evaluation version or Unity 2017 and earlier."), define_USE_PHYSICS2D);
+            var new_USE_NAVMESH = EditorGUILayout.ToggleLeft(new GUIContent(define_USE_NAVMESH ? "Navigation (USE_NAVMESH)" : "Navigation (USE_NAVMESH) <- USING NAVIGATION?", "Enable Dialogue System support for Unity's NavMesh Navigation system."), define_USE_NAVMESH);
             EditorGUILayout.ToggleLeft(new GUIContent("Addressables (USE_ADDRESSABLES)", "Addressables support not available in evaluation version."), define_USE_ADDRESSABLES);
             EditorGUILayout.ToggleLeft(new GUIContent("New Input System (USE_NEW_INPUT)", "New Input System support not available in evaluation version."), define_USE_NEW_INPUT);
             EditorGUI.EndDisabledGroup();
@@ -253,6 +258,7 @@ namespace PixelCrushers.DialogueSystem
 #else
             var new_TMP_PRESENT = EditorGUILayout.ToggleLeft(new GUIContent(define_TMP_PRESENT ? "TextMesh Pro (TMP_PRESENT)" : "TextMesh Pro (TMP_PRESENT) <- USING TEXTMESH PRO?", "Enable Dialogue System support for TextMesh Pro. You must still enable TextMesh Pro in Package Manager."), define_TMP_PRESENT);
             var new_USE_PHYSICS2D = EditorGUILayout.ToggleLeft(define_USE_PHYSICS2D ? "2D Physics (USE_PHYSICS2D)" : "2D Physics (USE_PHYSICS2D) <- MAKING A 2D GAME?", define_USE_PHYSICS2D);
+            var new_USE_NAVMESH = EditorGUILayout.ToggleLeft(new GUIContent(define_USE_NAVMESH ? "Navigation (USE_NAVMESH)" : "Navigation (USE_NAVMESH) <- USING NAVIGATION?", "Enable Dialogue System support for Unity's NavMesh Navigation system."), define_USE_NAVMESH);
             var new_USE_ADDRESSABLES = EditorGUILayout.ToggleLeft("Addressables (USE_ADDRESSABLES)", define_USE_ADDRESSABLES);
             var new_USE_CINEMACHINE = EditorGUILayout.ToggleLeft(new GUIContent("Cinemachine (USE_CINEMACHINE)", "Enable Dialogue System support for Cinemachine. You must still enable Cinemachine in Package Manager."), define_USE_CINEMACHINE);
             var new_USE_NEW_INPUT = EditorGUILayout.ToggleLeft("New Input System (USE_NEW_INPUT)", define_USE_NEW_INPUT);
@@ -264,7 +270,6 @@ namespace PixelCrushers.DialogueSystem
             EditorGUI.BeginDisabledGroup(true);
             EditorGUILayout.ToggleLeft(new GUIContent("Super Text Mesh (USE_STM)", "Super Text Mesh support not available in evaluation version."), define_USE_STM);
             EditorGUI.EndDisabledGroup();
-            //var new_TMP_PRESENT = define_TMP_PRESENT;
             var new_USE_STM = define_USE_STM;
 #else
             var new_USE_STM = EditorGUILayout.ToggleLeft(new GUIContent("Super Text Mesh (USE_STM)", "Enable Dialogue System support for Super Text Mesh. Requires Super Text Mesh in project."), define_USE_STM);
@@ -278,7 +283,8 @@ namespace PixelCrushers.DialogueSystem
             EditorGUILayout.ToggleLeft(new GUIContent("Celtx GVR 2 (USE_CELTX)", "Enable Dialogue System support for Celtx GVR 2 JSON import."), define_USE_CELTX);
             EditorGUILayout.ToggleLeft(new GUIContent("Backlight (Celtx) Gem 3 (USE_CELTX3)", "Enable Dialogue System support for Backlight Gem 3 JSON import."), define_USE_CELTX3);
             EditorGUILayout.ToggleLeft(new GUIContent("Twine (USE_TWINE)", "Enable Dialogue System support for Twine Twison import."), define_USE_TWINE);
-            EditorGUILayout.ToggleLeft(new GUIContent("Yarn (USE_YARN)", "Enable Dialogue System support for YarnSpinner import."), define_USE_YARN);
+            EditorGUILayout.ToggleLeft(new GUIContent("Yarn 1 (USE_YARN)", "Enable Dialogue System support for YarnSpinner 1 import."), define_USE_YARN);
+            EditorGUILayout.ToggleLeft(new GUIContent("Yarn 2 (USE_YARN2)", "Enable Dialogue System support for YarnSpinner 2 import."), define_USE_YARN2);
             EditorGUI.EndDisabledGroup();
             var new_USE_ARCWEAVE = define_USE_ARCWEAVE;
             var new_USE_ARTICY = define_USE_ARTICY;
@@ -287,6 +293,7 @@ namespace PixelCrushers.DialogueSystem
             var new_USE_CELTX3 = define_USE_CELTX3;
             var new_USE_TWINE = define_USE_TWINE;
             var new_USE_YARN = define_USE_YARN;
+            var new_USE_YARN2 = define_USE_YARN2;
 #else
             var new_USE_ARCWEAVE = EditorGUILayout.ToggleLeft(new GUIContent("Arcweave (USE_ARCWEAVE)", "Enable Dialogue System support for Arcweave import."), define_USE_ARCWEAVE);
             var new_USE_ARTICY = EditorGUILayout.ToggleLeft(new GUIContent("articy:draft (USE_ARTICY)", "Enable Dialogue System support for articy:draft XML import."), define_USE_ARTICY);
@@ -294,7 +301,8 @@ namespace PixelCrushers.DialogueSystem
             var new_USE_CELTX = EditorGUILayout.ToggleLeft(new GUIContent("Celtx GVR 2 (USE_CELTX)", "Enable Dialogue System support for Celtx GVR 2 JSON import."), define_USE_CELTX);
             var new_USE_CELTX3 = EditorGUILayout.ToggleLeft(new GUIContent("Backlight (Celtx) Gem 3 (USE_CELTX3)", "Enable Dialogue System support for Backlight Gem 3 JSON import."), define_USE_CELTX3);
             var new_USE_TWINE = EditorGUILayout.ToggleLeft(new GUIContent("Twine (USE_TWINE)", "Enable Dialogue System support for Twine Twison import."), define_USE_TWINE);
-            var new_USE_YARN = EditorGUILayout.ToggleLeft(new GUIContent("Yarn (USE_YARN)", "Enable Dialogue System support for YarnSpinner import."), define_USE_YARN);
+            var new_USE_YARN = EditorGUILayout.ToggleLeft(new GUIContent("Yarn 1 (USE_YARN)", "Enable Dialogue System support for YarnSpinner 1 import."), define_USE_YARN);
+            var new_USE_YARN2 = EditorGUILayout.ToggleLeft(new GUIContent("Yarn 2 (USE_YARN2)", "Enable Dialogue System support for YarnSpinner 2 import."), define_USE_YARN2);
 #endif
 
             var changed = EditorGUI.EndChangeCheck();
@@ -305,7 +313,9 @@ namespace PixelCrushers.DialogueSystem
             if (new_USE_AURORA != define_USE_AURORA) MoreEditorUtility.ToggleScriptingDefineSymbol(ScriptingSymbolNames.USE_AURORA, new_USE_AURORA);
             if (new_USE_TWINE != define_USE_TWINE) MoreEditorUtility.ToggleScriptingDefineSymbol(ScriptingSymbolNames.USE_TWINE, new_USE_TWINE);
             if (new_USE_YARN != define_USE_YARN) MoreEditorUtility.ToggleScriptingDefineSymbol(ScriptingSymbolNames.USE_YARN, new_USE_YARN);
+            if (new_USE_YARN2 != define_USE_YARN2) MoreEditorUtility.ToggleScriptingDefineSymbol(ScriptingSymbolNames.USE_YARN2, new_USE_YARN2);
             if (new_TMP_PRESENT != define_TMP_PRESENT) MoreEditorUtility.ToggleScriptingDefineSymbol(ScriptingSymbolNames.TMP_PRESENT, new_TMP_PRESENT, true);
+            if (new_USE_NAVMESH != define_USE_NAVMESH) MoreEditorUtility.ToggleScriptingDefineSymbol(ScriptingSymbolNames.USE_NAVMESH, new_USE_NAVMESH, true);
 
             if (new_USE_NEW_INPUT != define_USE_NEW_INPUT)
             {
@@ -437,7 +447,7 @@ namespace PixelCrushers.DialogueSystem
             {
                 if (new_USE_YARN)
                 {
-                    if (EditorUtility.DisplayDialog("Enable Yarn Import", "This will enable the ability to import Yarn Spinner files. Yarn Spinner for Unity must already be installed in your project first.\n\n*IMPORTANT*: Only press OK if Yarn Spinner is already installed!\n\nTo continue, press OK. If you need to install Yarn Spinner first, press Cancel.", "OK", "Cancel"))
+                    if (EditorUtility.DisplayDialog("Enable Yarn 1 Import", "This will enable the ability to import Yarn Spinner 1 files. Yarn Spinner 1 for Unity must already be installed in your project first.\n\n*IMPORTANT*: Only press OK if Yarn Spinner is already installed!\n\nTo continue, press OK. If you need to install Yarn Spinner 1 first, press Cancel.", "OK", "Cancel"))
                     {
                         MoreEditorUtility.ToggleScriptingDefineSymbol(ScriptingSymbolNames.USE_YARN, new_USE_YARN);
                     }
@@ -449,6 +459,25 @@ namespace PixelCrushers.DialogueSystem
                 else
                 {
                     MoreEditorUtility.ToggleScriptingDefineSymbol(ScriptingSymbolNames.USE_YARN, new_USE_YARN);
+                }
+            }
+
+            if (new_USE_YARN2 != define_USE_YARN2)
+            {
+                if (new_USE_YARN2)
+                {
+                    if (EditorUtility.DisplayDialog("Enable Yarn 2 Import", "This will enable the ability to import Yarn Spinner 2 files. Yarn Spinner 2 for Unity must already be installed in your project first.\n\n*IMPORTANT*: Only press OK if Yarn Spinner 2 is already installed!\n\nTo continue, press OK. If you need to install Yarn Spinner first, press Cancel.", "OK", "Cancel"))
+                    {
+                        MoreEditorUtility.ToggleScriptingDefineSymbol(ScriptingSymbolNames.USE_YARN2, new_USE_YARN2);
+                    }
+                    else
+                    {
+                        changed = false;
+                    }
+                }
+                else
+                {
+                    MoreEditorUtility.ToggleScriptingDefineSymbol(ScriptingSymbolNames.USE_YARN2, new_USE_YARN2);
                 }
             }
 

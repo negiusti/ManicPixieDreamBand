@@ -212,9 +212,6 @@ namespace PixelCrushers
                     DontDestroyOnLoad(gameObject);
                 }
             }
-#if !UNITY_5_3
-            SceneManager.sceneLoaded += OnSceneLoaded;
-#endif
         }
 
         public void OnDestroy()
@@ -229,6 +226,9 @@ namespace PixelCrushers
             m_lastMousePosition = GetMousePosition();
             SetInputDevice(inputDevice);
             BrieflyIgnoreMouseMovement();
+#if !UNITY_5_3
+            SceneManager.sceneLoaded += OnSceneLoaded;
+#endif
         }
 
         private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)

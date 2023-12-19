@@ -7,7 +7,6 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Linq;
-using UnityEngine.UI;
 
 namespace PixelCrushers.DialogueSystem.Articy
 {
@@ -57,7 +56,7 @@ namespace PixelCrushers.DialogueSystem.Articy
 
         private static string[] htmlTags = new string[] { "<html>", "<head>", "<style>", "#s0", "{text-align:left;}", "#s1",
             "{font-size:11pt;}", "</style>", "</head>", "<body>", "<p id=\"s0\">", "<span id=\"s1\">",
-            "</span>", "</p>", "</body>", "</html>" };
+            "</span>", "</p>", "<br/>", "</body>", "</html>" };
 
         /// <summary>
         /// Removes HTML tags from a string.

@@ -236,5 +236,23 @@ namespace PixelCrushers
 
 #endif
 
+        //=============================================================
+
+        [MenuItem("Tools/Pixel Crushers/Common/Misc/Use NavMesh...", false, 103)]
+        static public void AddUSENAVMESH()
+        {
+            if (EditorUtility.DisplayDialog("Use NavMesh", "If your project uses Unity's NavMesh AI navigation system, this will enable Pixel Crushers support for it.", "OK", "Cancel"))
+            {
+                MoreEditorUtility.TryAddScriptingDefineSymbols("USE_NAVMESH");
+                EditorUtility.DisplayDialog("NavMesh Integration Enabled", "Pixel Crushers asset support for NavMeshes navigation is now enabled.", "OK");
+            }
+        }
+
+        [MenuItem("Tools/Pixel Crushers/Common/Misc/Use NavMesh...", true)]
+        static bool ValidateAddUSENAVMESH()
+        {
+            return !MoreEditorUtility.DoesScriptingDefineSymbolExist("USE_NAVMESH");
+        }
+
     }
 }

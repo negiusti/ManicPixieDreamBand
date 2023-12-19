@@ -405,7 +405,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             if (!dialogueEntryNodeHasSequence.TryGetValue(entry.id, out value))
             {
                 var sequence = entry.Sequence;
-                value = !string.IsNullOrEmpty(sequence) && 
+                value = !string.IsNullOrEmpty(sequence) &&
                     !(entry.id == 0 && (sequence == "None()" || sequence == "Continue()"));
                 dialogueEntryNodeHasSequence[entry.id] = value;
             }
@@ -856,10 +856,10 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 var sequence = GetMultinodeSelectionFieldValue(DialogueSystemFields.Sequence);
                 EditorGUI.BeginChangeCheck();
                 sequence = SequenceEditorTools.DrawLayout(new GUIContent("Sequence", "Cutscene played when speaking these entries. If set, overrides Dialogue Manager's Default Sequence. Drag audio clips to add AudioWait() commands."), sequence, ref sequenceRect, ref sequenceSyntaxState);
-                if (EditorGUI.EndChangeCheck()) 
-                { 
-                    changed = true; 
-                    SetMultinodeSelectionFieldValue(DialogueSystemFields.Sequence, sequence); 
+                if (EditorGUI.EndChangeCheck())
+                {
+                    changed = true;
+                    SetMultinodeSelectionFieldValue(DialogueSystemFields.Sequence, sequence);
                 }
 
                 // Response Menu Sequence:
@@ -1003,8 +1003,6 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             if (serializedObject == null)
             {
                 serializedObject = new SerializedObject(database);
-                //EditorGUILayout.LabelField("Error displaying UnityEvent. Please report to developer.");
-                //return;
             }
             if (serializedObjectCurrentEntry != currentEntry)
             {
@@ -1060,8 +1058,16 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             }
             else
             {
-                // Otherwise check if the entry's scene event is defined in this scene:
-                sceneEventIndex = DialogueSystemSceneEvents.GetDialogueEntrySceneEventIndex(sceneEventGuid);
+                // Make sure our serialized object points to this scene's DialogueSystemSceneEvents:
+                if (dialogueSystemSceneEvents == null || dialogueSystemSceneEventsSerializedObject == null)
+                {
+                    dialogueSystemSceneEvents = GameObjectUtility.FindFirstObjectByType<DialogueSystemSceneEvents>();
+                    dialogueSystemSceneEventsSerializedObject = (dialogueSystemSceneEvents != null)
+                        ? new SerializedObject(dialogueSystemSceneEvents) : null;
+                }
+
+                // Then check if the entry's scene event is defined in this scene:
+                sceneEventIndex = DialogueSystemSceneEvents.GetDialogueEntrySceneEventIndex(sceneEventGuid, dialogueSystemSceneEvents);
             }
             if (sceneEventIndex == -1 && !string.IsNullOrEmpty(sceneEventGuid))
             {
@@ -1070,15 +1076,6 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 if (GUILayout.Button("Delete Scene Event"))
                 {
                     currentEntry.sceneEventGuid = string.Empty;
-                }
-            }
-            if (sceneEventIndex != -1)
-            {
-                // Make sure our serialized object points to this scene's DialogueSystemSceneEvents:
-                if (dialogueSystemSceneEvents != DialogueSystemSceneEvents.sceneInstance || dialogueSystemSceneEventsSerializedObject == null)
-                {
-                    dialogueSystemSceneEvents = DialogueSystemSceneEvents.sceneInstance;
-                    dialogueSystemSceneEventsSerializedObject = new SerializedObject(dialogueSystemSceneEvents);
                 }
             }
             if (sceneEventIndex != -1 && dialogueSystemSceneEventsSerializedObject != null)
@@ -1109,12 +1106,15 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         private void MakeSureDialogueSystemSceneEventsExists()
         {
-            if (DialogueSystemSceneEvents.sceneInstance == null)
+            if (dialogueSystemSceneEvents == null)
             {
-                var go = new GameObject("Dialogue System Scene Events");
-                DialogueSystemSceneEvents.sceneInstance = go.AddComponent(PixelCrushers.TypeUtility.GetWrapperType(typeof(DialogueSystemSceneEvents))) as DialogueSystemSceneEvents;
-                UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene());
-                dialogueSystemSceneEvents = null;
+                dialogueSystemSceneEvents = GameObjectUtility.FindFirstObjectByType<DialogueSystemSceneEvents>();
+                if (dialogueSystemSceneEvents == null)
+                {
+                    var go = new GameObject("Dialogue System Scene Events");
+                    dialogueSystemSceneEvents = go.AddComponent(PixelCrushers.TypeUtility.GetWrapperType(typeof(DialogueSystemSceneEvents))) as DialogueSystemSceneEvents;
+                    UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene());
+                }
             }
         }
 
@@ -1425,38 +1425,95 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         private const int MaxEntriesForCrossConversationPopupNoSubmenus = 50;
         private const int CrossConversationPopupSubmenuSize = 20;
+        private const int MaxPopupSize = 500;
+        private int conversationPopupIndex = 0;
+        private string[] conversationPopupNames = null;
 
         private int DrawCrossConversationEntriesPopup(int conversationID, int entryID)
         {
             var conversation = database.GetConversation(conversationID);
-            List<string> entries = new List<string>();
-            int index = -1;
-            if (conversation != null)
+
+            if (conversation != null && conversation.dialogueEntries.Count > MaxPopupSize)
             {
-                var useSubmenus = conversation.dialogueEntries.Count > MaxEntriesForCrossConversationPopupNoSubmenus;
-#if UNITY_EDITOR_OSX
-                useSubmenus = false; // There may be a bug in Unity editor's call to NSMenuItem on MacOS.
-#endif
-                for (int i = 0; i < conversation.dialogueEntries.Count; i++)
+                var sortedEntries = new List<DialogueEntry>(conversation.dialogueEntries);
+                sortedEntries.Sort((x, y) => x.id.CompareTo(y.id));
+
+                var numPopups = Mathf.CeilToInt((float)conversation.dialogueEntries.Count / MaxPopupSize);
+                if (conversationPopupNames == null || conversationPopupNames.Length == numPopups)
                 {
-                    var entry = conversation.dialogueEntries[i];
+                    conversationPopupNames = new string[numPopups];
+                    for (int i = 0; i < numPopups; i++)
+                    {
+                        conversationPopupNames[i] = $"{i * MaxPopupSize}-{((i + 1) * MaxPopupSize) - 1}";
+                    }
+                }
+                conversationPopupIndex = EditorGUILayout.Popup(conversationPopupIndex, conversationPopupNames);
+
+                var entries = new List<string>();
+                var min = conversationPopupIndex * MaxPopupSize;
+                var max = Math.Min(((conversationPopupIndex + 1) * MaxPopupSize) - 1, sortedEntries.Count - 1);
+                int popupSize = max - min + 1;
+                var useSubmenus = popupSize > MaxEntriesForCrossConversationPopupNoSubmenus;
+#if UNITY_EDITOR_OSX
+                useSubmenus = false; // There is a bug in Unity editor's call to NSMenuItem on MacOS.
+#endif
+                int currentEntryIndex = -1;
+                int popupIndex = -1;
+                for (int i = 0; i < popupSize; i++)
+                {
+                    var entry = sortedEntries[min + i];
                     entries.Add(GetCrossConversationEntryText(entry, useSubmenus, i));
                     if (entry.id == entryID)
                     {
-                        index = i;
+                        popupIndex = i;
+                        currentEntryIndex = min + i;
                     }
                 }
+                popupIndex = EditorGUILayout.Popup(popupIndex, entries.ToArray());
+                if (0 <= popupIndex && popupIndex < popupSize)
+                {
+                    return sortedEntries[min + popupIndex].id;
+                }
+                else
+                {
+                    return entryID;
+                }
             }
-            EditorGUI.BeginDisabledGroup(conversation == null);
-            index = EditorGUILayout.Popup(index, entries.ToArray());
-            EditorGUI.EndDisabledGroup();
-            if ((conversation != null) && (0 <= index && index < conversation.dialogueEntries.Count))
-            {
-                return conversation.dialogueEntries[index].id;
-            }
+
+            //===========================
+
             else
             {
-                return -1;
+                List<string> entries = new List<string>();
+                int index = -1;
+                if (conversation != null)
+                {
+                    var useSubmenus = conversation.dialogueEntries.Count > MaxEntriesForCrossConversationPopupNoSubmenus;
+#if UNITY_EDITOR_OSX
+                useSubmenus = false; // There is a bug in Unity editor's call to NSMenuItem on MacOS.
+#endif
+                    for (int i = 0; i < conversation.dialogueEntries.Count; i++)
+                    {
+                        var entry = conversation.dialogueEntries[i];
+                        entries.Add(GetCrossConversationEntryText(entry, useSubmenus, i));
+                        if (entry.id == entryID)
+                        {
+                            index = i;
+                        }
+                    }
+                }
+
+                EditorGUI.BeginDisabledGroup(conversation == null);
+                index = EditorGUILayout.Popup(index, entries.ToArray());
+                EditorGUI.EndDisabledGroup();
+                if ((conversation != null) && (0 <= index && index < conversation.dialogueEntries.Count))
+                {
+                    return conversation.dialogueEntries[index].id;
+                }
+                else
+                {
+                    return -1;
+                }
             }
         }
 

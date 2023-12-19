@@ -93,6 +93,7 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
 
         protected override void DrawControls()
         {
+            if (arcweaveImporter == null) arcweaveImporter = new ArcweaveImporter();
             DrawSourceSection();
             DrawComponentTypeSection();
             DrawBoardTypeSection();
@@ -124,7 +125,7 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
             prefs.projectHash = EditorGUILayout.TextField(ProjectHashLabel, prefs.projectHash);
         }
 
-        protected void DrawComponentTypeSection()
+        protected virtual void DrawComponentTypeSection()
         {
             if (!arcweaveImporter.IsJsonLoaded()) return;
             prefs.componentsFoldout = EditorGUILayout.Foldout(prefs.componentsFoldout, "Components");
@@ -168,7 +169,7 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
             EditorGUI.indentLevel--;
         }
 
-        protected void DrawBoardTypeSection()
+        protected virtual void DrawBoardTypeSection()
         {
             if (!arcweaveImporter.IsJsonLoaded()) return;
             prefs.boardsFoldout = EditorGUILayout.Foldout(prefs.boardsFoldout, "Boards");
@@ -229,19 +230,19 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
             EditorGUI.indentLevel--;
         }
 
-        protected void DrawImportPortraitsSection()
+        protected virtual void DrawImportPortraitsSection()
         {
             if (!arcweaveImporter.IsJsonLoaded()) return;
             prefs.importPortraits = EditorGUILayout.Toggle(ImportPortraitsLabel, prefs.importPortraits);
         }
 
-        protected void DrawImportGuidSection()
+        protected virtual void DrawImportGuidSection()
         {
             if (!arcweaveImporter.IsJsonLoaded()) return;
             prefs.importGuids = EditorGUILayout.Toggle(ImportGuidsLabel, prefs.importGuids);
         }
 
-        protected void DrawNumPlayersSection()
+        protected virtual void DrawNumPlayersSection()
         {
             if (!arcweaveImporter.IsJsonLoaded()) return;
             EditorGUI.BeginChangeCheck();
@@ -278,7 +279,7 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
             }
         }
 
-        protected void DrawSaveLoadPrefsButtons()
+        protected virtual void DrawSaveLoadPrefsButtons()
         {
             if (GUILayout.Button(SavePrefsLabel, GUILayout.Width(100)))
             {
@@ -312,7 +313,7 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
             }
         }
 
-        protected void DrawLoadJsonButtons()
+        protected virtual void DrawLoadJsonButtons()
         {
             EditorGUI.BeginDisabledGroup(string.IsNullOrEmpty(prefs.apiKey) || string.IsNullOrEmpty(prefs.projectHash));
             if (GUILayout.Button(DownloadJsonLabel, GUILayout.Width(110)))
@@ -335,7 +336,7 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
 
 #region Convert
 
-        protected void SetupArcweaveImporter()
+        protected virtual void SetupArcweaveImporter()
         {
             arcweaveImporter.Setup(prefs.arcweaveProjectPath,
                 string.Empty,
@@ -355,7 +356,7 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
                 template ?? TemplateTools.LoadFromEditorPrefs());
         }
 
-        protected bool DownloadJson()
+        protected virtual bool DownloadJson()
         {
             try
             {
@@ -401,7 +402,7 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
             }
         }
 
-        public void LoadAndConvert()
+        public virtual void LoadAndConvert()
         {
             SetupArcweaveImporter();
             arcweaveImporter.LoadJson();

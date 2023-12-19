@@ -257,7 +257,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             if (globalSearchSpecificConversation)
             {
                 ValidateConversationMenuTitleIndex();
-                if (conversationTitles == null) conversationTitles = GetConversationTitles();
+                if (conversationTitles == null) RecordConversationTitles();
                 globalSearchConversationIndex = EditorGUILayout.Popup(globalSearchConversationIndex, conversationTitles, GUILayout.Height(30));
             }
             var ready = database != null && !string.IsNullOrEmpty(globalSearchText) &&
@@ -346,6 +346,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                         }
                     }
                 }
+
+                customGlobalSearch?.Invoke(database, specificConversation, globalSearchText, ref result);
 
                 Debug.Log(result);
             }
@@ -474,6 +476,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                         }
                     }
                 }
+
+                customGlobalSearchAndReplace?.Invoke(database, specificConversation, globalSearchText, globalReplaceText);
 
             }
             finally

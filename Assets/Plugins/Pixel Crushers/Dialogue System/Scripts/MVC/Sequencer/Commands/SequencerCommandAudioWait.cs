@@ -32,7 +32,7 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
             audioSource = GetAudioSource(subject);
             if (audioSource == null)
             {
-                if (DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: AudioWait() command: can't find or add AudioSource to {1}.", new System.Object[] { DialogueDebug.Prefix, subject.name }));
+                if (DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Sequencer: AudioWait({1}) command: can't find or add AudioSource to {2}.", new System.Object[] { DialogueDebug.Prefix, GetParameters(), subject.name }));
                 Stop();
             }
             else
