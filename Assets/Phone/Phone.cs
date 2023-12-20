@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.U2D.Animation;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 
 public class Phone : MonoBehaviour
 {
@@ -39,7 +38,7 @@ public class Phone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SceneManager.activeSceneChanged += ChangedActiveScene;
+        //SceneManager.activeSceneChanged += ChangedActiveScene;
         backgroundResolver = background.GetComponent<SpriteResolver>();
         phoneStateStack = new Stack<PhoneState>();
         phoneStateStack.Push(PhoneState.Home);
@@ -73,21 +72,21 @@ public class Phone : MonoBehaviour
         return txtResponsePanel != null && txtResponsePanel.gameObject.activeSelf;
     }
 
-    private void ChangedActiveScene(Scene current, Scene next)
-    {
-        string currentName = current.name;
+    //private void ChangedActiveScene(Scene current, Scene next)
+    //{
+    //    string currentName = current.name;
 
-        if (currentName == null)
-        {
-            // Scene1 has been removed
-            currentName = "Replaced";
-        }
+    //    if (currentName == null)
+    //    {
+    //        // Scene1 has been removed
+    //        currentName = "Replaced";
+    //    }
 
-        Canvas c = this.GetComponent<Canvas>();
-        c.worldCamera = Camera.main;
+    //    Canvas c = this.GetComponent<Canvas>();
+    //    c.worldCamera = Camera.main;
 
-        Debug.Log("Scenes: " + currentName + ", " + next.name);
-    }
+    //    Debug.Log("Scenes: " + currentName + ", " + next.name);
+    //}
 
     public void GoHome()
     {
@@ -248,9 +247,9 @@ public class Phone : MonoBehaviour
         foreach (Transform child in transform)
         {
             // Move each child object
-            child.Translate(Vector3.down * 4f);
+            child.Translate(Vector3.down * 9f);
         }
-        transform.Translate(Vector3.down * 4f);
+        transform.Translate(Vector3.down * 9f);
     }
 
     private void Unlock()
@@ -263,9 +262,9 @@ public class Phone : MonoBehaviour
         foreach (Transform child in transform)
         {
             // Move each child object
-            child.Translate(Vector3.up * 4f);
+            child.Translate(Vector3.up * 9f);
         }
-        transform.Translate(Vector3.up * 4f);
+        transform.Translate(Vector3.up * 9f);
     }
 
     private void Awake()
