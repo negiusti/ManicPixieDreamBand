@@ -11,7 +11,7 @@ public class MakeupSelector : MonoBehaviour
     private MakeupSelector[] selectors;
     public Material defaultMat;
     public Material outlineMat;
-    private bool isSelected;
+    private Animator anim;
 
     // Start is called before the first frame update
     void Start()
@@ -20,12 +20,13 @@ public class MakeupSelector : MonoBehaviour
         originalScale = this.spriteRenderer.gameObject.transform.localScale;
         selectors = this.transform.parent.gameObject.GetComponentsInChildren<MakeupSelector>();
         spriteRenderer.material = defaultMat;
+        anim = this.GetComponent<Animator>();
+        anim.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     private void OnMouseDown()
@@ -37,6 +38,9 @@ public class MakeupSelector : MonoBehaviour
     {
         Vector3 newScale = originalScale + Vector3.one * 0.2f;
         this.spriteRenderer.gameObject.transform.localScale = newScale;
+        //anim.CrossFade("MakeupMenu_Anim", 0f, 0);
+        //anim.Play("MakeupMenu_Anim", 0, 0f);
+
     }
 
     private void OnMouseExit()
@@ -47,6 +51,7 @@ public class MakeupSelector : MonoBehaviour
     public void UnSelect()
     {
         spriteRenderer.material = defaultMat;
+        anim.enabled = false;
     }
 
     private void UnSelectAll()
@@ -59,7 +64,11 @@ public class MakeupSelector : MonoBehaviour
 
     public void Select()
     {
+        //anim.ResetTrigger("MakeupSelectorTrigger");
+        //anim.SetTrigger("MakeupSelectorTrigger");
         UnSelectAll();
+        anim.enabled = true;
+        anim.Play("MakeupMenu_Anim", 0, 0f);
         characterEditor.SetCurrentFaceCategory(categoryName);
         spriteRenderer.material = outlineMat;
     }
