@@ -91,7 +91,7 @@ public class HairAndMakeupEditor : MonoBehaviour
         skinPalette.SetActive(false);
     }
 
-    void ExitMakeupView()
+    public void ExitMakeupView()
     {
         if (!makeupView)
             return;
