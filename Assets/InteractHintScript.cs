@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InteractHintScript : MonoBehaviour
@@ -10,22 +8,29 @@ public class InteractHintScript : MonoBehaviour
     private SceneChanger sc;
     public GameObject objToEnable;
     private GameManager gm;
+    private Animator animator;
 
-    private Vector3 originalScale;
+    //private Vector3 originalScale;
     //private bool isInsideTrigger = false;
-    public float scaleFactor = 0.1f; // 10% scale factor change
-    public float pulseSpeed = 2.0f; // Adjust the speed of the pulse
+    //public float scaleFactor = 0.1f; // 10% scale factor change
+    //public float pulseSpeed = 2.0f; // Adjust the speed of the pulse
+    public string animationName;
 
     // Start is called before the first frame update
     void Start()
     {
-        originalScale = transform.localScale;
         interactHint.SetActive(false);
         sc = FindObjectOfType<SceneChanger>();
         if (objToEnable != null)
             objToEnable.SetActive(false);
         gm = GameManager.Instance;
         sc = gm.gameObject.GetComponent<SceneChanger>();
+        animator = GetComponent<Animator>();
+        if (animationName == null)
+        {
+            Debug.Log("No animation given");
+        }
+        animator.enabled = false;
     }
 
     // Update is called once per frame
@@ -38,13 +43,6 @@ public class InteractHintScript : MonoBehaviour
             if (sceneToTrigger != null && sceneToTrigger.Length > 0)
                 sc.ChangeScene(sceneToTrigger);
         }
-        if (interactHint.activeSelf)
-        {
-            // Calculate the new scale based on a sine wave
-            float scaleChange = Mathf.Sin(Time.time * pulseSpeed) * scaleFactor;
-            Vector3 newScale = originalScale + Vector3.one * scaleChange;
-            transform.localScale = newScale;
-        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -52,6 +50,8 @@ public class InteractHintScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             interactHint.SetActive(true);
+            animator.enabled = true;
+            animator.Play(animationName);
         }
     }
 
@@ -60,7 +60,7 @@ public class InteractHintScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             interactHint.SetActive(false);
-            transform.localScale = originalScale;
+            animator.enabled = false;
         }
     }
 }
