@@ -9,6 +9,7 @@ public class InteractHintScript : MonoBehaviour
     public GameObject objToEnable;
     private GameManager gm;
     private Animator animator;
+    private SpriteRenderer spriteRenderer;
 
     //private Vector3 originalScale;
     //private bool isInsideTrigger = false;
@@ -31,6 +32,7 @@ public class InteractHintScript : MonoBehaviour
             Debug.Log("No animation given");
         }
         animator.enabled = false;
+        spriteRenderer = this.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -60,6 +62,7 @@ public class InteractHintScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             interactHint.SetActive(false);
+            spriteRenderer.color = Color.white;
             animator.enabled = false;
         }
     }
