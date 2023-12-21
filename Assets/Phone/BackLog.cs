@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using PixelCrushers.DialogueSystem;
-using TMPro;
+using System;
+using System.Collections;
 
 /// <summary>
 /// This script runs the back log. It records dialogue lines as they're played.
@@ -36,14 +37,21 @@ public class BackLog : MonoBehaviour
     {
         return currentEntryID;
     }
-    
+
     public void AddToBacklog(Subtitle subtitle)
     {
+        StartCoroutine(AddToBacklogWithDelay(subtitle));
+    }
+    
+    private IEnumerator AddToBacklogWithDelay(Subtitle subtitle)
+    {
         bool isGroupChat = groupChats.Contains(DialogueManager.LastConversationStarted);
-        Debug.Log("AddToBacklog: " + subtitle.dialogueEntry.DialogueText);
-        ScrollToBottomOfScrollView();
         if (subtitle.dialogueEntry.id == currentEntryID)
-            return;
+            yield return null;
+
+        if (!subtitle.speakerInfo.IsPlayer && !subtitle.dialogueEntry.isRoot)
+            yield return new WaitForSeconds(2);
+
         if (!string.IsNullOrEmpty(subtitle.formattedText.text))
         {
             if (isGroupChat && !subtitle.speakerInfo.IsPlayer)
@@ -59,23 +67,17 @@ public class BackLog : MonoBehaviour
             instances.Add(instance.gameObject);
             instance.gameObject.SetActive(true);
             instance.Assign(subtitle);
-            Image image = instance.GetComponent<Image>();
+            
             RectTransform rectTransform = instance.GetComponent<RectTransform>();
             Text[] texts = instance.GetComponentsInChildren<Text>();
-            float preferredWidth = 0f;
             float preferredHeight = 100f;
             foreach (Text t in texts)
             {
-                //if (preferredHeight < t.preferredHeight)
                 preferredHeight += t.preferredHeight;
-                if (preferredWidth < t.preferredWidth)
-                    preferredWidth = t.preferredWidth;
             }
-            //rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, preferredWidth);
             rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, preferredHeight);
-            //rectTransform.sizeDelta = new Vector2(preferredWidth, preferredHeight);
 
-            // TODO use different bubble image for PLAYER
+            Image image = instance.GetComponent<Image>();
             if (subtitle.speakerInfo.IsPlayer)
             {
                 image.color = Color.yellow;
@@ -83,18 +85,21 @@ public class BackLog : MonoBehaviour
             {
                 image.color = Color.cyan;
             }
-
-            // Move scroll to bottom
         }
         currentEntryID = subtitle.dialogueEntry.id;
         ScrollToBottomOfScrollView();
+        yield return null;
     }
 
     void ScrollToBottomOfScrollView()
     {
         if (scrollView != null && scrollView.verticalScrollbar != null)
         {
+            //Canvas.ForceUpdateCanvases();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(scrollView.content);
+            scrollView.verticalNormalizedPosition = Mathf.Clamp(scrollView.verticalNormalizedPosition, 0f, 1f);
             scrollView.verticalScrollbar.value = 0f;
+            scrollView.verticalNormalizedPosition = 0f;
         }
         else
         {
