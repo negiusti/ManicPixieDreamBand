@@ -37,12 +37,12 @@ public class StarSpawnerScript : MonoBehaviour
     private float runwayDelay;
     private GameObject miniGame;
 
-    private void OnLoadCompleted(AsyncOperationHandle<TextAsset> obj)
+    private void OnLoadCompleted(AsyncOperationHandle<IList<TextAsset>> obj)
     {
         if (obj.Status == AsyncOperationStatus.Succeeded)
         {
             // Access the text content
-            string fileContent = obj.Result.text;
+            string fileContent = obj.Result[0].text;
             Debug.Log("File Content: " + fileContent);
         }
         else
@@ -57,11 +57,12 @@ public class StarSpawnerScript : MonoBehaviour
     {
 
         // Specify the addressable path (use the address you set in the Addressables Group)
-        string addressablePath = "Assets/YourGroupName/YourTextFile";
+        string addressablePath1 = "Assets/RhythmGameNotes/Hamster/hamster_easy";
+        string addressablePath2 = "Assets/RhythmGameNotes/Hamster/hamster_easy_notes";
 
         // Load the text file asynchronously
-        AsyncOperationHandle<TextAsset> asyncOperation = Addressables.LoadAssetAsync<TextAsset>(addressablePath);
-
+        AsyncOperationHandle<IList<TextAsset>> asyncOperation = Addressables.LoadAssetsAsync<TextAsset>(new List<object> { addressablePath1, addressablePath2 }, obj => {});
+        
         // Register a callback for when the load operation completes
         asyncOperation.Completed += OnLoadCompleted;
 

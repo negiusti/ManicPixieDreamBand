@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class PhoneMessages : MonoBehaviour
 {
-    //public Canvas canvas;
     public GameObject contacts;
-    //public GameObject convo;
     public Phone phone;
     public Contact contactTemplate;
     private HashSet<string> contactsList;
@@ -47,7 +45,6 @@ public class PhoneMessages : MonoBehaviour
         phone.OpenConvo();
         customDialogue.FocusBackLog(contact);
         customDialogue.ResumeTxtConvo(contact);
-        //DialogueManager.StartConversation("TXT_" + contact);
     }
 
     // Update is called once per frame
@@ -72,10 +69,4 @@ public class PhoneMessages : MonoBehaviour
         contactsList.Add(name);
     }
 
-    //public void StartTestConvo()
-    //{
-    //    canvas.enabled = true;
-    //    DialogueManager.StartConversation("TXT_Band");
-    //    //DialogueManager.conversationController.
-    //}
 }
