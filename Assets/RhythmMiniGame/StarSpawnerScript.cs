@@ -22,8 +22,8 @@ public class StarSpawnerScript : MonoBehaviour
     public Vector3 purpleSpawnPosition;
     public Vector3 redSpawnPosition;
     //private string relativePath = "hamster_notes";
-    private string timesRelativePath = "hamster_easy";
-    private string notesRelativePath = "hamster_easy_notes";
+    //private string timesRelativePath = "hamster_easy";
+    //private string notesRelativePath = "hamster_easy_notes";
     //private StreamReader timesReader;
     //private StreamReader notesReader;
     private string currTimeLine;
@@ -73,6 +73,14 @@ public class StarSpawnerScript : MonoBehaviour
             //notes = songNotes.Split(new char[] { '\n', '\r', '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
             times = songTimes.Split(new char[] { '\n', '\r', '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
             //Debug.Log("File Content: " + fileContent);
+            try
+            {
+                delay = float.Parse(times[i]);
+            }
+            catch (FormatException)
+            {
+                Debug.LogError("Invalid float format.");
+            }
         }
         else
         {
@@ -164,7 +172,7 @@ public class StarSpawnerScript : MonoBehaviour
     private IEnumerator DelayedActions()
     {
         //while ((currTimeLine = timesReader.ReadLine()) != null)
-        while (i < times.Length)
+        while (i < times.Length - 1)
         {
             while (hamster.time < delay - runwayDelay)
             {

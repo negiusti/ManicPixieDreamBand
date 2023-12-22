@@ -11,8 +11,8 @@ public class Character : MonoBehaviour
     private SpriteRenderer[] spriteRenderers;
     private Dictionary<string, Color> categoryToColorMap;
     private Dictionary<string, bool> categoryToEnabled;
-    private SpriteResolver holdingResolver;
-    private SpriteRenderer holdingRenderer;
+    private SpriteResolver instResolver;
+    private SpriteRenderer instRenderer;
     //private bool isWearingPants; // Crotch is always enabled, determines whether L_Pant and R_Pant are enabled
     //private bool hasSleeves; // Whether this outfit has sleeves
     private bool isWearingFullFit; // Set matching Top, Crotch, and (optional) sleeves, (optional) L_Pant and R_Pant
@@ -67,17 +67,17 @@ public class Character : MonoBehaviour
         {
             if (targetResolver.GetCategory() != null)
             {
-                if (targetResolver.gameObject.name.Equals("Holding"))
-                    holdingResolver = targetResolver;
+                if (targetResolver.gameObject.name.Equals("Instrument"))
+                    instResolver = targetResolver;
                 Debug.Log("spriteRenderer GO name " + targetResolver.gameObject.name);
             }
         }
         foreach (var targetRenderer in spriteRenderers)
         {
-            if (targetRenderer.gameObject.name.Equals("Holding"))
+            if (targetRenderer.gameObject.name.Equals("Instrument"))
             {
                 
-                holdingRenderer = targetRenderer;
+                instRenderer = targetRenderer;
                 Debug.Log("spriteRenderer GO name " + targetRenderer.gameObject.name);
             }
         }
@@ -90,9 +90,9 @@ public class Character : MonoBehaviour
 
     public void SetInstrumentSprite(string s)
     {
-        holdingRenderer.enabled = true;
-        holdingResolver.SetCategoryAndLabel("Instrument", s);
-        holdingResolver.ResolveSpriteToSpriteRenderer();
+        instRenderer.enabled = true;
+        instResolver.SetCategoryAndLabel("Instrument", s);
+        instResolver.ResolveSpriteToSpriteRenderer();
     }
 
     //public void ShowHoldingSprite()
@@ -102,8 +102,8 @@ public class Character : MonoBehaviour
 
     public void HideHoldingSprite()
     {
-        holdingResolver.SetCategoryAndLabel("Holding", "None");
-        holdingResolver.ResolveSpriteToSpriteRenderer();
+        instResolver.SetCategoryAndLabel("Holding", "None");
+        instResolver.ResolveSpriteToSpriteRenderer();
     }
 
     private void updateSpriteResolverMap()
