@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -23,11 +24,11 @@ public class StarSpawnerScript : MonoBehaviour
     //private string relativePath = "hamster_notes";
     private string timesRelativePath = "hamster_easy";
     private string notesRelativePath = "hamster_easy_notes";
-    private StreamReader timesReader;
-    private StreamReader notesReader;
+    //private StreamReader timesReader;
+    //private StreamReader notesReader;
     private string currTimeLine;
     private string currNoteLine;
-    //private int i;
+    private int i;
     private float delay;
     private int note;
     private AudioSource hamster;
@@ -36,14 +37,42 @@ public class StarSpawnerScript : MonoBehaviour
     private int missedNotes;
     private float runwayDelay;
     private GameObject miniGame;
+    //private int[] notes;
+    //private float[] times;
+    private string[] notes;
+    private string[] times;
 
-    private void OnLoadCompleted(AsyncOperationHandle<IList<TextAsset>> obj)
+    private void OnLoadCompleted1(AsyncOperationHandle<TextAsset> obj)
     {
         if (obj.Status == AsyncOperationStatus.Succeeded)
         {
             // Access the text content
-            string fileContent = obj.Result[0].text;
-            Debug.Log("File Content: " + fileContent);
+            string songNotes = obj.Result.text;
+            //string songTimes = obj.Result[1].text;
+            //notes = songNotes.Split(new char[] { '\n', '\r', '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(x => Convert.ToInt32(x)).ToArray();
+            //times = songTimes.Split(new char[] { '\n', '\r', '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(x => Convert.ToSingle(x)).ToArray();
+            notes = songNotes.Split(new char[] { '\n', '\r', '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            //times = songTimes.Split(new char[] { '\n', '\r', '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            //Debug.Log("File Content: " + fileContent);
+        }
+        else
+        {
+            Debug.LogError("Failed to load file. Error: " + obj.OperationException);
+        }
+    }
+
+    private void OnLoadCompleted2(AsyncOperationHandle<TextAsset> obj)
+    {
+        if (obj.Status == AsyncOperationStatus.Succeeded)
+        {
+            // Access the text content
+            //string songNotes = obj.Result.text;
+            string songTimes = obj.Result.text;
+            //notes = songNotes.Split(new char[] { '\n', '\r', '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(x => Convert.ToInt32(x)).ToArray();
+            //times = songTimes.Split(new char[] { '\n', '\r', '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(x => Convert.ToSingle(x)).ToArray();
+            //notes = songNotes.Split(new char[] { '\n', '\r', '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            times = songTimes.Split(new char[] { '\n', '\r', '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            //Debug.Log("File Content: " + fileContent);
         }
         else
         {
@@ -55,71 +84,72 @@ public class StarSpawnerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         // Specify the addressable path (use the address you set in the Addressables Group)
-        string addressablePath1 = "Assets/RhythmGameNotes/Hamster/hamster_easy";
-        string addressablePath2 = "Assets/RhythmGameNotes/Hamster/hamster_easy_notes";
+        string addressablePath1 = "Assets/RhythmGameNotes/Hamster/hamster_easy_notes.txt";
+        string addressablePath2 = "Assets/RhythmGameNotes/Hamster/hamster_easy.txt";
 
         // Load the text file asynchronously
-        AsyncOperationHandle<IList<TextAsset>> asyncOperation = Addressables.LoadAssetsAsync<TextAsset>(new List<object> { addressablePath1, addressablePath2 }, obj => {});
-        
-        // Register a callback for when the load operation completes
-        asyncOperation.Completed += OnLoadCompleted;
+        AsyncOperationHandle<TextAsset> asyncOperation1 = Addressables.LoadAssetAsync<TextAsset>(addressablePath1);
 
+        AsyncOperationHandle<TextAsset> asyncOperation2 = Addressables.LoadAssetAsync<TextAsset>(addressablePath2);
+
+        // Register a callback for when the load operation completes
+        asyncOperation1.Completed += OnLoadCompleted1;
+        asyncOperation2.Completed += OnLoadCompleted2;
 
 
         miniGame = this.transform.parent.gameObject;
         hamster = starter.GetComponent<AudioSource>();
-        //i = 0;
+        i = 0;
         hitNotes = 0;
         missedNotes = 0;
         spawnedStars = new Queue<GameObject>();
-        try
-        {
-            // Combine the relative path with the current working directory to get the full file path
-            string timesFullPath = Path.Combine(Directory.GetCurrentDirectory(), timesRelativePath);
-            string notesFullPath = Path.Combine(Directory.GetCurrentDirectory(), notesRelativePath);
-            Debug.Log("PATH: " + timesFullPath);
-            // Check if the file exists
-            if (File.Exists(timesFullPath))
-            {
-                timesReader = new StreamReader(timesFullPath);
-                currTimeLine = timesReader.ReadLine();
-                try
-                {
-                    delay = float.Parse(currTimeLine);
-                }
-                catch (FormatException)
-                {
-                    Debug.LogError("Invalid float format.");
-                }
-            }
-            else
-            {
-                Debug.Log("File not found: " + timesFullPath);
-            }
-            if (File.Exists(notesFullPath))
-            {
-                notesReader = new StreamReader(notesFullPath);
-                currNoteLine = notesReader.ReadLine();
-                try
-                {
-                    note = int.Parse(currNoteLine);
-                }
-                catch (FormatException)
-                {
-                    Debug.LogError("Invalid int format.");
-                }
-            }
-            else
-            {
-                Debug.Log("File not found: " + notesFullPath);
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.Log("An error occurred: " + ex.Message);
-        }
+        //try
+        //{
+        //    // Combine the relative path with the current working directory to get the full file path
+        //    string timesFullPath = Path.Combine(Directory.GetCurrentDirectory(), timesRelativePath);
+        //    string notesFullPath = Path.Combine(Directory.GetCurrentDirectory(), notesRelativePath);
+        //    Debug.Log("PATH: " + timesFullPath);
+        //    // Check if the file exists
+        //    if (File.Exists(timesFullPath))
+        //    {
+        //        timesReader = new StreamReader(timesFullPath);
+        //        currTimeLine = timesReader.ReadLine();
+        //        try
+        //        {
+        //            delay = float.Parse(currTimeLine);
+        //        }
+        //        catch (FormatException)
+        //        {
+        //            Debug.LogError("Invalid float format.");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("File not found: " + timesFullPath);
+        //    }
+        //    if (File.Exists(notesFullPath))
+        //    {
+        //        notesReader = new StreamReader(notesFullPath);
+        //        currNoteLine = notesReader.ReadLine();
+        //        try
+        //        {
+        //            note = int.Parse(currNoteLine);
+        //        }
+        //        catch (FormatException)
+        //        {
+        //            Debug.LogError("Invalid int format.");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("File not found: " + notesFullPath);
+        //    }
+        //}
+        //catch (Exception ex)
+        //{
+        //    Debug.Log("An error occurred: " + ex.Message);
+        //}
 
         pinkSpawnPosition = pinkStar.transform.position;
         pinkSpawnPosition.y = 7f;
@@ -133,7 +163,8 @@ public class StarSpawnerScript : MonoBehaviour
 
     private IEnumerator DelayedActions()
     {
-        while ((currTimeLine = timesReader.ReadLine()) != null)
+        //while ((currTimeLine = timesReader.ReadLine()) != null)
+        while (i < times.Length)
         {
             while (hamster.time < delay - runwayDelay)
             {
@@ -145,7 +176,8 @@ public class StarSpawnerScript : MonoBehaviour
             SpawnStar();
             try
             {
-                delay = float.Parse(currTimeLine);
+                i++;
+                delay = float.Parse(times[i]);
             }
             catch (FormatException)
             {
@@ -201,9 +233,10 @@ public class StarSpawnerScript : MonoBehaviour
     private void SpawnStar()
     {
         Debug.Log("runway delay is " + runwayDelay);
-        if ((currNoteLine = notesReader.ReadLine()) != null)
+        //if ((currNoteLine = notesReader.ReadLine()) != null)
+        if (i < notes.Length)
         {
-            note = int.Parse(currNoteLine);
+            note = int.Parse(notes[i]);
         }
 
         // spawn note

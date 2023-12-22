@@ -88,10 +88,10 @@ public class Character : MonoBehaviour
     {
     }
 
-    public void SetHoldingSprite(string s)
+    public void SetInstrumentSprite(string s)
     {
         holdingRenderer.enabled = true;
-        holdingResolver.SetCategoryAndLabel("Holding", s);
+        holdingResolver.SetCategoryAndLabel("Instrument", s);
         holdingResolver.ResolveSpriteToSpriteRenderer();
     }
 
