@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class StarSpawnerScript : MonoBehaviour
 {
@@ -35,9 +37,36 @@ public class StarSpawnerScript : MonoBehaviour
     private float runwayDelay;
     private GameObject miniGame;
 
+    private void OnLoadCompleted(AsyncOperationHandle<TextAsset> obj)
+    {
+        if (obj.Status == AsyncOperationStatus.Succeeded)
+        {
+            // Access the text content
+            string fileContent = obj.Result.text;
+            Debug.Log("File Content: " + fileContent);
+        }
+        else
+        {
+            Debug.LogError("Failed to load file. Error: " + obj.OperationException);
+        }
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
+
+        // Specify the addressable path (use the address you set in the Addressables Group)
+        string addressablePath = "Assets/YourGroupName/YourTextFile";
+
+        // Load the text file asynchronously
+        AsyncOperationHandle<TextAsset> asyncOperation = Addressables.LoadAssetAsync<TextAsset>(addressablePath);
+
+        // Register a callback for when the load operation completes
+        asyncOperation.Completed += OnLoadCompleted;
+
+
+
         miniGame = this.transform.parent.gameObject;
         hamster = starter.GetComponent<AudioSource>();
         //i = 0;
