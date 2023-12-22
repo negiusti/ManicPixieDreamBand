@@ -25,7 +25,7 @@ public class PlayGuitar : MonoBehaviour
         {
             spriteRenderer.enabled = false;
             isPlayingGuitar = true;
-            character.SetHoldingSprite("Bass");
+            character.SetInstrumentSprite("Bass");
             playerMovement.PlayGuitar();
         }
         if (isPlayingGuitar && !minigame.activeSelf)
