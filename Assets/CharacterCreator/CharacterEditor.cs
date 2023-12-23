@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +19,8 @@ public class CharacterEditor : MonoBehaviour
     // Hair
     public SpriteRenderer bangsSRen;
     public SpriteRenderer hairSRen;
-    public SpriteRenderer tailsSRen;
+    public SpriteRenderer hiTailsSRen;
+    public SpriteRenderer loTailsSRen;
 
     public SpriteRenderer eyebrowsSRen;
     public SpriteRenderer mouthSRen;
@@ -39,9 +39,9 @@ public class CharacterEditor : MonoBehaviour
     private string currentFaceCategory;
 
     public ColorPalette hairPalette;
-    public ColorPalette tailsPalette;
-    public ColorPalette bangsPalette;
-    public ColorPalette browPalette;
+    //public ColorPalette tailsPalette;
+    //public ColorPalette bangsPalette;
+    //public ColorPalette browPalette;
     public ColorPalette mouthPalette;
     public ColorPalette shadowPalette;
     public ColorPalette faceDetailPalette;
@@ -94,15 +94,16 @@ public class CharacterEditor : MonoBehaviour
 
         categoryToColorPalette = new Dictionary<string, ColorPalette>();
         categoryToColorPalette.Add("Hair", hairPalette);
-        categoryToColorPalette.Add("Tails", tailsPalette);
-        categoryToColorPalette.Add("Bangs", bangsPalette);
+        categoryToColorPalette.Add("HiTails", hairPalette);
+        categoryToColorPalette.Add("LoTails", hairPalette);
+        categoryToColorPalette.Add("Bangs", hairPalette);
+        categoryToColorPalette.Add("Eyebrows", hairPalette);
         categoryToColorPalette.Add("FaceDetail", faceDetailPalette);
-        categoryToColorPalette.Add("Eyebrows", browPalette);
         categoryToColorPalette.Add("Mouth", mouthPalette);
         categoryToColorPalette.Add("Eyeshadow", shadowPalette);
         Debug.Log("categoryToColorPalette is " + categoryToColorPalette.Keys);
         SetCurrentFaceCategory("Hair");
-        HideTailsWithHijab();
+        HideLoTailsAndHairWithHijab();
     }
 
     private void OnDestroy()
@@ -337,13 +338,14 @@ public class CharacterEditor : MonoBehaviour
         ren.enabled = true;
     }
 
-    private void HideTailsWithHijab()
+    private void HideLoTailsAndHairWithHijab()
     {
-        SpriteResolver res = categoryToResolver.GetValueOrDefault("Hair");
+        SpriteResolver res = categoryToResolver.GetValueOrDefault("HiTails");
         string label = res.GetLabel();
         if (label.Contains("Hijab"))
         {
-            SetCategory("Tails", "None");
+            SetCategory("LoTails", "None");
+            SetCategory("Hair", "None");
         }
     }
 
@@ -360,18 +362,19 @@ public class CharacterEditor : MonoBehaviour
         categoryToLabelIdx[currentFaceCategory] = idx;
         string label = labels[idx];
         SetCategory(currentFaceCategory, label);
-        HideTailsWithHijab();
+        HideLoTailsAndHairWithHijab();
     }
 
     public void SetCurrentFaceCategory(string category)
     {
-        Debug.Log("categoryToColorPalette is " + categoryToColorPalette.Keys);
         currentFaceCategory = category;
         Debug.Log("SETTING CATEGORY: " + category);
         foreach (ColorPalette cp in categoryToColorPalette.Values)
         {
-            cp.gameObject.SetActive(cp.category.Equals(category));    
+            cp.gameObject.SetActive(false);    
         }
+        if (categoryToColorPalette.ContainsKey(category))
+            categoryToColorPalette[category].gameObject.SetActive(true);
     }
 
     private string[] GetUnlockedLabels(string category)

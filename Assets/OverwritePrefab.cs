@@ -9,7 +9,7 @@ public class OverwritePrefab : MonoBehaviour
 
     public void OverwritePrefabXD()
     {
-        string prefabPath = "Assets/Prefabs/" + instance.name + ".prefab";
+        string prefabPath = "Assets/Prefabs/NPCs/" + instance.name + ".prefab";
         Debug.Log(prefabPath);
 
         if (File.Exists(prefabPath))

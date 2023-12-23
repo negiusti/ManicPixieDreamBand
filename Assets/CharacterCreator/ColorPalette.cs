@@ -8,7 +8,6 @@ public class ColorPalette : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //pans = this.GetComponentsInChildren<PalettePan>();
     }
 
     // Update is called once per frame
