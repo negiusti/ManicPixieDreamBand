@@ -98,7 +98,7 @@ public class CharacterEditor : MonoBehaviour
         categoryToColorPalette.Add("LoTails", hairPalette);
         categoryToColorPalette.Add("Bangs", hairPalette);
         categoryToColorPalette.Add("Eyebrows", hairPalette);
-        categoryToColorPalette.Add("FaceDetail", faceDetailPalette);
+        categoryToColorPalette.Add("Face_Detail", faceDetailPalette);
         categoryToColorPalette.Add("Mouth", mouthPalette);
         categoryToColorPalette.Add("Eyeshadow", shadowPalette);
         Debug.Log("categoryToColorPalette is " + categoryToColorPalette.Keys);
