@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StarMoverScript : MonoBehaviour
@@ -8,14 +6,13 @@ public class StarMoverScript : MonoBehaviour
     public bool hasStarted = false;
     private float startTime;
     private float runwayDelay;
-
+    private bool passed;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (hasStarted)
-            startTime = Time.time;
-        //beatTempo = beatTempo / 60f;
+        hasStarted = false;
+        passed = false;
     }
 
     // Update is called once per frame
@@ -23,28 +20,26 @@ public class StarMoverScript : MonoBehaviour
     {
         if (!hasStarted)
         {
-            if (Input.anyKeyDown)
-            {
-                hasStarted = true;
-                startTime = Time.time;
-            }
+            hasStarted = true;
+            startTime = Time.time;
         } else
         {
             transform.position -= new Vector3(0f, beatTempo * Time.deltaTime, 0f);
         }
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-
-    //}
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Activator"))
         {
             runwayDelay = Time.time - startTime;
+            passed = true;
         }
+    }
+
+    public bool hasPassed()
+    {
+        return passed;
     }
 
     public float GetRunwayDelay()

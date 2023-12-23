@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
     public void StopPlayingGuitar()
     {
         isPlayingGuitar = false;
-        player.HideHoldingSprite();
+        player.HideInstrumentSprite();
     }
 
     // Start is called before the first frame update

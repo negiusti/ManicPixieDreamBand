@@ -1,5 +1,4 @@
 using System.Linq;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -13,15 +12,11 @@ public class Character : MonoBehaviour
     private Dictionary<string, bool> categoryToEnabled;
     private SpriteResolver instResolver;
     private SpriteRenderer instRenderer;
-    //private bool isWearingPants; // Crotch is always enabled, determines whether L_Pant and R_Pant are enabled
-    //private bool hasSleeves; // Whether this outfit has sleeves
     private bool isWearingFullFit; // Set matching Top, Crotch, and (optional) sleeves, (optional) L_Pant and R_Pant
 
-    //private ColorPicker[] colorPickers;
     private SpriteLibraryAsset libraryAsset;
     private System.Random random;
     private string characterName;
-    private Animator animator;
 
     public bool IsWearingFullFit()
     {
@@ -51,7 +46,6 @@ public class Character : MonoBehaviour
         categoryToEnabled = new Dictionary<string, bool>();
         categoryToLabelMap = new Dictionary<string, string>();
         categoryToColorMap = new Dictionary<string, Color>();
-        //colorPickers = this.GetComponentsInChildren<ColorPicker>();
         
         if (libraryAsset == null)
         {
@@ -60,8 +54,6 @@ public class Character : MonoBehaviour
         this.random = new System.Random();
         this.characterName = gameObject.name;
         LoadCharacter();
-        animator = this.GetComponent<Animator>();
-        animator.Play("BaseCharacter_Idle");
 
         foreach (var targetResolver in spriteResolvers)
         {
@@ -95,14 +87,9 @@ public class Character : MonoBehaviour
         instResolver.ResolveSpriteToSpriteRenderer();
     }
 
-    //public void ShowHoldingSprite()
-    //{
-    //    holdingResolver.enabled = true;
-    //}
-
-    public void HideHoldingSprite()
+    public void HideInstrumentSprite()
     {
-        instResolver.SetCategoryAndLabel("Holding", "None");
+        instResolver.SetCategoryAndLabel("Instrument", "None");
         instResolver.ResolveSpriteToSpriteRenderer();
     }
 
@@ -171,7 +158,6 @@ public class Character : MonoBehaviour
 
         foreach (var spriteRenderer in spriteRenderers)
         {
-            //spriteRenderer.color = categoryToColorMap[spriteRenderer.gameObject.name];
             spriteRenderer.color = categoryToColorMap.TryGetValue(spriteRenderer.gameObject.name, out Color value) ? value : Color.white;
             spriteRenderer.enabled = categoryToEnabled.GetValueOrDefault(spriteRenderer.gameObject.name);
         }
