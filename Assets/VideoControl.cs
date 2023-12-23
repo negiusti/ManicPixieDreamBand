@@ -11,6 +11,8 @@ public class VideoControl : MonoBehaviour
     //public SplashScreen splash;
     private GameManager gm;
     private SceneChanger sc;
+    private bool skip;
+    private float startTime;
 
     void Start()
     {
@@ -25,13 +27,31 @@ public class VideoControl : MonoBehaviour
         //sr.enabled = false;
         gm = GameManager.Instance;
         sc = gm.GetComponent<SceneChanger>();
+        skip = false;
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            startTime = Time.time;
+        }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (Time.time - startTime > 2f)
+            {
+                skip = true;
+            }
+        }
+        if (skip)
+        {
             sc.ChangeScene("Character_Editor");
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            startTime = Time.time;
+            skip = false;
         }
     }
 
