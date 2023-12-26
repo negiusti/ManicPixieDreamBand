@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,16 +8,27 @@ public class PlayerMovement : MonoBehaviour
     private Character player;
     private Animator animator;
     private bool isIdle = true;
-    private string targetSortingLayer = "Player";
+    
     private float minX, maxX;
     public GameObject background;
     bool isPlayingGuitar;
+
+    public enum MovementState
+    {
+        Walk,
+        Idle,
+        Guitar,
+        Drum
+    };
+
+    private MovementState currState;
 
     void Update()
     {
         if (isPlayingGuitar)
         {
             animator.CrossFade("BaseCharacter_Guitar", .1f);
+            isIdle = false;
             return;
         }
 
@@ -53,10 +62,10 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = currentRotation;
     }
 
-    public void PlayGuitar()
+    public void PlayGuitar(string instLabel)
     {
         isPlayingGuitar = true;
-        //player.ShowHoldingSprite();
+        player.SetInstrumentSprite(instLabel);
     }
 
     public void StopPlayingGuitar()
@@ -70,9 +79,6 @@ public class PlayerMovement : MonoBehaviour
     {
         player = GetComponent<Character>();
         animator = GetComponentInChildren<Animator>();
-        //player.SetCharacterName("Nicole");
-        //player.LoadCharacter();
-        ChangeChildSortingLayers(transform);
         animator.Play("BaseCharacter_Idle");
         if (background != null)
         {
@@ -85,23 +91,24 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void ChangeChildSortingLayers(Transform parent)
-    {
-        // Iterate through all child objects
-        foreach (Transform child in parent)
-        {
-            // Get the Sprite Renderer component of the child object
-            SpriteRenderer spriteRenderer = child.GetComponent<SpriteRenderer>();
+    //private void ChangeChildSortingLayers(Transform parent)
+    //{
+    //    string targetSortingLayer = "Player";
+    //    // Iterate through all child objects
+    //    foreach (Transform child in parent)
+    //    {
+    //        // Get the Sprite Renderer component of the child object
+    //        SpriteRenderer spriteRenderer = child.GetComponent<SpriteRenderer>();
 
-            if (spriteRenderer != null)
-            {
-                // Change the sorting layer to the target sorting layer
-                spriteRenderer.sortingLayerName = targetSortingLayer;
-            }
+    //        if (spriteRenderer != null)
+    //        {
+    //            // Change the sorting layer to the target sorting layer
+    //            spriteRenderer.sortingLayerName = targetSortingLayer;
+    //        }
 
-            // Recursively call the function for nested child objects
-            ChangeChildSortingLayers(child);
-        }
-    }
+    //        // Recursively call the function for nested child objects
+    //        ChangeChildSortingLayers(child);
+    //    }
+    //}
 
 }

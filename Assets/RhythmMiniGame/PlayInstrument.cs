@@ -1,21 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
-public class PlayGuitar : MonoBehaviour
+public class PlayInstrument : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
+    private SpriteResolver spriteResolver;
     private bool withinRange;
     public KeyCode keyToTrigger;
-    private Character character;
     private PlayerMovement playerMovement;
     public GameObject minigame;
     private bool isPlayingGuitar;
+    private string instLabel;
+
     // Start is called before the first frame update
     void Start()
     {
         withinRange = false;
         spriteRenderer = this.GetComponent<SpriteRenderer>();
+        spriteResolver = this.GetComponent<SpriteResolver>();
+        instLabel = spriteResolver.GetLabel();
     }
 
     // Update is called once per frame
@@ -25,8 +28,7 @@ public class PlayGuitar : MonoBehaviour
         {
             spriteRenderer.enabled = false;
             isPlayingGuitar = true;
-            character.SetInstrumentSprite("Bass");
-            playerMovement.PlayGuitar();
+            playerMovement.PlayGuitar(instLabel);
         }
         if (isPlayingGuitar && !minigame.activeSelf)
         {
@@ -40,7 +42,6 @@ public class PlayGuitar : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            character = other.gameObject.GetComponent<Character>();
             playerMovement = other.gameObject.GetComponent<PlayerMovement>();
             withinRange = true;
         }

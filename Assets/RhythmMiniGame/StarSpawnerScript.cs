@@ -72,18 +72,8 @@ public class StarSpawnerScript : MonoBehaviour
     {
         i = 0;
         hasStarted = false;
-    }
-
-    private void OnDisable()
-    {
-        if (spawnStarCoroutine != null)
-            StopCoroutine(spawnStarCoroutine);
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
+        hitNotes = 0;
+        missedNotes = 0;
         hamster = this.GetComponent<AudioSource>();
         // Specify the addressable path (use the address you set in the Addressables Group)
         string addressablePath1 = "Assets/RhythmGameNotes/Hamster/hamster_easy_notes.txt";
@@ -98,9 +88,44 @@ public class StarSpawnerScript : MonoBehaviour
         asyncOperation2.Completed += OnLoadCompleted2;
 
         miniGame = this.transform.parent.gameObject;
-        i = 0;
-        hitNotes = 0;
-        missedNotes = 0;
+    }
+
+    private void OnDisable()
+    {
+        hamster.Stop();
+        if (spawnedStars != null)
+        {
+            GameObject star;
+            while (spawnedStars.TryDequeue(out star))
+            {
+                Destroy(star);
+            }
+        }
+        if (spawnStarCoroutine != null)
+            StopCoroutine(spawnStarCoroutine);
+    }
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //hamster = this.GetComponent<AudioSource>();
+        //// Specify the addressable path (use the address you set in the Addressables Group)
+        //string addressablePath1 = "Assets/RhythmGameNotes/Hamster/hamster_easy_notes.txt";
+        //string addressablePath2 = "Assets/RhythmGameNotes/Hamster/hamster_easy.txt";
+
+        //// Load the text file asynchronously
+        //AsyncOperationHandle<TextAsset> asyncOperation1 = Addressables.LoadAssetAsync<TextAsset>(addressablePath1);
+        //AsyncOperationHandle<TextAsset> asyncOperation2 = Addressables.LoadAssetAsync<TextAsset>(addressablePath2);
+
+        //// Register a callback for when the load operation completes
+        //asyncOperation1.Completed += OnLoadCompleted1;
+        //asyncOperation2.Completed += OnLoadCompleted2;
+
+        //miniGame = this.transform.parent.gameObject;
+        //i = 0;
+        //hitNotes = 0;
+        //missedNotes = 0;
         spawnedStars = new Queue<GameObject>();
 
         pinkSpawnPosition = pinkStar.transform.position;
