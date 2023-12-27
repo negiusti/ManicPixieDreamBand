@@ -1,46 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
-public class PlayGuitar : MonoBehaviour
+public class PlayInstrument : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
+    private SpriteResolver spriteResolver;
     private bool withinRange;
     public KeyCode keyToTrigger;
-    private Character character;
     private PlayerMovement playerMovement;
     public GameObject minigame;
-    private bool isPlayingGuitar;
+    private bool isPlayingInstrument;
+    private string instLabel;
+    //public enum Instrument
+    //{
+    //    Drums,
+    //    Guitar,
+    //    Bass
+    //};
+    
+    //public Instrument instrument;
+
     // Start is called before the first frame update
     void Start()
     {
         withinRange = false;
         spriteRenderer = this.GetComponent<SpriteRenderer>();
+        spriteResolver = this.GetComponent<SpriteResolver>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isPlayingGuitar && withinRange && Input.GetKey(keyToTrigger))
+        if (!isPlayingInstrument && withinRange && Input.GetKey(keyToTrigger))
         {
             spriteRenderer.enabled = false;
-            isPlayingGuitar = true;
-            character.SetInstrumentSprite("Bass");
-            playerMovement.PlayGuitar();
+            isPlayingInstrument = true;
+            instLabel = spriteResolver.GetLabel();
+            playerMovement.PlayInstrument(instLabel);
         }
-        if (isPlayingGuitar && !minigame.activeSelf)
+        if (isPlayingInstrument && !minigame.activeSelf)
         {
             spriteRenderer.enabled = true;
-            isPlayingGuitar = false;
-            playerMovement.StopPlayingGuitar();
+            isPlayingInstrument = false;
+            playerMovement.StopPlayingInstrument();
         }
     }
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            character = other.gameObject.GetComponent<Character>();
             playerMovement = other.gameObject.GetComponent<PlayerMovement>();
             withinRange = true;
         }

@@ -72,18 +72,8 @@ public class StarSpawnerScript : MonoBehaviour
     {
         i = 0;
         hasStarted = false;
-    }
-
-    private void OnDisable()
-    {
-        if (spawnStarCoroutine != null)
-            StopCoroutine(spawnStarCoroutine);
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
+        hitNotes = 0;
+        missedNotes = 0;
         hamster = this.GetComponent<AudioSource>();
         // Specify the addressable path (use the address you set in the Addressables Group)
         string addressablePath1 = "Assets/RhythmGameNotes/Hamster/hamster_easy_notes.txt";
@@ -98,11 +88,28 @@ public class StarSpawnerScript : MonoBehaviour
         asyncOperation2.Completed += OnLoadCompleted2;
 
         miniGame = this.transform.parent.gameObject;
-        i = 0;
-        hitNotes = 0;
-        missedNotes = 0;
-        spawnedStars = new Queue<GameObject>();
+    }
 
+    private void OnDisable()
+    {
+        hamster.Stop();
+        if (spawnedStars != null)
+        {
+            GameObject star;
+            while (spawnedStars.TryDequeue(out star))
+            {
+                Destroy(star);
+            }
+        }
+        if (spawnStarCoroutine != null)
+            StopCoroutine(spawnStarCoroutine);
+    }
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        spawnedStars = new Queue<GameObject>();
         pinkSpawnPosition = pinkStar.transform.position;
         pinkSpawnPosition.y = 7f;
         blackSpawnPosition = blackStar.transform.position;
