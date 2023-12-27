@@ -48,6 +48,11 @@ public class PlayInstrument : MonoBehaviour
         }
     }
 
+    public bool isBeingPlayed()
+    {
+        return isPlayingInstrument;
+    }
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
