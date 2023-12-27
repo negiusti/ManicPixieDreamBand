@@ -4,7 +4,8 @@ public class CameraFollow : MonoBehaviour
 {
     public GameObject background; // Reference to the background GameObject
     public float smoothSpeed = 0.125f; // Smoothing factor for camera movement
-
+    private Bounds backgroundBounds;
+    private Camera mainCamera;
     private float minX, maxX; // Minimum and maximum x positions for the camera
 
     void Start()
@@ -12,12 +13,8 @@ public class CameraFollow : MonoBehaviour
         if (background != null)
         {
             // Calculate the camera bounds based on the background's collider
-            Bounds backgroundBounds = background.GetComponent<Collider2D>().bounds;
-            Camera mainCamera = Camera.main;
-
-            float cameraHalfWidth = mainCamera.orthographicSize * mainCamera.aspect;
-            minX = backgroundBounds.min.x + cameraHalfWidth;
-            maxX = backgroundBounds.max.x - cameraHalfWidth;
+            backgroundBounds = background.GetComponent<Collider2D>().bounds;
+            mainCamera = Camera.main;
             Follow();
         }
         else
@@ -28,6 +25,10 @@ public class CameraFollow : MonoBehaviour
 
     private void Follow()
     {
+        float cameraHalfWidth = mainCamera.orthographicSize * mainCamera.aspect;
+        minX = backgroundBounds.min.x + cameraHalfWidth;
+        maxX = backgroundBounds.max.x - cameraHalfWidth;
+
         // Get the current position of the GameObject
         Vector3 desiredPosition = new Vector3(transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
