@@ -11,6 +11,7 @@ public class PlayInstrument : MonoBehaviour
     public GameObject minigame;
     private bool isPlayingInstrument;
     private string instLabel;
+    private float startTime;
     //public enum Instrument
     //{
     //    Drums,
@@ -27,7 +28,7 @@ public class PlayInstrument : MonoBehaviour
         spriteRenderer = this.GetComponent<SpriteRenderer>();
         spriteResolver = this.GetComponent<SpriteResolver>();
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -36,9 +37,10 @@ public class PlayInstrument : MonoBehaviour
             spriteRenderer.enabled = false;
             isPlayingInstrument = true;
             instLabel = spriteResolver.GetLabel();
-            playerMovement.PlayInstrument(instLabel);
+            startTime = Time.time;
+            playerMovement.PlayInstrument(instLabel, transform.position.x);
         }
-        if (isPlayingInstrument && !minigame.activeSelf)
+        if (isPlayingInstrument && !minigame.activeSelf && Time.time - startTime > 1f)
         {
             spriteRenderer.enabled = true;
             isPlayingInstrument = false;

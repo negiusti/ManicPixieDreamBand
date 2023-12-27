@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;    
     private float minX, maxX;
     public GameObject background;
-    
+    private float prevYPos;
 
     public enum MovementState
     {
@@ -34,12 +34,10 @@ public class PlayerMovement : MonoBehaviour
             if (currState == MovementState.Guitar)
             {
                 animator.CrossFade("BaseCharacter_Guitar", .05f);
-                return;
             }
             else if (currState == MovementState.Drums)
             {
                 animator.CrossFade("BaseCharacter_Drum", .05f);
-                return;
             }
             else if (currState == MovementState.Idle)
             {
@@ -49,6 +47,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 animator.CrossFade("BaseCharacter_Walk", .05f);
             }
+        }
+        if (currState == MovementState.Guitar || currState == MovementState.Drums)
+        {
+            return;
         }
 
         moveInput = Input.GetAxis("Horizontal");
@@ -85,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = currentRotation;
     }
 
-    public void PlayInstrument(string instLabel)
+    public void PlayInstrument(string instLabel, float xPos)
     {
         prevState = currState;
         player.SetInstrumentSprite(instLabel);
@@ -93,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
             currState = MovementState.Guitar;
         else if (instLabel.Contains("Drums"))
             currState = MovementState.Drums;
+        transform.position = new Vector3(xPos, transform.position.y + 1f, transform.position.z);
     }
 
     public void StopPlayingInstrument()
@@ -100,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
         prevState = currState;
         currState = MovementState.Idle;
         player.HideInstrumentSprite();
+        transform.position = new Vector3(transform.position.x, prevYPos, transform.position.z);
     }
 
     // Start is called before the first frame update
@@ -117,6 +121,7 @@ public class PlayerMovement : MonoBehaviour
             minX = backgroundBounds.min.x + objectHalfWidth;
             maxX = backgroundBounds.max.x - objectHalfWidth;
         }
+        prevYPos = transform.position.y;
     }
 
     //private void ChangeChildSortingLayers(Transform parent)
