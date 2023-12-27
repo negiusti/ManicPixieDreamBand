@@ -9,8 +9,16 @@ public class PlayInstrument : MonoBehaviour
     public KeyCode keyToTrigger;
     private PlayerMovement playerMovement;
     public GameObject minigame;
-    private bool isPlayingGuitar;
+    private bool isPlayingInstrument;
     private string instLabel;
+    //public enum Instrument
+    //{
+    //    Drums,
+    //    Guitar,
+    //    Bass
+    //};
+    
+    //public Instrument instrument;
 
     // Start is called before the first frame update
     void Start()
@@ -18,25 +26,26 @@ public class PlayInstrument : MonoBehaviour
         withinRange = false;
         spriteRenderer = this.GetComponent<SpriteRenderer>();
         spriteResolver = this.GetComponent<SpriteResolver>();
-        instLabel = spriteResolver.GetLabel();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isPlayingGuitar && withinRange && Input.GetKey(keyToTrigger))
+        if (!isPlayingInstrument && withinRange && Input.GetKey(keyToTrigger))
         {
             spriteRenderer.enabled = false;
-            isPlayingGuitar = true;
-            playerMovement.PlayGuitar(instLabel);
+            isPlayingInstrument = true;
+            instLabel = spriteResolver.GetLabel();
+            playerMovement.PlayInstrument(instLabel);
         }
-        if (isPlayingGuitar && !minigame.activeSelf)
+        if (isPlayingInstrument && !minigame.activeSelf)
         {
             spriteRenderer.enabled = true;
-            isPlayingGuitar = false;
-            playerMovement.StopPlayingGuitar();
+            isPlayingInstrument = false;
+            playerMovement.StopPlayingInstrument();
         }
     }
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
