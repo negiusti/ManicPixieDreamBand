@@ -12,11 +12,11 @@ public class OverwritePrefab : MonoBehaviour
         string prefabPath = "Assets/Prefabs/NPCs/" + instance.name + ".prefab";
         Debug.Log(prefabPath);
 
-        if (File.Exists(prefabPath))
-        {
-            Debug.Log("File already exists");
-            return;
-        }
+        //if (File.Exists(prefabPath))
+        //{
+        //    Debug.Log("File already exists");
+        //    return;
+        //}
             
 
         PrefabUtility.SaveAsPrefabAsset(instance, prefabPath);
