@@ -17,15 +17,15 @@ public class CharacterEditor : MonoBehaviour
     private static string lShoe = "L_Shoe";
 
     // Hair
-    public SpriteRenderer bangsSRen;
-    public SpriteRenderer hairSRen;
-    public SpriteRenderer hiTailsSRen;
-    public SpriteRenderer loTailsSRen;
+    //public SpriteRenderer bangsSRen;
+    //public SpriteRenderer hairSRen;
+    //public SpriteRenderer hiTailsSRen;
+    //public SpriteRenderer loTailsSRen;
 
-    public SpriteRenderer eyebrowsSRen;
-    public SpriteRenderer mouthSRen;
-    public SpriteRenderer faceDetailSRen;
-    public SpriteRenderer eyesShadowSRen;
+    //public SpriteRenderer eyebrowsSRen;
+    //public SpriteRenderer mouthSRen;
+    //public SpriteRenderer faceDetailSRen;
+    //public SpriteRenderer eyesShadowSRen;
 
     private List<SpriteRenderer> skinRenderers;
 
