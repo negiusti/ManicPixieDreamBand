@@ -39,9 +39,6 @@ public class CharacterEditor : MonoBehaviour
     private string currentFaceCategory;
 
     public ColorPalette hairPalette;
-    //public ColorPalette tailsPalette;
-    //public ColorPalette bangsPalette;
-    //public ColorPalette browPalette;
     public ColorPalette mouthPalette;
     public ColorPalette shadowPalette;
     public ColorPalette faceDetailPalette;
@@ -171,8 +168,8 @@ public class CharacterEditor : MonoBehaviour
         categoryToRenderer.GetValueOrDefault("FB_" + crotch).enabled = false;
         categoryToRenderer.GetValueOrDefault("FB_" + lPant).enabled = false;
         categoryToRenderer.GetValueOrDefault("FB_" + rPant).enabled = false;
-        //categoryToRenderer.GetValueOrDefault("FB_" + lSleeve).enabled = false;
-        //categoryToRenderer.GetValueOrDefault("FB_" + rSleeve).enabled = false;
+        categoryToRenderer.GetValueOrDefault("FB_" + lSleeve).enabled = false;
+        categoryToRenderer.GetValueOrDefault("FB_" + rSleeve).enabled = false;
     }
 
     public void SelectTopAndBottom()
@@ -203,17 +200,18 @@ public class CharacterEditor : MonoBehaviour
         categoryToLabelIdx["FB_" + top] = idx;
         SetCategory("FB_" + top, label);
         SetCategory("FB_" + crotch, label);
-        // TO DO (later)
-        //string[] sleeveCategories = GetUnlockedLabels("FB_" + lSleeve);
-        //if (sleeveCategories.Contains(label))
-        //{
-        //    SetCategory("FB_" + lSleeve, label);
-        //    SetCategory("FB_" + rSleeve, label);
-        //} else
-        //{
-        //    categoryToRenderer.GetValueOrDefault("FB_" + lSleeve).enabled = false;
-        //    categoryToRenderer.GetValueOrDefault("FB_" + rSleeve).enabled = false;
-        //}
+
+        string[] sleeveCategories = GetUnlockedLabels("FB_" + lSleeve);
+        if (sleeveCategories.Contains(label))
+        {
+            SetCategory("FB_" + lSleeve, label);
+            SetCategory("FB_" + rSleeve, label);
+        }
+        else
+        {
+            categoryToRenderer.GetValueOrDefault("FB_" + lSleeve).enabled = false;
+            categoryToRenderer.GetValueOrDefault("FB_" + rSleeve).enabled = false;
+        }
 
         string[] pantCategories = GetUnlockedLabels("FB_" + lPant);
         if (pantCategories.Contains(label))
