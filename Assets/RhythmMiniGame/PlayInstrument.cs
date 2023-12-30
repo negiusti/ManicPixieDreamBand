@@ -7,19 +7,11 @@ public class PlayInstrument : MonoBehaviour
     private SpriteResolver spriteResolver;
     private bool withinRange;
     public KeyCode keyToTrigger;
-    private PlayerMovement playerMovement;
+    private Movement musicianMovement;
     public GameObject minigame;
     private bool isPlayingInstrument;
     private string instLabel;
     private float startTime;
-    //public enum Instrument
-    //{
-    //    Drums,
-    //    Guitar,
-    //    Bass
-    //};
-    
-    //public Instrument instrument;
 
     // Start is called before the first frame update
     void Start()
@@ -32,23 +24,45 @@ public class PlayInstrument : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Only applies to MainCharacter
         if (!isPlayingInstrument && withinRange && Input.GetKey(keyToTrigger))
         {
-            spriteRenderer.enabled = false;
-            isPlayingInstrument = true;
-            instLabel = spriteResolver.GetLabel();
-            startTime = Time.time;
-            playerMovement.PlayInstrument(instLabel, transform.position.x);
+            Play();
+            JamCoordinator.StartJam();
         }
         if (isPlayingInstrument && !minigame.activeSelf && Time.time - startTime > 1f)
         {
-            spriteRenderer.enabled = true;
-            isPlayingInstrument = false;
-            playerMovement.StopPlayingInstrument();
+            Stop();
+            JamCoordinator.EndJam();
         }
     }
 
-    public bool isBeingPlayed()
+    // Used by MainCharacter only (the movement is set by the collider)
+    public void Play()
+    {
+        Play(musicianMovement);
+    }
+
+    // Used by NPCs
+    public void Play(Movement movement)
+    {
+        spriteRenderer.enabled = false;
+        isPlayingInstrument = true;
+        instLabel = spriteResolver.GetLabel();
+        startTime = Time.time;
+        musicianMovement = movement;
+        musicianMovement.PlayInstrument(instLabel, transform.position.x);
+    }
+
+    // Used by NPCs as well as MainCharacter
+    public void Stop()
+    {
+        spriteRenderer.enabled = true;
+        isPlayingInstrument = false;
+        musicianMovement.StopPlayingInstrument();
+    }
+
+    public bool IsBeingPlayed()
     {
         return isPlayingInstrument;
     }
@@ -58,7 +72,7 @@ public class PlayInstrument : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerMovement = other.gameObject.GetComponent<PlayerMovement>();
+            musicianMovement = other.gameObject.GetComponent<Movement>();
             withinRange = true;
         }
     }

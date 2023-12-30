@@ -13,9 +13,9 @@ public class Character : MonoBehaviour
     private SpriteResolver instResolver;
     private SpriteRenderer instRenderer;
     private bool isWearingFullFit; // Set matching Top, Crotch, and (optional) sleeves, (optional) L_Pant and R_Pant
+    public bool isMusician;
 
     private SpriteLibraryAsset libraryAsset;
-    private System.Random random;
     private string characterName;
 
     public bool IsWearingFullFit()
@@ -51,7 +51,6 @@ public class Character : MonoBehaviour
         {
             libraryAsset = this.GetComponent<SpriteLibrary>().spriteLibraryAsset;
         }
-        this.random = new System.Random();
         this.characterName = gameObject.name;
         LoadCharacter();
 

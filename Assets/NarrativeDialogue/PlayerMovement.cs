@@ -1,53 +1,17 @@
 using UnityEngine;
-//using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Movement
 {
-    private float moveSpeed = 4f;
     private float moveInput;
-    private Character player;
-    private Animator animator;    
-    private float minX, maxX;
-    public GameObject background;
-    private float prevYPos;
-
-    public enum MovementState
+    // Start is called before the first frame update
+    new void Start()
     {
-        Walk,
-        Idle,
-        Guitar,
-        Drums
-    };
-
-    private MovementState currState;
-    private MovementState prevState;
-
-    private bool HasStateChanged()
-    {
-        return currState != prevState;
+        base.Start();
     }
 
-    void Update()
+    new void Update()
     {
-        if (HasStateChanged())
-        {
-            if (currState == MovementState.Guitar)
-            {
-                animator.CrossFade("BaseCharacter_Guitar", .05f);
-            }
-            else if (currState == MovementState.Drums)
-            {
-                animator.CrossFade("BaseCharacter_Drum", .05f);
-            }
-            else if (currState == MovementState.Idle)
-            {
-                animator.CrossFade("BaseCharacter_Idle", .05f);
-            }
-            else if (currState == MovementState.Walk)
-            {
-                animator.CrossFade("BaseCharacter_Walk", .05f);
-            }
-        }
+        base.Update();
         if (currState == MovementState.Guitar || currState == MovementState.Drums)
         {
             return;
@@ -69,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveLeftRight()
     {   
-        Quaternion currentRotation = player.transform.localRotation;
+        Quaternion currentRotation = transform.localRotation;
         if (moveInput < 0 && currentRotation.y > 0)
         {
             currentRotation.y = 0;
@@ -86,62 +50,4 @@ public class PlayerMovement : MonoBehaviour
         transform.position = position;
         transform.rotation = currentRotation;
     }
-
-    public void PlayInstrument(string instLabel, float xPos)
-    {
-        prevState = currState;
-        player.SetInstrumentSprite(instLabel);
-        if (instLabel.Contains("Guitar") || instLabel.Contains("Bass"))
-            currState = MovementState.Guitar;
-        else if (instLabel.Contains("Drums"))
-            currState = MovementState.Drums;
-        transform.position = new Vector3(xPos, transform.position.y + 1f, transform.position.z);
-    }
-
-    public void StopPlayingInstrument()
-    {
-        prevState = currState;
-        currState = MovementState.Idle;
-        player.HideInstrumentSprite();
-        transform.position = new Vector3(transform.position.x, prevYPos, transform.position.z);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        player = GetComponent<Character>();
-        animator = GetComponentInChildren<Animator>();
-        currState = MovementState.Idle;
-        if (background != null)
-        {
-            // Calculate the movement bounds based on the background's collider
-            Bounds backgroundBounds = background.GetComponent<Collider2D>().bounds;
-            float objectHalfWidth = GetComponent<Collider2D>().bounds.extents.x;
-
-            minX = backgroundBounds.min.x + objectHalfWidth;
-            maxX = backgroundBounds.max.x - objectHalfWidth;
-        }
-        prevYPos = transform.position.y;
-    }
-
-    //private void ChangeChildSortingLayers(Transform parent)
-    //{
-    //    string targetSortingLayer = "Player";
-    //    // Iterate through all child objects
-    //    foreach (Transform child in parent)
-    //    {
-    //        // Get the Sprite Renderer component of the child object
-    //        SpriteRenderer spriteRenderer = child.GetComponent<SpriteRenderer>();
-
-    //        if (spriteRenderer != null)
-    //        {
-    //            // Change the sorting layer to the target sorting layer
-    //            spriteRenderer.sortingLayerName = targetSortingLayer;
-    //        }
-
-    //        // Recursively call the function for nested child objects
-    //        ChangeChildSortingLayers(child);
-    //    }
-    //}
-
 }

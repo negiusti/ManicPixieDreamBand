@@ -16,17 +16,6 @@ public class CharacterEditor : MonoBehaviour
     private static string rShoe = "R_Shoe";
     private static string lShoe = "L_Shoe";
 
-    // Hair
-    //public SpriteRenderer bangsSRen;
-    //public SpriteRenderer hairSRen;
-    //public SpriteRenderer hiTailsSRen;
-    //public SpriteRenderer loTailsSRen;
-
-    //public SpriteRenderer eyebrowsSRen;
-    //public SpriteRenderer mouthSRen;
-    //public SpriteRenderer faceDetailSRen;
-    //public SpriteRenderer eyesShadowSRen;
-
     private List<SpriteRenderer> skinRenderers;
 
     private SpriteLibraryAsset spriteLib;
@@ -366,7 +355,6 @@ public class CharacterEditor : MonoBehaviour
     public void SetCurrentFaceCategory(string category)
     {
         currentFaceCategory = category;
-        Debug.Log("SETTING CATEGORY: " + category);
         foreach (ColorPalette cp in categoryToColorPalette.Values)
         {
             cp.gameObject.SetActive(false);    
