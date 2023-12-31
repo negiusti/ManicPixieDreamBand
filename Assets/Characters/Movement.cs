@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class Movement : MonoBehaviour
 {
@@ -14,11 +15,22 @@ public abstract class Movement : MonoBehaviour
         Walk,
         Idle,
         Guitar,
-        Drums
+        Drum
     };
 
+    private static string WalkAnim = "BaseCharacter_Walk";
+    private static string IdleAnim = "BaseCharacter_Idle";
+    private static string GuitarAnim = "BaseCharacter_Guitar";
+    private static string DrumAnim = "BaseCharacter_Drum";
+
+    private Dictionary<MovementState, string> stateToAnimation = new Dictionary<MovementState, string> {
+        {MovementState.Walk, WalkAnim },
+        {MovementState.Idle, IdleAnim },
+        {MovementState.Guitar, GuitarAnim },
+        {MovementState.Drum, DrumAnim }
+            };
     protected MovementState currState;
-    protected MovementState prevState;
+    private string currAnim;
 
     // Use this for initialization
     protected virtual void Start()
@@ -47,37 +59,40 @@ public abstract class Movement : MonoBehaviour
         {
             if (currState == MovementState.Guitar)
             {
-                animator.CrossFade("BaseCharacter_Guitar", .05f);
+                currAnim = GuitarAnim;
             }
-            else if (currState == MovementState.Drums)
+            else if (currState == MovementState.Drum)
             {
-                animator.CrossFade("BaseCharacter_Drum", .05f);
+                currAnim = DrumAnim;
             }
             else if (currState == MovementState.Idle)
             {
-                animator.CrossFade("BaseCharacter_Idle", .05f);
+                currAnim = IdleAnim;
             }
             else if (currState == MovementState.Walk)
             {
-                animator.CrossFade("BaseCharacter_Walk", .05f);
+                currAnim = WalkAnim;
             }
+            animator.CrossFade(currAnim, .05f);
         }
     }
 
     public void PlayInstrument(string instLabel, float xPos)
     {
-        prevState = currState;
         player.SetInstrumentSprite(instLabel);
         if (instLabel.Contains("Guitar") || instLabel.Contains("Bass"))
             currState = MovementState.Guitar;
-        else if (instLabel.Contains("Drums"))
-            currState = MovementState.Drums;
+        else if (instLabel.Contains("Drum"))
+            currState = MovementState.Drum;
+
+        Quaternion currentRotation = transform.localRotation;
+        currentRotation.y = 0;
         transform.position = new Vector3(xPos, transform.position.y + 1f, transform.position.z);
+        transform.rotation = currentRotation;
     }
 
     public void StopPlayingInstrument()
     {
-        prevState = currState;
         currState = MovementState.Idle;
         player.HideInstrumentSprite();
         transform.position = new Vector3(transform.position.x, prevYPos, transform.position.z);
@@ -85,6 +100,6 @@ public abstract class Movement : MonoBehaviour
 
     private bool HasStateChanged()
     {
-        return currState != prevState;
+        return stateToAnimation[currState] != currAnim;
     }
 }

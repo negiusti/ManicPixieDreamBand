@@ -12,7 +12,7 @@ public class PlayerMovement : Movement
     new void Update()
     {
         base.Update();
-        if (currState == MovementState.Guitar || currState == MovementState.Drums)
+        if (currState == MovementState.Guitar || currState == MovementState.Drum)
         {
             return;
         }
@@ -20,12 +20,10 @@ public class PlayerMovement : Movement
         moveInput = Input.GetAxis("Horizontal");
         if (moveInput == 0f)
         {
-            prevState = currState;
             currState = MovementState.Idle;
         }
         else
         {
-            prevState = currState;
             currState = MovementState.Walk;
             MoveLeftRight();
         }
