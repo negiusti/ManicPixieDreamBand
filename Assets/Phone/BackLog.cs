@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using PixelCrushers.DialogueSystem;
-using System;
 using System.Collections;
 
 /// <summary>
@@ -15,6 +14,7 @@ public class BackLog : MonoBehaviour
     public LogEntry logEntryTemplate;
     public Text speakerNameTemplate;
     public ScrollRect scrollView;
+    public GameObject typingBubbleTemplate;
     private int currentEntryID;
     private static HashSet<string> groupChats = new HashSet<string> { "TXT_Band" };
 
@@ -31,6 +31,7 @@ public class BackLog : MonoBehaviour
     {
         logEntryTemplate.gameObject.SetActive(false);
         speakerNameTemplate.gameObject.SetActive(false);
+        typingBubbleTemplate.SetActive(false);
     }
 
     public int GetCurrEntryID()
@@ -50,7 +51,16 @@ public class BackLog : MonoBehaviour
             yield return null;
 
         if (!subtitle.speakerInfo.IsPlayer && !subtitle.dialogueEntry.isRoot)
+        {
+            // add typing bubble here
+            GameObject typingBubble = Instantiate(typingBubbleTemplate, logEntryContainer);
+            typingBubble.SetActive(true);
             yield return new WaitForSeconds(2);
+            // remove typing bubble here
+            typingBubble.SetActive(false);
+            Destroy(typingBubble);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(scrollView.content);
+        }
 
         if (!string.IsNullOrEmpty(subtitle.formattedText.text))
         {
