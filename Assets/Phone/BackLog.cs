@@ -19,7 +19,7 @@ public class BackLog : MonoBehaviour
     private static HashSet<string> groupChats = new HashSet<string> { "TXT_Band" };
 
     private List<Subtitle> log = new List<Subtitle>();
-
+    private Stack<GameObject> typingBubbles = new Stack<GameObject>();
     private List<GameObject> instances = new List<GameObject>();
 
     private void Start()
@@ -55,15 +55,23 @@ public class BackLog : MonoBehaviour
             // add typing bubble here
             GameObject typingBubble = Instantiate(typingBubbleTemplate, logEntryContainer);
             typingBubble.SetActive(true);
+            typingBubbles.Push(typingBubble);
             yield return new WaitForSeconds(2);
             // remove typing bubble here
             typingBubble.SetActive(false);
-            Destroy(typingBubble);
             LayoutRebuilder.ForceRebuildLayoutImmediate(scrollView.content);
         }
 
         if (!string.IsNullOrEmpty(subtitle.formattedText.text))
         {
+            GameObject b;
+            while (typingBubbles.TryPeek(out _))
+            {
+                b = typingBubbles.Pop();
+                b.SetActive(false);
+                Destroy(b);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(scrollView.content);
+            }
             if (isGroupChat && !subtitle.speakerInfo.IsPlayer)
             {
                 // add a name header
