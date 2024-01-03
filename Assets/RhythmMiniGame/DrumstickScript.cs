@@ -6,7 +6,7 @@ public class DrumstickScript : MonoBehaviour
     public bool isLeftStick;
     private Vector3 startPos;
     private Vector3 startScale;
-    private float inSpeed = 19f;
+    private float inSpeed = 7f;
     private float outSpeed = 2.5f;
     private bool onDrumPad = false;
 
@@ -21,7 +21,7 @@ public class DrumstickScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float newXPosition = transform.position.x;
         if (isShaking)
