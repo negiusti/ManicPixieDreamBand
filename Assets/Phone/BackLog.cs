@@ -58,16 +58,15 @@ public class BackLog : MonoBehaviour
             typingBubbles.Push(typingBubble);
             yield return new WaitForSeconds(2);
             // remove typing bubble here
-            typingBubble.SetActive(false);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(scrollView.content);
+            //typingBubble.SetActive(false);
+            //LayoutRebuilder.ForceRebuildLayoutImmediate(scrollView.content);
         }
 
         if (!string.IsNullOrEmpty(subtitle.formattedText.text))
         {
-            GameObject b;
             while (typingBubbles.TryPeek(out _))
             {
-                b = typingBubbles.Pop();
+                GameObject b = typingBubbles.Pop();
                 b.SetActive(false);
                 Destroy(b);
                 LayoutRebuilder.ForceRebuildLayoutImmediate(scrollView.content);
@@ -85,10 +84,15 @@ public class BackLog : MonoBehaviour
             instances.Add(instance.gameObject);
             instance.gameObject.SetActive(true);
             instance.Assign(subtitle);
+
+            if (!subtitle.speakerInfo.IsPlayer)
+            {
+                instance.transform.rotation = new Quaternion(instance.transform.rotation.x, 180f, instance.transform.rotation.z, instance.transform.rotation.w);
+            }
             
             RectTransform rectTransform = instance.GetComponent<RectTransform>();
             Text[] texts = instance.GetComponentsInChildren<Text>();
-            float preferredHeight = 100f;
+            float preferredHeight = 30f;
             foreach (Text t in texts)
             {
                 preferredHeight += t.preferredHeight;
@@ -98,10 +102,10 @@ public class BackLog : MonoBehaviour
             Image image = instance.GetComponent<Image>();
             if (subtitle.speakerInfo.IsPlayer)
             {
-                image.color = Color.yellow;
+                image.color = new Color(0.6f, 0.94f, 1f);
             } else
             {
-                image.color = Color.cyan;
+                image.color = new Color(0.98f, 0.89f, 1f);
             }
         }
         currentEntryID = subtitle.dialogueEntry.id;
