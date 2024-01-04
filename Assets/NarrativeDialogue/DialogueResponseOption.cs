@@ -29,7 +29,7 @@ public class DialogueResponseOption : MonoBehaviour
     public void Select()
     {
         if (button != null)
-            button.image.color = new Color(0, 0, 1, 1);
+            button.image.color = new Color(0.6276432f, 0.5379584f, 0.7264151f, 1);
         if (text != null)
             text.color = new Color(1, 1, 1, 1);
     }
