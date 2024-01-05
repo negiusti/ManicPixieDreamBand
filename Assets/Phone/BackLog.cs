@@ -15,16 +15,28 @@ public class BackLog : MonoBehaviour
     public Text speakerNameTemplate;
     public ScrollRect scrollView;
     public GameObject typingBubbleTemplate;
+    public StandardUIMenuPanel responseMenu;
     private int currentEntryID;
     private static HashSet<string> groupChats = new HashSet<string> { "TXT_Band" };
 
     private List<Subtitle> log = new List<Subtitle>();
     private Stack<GameObject> typingBubbles = new Stack<GameObject>();
     private List<GameObject> instances = new List<GameObject>();
+    private RectTransform rectTransform;
+    private Scrollbar scrollbar;
+    private bool responseMenuView;
+    private static float longScrollViewHeight = 310.6017f;
+    private static float shortScrollViewHeight = 203.4449f;
+    private Queue<IEnumerator> coroutines;
 
     private void Start()
     {
         currentEntryID = 0;
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
     private void Awake()
@@ -32,6 +44,41 @@ public class BackLog : MonoBehaviour
         logEntryTemplate.gameObject.SetActive(false);
         speakerNameTemplate.gameObject.SetActive(false);
         typingBubbleTemplate.SetActive(false);
+        responseMenuView = false;
+        rectTransform = GetComponent<RectTransform>();
+        scrollbar = GetComponentInChildren<Scrollbar>();
+        coroutines = new Queue<IEnumerator>();
+    }
+
+    private void Update()
+    {
+        if (!responseMenuView && responseMenu.gameObject.activeSelf)
+        {
+            // Shorten scroll view
+            responseMenuView = true;
+
+            Vector2 sizeDelta = rectTransform.sizeDelta;
+            sizeDelta.y = shortScrollViewHeight;
+            rectTransform.sizeDelta = sizeDelta;
+
+            RectTransform r = scrollbar.gameObject.GetComponent<RectTransform>();
+            sizeDelta = r.sizeDelta;
+            sizeDelta.y = shortScrollViewHeight;
+            r.sizeDelta = sizeDelta;
+        } else if (responseMenuView && !responseMenu.gameObject.activeSelf)
+        {
+            // Extend scroll view
+            responseMenuView = false;
+
+            Vector2 sizeDelta = rectTransform.sizeDelta;
+            sizeDelta.y = longScrollViewHeight;
+            rectTransform.sizeDelta = sizeDelta;
+
+            RectTransform r = scrollbar.gameObject.GetComponent<RectTransform>();
+            sizeDelta = r.sizeDelta;
+            sizeDelta.y = longScrollViewHeight;
+            r.sizeDelta = sizeDelta;
+        }
     }
 
     public int GetCurrEntryID()
@@ -41,25 +88,43 @@ public class BackLog : MonoBehaviour
 
     public void AddToBacklog(Subtitle subtitle)
     {
-        StartCoroutine(AddToBacklogWithDelay(subtitle));
+        if (subtitle.dialogueEntry.id == currentEntryID)
+            return;
+        else
+        {
+            coroutines.Enqueue(AddToBacklogWithDelay(subtitle));
+            if (coroutines.Count == 1)
+                StartCoroutine(RunCoroutineQueue());
+        }
     }
-    
+
+    IEnumerator RunCoroutineQueue()
+    {
+        while (true)
+        {
+            if (coroutines.Count == 0)
+            {
+                yield break;
+            }
+            else
+            {
+                // Dequeue the next coroutine and start it
+                IEnumerator currentCoroutine = coroutines.Dequeue();
+                yield return StartCoroutine(currentCoroutine);
+            }
+        }
+    }
+
     private IEnumerator AddToBacklogWithDelay(Subtitle subtitle)
     {
         bool isGroupChat = groupChats.Contains(DialogueManager.LastConversationStarted);
-        if (subtitle.dialogueEntry.id == currentEntryID)
-            yield return null;
-
-        if (!subtitle.speakerInfo.IsPlayer && !subtitle.dialogueEntry.isRoot)
+        if (!subtitle.speakerInfo.IsPlayer && !subtitle.dialogueEntry.isRoot && !string.IsNullOrEmpty(subtitle.formattedText.text))
         {
             // add typing bubble here
             GameObject typingBubble = Instantiate(typingBubbleTemplate, logEntryContainer);
             typingBubble.SetActive(true);
             typingBubbles.Push(typingBubble);
             yield return new WaitForSeconds(2);
-            // remove typing bubble here
-            //typingBubble.SetActive(false);
-            //LayoutRebuilder.ForceRebuildLayoutImmediate(scrollView.content);
         }
 
         if (!string.IsNullOrEmpty(subtitle.formattedText.text))
@@ -89,7 +154,7 @@ public class BackLog : MonoBehaviour
             {
                 instance.transform.rotation = new Quaternion(instance.transform.rotation.x, 180f, instance.transform.rotation.z, instance.transform.rotation.w);
             }
-            
+
             RectTransform rectTransform = instance.GetComponent<RectTransform>();
             Text[] texts = instance.GetComponentsInChildren<Text>();
             float preferredHeight = 30f;
@@ -103,11 +168,13 @@ public class BackLog : MonoBehaviour
             if (subtitle.speakerInfo.IsPlayer)
             {
                 image.color = new Color(0.6f, 0.94f, 1f);
-            } else
+            }
+            else
             {
                 image.color = new Color(0.98f, 0.89f, 1f);
             }
         }
+        
         currentEntryID = subtitle.dialogueEntry.id;
         ScrollToBottomOfScrollView();
         yield return null;
