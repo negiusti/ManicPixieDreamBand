@@ -30,16 +30,16 @@ public class CameraFollow : MonoBehaviour
         maxX = backgroundBounds.max.x - cameraHalfWidth;
 
         // Get the current position of the GameObject
-        Vector3 desiredPosition = new Vector3(transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
+        Vector3 desiredPosition = new Vector3(transform.position.x, mainCamera.transform.position.y, mainCamera.transform.position.z);
 
         // Smoothly move the camera towards the desired position
-        Vector3 smoothedPosition = Vector3.Lerp(Camera.main.transform.position, desiredPosition, smoothSpeed);
-        Camera.main.transform.position = smoothedPosition;
+        Vector3 smoothedPosition = Vector3.Lerp(mainCamera.transform.position, desiredPosition, smoothSpeed);
+        mainCamera.transform.position = smoothedPosition;
 
         // Clamp the camera position to stay within the defined bounds
-        Camera.main.transform.position = new Vector3(Mathf.Clamp(Camera.main.transform.position.x, minX, maxX),
-                                                     Camera.main.transform.position.y,
-                                                     Camera.main.transform.position.z);
+        mainCamera.transform.position = new Vector3(Mathf.Clamp(mainCamera.transform.position.x, minX, maxX),
+                                                     mainCamera.transform.position.y,
+                                                     mainCamera.transform.position.z);
     }
 
     void LateUpdate()

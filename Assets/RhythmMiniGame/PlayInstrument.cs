@@ -51,7 +51,7 @@ public class PlayInstrument : MonoBehaviour
         instLabel = spriteResolver.GetLabel();
         startTime = Time.time;
         musicianMovement = movement;
-        musicianMovement.PlayInstrument(instLabel, transform.position.x);
+        musicianMovement.PlayInstrument(instLabel, transform.position);
     }
 
     // Used by NPCs as well as MainCharacter
