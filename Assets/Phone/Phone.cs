@@ -104,7 +104,7 @@ public class Phone : MonoBehaviour
         messagesApp.gameObject.SetActive(true);
         messagesApp.OpenContacts();
         HideIcons();
-        backgroundResolver.SetCategoryAndLabel("Background", "Messages");
+        backgroundResolver.SetCategoryAndLabel("Background", "Contacts");
     }
 
     public void OpenConvo()
@@ -112,6 +112,7 @@ public class Phone : MonoBehaviour
         appHeader.gameObject.SetActive(false);
         if (phoneStateStack.Peek() != PhoneState.Convo)
             phoneStateStack.Push(PhoneState.Convo);
+        backgroundResolver.SetCategoryAndLabel("Background", "Messages");
     }
 
     public void OpenPin()
