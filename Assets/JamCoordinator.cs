@@ -8,10 +8,14 @@ public class JamCoordinator : ScriptableObject
     private static NPCMovement[] musicians;
     private static Camera jamCamera;
     private static Camera mainCam;
+    private static bool isJamInSession;
 
     // Start is called before the first frame update
     public static void StartJam()
     {
+        if (isJamInSession)
+            return;
+        isJamInSession = true;
         mainCam = Camera.main;
         jamCamera = Instantiate(mainCam);
         jamCamera.orthographicSize = 7f;
@@ -31,9 +35,12 @@ public class JamCoordinator : ScriptableObject
 
     public static void EndJam()
     {
+        if (!isJamInSession)
+            return;
+        isJamInSession = false;
         mainCam.enabled = true;
         jamCamera.enabled = false;
-        Destroy(jamCamera);
+        Destroy(jamCamera.gameObject);
         foreach (PlayInstrument instrument in playableInstruments)
         {
             instrument.Stop();

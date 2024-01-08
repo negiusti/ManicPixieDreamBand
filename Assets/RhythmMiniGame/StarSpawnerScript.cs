@@ -31,7 +31,6 @@ public class StarSpawnerScript : MonoBehaviour
     private string[] notes;
     private string[] times;
     private Coroutine spawnStarCoroutine;
-    //private float prevCameraSize;
 
     private void OnLoadCompleted1(AsyncOperationHandle<TextAsset> obj)
     {
@@ -89,8 +88,6 @@ public class StarSpawnerScript : MonoBehaviour
         asyncOperation2.Completed += OnLoadCompleted2;
 
         miniGame = this.transform.parent.gameObject;
-        //prevCameraSize = Camera.main.orthographicSize;
-        //Camera.main.orthographicSize = 7f;
     }
 
     private void OnDisable()
@@ -104,9 +101,9 @@ public class StarSpawnerScript : MonoBehaviour
                 Destroy(star);
             }
         }
-        if (spawnStarCoroutine != null)
-            StopCoroutine(spawnStarCoroutine);
-        //Camera.main.orthographicSize = prevCameraSize;
+        StopAllCoroutines();
+        //if (spawnStarCoroutine != null)
+        //    StopCoroutine(spawnStarCoroutine);
     }
 
 
