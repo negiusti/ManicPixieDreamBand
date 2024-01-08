@@ -65,28 +65,18 @@ public class Phone : MonoBehaviour
             DialogueManager.StopAllConversations();
             txtResponsePanel.Close();
         }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            // Toggle phone visibility
+            ToggleLock();
+        }
     }
 
     private bool IsTxtResponseMenuOpen()
     {
         return txtResponsePanel != null && txtResponsePanel.gameObject.activeSelf;
     }
-
-    //private void ChangedActiveScene(Scene current, Scene next)
-    //{
-    //    string currentName = current.name;
-
-    //    if (currentName == null)
-    //    {
-    //        // Scene1 has been removed
-    //        currentName = "Replaced";
-    //    }
-
-    //    Canvas c = this.GetComponent<Canvas>();
-    //    c.worldCamera = Camera.main;
-
-    //    Debug.Log("Scenes: " + currentName + ", " + next.name);
-    //}
 
     public void GoHome()
     {
@@ -247,25 +237,26 @@ public class Phone : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
+            if (child.tag.Equals("Menu"))
+                continue;
             // Move each child object
-            child.Translate(Vector3.down * 9f);
+            child.Translate(Vector3.down * 20f, Space.Self);
         }
-        transform.Translate(Vector3.down * 9f);
+        //transform.Translate(Vector3.down * 20f, Space.World);
     }
 
     private void Unlock()
     {
-        //animator.enabled = true;
-        //animator.ResetTrigger("UnlockPhone");
-        //animator.Play("Phone_Open_Anim", 0, 0f);
-        //animator.SetTrigger("UnlockPhone");
-
+        float deltaY = background.transform.position.y;
         foreach (Transform child in transform)
         {
+            if (child.tag.Equals("Menu"))
+                continue;
             // Move each child object
-            child.Translate(Vector3.up * 9f);
+            
+            child.Translate(Vector3.up * -deltaY, Space.Self);
         }
-        transform.Translate(Vector3.up * 9f);
+        //transform.Translate(Vector3.up * -background.transform.position.y, Space.World);
     }
 
     private void Awake()
