@@ -117,8 +117,9 @@ public class BackLog : MonoBehaviour
 
     private IEnumerator AddToBacklogWithDelay(Subtitle subtitle)
     {
+        currentEntryID = subtitle.dialogueEntry.id;
         bool isGroupChat = groupChats.Contains(DialogueManager.LastConversationStarted);
-        if (!subtitle.speakerInfo.IsPlayer && !subtitle.dialogueEntry.isRoot && !string.IsNullOrEmpty(subtitle.formattedText.text))
+        if (!subtitle.speakerInfo.IsPlayer && instances.Count > 0 && !string.IsNullOrEmpty(subtitle.formattedText.text))
         {
             // add typing bubble here
             GameObject typingBubble = Instantiate(typingBubbleTemplate, logEntryContainer);
@@ -175,7 +176,6 @@ public class BackLog : MonoBehaviour
             }
         }
         
-        currentEntryID = subtitle.dialogueEntry.id;
         ScrollToBottomOfScrollView();
         yield return null;
     }
