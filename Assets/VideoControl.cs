@@ -32,27 +32,27 @@ public class VideoControl : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            startTime = Time.time;
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    startTime = Time.time;
+        //}
 
-        if (Input.GetKey(KeyCode.Space))
-        {
-            if (Time.time - startTime > 2f)
-            {
-                skip = true;
-            }
-        }
-        if (skip)
-        {
-            sc.ChangeScene("Character_Editor");
-        }
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            startTime = Time.time;
-            skip = false;
-        }
+        //if (Input.GetKey(KeyCode.Space))
+        //{
+        //    if (Time.time - startTime > 2f)
+        //    {
+        //        skip = true;
+        //    }
+        //}
+        //if (skip)
+        //{
+        //    sc.ChangeScene("Character_Editor");
+        //}
+        //if (Input.GetKeyUp(KeyCode.Space))
+        //{
+        //    startTime = Time.time;
+        //    skip = false;
+        //}
     }
 
     public void PlayPauseVideo()
