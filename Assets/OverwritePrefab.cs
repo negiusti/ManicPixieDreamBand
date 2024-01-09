@@ -17,7 +17,7 @@ public class OverwritePrefab : MonoBehaviour
         //    Debug.Log("File already exists");
         //    return;
         //}
-            
+        //SaveSystem.SaveCharacter(instance.GetComponent<Character>());
 
         PrefabUtility.SaveAsPrefabAsset(instance, prefabPath);
 
