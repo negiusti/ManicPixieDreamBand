@@ -8,7 +8,7 @@ public abstract class Movement : MonoBehaviour
     protected Animator animator;
     protected float minX, maxX;
     protected GameObject background;
-    protected float prevYPos;
+    protected Vector3 prevPos;
 
     public enum MovementState
     {
@@ -49,7 +49,7 @@ public abstract class Movement : MonoBehaviour
             minX = backgroundBounds.min.x + objectHalfWidth;
             maxX = backgroundBounds.max.x - objectHalfWidth;
         }
-        prevYPos = transform.position.y;
+        prevPos = transform.position;
     }
 
     // Update is called once per frame
@@ -87,7 +87,7 @@ public abstract class Movement : MonoBehaviour
 
         Quaternion currentRotation = transform.localRotation;
         currentRotation.y = 0;
-        transform.position = pos;// new Vector3(xPos, transform.position.y + 1f, transform.position.z);
+        transform.position = pos;
         transform.rotation = currentRotation;
     }
 
@@ -95,7 +95,7 @@ public abstract class Movement : MonoBehaviour
     {
         currState = MovementState.Idle;
         player.HideInstrumentSprite();
-        transform.position = new Vector3(transform.position.x, prevYPos, transform.position.z);
+        transform.position = prevPos;
     }
 
     private bool HasStateChanged()

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class InteractHintScript : MonoBehaviour
 {
-    public GameObject interactHint;
+    private bool inRange;
     public string sceneToTrigger;
     public KeyCode keyToTrigger;
     private SceneChanger sc;
@@ -20,7 +20,7 @@ public class InteractHintScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        interactHint.SetActive(false);
+        inRange = false;
         sc = FindObjectOfType<SceneChanger>();
         if (objToEnable != null)
             objToEnable.SetActive(false);
@@ -38,7 +38,7 @@ public class InteractHintScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (interactHint.activeSelf && Input.GetKey(keyToTrigger))
+        if (inRange && Input.GetKey(keyToTrigger))
         {
             if (objToEnable != null)
                 objToEnable.SetActive(true);
@@ -51,7 +51,7 @@ public class InteractHintScript : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            interactHint.SetActive(true);
+            inRange = true;
             animator.enabled = true;
             animator.Play(animationName);
         }
@@ -61,7 +61,7 @@ public class InteractHintScript : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            interactHint.SetActive(false);
+            inRange = false;
             spriteRenderer.color = Color.white;
             animator.enabled = false;
         }
