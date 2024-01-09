@@ -66,11 +66,11 @@ public class Phone : MonoBehaviour
             txtResponsePanel.Close();
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            // Toggle phone visibility
-            ToggleLock();
-        }
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    // Toggle phone visibility
+        //    ToggleLock();
+        //}
     }
 
     private bool IsTxtResponseMenuOpen()

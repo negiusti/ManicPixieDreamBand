@@ -85,10 +85,10 @@ public abstract class Movement : MonoBehaviour
         else if (instLabel.Contains("Drum"))
             currState = MovementState.Drum;
 
-        Quaternion currentRotation = transform.localRotation;
-        currentRotation.y = 0;
+        //Quaternion currentRotation = transform.localRotation;
+        //currentRotation.y = 0;
         transform.position = pos;
-        transform.rotation = currentRotation;
+        //transform.rotation = currentRotation;
     }
 
     public void StopPlayingInstrument()
