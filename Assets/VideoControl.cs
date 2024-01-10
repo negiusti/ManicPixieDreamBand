@@ -11,8 +11,9 @@ public class VideoControl : MonoBehaviour
     //public SplashScreen splash;
     private GameManager gm;
     private SceneChanger sc;
-    private bool skip;
-    private float startTime;
+    //private bool skip;
+    //private float startTime;
+    private bool togglePause;
 
     void Start()
     {
@@ -27,11 +28,23 @@ public class VideoControl : MonoBehaviour
         //sr.enabled = false;
         gm = GameManager.Instance;
         sc = gm.GetComponent<SceneChanger>();
-        skip = false;
+        //skip = false;
+        togglePause = false;
     }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!togglePause)
+            {
+                videoPlayer.Pause();
+            } else
+            {
+                videoPlayer.Play();
+            }
+            togglePause = !togglePause;
+        }
         //if (Input.GetKeyDown(KeyCode.Space))
         //{
         //    startTime = Time.time;
