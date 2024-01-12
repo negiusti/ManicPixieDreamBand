@@ -11,6 +11,7 @@ public class Icons : MonoBehaviour
     private SpriteResolver leftSpriteResolver;
     private SpriteResolver middleSpriteResolver;
     private SpriteResolver rightSpriteResolver;
+    private Collider2D[] colls;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,7 @@ public class Icons : MonoBehaviour
         leftSpriteResolver = leftIcon.GetComponent<SpriteResolver>();
         middleSpriteResolver = middleIcon.GetComponent<SpriteResolver>();
         rightSpriteResolver = rightIcon.GetComponent<SpriteResolver>();
+        colls = this.GetComponentsInChildren<Collider2D>();
     }
 
     // Update is called once per frame
@@ -31,5 +33,21 @@ public class Icons : MonoBehaviour
         leftSpriteResolver.SetCategoryAndLabel(leftSpriteResolver.GetCategory(), leftLabel);
         middleSpriteResolver.SetCategoryAndLabel(middleSpriteResolver.GetCategory(), middleLabel);
         rightSpriteResolver.SetCategoryAndLabel(rightSpriteResolver.GetCategory(), rightLabel);
+    }
+
+    public void DisableIconColliders()
+    {
+        foreach (Collider2D c in colls)
+        {
+            c.enabled = false;
+        }
+    }
+
+    public void EnableIconColliders()
+    {
+        foreach (Collider2D c in colls)
+        {
+            c.enabled = true;
+        }
     }
 }

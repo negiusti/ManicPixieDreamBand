@@ -1,35 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    private GameManager[] gms;
 
     // Start is called before the first frame update
     void Start()
     {
-        //GameManager[] objects = FindObjectsOfType<GameManager>();
+        gms = FindObjectsOfType<GameManager>();
 
-        //// If there is more than one instance, destroy the current object
-        //if (objects.Length > 1)
-        //{
-        //    Destroy(gameObject);
-        //}
-        //else
-        //{
-        //    DontDestroyOnLoad(gameObject);
-        //}
+        // If there is more than one instance, destroy the current object
+        if (gms.Length > 1)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+
+            //try
+            //{
+            //    Steamworks.SteamClient.Init(2772090);
+            //}
+            //catch (System.Exception e)
+            //{
+            //    Debug.LogError("Could not initialize steam client: + " + e.ToString());
+            //    // Something went wrong - it's one of these:
+            //    //
+            //    //     Steam is closed?
+            //    //     Can't find steam_api dll?
+            //    //     Don't have permission to play app?
+            //    //
+            //}
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //Steamworks.SteamClient.RunCallbacks();
+    }
+
+    public void Quit()
+    {
+    #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+    #else
+            Application.Quit();
+    #endif
     }
 
     private void OnDestroy()
     {
+        //if (gms.Length == 1)
+        //    Steamworks.SteamClient.Shutdown();
         // SAVE THE CURRENT STATE OF EVERYTHING
         // phone: contacts, messages, money
         // conversations

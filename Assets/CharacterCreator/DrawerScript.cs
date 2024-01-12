@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.U2D.Animation;
 
 public class DrawerScript : MonoBehaviour
@@ -10,6 +11,7 @@ public class DrawerScript : MonoBehaviour
     public DrawerScript[] otherDrawers;
     public Canvas canvas;
     private Icons icons;
+    private Collider2D coll;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +22,7 @@ public class DrawerScript : MonoBehaviour
         //canvas = this.GetComponentInChildren<Canvas>();
         canvas.enabled = false;
         icons = this.GetComponentInChildren<Icons>();
+        coll = this.GetComponent<Collider2D>();
         HideIcons();
     }
 
@@ -57,15 +60,16 @@ public class DrawerScript : MonoBehaviour
         //}
     }
 
-    void OnMouseEnter()
+    public void OnMouseEnter()
     {
         // Called when the cursor enters the collider
         Debug.Log("Mouse entered the collider of " + gameObject.name);
         targetResolver.SetCategoryAndLabel("Drawer", "Open");
         ShowIcons();
+        icons.DisableIconColliders();
     }
 
-    void OnMouseExit()
+    public void OnMouseExit()
     {
         // Called when the cursor exits the collider
         Debug.Log("Mouse exited the collider of " + gameObject.name);
@@ -78,7 +82,7 @@ public class DrawerScript : MonoBehaviour
         }
     }
 
-    void OnMouseDown()
+    public void OnMouseDown()
     {
         SelectDrawer();
     }
@@ -93,6 +97,8 @@ public class DrawerScript : MonoBehaviour
         {
             drawer.UnselectDrawer();
         }
+        coll.enabled = false;
+        icons.EnableIconColliders();
     }
 
     public void UnselectDrawer()
@@ -101,5 +107,7 @@ public class DrawerScript : MonoBehaviour
         canvas.enabled = false;
         targetResolver.SetCategoryAndLabel("Drawer", "Closed");
         HideIcons();
+        coll.enabled = true;
+        icons.DisableIconColliders();
     }
 }
