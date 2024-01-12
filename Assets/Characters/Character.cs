@@ -59,8 +59,10 @@ public class Character : MonoBehaviour
             if (targetResolver.GetCategory() != null)
             {
                 if (targetResolver.gameObject.name.Equals("Instrument"))
+                {
                     instResolver = targetResolver;
-                Debug.Log("spriteRenderer GO name " + targetResolver.gameObject.name);
+                    break;
+                }
             }
         }
         foreach (var targetRenderer in spriteRenderers)
@@ -69,7 +71,7 @@ public class Character : MonoBehaviour
             {
                 
                 instRenderer = targetRenderer;
-                Debug.Log("spriteRenderer GO name " + targetRenderer.gameObject.name);
+                break;
             }
         }
     }
@@ -133,6 +135,8 @@ public class Character : MonoBehaviour
         if (characterData == null)
         {
             // Character does not exist yet...
+            updateSpriteResolverMap();
+            updateSpriteColorMap();
             return;
         }
         isWearingFullFit = characterData.IsWearingFullFit();

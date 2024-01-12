@@ -57,6 +57,15 @@ public static class SaveSystem
         return Load(characterSavePath);
     }
 
+    public static void DeleteMainCharacterData()
+    {
+        string characterSavePath = Application.persistentDataPath + "/MainCharacter/character.save";
+        if (File.Exists(characterSavePath))
+        {
+            File.Delete(characterSavePath);
+        }
+    }
+
     private static CharacterData Load(string characterSavePath)
     {
         if(File.Exists(characterSavePath))

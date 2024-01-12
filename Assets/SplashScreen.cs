@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SplashScreen : MonoBehaviour
@@ -14,6 +12,7 @@ public class SplashScreen : MonoBehaviour
     {
         gm = GameManager.Instance;
         sc = gm.GetComponent<SceneChanger>();
+        SaveSystem.DeleteMainCharacterData();
     }
 
     // Update is called once per frame
