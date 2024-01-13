@@ -4716,7 +4716,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 267.6, y: 75.8}
+  m_AnchoredPosition: {x: 267.6, y: 68}
   m_SizeDelta: {x: 62, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &765574042
@@ -4860,6 +4860,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e41494279aeba4b7c9a2f056710f7abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pulseSpeed: 0.2
+  pulseMagnitude: 0.1
 --- !u!1 &806259443
 GameObject:
   m_ObjectHideFlags: 0
@@ -6179,7 +6181,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 496.7, y: 75.79999}
+  m_AnchoredPosition: {x: 496.7, y: 67.99999}
   m_SizeDelta: {x: 62, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &960303026
@@ -6194,6 +6196,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e41494279aeba4b7c9a2f056710f7abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pulseSpeed: 0.2
+  pulseMagnitude: 0.1
 --- !u!58 &960303027
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -7700,6 +7704,8 @@ GameObject:
   - component: {fileID: 1067628320}
   - component: {fileID: 1067628319}
   - component: {fileID: 1067628318}
+  - component: {fileID: 1067628322}
+  - component: {fileID: 1067628321}
   m_Layer: 0
   m_Name: LeftIcon
   m_TagString: Untagged
@@ -7808,6 +7814,80 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1067628321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067628316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1062660910}
+          m_TargetAssemblyTypeName: CharacterEditor, Assembly-CSharp
+          m_MethodName: ChangeFace
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: -1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!61 &1067628322
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067628316}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.52, y: 2.81}
+    newSize: {x: 3.52, y: 2.81}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.52, y: 2.81}
+  m_EdgeRadius: 0
 --- !u!1 &1078869295
 GameObject:
   m_ObjectHideFlags: 0
@@ -8504,7 +8584,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 378.8, y: -283.4}
+  m_AnchoredPosition: {x: 378.8, y: -286.3}
   m_SizeDelta: {x: 62, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1229784718
@@ -8648,6 +8728,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e41494279aeba4b7c9a2f056710f7abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pulseSpeed: 0.2
+  pulseMagnitude: 0.1
 --- !u!1 &1270606415
 GameObject:
   m_ObjectHideFlags: 0
@@ -10821,7 +10903,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 329, y: 68.6}
+  m_AnchoredPosition: {x: 329, y: 60.800003}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1527801625
@@ -12143,6 +12225,8 @@ GameObject:
   - component: {fileID: 1741615234}
   - component: {fileID: 1741615233}
   - component: {fileID: 1741615232}
+  - component: {fileID: 1741615237}
+  - component: {fileID: 1741615236}
   m_Layer: 0
   m_Name: RightIcon
   m_TagString: Untagged
@@ -12251,6 +12335,80 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1741615236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741615231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1062660910}
+          m_TargetAssemblyTypeName: CharacterEditor, Assembly-CSharp
+          m_MethodName: ChangeFace
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!61 &1741615237
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741615231}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.52, y: 2.81}
+    newSize: {x: 3.52, y: 2.81}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.52, y: 2.81}
+  m_EdgeRadius: 0
 --- !u!1 &1825323714
 GameObject:
   m_ObjectHideFlags: 0
