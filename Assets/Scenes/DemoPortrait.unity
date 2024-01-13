@@ -1390,8 +1390,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1375673241
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 331a7a6278b89984d9a1f2266ccaaf5e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1626,6 +1626,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e41494279aeba4b7c9a2f056710f7abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pulseSpeed: 0.2
+  pulseMagnitude: 0.1
 --- !u!1 &863975243
 GameObject:
   m_ObjectHideFlags: 0
@@ -2089,6 +2091,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 7057301380020118702, guid: ad4a44518d8e24fdfa0c138d2459b4d3, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7057301380020118702, guid: ad4a44518d8e24fdfa0c138d2459b4d3, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1375673241
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2122,6 +2132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e41494279aeba4b7c9a2f056710f7abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pulseSpeed: 0.2
+  pulseMagnitude: 0.1
 --- !u!1 &1298031675
 GameObject:
   m_ObjectHideFlags: 0
@@ -2556,16 +2568,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1691182039}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.016666668, y: 0.016666668, z: 0.016666668}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2025204309}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -270.1, y: -122.3}
+  m_AnchoredPosition: {x: -2.89, y: -2.53}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1691182041
@@ -3024,18 +3036,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1785632971}
-        m_TargetAssemblyTypeName: TakeMyPhoto, Assembly-CSharp
-        m_MethodName: SaveSpriteAsPNG
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1691182039}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -3064,6 +3064,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1785632971}
+        m_TargetAssemblyTypeName: TakeMyPhoto, Assembly-CSharp
+        m_MethodName: SaveSpriteAsPNG
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3204,7 +3216,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 5.96
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3230,7 +3242,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 7.929352, y: 0, z: 30.84053, w: 4.334054}
+  m_margin: {x: 1.696949, y: 0, z: 30.84053, w: 4.334054}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -3277,8 +3289,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1375673241
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1827720721
@@ -3414,8 +3426,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 75e9095034c68ff469f860fc30b363d3, type: 3}
-    m_FontSize: 19
+    m_Font: {fileID: 12800000, guid: 016877dc0b7058d4d8839eb3adc406ad, type: 3}
+    m_FontSize: 51
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -3424,9 +3436,9 @@ MonoBehaviour:
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 0.5
-  m_Text: SUBMIT
+  m_Text: Submit
 --- !u!222 &1837987918
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3902,6 +3914,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e41494279aeba4b7c9a2f056710f7abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pulseSpeed: 0.07
+  pulseMagnitude: 0.04
 --- !u!1001 &2005806522
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4832,7 +4846,6 @@ RectTransform:
   - {fileID: 321382645}
   - {fileID: 131188661}
   - {fileID: 839741485}
-  - {fileID: 1691182040}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4934,7 +4947,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 4.94
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -5007,8 +5020,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1375673241
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2129336333
@@ -5193,6 +5206,7 @@ SceneRoots:
   - {fileID: 1032597434}
   - {fileID: 1592846463}
   - {fileID: 639655216}
+  - {fileID: 1691182040}
   - {fileID: 2005806522}
   - {fileID: 2022919899}
   - {fileID: 2025204309}
