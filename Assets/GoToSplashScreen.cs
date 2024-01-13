@@ -5,6 +5,7 @@ public class GoToSplashScreen : MonoBehaviour
     private GameManager gm;
     private SceneChanger sc;
     private float startTime;
+    private TakeMyPhoto takeMyPhoto;
 
     // Start is called before the first frame update
     void Start()
@@ -12,12 +13,19 @@ public class GoToSplashScreen : MonoBehaviour
         gm = GameManager.Instance;
         sc = gm.GetComponent<SceneChanger>();
         startTime = Time.time;
+        takeMyPhoto = Camera.main.gameObject.GetComponent<TakeMyPhoto>();
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    private void OnMouseDown()
+    {
+        takeMyPhoto.SaveSpriteAsPNG();
+        GoToSplash();
     }
 
     public void GoToSplash()
