@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class MakeupSelector : MonoBehaviour
@@ -10,7 +11,8 @@ public class MakeupSelector : MonoBehaviour
     public Material defaultMat;
     public Material outlineMat;
     private Animator anim;
-
+    public string hintText;
+    private TextMeshPro tmp;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,9 @@ public class MakeupSelector : MonoBehaviour
         spriteRenderer.material = defaultMat;
         anim = this.GetComponent<Animator>();
         anim.enabled = false;
+        tmp = this.GetComponentInChildren<TextMeshPro>();
+        tmp.text = hintText;
+        tmp.enabled = false;
     }
 
     // Update is called once per frame
@@ -38,12 +43,13 @@ public class MakeupSelector : MonoBehaviour
         this.spriteRenderer.gameObject.transform.localScale = newScale;
         //anim.CrossFade("MakeupMenu_Anim", 0f, 0);
         //anim.Play("MakeupMenu_Anim", 0, 0f);
-
+        tmp.enabled = true;
     }
 
     private void OnMouseExit()
     {
         spriteRenderer.gameObject.transform.localScale = originalScale;
+        tmp.enabled = false;
     }
 
     public void UnSelect()
