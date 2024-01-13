@@ -34,7 +34,7 @@ public class MakeupSelector : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        Vector3 newScale = originalScale + Vector3.one * 0.2f;
+        Vector3 newScale = originalScale * 1.1f;
         this.spriteRenderer.gameObject.transform.localScale = newScale;
         //anim.CrossFade("MakeupMenu_Anim", 0f, 0);
         //anim.Play("MakeupMenu_Anim", 0, 0f);

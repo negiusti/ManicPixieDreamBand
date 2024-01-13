@@ -8,8 +8,8 @@ public class Pulsate : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private Vector3 originalScale;
     //public float scaleFactor;
     private bool isPulsing;
-    private float pulseSpeed = 0.2f; // Adjust the speed of the pulsation
-    private float pulseMagnitude = 0.1f; // Adjust the magnitude of the pulsation (20% bigger/smaller)
+    public float pulseSpeed = 0.2f; // Adjust the speed of the pulsation
+    public float pulseMagnitude = 0.1f; // Adjust the magnitude of the pulsation (20% bigger/smaller)
 
     // Start is called before the first frame update
     void Start()
