@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using PixelCrushers.DialogueSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine;
+using System.Linq;
 
 public class CustomDialogueScript : MonoBehaviour
 {
@@ -15,7 +17,9 @@ public class CustomDialogueScript : MonoBehaviour
     public StandardUIMenuPanel phoneResponsePanel;
     private StandardUIMenuPanel responsePanel;
     private List<Conversation> conversations;
+    private PlotData plotData;
     private Canvas phoneResponsePanelCanvas;
+    private int currentConvoIdx;
 
     private void Awake()
     {
@@ -26,18 +30,37 @@ public class CustomDialogueScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentConvoIdx = 0;
+        //SceneManager.activeSceneChanged += ChangedActiveScene;
+        SceneManager.sceneLoaded += ChangedActiveScene;
         isCoolDown = false;
         backLogs = new Dictionary<string, BackLog>();
         convoHeaders = new Dictionary<string, ConvoHeader>();
         GetAllConversations();
         phoneResponsePanelCanvas = phoneResponsePanel.gameObject.GetComponent<Canvas>();
+        CheckForConvo();
+    }
+
+    private void ChangedActiveScene(Scene current, LoadSceneMode mode)
+    {
+        CheckForConvo();
+    }
+
+    private void CheckForConvo()
+    {
+        string currentLocation = SceneManager.GetActiveScene().name;
+        if (plotData.conversationsData[currentConvoIdx].locations.Contains(currentLocation))
+        {
+            DialogueManager.StartConversation(plotData.conversationsData[currentConvoIdx].conversation);
+            currentConvoIdx++;
+        }
     }
 
     private void GetAllConversations()
     {
         // TODO sort conversations into trivial, plot, text, etc
         conversations = DialogueManager.masterDatabase.conversations;
-        //conversations.Where(c => c.Name.e)
+        plotData = ConversationJson.GetPlotData();
     }
 
     public bool IsPCResponseMenuOpen()

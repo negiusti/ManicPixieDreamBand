@@ -19,21 +19,22 @@ public class GameManager : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
 
-            try
-            {
-                Steamworks.SteamClient.Init(2772090);
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError("Could not initialize steam client: + " + e.ToString());
-                // Something went wrong - it's one of these:
-                //
-                //     Steam is closed?
-                //     Can't find steam_api dll?
-                //     Don't have permission to play app?
-                //
-            }
+            //try
+            //{
+            //    Steamworks.SteamClient.Init(2772090);
+            //}
+            //catch (System.Exception e)
+            //{
+            //    Debug.LogError("Could not initialize steam client: + " + e.ToString());
+            //    // Something went wrong - it's one of these:
+            //    //
+            //    //     Steam is closed?
+            //    //     Can't find steam_api dll?
+            //    //     Don't have permission to play app?
+            //    //
+            //}
         }
+        ConversationJson.LoadFromJson();
     }
 
     // Update is called once per frame
@@ -53,8 +54,8 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (gms.Length == 1)
-            Steamworks.SteamClient.Shutdown();
+        //if (gms.Length == 1)
+        //    Steamworks.SteamClient.Shutdown();
         // SAVE THE CURRENT STATE OF EVERYTHING
         // phone: contacts, messages, money
         // conversations
