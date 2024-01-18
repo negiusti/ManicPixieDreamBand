@@ -60,6 +60,7 @@ public class CustomDialogueScript : MonoBehaviour
     {
         // TODO sort conversations into trivial, plot, text, etc
         conversations = DialogueManager.masterDatabase.conversations;
+        ConversationJson.LoadFromJson().WaitForCompletion();
         plotData = ConversationJson.GetPlotData();
     }
 

@@ -33,9 +33,11 @@ public class ConversationJson : ScriptableObject
     private static string plotConvoJsonPath = "Assets/Conversations/plot.json";
     private static PlotData plotData;
 
-    public static void LoadFromJson()
+    public static AsyncOperationHandle<TextAsset> LoadFromJson()
     {
-        Addressables.LoadAssetAsync<TextAsset>(plotConvoJsonPath).Completed += OnPlotDataLoaded;
+        AsyncOperationHandle<TextAsset> x = Addressables.LoadAssetAsync<TextAsset>(plotConvoJsonPath);
+        x.Completed += OnPlotDataLoaded;
+        return x;
     }
 
     private static void OnPlotDataLoaded(AsyncOperationHandle<TextAsset> obj)

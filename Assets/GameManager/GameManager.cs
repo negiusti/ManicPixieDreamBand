@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
             //    //
             //}
         }
-        ConversationJson.LoadFromJson();
     }
 
     // Update is called once per frame

@@ -19,6 +19,7 @@ public class Icons : MonoBehaviour
     private Vector3 bigScale;
     private Vector3 smallScale;
     private Vector3 medScale;
+    private Animator midAnim;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +35,8 @@ public class Icons : MonoBehaviour
         bigScale = new Vector3(19f, 19f, 19f);
         medScale = new Vector3(35f, 35f, 35f);
         smallScale = new Vector3(60f, 60f, 60f);
+        midAnim = middleIcon.GetComponent<Animator>();
+        midAnim.enabled = false;
     }
 
     // Update is called once per frame
@@ -44,9 +47,13 @@ public class Icons : MonoBehaviour
 
     public void UpdateIcons(string leftLabel, string middleLabel, string rightLabel)
     {
+        midAnim.enabled = false;
         leftSpriteResolver.SetCategoryAndLabel(leftSpriteResolver.GetCategory(), leftLabel);
         middleSpriteResolver.SetCategoryAndLabel(middleSpriteResolver.GetCategory(), middleLabel);
         rightSpriteResolver.SetCategoryAndLabel(rightSpriteResolver.GetCategory(), rightLabel);
+        midAnim.enabled = true;
+        midAnim.Play("IconPop", -1, 0f);
+        //midAnim.CrossFade("IconPop", .5f);
     }
 
     public void UpdateIconsColor(Color c)
