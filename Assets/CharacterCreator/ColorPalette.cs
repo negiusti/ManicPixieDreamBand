@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class ColorPalette : MonoBehaviour
 {
-    public CharacterEditor characterEditor;
+    private CharacterEditor characterEditor;
     public string category;
 
     // Start is called before the first frame update
     void Start()
     {
+        characterEditor = GameObject.FindObjectOfType<CharacterEditor>();
     }
 
     // Update is called once per frame

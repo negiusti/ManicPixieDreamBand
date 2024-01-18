@@ -4,7 +4,7 @@ using UnityEngine;
 public class MakeupSelector : MonoBehaviour
 {
     public string categoryName;
-    public CharacterEditor characterEditor;
+    private CharacterEditor characterEditor;
     private Vector3 originalScale;
     private SpriteRenderer spriteRenderer;
     private MakeupSelector[] selectors;
@@ -19,6 +19,7 @@ public class MakeupSelector : MonoBehaviour
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         originalScale = this.spriteRenderer.gameObject.transform.localScale;
         selectors = this.transform.parent.gameObject.GetComponentsInChildren<MakeupSelector>();
+        characterEditor = GameObject.FindObjectOfType<CharacterEditor>();
         spriteRenderer.material = defaultMat;
         anim = this.GetComponent<Animator>();
         anim.enabled = false;

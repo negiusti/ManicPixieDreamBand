@@ -40,6 +40,7 @@ public class CharacterEditor : MonoBehaviour
     public Icons FBIcons;
     public Icons faceIcons;
     private Phone phone;
+    private GameObject characterGameObject;
 
     // Start is called before the first frame update
     void Start()
@@ -48,13 +49,14 @@ public class CharacterEditor : MonoBehaviour
         if (phone != null)
             phone.gameObject.SetActive(false);
         skinRenderers = new List<SpriteRenderer>();
-        character = this.GetComponent<Character>();
-        SpriteResolver[] resolvers = this.GetComponentsInChildren<SpriteResolver>();
+        character = GameObject.FindFirstObjectByType<Character>();
+        characterGameObject = character.gameObject;
+        SpriteResolver[] resolvers = characterGameObject.GetComponentsInChildren<SpriteResolver>();
         foreach (SpriteResolver resolver in resolvers)
         {
             categoryToResolver[resolver.gameObject.name] = resolver;
         }
-        SpriteRenderer[] renderers = this.GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] renderers = characterGameObject.GetComponentsInChildren<SpriteRenderer>();
         foreach (SpriteRenderer renderer in renderers)
         {
             categoryToRenderer[renderer.gameObject.name] = renderer;
@@ -62,7 +64,7 @@ public class CharacterEditor : MonoBehaviour
                 skinRenderers.Add(renderer);
         }
         string[] labels;
-        SpriteLibrary fuck = this.GetComponent<SpriteLibrary>();
+        SpriteLibrary fuck = characterGameObject.GetComponent<SpriteLibrary>();
         spriteLib = fuck.spriteLibraryAsset;
 
         categoryToColorPalette = new Dictionary<string, ColorPalette>();

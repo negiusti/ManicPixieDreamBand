@@ -5,12 +5,12 @@ using System.IO;
 
 public class OverwritePrefab : MonoBehaviour
 {
-    public GameObject instance; // Reference to your instance
+    private GameObject instance; // Reference to your instance
 
     public void OverwritePrefabXD()
     {
-        //string prefabPath = "Assets/Prefabs/NPCs/" + instance.name + ".prefab";
-        string prefabPath = "Assets/Prefabs/" + instance.name + ".prefab";
+        instance = GameObject.FindFirstObjectByType<Character>().gameObject;
+        string prefabPath = "Assets/Prefabs/Characters/" + instance.name + ".prefab";
         Debug.Log(prefabPath);
 
         //if (File.Exists(prefabPath))
