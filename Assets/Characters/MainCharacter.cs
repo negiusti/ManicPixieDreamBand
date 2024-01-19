@@ -14,7 +14,6 @@ public class MainCharacter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LoadMainCharacter();
         ps = this.GetComponent<ProximitySelector>();
     }
 
@@ -43,26 +42,5 @@ public class MainCharacter : MonoBehaviour
     public float GetBankBalance()
     {
         return (float)System.Math.Round(bankBalance, 2);
-    }
-
-    public void SaveMainCharacter()
-    {
-        Debug.Log("Saving... " + characterName);
-        
-        SaveSystem.SaveMainCharacter(this);
-    }
-
-    public void LoadMainCharacter()
-    {
-        Debug.Log("Loading main character...");
-        MainCharacterData mainCharacterData = SaveSystem.LoadMainCharacter();
-        if (mainCharacterData == null)
-        {
-            // Character does not exist yet...
-            bankBalance = 4.20f;
-            characterName = "MainCharacter";
-            return;
-        }
-
     }
 }

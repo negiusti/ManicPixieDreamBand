@@ -16,8 +16,8 @@ public class CustomDialogueScript : MonoBehaviour
     private Dictionary<string, ConvoHeader> convoHeaders;
     public StandardUIMenuPanel phoneResponsePanel;
     private StandardUIMenuPanel responsePanel;
-    private List<Conversation> conversations;
-    private PlotData plotData;
+    private Dictionary<string, Conversation> conversations;
+    private ConversationData[] plotData;
     private Canvas phoneResponsePanelCanvas;
     private int currentConvoIdx;
 
@@ -38,20 +38,34 @@ public class CustomDialogueScript : MonoBehaviour
         convoHeaders = new Dictionary<string, ConvoHeader>();
         GetAllConversations();
         phoneResponsePanelCanvas = phoneResponsePanel.gameObject.GetComponent<Canvas>();
-        CheckForConvo();
+        CheckForPlotConvo();
     }
 
     private void ChangedActiveScene(Scene current, LoadSceneMode mode)
     {
-        CheckForConvo();
+        CheckForPlotConvo();
     }
 
-    private void CheckForConvo()
+    private void CheckForPlotConvo()
     {
         string currentLocation = SceneManager.GetActiveScene().name;
-        if (plotData.conversationsData[currentConvoIdx].locations.Contains(currentLocation))
+        if (currentConvoIdx > plotData.Length -1)
         {
-            DialogueManager.StartConversation(plotData.conversationsData[currentConvoIdx].conversation);
+            Debug.Log("Out of plot conversations");
+            return;
+        }
+        if (plotData[currentConvoIdx].locations.Contains(currentLocation))
+        {
+            //if (!conversations.ContainsKey(plotData.conversationsData[currentConvoIdx].conversation))
+            //{
+            //    Debug.Log("Could not find conversation in database: " + plotData.conversationsData[currentConvoIdx].conversation);
+            //    return;
+            //}
+            foreach (Participant p in plotData[currentConvoIdx].participants)
+            {
+                SpawnCharacters.SpawnCharacter(p).WaitForCompletion();
+            }
+            DialogueManager.StartConversation(plotData[currentConvoIdx].conversation);
             currentConvoIdx++;
         }
     }
@@ -59,9 +73,9 @@ public class CustomDialogueScript : MonoBehaviour
     private void GetAllConversations()
     {
         // TODO sort conversations into trivial, plot, text, etc
-        conversations = DialogueManager.masterDatabase.conversations;
+        //conversations = DialogueManager.masterDatabase.conversations.ToDictionary(c => c.Name, c => c);
         ConversationJson.LoadFromJson().WaitForCompletion();
-        plotData = ConversationJson.GetPlotData();
+        plotData = ConversationJson.GetPlotData().conversationsData;
     }
 
     public bool IsPCResponseMenuOpen()

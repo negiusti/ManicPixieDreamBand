@@ -22,35 +22,6 @@ public static class SaveSystem
         stream.Close();
     }
 
-    public static MainCharacterData LoadMainCharacter()
-    {
-        if (File.Exists(mainCharacterSavePath))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(mainCharacterSavePath, FileMode.Open);
-            MainCharacterData data = formatter.Deserialize(stream) as MainCharacterData;
-            stream.Close();
-            return data;
-        }
-        else
-        {
-            Debug.LogError("Save file not found in" + mainCharacterSavePath);
-            return null;
-        }
-    }
-
-    public static void SaveMainCharacter(MainCharacter mc)
-    {
-        // Create the directory structure if it doesn't exist
-        string directoryPath = Path.GetDirectoryName(mainCharacterSavePath);
-        Directory.CreateDirectory(directoryPath);
-        BinaryFormatter formatter = new BinaryFormatter();
-        FileStream stream = new FileStream(mainCharacterSavePath, FileMode.Create);
-        MainCharacterData mcData = new MainCharacterData(mc);
-        formatter.Serialize(stream, mcData);
-        stream.Close();
-    }
-
     public static CharacterData LoadCharacter(string name)
     {
         string characterSavePath = Application.persistentDataPath + "/" + name + "/character.save";

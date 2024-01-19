@@ -51,6 +51,21 @@ public class Character : MonoBehaviour
         {
             libraryAsset = this.GetComponent<SpriteLibrary>().spriteLibraryAsset;
         }
+        string originalName = gameObject.name;
+
+        // Check if the name ends with "(Clone)"
+        if (originalName.EndsWith("(Clone)"))
+        {
+            // Remove "(Clone)" from the end of the name
+            string newName = originalName.Substring(0, originalName.Length - "(Clone)".Length);
+
+            // Set the new name to the game object
+            gameObject.name = newName;
+
+            // Optionally, you can print the new name
+            Debug.Log($"Changed name from '{originalName}' to '{newName}'");
+        }
+
         this.characterName = gameObject.name;
         LoadCharacter();
 
