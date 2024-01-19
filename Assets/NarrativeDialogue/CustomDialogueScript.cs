@@ -19,7 +19,7 @@ public class CustomDialogueScript : MonoBehaviour
     private Dictionary<string, Conversation> conversations;
     private ConversationData[] plotData;
     private Canvas phoneResponsePanelCanvas;
-    private int currentConvoIdx;
+    public int currentConvoIdx;
 
     private void Awake()
     {

@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
         else
         {
             DontDestroyOnLoad(gameObject);
-
             //try
             //{
             //    Steamworks.SteamClient.Init(2772090);

@@ -5963,7 +5963,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: welcome to the band
+        value: you're late.
         type: 0
         typeString: 
       - title: Sequence
@@ -6006,11 +6006,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 3
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 1
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -6018,7 +6018,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: buckle up kiddo
+        value: i know, im sorry :(
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -6037,6 +6037,12 @@ MonoBehaviour:
         originDialogueID: 3
         destinationConversationID: 6
         destinationDialogueID: 15
+        isConnector: 0
+        priority: 2
+      - originConversationID: 6
+        originDialogueID: 3
+        destinationConversationID: 6
+        destinationDialogueID: 16
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -6061,11 +6067,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 3
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 2
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -6073,7 +6079,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: ur late. again.
+        value: where's our coffee?
         type: 0
         typeString: 
       - title: Sequence
@@ -6094,6 +6100,12 @@ MonoBehaviour:
         destinationDialogueID: 11
         isConnector: 0
         priority: 2
+      - originConversationID: 6
+        originDialogueID: 4
+        destinationConversationID: 6
+        destinationDialogueID: 17
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -6101,8 +6113,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 155
-        y: 187
+        x: 162.54941
+        y: 265.7295
         width: 160
         height: 30
     - id: 11
@@ -6116,7 +6128,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 2
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
@@ -6128,7 +6140,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: is this a joke to you, punk!!
+        value: sorry i only had enough money for one...
         type: 0
         typeString: 
       - title: Sequence
@@ -6156,8 +6168,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 160.29614
-        y: 244.94421
+        x: 93.42999
+        y: 324.7522
         width: 160
         height: 30
     - id: 12
@@ -6211,8 +6223,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 161.37463
-        y: 294.9442
+        x: 204.51404
+        y: 372.5952
         width: 160
         height: 30
     - id: 13
@@ -6267,7 +6279,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 160.29614
-        y: 344.9442
+        y: 426.90918
         width: 160
         height: 30
     - id: 14
@@ -6316,7 +6328,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 160.29614
-        y: 394.9442
+        y: 476.90918
         width: 160
         height: 30
     - id: 15
@@ -6342,7 +6354,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: its gonna be a wild ride.
+        value: and you decided to show up in your pajamas?
         type: 0
         typeString: 
       - title: Sequence
@@ -6363,6 +6375,61 @@ MonoBehaviour:
         destinationDialogueID: 4
         isConnector: 0
         priority: 2
+      conditionsString: HasChangedOutfitToday() == false
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 159.39139
+        y: 204.89615
+        width: 160
+        height: 30
+    - id: 16
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: whatever
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 6
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 6
+        originDialogueID: 16
+        destinationConversationID: 6
+        destinationDialogueID: 4
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -6370,8 +6437,63 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 388.03043
-        y: 196.26825
+        x: 345.89212
+        y: 199.10892
+        width: 160
+        height: 30
+    - id: 17
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: here ya go
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 6
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 6
+        originDialogueID: 17
+        destinationConversationID: 6
+        destinationDialogueID: 12
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 349.1275
+        y: 323.2789
         width: 160
         height: 30
     entryGroups: []
@@ -6640,7 +6762,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 162
-        y: 244
+        y: 214
         width: 160
         height: 30
     - id: 5
@@ -6666,7 +6788,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: 
+        value: ok i should get going, i'm going to be late
         type: 0
         typeString: 
       - title: Sequence
@@ -6681,7 +6803,7 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: 
+      conditionsString: HasChangedOutfitToday()
       userScript: 
       onExecute:
         m_PersistentCalls:

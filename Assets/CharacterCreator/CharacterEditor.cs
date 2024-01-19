@@ -76,7 +76,6 @@ public class CharacterEditor : MonoBehaviour
         categoryToColorPalette.Add("Face_Detail", faceDetailPalette);
         categoryToColorPalette.Add("Mouth", mouthPalette);
         categoryToColorPalette.Add("Eyeshadow", shadowPalette);
-        Debug.Log("categoryToColorPalette is " + categoryToColorPalette.Keys);
 
         foreach (string category in spriteLib.GetCategoryNames())
         {
@@ -84,7 +83,6 @@ public class CharacterEditor : MonoBehaviour
             categoryToLabels[category] = labels;
             categoryToLabelIdx[category] = System.Array.IndexOf(labels, character.CategoryToLabelMap().GetValueOrDefault(category));
             categoryToLabelIdx[category] = categoryToLabelIdx[category] < 0 ? 0 : categoryToLabelIdx[category];
-            Debug.Log("idx " + categoryToLabelIdx[category] + " category " + category);
             UpdateIcons(category, labels);
         }
 
@@ -96,6 +94,14 @@ public class CharacterEditor : MonoBehaviour
         else
             SelectTopAndBottom();
 
+    }
+
+    private void SetOutfitChangedFlag(bool changed)
+    {
+        if (character.isMainCharacter() && changed)
+        {
+            MainCharacterState.SetOutfitChangedFlag(true);
+        }
     }
 
     private void OnDestroy()
@@ -211,6 +217,7 @@ public class CharacterEditor : MonoBehaviour
 
     public void ChangeFB(int idxDelta)
     {
+        SetOutfitChangedFlag(idxDelta != 0 || !isFullBody);
         if (!isFullBody)
             SelectFB();
         int idx = categoryToLabelIdx.GetValueOrDefault("FB_" + top) + idxDelta;
@@ -249,6 +256,7 @@ public class CharacterEditor : MonoBehaviour
 
     public void ChangeTop(int idxDelta)
     {
+        SetOutfitChangedFlag(idxDelta != 0 || isFullBody);
         if (isFullBody)
             SelectTopAndBottom();
         int idx = categoryToLabelIdx.GetValueOrDefault(top) + idxDelta;
@@ -273,6 +281,7 @@ public class CharacterEditor : MonoBehaviour
 
     public void ChangeSocks(int idxDelta)
     {
+        SetOutfitChangedFlag(idxDelta != 0);
         int idx = categoryToLabelIdx.GetValueOrDefault(lSock) + idxDelta;
         string[] labels = GetUnlockedLabels(lSock);
         idx = GetWrapAroundIndex(idx, labels.Length -1);
@@ -286,6 +295,7 @@ public class CharacterEditor : MonoBehaviour
 
     public void ChangeShoes(int idxDelta)
     {
+        SetOutfitChangedFlag(idxDelta != 0);
         int idx = categoryToLabelIdx.GetValueOrDefault(lShoe) + idxDelta;
         string[] labels = GetUnlockedLabels(lShoe);
         idx = GetWrapAroundIndex(idx, labels.Length - 1);
@@ -299,6 +309,7 @@ public class CharacterEditor : MonoBehaviour
 
     public void ChangeBottom(int idxDelta)
     {
+        SetOutfitChangedFlag(idxDelta != 0 || isFullBody);
         if (isFullBody)
             SelectTopAndBottom();
         int idx = categoryToLabelIdx.GetValueOrDefault(crotch) + idxDelta;
@@ -362,6 +373,7 @@ public class CharacterEditor : MonoBehaviour
 
     public void ChangeFace(int idxDelta)
     {
+        SetOutfitChangedFlag(idxDelta != 0);
         int idx = categoryToLabelIdx.GetValueOrDefault(currentFaceCategory,0) + idxDelta;
         string[] labels = GetUnlockedLabels(currentFaceCategory);
 

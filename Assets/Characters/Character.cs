@@ -14,6 +14,7 @@ public class Character : MonoBehaviour
     private SpriteRenderer instRenderer;
     private bool isWearingFullFit; // Set matching Top, Crotch, and (optional) sleeves, (optional) L_Pant and R_Pant
     public bool isMusician;
+    private bool isMC;
 
     private SpriteLibraryAsset libraryAsset;
     private string characterName;
@@ -38,9 +39,15 @@ public class Character : MonoBehaviour
         this.isWearingFullFit = isWearingFullFit;
     }
 
+    public bool isMainCharacter()
+    {
+        return isMC;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        isMC = gameObject.name == "MainCharacter";
         spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
         spriteResolvers = this.GetComponentsInChildren<SpriteResolver>();
         categoryToEnabled = new Dictionary<string, bool>();
@@ -116,8 +123,6 @@ public class Character : MonoBehaviour
             if (targetResolver.GetCategory() != null)
             {
                 categoryToLabelMap[targetResolver.GetCategory()] = targetResolver.GetLabel();
-                Debug.Log("category: " + targetResolver.GetCategory() + " label: " + targetResolver.GetLabel());
-                Debug.Log("category: " + targetResolver.GetCategory() + " label: " + categoryToLabelMap[targetResolver.GetCategory()]);
             }
         }
 
@@ -167,8 +172,6 @@ public class Character : MonoBehaviour
         foreach (var targetResolver in spriteResolvers)
         {
             if (targetResolver.GetCategory() != null && categoryToLabelMap.ContainsKey(targetResolver.GetCategory())) {
-                Debug.Log("category: " + targetResolver.GetCategory() + " label: " + targetResolver.GetLabel());
-                Debug.Log("category: " + targetResolver.GetCategory() + " label: " + categoryToLabelMap[targetResolver.GetCategory()]);
                 targetResolver.SetCategoryAndLabel(targetResolver.GetCategory(), categoryToLabelMap[targetResolver.GetCategory()]);
                 targetResolver.ResolveSpriteToSpriteRenderer(); 
             }

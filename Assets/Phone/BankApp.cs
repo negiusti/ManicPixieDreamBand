@@ -26,7 +26,7 @@ public class BankApp : MonoBehaviour
 
     public void UpdateBankBalance()
     {
-        float currBalance = phone.GetMainCharacter().GetBankBalance();
+        float currBalance = MainCharacterState.GetBankBalance();
         balance.text = "$" + currBalance.ToString("F2");
         if (currBalance < 30f) {
             poopResolver.SetCategoryAndLabel("Poop", "Sad");

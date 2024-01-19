@@ -1,20 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
+
 public class MainCharacter : MonoBehaviour
 {
-    // We store MC-specific info here like: 
-    // money, unlocked clothes/furniture/instruments, inventory, etc
-    private string characterName;
-    private float bankBalance;
     private ProximitySelector ps;
 
     // Start is called before the first frame update
     void Start()
     {
         ps = this.GetComponent<ProximitySelector>();
+    }
+
+    public void GoToBed()
+    {
+
     }
 
     // Update is called once per frame
@@ -29,18 +29,24 @@ public class MainCharacter : MonoBehaviour
         }
     }
 
-    public void SetCharacterName(string name)
+    public static bool HasChangedOutfitToday()
     {
-        characterName = name;
+        return MainCharacterState.HasChangedOutfitToday();
     }
 
-    public void ModifyBankBalance(float delta)
+    void OnEnable()
     {
-        bankBalance += delta;
+        Debug.Log("registering func");
+        // Make the functions available to Lua: (Replace these lines with your own.)
+        Lua.RegisterFunction(nameof(HasChangedOutfitToday), this, SymbolExtensions.GetMethodInfo(() => HasChangedOutfitToday()));
     }
 
-    public float GetBankBalance()
+    void OnDisable()
     {
-        return (float)System.Math.Round(bankBalance, 2);
+        //if (unregisterOnDisable)
+        //{
+        // Remove the functions from Lua: (Replace these lines with your own.)
+        Lua.UnregisterFunction(nameof(HasChangedOutfitToday));
+        //}
     }
 }
