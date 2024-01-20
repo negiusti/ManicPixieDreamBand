@@ -20,6 +20,9 @@ public class CustomDialogueScript : MonoBehaviour
     private ConversationData[] plotData;
     private Canvas phoneResponsePanelCanvas;
     public int currentConvoIdx;
+    private string currentLocation;
+    private Phone phone;
+    private string lastNotifiedTxtConvo;
 
     private void Awake()
     {
@@ -30,12 +33,14 @@ public class CustomDialogueScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        phone = FindFirstObjectByType<Phone>();
         currentConvoIdx = 0;
         //SceneManager.activeSceneChanged += ChangedActiveScene;
         SceneManager.sceneLoaded += ChangedActiveScene;
         isCoolDown = false;
         backLogs = new Dictionary<string, BackLog>();
         convoHeaders = new Dictionary<string, ConvoHeader>();
+        currentLocation = SceneManager.GetActiveScene().name;
         GetAllConversations();
         phoneResponsePanelCanvas = phoneResponsePanel.gameObject.GetComponent<Canvas>();
         CheckForPlotConvo();
@@ -43,17 +48,18 @@ public class CustomDialogueScript : MonoBehaviour
 
     private void ChangedActiveScene(Scene current, LoadSceneMode mode)
     {
-        CheckForPlotConvo();
+        currentLocation = SceneManager.GetActiveScene().name;
+        //CheckForPlotConvo();
     }
 
     private void CheckForPlotConvo()
     {
-        string currentLocation = SceneManager.GetActiveScene().name;
         if (currentConvoIdx > plotData.Length -1)
         {
             Debug.Log("Out of plot conversations");
             return;
         }
+        Debug.Log("plotData[currentConvoIdx].locations: " + plotData[currentConvoIdx].locations + " currentLocation; " + currentLocation);
         if (plotData[currentConvoIdx].locations.Contains(currentLocation))
         {
             //if (!conversations.ContainsKey(plotData.conversationsData[currentConvoIdx].conversation))
@@ -61,10 +67,23 @@ public class CustomDialogueScript : MonoBehaviour
             //    Debug.Log("Could not find conversation in database: " + plotData.conversationsData[currentConvoIdx].conversation);
             //    return;
             //}
-            
+            StartConversation(plotData[currentConvoIdx].conversation);
+        }
+    }
+
+    private void StartConversation(string conversation)
+    {
+        // TXT_ContactName_ConversationName
+        if (lastNotifiedTxtConvo != conversation && IsTxtConvo(conversation))
+        {
+            // Send notification to phone
+            phone.ReceiveMsg(conversation);
+            lastNotifiedTxtConvo = conversation;
+        }
+        else
+        {
             SpawnCharacters.SpawnParticipants(plotData[currentConvoIdx].participants);
-            
-            DialogueManager.StartConversation(plotData[currentConvoIdx].conversation);
+            DialogueManager.StartConversation(conversation);
         }
     }
 
@@ -97,7 +116,10 @@ public class CustomDialogueScript : MonoBehaviour
             Debug.Log("cooling down");
             isCoolDown = false;
         }
-
+        if (!DialogueManager.IsConversationActive)
+        {
+            CheckForPlotConvo();
+        }
     }
 
     public void AddBackLog(string contactName)
@@ -144,10 +166,9 @@ public class CustomDialogueScript : MonoBehaviour
         }
     }
 
-    void OnConversationEnd(Transform actor)
-    {
-        currentConvoIdx++;
-    }
+    //void OnConversationEnd(Transform actor)
+    //{
+    //}
 
     public bool IsCurrentConvoTxt()
     {
@@ -160,17 +181,23 @@ public class CustomDialogueScript : MonoBehaviour
         return DialogueManager.IsConversationActive && IsCurrentConvoTxt();
     }
 
-    private bool IsTxtConvo(string convoName)
+    public bool IsTxtConvo(string convoName)
     {
-        return convoName.Contains("TXT");
+        return convoName.StartsWith("TXT_");
     }
 
     void OnConversationLine(Subtitle subtitle)
     {
         Debug.Log("OnConversationLine: " + subtitle.dialogueEntry.DialogueText);
         string convoName = DialogueManager.LastConversationStarted;
+
+        // if you reached the end of the conversation
+        if (subtitle.dialogueEntry.outgoingLinks.Count == 0)
+        {
+            ConversationComplete(convoName);
+        }
         if (IsTxtConvo(convoName)) {
-            string contactName = convoName.Substring(4);
+            string contactName = phone.GetContactNameFromConvoName(convoName);
             backLogs[contactName].AddToBacklog(subtitle);
             return;
         }
@@ -181,21 +208,28 @@ public class CustomDialogueScript : MonoBehaviour
         }
     }
 
+    private void ConversationComplete(string convoName)
+    {
+        currentConvoIdx++;
+        if (IsTxtConvo(convoName))
+            phone.CompleteConvo(convoName);
+    }
+
     public void StopCurrentConvo()
     {
         DialogueManager.StopAllConversations();
     }
 
-    public void ResumeTxtConvo(string contactName)
+    public void ResumeTxtConvo(string contactName, string conversation)
     {
         // TODO check if conversation was completed or else resume it
         //conversations[0].dialogueEntries.LastOrDefault().id;
-        // check if convo name is group or singular
-        DialogueManager.StartConversation("TXT_" + contactName, null, null, backLogs[contactName].GetCurrEntryID());
+        FocusBackLog(contactName);
+        DialogueManager.StartConversation(conversation, null, null, backLogs[contactName].GetCurrEntryID());
         DialogueManager.SetDialoguePanel(false, true);
     }
 
-    public void FocusBackLog(string contactName)
+    private void FocusBackLog(string contactName)
     {
         foreach (string c in backLogs.Keys)
         {

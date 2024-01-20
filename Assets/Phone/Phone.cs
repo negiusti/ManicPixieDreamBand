@@ -11,6 +11,7 @@ public class Phone : MonoBehaviour
     public GameObject background;
     public GameObject backButton;
     public AppHeader appHeader;
+    public GameObject notificationIndicator;
     private PhoneMessages messagesApp;
     private BankApp bankApp;
     private MapsApp mapsApp;
@@ -78,6 +79,25 @@ public class Phone : MonoBehaviour
         return txtResponsePanel != null && txtResponsePanel.gameObject.activeSelf;
     }
 
+    public void EnableNotificationIndicator()
+    {
+        notificationIndicator.SetActive(true);
+    }
+
+    public void DisableNotificationIndicator()
+    {
+        notificationIndicator.SetActive(false);
+    }
+
+    public string GetContactNameFromConvoName(string convoName)
+    {
+        if (!customDialogue.IsTxtConvo(convoName))
+        {
+            Debug.LogError("conversation is not a txt convo: " + convoName);
+        }
+        return convoName.Split('_')[1];
+    }
+
     public void GoHome()
     {
         phoneStateStack = new Stack<PhoneState>();
@@ -110,6 +130,12 @@ public class Phone : MonoBehaviour
         backgroundResolver.SetCategoryAndLabel("Background", "Maps2");
         if (phoneStateStack.Peek() != PhoneState.Pin)
             phoneStateStack.Push(PhoneState.Pin);
+    }
+
+    public void ReceiveMsg(string conversation)
+    {
+        messagesApp.ReceiveMsg(GetContactNameFromConvoName(conversation), conversation);
+        EnableNotificationIndicator();
     }
 
     public void OpenBank()
@@ -203,6 +229,12 @@ public class Phone : MonoBehaviour
     {
         appHeader.gameObject.SetActive(true);
         appHeader.SetAppHeader(appName);
+    }
+
+    public void CompleteConvo(string convoName)
+    {
+        messagesApp.CompleteConvo(GetContactNameFromConvoName(convoName));
+        DisableNotificationIndicator();
     }
 
     private void HideIcons()

@@ -11,6 +11,7 @@ public class PhoneMessages : MonoBehaviour
     private HashSet<string> contactsList;
     public CustomDialogueScript customDialogue;
     private List<GameObject> instances = new List<GameObject>();
+    private Dictionary<string, string> unfinishedConversations; // contact name to name of conversation
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +21,7 @@ public class PhoneMessages : MonoBehaviour
 
         // load contacts
         contactsList = new HashSet<string> { "Ricki", "Max", "Band" };//SaveSystem.LoadContactsList();
-
+        unfinishedConversations = new Dictionary<string, string>();
         foreach (string c in contactsList)
         {
             Debug.Log("Create contact for: " + c);
@@ -43,8 +44,23 @@ public class PhoneMessages : MonoBehaviour
     {
         CloseContacts();
         phone.OpenConvo();
-        customDialogue.FocusBackLog(contact);
-        customDialogue.ResumeTxtConvo(contact);
+        if (ContactHasPendingConvo(contact))
+            customDialogue.ResumeTxtConvo(contact, unfinishedConversations[contact]);
+    }
+
+    public void ReceiveMsg(string contactName, string conversation)
+    {
+        unfinishedConversations.Add(contactName, conversation);
+    }
+
+    public void CompleteConvo(string contactName)
+    {
+        unfinishedConversations.Remove(contactName);
+    }
+
+    private bool ContactHasPendingConvo(string contact)
+    {
+        return unfinishedConversations.ContainsKey(contact);
     }
 
     // Update is called once per frame
