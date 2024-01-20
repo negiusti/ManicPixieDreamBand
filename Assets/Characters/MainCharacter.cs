@@ -12,11 +12,6 @@ public class MainCharacter : MonoBehaviour
         ps = this.GetComponent<ProximitySelector>();
     }
 
-    public void GoToBed()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -28,6 +23,12 @@ public class MainCharacter : MonoBehaviour
             ps.enabled = true;
         }
     }
+
+
+
+
+
+    // EVERYTHING BELOW USED FOR LUA FUNCTIONS IN DIALOGUE TREE!!!!
 
     public static bool HasChangedOutfitToday()
     {

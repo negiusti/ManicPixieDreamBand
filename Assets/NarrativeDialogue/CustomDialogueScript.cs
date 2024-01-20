@@ -61,12 +61,10 @@ public class CustomDialogueScript : MonoBehaviour
             //    Debug.Log("Could not find conversation in database: " + plotData.conversationsData[currentConvoIdx].conversation);
             //    return;
             //}
-            foreach (Participant p in plotData[currentConvoIdx].participants)
-            {
-                SpawnCharacters.SpawnCharacter(p).WaitForCompletion();
-            }
+            
+            SpawnCharacters.SpawnParticipants(plotData[currentConvoIdx].participants);
+            
             DialogueManager.StartConversation(plotData[currentConvoIdx].conversation);
-            currentConvoIdx++;
         }
     }
 
@@ -148,8 +146,7 @@ public class CustomDialogueScript : MonoBehaviour
 
     void OnConversationEnd(Transform actor)
     {
-        //phoneResponsePanelCanvas.enabled = false;
-        //phoneResponsePanel.gameObject.SetActive(false);
+        currentConvoIdx++;
     }
 
     public bool IsCurrentConvoTxt()

@@ -9,6 +9,8 @@ public class Participant
 {
     public string name;
     public Vector3 position;
+    public bool inBackground;
+    public bool isTrigger; // does interacting with this participant trigger the conversation
     public bool existAtStart;
 }
 
@@ -17,7 +19,7 @@ public class ConversationData
 {
     public string[] locations;
     public Participant[] participants;
-    public string trigger;
+    public string trigger; // either Start or the name of the participant to interact with
     public string conversation;
 }
 
@@ -27,7 +29,7 @@ public class PlotData
     public ConversationData[] conversationsData;
 }
 
-[CreateAssetMenu(fileName = "ConversationJson", menuName = "Custom/ConversationJson", order = 1)]
+[CreateAssetMenu(fileName = "ConversationJson", menuName = "Custom/ConversationJson")]
 public class ConversationJson : ScriptableObject
 {
     private static string plotConvoJsonPath = "Assets/Conversations/plot.json";
