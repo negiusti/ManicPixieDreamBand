@@ -40,6 +40,11 @@ public class PhoneMessages : MonoBehaviour
         contactTemplate.gameObject.SetActive(false);
     }
 
+    public bool HasPendingConvos()
+    {
+        return unfinishedConversations.Count > 0;
+    }
+
     public void OpenTxtConvoWith(string contact)
     {
         CloseContacts();

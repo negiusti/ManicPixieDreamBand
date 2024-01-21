@@ -52,6 +52,10 @@ public class Phone : MonoBehaviour
         isLocked = true;
         Lock();
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
+        if (messagesApp.HasPendingConvos())
+            EnableNotificationIndicator();
+        else
+            DisableNotificationIndicator();
         //txtResponsePanel = this.GetComponentInChildren<PixelCrushers.DialogueSystem.Wrappers.StandardUIMenuPanel>();
     }
 

@@ -35,9 +35,10 @@ public class SpawnCharacters : ScriptableObject
             if (c == null)
             {
                 c = SpawnParticipant(p).WaitForCompletion().GetComponent<Character>();
+                c.transform.position = p.position;
+                c.MoveToRenderLayer(p.inBackground, idx);
             }
             c.MoveToRenderLayer(p.inBackground, idx);
-            c.transform.position = p.position;
         }
     }
 
