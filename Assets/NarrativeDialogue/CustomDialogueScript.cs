@@ -36,7 +36,8 @@ public class CustomDialogueScript : MonoBehaviour
         phone = FindFirstObjectByType<Phone>();
         currentConvoIdx = 0;
         //SceneManager.activeSceneChanged += ChangedActiveScene;
-        SceneManager.sceneLoaded += ChangedActiveScene;
+        SceneManager.sceneLoaded += NewActiveScene;
+        SceneManager.sceneUnloaded += EndingActiveScene;
         isCoolDown = false;
         backLogs = new Dictionary<string, BackLog>();
         convoHeaders = new Dictionary<string, ConvoHeader>();
@@ -46,10 +47,14 @@ public class CustomDialogueScript : MonoBehaviour
         CheckForPlotConvo();
     }
 
-    private void ChangedActiveScene(Scene current, LoadSceneMode mode)
+    private void NewActiveScene(Scene current, LoadSceneMode mode)
     {
         currentLocation = SceneManager.GetActiveScene().name;
-        //CheckForPlotConvo();
+    }
+
+    private void EndingActiveScene(Scene current)
+    {
+        StopCurrentConvo();
     }
 
     private void CheckForPlotConvo()
@@ -73,8 +78,10 @@ public class CustomDialogueScript : MonoBehaviour
 
     private void StartConversation(string conversation)
     {
+        if (lastNotifiedTxtConvo == conversation)
+            return;
         // TXT_ContactName_ConversationName
-        if (lastNotifiedTxtConvo != conversation && IsTxtConvo(conversation))
+        if (IsTxtConvo(conversation))
         {
             // Send notification to phone
             phone.ReceiveMsg(conversation);
@@ -198,6 +205,7 @@ public class CustomDialogueScript : MonoBehaviour
         }
         if (IsTxtConvo(convoName)) {
             string contactName = phone.GetContactNameFromConvoName(convoName);
+            FocusBackLog(contactName);
             backLogs[contactName].AddToBacklog(subtitle);
             return;
         }
@@ -229,8 +237,16 @@ public class CustomDialogueScript : MonoBehaviour
         DialogueManager.SetDialoguePanel(false, true);
     }
 
-    private void FocusBackLog(string contactName)
+    public void FocusBackLog(string contactName)
     {
+        if (!backLogs.ContainsKey(contactName))
+        {
+            AddBackLog(contactName);
+        }
+        if (backLogs[contactName].gameObject.activeSelf)
+        {
+            return;
+        }
         foreach (string c in backLogs.Keys)
         {
             backLogs[c].gameObject.SetActive(c.Equals(contactName));

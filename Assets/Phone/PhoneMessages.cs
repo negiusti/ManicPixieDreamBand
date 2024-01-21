@@ -46,6 +46,10 @@ public class PhoneMessages : MonoBehaviour
         phone.OpenConvo();
         if (ContactHasPendingConvo(contact))
             customDialogue.ResumeTxtConvo(contact, unfinishedConversations[contact]);
+        else
+        {
+            customDialogue.FocusBackLog(contact);
+        }
     }
 
     public void ReceiveMsg(string contactName, string conversation)
