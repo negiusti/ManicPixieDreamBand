@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using PixelCrushers.DialogueSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -12,6 +11,7 @@ public class Contact : MonoBehaviour
     public PhoneMessages messages;
     public Phone phone;
     private TextMeshPro contactNameTM;
+    public GameObject notificationIndicator;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +31,16 @@ public class Contact : MonoBehaviour
         this.contactNameTM = this.GetComponentInChildren<TextMeshPro>();
         contactNameTM.text = contactName;
         spriteResolver.SetCategoryAndLabel("Pic", contactName);
+    }
+
+    public void ShowNotificationIndicator()
+    {
+        notificationIndicator.SetActive(true);
+    }
+
+    public void HideNotificationIndicator()
+    {
+        notificationIndicator.SetActive(false);
     }
 
     public void StartConvo()

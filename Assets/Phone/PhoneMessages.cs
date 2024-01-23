@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
 public class PhoneMessages : MonoBehaviour
@@ -9,6 +7,7 @@ public class PhoneMessages : MonoBehaviour
     public Phone phone;
     public Contact contactTemplate;
     private HashSet<string> contactsList;
+    private Dictionary<string, Contact> contactsMap;
     public CustomDialogueScript customDialogue;
     private List<GameObject> instances = new List<GameObject>();
     private Dictionary<string, string> unfinishedConversations; // contact name to name of conversation
@@ -17,7 +16,7 @@ public class PhoneMessages : MonoBehaviour
     void Start()
     {
         // wait until message app is opened before enabling the canvas
-        //canvas.enabled = false;
+        contactsMap = new Dictionary<string, Contact>();
 
         // load contacts
         contactsList = new HashSet<string> { "Ricki", "Max", "Band" };//SaveSystem.LoadContactsList();
@@ -28,7 +27,12 @@ public class PhoneMessages : MonoBehaviour
             Contact instance = Instantiate(contactTemplate, contacts.transform);
             instance.gameObject.SetActive(true);
             instance.SetContact(c);
+            if (unfinishedConversations.ContainsKey(c))
+            {
+                instance.ShowNotificationIndicator();
+            }
             instances.Add(instance.gameObject);
+            contactsMap.Add(c, instance);
             customDialogue.AddBackLog(c);
         }
 
@@ -60,11 +64,13 @@ public class PhoneMessages : MonoBehaviour
     public void ReceiveMsg(string contactName, string conversation)
     {
         unfinishedConversations.Add(contactName, conversation);
+        contactsMap[contactName].ShowNotificationIndicator();
     }
 
     public void CompleteConvo(string contactName)
     {
         unfinishedConversations.Remove(contactName);
+        contactsMap[contactName].HideNotificationIndicator();
     }
 
     private bool ContactHasPendingConvo(string contact)
@@ -82,6 +88,16 @@ public class PhoneMessages : MonoBehaviour
     {
         contacts.SetActive(true);
         customDialogue.CloseBacklogs();
+        foreach (string c in contactsList)
+        {
+            if (unfinishedConversations.ContainsKey(c))
+            {
+                contactsMap[c].ShowNotificationIndicator();
+            } else
+            {
+                contactsMap[c].HideNotificationIndicator();
+            }
+        }
     }
 
     void CloseContacts()
