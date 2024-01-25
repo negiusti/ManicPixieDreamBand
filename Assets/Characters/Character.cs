@@ -207,12 +207,10 @@ public class Character : MonoBehaviour
     public void MoveToRenderLayer(bool inBackground, int idx)
     {
         string layerName = (inBackground ? "bg" : "fg") + idx;
-        Debug.Log("layerName is " + layerName);
         if (spriteRenderers == null)
             spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
         foreach (var targetRenderer in spriteRenderers)
         {
-            Debug.Log(targetRenderer.gameObject.name + "'s layerName is " + layerName);
             targetRenderer.sortingLayerName = layerName;
         }
     }

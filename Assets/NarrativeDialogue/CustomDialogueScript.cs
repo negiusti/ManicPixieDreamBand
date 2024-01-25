@@ -64,7 +64,6 @@ public class CustomDialogueScript : MonoBehaviour
             Debug.Log("Out of plot conversations");
             return;
         }
-        Debug.Log("plotData[currentConvoIdx].locations: " + plotData[currentConvoIdx].locations + " currentLocation; " + currentLocation);
         if (plotData[currentConvoIdx].locations.Contains(currentLocation))
         {
             //if (!conversations.ContainsKey(plotData.conversationsData[currentConvoIdx].conversation))

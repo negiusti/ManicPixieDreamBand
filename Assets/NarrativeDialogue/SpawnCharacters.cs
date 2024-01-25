@@ -24,19 +24,21 @@ public class SpawnCharacters : ScriptableObject
     public static void SpawnParticipants(Participant [] participants)
     {
         Character[] characters = FindObjectsOfType<Character>();
-        Array.Sort(participants, (a, b) => a.position.y.CompareTo(b.position.y));
+        Array.Sort(participants, (a, b) => b.position.y.CompareTo(a.position.y));
         int f = 0;
         int b = 0;
         foreach (Participant p in  participants)
         {
-            
-            int idx = p.inBackground ? b++ : f++;
             Character c = characters.FirstOrDefault(c => c.name.Equals(p.name));
+            int idx = p.inBackground ? b++ : f++;
             if (c == null)
             {
                 c = SpawnParticipant(p).WaitForCompletion().GetComponent<Character>();
-                c.transform.position = p.position;
-                c.MoveToRenderLayer(p.inBackground, idx);
+            }
+            else
+            {
+                Vector3 newPos = new Vector3(c.transform.position.x, p.position.y, 3f);
+                c.transform.position = newPos;
             }
             c.MoveToRenderLayer(p.inBackground, idx);
         }
@@ -48,6 +50,18 @@ public class SpawnCharacters : ScriptableObject
         {
             // Instantiate the prefab and spawn it in the current scene
             GameObject spawnedCharacter = Instantiate(handle.Result, p.position, Quaternion.identity);
+            string originalName = spawnedCharacter.name;
+
+            // Check if the name ends with "(Clone)"
+            if (originalName.EndsWith("(Clone)"))
+            {
+                // Remove "(Clone)" from the end of the name
+                string newName = originalName.Substring(0, originalName.Length - "(Clone)".Length);
+
+                // Set the new name to the game object
+                spawnedCharacter.name = newName;
+                spawnedCharacter.GetComponent<Character>().SetCharacterName(newName);
+            }
             spawnedCharacter.GetComponent<Usable>().enabled = p.existAtStart;
         }
         else
