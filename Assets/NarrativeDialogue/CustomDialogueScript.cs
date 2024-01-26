@@ -86,7 +86,8 @@ public class CustomDialogueScript : MonoBehaviour
         }
         else
         {
-            SpawnCharacters.SpawnParticipants(plotData[currentConvoIdx].participants);
+            if (plotData[currentConvoIdx].conversation.Equals(conversation))
+                SpawnCharacters.SpawnParticipants(plotData[currentConvoIdx].participants);
             DialogueManager.StartConversation(conversation);
         }
     }
