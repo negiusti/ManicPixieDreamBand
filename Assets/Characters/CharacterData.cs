@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
-[System.Serializable]
 public class CharacterData
 {
-    private Dictionary<string, string> categoryToLabelMap;
-    private Dictionary<string, float[]> categoryToColorMap;
-    private Dictionary<string, bool> categoryToEnabled;
-    private bool isWearingFullFit;
-    private string name;
+    [SerializeField] private Dictionary<string, string> categoryToLabelMap;
+    [SerializeField] private Dictionary<string, float[]> categoryToColorMap;
+    [SerializeField] private Dictionary<string, bool> categoryToEnabled;
+    [SerializeField] private bool isWearingFullFit;
+    [SerializeField] private string name;
+    [SerializeField] private bool isMusician;
 
     public CharacterData(Character character)
     {
@@ -17,6 +18,7 @@ public class CharacterData
         this.isWearingFullFit = character.IsWearingFullFit();
         this.categoryToEnabled = character.CategoryToEnabled();
         this.name = character.CharacterName();
+        this.isMusician = character.isMusician;
     }
 
     public Dictionary<string, string> CategoryToLabelMap()
@@ -36,9 +38,13 @@ public class CharacterData
 
     public bool IsWearingFullFit()
     {
-        return this.isWearingFullFit;
+        return isWearingFullFit;
     }
 
+    public bool IsMusician()
+    {
+        return isMusician;
+    }
 
     public String GetName()
     {

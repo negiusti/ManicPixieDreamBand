@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
         else
         {
             DontDestroyOnLoad(gameObject);
+            LoadData();
             //try
             //{
             //    Steamworks.SteamClient.Init(2772090);
@@ -35,6 +36,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void LoadData()
+    {
+        MainCharacterState.Load();
+    }
+
+    private void SaveData()
+    {
+        MainCharacterState.Save();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -45,9 +56,15 @@ public class GameManager : MonoBehaviour
     {
     #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
+            SaveData();
     #else
             Application.Quit();
     #endif
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveData();
     }
 
     private void OnDestroy()

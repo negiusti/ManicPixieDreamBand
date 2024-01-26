@@ -63,6 +63,8 @@ public class PhoneMessages : MonoBehaviour
 
     public void ReceiveMsg(string contactName, string conversation)
     {
+        if (unfinishedConversations.ContainsKey(contactName))
+            return;
         unfinishedConversations.Add(contactName, conversation);
         contactsMap[contactName].ShowNotificationIndicator();
     }

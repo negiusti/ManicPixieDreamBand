@@ -77,8 +77,6 @@ public class CustomDialogueScript : MonoBehaviour
 
     private void StartConversation(string conversation)
     {
-        if (lastNotifiedTxtConvo == conversation)
-            return;
         // TXT_ContactName_ConversationName
         if (IsTxtConvo(conversation))
         {
@@ -217,7 +215,8 @@ public class CustomDialogueScript : MonoBehaviour
 
     private void ConversationComplete(string convoName)
     {
-        currentConvoIdx++;
+        if (plotData[currentConvoIdx].conversation.Equals(convoName))
+            currentConvoIdx++;
         if (IsTxtConvo(convoName))
             phone.CompleteConvo(convoName);
     }
@@ -260,6 +259,13 @@ public class CustomDialogueScript : MonoBehaviour
             backLogs[c].gameObject.SetActive(false);
             convoHeaders[c].gameObject.SetActive(false);
         }
+    }
+
+    public void StartShopkeeperConvo(string convoName)
+    {
+        if (DialogueManager.IsConversationActive)
+            return;
+        StartConversation(convoName);
     }
 
     void OnEnable()

@@ -21,12 +21,12 @@ public class Character : MonoBehaviour
 
     public bool IsWearingFullFit()
     {
-        return this.isWearingFullFit;
+        return isWearingFullFit;
     }
 
     public void SetCharacterName(string name)
     {
-        this.characterName = name;
+        characterName = name;
     }
 
     public string CharacterName()
@@ -145,25 +145,26 @@ public class Character : MonoBehaviour
         Debug.Log("Saving... " + characterName);
         updateSpriteResolverMap();
         updateSpriteColorMap();
-        SaveSystem.SaveCharacter(this);
+        ES3.Save(characterName, new CharacterData(this));
     }
 
     public void LoadCharacter()
     {
         Debug.Log("Loading... " + characterName);
-        CharacterData characterData = SaveSystem.LoadCharacter(characterName);
-        if (characterData == null)
+        if (!ES3.KeyExists(characterName))
         {
             // Character does not exist yet...
             updateSpriteResolverMap();
             updateSpriteColorMap();
             return;
         }
+        CharacterData characterData = (CharacterData)ES3.Load(characterName);
         isWearingFullFit = characterData.IsWearingFullFit();
         categoryToLabelMap = characterData.CategoryToLabelMap();
         categoryToColorMap = characterData.CategoryToColorMap().ToDictionary(pair => pair.Key, pair => new Color(pair.Value[0], pair.Value[1], pair.Value[2], pair.Value[3]));
         characterName = characterData.GetName();
         categoryToEnabled = characterData.CategoryToEnabled();
+        isMusician = characterData.IsMusician();
         UpdateAppearance();
     }
 

@@ -24,10 +24,6 @@ public class MainCharacter : MonoBehaviour
         }
     }
 
-
-
-
-
     // EVERYTHING BELOW USED FOR LUA FUNCTIONS IN DIALOGUE TREE!!!!
 
     public static bool HasChangedOutfitToday()
@@ -35,11 +31,17 @@ public class MainCharacter : MonoBehaviour
         return MainCharacterState.HasChangedOutfitToday();
     }
 
+    public static double CurrentBankBalance()
+    {
+        return MainCharacterState.GetBankBalance();
+    }
+
     void OnEnable()
     {
         Debug.Log("registering func");
         // Make the functions available to Lua: (Replace these lines with your own.)
         Lua.RegisterFunction(nameof(HasChangedOutfitToday), this, SymbolExtensions.GetMethodInfo(() => HasChangedOutfitToday()));
+        Lua.RegisterFunction(nameof(CurrentBankBalance), this, SymbolExtensions.GetMethodInfo(() => CurrentBankBalance()));
     }
 
     void OnDisable()
@@ -48,6 +50,7 @@ public class MainCharacter : MonoBehaviour
         //{
         // Remove the functions from Lua: (Replace these lines with your own.)
         Lua.UnregisterFunction(nameof(HasChangedOutfitToday));
+        Lua.UnregisterFunction(nameof(CurrentBankBalance));
         //}
     }
 }

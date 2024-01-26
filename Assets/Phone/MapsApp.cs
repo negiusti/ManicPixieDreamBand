@@ -8,7 +8,8 @@ public class MapsApp : MonoBehaviour
     {
         Bedroom,
         Basement,
-        CoffeeShop
+        CoffeeShop,
+        ThriftStore
     };
     private GameManager gm;
     private SceneChanger sc;
@@ -21,7 +22,8 @@ public class MapsApp : MonoBehaviour
     private Dictionary<Location, string> locationToSceneName = new Dictionary<Location, string> {
         { Location.Bedroom, "Bedroom" },
         { Location.CoffeeShop, "CoffeeShop" },
-        { Location.Basement, "BandPracticeRoom" } };
+        { Location.Basement, "BandPracticeRoom" },
+        { Location.ThriftStore, "ThriftStore" }};
 
     private Dictionary<string, Location> sceneNameToLocation = new Dictionary<string, Location> {
         { "Bedroom", Location.Bedroom },

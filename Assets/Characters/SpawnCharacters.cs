@@ -5,7 +5,7 @@ using System.Linq;
 using System;
 using PixelCrushers.DialogueSystem;
 
-[CreateAssetMenu(fileName = "SpawnCharacters", menuName = "Custom/SpawnCharacters", order = 1)]
+[CreateAssetMenu(fileName = "SpawnCharacters", menuName = "Custom/SpawnCharacters")]
 public class SpawnCharacters : ScriptableObject
 {
     private static AsyncOperationHandle<GameObject> SpawnParticipant(Participant p)
