@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public class Purchasable : MonoBehaviour
 {
@@ -8,11 +9,16 @@ public class Purchasable : MonoBehaviour
     public string category;
     public double price;
     private Shop shop;
+    private SpriteResolver spriteResolver;
 
     // Start is called before the first frame update
     void Start()
     {
-        shop = FindFirstObjectByType<Shop>();
+        // TO DO : FIND A WAY TO 
+        //shop = 
+        spriteResolver = this.GetComponent<SpriteResolver>();
+        itemName = spriteResolver.GetLabel();
+        category = spriteResolver.GetCategory();
     }
 
     // Update is called once per frame
@@ -21,8 +27,14 @@ public class Purchasable : MonoBehaviour
         
     }
 
+    public void SetShop(Shop s)
+    {
+        shop = s;
+    }
+
     private void OnMouseDown()
     {
+        Debug.Log("Ask shop + " + shop + " to buy");
         shop.AskToBuy(this);
     }
 
@@ -31,14 +43,16 @@ public class Purchasable : MonoBehaviour
         // show price
     }
 
-    private void MouseExit()
+    private void OnMouseExit()
     {
         // hide price
     }
 
     public void Buy()
     {
-        // replace sprite resolver with none
+        // TODO: set spriteresolver to none
+        // TODO: disable collider
         MainCharacterState.ModifyBankBalance(price * -1.0);
+        // TODO: modify inventory
     }
 }

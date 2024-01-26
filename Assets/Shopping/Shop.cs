@@ -6,13 +6,17 @@ public abstract class Shop : MonoBehaviour
     protected Shopkeeper shopkeeper;
     protected Purchasable[] purchasables;
     protected CustomDialogueScript customDialogue;
-    private Purchasable currentSelectedPurchasable;
+    protected Purchasable currentSelectedPurchasable;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         shopkeeper = FindFirstObjectByType<Shopkeeper>();
         purchasables = FindObjectsOfType<Purchasable>();
+        foreach (Purchasable p in purchasables)
+        {
+            p.SetShop(this);
+        }
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
     }
 
@@ -22,10 +26,7 @@ public abstract class Shop : MonoBehaviour
         
     }
 
-    public void AskToBuy(Purchasable p)
-    {
-        currentSelectedPurchasable = p;
-    }
+    public abstract void AskToBuy(Purchasable p);
 
     public void MakeAPurchase()
     {
@@ -33,9 +34,10 @@ public abstract class Shop : MonoBehaviour
         //currentSelectedPurchasable = null;
     }
 
-    public string CurrentPurchasablePrice()
+    public double CurrentPurchasablePrice()
     {
-        return currentSelectedPurchasable == null ? "" : currentSelectedPurchasable.price.ToString();
+        Debug.Log("CurrentPurchasablePrice() is " + currentSelectedPurchasable.price);
+        return currentSelectedPurchasable == null ? 0 : currentSelectedPurchasable.price;
     }
     public string CurrentPurchasableName()
     {

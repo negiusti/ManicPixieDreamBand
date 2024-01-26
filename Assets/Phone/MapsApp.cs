@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,7 +27,8 @@ public class MapsApp : MonoBehaviour
     private Dictionary<string, Location> sceneNameToLocation = new Dictionary<string, Location> {
         { "Bedroom", Location.Bedroom },
         { "CoffeeShop", Location.CoffeeShop },
-        { "BandPracticeRoom", Location.Basement } };
+        { "BandPracticeRoom", Location.Basement },
+        { "ThriftStore", Location.ThriftStore }};
 
     // Start is called before the first frame update
     void Start()

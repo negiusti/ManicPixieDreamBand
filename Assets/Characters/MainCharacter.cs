@@ -10,6 +10,7 @@ public class MainCharacter : MonoBehaviour
     void Start()
     {
         ps = this.GetComponent<ProximitySelector>();
+        MainCharacterState.ModifyBankBalance(100d);
     }
 
     // Update is called once per frame
@@ -33,6 +34,7 @@ public class MainCharacter : MonoBehaviour
 
     public static double CurrentBankBalance()
     {
+        Debug.Log(" CurrentBankBalance() is " + MainCharacterState.GetBankBalance());
         return MainCharacterState.GetBankBalance();
     }
 

@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using PixelCrushers.DialogueSystem;
-using UnityEngine.SceneManagement;
-using UnityEngine;
-using System.Linq;
 
 public class ThriftStore : Shop
 {
@@ -21,9 +16,9 @@ public class ThriftStore : Shop
         base.Update();
     }
 
-    new void AskToBuy(Purchasable p)
+    public override void AskToBuy(Purchasable p)
     {
-        base.AskToBuy(p);
+        currentSelectedPurchasable = p;
         customDialogue.StartShopkeeperConvo(purchaseConvo);
     }
 

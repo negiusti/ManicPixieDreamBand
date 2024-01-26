@@ -19,7 +19,7 @@ public class MainCharacterState : ScriptableObject
     public static void Load()
     {
         characterName = ES3.Load<string>("MC_Name");
-        bankBalance = ES3.Load<double>("MC_Money", 100);
+        bankBalance = ES3.Load<double>("MC_Money", 100d);
         hasChangedOutfitToday = ES3.Load<bool>("MC_Flag_HasChangedOutfitToday", false);
     }
 

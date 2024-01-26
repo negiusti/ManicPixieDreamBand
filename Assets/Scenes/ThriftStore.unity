@@ -2535,8 +2535,9 @@ GameObject:
   - component: {fileID: 1894025689}
   - component: {fileID: 1894025688}
   - component: {fileID: 1894025687}
-  - component: {fileID: 1894025686}
   - component: {fileID: 1894025684}
+  - component: {fileID: 1894025690}
+  - component: {fileID: 1894025691}
   m_Layer: 0
   m_Name: Middle Icon
   m_TagString: Untagged
@@ -2573,35 +2574,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Library: []
   m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: c74f40c83118e483ba522039ed9bfbb9, type: 3}
---- !u!114 &1894025686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1894025682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: CharacterEditor, Assembly-CSharp
-          m_MethodName: SelectTopAndBottom
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!58 &1894025687
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2634,9 +2606,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -1.555257}
   serializedVersion: 2
-  m_Radius: 2.015
+  m_Radius: 1.8563005
 --- !u!114 &1894025688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2705,6 +2677,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1894025690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894025682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16d65c462eb16484e9a52f7c054ffe97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: 
+  category: 
+  price: 25
+--- !u!114 &1894025691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894025682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bbbba966955c48f1a29f8aba1111f01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleFactor: 1.2
 --- !u!1 &1923441004
 GameObject:
   m_ObjectHideFlags: 0
@@ -2847,8 +2847,8 @@ GameObject:
   - component: {fileID: 1983792415}
   - component: {fileID: 1983792414}
   - component: {fileID: 1983792413}
-  - component: {fileID: 1983792412}
   - component: {fileID: 1983792410}
+  - component: {fileID: 1983792416}
   m_Layer: 0
   m_Name: Middle Icon
   m_TagString: Untagged
@@ -2885,35 +2885,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Library: []
   m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: c74f40c83118e483ba522039ed9bfbb9, type: 3}
---- !u!114 &1983792412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1983792408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: CharacterEditor, Assembly-CSharp
-          m_MethodName: SelectTopAndBottom
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!58 &1983792413
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2946,9 +2917,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -1.9115896}
   serializedVersion: 2
-  m_Radius: 2.015
+  m_Radius: 1.9372933
 --- !u!114 &1983792414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3017,6 +2988,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1983792416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983792408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16d65c462eb16484e9a52f7c054ffe97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: 
+  category: 
+  price: 75
 --- !u!1 &2030524487
 GameObject:
   m_ObjectHideFlags: 0
@@ -3032,7 +3018,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2030524488
 Transform:
   m_ObjectHideFlags: 0
