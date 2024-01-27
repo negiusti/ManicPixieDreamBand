@@ -28,7 +28,6 @@ public class BackLog : MonoBehaviour
     private static float longScrollViewHeight = 310.6017f;
     private static float shortScrollViewHeight = 203.4449f;
     private Queue<IEnumerator> coroutines;
-    private bool waitingToRespond;
 
     private void Start()
     {
@@ -80,18 +79,6 @@ public class BackLog : MonoBehaviour
             sizeDelta.y = longScrollViewHeight;
             r.sizeDelta = sizeDelta;
         }
-        //if (responseMenu.gameObject.activeSelf && typingBubbles.Count > 0)
-        //{
-        //    responseMenu.gameObject.SetActive(false);
-        //    //responseMenu.Close();
-        //    waitingToRespond = true;
-        //}
-        //if (waitingToRespond && typingBubbles.Count == 0)
-        //{
-        //    responseMenu.gameObject.SetActive(true);
-        //    responseMenu.Open();
-        //    waitingToRespond = false;
-        //}
     }
 
     public int GetCurrEntryID()

@@ -145,6 +145,11 @@ public class CustomDialogueScript : MonoBehaviour
         isCoolDown = false;
     }
 
+    void OnConversationResponseMenu(Response[] responses)
+    {
+        
+    }
+
     void OnConversationStart(Transform actor)
     {
         string convoName = DialogueManager.LastConversationStarted;
