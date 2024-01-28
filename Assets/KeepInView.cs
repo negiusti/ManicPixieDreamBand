@@ -5,6 +5,7 @@ public class KeepInView : MonoBehaviour
     private Camera mainCamera;
     private RectTransform rectTransform;
     private float originalX;
+    private Vector2 originalPosition;
     private float offset;
     public float movementSpeed = 5f;
 
@@ -15,9 +16,9 @@ public class KeepInView : MonoBehaviour
 
         // Get the RectTransform component of the object
         rectTransform = GetComponent<RectTransform>();
-
         // Store the original x position
-        originalX = rectTransform.anchoredPosition.x;
+        //originalX = rectTransform.TransformPoint(rectTransform.anchoredPosition).x;
+        originalX = rectTransform.position.x;//rectTransform.TransformPoint(rectTransform.anchoredPosition).x;
     }
 
     void Update()
@@ -42,15 +43,25 @@ public class KeepInView : MonoBehaviour
     {
         Vector3 minWorldPos = rectTransform.TransformPoint(new Vector3(rectTransform.rect.xMin, 0, 0));
         Vector3 maxWorldPos = rectTransform.TransformPoint(new Vector3(rectTransform.rect.xMax, 0, 0));
-        offset = (maxWorldPos.x - minWorldPos.x) / 2;
+        offset = (maxWorldPos.x - minWorldPos.x);
+        offset = (rectTransform.rect.width * rectTransform.lossyScale.x)/2;
+
+        Debug.Log(this.gameObject.transform.parent.gameObject.name + ": speech bubble is at " + rectTransform.anchoredPosition.x);
+        Debug.Log(this.gameObject.transform.parent.gameObject.name + "minx: " + (mainCamera.ScreenToWorldPoint(Vector3.zero).x + offset));
+        Debug.Log(this.gameObject.transform.parent.gameObject.name + "maxx: " + (mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x - offset));
+        Debug.Log("originalX: " + originalX);
+
         // Calculate the target x position to stay within the camera view
         float targetX = Mathf.Clamp(originalX, mainCamera.ScreenToWorldPoint(Vector3.zero).x + offset, mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x - offset);
-
+        Debug.Log("targetX: " + targetX);
+        //float currentX = rectTransform.anchoredPosition.x;
+        float currentX = rectTransform.position.x;
         // Interpolate towards the target x position to create smooth movement
-        float newX = Mathf.Lerp(rectTransform.anchoredPosition.x, targetX, Time.deltaTime * movementSpeed);
+        float newX = Mathf.Lerp(currentX, targetX, Time.deltaTime * movementSpeed);
 
         // Update the RectTransform's x position
-        rectTransform.anchoredPosition = new Vector2(newX, rectTransform.anchoredPosition.y);
+        //rectTransform.anchoredPosition = new Vector2(newX, rectTransform.anchoredPosition.y);
+        rectTransform.position = new Vector3(newX, rectTransform.position.y);
     }
 }
 //    private Camera mainCamera;
