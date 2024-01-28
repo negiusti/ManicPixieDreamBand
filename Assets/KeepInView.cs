@@ -18,10 +18,6 @@ public class KeepInView : MonoBehaviour
 
         // Store the original x position
         originalX = rectTransform.anchoredPosition.x;
-
-        Vector3 minWorldPos = rectTransform.TransformPoint(new Vector3(rectTransform.rect.xMin, 0, 0));
-        Vector3 maxWorldPos = rectTransform.TransformPoint(new Vector3(rectTransform.rect.xMax, 0, 0));
-        offset = (maxWorldPos.x - minWorldPos.x) / 2;
     }
 
     void Update()
@@ -43,7 +39,10 @@ public class KeepInView : MonoBehaviour
     }
 
     void MoveWithinCameraView()
-    {        
+    {
+        Vector3 minWorldPos = rectTransform.TransformPoint(new Vector3(rectTransform.rect.xMin, 0, 0));
+        Vector3 maxWorldPos = rectTransform.TransformPoint(new Vector3(rectTransform.rect.xMax, 0, 0));
+        offset = (maxWorldPos.x - minWorldPos.x) / 2;
         // Calculate the target x position to stay within the camera view
         float targetX = Mathf.Clamp(originalX, mainCamera.ScreenToWorldPoint(Vector3.zero).x + offset, mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x - offset);
 

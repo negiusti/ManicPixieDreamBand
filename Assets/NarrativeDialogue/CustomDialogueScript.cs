@@ -22,7 +22,6 @@ public class CustomDialogueScript : MonoBehaviour
     public int currentConvoIdx;
     private string currentLocation;
     private Phone phone;
-    private string lastNotifiedTxtConvo;
 
     private void Awake()
     {
@@ -64,6 +63,10 @@ public class CustomDialogueScript : MonoBehaviour
             Debug.Log("Out of plot conversations");
             return;
         }
+        if (!phone.IsLocked())
+            return;
+        if (DialogueManager.IsConversationActive)
+            return;
         if (plotData[currentConvoIdx].locations.Contains(currentLocation))
         {
             //if (!conversations.ContainsKey(plotData.conversationsData[currentConvoIdx].conversation))
@@ -82,7 +85,6 @@ public class CustomDialogueScript : MonoBehaviour
         {
             // Send notification to phone
             phone.ReceiveMsg(conversation);
-            lastNotifiedTxtConvo = conversation;
         }
         else
         {
@@ -111,7 +113,7 @@ public class CustomDialogueScript : MonoBehaviour
     {
         // the reason I do this is so that the space button selects the dialogue option without also continuing
         if (Input.GetKeyDown(keyCode) && DialogueManager.IsConversationActive && !isCoolDown &&
-            !IsPCResponseMenuOpen())
+            !IsPCResponseMenuOpen() && !IsTxtConvoActive())
         {
             DialogueManager.standardDialogueUI.OnContinue();
             StartCoroutine(CoolDown());
@@ -162,7 +164,7 @@ public class CustomDialogueScript : MonoBehaviour
             //phoneResponsePanel.gameObject.SetActive(true);            
             //phoneResponsePanelCanvas.enabled = true;
             DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(phoneResponsePanel);
-            DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Never;
+            DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Always;
         }
         else
         {
@@ -212,7 +214,7 @@ public class CustomDialogueScript : MonoBehaviour
             backLogs[contactName].AddToBacklog(subtitle);
             return;
         }
-        if (subtitle.dialogueEntry.DialogueText.Length == 0 && subtitle.dialogueEntry.Title != "START")
+        else if (subtitle.dialogueEntry.DialogueText.Length == 0 && !subtitle.dialogueEntry.Title.Equals("START"))
         {
             Debug.Log("Continuing after empty line of dialogue!!");
             DialogueManager.standardDialogueUI.OnContinue();
@@ -221,6 +223,7 @@ public class CustomDialogueScript : MonoBehaviour
 
     private void ConversationComplete(string convoName)
     {
+        Debug.Log("convo complete: " + convoName);
         if (plotData[currentConvoIdx].conversation.Equals(convoName))
             currentConvoIdx++;
         if (IsTxtConvo(convoName))
@@ -229,6 +232,7 @@ public class CustomDialogueScript : MonoBehaviour
 
     public void StopCurrentConvo()
     {
+        Debug.Log("STJOP CURRENTJ JCONVJOj");
         DialogueManager.StopAllConversations();
     }
 
@@ -278,7 +282,7 @@ public class CustomDialogueScript : MonoBehaviour
     {
         // Make the functions available to Lua: (Replace these lines with your own.)
         Lua.RegisterFunction(nameof(DebugLog), this, SymbolExtensions.GetMethodInfo(() => DebugLog(string.Empty)));
-        Lua.RegisterFunction(nameof(StopCurrentConvo), this, SymbolExtensions.GetMethodInfo(() => StopCurrentConvo()));
+        //Lua.RegisterFunction(nameof(StopCurrentConvo), this, SymbolExtensions.GetMethodInfo(() => StopCurrentConvo()));
     }
 
     void OnDisable()
@@ -287,7 +291,7 @@ public class CustomDialogueScript : MonoBehaviour
         //{
         // Remove the functions from Lua: (Replace these lines with your own.)
         Lua.UnregisterFunction(nameof(DebugLog));
-        Lua.UnregisterFunction(nameof(StopCurrentConvo));
+        //Lua.UnregisterFunction(nameof(StopCurrentConvo));
         //}
     }
 

@@ -59,6 +59,11 @@ public class Phone : MonoBehaviour
         //txtResponsePanel = this.GetComponentInChildren<PixelCrushers.DialogueSystem.Wrappers.StandardUIMenuPanel>();
     }
 
+    public bool IsLocked()
+    {
+        return isLocked;
+    }
+
     // Update is called once per frame
     void Update()
     {

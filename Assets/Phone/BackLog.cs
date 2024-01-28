@@ -20,7 +20,7 @@ public class BackLog : MonoBehaviour
     private static HashSet<string> groupChats = new HashSet<string> { "TXT_Band" };
 
     private List<Subtitle> log = new List<Subtitle>();
-    private Stack<GameObject> typingBubbles = new Stack<GameObject>();
+    private Queue<GameObject> typingBubbles = new Queue<GameObject>();
     private List<GameObject> instances = new List<GameObject>();
     private RectTransform rectTransform;
     private Scrollbar scrollbar;
@@ -92,48 +92,50 @@ public class BackLog : MonoBehaviour
             return;
         else
         {
-            coroutines.Enqueue(AddToBacklogWithDelay(subtitle));
-            if (coroutines.Count == 1)
-                StartCoroutine(RunCoroutineQueue());
+           StartCoroutine(AddToBacklogWithDelay(subtitle));
+            //coroutines.Enqueue(AddToBacklogWithDelay(subtitle));
+            //if (coroutines.Count == 1)
+            //    StartCoroutine(RunCoroutineQueue());
         }
     }
 
-    IEnumerator RunCoroutineQueue()
-    {
-        while (true)
-        {
-            if (coroutines.Count == 0)
-            {
-                yield break;
-            }
-            else
-            {
-                // Dequeue the next coroutine and start it
-                IEnumerator currentCoroutine = coroutines.Dequeue();
-                yield return StartCoroutine(currentCoroutine);
-            }
-        }
-    }
+    //IEnumerator RunCoroutineQueue()
+    //{
+    //    while (true)
+    //    {
+    //        if (coroutines.Count == 0)
+    //        {
+    //            yield break;
+    //        }
+    //        else
+    //        {
+    //            // Dequeue the next coroutine and start it
+    //            IEnumerator currentCoroutine = coroutines.Dequeue();
+    //            yield return StartCoroutine(currentCoroutine);
+    //        }
+    //    }
+    //}
 
     private IEnumerator AddToBacklogWithDelay(Subtitle subtitle)
     {
         currentEntryID = subtitle.dialogueEntry.id;
+        bool isFirstTxt = subtitle.dialogueEntry.Title.Equals("FIRST");
         bool isGroupChat = groupChats.Contains(DialogueManager.LastConversationStarted);
-        if (!subtitle.speakerInfo.IsPlayer && instances.Count > 0 && !string.IsNullOrEmpty(subtitle.formattedText.text))
+        if (!isFirstTxt && !subtitle.speakerInfo.IsPlayer && currentEntryID > 0 && !string.IsNullOrEmpty(subtitle.formattedText.text))
         {
             // add typing bubble here
-            yield return new WaitForSeconds(2);
+            //yield return new WaitForSeconds(2);
             GameObject typingBubble = Instantiate(typingBubbleTemplate, logEntryContainer);
             typingBubble.SetActive(true);
-            typingBubbles.Push(typingBubble);
+            typingBubbles.Enqueue(typingBubble);
             yield return new WaitForSeconds(2);
         }
 
         if (!string.IsNullOrEmpty(subtitle.formattedText.text))
         {
-            while (typingBubbles.TryPeek(out _))
+            if (typingBubbles.TryPeek(out _))
             {
-                GameObject b = typingBubbles.Pop();
+                GameObject b = typingBubbles.Dequeue();
                 b.SetActive(false);
                 Destroy(b);
                 LayoutRebuilder.ForceRebuildLayoutImmediate(scrollView.content);
@@ -179,8 +181,9 @@ public class BackLog : MonoBehaviour
                 image.color = new Color(0.98f, 0.89f, 1f);
             }
         }
-        
         ScrollToBottomOfScrollView();
+        if (DialogueManager.lastConversationStarted.StartsWith("TXT_"))
+            DialogueManager.standardDialogueUI.OnContinue();
         yield return null;
     }
 
