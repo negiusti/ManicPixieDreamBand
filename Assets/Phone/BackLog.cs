@@ -60,7 +60,7 @@ public class BackLog : MonoBehaviour
 
     private void Update()
     {
-        if (!responseMenuView && responseMenu.gameObject.activeSelf)
+        if (!responseMenuView && responseMenu.gameObject.activeSelf && responseMenu.isOpen)
         {
             // Shorten scroll view
             responseMenuView = true;
@@ -73,7 +73,7 @@ public class BackLog : MonoBehaviour
             sizeDelta = r.sizeDelta;
             sizeDelta.y = shortScrollViewHeight;
             r.sizeDelta = sizeDelta;
-        } else if (responseMenuView && !responseMenu.gameObject.activeSelf)
+        } else if (responseMenuView && (!responseMenu.gameObject.activeSelf || !responseMenu.isOpen))
         {
             // Extend scroll view
             responseMenuView = false;

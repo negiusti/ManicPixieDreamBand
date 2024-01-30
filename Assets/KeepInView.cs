@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class KeepInView : MonoBehaviour
 {
-    private Camera mainCamera;
     private RectTransform rectTransform;
     private float originalX;
     private float offset;
@@ -10,9 +9,6 @@ public class KeepInView : MonoBehaviour
 
     void Start()
     {
-        // Assuming the main camera is tagged as "MainCamera"
-        mainCamera = Camera.main;
-
         // Get the RectTransform component of the object
         rectTransform = GetComponent<RectTransform>();
         // Store the original x position
@@ -21,7 +17,7 @@ public class KeepInView : MonoBehaviour
 
     void Update()
     {
-        if (mainCamera == null)
+        if (Camera.main == null)
         {
             Debug.LogError("Main camera not found. Make sure the main camera is tagged as 'MainCamera'.");
             return;
@@ -45,7 +41,7 @@ public class KeepInView : MonoBehaviour
         offset = (rectTransform.rect.width * rectTransform.lossyScale.x)/2;
 
         // Calculate the target x position to stay within the camera view
-        float targetX = Mathf.Clamp(originalX, mainCamera.ScreenToWorldPoint(Vector3.zero).x + offset, mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x - offset);
+        float targetX = Mathf.Clamp(originalX, Camera.main.ScreenToWorldPoint(Vector3.zero).x + offset, Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x - offset);
         float currentX = rectTransform.position.x;
         // Interpolate towards the target x position to create smooth movement
         float newX = Mathf.Lerp(currentX, targetX, Time.deltaTime * movementSpeed);

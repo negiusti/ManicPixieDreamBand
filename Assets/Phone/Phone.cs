@@ -48,7 +48,6 @@ public class Phone : MonoBehaviour
         mapsApp = this.GetComponentInChildren<MapsApp>();
         messagesApp = this.GetComponentInChildren<PhoneMessages>();
         animator = this.GetComponent<Animator>();
-        GoHome();
         isLocked = true;
         Lock();
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
@@ -276,6 +275,7 @@ public class Phone : MonoBehaviour
     }
     private void Lock()
     {
+        GoHome();
         foreach (Transform child in transform)
         {
             if (child.tag.Equals("Menu"))
