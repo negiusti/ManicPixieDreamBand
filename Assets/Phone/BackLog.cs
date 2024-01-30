@@ -20,14 +20,16 @@ public class BackLog : MonoBehaviour
     private static HashSet<string> groupChats = new HashSet<string> { "TXT_Band" };
 
     private List<Subtitle> log = new List<Subtitle>();
-    private Queue<GameObject> typingBubbles = new Queue<GameObject>();
     private List<GameObject> instances = new List<GameObject>();
     private RectTransform rectTransform;
     private Scrollbar scrollbar;
     private bool responseMenuView;
     private static float longScrollViewHeight = 310.6017f;
     private static float shortScrollViewHeight = 203.4449f;
-    private Queue<IEnumerator> coroutines;
+    //private Queue<IEnumerator> coroutines;
+    //private bool inprogress;
+    private GameObject typingBubble;
+    //private object coroutineLock = new object();
 
     private void Start()
     {
@@ -36,6 +38,12 @@ public class BackLog : MonoBehaviour
 
     private void OnDisable()
     {
+        if (typingBubble != null)
+        {
+            typingBubble.SetActive(false);
+            Destroy(typingBubble);
+            typingBubble = null;
+        }
         StopAllCoroutines();
     }
 
@@ -47,7 +55,7 @@ public class BackLog : MonoBehaviour
         responseMenuView = false;
         rectTransform = GetComponent<RectTransform>();
         scrollbar = GetComponentInChildren<Scrollbar>();
-        coroutines = new Queue<IEnumerator>();
+        //coroutines = new Queue<IEnumerator>();
     }
 
     private void Update()
@@ -89,57 +97,47 @@ public class BackLog : MonoBehaviour
     public void AddToBacklog(Subtitle subtitle)
     {
         if (subtitle.dialogueEntry.id == currentEntryID)
-            return;
+        {
+            //DialogueManager.Unpause();
+            DialogueManager.standardDialogueUI.OnContinueConversation();
+        }
         else
         {
-           StartCoroutine(AddToBacklogWithDelay(subtitle));
-            //coroutines.Enqueue(AddToBacklogWithDelay(subtitle));
-            //if (coroutines.Count == 1)
-            //    StartCoroutine(RunCoroutineQueue());
+            DialogueManager.Pause();
+            StartCoroutine(AddToBacklogWithDelay(subtitle));
+            //lock (coroutineLock)
+            //{
+            //    IEnumerator c = AddToBacklogWithDelay(subtitle, last);
+            //    if (inprogress)
+            //        coroutines.Enqueue(c);
+            //    else
+            //        StartCoroutine(c);
+            //}
         }
     }
 
-    //IEnumerator RunCoroutineQueue()
-    //{
-    //    while (true)
-    //    {
-    //        if (coroutines.Count == 0)
-    //        {
-    //            yield break;
-    //        }
-    //        else
-    //        {
-    //            // Dequeue the next coroutine and start it
-    //            IEnumerator currentCoroutine = coroutines.Dequeue();
-    //            yield return StartCoroutine(currentCoroutine);
-    //        }
-    //    }
-    //}
-
     private IEnumerator AddToBacklogWithDelay(Subtitle subtitle)
     {
-        currentEntryID = subtitle.dialogueEntry.id;
+        //lock (coroutineLock)
+        //{
+        //    inprogress = true;
+        //}
         bool isFirstTxt = subtitle.dialogueEntry.Title.Equals("FIRST");
         bool isGroupChat = groupChats.Contains(DialogueManager.LastConversationStarted);
         if (!isFirstTxt && !subtitle.speakerInfo.IsPlayer && currentEntryID > 0 && !string.IsNullOrEmpty(subtitle.formattedText.text))
         {
             // add typing bubble here
-            //yield return new WaitForSeconds(2);
-            GameObject typingBubble = Instantiate(typingBubbleTemplate, logEntryContainer);
+            typingBubble = Instantiate(typingBubbleTemplate, logEntryContainer);
             typingBubble.SetActive(true);
-            typingBubbles.Enqueue(typingBubble);
             yield return new WaitForSeconds(2);
+            typingBubble.SetActive(false);
+            Destroy(typingBubble);
+            typingBubble = null;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(scrollView.content);
         }
 
         if (!string.IsNullOrEmpty(subtitle.formattedText.text))
         {
-            if (typingBubbles.TryPeek(out _))
-            {
-                GameObject b = typingBubbles.Dequeue();
-                b.SetActive(false);
-                Destroy(b);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(scrollView.content);
-            }
             if (isGroupChat && !subtitle.speakerInfo.IsPlayer)
             {
                 // add a name header
@@ -181,9 +179,28 @@ public class BackLog : MonoBehaviour
                 image.color = new Color(0.98f, 0.89f, 1f);
             }
         }
+        currentEntryID = subtitle.dialogueEntry.id;
+        //if (last)
+        //{
+        //    DialogueManager.instance.GetComponent<CustomDialogueScript>().ConversationComplete(DialogueManager.LastConversationStarted);
+        //}
+        DialogueManager.Unpause();
+        DialogueManager.standardDialogueUI.OnContinue();
         ScrollToBottomOfScrollView();
-        if (DialogueManager.lastConversationStarted.StartsWith("TXT_"))
-            DialogueManager.standardDialogueUI.OnContinue();
+        //lock (coroutineLock)
+        //{
+        //    if (coroutines.Count == 0)
+        //    {
+        //        inprogress = false;
+        //        yield break;
+        //    }
+        //    else
+        //    {
+        //        // Dequeue the next coroutine and start it
+        //        IEnumerator currentCoroutine = coroutines.Dequeue();
+        //        yield return StartCoroutine(currentCoroutine);
+        //    }
+        //}
         yield return null;
     }
 
@@ -191,7 +208,6 @@ public class BackLog : MonoBehaviour
     {
         if (scrollView != null && scrollView.verticalScrollbar != null)
         {
-            //Canvas.ForceUpdateCanvases();
             LayoutRebuilder.ForceRebuildLayoutImmediate(scrollView.content);
             scrollView.verticalNormalizedPosition = Mathf.Clamp(scrollView.verticalNormalizedPosition, 0f, 1f);
             scrollView.verticalScrollbar.value = 0f;
