@@ -22,7 +22,6 @@ public class CustomDialogueScript : MonoBehaviour
     public int currentConvoIdx;
     private string currentLocation;
     private Phone phone;
-    private string lastNotifiedTxtConvo;
 
     private void Awake()
     {
@@ -64,6 +63,10 @@ public class CustomDialogueScript : MonoBehaviour
             Debug.Log("Out of plot conversations");
             return;
         }
+        if (!phone.IsLocked())
+            return;
+        if (DialogueManager.IsConversationActive)
+            return;
         if (plotData[currentConvoIdx].locations.Contains(currentLocation))
         {
             //if (!conversations.ContainsKey(plotData.conversationsData[currentConvoIdx].conversation))
@@ -82,11 +85,10 @@ public class CustomDialogueScript : MonoBehaviour
         {
             // Send notification to phone
             phone.ReceiveMsg(conversation);
-            lastNotifiedTxtConvo = conversation;
         }
         else
         {
-            if (plotData[currentConvoIdx].conversation.Equals(conversation))
+            if (currentConvoIdx < plotData.Count() && plotData[currentConvoIdx].conversation.Equals(conversation))
                 SpawnCharacters.SpawnParticipants(plotData[currentConvoIdx].participants);
             DialogueManager.StartConversation(conversation);
         }
@@ -103,7 +105,7 @@ public class CustomDialogueScript : MonoBehaviour
     public bool IsPCResponseMenuOpen()
     {
         responsePanel = GameObject.FindFirstObjectByType<MainCharacter>().gameObject.GetComponentInChildren<PixelCrushers.DialogueSystem.Wrappers.StandardUIMenuPanel>();
-        return responsePanel != null && responsePanel.gameObject.activeSelf;
+        return responsePanel != null && responsePanel.gameObject.activeSelf && responsePanel.isOpen;
     }
 
     // Update is called once per frame
@@ -111,15 +113,15 @@ public class CustomDialogueScript : MonoBehaviour
     {
         // the reason I do this is so that the space button selects the dialogue option without also continuing
         if (Input.GetKeyDown(keyCode) && DialogueManager.IsConversationActive && !isCoolDown &&
-            !IsPCResponseMenuOpen())
+            !IsPCResponseMenuOpen() && !IsTxtConvoActive())
         {
-            DialogueManager.standardDialogueUI.OnContinue();
             StartCoroutine(CoolDown());
+            DialogueManager.standardDialogueUI.OnContinue();
             Debug.Log("continuing");
         } else if (Input.GetKeyDown(keyCode) && DialogueManager.IsConversationActive && isCoolDown)
         {
             Debug.Log("cooling down");
-            isCoolDown = false;
+            //isCoolDown = false;
         }
         if (!DialogueManager.IsConversationActive)
         {
@@ -145,26 +147,38 @@ public class CustomDialogueScript : MonoBehaviour
         isCoolDown = false;
     }
 
+    void OnConversationResponseMenu(Response[] responses)
+    {
+        
+    }
+
     void OnConversationStart(Transform actor)
     {
         string convoName = DialogueManager.LastConversationStarted;
         if (IsTxtConvo(convoName))
         {
+            DialogueManager.displaySettings.conversationOverrideSettings.skipPCSubtitleAfterResponseMenu = true;
+            DialogueManager.displaySettings.conversationOverrideSettings.showPCSubtitlesDuringLine = false;
+            DialogueManager.displaySettings.conversationOverrideSettings.showNPCSubtitlesDuringLine = false;
             DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = true;
             DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = false;
             DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = false;
             DialogueManager.SetDialoguePanel(false, true);
-            //phoneResponsePanel.gameObject.SetActive(true);            
-            //phoneResponsePanelCanvas.enabled = true;
+            //DialogueManager.SetDialoguePanel(true, true);
+            phoneResponsePanel.gameObject.SetActive(true);
+            phoneResponsePanelCanvas.enabled = true;
             DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(phoneResponsePanel);
-            DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Never;
+            DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Always;
         }
         else
         {
+            DialogueManager.displaySettings.conversationOverrideSettings.skipPCSubtitleAfterResponseMenu = false;
+            DialogueManager.displaySettings.conversationOverrideSettings.showPCSubtitlesDuringLine = true;
+            DialogueManager.displaySettings.conversationOverrideSettings.showNPCSubtitlesDuringLine = true;
             DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = false;
             DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = true;
             DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = true;
-            DialogueManager.SetDialoguePanel(true, true);
+            //DialogueManager.SetDialoguePanel(true, true);
             responsePanel = GameObject.FindObjectOfType<MainCharacter>().gameObject.GetComponentInChildren<StandardUIMenuPanel>();
             DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(responsePanel);
             DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Always;
@@ -201,22 +215,24 @@ public class CustomDialogueScript : MonoBehaviour
         {
             ConversationComplete(convoName);
         }
-        if (IsTxtConvo(convoName)) {
-            string contactName = phone.GetContactNameFromConvoName(convoName);
-            FocusBackLog(contactName);
-            backLogs[contactName].AddToBacklog(subtitle);
-            return;
-        }
-        if (subtitle.dialogueEntry.DialogueText.Length == 0 && subtitle.dialogueEntry.Title != "START")
+        if (subtitle.dialogueEntry.DialogueText.Length == 0 && !subtitle.dialogueEntry.Title.Equals("START"))
         {
             Debug.Log("Continuing after empty line of dialogue!!");
             DialogueManager.standardDialogueUI.OnContinue();
+        }
+        if (subtitle.dialogueEntry.DialogueText.Length > 0 && IsTxtConvo(convoName)) {
+            string contactName = phone.GetContactNameFromConvoName(convoName);
+            FocusBackLog(contactName);
+            backLogs[contactName].AddToBacklog(subtitle);
+            //DialogueManager.Pause();
+            return;
         }
     }
 
     private void ConversationComplete(string convoName)
     {
-        if (plotData[currentConvoIdx].conversation.Equals(convoName))
+        Debug.Log("convo complete: " + convoName);
+        if (currentConvoIdx < plotData.Count() && plotData[currentConvoIdx].conversation.Equals(convoName))
             currentConvoIdx++;
         if (IsTxtConvo(convoName))
             phone.CompleteConvo(convoName);
@@ -224,6 +240,7 @@ public class CustomDialogueScript : MonoBehaviour
 
     public void StopCurrentConvo()
     {
+        Debug.Log("STJOP CURRENTJ JCONVJOj");
         DialogueManager.StopAllConversations();
     }
 
@@ -233,7 +250,7 @@ public class CustomDialogueScript : MonoBehaviour
         //conversations[0].dialogueEntries.LastOrDefault().id;
         FocusBackLog(contactName);
         DialogueManager.StartConversation(conversation, null, null, backLogs[contactName].GetCurrEntryID());
-        DialogueManager.SetDialoguePanel(false, true);
+        //DialogueManager.SetDialoguePanel(false, true);
     }
 
     public void FocusBackLog(string contactName)
@@ -273,7 +290,7 @@ public class CustomDialogueScript : MonoBehaviour
     {
         // Make the functions available to Lua: (Replace these lines with your own.)
         Lua.RegisterFunction(nameof(DebugLog), this, SymbolExtensions.GetMethodInfo(() => DebugLog(string.Empty)));
-        Lua.RegisterFunction(nameof(StopCurrentConvo), this, SymbolExtensions.GetMethodInfo(() => StopCurrentConvo()));
+        //Lua.RegisterFunction(nameof(StopCurrentConvo), this, SymbolExtensions.GetMethodInfo(() => StopCurrentConvo()));
     }
 
     void OnDisable()
@@ -282,7 +299,7 @@ public class CustomDialogueScript : MonoBehaviour
         //{
         // Remove the functions from Lua: (Replace these lines with your own.)
         Lua.UnregisterFunction(nameof(DebugLog));
-        Lua.UnregisterFunction(nameof(StopCurrentConvo));
+        //Lua.UnregisterFunction(nameof(StopCurrentConvo));
         //}
     }
 
