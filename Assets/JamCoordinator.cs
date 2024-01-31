@@ -25,6 +25,7 @@ public class JamCoordinator : ScriptableObject
         isJamInSession = true;
         mainCam = Camera.main;
         jamCamera = Instantiate(mainCam);
+        jamCamera.GetComponent<AudioListener>().enabled = false;
         jamCamera.orthographicSize = 8f;
         jamCamera.transform.position = new Vector3(1.63f, 0f, -10f);
         mainCam.enabled = false;

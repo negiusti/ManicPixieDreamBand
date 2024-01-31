@@ -18,6 +18,25 @@ public abstract class Shop : MonoBehaviour
             p.SetShop(this);
         }
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
+        if (HasDayPassed())
+        {
+            RandomizePurchaseables();
+        }
+    }
+
+    // TO-DO: after implementing calendar system
+    protected virtual bool HasDayPassed()
+    {
+        return true;
+    }
+
+    protected virtual void RandomizePurchaseables()
+    {
+        foreach (Purchasable p in purchasables)
+        {
+            p.gameObject.SetActive(true);
+            p.Randomize();
+        }
     }
 
     // Update is called once per frame
