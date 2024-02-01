@@ -243,12 +243,10 @@ public class CustomDialogueScript : MonoBehaviour
             currentConvoIdx++;
         if (IsTxtConvo(convoName))
             phone.CompleteConvo(convoName);
-        PrepSpokenConvo();
     }
 
     public void StopCurrentConvo()
     {
-        PrepSpokenConvo();
         Debug.Log("STJOP CURRENTJ JCONVJOj");
         DialogueManager.StopAllConversations();
     }

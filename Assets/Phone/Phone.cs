@@ -274,6 +274,7 @@ public class Phone : MonoBehaviour
     }
     public void Lock()
     {
+        isLocked = true;
         GoHome();
         foreach (Transform child in transform)
         {
@@ -293,6 +294,7 @@ public class Phone : MonoBehaviour
 
     private void Unlock()
     {
+        isLocked = false;
         if (ShouldNotUnlock())
         {
             isLocked = true;
