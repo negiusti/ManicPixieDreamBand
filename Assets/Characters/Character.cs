@@ -78,20 +78,16 @@ public class Character : MonoBehaviour
 
         foreach (var targetResolver in spriteResolvers)
         {
-            if (targetResolver.GetCategory() != null)
-            {
-                if (targetResolver.gameObject.name.Equals("Instrument"))
+                if (GetSRCategory(targetResolver).Equals("Instrument"))
                 {
                     instResolver = targetResolver;
                     break;
                 }
-            }
         }
         foreach (var targetRenderer in spriteRenderers)
         {
             if (targetRenderer.gameObject.name.Equals("Instrument"))
             {
-                
                 instRenderer = targetRenderer;
                 break;
             }
@@ -120,10 +116,7 @@ public class Character : MonoBehaviour
     {
         foreach (var targetResolver in spriteResolvers)
         {
-            if (targetResolver.GetCategory() != null)
-            {
-                categoryToLabelMap[targetResolver.GetCategory()] = targetResolver.GetLabel();
-            }
+                categoryToLabelMap[GetSRCategory(targetResolver)] = targetResolver.GetLabel();
         }
 
         foreach (var spriteRenderer in spriteRenderers)
@@ -138,6 +131,11 @@ public class Character : MonoBehaviour
         {
             categoryToColorMap[spriteRenderer.gameObject.name] = spriteRenderer.color;
         }
+    }
+
+    private string GetSRCategory(SpriteResolver sr)
+    {
+        return sr.GetCategory() != null ? sr.GetCategory() : sr.gameObject.name;
     }
 
     public void SaveCharacter()
@@ -172,9 +170,11 @@ public class Character : MonoBehaviour
     {
         foreach (var targetResolver in spriteResolvers)
         {
-            if (targetResolver.GetCategory() != null && categoryToLabelMap.ContainsKey(targetResolver.GetCategory())) {
-                targetResolver.SetCategoryAndLabel(targetResolver.GetCategory(), categoryToLabelMap[targetResolver.GetCategory()]);
-                targetResolver.ResolveSpriteToSpriteRenderer(); 
+            string category = GetSRCategory(targetResolver);
+            if (categoryToLabelMap.ContainsKey(category))
+            {
+                targetResolver.SetCategoryAndLabel(category, categoryToLabelMap[category]);
+                targetResolver.ResolveSpriteToSpriteRenderer();
             }
         }
 

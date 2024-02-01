@@ -156,8 +156,6 @@ public class CustomDialogueScript : MonoBehaviour
         DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = true;
         DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = false;
         DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = false;
-        DialogueManager.SetDialoguePanel(false, true);
-        //DialogueManager.SetDialoguePanel(true, true);
         phoneResponsePanel.gameObject.SetActive(true);
         phoneResponsePanelCanvas.enabled = true;
         DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(phoneResponsePanel);
@@ -172,6 +170,7 @@ public class CustomDialogueScript : MonoBehaviour
             DialogueManager.displaySettings.conversationOverrideSettings.skipPCSubtitleAfterResponseMenu = true;
             DialogueManager.displaySettings.conversationOverrideSettings.showPCSubtitlesDuringLine = false;
             DialogueManager.displaySettings.conversationOverrideSettings.showNPCSubtitlesDuringLine = false;
+            DialogueManager.SetDialoguePanel(false, true);
             PrepTxtConvo();
         }
         else
@@ -179,14 +178,19 @@ public class CustomDialogueScript : MonoBehaviour
             DialogueManager.displaySettings.conversationOverrideSettings.skipPCSubtitleAfterResponseMenu = false;
             DialogueManager.displaySettings.conversationOverrideSettings.showPCSubtitlesDuringLine = true;
             DialogueManager.displaySettings.conversationOverrideSettings.showNPCSubtitlesDuringLine = true;
-            DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = false;
-            DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = true;
-            DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = true;
-            //DialogueManager.SetDialoguePanel(true, true);
+            DialogueManager.SetDialoguePanel(true, true);
+            PrepSpokenConvo();
             responsePanel = GameObject.FindObjectOfType<MainCharacter>().gameObject.GetComponentInChildren<StandardUIMenuPanel>();
-            DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(responsePanel);
-            DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Always;
         }
+    }
+
+    private void PrepSpokenConvo()
+    {
+        DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = false;
+        DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = true;
+        DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = true;
+        DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(responsePanel);
+        DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Always;
     }
 
     //void OnConversationEnd(Transform actor)
@@ -228,7 +232,6 @@ public class CustomDialogueScript : MonoBehaviour
             string contactName = phone.GetContactNameFromConvoName(convoName);
             FocusBackLog(contactName);
             backLogs[contactName].AddToBacklog(subtitle);
-            //DialogueManager.Pause();
             return;
         }
     }
@@ -240,10 +243,12 @@ public class CustomDialogueScript : MonoBehaviour
             currentConvoIdx++;
         if (IsTxtConvo(convoName))
             phone.CompleteConvo(convoName);
+        PrepSpokenConvo();
     }
 
     public void StopCurrentConvo()
     {
+        PrepSpokenConvo();
         Debug.Log("STJOP CURRENTJ JCONVJOj");
         DialogueManager.StopAllConversations();
     }

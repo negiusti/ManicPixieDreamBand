@@ -68,18 +68,17 @@ public class Phone : MonoBehaviour
     {
 
         // if we don't have the convo open rn, stop the convo when it needs our response
-        //if (!phoneStateStack.Peek().Equals(PhoneState.Convo) && IsTxtResponseMenuOpen())
         if (!phoneStateStack.Peek().Equals(PhoneState.Convo) && customDialogue.IsTxtConvoActive())
         {
-            DialogueManager.StopAllConversations();
             txtResponsePanel.Close();
+            customDialogue.StopCurrentConvo();
         }
 
-        //if (Input.GetKeyDown(KeyCode.P))
-        //{
-        //    // Toggle phone visibility
-        //    ToggleLock();
-        //}
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            // Toggle phone visibility
+            ToggleLock();
+        }
     }
 
     private bool IsTxtResponseMenuOpen()
@@ -273,7 +272,7 @@ public class Phone : MonoBehaviour
         else
             Unlock();
     }
-    private void Lock()
+    public void Lock()
     {
         GoHome();
         foreach (Transform child in transform)
@@ -286,8 +285,19 @@ public class Phone : MonoBehaviour
         //transform.Translate(Vector3.down * 20f, Space.World);
     }
 
+    // TODO: Don't unlock the phone during conversations, minigames, etc!!!
+    private bool ShouldNotUnlock()
+    {
+        return DialogueManager.isConversationActive && !customDialogue.IsCurrentConvoTxt();
+    }
+
     private void Unlock()
     {
+        if (ShouldNotUnlock())
+        {
+            isLocked = true;
+            return;
+        }
         float deltaY = background.transform.position.y;
         foreach (Transform child in transform)
         {
