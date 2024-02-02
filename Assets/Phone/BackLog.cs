@@ -99,30 +99,18 @@ public class BackLog : MonoBehaviour
     {
         if (subtitle.dialogueEntry.id == currentEntryID)
         {
-            //DialogueManager.Unpause();
+            Debug.Log("oncontinuing");
             DialogueManager.standardDialogueUI.OnContinueConversation();
         }
         else
         {
             DialogueManager.Pause();
             StartCoroutine(AddToBacklogWithDelay(subtitle));
-            //lock (coroutineLock)
-            //{
-            //    IEnumerator c = AddToBacklogWithDelay(subtitle, last);
-            //    if (inprogress)
-            //        coroutines.Enqueue(c);
-            //    else
-            //        StartCoroutine(c);
-            //}
         }
     }
 
     private IEnumerator AddToBacklogWithDelay(Subtitle subtitle)
     {
-        //lock (coroutineLock)
-        //{
-        //    inprogress = true;
-        //}
         bool isFirstTxt = subtitle.dialogueEntry.Title.Equals("FIRST");
         bool isGroupChat = groupChats.Contains(DialogueManager.LastConversationStarted);
         if (!isFirstTxt && !subtitle.speakerInfo.IsPlayer && currentEntryID > 0 && !string.IsNullOrEmpty(subtitle.formattedText.text))
@@ -181,27 +169,10 @@ public class BackLog : MonoBehaviour
             }
         }
         currentEntryID = subtitle.dialogueEntry.id;
-        //if (last)
-        //{
-        //    DialogueManager.instance.GetComponent<CustomDialogueScript>().ConversationComplete(DialogueManager.LastConversationStarted);
-        //}
         DialogueManager.Unpause();
+        Debug.Log("continuing");
         DialogueManager.standardDialogueUI.OnContinue();
         ScrollToBottomOfScrollView();
-        //lock (coroutineLock)
-        //{
-        //    if (coroutines.Count == 0)
-        //    {
-        //        inprogress = false;
-        //        yield break;
-        //    }
-        //    else
-        //    {
-        //        // Dequeue the next coroutine and start it
-        //        IEnumerator currentCoroutine = coroutines.Dequeue();
-        //        yield return StartCoroutine(currentCoroutine);
-        //    }
-        //}
         yield return null;
     }
 

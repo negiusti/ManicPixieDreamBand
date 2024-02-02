@@ -159,7 +159,7 @@ public class CustomDialogueScript : MonoBehaviour
         DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = true;
         DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = false;
         DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = false;
-        DialogueManager.SetDialoguePanel(false, true);
+        DialogueManager.SetDialoguePanel(true, true);
         phoneResponsePanel.gameObject.SetActive(true);
         phoneResponsePanelCanvas.enabled = true;
         DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(phoneResponsePanel);
@@ -255,7 +255,9 @@ public class CustomDialogueScript : MonoBehaviour
     {
         // TODO check if conversation was completed or else resume it
         //conversations[0].dialogueEntries.LastOrDefault().id;
-        PrepTxtConvo();
+        DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = true;
+        DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = false;
+        DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = false;
         FocusBackLog(contactName);
         DialogueManager.StartConversation(conversation, null, null, backLogs[contactName].GetCurrEntryID());
     }
