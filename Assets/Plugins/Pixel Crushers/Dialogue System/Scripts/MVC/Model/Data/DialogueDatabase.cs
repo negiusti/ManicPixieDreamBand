@@ -471,7 +471,13 @@ namespace PixelCrushers.DialogueSystem
             for (int i = 0; i < assetsToAdd.Count; i++)
             {
                 var asset = assetsToAdd[i];
+                if (asset == null) continue;
                 var key = useTitle ? (asset as Conversation).Title : asset.Name;
+                if (key == null)
+                {
+                    if (DialogueDebug.logWarnings) Debug.LogWarning($"Dialogue System: A {typeof(T).Name} has an invalid name.");
+                    continue;
+                }
                 if (!cache.ContainsKey(key))
                 {
                     cache.Add(key, asset);

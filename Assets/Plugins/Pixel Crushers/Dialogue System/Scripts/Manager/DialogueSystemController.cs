@@ -13,6 +13,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace PixelCrushers.DialogueSystem
 {
+
     public delegate bool GetInputButtonDownDelegate(string buttonName);
 
     public delegate void TransformDelegate(Transform t);
@@ -30,6 +31,8 @@ namespace PixelCrushers.DialogueSystem
     [AddComponentMenu("")] // Use wrapper.
     public class DialogueSystemController : MonoBehaviour
     {
+
+        #region Public Fields & Properties
 
         /// <summary>
         /// The initial dialogue database.
@@ -186,15 +189,6 @@ namespace PixelCrushers.DialogueSystem
         public static bool isWarmingUp = false;
         public static bool applicationIsQuitting = false;
         public static string lastInitialDatabaseName = null;
-
-#if UNITY_2019_3_OR_NEWER && UNITY_EDITOR
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void InitStaticVariables()
-        {
-            applicationIsQuitting = false;
-            lastInitialDatabaseName = null;
-        }
-#endif
 
         /// <summary>
         /// Gets the dialogue database manager.
@@ -368,11 +362,25 @@ namespace PixelCrushers.DialogueSystem
         public bool unloadAddressablesOnSceneChange { get { return m_unloadAddressablesOnSceneChange; } set { m_unloadAddressablesOnSceneChange = value; } }
         private bool m_unloadAddressablesOnSceneChange = true;
 
+        #endregion
+
+        #region Initialization
+
+#if UNITY_2019_3_OR_NEWER && UNITY_EDITOR
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void InitStaticVariables()
+        {
+            applicationIsQuitting = false;
+            lastInitialDatabaseName = null;
+        }
+#endif
+
         public void OnDestroy()
         {
             if (dontDestroyOnLoad && allowOnlyOneInstance) applicationIsQuitting = true;
             if (!applicationIsQuitting && !m_isDuplicateBeingDestroyed && DialogueTime.isPaused) Unpause();
             UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+            UILocalizationManager.languageChanged -= OnLanguageChanged;
             //--- No need to unregister static Lua functions: UnregisterLuaFunctions();
         }
 
@@ -474,57 +482,6 @@ namespace PixelCrushers.DialogueSystem
         }
 
         /// <summary>
-        /// Standard Unity Input method to check if a button is down.
-        /// </summary>
-        /// <param name="buttonName"></param>
-        /// <returns></returns>
-        public bool StandardGetInputButtonDown(string buttonName)
-        {
-            return InputDeviceManager.IsButtonDown(buttonName);
-        }
-
-        private bool DisabledGetInputButtonDown(string buttonName)
-        {
-            return false;
-        }
-
-        private bool m_disableInput = false;
-
-        /// <summary>
-        /// Returns true if Dialogue System input is disabled.
-        /// </summary>
-        /// <returns></returns>
-        public bool IsDialogueSystemInputDisabled()
-        {
-            return m_disableInput; //---Was delegate comparison, which generates GC: getInputButtonDown == DisabledGetInputButtonDown;
-        }
-
-        /// <summary>
-        /// Enables or disables Dialogue System input.
-        /// </summary>
-        /// <param name="value">True to enable, false to disable.</param>
-        public void SetDialogueSystemInput(bool value)
-        {
-            if (value == true)
-            {
-                if (IsDialogueSystemInputDisabled())
-                {
-                    getInputButtonDown = m_savedGetInputButtonDownDelegate ?? StandardGetInputButtonDown;
-                    m_disableInput = false;
-                }
-            }
-            else
-            {
-                if (!IsDialogueSystemInputDisabled())
-                {
-                    m_savedGetInputButtonDownDelegate = getInputButtonDown;
-                    getInputButtonDown = DisabledGetInputButtonDown;
-                    m_disableInput = true;
-                }
-            }
-        }
-
-        /// <summary>
         /// Start by enforcing only one instance is specified. Then start monitoring alerts.
         /// </summary>
         public void Start()
@@ -581,6 +538,7 @@ namespace PixelCrushers.DialogueSystem
             {
                 SetLanguage(displaySettings.localizationSettings.language);
             }
+            UILocalizationManager.languageChanged += OnLanguageChanged;
         }
 
         /// <summary>
@@ -609,77 +567,10 @@ namespace PixelCrushers.DialogueSystem
             Localization.language = language;
         }
 
-        private void CheckDebugLevel()
+        private void OnLanguageChanged(string newLanguage)
         {
-            if (debugLevel != m_lastDebugLevelSet)
-            {
-                DialogueDebug.level = debugLevel;
-                m_lastDebugLevelSet = debugLevel;
-            }
-        }
-
-        private void InitializeDatabase()
-        {
-            m_databaseManager = new DatabaseManager(initialDatabase);
-            if (initialDatabase != null && initialDatabase.name == lastInitialDatabaseName)
-            {
-                m_databaseManager.Add(initialDatabase);
-            }
-            else
-            {
-                m_databaseManager.Reset(DatabaseResetOptions.KeepAllLoaded);
-            }
-            if (initialDatabase != null) lastInitialDatabaseName = initialDatabase.name;
-            if (DialogueDebug.logWarnings && (initialDatabase == null)) Debug.LogWarning(string.Format("{0}: No dialogue database is assigned.", new System.Object[] { DialogueDebug.Prefix }));
-        }
-
-        /// <summary>
-        /// Adds a dialogue database to memory. To save memory or reduce load time, you may want to 
-        /// break up your dialogue data into multiple smaller databases. You can add or remove 
-        /// these databases as needed.
-        /// </summary>
-        /// <param name='database'>
-        /// The database to add.
-        /// </param>
-        public void AddDatabase(DialogueDatabase database)
-        {
-            if (m_databaseManager != null) m_databaseManager.Add(database);
-        }
-
-        /// <summary>
-        /// Removes a dialogue database from memory. To save memory or reduce load time, you may 
-        /// want to break up your dialogue data into multiple smaller databases. You can add or 
-        /// remove these databases as needed.
-        /// </summary>
-        /// <param name='database'>
-        /// The database to remove.
-        /// </param>
-        public void RemoveDatabase(DialogueDatabase database)
-        {
-            if (m_databaseManager != null) m_databaseManager.Remove(database);
-        }
-
-        /// <summary>
-        /// Resets the database to a default state.
-        /// </summary>
-        /// <param name='databaseResetOptions'>
-        /// Accepts the following values:
-        /// - RevertToDefault: Restores the default database, removing any other databases that 
-        /// were added after startup.
-        /// - KeepAllLoaded: Keeps all loaded databases in memory, but reverts them to their 
-        /// starting values.
-        /// </param>
-        public void ResetDatabase(DatabaseResetOptions databaseResetOptions)
-        {
-            if (m_databaseManager != null) m_databaseManager.Reset(databaseResetOptions);
-        }
-
-        /// <summary>
-        /// Resets the database to a default state, keeping all databases loaded.
-        /// </summary>
-        public void ResetDatabase()
-        {
-            if (m_databaseManager != null) m_databaseManager.Reset(DatabaseResetOptions.KeepAllLoaded);
+            displaySettings.localizationSettings.language = newLanguage;
+            UpdateLocalizationOnActiveConversations();
         }
 
         /// <summary>
@@ -704,74 +595,6 @@ namespace PixelCrushers.DialogueSystem
         {
             IDialogueUI ui = dialogueUI;
             if ((ui == null) && DialogueDebug.logWarnings) Debug.LogWarning(string.Format("{0}: Unable to load the dialogue UI.", DialogueDebug.Prefix));
-        }
-
-        /// <summary>
-        /// Checks whether a conversation has any valid entries linked from the start entry, since it's possible that
-        /// the conditions of all entries could be false.
-        /// </summary>
-        /// <returns>
-        /// <c>true</c>, if the conversation has a valid entry, <c>false</c> otherwise.
-        /// </returns>
-        /// <param name="title">
-        /// The title of the conversation to look up in the master database.
-        /// </param>
-        /// <param name='actor'>
-        /// The transform of the actor (primary participant). The sequencer uses this to direct 
-        /// camera angles and perform other actions. In PC-NPC conversations, the actor is usually
-        /// the PC.
-        /// </param>
-        /// <param name='conversant'>
-        /// The transform of the conversant (the other participant). The sequencer uses this to 
-        /// direct camera angles and perform other actions. In PC-NPC conversations, the conversant
-        /// is usually the NPC.
-        /// </param>
-        public bool ConversationHasValidEntry(string title, Transform actor, Transform conversant, int initialDialogueEntryID = -1)
-        {
-            if (string.IsNullOrEmpty(title)) return false;
-            var prevCurrentActor = currentActor;
-            var prevCurrentConversant = currentConversant;
-            currentActor = actor;
-            currentConversant = conversant;
-            var model = new ConversationModel(m_databaseManager.masterDatabase, title, actor, conversant, allowLuaExceptions, isDialogueEntryValid, initialDialogueEntryID, true, true);
-            currentActor = prevCurrentActor;
-            currentConversant = prevCurrentConversant;
-            return model.hasValidEntry;
-        }
-
-        /// <summary>
-        /// Checks whether a conversation has any valid entries linked from the start entry, since it's possible that
-        /// the conditions of all entries could be false.
-        /// </summary>
-        /// <returns>
-        /// <c>true</c>, if the conversation has a valid entry, <c>false</c> otherwise.
-        /// </returns>
-        /// <param name="title">
-        /// The title of the conversation to look up in the master database.
-        /// </param>
-        /// <param name='actor'>
-        /// The transform of the actor (primary participant). The sequencer uses this to direct 
-        /// camera angles and perform other actions. In PC-NPC conversations, the actor is usually
-        /// the PC.
-        /// </param>
-        public bool ConversationHasValidEntry(string title, Transform actor)
-        {
-            return ConversationHasValidEntry(title, actor, null);
-        }
-
-        /// <summary>
-        /// Checks whether a conversation has any valid entries linked from the start entry, since it's possible that
-        /// the conditions of all entries could be false.
-        /// </summary>
-        /// <returns>
-        /// <c>true</c>, if the conversation has a valid entry, <c>false</c> otherwise.
-        /// </returns>
-        /// <param name="title">
-        /// The title of the conversation to look up in the master database.
-        /// </param>
-        public bool ConversationHasValidEntry(string title)
-        {
-            return ConversationHasValidEntry(title, null, null);
         }
 
         /// <summary>
@@ -950,6 +773,210 @@ namespace PixelCrushers.DialogueSystem
             entry.Sequence = "Delay(2)";
             fakeConversation.dialogueEntries.Add(entry);
             return fakeConversation;
+        }
+
+        private void CheckDebugLevel()
+        {
+            if (debugLevel != m_lastDebugLevelSet)
+            {
+                DialogueDebug.level = debugLevel;
+                m_lastDebugLevelSet = debugLevel;
+            }
+        }
+
+        #endregion
+
+        #region Input
+
+        /// <summary>
+        /// Standard Unity Input method to check if a button is down.
+        /// </summary>
+        /// <param name="buttonName"></param>
+        /// <returns></returns>
+        public bool StandardGetInputButtonDown(string buttonName)
+        {
+            return InputDeviceManager.IsButtonDown(buttonName);
+        }
+
+        private bool DisabledGetInputButtonDown(string buttonName)
+        {
+            return false;
+        }
+
+        private bool m_disableInput = false;
+
+        /// <summary>
+        /// Returns true if Dialogue System input is disabled.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDialogueSystemInputDisabled()
+        {
+            return m_disableInput; //---Was delegate comparison, which generates GC: getInputButtonDown == DisabledGetInputButtonDown;
+        }
+
+        /// <summary>
+        /// Enables or disables Dialogue System input.
+        /// </summary>
+        /// <param name="value">True to enable, false to disable.</param>
+        public void SetDialogueSystemInput(bool value)
+        {
+            if (value == true)
+            {
+                if (IsDialogueSystemInputDisabled())
+                {
+                    getInputButtonDown = m_savedGetInputButtonDownDelegate ?? StandardGetInputButtonDown;
+                    m_disableInput = false;
+                }
+            }
+            else
+            {
+                if (!IsDialogueSystemInputDisabled())
+                {
+                    m_savedGetInputButtonDownDelegate = getInputButtonDown;
+                    getInputButtonDown = DisabledGetInputButtonDown;
+                    m_disableInput = true;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Database Management
+
+        private void InitializeDatabase()
+        {
+            m_databaseManager = new DatabaseManager(initialDatabase);
+            if (initialDatabase != null && initialDatabase.name == lastInitialDatabaseName)
+            {
+                m_databaseManager.Add(initialDatabase);
+            }
+            else
+            {
+                m_databaseManager.Reset(DatabaseResetOptions.KeepAllLoaded);
+            }
+            if (initialDatabase != null) lastInitialDatabaseName = initialDatabase.name;
+            if (DialogueDebug.logWarnings && (initialDatabase == null)) Debug.LogWarning(string.Format("{0}: No dialogue database is assigned.", new System.Object[] { DialogueDebug.Prefix }));
+        }
+
+        /// <summary>
+        /// Adds a dialogue database to memory. To save memory or reduce load time, you may want to 
+        /// break up your dialogue data into multiple smaller databases. You can add or remove 
+        /// these databases as needed.
+        /// </summary>
+        /// <param name='database'>
+        /// The database to add.
+        /// </param>
+        public void AddDatabase(DialogueDatabase database)
+        {
+            if (m_databaseManager != null) m_databaseManager.Add(database);
+        }
+
+        /// <summary>
+        /// Removes a dialogue database from memory. To save memory or reduce load time, you may 
+        /// want to break up your dialogue data into multiple smaller databases. You can add or 
+        /// remove these databases as needed.
+        /// </summary>
+        /// <param name='database'>
+        /// The database to remove.
+        /// </param>
+        public void RemoveDatabase(DialogueDatabase database)
+        {
+            if (m_databaseManager != null) m_databaseManager.Remove(database);
+        }
+
+        /// <summary>
+        /// Resets the database to a default state.
+        /// </summary>
+        /// <param name='databaseResetOptions'>
+        /// Accepts the following values:
+        /// - RevertToDefault: Restores the default database, removing any other databases that 
+        /// were added after startup.
+        /// - KeepAllLoaded: Keeps all loaded databases in memory, but reverts them to their 
+        /// starting values.
+        /// </param>
+        public void ResetDatabase(DatabaseResetOptions databaseResetOptions)
+        {
+            if (m_databaseManager != null) m_databaseManager.Reset(databaseResetOptions);
+        }
+
+        /// <summary>
+        /// Resets the database to a default state, keeping all databases loaded.
+        /// </summary>
+        public void ResetDatabase()
+        {
+            if (m_databaseManager != null) m_databaseManager.Reset(DatabaseResetOptions.KeepAllLoaded);
+        }
+
+        #endregion
+
+        #region Conversations
+
+        /// <summary>
+        /// Checks whether a conversation has any valid entries linked from the start entry, since it's possible that
+        /// the conditions of all entries could be false.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c>, if the conversation has a valid entry, <c>false</c> otherwise.
+        /// </returns>
+        /// <param name="title">
+        /// The title of the conversation to look up in the master database.
+        /// </param>
+        /// <param name='actor'>
+        /// The transform of the actor (primary participant). The sequencer uses this to direct 
+        /// camera angles and perform other actions. In PC-NPC conversations, the actor is usually
+        /// the PC.
+        /// </param>
+        /// <param name='conversant'>
+        /// The transform of the conversant (the other participant). The sequencer uses this to 
+        /// direct camera angles and perform other actions. In PC-NPC conversations, the conversant
+        /// is usually the NPC.
+        /// </param>
+        public bool ConversationHasValidEntry(string title, Transform actor, Transform conversant, int initialDialogueEntryID = -1)
+        {
+            if (string.IsNullOrEmpty(title)) return false;
+            var prevCurrentActor = currentActor;
+            var prevCurrentConversant = currentConversant;
+            currentActor = actor;
+            currentConversant = conversant;
+            var model = new ConversationModel(m_databaseManager.masterDatabase, title, actor, conversant, allowLuaExceptions, isDialogueEntryValid, initialDialogueEntryID, true, true);
+            currentActor = prevCurrentActor;
+            currentConversant = prevCurrentConversant;
+            return model.hasValidEntry;
+        }
+
+        /// <summary>
+        /// Checks whether a conversation has any valid entries linked from the start entry, since it's possible that
+        /// the conditions of all entries could be false.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c>, if the conversation has a valid entry, <c>false</c> otherwise.
+        /// </returns>
+        /// <param name="title">
+        /// The title of the conversation to look up in the master database.
+        /// </param>
+        /// <param name='actor'>
+        /// The transform of the actor (primary participant). The sequencer uses this to direct 
+        /// camera angles and perform other actions. In PC-NPC conversations, the actor is usually
+        /// the PC.
+        /// </param>
+        public bool ConversationHasValidEntry(string title, Transform actor)
+        {
+            return ConversationHasValidEntry(title, actor, null);
+        }
+
+        /// <summary>
+        /// Checks whether a conversation has any valid entries linked from the start entry, since it's possible that
+        /// the conditions of all entries could be false.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c>, if the conversation has a valid entry, <c>false</c> otherwise.
+        /// </returns>
+        /// <param name="title">
+        /// The title of the conversation to look up in the master database.
+        /// </param>
+        public bool ConversationHasValidEntry(string title)
+        {
+            return ConversationHasValidEntry(title, null, null);
         }
 
         /// <summary>
@@ -1503,6 +1530,50 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
+        public void UpdateLocalizationOnActiveConversations()
+        {
+            foreach (var record in activeConversations)
+            {
+                UpdateLocalizationOnConversation(record);
+            }
+        }
+
+        private void UpdateLocalizationOnConversation(ActiveConversationRecord record)
+        {
+            if (record == null || record.conversationView == null || record.conversationView.dialogueUI == null) return;
+            var ui = record.conversationView.dialogueUI as StandardDialogueUI;
+            if (ui == null) return;
+            var state = record.conversationController.currentState;
+            var subtitle = state.subtitle;
+            subtitle.formattedText.text = FormattedText.Parse(subtitle.dialogueEntry.currentDialogueText).text;
+            DialogueActor dialogueActor;
+            var panel = ui.conversationUIElements.standardSubtitleControls.GetPanel(subtitle, out dialogueActor);
+            panel.subtitleText.text = subtitle.formattedText.text;
+            if (panel.portraitName != null)
+            {
+                // We need to update the character's name:
+                record.conversationModel.OverrideCharacterInfo(subtitle.speakerInfo.id, subtitle.speakerInfo.transform);
+                var characterInfo = record.conversationModel.GetCharacterInfo(subtitle.speakerInfo.id);
+                if (characterInfo != null)
+                {
+                    panel.portraitName.text = characterInfo.Name;
+                }
+            }
+            var menu = ui.conversationUIElements.defaultMenuPanel;
+            if (menu != null && menu.isOpen)
+            {
+                foreach (var response in state.pcResponses)
+                {
+                    response.formattedText.text = FormattedText.Parse(response.destinationEntry.currentMenuText).text;
+                }
+                menu.ShowResponses(subtitle, state.pcResponses, ui.transform);
+            }
+        }
+
+        #endregion
+
+        #region Barks
+
         /// <summary>
         /// Causes a character to bark a line at another character. A bark is a line spoken outside
         /// of a full conversation. It uses a simple gameplay bark UI instead of the dialogue UI.
@@ -1527,6 +1598,34 @@ namespace PixelCrushers.DialogueSystem
             StartCoroutine(BarkController.Bark(conversationTitle, speaker, listener, barkHistory));
         }
 
+        /// <summary>
+        /// Causes a character to bark a line at another character. A bark is a line spoken outside
+        /// of a full conversation. It uses a simple gameplay bark UI instead of the dialogue UI.
+        /// </summary>
+        /// <param name='conversationTitle'>
+        /// Title of the conversation that contains the bark lines. In this conversation, all 
+        /// dialogue entries linked from the first entry are considered bark lines.
+        /// </param>
+        /// <param name='speaker'>
+        /// The character barking the line.
+        /// </param>
+        /// <param name='listener'>
+        /// The character being barked at.
+        /// </param>
+        /// <param name="entryID">Dialogue entry ID to bark.</param>
+        public void Bark(string conversationTitle, Transform speaker, Transform listener, int entryID)
+        {
+            CheckDebugLevel();
+            if (speaker == null)
+            {
+                if (DialogueDebug.logWarnings) Debug.LogWarning($"Dialogue System: Can't bark '{conversationTitle}:[{entryID}]. No barker specified.");
+                return;
+            }
+            var barkUI = speaker.GetComponentInChildren(typeof(IBarkUI)) as IBarkUI;
+            ConversationModel conversationModel = new ConversationModel(DialogueManager.masterDatabase, conversationTitle, speaker, listener, DialogueManager.allowLuaExceptions, DialogueManager.isDialogueEntryValid, entryID);
+            var state = conversationModel.firstState;
+            StartCoroutine(BarkController.Bark(state.subtitle, speaker, listener, barkUI));
+        }
         /// <summary>
         /// Causes a character to bark a line at another character. A bark is a line spoken outside
         /// of a full conversation. It uses a simple gameplay bark UI instead of the dialogue UI.
@@ -1631,6 +1730,10 @@ namespace PixelCrushers.DialogueSystem
             return duration;
         }
 
+        #endregion
+
+        #region Character Info
+
         private CharacterInfo GetCharacterInfoFromTransform(Transform actorTransform)
         {
             var actorName = DialogueActor.GetActorName(actorTransform);
@@ -1639,6 +1742,10 @@ namespace PixelCrushers.DialogueSystem
             var portrait = (actor != null) ? actor.GetPortraitSprite() : null;
             return new CharacterInfo(actorID, actorName, actorTransform, CharacterType.NPC, portrait);
         }
+
+        #endregion
+
+        #region Alerts
 
         /// <summary>
         /// Shows an alert message using the dialogue UI.
@@ -1724,8 +1831,12 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
+        #endregion
+
+        #region Localization
+
         /// <summary>
-        /// Gets localized text.
+        /// Gets localized text from a text table.
         /// </summary>
         /// <returns>If the specified field exists in the text tables, returns the field's 
         /// localized text for the current language. Otherwise returns the field itself. 
@@ -1751,6 +1862,10 @@ namespace PixelCrushers.DialogueSystem
             localizedText = UILocalizationManager.instance.GetLocalizedText(s);
             return string.IsNullOrEmpty(localizedText) ? s : localizedText;
         }
+
+        #endregion
+
+        #region Sequences
 
         /// <summary>
         /// Starts a sequence. See @ref sequencer.
@@ -1870,6 +1985,21 @@ namespace PixelCrushers.DialogueSystem
             if (sequencer != null) sequencer.Close();
         }
 
+        private Sequencer GetNewSequencer()
+        {
+            Sequencer sequencer = this.gameObject.AddComponent<Sequencer>();
+            if (sequencer != null)
+            {
+                sequencer.UseCamera(displaySettings.cameraSettings.sequencerCamera, displaySettings.cameraSettings.alternateCameraObject, displaySettings.cameraSettings.cameraAngles);
+                sequencer.disableInternalSequencerCommands = displaySettings.cameraSettings.disableInternalSequencerCommands;
+            }
+            return sequencer;
+        }
+
+        #endregion
+
+        #region Pause
+
         /// <summary>
         /// Pauses the Dialogue System. Also broadcasts OnDialogueSystemPause to 
         /// the Dialogue Manager and conversation participants. Conversations,
@@ -1894,6 +2024,10 @@ namespace PixelCrushers.DialogueSystem
             BroadcastDialogueSystemMessage(DialogueSystemMessages.OnDialogueSystemUnpause);
         }
 
+        #endregion
+
+        #region Messages
+
         private void BroadcastDialogueSystemMessage(string message)
         {
             BroadcastMessage(message, SendMessageOptions.DontRequireReceiver);
@@ -1903,6 +2037,10 @@ namespace PixelCrushers.DialogueSystem
                 if (currentConversant != null) currentConversant.BroadcastMessage(message, SendMessageOptions.DontRequireReceiver);
             }
         }
+
+        #endregion
+
+        #region Dialogue UIs
 
         /// <summary>
         /// Sets the dialogue UI. (Deprecated; just set DialogueUI now.)
@@ -2082,16 +2220,9 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
-        private Sequencer GetNewSequencer()
-        {
-            Sequencer sequencer = this.gameObject.AddComponent<Sequencer>();
-            if (sequencer != null)
-            {
-                sequencer.UseCamera(displaySettings.cameraSettings.sequencerCamera, displaySettings.cameraSettings.alternateCameraObject, displaySettings.cameraSettings.cameraAngles);
-                sequencer.disableInternalSequencerCommands = displaySettings.cameraSettings.disableInternalSequencerCommands;
-            }
-            return sequencer;
-        }
+        #endregion
+
+        #region Lua Functions
 
         private void RegisterLuaFunctions()
         {
@@ -2229,6 +2360,10 @@ namespace PixelCrushers.DialogueSystem
             return (asset != null) ? asset.Name : null;
         }
 
+        #endregion
+
+        #region Lua Observers
+
         /// <summary>
         /// Adds a Lua expression observer.
         /// </summary>
@@ -2306,10 +2441,18 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
+        #endregion
+
+        #region Quests
+
         private void UpdateTracker()
         {
             receivedUpdateTracker();
         }
+
+        #endregion
+
+        #region Asset Management
 
         /// <summary>
         /// Registers an asset bundle with the Dialogue System. This allows sequencer
@@ -2534,6 +2677,8 @@ namespace PixelCrushers.DialogueSystem
             loadedAddressableHashes.Clear();
 #endif
         }
+
+        #endregion
 
 #if EVALUATION_VERSION
 

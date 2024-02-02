@@ -168,6 +168,10 @@ namespace PixelCrushers.DialogueSystem.Yarn
             foreach (var filename in _prefs.sourceFiles)
             {
                 var yarnScriptText = File.ReadAllText(filename);
+
+                // Parser doesn't handle ->Message, so temporarily replace:
+                yarnScriptText = yarnScriptText.Replace("->Message(", "SEQ_SEND_MESSAGE(");
+
                 // if (_prefs.debug) Debug.Log($"Parsing some source file: {filename}, string: \n{yarnScriptText}");
                 // Debug.Log($"Parsing some source file: {filename}, string: \n{yarnScriptText}");
                 var input = new AntlrInputStream(yarnScriptText);

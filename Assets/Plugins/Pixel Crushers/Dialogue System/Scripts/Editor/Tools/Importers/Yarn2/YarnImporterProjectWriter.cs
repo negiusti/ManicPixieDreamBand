@@ -1070,7 +1070,12 @@ $@"local {RunCommandRuntimeArgumentList} = {Lua.EvaluateYarnExpression}({{1}})
             // So no need to completely parse this apart like a typical command.
             var splitIndex = cmd.Text.IndexOf(' ');
             var sequenceString = cmd.Text;
+
             if (splitIndex < sequenceString.Length) sequenceString = cmd.Text.Substring(splitIndex + 1).Trim();
+
+            // Parser doesn't handle ->Message, so it was temporarily replaced. Fix it back:
+            sequenceString = sequenceString.Replace("SEQ_SEND_MESSAGE(", "->Message(");
+
             Debug.Log($"YarnProjectWriter::GenerateSequence() - sequenceString: {sequenceString}, exp count: {cmd.ExpressionCount}");
 
             if (cmd.HasExpression)

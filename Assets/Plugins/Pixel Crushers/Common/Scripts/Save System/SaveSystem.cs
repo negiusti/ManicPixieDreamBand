@@ -31,6 +31,10 @@ namespace PixelCrushers
         [SerializeField]
         private bool m_saveCurrentScene = true;
 
+        [Tooltip("Highest save slot number allowed.")]
+        [SerializeField]
+        private int m_maxSaveSlot = 99999;
+
         [Tooltip("When loading a game/scene, wait this many frames before applying saved data to allow other scripts to initialize first.")]
         [SerializeField]
         private int m_framesToWaitBeforeApplyData = 0;
@@ -54,6 +58,8 @@ namespace PixelCrushers
         private static SavedGameDataStorer m_storer = null;
 
         private static SceneTransitionManager m_sceneTransitionManager = null;
+
+        private static bool m_allowNegativeSlotNumbers = false;
 
         private static GameObject m_playerSpawnpoint = null;
 
@@ -124,6 +130,21 @@ namespace PixelCrushers
         }
 
         /// <summary>
+        /// Highest save slot number allowed.
+        /// </summary>
+        public static int maxSaveSlot
+        {
+            get
+            {
+                return (m_instance != null) ? m_instance.m_maxSaveSlot : int.MaxValue;
+            }
+            set
+            {
+                if (m_instance != null) m_instance.m_maxSaveSlot = value;
+            }
+        }
+
+        /// <summary>
         /// When loading a game/scene, wait this many frames before applying saved data to allow other scripts to initialize first.
         /// </summary>
         public static int framesToWaitBeforeApplyData
@@ -186,6 +207,10 @@ namespace PixelCrushers
             }
         }
 
+        /// <summary>
+        /// Reference to the DataSerializer in the SaveSystem's hierarchy.
+        /// SaveSystem will use it to serialize and deserialize saved game data.
+        /// </summary>
         public static DataSerializer serializer
         {
             get
@@ -203,6 +228,10 @@ namespace PixelCrushers
             }
         }
 
+        /// <summary>
+        /// Reference to the SavedGameDataStorer in the SaveSystem's hierarchy. 
+        /// SaveSystem will use it to store and retrieve saved game data.
+        /// </summary>
         public static SavedGameDataStorer storer
         {
             get
@@ -220,6 +249,9 @@ namespace PixelCrushers
             }
         }
 
+        /// <summary>
+        /// Reference to the SceneTransitionManager in the SaveSystem's hierarchy, if present.
+        /// </summary>
         public static SceneTransitionManager sceneTransitionManager
         {
             get
@@ -230,6 +262,15 @@ namespace PixelCrushers
                 }
                 return m_sceneTransitionManager;
             }
+        }
+
+        /// <summary>
+        /// Allow the use of negative slot numbers.
+        /// </summary>
+        public bool allowNegativeSlotNumbers
+        {
+            get { return m_allowNegativeSlotNumbers; }
+            set { m_allowNegativeSlotNumbers = value; }
         }
 
         /// <summary>
@@ -639,6 +680,30 @@ namespace PixelCrushers
 #endif
 
         /// <summary>
+        /// If slotNumber is negative and allowNegativeSlotNumbers is false, 
+        /// choose an empty positive slot up to maxSlots. If none are empty,
+        /// return false;
+        /// </summary>
+        private static bool SanitizeSlotNumberForSave(int slotNumber, out int sanitizedSlotNumber)
+        {
+            if (slotNumber >= 0 || m_instance == null || m_instance.allowNegativeSlotNumbers)
+            {
+                sanitizedSlotNumber = slotNumber;
+                return true;
+            }
+            for (int i = 0; i <= maxSaveSlot; i++)
+            {
+                if (!HasSavedGameInSlot(i))
+                {
+                    sanitizedSlotNumber = i;
+                    return true;
+                }
+            }
+            sanitizedSlotNumber = 0;
+            return false;
+        }
+
+        /// <summary>
         /// Saves a game into a slot using the storage provider on the 
         /// Save System GameObject.
         /// </summary>
@@ -699,6 +764,11 @@ namespace PixelCrushers
 
         private static IEnumerator SaveToSlotCoroutine(int slotNumber)
         {
+            if (!SanitizeSlotNumberForSave(slotNumber, out slotNumber))
+            {
+                Debug.LogError("Can't save game. Invalid save slot: " + slotNumber);
+                yield break;
+            }
             saveStarted();
             yield return null;
             PlayerPrefs.SetInt(LastSavedGameSlotPlayerPrefsKey, slotNumber);
@@ -711,6 +781,11 @@ namespace PixelCrushers
         /// </summary>
         public static void SaveToSlotImmediate(int slotNumber)
         {
+            if (!SanitizeSlotNumberForSave(slotNumber, out slotNumber))
+            {
+                Debug.LogError("Can't save game. Invalid save slot: " + slotNumber);
+                return;
+            }
             saveStarted();
             PlayerPrefs.SetInt(LastSavedGameSlotPlayerPrefsKey, slotNumber);
             storer.StoreSavedGameData(slotNumber, RecordSavedGameData());

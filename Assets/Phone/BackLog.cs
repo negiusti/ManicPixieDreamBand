@@ -38,6 +38,7 @@ public class BackLog : MonoBehaviour
 
     private void OnDisable()
     {
+        DialogueManager.Unpause();
         if (typingBubble != null)
         {
             typingBubble.SetActive(false);

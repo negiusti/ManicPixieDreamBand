@@ -89,7 +89,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 s += ". Resolve this conflict first. Menu > Show > Show Node IDs may help.";
                 Debug.LogWarning(s);
             }
-            return conflictedIDs.Count > 0;
+            return conflictedIDs.Count == 0;
         }
 
         #region Reorder IDs Depth First

@@ -75,6 +75,8 @@ namespace PixelCrushers
             }
         }
 
+        public static event System.Action<string> languageChanged = null;
+
 #if UNITY_2019_3_OR_NEWER && UNITY_EDITOR
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void InitStaticVariables()
@@ -157,6 +159,7 @@ namespace PixelCrushers
                 if (!string.IsNullOrEmpty(currentLanguagePlayerPrefsKey) && PlayerPrefs.HasKey(currentLanguagePlayerPrefsKey))
                 {
                     m_currentLanguage = PlayerPrefs.GetString(currentLanguagePlayerPrefsKey);
+                    languageChanged?.Invoke(currentLanguage);
                 }
             }
             TextTable.useDefaultLanguageForBlankTranslations = m_useDefaultLanguageForBlankTranslations;
@@ -233,6 +236,7 @@ namespace PixelCrushers
         public void UpdateUIs(string language)
         {
             m_currentLanguage = language;
+            languageChanged?.Invoke(language);
             if (saveLanguageInPlayerPrefs)
             {
                 if (!string.IsNullOrEmpty(currentLanguagePlayerPrefsKey))

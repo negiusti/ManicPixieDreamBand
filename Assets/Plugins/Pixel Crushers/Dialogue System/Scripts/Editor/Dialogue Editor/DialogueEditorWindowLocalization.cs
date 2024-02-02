@@ -22,6 +22,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         #region Database Tab > Localization Foldout Variables
 
+        private enum EntrySortMethod { No, DepthFirst, BreadthFirst }
+
         [Serializable]
         private class LocalizationLanguages
         {
@@ -57,10 +59,14 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         [SerializeField]
         private string localizationKeyField = "Articy Id";
 
+        [SerializeField]
+        private EntrySortMethod localizationEntrySortMethod = EntrySortMethod.No;
+
         private GUIContent exportLocalizationConversationTitleLabel = new GUIContent("Export Conversation Title Instead Of ID", "Export conversation title instead of ID. Titles should be unique.");
         private GUIContent exportLocalizationKeyFieldLabel = new GUIContent("Use Key Field", "Tie each dialogue entry row to a key field (e.g., 'Articy Id' or 'Celtx ID') instead of conversation & entry IDs.");
         private GUIContent exportAssignFieldValuesLabel = new GUIContent("Assign Values", "If key field is blank for dialogue entry, assign a unique value to it.");
         private GUIContent exportLocalizationCreateNewFieldsLabel = new GUIContent("Create New Fields", "If Extra Dialogue Entry field doesn't exist in an entry or if Extra Quest Field doesn't exist for a quest, create field when importing.");
+        private GUIContent exportLocalizationSortModeLabel = new GUIContent("Sort Entries?", "Export dialogue entries in a sorted order.");
         private GUIContent exportExtraEntryFieldsLabel = new GUIContent("Extra Dialogue Entry Fields", "(Optional) Extra dialogue entry fields to localize.");
         private GUIContent exportExtraQuestFieldsLabel = new GUIContent("Extra Quest Fields", "(Optional) Extra quest fields to localize.");
         private GUIContent exportExtraItemFieldsLabel = new GUIContent("Extra Item Fields", "(Optional) Extra item fields to localize.");
@@ -139,7 +145,13 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 exportAssignFieldValues = EditorGUILayout.ToggleLeft(exportAssignFieldValuesLabel, exportAssignFieldValues, GUILayout.Width(160));
             }
             EditorGUILayout.EndHorizontal();
+
             exportLocalizationCreateNewFields = EditorGUILayout.ToggleLeft(exportLocalizationCreateNewFieldsLabel, exportLocalizationCreateNewFields, GUILayout.Width(160));
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField(exportLocalizationSortModeLabel, GUILayout.Width(80));
+            localizationEntrySortMethod = (EntrySortMethod)EditorGUILayout.EnumPopup(GUIContent.none, localizationEntrySortMethod, GUILayout.Width(100));
+            EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
@@ -379,7 +391,21 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                         foreach (var c in database.conversations)
                         {
                             var conversationTitle = c.Title;
-                            foreach (var de in c.dialogueEntries)
+                            List<DialogueEntry> sortedEntries = new List<DialogueEntry>();
+                            switch (localizationEntrySortMethod)
+                            {
+                                default:
+                                case EntrySortMethod.No:
+                                    sortedEntries.AddRange(c.dialogueEntries);
+                                    break;
+                                case EntrySortMethod.DepthFirst:
+                                    sortedEntries = DepthFirstSortEntries(c.dialogueEntries);
+                                    break;
+                                case EntrySortMethod.BreadthFirst:
+                                    sortedEntries = BreadthFirstSortEntries(c.dialogueEntries);
+                                    break;
+                            }
+                            foreach (var de in sortedEntries)
                             {
                                 var fields = new List<string>();
                                 foreach (string s in orderedFields)
@@ -567,6 +593,56 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             {
                 EditorUtility.ClearProgressBar();
             }
+        }
+
+        private List<DialogueEntry> DepthFirstSortEntries(List<DialogueEntry> entries)
+        {
+            var sorted = new List<DialogueEntry>();
+            var unprocessed = new List<DialogueEntry>(entries);
+            var start = entries.Find(x => x.id == 0);
+            if (start == null) return unprocessed;
+            SortDepthFirstRecursive(start, sorted, unprocessed);
+            sorted.AddRange(unprocessed);
+            return sorted;
+        }
+
+        private void SortDepthFirstRecursive(DialogueEntry entry, List<DialogueEntry> sorted, List<DialogueEntry> unprocessed)
+        {
+            if (entry == null) return;
+            unprocessed.Remove(entry);
+            sorted.Add(entry);
+            foreach (var link in entry.outgoingLinks)
+            {
+                if (link.destinationConversationID != entry.conversationID) continue;
+                var child = unprocessed.Find(x => x.id == link.destinationDialogueID); 
+                if (child == null) continue;
+                SortDepthFirstRecursive(child, sorted, unprocessed);
+            }
+        }
+
+        private List<DialogueEntry> BreadthFirstSortEntries(List<DialogueEntry> entries)
+        {
+            var sorted= new List<DialogueEntry>();
+            var unprocessed = new List<DialogueEntry>(entries);
+            var queued = new Queue<DialogueEntry>();
+            var start = entries.Find(x => x.id == 0);
+            if (start == null) return unprocessed;
+            queued.Enqueue(start);
+            while (queued.Count > 0)
+            {
+                var entry = queued.Dequeue();
+                unprocessed.Remove(entry);
+                sorted.Add(entry);
+                foreach (var link in entry.outgoingLinks)
+                {
+                    if (link.destinationConversationID != entry.conversationID) continue;
+                    var child = unprocessed.Find(x => x.id == link.destinationDialogueID);
+                    if (child == null) continue;
+                    queued.Enqueue(child);
+                }
+            }
+            sorted.AddRange(unprocessed);
+            return sorted;
         }
 
         private string GetNewKeyFieldValue()

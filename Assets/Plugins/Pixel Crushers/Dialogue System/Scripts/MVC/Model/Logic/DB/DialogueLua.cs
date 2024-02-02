@@ -1348,7 +1348,7 @@ namespace PixelCrushers.DialogueSystem
             var safeValue = (value == null) ? "nil"
                 : (value.GetType() == typeof(string)) ? $"\"{DoubleQuotesToSingle(value.ToString())}\""
                 : value.ToString();
-            Lua.Run(string.Format("return Conversation[{0}].{1} = {2}", new System.Object[] { conversationID, StringToTableIndex(field), safeValue }), false, true);
+            Lua.Run(string.Format("Conversation[{0}].{1} = {2}", new System.Object[] { conversationID, StringToTableIndex(field), safeValue }), false, true);
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ public class CustomDialogueScript : MonoBehaviour
 {
     public KeyCode keyCode;
     private bool isCoolDown;
-    private float coolDown = 0.5f;
+    private float coolDown = 1f;
     public BackLog backLogTemplate;
     public ConvoHeader convoHeaderTemplate;
     private Dictionary<string, BackLog> backLogs;
@@ -105,7 +105,7 @@ public class CustomDialogueScript : MonoBehaviour
     public bool IsPCResponseMenuOpen()
     {
         responsePanel = GameObject.FindFirstObjectByType<MainCharacter>().gameObject.GetComponentInChildren<PixelCrushers.DialogueSystem.Wrappers.StandardUIMenuPanel>();
-        return responsePanel != null && responsePanel.gameObject.activeSelf && responsePanel.isOpen;
+        return responsePanel != null && responsePanel.gameObject.activeSelf;// && responsePanel.isOpen;
     }
 
     // Update is called once per frame
@@ -153,9 +153,13 @@ public class CustomDialogueScript : MonoBehaviour
     }
     private void PrepTxtConvo()
     {
+        DialogueManager.displaySettings.conversationOverrideSettings.skipPCSubtitleAfterResponseMenu = true;
+        DialogueManager.displaySettings.conversationOverrideSettings.showPCSubtitlesDuringLine = false;
+        DialogueManager.displaySettings.conversationOverrideSettings.showNPCSubtitlesDuringLine = false;
         DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = true;
         DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = false;
         DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = false;
+        DialogueManager.SetDialoguePanel(false, true);
         phoneResponsePanel.gameObject.SetActive(true);
         phoneResponsePanelCanvas.enabled = true;
         DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(phoneResponsePanel);
@@ -167,28 +171,24 @@ public class CustomDialogueScript : MonoBehaviour
         string convoName = DialogueManager.LastConversationStarted;
         if (IsTxtConvo(convoName))
         {
-            DialogueManager.displaySettings.conversationOverrideSettings.skipPCSubtitleAfterResponseMenu = true;
-            DialogueManager.displaySettings.conversationOverrideSettings.showPCSubtitlesDuringLine = false;
-            DialogueManager.displaySettings.conversationOverrideSettings.showNPCSubtitlesDuringLine = false;
-            DialogueManager.SetDialoguePanel(false, true);
             PrepTxtConvo();
         }
         else
         {
-            DialogueManager.displaySettings.conversationOverrideSettings.skipPCSubtitleAfterResponseMenu = false;
-            DialogueManager.displaySettings.conversationOverrideSettings.showPCSubtitlesDuringLine = true;
-            DialogueManager.displaySettings.conversationOverrideSettings.showNPCSubtitlesDuringLine = true;
-            DialogueManager.SetDialoguePanel(true, true);
             PrepSpokenConvo();
-            responsePanel = GameObject.FindObjectOfType<MainCharacter>().gameObject.GetComponentInChildren<StandardUIMenuPanel>();
         }
     }
 
     private void PrepSpokenConvo()
     {
+        DialogueManager.displaySettings.conversationOverrideSettings.skipPCSubtitleAfterResponseMenu = false;
+        DialogueManager.displaySettings.conversationOverrideSettings.showPCSubtitlesDuringLine = true;
+        DialogueManager.displaySettings.conversationOverrideSettings.showNPCSubtitlesDuringLine = true;
         DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = false;
         DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = true;
         DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = true;
+        DialogueManager.SetDialoguePanel(true, true);
+        responsePanel = GameObject.FindObjectOfType<MainCharacter>().gameObject.GetComponentInChildren<StandardUIMenuPanel>();
         DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(responsePanel);
         DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Always;
     }
@@ -258,7 +258,6 @@ public class CustomDialogueScript : MonoBehaviour
         PrepTxtConvo();
         FocusBackLog(contactName);
         DialogueManager.StartConversation(conversation, null, null, backLogs[contactName].GetCurrEntryID());
-        //DialogueManager.SetDialoguePanel(false, true);
     }
 
     public void FocusBackLog(string contactName)

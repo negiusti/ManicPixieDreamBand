@@ -240,8 +240,10 @@ namespace PixelCrushers.DialogueSystem
                 }
             }
             isPCResponseMenuNext = !state.hasNPCResponse && !hasForceAuto &&
-                (numPCResponses > 1 || hasForceMenu || (numPCResponses == 1 && alwaysForceMenu));
-            isPCAutoResponseNext = !state.hasNPCResponse && hasForceAuto || (numPCResponses == 1 && !hasForceMenu && (!alwaysForceMenu || state.pcResponses[0].destinationEntry.isGroup));
+                (numPCResponses > 1 || hasForceMenu || (numPCResponses == 1 && alwaysForceMenu && !string.IsNullOrEmpty(state.pcResponses[0].formattedText.text)));
+            isPCAutoResponseNext = !state.hasNPCResponse && hasForceAuto || 
+                (numPCResponses == 1 && string.IsNullOrEmpty(state.pcResponses[0].formattedText.text)) ||
+                (numPCResponses == 1 && !hasForceMenu && (!alwaysForceMenu || state.pcResponses[0].destinationEntry.isGroup));
         }
 
         private void SetConversationOverride(ConversationState state)

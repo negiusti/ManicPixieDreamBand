@@ -255,6 +255,7 @@ namespace PixelCrushers.DialogueSystem
                 textComponent.maxVisibleCharacters = fromIndex;
                 textComponent.ForceMeshUpdate();
                 TMPro.TMP_TextInfo textInfo = textComponent.textInfo;
+                if (textInfo == null) yield break;
                 var parsedText = textComponent.GetParsedText();
                 int totalVisibleCharacters = textInfo.characterCount; // Get # of Visible Character in text object
                 charactersTyped = fromIndex;
@@ -427,7 +428,7 @@ namespace PixelCrushers.DialogueSystem
                 onEnd.Invoke();
                 Sequencer.Message(SequencerMessages.Typed);
             }
-            if (textComponent != null) 
+            if (textComponent != null && textComponent.textInfo != null) 
             {
                 textComponent.maxVisibleCharacters = textComponent.textInfo.characterCount;
                 textComponent.ForceMeshUpdate();

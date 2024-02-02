@@ -347,6 +347,7 @@ namespace PixelCrushers.DialogueSystem
         protected virtual void ShowResponsesImmediate(Subtitle subtitle, Response[] responses, float timeout)
         { 
             conversationUIElements.standardSubtitleControls.UnfocusAll();
+            conversationUIElements.standardSubtitleControls.HideOnResponseMenu();
             base.ShowResponses(subtitle, responses, timeout);
         }
 

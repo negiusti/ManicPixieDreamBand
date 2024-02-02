@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using System;
+using System.Text.RegularExpressions;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -606,7 +607,7 @@ namespace PixelCrushers.DialogueSystem
                 else
                 {
                     // If we're at the max number of lines, remove the first line from the accumulated text:
-                    previousText = previousText.Substring(previousText.IndexOf("\n") + 1);
+                    previousText = RemoveFirstLine(previousText);
                 }
             }
             var previousChars = accumulateText ? UITools.StripRPGMakerCodes(Tools.StripTextMeshProTags(Tools.StripRichTextCodes(previousText))).Length : 0;
@@ -623,6 +624,27 @@ namespace PixelCrushers.DialogueSystem
             else
             {
                 TypewriterUtility.StartTyping(subtitleText, subtitleText.text, previousChars);
+            }
+        }
+
+        protected virtual string RemoveFirstLine(string previousText)
+        {
+            if (string.IsNullOrEmpty(previousText)) return string.Empty;
+            var newlineIndex = previousText.IndexOf("\n");
+            if (previousText.Contains("<"))
+            {
+                // Preserve rich text tags in first line:
+                var tags = string.Empty;
+                var firstLine = previousText.Substring(0, newlineIndex);
+                foreach (Match match in Tools.TextMeshProTagsRegex.Matches(firstLine))
+                {
+                    tags += match.Value;
+                }
+                return tags + previousText.Substring(newlineIndex + 1);
+            }
+            else
+            {
+                return previousText.Substring(newlineIndex + 1);
             }
         }
 

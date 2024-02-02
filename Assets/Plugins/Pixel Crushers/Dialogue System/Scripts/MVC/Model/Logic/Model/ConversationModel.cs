@@ -297,7 +297,7 @@ namespace PixelCrushers.DialogueSystem
                     }
                     else
                     {
-                        EvaluateLinks(entry, npcResponses, pcResponses, new List<DialogueEntry>(), stopAtFirstValid);
+                        EvaluateLinks(entry, npcResponses, pcResponses, new List<DialogueEntry>(), stopAtFirstValid, skipExecution);
                     }
                 }
                 return new ConversationState(subtitle, npcResponses.ToArray(), pcResponses.ToArray(), entry.isGroup);
@@ -396,14 +396,14 @@ namespace PixelCrushers.DialogueSystem
         /// and get frozen in an infinite loop.
         /// </param>
         private void EvaluateLinks(DialogueEntry entry, List<Response> npcResponses, List<Response> pcResponses,
-                                   List<DialogueEntry> visited, bool stopAtFirstValid = false)
+                                   List<DialogueEntry> visited, bool stopAtFirstValid = false, bool skipExecution = false)
         {
             if ((entry != null) && !visited.Contains(entry))
             {
                 visited.Add(entry);
                 for (int i = (int)ConditionPriority.High; i >= 0; i--)
                 {
-                    EvaluateLinksAtPriority((ConditionPriority)i, entry, npcResponses, pcResponses, visited, stopAtFirstValid);
+                    EvaluateLinksAtPriority((ConditionPriority)i, entry, npcResponses, pcResponses, visited, stopAtFirstValid, skipExecution);
                     if ((npcResponses.Count > 0) || (pcResponses.Count > 0)) return;
                 }
             }
@@ -411,7 +411,7 @@ namespace PixelCrushers.DialogueSystem
 
         private void EvaluateLinksAtPriority(ConditionPriority priority, DialogueEntry entry, List<Response> npcResponses,
                                              List<Response> pcResponses, List<DialogueEntry> visited,
-                                             bool stopAtFirstValid = false)
+                                             bool stopAtFirstValid = false, bool skipExecution = false)
         {
             if (entry != null)
             {
@@ -434,13 +434,16 @@ namespace PixelCrushers.DialogueSystem
 
                                 // For groups, evaluate their links (after running the group node's Lua code and OnExecute() event):
                                 if (DialogueDebug.logInfo) Debug.Log(string.Format("{0}: Evaluate Group ({1}): ID={2}:{3} '{4}' ({5})", new System.Object[] { DialogueDebug.Prefix, GetActorName(m_database.GetActor(destinationEntry.ActorID)), link.destinationConversationID, link.destinationDialogueID, destinationEntry.Title, isValid }));
-                                Lua.Run(destinationEntry.userScript, DialogueDebug.logInfo, m_allowLuaExceptions);
-                                destinationEntry.onExecute.Invoke();
+                                if (!skipExecution)
+                                {
+                                    Lua.Run(destinationEntry.userScript, DialogueDebug.logInfo, m_allowLuaExceptions);
+                                    destinationEntry.onExecute.Invoke();
+                                }
                                 isValid = false; // Assume invalid until at least one group's child is true.
                                 for (int i = (int)ConditionPriority.High; i >= 0; i--)
                                 {
                                     int originalResponseCount = npcResponses.Count + pcResponses.Count;
-                                    EvaluateLinksAtPriority((ConditionPriority)i, destinationEntry, npcResponses, pcResponses, visited);
+                                    EvaluateLinksAtPriority((ConditionPriority)i, destinationEntry, npcResponses, pcResponses, visited, stopAtFirstValid, skipExecution);
                                     if ((npcResponses.Count + pcResponses.Count) > originalResponseCount)
                                     {
                                         isValid = true;

@@ -83,7 +83,7 @@ public class Phone : MonoBehaviour
 
     private bool IsTxtResponseMenuOpen()
     {
-        return txtResponsePanel != null && txtResponsePanel.gameObject.activeSelf;
+        return txtResponsePanel != null && txtResponsePanel.gameObject.activeSelf && txtResponsePanel.isOpen;
     }
 
     public void EnableNotificationIndicator()

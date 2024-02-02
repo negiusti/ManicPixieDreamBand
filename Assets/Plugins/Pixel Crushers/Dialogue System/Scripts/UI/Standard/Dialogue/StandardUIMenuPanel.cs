@@ -151,6 +151,24 @@ namespace PixelCrushers.DialogueSystem
 
         #region Show & Hide
 
+        protected override void Update()
+        {
+            if (s_isInputDisabled)
+            {
+                if (eventSystem != null) eventSystem.SetSelectedGameObject(null);
+            }
+            else
+            {
+                base.Update();
+            }
+        }
+
+        public override void CheckFocus()
+        {
+            if (s_isInputDisabled) return;
+            base.CheckFocus();
+        }
+
         public virtual void SetPCPortrait(Sprite portraitSprite, string portraitName)
         {
             if (pcImage != null)

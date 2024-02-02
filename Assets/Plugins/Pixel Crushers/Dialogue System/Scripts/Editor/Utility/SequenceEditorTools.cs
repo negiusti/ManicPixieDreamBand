@@ -519,20 +519,58 @@ namespace PixelCrushers.DialogueSystem
         private static void AddAllShortcuts(GenericMenu menu)
         {
             menu.AddItem(new GUIContent("Shortcuts/Help..."), false, OpenURL, "https://www.pixelcrushers.com/dialogue_system/manual2x/html/cutscene_sequences.html#shortcuts");
+
+            // Dictionary to hold submenus and their corresponding shortcuts
+            var submenuDict = new Dictionary<string, List<string>>();
+
+            // Find all SequencerShortcuts in the scene
             var list = new List<string>();
             var allSequencerShortcuts = GameObjectUtility.FindObjectsByType<SequencerShortcuts>();
             foreach (var sequencerShortcuts in allSequencerShortcuts)
             {
                 foreach (var shortcut in sequencerShortcuts.shortcuts)
                 {
-                    list.Add(@"{{" + shortcut.shortcut + @"}}");
+                    //list.Add(@"{{" + shortcut.shortcut + @"}}");
+
+                    // Check if the shortcut has a submenu specified
+                    if (!string.IsNullOrEmpty(shortcut.subMenu))
+                    {
+                        // If the submenu doesn't exist, create a new list for it
+                        if (!submenuDict.ContainsKey(shortcut.subMenu))
+                        {
+                            submenuDict[shortcut.subMenu] = new List<string>();
+                        }
+                        // Add the shortcut to the submenu list
+                        submenuDict[shortcut.subMenu].Add(@"{{" + shortcut.shortcut + @"}}");
+                    }
+                    else
+                    {
+                        // If no submenu is specified, add it to a default "General" list
+                        if (!submenuDict.ContainsKey("General"))
+                        {
+                            submenuDict["General"] = new List<string>();
+                        }
+                        submenuDict["General"].Add(shortcut.shortcut);
+                    }
                 }
             }
-            list.Sort();
-            for (int i = 0; i < list.Count; i++)
+
+            // Sort and add the submenu items to the menu
+            foreach (var submenu in submenuDict.Keys)
             {
-                menu.AddItem(new GUIContent("Shortcuts/" + list[i]), false, StartOtherCommand, list[i]);
+                submenuDict[submenu].Sort(); // Sort the shortcuts
+                foreach (var shortcut in submenuDict[submenu])
+                {
+                    string menuPath = string.IsNullOrEmpty(submenu) ? shortcut : $"{submenu}/{shortcut}";
+                    menu.AddItem(new GUIContent("Shortcuts/" + menuPath), false, StartOtherCommand, shortcut);
+                }
             }
+
+            //list.Sort();
+            //for (int i = 0; i < list.Count; i++)
+            //{
+            //    menu.AddItem(new GUIContent("Shortcuts/" + list[i]), false, StartOtherCommand, list[i]);
+            //}
         }
 
         private static void StartSequencerCommand(object data)

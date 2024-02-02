@@ -592,6 +592,27 @@ namespace PixelCrushers.DialogueSystem
         /// <summary>
         /// Causes a character to bark a line at another character. A bark is a line spoken outside
         /// of a full conversation. It uses a simple gameplay bark UI instead of the dialogue UI.
+        /// </summary>
+        /// <param name='conversationTitle'>
+        /// Title of the conversation that contains the bark lines. In this conversation, all 
+        /// dialogue entries linked from the first entry are considered bark lines.
+        /// </param>
+        /// <param name='speaker'>
+        /// The character barking the line.
+        /// </param>
+        /// <param name='listener'>
+        /// The character being barked at.
+        /// </param>
+        /// <param name="entryID">Dialogue entry ID to bark.</param>
+        public static void Bark(string conversationTitle, Transform speaker, Transform listener, int entryID)
+        {
+            if (!hasInstance) return;
+            instance.Bark(conversationTitle, speaker, listener, entryID);
+        }
+
+        /// <summary>
+        /// Causes a character to bark a line at another character. A bark is a line spoken outside
+        /// of a full conversation. It uses a simple gameplay bark UI instead of the dialogue UI.
         /// Since this form of the Bark() method does not include a BarkHistory, a random bark is
         /// selected from the bark lines.
         /// </summary>

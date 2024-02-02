@@ -704,6 +704,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 if (newEntryField == null) newEntryField = new Field(string.Empty, string.Empty, FieldType.Text);
                 newEntryField.title = EditorGUILayout.TextField(GUIContent.none, newEntryField.title);
                 DrawFieldType(newEntryField);
+                EditorGUI.BeginDisabledGroup(string.IsNullOrEmpty(newEntryField.title));
                 if (GUILayout.Button("Create", GUILayout.Width(80)))
                 {
                     newEntryField.title = "Entry " + entryNumber + " " + newEntryField.title;
@@ -713,6 +714,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                         isAddingNewFieldToEntryNumber = -1;
                     }
                 }
+                EditorGUI.EndDisabledGroup();
                 if (GUILayout.Button("Cancel", GUILayout.Width(80)))
                 {
                     isAddingNewFieldToEntryNumber = -1;
