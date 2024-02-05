@@ -25,6 +25,7 @@ public class CameraFollow : MonoBehaviour
 
     private void Follow()
     {
+        mainCamera = Camera.main;
         float cameraHalfWidth = mainCamera.orthographicSize * mainCamera.aspect;
         minX = backgroundBounds.min.x + cameraHalfWidth;
         maxX = backgroundBounds.max.x - cameraHalfWidth;

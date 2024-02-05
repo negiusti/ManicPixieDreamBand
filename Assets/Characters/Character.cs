@@ -205,6 +205,16 @@ public class Character : MonoBehaviour
         return libraryAsset;
     }
 
+    public void MoveToRenderLayer(string layerName)
+    {
+        if (spriteRenderers == null)
+            spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
+        foreach (var targetRenderer in spriteRenderers)
+        {
+            targetRenderer.sortingLayerName = layerName;
+        }
+    }
+
     public void MoveToRenderLayer(bool inBackground, int idx)
     {
         string layerName = (inBackground ? "bg" : "fg") + idx;

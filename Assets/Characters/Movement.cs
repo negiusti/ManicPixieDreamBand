@@ -77,7 +77,7 @@ public abstract class Movement : MonoBehaviour
         }
     }
 
-    public void PlayInstrument(string instLabel, Vector3 pos)
+    public void PlayInstrument(string instLabel, Vector3 pos, string layer)
     {
         player.SetInstrumentSprite(instLabel);
         if (instLabel.Contains("Guitar") || instLabel.Contains("Bass"))
@@ -88,6 +88,7 @@ public abstract class Movement : MonoBehaviour
         //Quaternion currentRotation = transform.localRotation;
         //currentRotation.y = 0;
         transform.position = pos;
+        player.MoveToRenderLayer(layer);
         //transform.rotation = currentRotation;
     }
 
