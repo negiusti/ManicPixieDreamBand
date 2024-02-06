@@ -21,7 +21,7 @@ public class DrumstickScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         float newXPosition = transform.position.x;
         if (isShaking)

@@ -281,7 +281,7 @@ public class Phone : MonoBehaviour
             if (child.tag.Equals("Menu"))
                 continue;
             // Move each child object
-            child.Translate(Vector3.down * 20f, Space.Self);
+            child.Translate(Vector3.down * 30f, Space.Self);
         }
         //transform.Translate(Vector3.down * 20f, Space.World);
     }

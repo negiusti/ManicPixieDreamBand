@@ -19,6 +19,7 @@ public class StarSpawnerScript : MonoBehaviour
     public Vector3 blackSpawnPosition;
     public Vector3 purpleSpawnPosition;
     public Vector3 redSpawnPosition;
+    public float highwaySpeed = 5f;
     private int i;
     private float delay;
     private int note;
@@ -68,6 +69,11 @@ public class StarSpawnerScript : MonoBehaviour
         Addressables.Release(obj);
     }
 
+    public float HighwaySpeed()
+    {
+        return highwaySpeed;
+    }
+
     private void OnEnable()
     {
         i = 0;
@@ -102,8 +108,6 @@ public class StarSpawnerScript : MonoBehaviour
             }
         }
         StopAllCoroutines();
-        //if (spawnStarCoroutine != null)
-        //    StopCoroutine(spawnStarCoroutine);
     }
 
 
@@ -112,13 +116,13 @@ public class StarSpawnerScript : MonoBehaviour
     {
         spawnedStars = new Queue<GameObject>();
         pinkSpawnPosition = pinkStar.transform.position;
-        pinkSpawnPosition.y = 7f;
+        pinkSpawnPosition.y = starter.transform.position.y;
         blackSpawnPosition = blackStar.transform.position;
-        blackSpawnPosition.y = 7f;
+        blackSpawnPosition.y = starter.transform.position.y;
         purpleSpawnPosition = purpleStar.transform.position;
-        purpleSpawnPosition.y = 7f;
+        purpleSpawnPosition.y = starter.transform.position.y;
         redSpawnPosition = redStar.transform.position;
-        redSpawnPosition.y = 7f;
+        redSpawnPosition.y = starter.transform.position.y;
     }
 
     private IEnumerator DelayedActions()
@@ -174,7 +178,7 @@ public class StarSpawnerScript : MonoBehaviour
                     hitNotes++;
                 }
                 // This means the note was "missed"
-                else if (spawnedStars.Peek().transform.position.y < -7f)
+                else if (spawnedStars.Peek().transform.position.y < -20f)
                 {
                     GameObject starToDestroy = spawnedStars.Dequeue();
                     runwayDelay = starToDestroy.GetComponent<StarMoverScript>().GetRunwayDelay();
@@ -209,24 +213,28 @@ public class StarSpawnerScript : MonoBehaviour
         {
             GameObject p = Instantiate(pinkStar, pinkSpawnPosition, Quaternion.identity);
             p.transform.parent = gameObject.transform;
+            p.transform.localScale = pinkStar.transform.localScale;
             spawnedStars.Enqueue(p);
         }
         else if (note == 2)
         {
             GameObject b = Instantiate(blackStar, blackSpawnPosition, Quaternion.identity);
             b.transform.parent = gameObject.transform;
+            b.transform.localScale = pinkStar.transform.localScale;
             spawnedStars.Enqueue(b);
         }
         else if (note == 3)
         {
             GameObject p = Instantiate(purpleStar, purpleSpawnPosition, Quaternion.identity);
             p.transform.parent = gameObject.transform;
+            p.transform.localScale = pinkStar.transform.localScale;
             spawnedStars.Enqueue(p);
         }
         else if (note == 4)
         {
             GameObject x = Instantiate(redStar, redSpawnPosition, Quaternion.identity);
             x.transform.parent = gameObject.transform;
+            x.transform.localScale = pinkStar.transform.localScale;
             spawnedStars.Enqueue(x);
         }
     }   

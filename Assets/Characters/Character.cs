@@ -19,6 +19,11 @@ public class Character : MonoBehaviour
     private SpriteLibraryAsset libraryAsset;
     private string characterName;
 
+    public string GetCurrentLayer()
+    {
+        return spriteRenderers[0].sortingLayerName;
+    }
+
     public bool IsWearingFullFit()
     {
         return isWearingFullFit;

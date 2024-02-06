@@ -46,8 +46,10 @@ public class JamCoordinator : ScriptableObject
         mainCam = Camera.main;
         jamCamera = Instantiate(mainCam);
         jamCamera.GetComponent<AudioListener>().enabled = false;
+        Debug.Log("currLocation: " + currLocation);
         if (jamCameras.ContainsKey(currLocation))
         {
+            Debug.Log("contains currLocation: " + currLocation);
             jamCamera.orthographicSize = jamCameras[currLocation].orthographicSize;
             jamCamera.transform.position = jamCameras[currLocation].position;
         }

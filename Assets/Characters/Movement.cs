@@ -9,6 +9,7 @@ public abstract class Movement : MonoBehaviour
     protected float minX, maxX;
     protected GameObject background;
     protected Vector3 prevPos;
+    protected string prevLayer;
 
     public enum MovementState
     {
@@ -87,7 +88,9 @@ public abstract class Movement : MonoBehaviour
 
         //Quaternion currentRotation = transform.localRotation;
         //currentRotation.y = 0;
+        prevPos = transform.position;
         transform.position = pos;
+        prevLayer = player.GetCurrentLayer();
         player.MoveToRenderLayer(layer);
         //transform.rotation = currentRotation;
     }
@@ -97,6 +100,7 @@ public abstract class Movement : MonoBehaviour
         currState = MovementState.Idle;
         player.HideInstrumentSprite();
         transform.position = prevPos;
+        player.MoveToRenderLayer(prevLayer);
     }
 
     private bool HasStateChanged()
