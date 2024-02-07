@@ -6,6 +6,7 @@ using PixelCrushers.DialogueSystem;
 
 public class SceneChanger : MonoBehaviour
 {
+    public static SceneChanger Instance;
     MenuToggleScript menuToggle;
     Stack<string> sceneStack;
     //private GameObject player;
@@ -73,6 +74,10 @@ public class SceneChanger : MonoBehaviour
         menuToggle.DisableMenu();
         sceneStack = new Stack<string>();
         sceneStack.Push("Bedroom");
+        if (Instance == null)
+        {
+            Instance = this;
+        }
         //player = GameObject.Find("Player");
     }
 
@@ -84,6 +89,10 @@ public class SceneChanger : MonoBehaviour
 
     void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
         //DontDestroyOnLoad(gameObject);
     }
 }

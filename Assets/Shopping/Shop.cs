@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class Shop : MonoBehaviour
 {
     protected Shopkeeper shopkeeper;
-    protected Purchasable[] purchasables;
+    protected ShopDisplay[] displays;
     protected CustomDialogueScript customDialogue;
     protected Purchasable currentSelectedPurchasable;
 
@@ -12,30 +12,26 @@ public abstract class Shop : MonoBehaviour
     protected virtual void Start()
     {
         shopkeeper = FindFirstObjectByType<Shopkeeper>();
-        purchasables = FindObjectsOfType<Purchasable>();
-        foreach (Purchasable p in purchasables)
-        {
-            p.SetShop(this);
-        }
+        displays = FindObjectsOfType<ShopDisplay>();
+
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
         if (HasDayPassed())
         {
-            RandomizePurchaseables();
+            RandomizeDisplays();
         }
     }
 
     // TO-DO: after implementing calendar system
     protected virtual bool HasDayPassed()
     {
-        return true;
+        return false;
     }
 
-    protected virtual void RandomizePurchaseables()
+    protected virtual void RandomizeDisplays()
     {
-        foreach (Purchasable p in purchasables)
+        foreach (ShopDisplay d in displays)
         {
-            p.gameObject.SetActive(true);
-            p.Randomize();
+            d.Randomize();
         }
     }
 
@@ -46,6 +42,7 @@ public abstract class Shop : MonoBehaviour
     }
 
     public abstract void AskToBuy(Purchasable p);
+    public abstract string ShopName();
 
     public void MakeAPurchase()
     {
@@ -62,8 +59,8 @@ public abstract class Shop : MonoBehaviour
     {
         return currentSelectedPurchasable == null ? "" : currentSelectedPurchasable.itemName.ToString();
     }
-    public string CurrentPurchasableCategory()
-    {
-        return currentSelectedPurchasable == null ? "" : currentSelectedPurchasable.category.ToString();
-    }
+    //public string CurrentPurchasableCategory()
+    //{
+    //    return currentSelectedPurchasable == null ? "" : currentSelectedPurchasable.category.ToString();
+    //}
 }

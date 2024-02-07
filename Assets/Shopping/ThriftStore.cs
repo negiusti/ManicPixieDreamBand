@@ -22,6 +22,11 @@ public class ThriftStore : Shop
         customDialogue.StartShopkeeperConvo(purchaseConvo);
     }
 
+    public override string ShopName()
+    {
+        return "ThriftStore";
+    }
+
     void OnEnable()
     {
         // Make the functions available to Lua: (Replace these lines with your own.)

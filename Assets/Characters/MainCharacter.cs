@@ -5,6 +5,7 @@ using UnityEngine;
 public class MainCharacter : MonoBehaviour
 {
     private ProximitySelector ps;
+    public double moneyDEBUG = -1;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +40,10 @@ public class MainCharacter : MonoBehaviour
 
     void OnEnable()
     {
-        Debug.Log("registering func");
+        if (moneyDEBUG >= 0)
+        {
+            MainCharacterState.SetBankBalance(moneyDEBUG);
+        }
         // Make the functions available to Lua: (Replace these lines with your own.)
         Lua.RegisterFunction(nameof(HasChangedOutfitToday), this, SymbolExtensions.GetMethodInfo(() => HasChangedOutfitToday()));
         Lua.RegisterFunction(nameof(CurrentBankBalance), this, SymbolExtensions.GetMethodInfo(() => CurrentBankBalance()));
