@@ -48,12 +48,14 @@ public class GameManager : MonoBehaviour
     {
         MainCharacterState.Load();
         Calendar.Load();
+        InventoryManager.LoadInventories();
     }
 
     private void SaveData()
     {
         MainCharacterState.Save();
         Calendar.Save();
+        InventoryManager.SaveInventories();
     }
 
     // Update is called once per frame

@@ -112,6 +112,7 @@ public class Purchasable : MonoBehaviour
 
     public void SetBought(bool bought)
     {
+        sold = bought;
         this.gameObject.GetComponent<Collider2D>().enabled = !bought;
         this.gameObject.GetComponent<SpriteRenderer>().enabled = !bought;
     }
