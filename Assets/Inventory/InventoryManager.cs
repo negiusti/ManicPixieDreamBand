@@ -6,13 +6,13 @@ public class InventoryManager : ScriptableObject
 {
     private static Dictionary<string, Dictionary<string, HashSet<string>>> characterInventories;
     private static string invSaveKey = "CharacterInventories";
-    private static Dictionary<string, HashSet<string>> cateogoryToPurchased;
+    private static Dictionary<string, HashSet<string>> categoryToPurchased;
     private static string purchasedSaveKey = "PurchasedInventory";
 
     public static void SaveInventories()
     {
         ES3.Save(invSaveKey, characterInventories);
-        ES3.Save(purchasedSaveKey, cateogoryToPurchased);
+        ES3.Save(purchasedSaveKey, categoryToPurchased);
     }
 
     public static void AddToInventory(string character, string category, string item)
@@ -32,8 +32,8 @@ public class InventoryManager : ScriptableObject
     }
 
     public static HashSet<string> GetPurchasedItems(string category)
-    {
-        return cateogoryToPurchased.GetValueOrDefault(category, defaultValue: new HashSet<string>());
+    {       
+        return categoryToPurchased.GetValueOrDefault(category, defaultValue: new HashSet<string>());
     }
 
     public static void LoadInventories()
@@ -43,14 +43,16 @@ public class InventoryManager : ScriptableObject
             characterInventories = (Dictionary<string, Dictionary<string, HashSet<string>>>)ES3.Load(invSaveKey);
         } else
         {
+            characterInventories = new Dictionary<string, Dictionary<string, HashSet<string>>>();
             Debug.LogError("Could not find characterInventories in easy save system");
         }
         if (ES3.KeyExists(purchasedSaveKey))
         {
-            cateogoryToPurchased = ES3.Load<Dictionary<string, HashSet<string>>>(purchasedSaveKey);
+            categoryToPurchased = ES3.Load<Dictionary<string, HashSet<string>>>(purchasedSaveKey);
         }
         else
         {
+            categoryToPurchased = new Dictionary<string, HashSet<string>>();
             Debug.LogError("Could not find cateogoryToPurchased in easy save system");
         }
     }

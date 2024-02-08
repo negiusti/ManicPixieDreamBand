@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -29,7 +30,14 @@ public class Purchasable : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        spriteResolver = this.GetComponent<SpriteResolver>();
+        category = spriteResolver.GetCategory();
+        itemName = spriteResolver.GetLabel();
+        SpriteLibrary sl = this.GetComponent<SpriteLibrary>();
+        spriteLib = sl.spriteLibraryAsset;
+        purchaseableName = SceneChanger.Instance.GetCurrentScene() + "_" + this.gameObject.name;
+        shop = FindObjectOfType<Shop>();
+        Load();
     }
 
     // Update is called once per frame
@@ -40,14 +48,6 @@ public class Purchasable : MonoBehaviour
 
     private void OnEnable()
     {
-        spriteResolver = this.GetComponent<SpriteResolver>();
-        category = spriteResolver.GetCategory();
-        itemName = spriteResolver.GetLabel();
-        SpriteLibrary sl = this.GetComponent<SpriteLibrary>();
-        spriteLib = sl.spriteLibraryAsset;
-        purchaseableName = SceneChanger.Instance.GetCurrentScene() + "_" + this.gameObject.name;
-        shop = FindObjectOfType<Shop>();
-        Load();
     }
 
     private void Save()
@@ -74,15 +74,25 @@ public class Purchasable : MonoBehaviour
         Save();
     }
 
+    private string[] GetAvailableStock()
+    {
+        //if (category == null)
+        //{
+        //    Debug.LogError("category is null");
+        //    Start();
+        //    Debug.Log("category is " + category);
+        //}
+        HashSet<string> purchasedItems = InventoryManager.GetPurchasedItems(category);
+        return spriteLib.GetCategoryLabelNames(category).Where(i => !purchasedItems.Contains(i)).ToArray();
+    }
+
     public void Randomize()
     {
-        string[] labels = spriteLib.GetCategoryLabelNames(category).ToArray();
+        string[] labels = GetAvailableStock();
         int randomIdx = Random.Range(0, labels.Length);
         itemName = labels[randomIdx];
-        sold = false;
         SetBought(false);
         spriteResolver.SetCategoryAndLabel(category, itemName);
-        // TO-DO: exclude items that have already been purchased
         // TO-DO: look up price for new item
     }
 
@@ -106,7 +116,6 @@ public class Purchasable : MonoBehaviour
     {
         MainCharacterState.ModifyBankBalance(price * -1.0);
         // TODO: modify inventory
-        sold = true;
         SetBought(true);
     }
 
