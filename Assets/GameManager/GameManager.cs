@@ -47,11 +47,13 @@ public class GameManager : MonoBehaviour
     private void LoadData()
     {
         MainCharacterState.Load();
+        Calendar.Load();
     }
 
     private void SaveData()
     {
         MainCharacterState.Save();
+        Calendar.Save();
     }
 
     // Update is called once per frame

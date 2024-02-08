@@ -7,6 +7,7 @@ public abstract class Shop : MonoBehaviour
     protected ShopDisplay[] displays;
     protected CustomDialogueScript customDialogue;
     protected Purchasable currentSelectedPurchasable;
+    protected int lastInventoryRefreshDay;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -15,6 +16,7 @@ public abstract class Shop : MonoBehaviour
         displays = FindObjectsOfType<ShopDisplay>();
 
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
+        lastInventoryRefreshDay = ES3.Load<int>("LastRefresh" + ShopName(), 0);
         if (HasDayPassed())
         {
             RandomizeDisplays();
@@ -24,11 +26,13 @@ public abstract class Shop : MonoBehaviour
     // TO-DO: after implementing calendar system
     protected virtual bool HasDayPassed()
     {
-        return false;
+        Debug.Log("lastInventoryRefreshDay" + lastInventoryRefreshDay + "date=" + Calendar.Date());
+        return lastInventoryRefreshDay < Calendar.Date();
     }
 
     protected virtual void RandomizeDisplays()
     {
+        Debug.Log("randomize displays");
         foreach (ShopDisplay d in displays)
         {
             d.Randomize();
@@ -39,6 +43,11 @@ public abstract class Shop : MonoBehaviour
     protected virtual void Update()
     {
         
+    }
+
+    private void OnDisable()
+    {
+        ES3.Save<int>("LastRefresh" + ShopName(), lastInventoryRefreshDay);
     }
 
     public abstract void AskToBuy(Purchasable p);

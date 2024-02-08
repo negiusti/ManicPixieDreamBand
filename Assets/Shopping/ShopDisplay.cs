@@ -19,14 +19,19 @@ public class ShopDisplay : MonoBehaviour
     public void Randomize()
     {
         int randomIdx = Random.Range(0, childPurchasables.Length);
+        Debug.Log("randomize displays " + randomIdx);
+
         for (int i = 0; i < childPurchasables.Length; i ++)
         {
             bool selected = (i == randomIdx);
-            childPurchasables[i].gameObject.SetActive(selected);
-            if (childPurchasables[i].gameObject.activeSelf)
+            if (selected)
             {
                 childPurchasables[i].Randomize();
+            } else
+            {
+                childPurchasables[i].SetBought(true);
             }
+
         }
     }
 }

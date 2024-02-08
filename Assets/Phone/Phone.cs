@@ -15,6 +15,7 @@ public class Phone : MonoBehaviour
     private PhoneMessages messagesApp;
     private BankApp bankApp;
     private MapsApp mapsApp;
+    private CalendarApp calendarApp;
     private SpriteResolver backgroundResolver;
     private bool isLocked;
     private Animator animator;
@@ -30,7 +31,8 @@ public class Phone : MonoBehaviour
         Settings,
         Photos,
         Bank,
-        Convo
+        Convo,
+        Calendar
     };
 
     // State stack
@@ -47,6 +49,7 @@ public class Phone : MonoBehaviour
         bankApp = this.GetComponentInChildren<BankApp>();
         mapsApp = this.GetComponentInChildren<MapsApp>();
         messagesApp = this.GetComponentInChildren<PhoneMessages>();
+        calendarApp = this.GetComponentInChildren<CalendarApp>();
         animator = this.GetComponent<Animator>();
         isLocked = true;
         Lock();
@@ -172,6 +175,17 @@ public class Phone : MonoBehaviour
         HideIcons();
     }
 
+    public void OpenCalendar()
+    {
+        //backgroundResolver.SetCategoryAndLabel("Background", "Calendar");
+        calendarApp.gameObject.SetActive(true);
+        //calendarApp.Open();
+        SetAppHeader("Calendar");
+        if (phoneStateStack.Peek() != PhoneState.Calendar)
+            phoneStateStack.Push(PhoneState.Calendar);
+        HideIcons();
+    }
+
     public void OpenSettings()
     {
         SetAppHeader("Settings");
@@ -226,6 +240,10 @@ public class Phone : MonoBehaviour
                 GoHome();
                 break;
 
+            case PhoneState.Calendar:
+                OpenCalendar();
+                break;
+
             default:
                 Debug.Log("State not found: " + state.ToString());
                 break;
@@ -256,6 +274,7 @@ public class Phone : MonoBehaviour
         appHeader.gameObject.SetActive(false);
         messagesApp.gameObject.SetActive(false);
         mapsApp.gameObject.SetActive(false);
+        calendarApp.gameObject.SetActive(false);
         backButton.SetActive(false);
         ShowIcons();
     }

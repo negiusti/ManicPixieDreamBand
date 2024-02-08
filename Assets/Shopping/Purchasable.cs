@@ -66,10 +66,7 @@ public class Purchasable : MonoBehaviour
         price = p.p;
         sold = p.s;
         spriteResolver.SetCategoryAndLabel(category, itemName);
-        if (sold)
-        {
-            this.gameObject.SetActive(false);
-        }
+        SetBought(sold);
     }
 
     private void OnDisable()
@@ -82,6 +79,8 @@ public class Purchasable : MonoBehaviour
         string[] labels = spriteLib.GetCategoryLabelNames(category).ToArray();
         int randomIdx = Random.Range(0, labels.Length);
         itemName = labels[randomIdx];
+        sold = false;
+        SetBought(false);
         spriteResolver.SetCategoryAndLabel(category, itemName);
         // TO-DO: exclude items that have already been purchased
         // TO-DO: look up price for new item
@@ -108,6 +107,12 @@ public class Purchasable : MonoBehaviour
         MainCharacterState.ModifyBankBalance(price * -1.0);
         // TODO: modify inventory
         sold = true;
-        this.gameObject.SetActive(false);
+        SetBought(true);
+    }
+
+    public void SetBought(bool bought)
+    {
+        this.gameObject.GetComponent<Collider2D>().enabled = !bought;
+        this.gameObject.GetComponent<SpriteRenderer>().enabled = !bought;
     }
 }
