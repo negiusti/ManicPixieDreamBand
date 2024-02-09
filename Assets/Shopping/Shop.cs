@@ -33,6 +33,7 @@ public abstract class Shop : MonoBehaviour
     protected virtual void RandomizeDisplays()
     {
         Debug.Log("randomize displays");
+        lastInventoryRefreshDay = Calendar.Date();
         foreach (ShopDisplay d in displays)
         {
             d.Randomize();
