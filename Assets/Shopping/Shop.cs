@@ -34,6 +34,7 @@ public abstract class Shop : MonoBehaviour
     {
         Debug.Log("randomize displays");
         lastInventoryRefreshDay = Calendar.Date();
+        ES3.Save<int>("LastRefresh" + ShopName(), lastInventoryRefreshDay);
         foreach (ShopDisplay d in displays)
         {
             d.Randomize();
