@@ -76,12 +76,6 @@ public class Purchasable : MonoBehaviour
 
     private string[] GetAvailableStock()
     {
-        //if (category == null)
-        //{
-        //    Debug.LogError("category is null");
-        //    Start();
-        //    Debug.Log("category is " + category);
-        //}
         HashSet<string> purchasedItems = InventoryManager.GetPurchasedItems(category);
         return spriteLib.GetCategoryLabelNames(category).Where(i => !purchasedItems.Contains(i)).ToArray();
     }
@@ -115,7 +109,8 @@ public class Purchasable : MonoBehaviour
     public void Buy()
     {
         MainCharacterState.ModifyBankBalance(price * -1.0);
-        // TODO: modify inventory
+        InventoryManager.AddToMCInventory(category, itemName);
+        InventoryManager.RecordPurchase(category, itemName);
         SetBought(true);
     }
 

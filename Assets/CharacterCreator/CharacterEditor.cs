@@ -5,6 +5,7 @@ using UnityEngine.U2D.Animation;
 
 public class CharacterEditor : MonoBehaviour
 {
+    private bool unlockAllOutfits;
     private static string top = "Top";
     private static string lSleeve = "L_Sleeve";
     private static string rSleeve = "R_Sleeve";
@@ -41,6 +42,12 @@ public class CharacterEditor : MonoBehaviour
     public Icons faceIcons;
     private Phone phone;
     private GameObject characterGameObject;
+
+    public void UnlockAllOutfits(bool value)
+    {
+        unlockAllOutfits = value;
+        Start();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -79,7 +86,18 @@ public class CharacterEditor : MonoBehaviour
 
         foreach (string category in spriteLib.GetCategoryNames())
         {
-            labels = spriteLib.GetCategoryLabelNames(category).Where(l => !l.StartsWith("X_") || l.Equals("X_" + gameObject.name)).ToArray();
+            // TO DO: // get locked vs unlocked labels
+            if (unlockAllOutfits)
+            {
+                labels = spriteLib.GetCategoryLabelNames(category).ToArray();
+            } else
+            {
+                labels = InventoryManager.GetMCInventory(category).ToArray();
+                // if the inventory is empty, just unlock everything
+                if (labels.Length == 0)
+                    labels = spriteLib.GetCategoryLabelNames(category).ToArray();
+            }
+            
             categoryToLabels[category] = labels;
             categoryToLabelIdx[category] = System.Array.IndexOf(labels, character.CategoryToLabelMap().GetValueOrDefault(category));
             categoryToLabelIdx[category] = categoryToLabelIdx[category] < 0 ? 0 : categoryToLabelIdx[category];
@@ -403,6 +421,7 @@ public class CharacterEditor : MonoBehaviour
 
     private string[] GetUnlockedLabels(string category)
     {
-        return categoryToLabels.GetValueOrDefault(category).Where(l => !l.StartsWith("X_") || l.Equals("X_" + gameObject.name)).ToArray();
+        return categoryToLabels[category];
+        //return categoryToLabels.GetValueOrDefault(category).Where(l => !l.StartsWith("X_") || l.Equals("X_" + gameObject.name)).ToArray();
     }
 }
