@@ -141,7 +141,7 @@ public class InventoryManager : ScriptableObject
     {
         if (category.Contains("Shoe"))
             return "Shoe_Icons";
-        else if (category.Contains("FB_"))
+        else if (category.Contains("Sock"))
             return "Sock_Icons";
         else if (category.Contains("FB_"))
             return "FB_Icons";

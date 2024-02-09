@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Calendar", menuName = "Custom/Calendar")]
@@ -61,5 +59,7 @@ public class Calendar : ScriptableObject
         if (!ES3.KeyExists("Calendar"))
             return;
         CalendarData c = ES3.Load<CalendarData>("Calendar");
+        day = c.d;
+        isNight = c.n;
     }
 }

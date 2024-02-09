@@ -46,7 +46,7 @@ public class CharacterEditor : MonoBehaviour
     public void UnlockAllOutfits(bool value)
     {
         unlockAllOutfits = value;
-        Start();
+        GetAvailableOptions();
     }
 
     // Start is called before the first frame update
@@ -70,7 +70,7 @@ public class CharacterEditor : MonoBehaviour
             if (renderer.CompareTag("BodyPart"))
                 skinRenderers.Add(renderer);
         }
-        string[] labels;
+        
         SpriteLibrary fuck = characterGameObject.GetComponent<SpriteLibrary>();
         spriteLib = fuck.spriteLibraryAsset;
 
@@ -84,20 +84,26 @@ public class CharacterEditor : MonoBehaviour
         categoryToColorPalette.Add("Mouth", mouthPalette);
         categoryToColorPalette.Add("Eyeshadow", shadowPalette);
 
+        GetAvailableOptions();
+    }
+
+    private void GetAvailableOptions()
+    {
+        string[] labels;
         foreach (string category in spriteLib.GetCategoryNames())
         {
-            // TO DO: // get locked vs unlocked labels
             if (unlockAllOutfits)
             {
-                labels = spriteLib.GetCategoryLabelNames(category).ToArray();
-            } else
+                labels = spriteLib.GetCategoryLabelNames(category).Where(l => !l.StartsWith("X_") || l.Equals("X_" + gameObject.name)).ToArray();
+            }
+            else
             {
                 labels = InventoryManager.GetMCInventory(category).ToArray();
                 // if the inventory is empty, just unlock everything
                 if (labels.Length == 0)
-                    labels = spriteLib.GetCategoryLabelNames(category).ToArray();
+                    labels = spriteLib.GetCategoryLabelNames(category).Where(l => !l.StartsWith("X_") || l.Equals("X_" + gameObject.name)).ToArray();
             }
-            
+
             categoryToLabels[category] = labels;
             categoryToLabelIdx[category] = System.Array.IndexOf(labels, character.CategoryToLabelMap().GetValueOrDefault(category));
             categoryToLabelIdx[category] = categoryToLabelIdx[category] < 0 ? 0 : categoryToLabelIdx[category];
@@ -111,7 +117,6 @@ public class CharacterEditor : MonoBehaviour
             SelectFB();
         else
             SelectTopAndBottom();
-
     }
 
     private void SetOutfitChangedFlag(bool changed)

@@ -47,10 +47,11 @@ public class Icons : MonoBehaviour
 
     public void UpdateIcons(string leftLabel, string middleLabel, string rightLabel)
     {
+        string category = leftSpriteResolver.GetCategory() == null ? gameObject.name : leftSpriteResolver.GetCategory();
         midAnim.enabled = false;
-        leftSpriteResolver.SetCategoryAndLabel(leftSpriteResolver.GetCategory(), leftLabel);
-        middleSpriteResolver.SetCategoryAndLabel(middleSpriteResolver.GetCategory(), middleLabel);
-        rightSpriteResolver.SetCategoryAndLabel(rightSpriteResolver.GetCategory(), rightLabel);
+        leftSpriteResolver.SetCategoryAndLabel(category, leftLabel);
+        middleSpriteResolver.SetCategoryAndLabel(category, middleLabel);
+        rightSpriteResolver.SetCategoryAndLabel(category, rightLabel);
         midAnim.enabled = true;
         midAnim.Play("IconPop", -1, 0f);
         //midAnim.CrossFade("IconPop", .5f);
