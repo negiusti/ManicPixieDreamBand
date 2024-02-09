@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class StarMoverScript : MonoBehaviour
 {
-    private float beatTempo = 4f;
+    private float beatTempo;// = 6f;
     public bool hasStarted = false;
     private float startTime;
     private float runwayDelay;
@@ -13,6 +13,7 @@ public class StarMoverScript : MonoBehaviour
     {
         hasStarted = false;
         passed = false;
+        beatTempo = this.gameObject.transform.parent.GetComponent<StarSpawnerScript>().HighwaySpeed();
     }
 
     // Update is called once per frame

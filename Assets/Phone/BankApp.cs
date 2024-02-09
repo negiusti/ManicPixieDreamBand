@@ -24,6 +24,17 @@ public class BankApp : MonoBehaviour
         
     }
 
+    public void SetBankBalance(double value)
+    {
+        MainCharacterState.SetBankBalance(value);
+        UpdateBankBalance();
+    }
+
+    public void DebugGiveMeMoney()
+    {
+        SetBankBalance(100 + MainCharacterState.GetBankBalance());
+    }
+
     public void UpdateBankBalance()
     {
         double currBalance = MainCharacterState.GetBankBalance();

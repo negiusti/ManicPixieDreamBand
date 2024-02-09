@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -6,13 +7,32 @@ public class JamCoordinator : ScriptableObject
 {
     private static PlayInstrument[] playableInstruments;
     private static NPCMovement[] musicians;
-    private static Camera jamCamera;
     private static Camera mainCam;
+    private static Camera jamCamera;
     private static bool isJamInSession;
+    private static Dictionary<string, JamCamera> jamCameras = new Dictionary<string, JamCamera>{
+        {"BandPracticeRoom", new JamCamera(8f, new Vector3(1.63f, 0f, -10f))},
+        {"SmallBar", new JamCamera(11.9f, new Vector3(0f, 0f, -10f))}
+    };
+
+    private class JamCamera
+    {
+        public float orthographicSize;
+        public Vector3 position;
+        public JamCamera (float o, Vector3 p)
+        {
+            orthographicSize = o;
+            position = p;
+        }
+    }
 
     // Start is called before the first frame update
     public static void StartJam()
     {
+        GameManager gm = GameManager.Instance;
+        SceneChanger sc = gm.gameObject.GetComponent<SceneChanger>();
+        string currLocation = sc.GetCurrentScene();
+
         if (isJamInSession)
             return;
 
@@ -26,8 +46,13 @@ public class JamCoordinator : ScriptableObject
         mainCam = Camera.main;
         jamCamera = Instantiate(mainCam);
         jamCamera.GetComponent<AudioListener>().enabled = false;
-        jamCamera.orthographicSize = 8f;
-        jamCamera.transform.position = new Vector3(1.63f, 0f, -10f);
+        Debug.Log("currLocation: " + currLocation);
+        if (jamCameras.ContainsKey(currLocation))
+        {
+            Debug.Log("contains currLocation: " + currLocation);
+            jamCamera.orthographicSize = jamCameras[currLocation].orthographicSize;
+            jamCamera.transform.position = jamCameras[currLocation].position;
+        }
         mainCam.enabled = false;
         
         int i = 0;

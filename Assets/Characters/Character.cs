@@ -19,6 +19,11 @@ public class Character : MonoBehaviour
     private SpriteLibraryAsset libraryAsset;
     private string characterName;
 
+    public string GetCurrentLayer()
+    {
+        return spriteRenderers[0].sortingLayerName;
+    }
+
     public bool IsWearingFullFit()
     {
         return isWearingFullFit;
@@ -203,6 +208,16 @@ public class Character : MonoBehaviour
     public SpriteLibraryAsset LibraryAsset()
     {
         return libraryAsset;
+    }
+
+    public void MoveToRenderLayer(string layerName)
+    {
+        if (spriteRenderers == null)
+            spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
+        foreach (var targetRenderer in spriteRenderers)
+        {
+            targetRenderer.sortingLayerName = layerName;
+        }
     }
 
     public void MoveToRenderLayer(bool inBackground, int idx)

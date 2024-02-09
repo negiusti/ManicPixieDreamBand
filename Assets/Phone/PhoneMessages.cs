@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
 public class PhoneMessages : MonoBehaviour
@@ -8,7 +9,7 @@ public class PhoneMessages : MonoBehaviour
     public Contact contactTemplate;
     private HashSet<string> contactsList;
     private Dictionary<string, Contact> contactsMap;
-    public CustomDialogueScript customDialogue;
+    private CustomDialogueScript customDialogue;
     private List<GameObject> instances = new List<GameObject>();
     private Dictionary<string, string> unfinishedConversations; // contact name to name of conversation
 
@@ -21,6 +22,7 @@ public class PhoneMessages : MonoBehaviour
         // load contacts
         contactsList = new HashSet<string> { "Ricki", "Max", "Band" };//SaveSystem.LoadContactsList();
         unfinishedConversations = new Dictionary<string, string>();
+        customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
         foreach (string c in contactsList)
         {
             Debug.Log("Create contact for: " + c);

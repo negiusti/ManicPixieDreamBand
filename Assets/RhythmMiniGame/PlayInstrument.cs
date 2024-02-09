@@ -13,6 +13,7 @@ public class PlayInstrument : MonoBehaviour
     private string instLabel;
     private float startTime;
     private Vector3 spawnPos;
+    private string layer;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,7 @@ public class PlayInstrument : MonoBehaviour
         spriteRenderer = this.GetComponent<SpriteRenderer>();
         spriteResolver = this.GetComponent<SpriteResolver>();
         spawnPos = this.transform.GetChild(0).transform.position;
+        layer = spriteRenderer.sortingLayerName;
     }
     
     // Update is called once per frame
@@ -53,7 +55,7 @@ public class PlayInstrument : MonoBehaviour
         instLabel = spriteResolver.GetLabel();
         startTime = Time.time;
         musicianMovement = movement;
-        musicianMovement.PlayInstrument(instLabel, spawnPos);
+        musicianMovement.PlayInstrument(instLabel, spawnPos, layer);
     }
 
     // Used by NPCs as well as MainCharacter

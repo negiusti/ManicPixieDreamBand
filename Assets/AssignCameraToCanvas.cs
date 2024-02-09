@@ -14,12 +14,16 @@ public class AssignCameraToCanvas : MonoBehaviour
         {
             c = GetComponentInChildren<Canvas>();
         }
+        c.worldCamera = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Camera.main != c.worldCamera)
+        {
+            c.worldCamera = Camera.main;
+        }
     }
 
     private void ChangedActiveScene(Scene current, Scene next)

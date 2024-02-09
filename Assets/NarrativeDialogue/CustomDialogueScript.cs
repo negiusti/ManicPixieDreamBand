@@ -60,7 +60,6 @@ public class CustomDialogueScript : MonoBehaviour
     {
         if (currentConvoIdx > plotData.Length -1)
         {
-            Debug.Log("Out of plot conversations");
             return;
         }
         if (!phone.IsLocked())
@@ -153,9 +152,6 @@ public class CustomDialogueScript : MonoBehaviour
     }
     private void PrepTxtConvo()
     {
-        //DialogueManager.displaySettings.conversationOverrideSettings.skipPCSubtitleAfterResponseMenu = true;
-        //DialogueManager.displaySettings.conversationOverrideSettings.showPCSubtitlesDuringLine = false;
-        //DialogueManager.displaySettings.conversationOverrideSettings.showNPCSubtitlesDuringLine = false;
         DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = true;
         DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = false;
         DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = false;
@@ -181,9 +177,6 @@ public class CustomDialogueScript : MonoBehaviour
 
     private void PrepSpokenConvo()
     {
-        //DialogueManager.displaySettings.conversationOverrideSettings.skipPCSubtitleAfterResponseMenu = false;
-        //DialogueManager.displaySettings.conversationOverrideSettings.showPCSubtitlesDuringLine = true;
-        //DialogueManager.displaySettings.conversationOverrideSettings.showNPCSubtitlesDuringLine = true;
         DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = false;
         DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = true;
         DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = true;

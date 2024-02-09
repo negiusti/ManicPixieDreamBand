@@ -1,3 +1,4 @@
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             LoadData();
+            SceneManager.activeSceneChanged += ChangedActiveScene;
+
             //try
             //{
             //    Steamworks.SteamClient.Init(2772090);
@@ -36,14 +39,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void ChangedActiveScene(Scene current, Scene next)
+    {
+        SaveData();
+    }
+
     private void LoadData()
     {
         MainCharacterState.Load();
+        Calendar.Load();
+        InventoryManager.LoadInventories();
     }
 
     private void SaveData()
     {
         MainCharacterState.Save();
+        Calendar.Save();
+        InventoryManager.SaveInventories();
     }
 
     // Update is called once per frame

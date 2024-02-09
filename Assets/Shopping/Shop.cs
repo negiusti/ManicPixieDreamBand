@@ -4,38 +4,38 @@ using UnityEngine;
 public abstract class Shop : MonoBehaviour
 {
     protected Shopkeeper shopkeeper;
-    protected Purchasable[] purchasables;
+    protected ShopDisplay[] displays;
     protected CustomDialogueScript customDialogue;
     protected Purchasable currentSelectedPurchasable;
+    protected int lastInventoryRefreshDay;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         shopkeeper = FindFirstObjectByType<Shopkeeper>();
-        purchasables = FindObjectsOfType<Purchasable>();
-        foreach (Purchasable p in purchasables)
-        {
-            p.SetShop(this);
-        }
+        displays = FindObjectsOfType<ShopDisplay>();
+
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
+        lastInventoryRefreshDay = ES3.Load<int>("LastRefresh" + ShopName(), 0);
         if (HasDayPassed())
         {
-            RandomizePurchaseables();
+            RandomizeDisplays();
         }
     }
 
     // TO-DO: after implementing calendar system
     protected virtual bool HasDayPassed()
     {
-        return true;
+        Debug.Log("lastInventoryRefreshDay" + lastInventoryRefreshDay + "date=" + Calendar.Date());
+        return lastInventoryRefreshDay < Calendar.Date();
     }
 
-    protected virtual void RandomizePurchaseables()
+    protected virtual void RandomizeDisplays()
     {
-        foreach (Purchasable p in purchasables)
+        Debug.Log("randomize displays");
+        foreach (ShopDisplay d in displays)
         {
-            p.gameObject.SetActive(true);
-            p.Randomize();
+            d.Randomize();
         }
     }
 
@@ -45,7 +45,13 @@ public abstract class Shop : MonoBehaviour
         
     }
 
+    private void OnDisable()
+    {
+        ES3.Save<int>("LastRefresh" + ShopName(), lastInventoryRefreshDay);
+    }
+
     public abstract void AskToBuy(Purchasable p);
+    public abstract string ShopName();
 
     public void MakeAPurchase()
     {
@@ -62,8 +68,8 @@ public abstract class Shop : MonoBehaviour
     {
         return currentSelectedPurchasable == null ? "" : currentSelectedPurchasable.itemName.ToString();
     }
-    public string CurrentPurchasableCategory()
-    {
-        return currentSelectedPurchasable == null ? "" : currentSelectedPurchasable.category.ToString();
-    }
+    //public string CurrentPurchasableCategory()
+    //{
+    //    return currentSelectedPurchasable == null ? "" : currentSelectedPurchasable.category.ToString();
+    //}
 }

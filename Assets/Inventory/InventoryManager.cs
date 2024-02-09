@@ -5,11 +5,41 @@ using System.Collections.Generic;
 public class InventoryManager : ScriptableObject
 {
     private static Dictionary<string, Dictionary<string, HashSet<string>>> characterInventories;
-    private static string SaveKey = "CharacterInventories";
+    private static string invSaveKey = "CharacterInventories";
+    private static Dictionary<string, HashSet<string>> categoryToPurchased;
+    private static string purchasedSaveKey = "PurchasedInventory";
+    private static string MAIN_CHARACTER = "MainCharacter";
+    //private static Dictionary<string, string> SRCategoryToInventoryCategory = new Dictionary<string, string>{
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //    { "",""},
+    //};
 
     public static void SaveInventories()
     {
-        ES3.Save(SaveKey, characterInventories);
+        ES3.Save(invSaveKey, characterInventories);
+        ES3.Save(purchasedSaveKey, categoryToPurchased);
     }
 
     public static void AddToInventory(string character, string category, string item)
@@ -17,9 +47,19 @@ public class InventoryManager : ScriptableObject
         GetCharacterInventory(character, category).Add(item);
     }
 
+    public static void AddToMCInventory(string category, string item)
+    {
+        AddToInventory(MAIN_CHARACTER, category, item);
+    }
+
     public static void RemoveFromInventory(string character, string category, string item)
     {
         GetCharacterInventory(character, category).Remove(item);
+    }
+
+    public static void RemoveFromMCInventory(string category, string item)
+    {
+        RemoveFromInventory(MAIN_CHARACTER, category, item);
     }
 
     public static void TransferBetweenInventories(string rcvCharacter, string sndCharacter, string category, string item)
@@ -28,14 +68,46 @@ public class InventoryManager : ScriptableObject
         AddToInventory(rcvCharacter, category, item);
     }
 
+    public static void MCGivesTo(string npc, string category, string item)
+    {
+        TransferBetweenInventories(npc, MAIN_CHARACTER, category, item);
+    }
+
+    public static void MCReceivesFrom(string npc, string category, string item)
+    {
+        TransferBetweenInventories(MAIN_CHARACTER, npc, category, item);
+    }
+
+    public static HashSet<string> GetPurchasedItems(string category)
+    {       
+        return categoryToPurchased.GetValueOrDefault(category, defaultValue: new HashSet<string>());
+    }
+
+    public static void RecordPurchase(string category, string item)
+    {
+        if (!categoryToPurchased.ContainsKey(category))
+            categoryToPurchased[category] = new HashSet<string>();
+        categoryToPurchased[category].Add(item);
+    }
+
     public static void LoadInventories()
     {
-        if (ES3.KeyExists(SaveKey))
+        if (ES3.KeyExists(invSaveKey))
         {
-            characterInventories = (Dictionary<string, Dictionary<string, HashSet<string>>>)ES3.Load(SaveKey);
+            characterInventories = (Dictionary<string, Dictionary<string, HashSet<string>>>)ES3.Load(invSaveKey);
         } else
         {
+            characterInventories = new Dictionary<string, Dictionary<string, HashSet<string>>>();
             Debug.LogError("Could not find characterInventories in easy save system");
+        }
+        if (ES3.KeyExists(purchasedSaveKey))
+        {
+            categoryToPurchased = ES3.Load<Dictionary<string, HashSet<string>>>(purchasedSaveKey);
+        }
+        else
+        {
+            categoryToPurchased = new Dictionary<string, HashSet<string>>();
+            Debug.LogError("Could not find cateogoryToPurchased in easy save system");
         }
     }
 
@@ -44,14 +116,40 @@ public class InventoryManager : ScriptableObject
         if (characterInventories == null)
             LoadInventories();
         if (!characterInventories.ContainsKey(character))
-            return new HashSet<string>();
+        {
+            characterInventories.Add(character, new Dictionary<string, HashSet<string>>());
+        }
+        category = GetInventoryCategory(category);
         if (!characterInventories[character].ContainsKey(category))
-            return new HashSet<string>();
+        {
+            characterInventories[character].Add(category, new HashSet<string>());
+        }
         return characterInventories[character][category];
     }
 
-    private void OnDestroy()
+    public static HashSet<string> GetMCInventory(string category)
     {
-        SaveInventories();
+        return GetCharacterInventory(MAIN_CHARACTER, category);
+    }
+
+    //private void OnDestroy()
+    //{
+    //    SaveInventories();
+    //}
+
+    private static string GetInventoryCategory(string category)
+    {
+        if (category.Contains("Shoe"))
+            return "Shoe_Icons";
+        else if (category.Contains("FB_"))
+            return "Sock_Icons";
+        else if (category.Contains("FB_"))
+            return "FB_Icons";
+        else if (category.Contains("Top"))
+            return "Top_Icons";
+        else if (category.Contains("Pant") || category.Contains("Crotch"))
+            return "Bottom_Icons";
+        else
+            return category;
     }
 }
