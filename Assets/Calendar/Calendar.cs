@@ -29,7 +29,7 @@ public class Calendar : ScriptableObject
 
     public static void ToggleDayNight()
     {
-        isNight = !isNight;
+        SetIsNight(!isNight);
     }
 
     public static void Sleep()
