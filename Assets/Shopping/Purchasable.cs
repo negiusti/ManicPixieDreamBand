@@ -83,6 +83,12 @@ public class Purchasable : MonoBehaviour
     public void Randomize()
     {
         string[] labels = GetAvailableStock();
+        // Already bought everything in this category ¯\_(ツ)_/¯
+        if (labels.Length == 0)
+        {
+            SetBought(true);
+            return;
+        }
         int randomIdx = Random.Range(0, labels.Length);
         itemName = labels[randomIdx];
         SetBought(false);
