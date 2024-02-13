@@ -177,10 +177,14 @@ public class Phone : MonoBehaviour
 
     public void OpenCalendar()
     {
-        //backgroundResolver.SetCategoryAndLabel("Background", "Calendar");
+        if (Calendar.IsNight())
+            backgroundResolver.SetCategoryAndLabel("Background", "Calendar_Night");
+        else
+            backgroundResolver.SetCategoryAndLabel("Background", "Calendar_Day");
+
         calendarApp.gameObject.SetActive(true);
         //calendarApp.Open();
-        SetAppHeader("Calendar");
+        SetAppHeader("CAL PAL");
         if (phoneStateStack.Peek() != PhoneState.Calendar)
             phoneStateStack.Push(PhoneState.Calendar);
         HideIcons();
