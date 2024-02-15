@@ -28,4 +28,9 @@ public class PhoneCalendarEvent : MonoBehaviour
             Debug.LogError("mtp is null");
         tmp.text = e.Name();
     }
+
+    public void Complete()
+    {
+        sr.color = Color.gray;
+    }
 }

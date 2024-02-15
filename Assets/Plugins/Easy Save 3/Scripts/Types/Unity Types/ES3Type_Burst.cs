@@ -9,7 +9,7 @@ namespace ES3Types
 	{
 		public static ES3Type Instance = null;
 
-		public ES3Type_Burst() : base(typeof(UnityEngine.ParticleSystem.Burst)){ Instance = this; priority = 1;}
+		public ES3Type_Burst() : base(typeof(UnityEngine.ParticleSystem.Burst)){ Instance = this; }
 
 
 		public override void Write(object obj, ES3Writer writer)

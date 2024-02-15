@@ -13,6 +13,9 @@ public class ES3File
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public static Dictionary<string, ES3File> cachedFiles = new Dictionary<string, ES3File>();
 
+
+
+
     public ES3Settings settings;
     private Dictionary<string, ES3Data> cache = new Dictionary<string, ES3Data>();
     private bool syncWithFile = false;
@@ -165,7 +168,9 @@ public class ES3File
         else
             type = value.GetType();
 
-        cache[key] = new ES3Data(ES3TypeMgr.GetOrCreateES3Type(type), ES3.Serialize(value, unencryptedSettings));
+        ES3Type es3Type = ES3TypeMgr.GetOrCreateES3Type(type);
+
+        cache[key] = new ES3Data(es3Type, ES3.Serialize(value, es3Type, unencryptedSettings));
     }
 
     /// <summary>Merges the data specified by the bytes parameter into this ES3File.</summary>

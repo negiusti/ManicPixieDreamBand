@@ -35,6 +35,8 @@ public class ES3AutoSaveMgr : MonoBehaviour
         }
     }
 
+    public static Dictionary<Scene, ES3AutoSaveMgr> managers = new Dictionary<Scene, ES3AutoSaveMgr>();
+
     // Included for backwards compatibility.
     public static ES3AutoSaveMgr Instance
     {
@@ -46,7 +48,7 @@ public class ES3AutoSaveMgr : MonoBehaviour
 
 	public string key = System.Guid.NewGuid().ToString();
 	public SaveEvent saveEvent = SaveEvent.OnApplicationQuit;
-	public LoadEvent loadEvent = LoadEvent.Awake;
+	public LoadEvent loadEvent = LoadEvent.Start;
 	public ES3SerializableSettings settings = new ES3SerializableSettings("AutoSave.es3", ES3.Location.Cache);
 
 	public HashSet<ES3AutoSave> autoSaves = new HashSet<ES3AutoSave>();
@@ -91,7 +93,12 @@ public class ES3AutoSaveMgr : MonoBehaviour
         }
         catch { }
 
-        ES3.Load<GameObject[]>(key, new GameObject[0], settings);
+
+        // Ensure that the reference manager for this scene has been initialised.
+        var mgr = ES3ReferenceMgr.GetManagerFromScene(this.gameObject.scene);
+        mgr.Awake();
+
+        var gameObjects = ES3.Load<GameObject[]>(key, new GameObject[0], settings);
 	}
 
 	void Start()
@@ -102,6 +109,7 @@ public class ES3AutoSaveMgr : MonoBehaviour
 
     public void Awake()
     {
+        managers.Add(this.gameObject.scene, this);
         GetAutoSaves();
 
         if (loadEvent == LoadEvent.Awake)
@@ -124,15 +132,29 @@ public class ES3AutoSaveMgr : MonoBehaviour
 	/* Register an ES3AutoSave with the ES3AutoSaveMgr, if there is one */
 	public static void AddAutoSave(ES3AutoSave autoSave)
 	{
-		if(ES3AutoSaveMgr.Current != null)
-			ES3AutoSaveMgr.Current.autoSaves.Add(autoSave);
+        if (autoSave == null)
+            return;
+
+        ES3AutoSaveMgr mgr;
+        if (managers.TryGetValue(autoSave.gameObject.scene, out mgr))
+            mgr.autoSaves.Add(autoSave);
+
+		/*if(ES3AutoSaveMgr.Current != null)
+			ES3AutoSaveMgr.Current.autoSaves.Add(autoSave);*/
 	}
 
 	/* Remove an ES3AutoSave from the ES3AutoSaveMgr, for example if it's GameObject has been destroyed */
 	public static void RemoveAutoSave(ES3AutoSave autoSave)
 	{
-		if(ES3AutoSaveMgr.Current != null)
-			ES3AutoSaveMgr.Current.autoSaves.Remove(autoSave);
+        if (autoSave == null)
+            return;
+
+        ES3AutoSaveMgr mgr;
+        if (managers.TryGetValue(autoSave.gameObject.scene, out mgr))
+            mgr.autoSaves.Remove(autoSave);
+
+        /*if (ES3AutoSaveMgr.Current != null)
+			ES3AutoSaveMgr.Current.autoSaves.Remove(autoSave);*/
 	}
 
     /* Gathers all of the ES3AutoSave Components in the scene and registers them with the manager */

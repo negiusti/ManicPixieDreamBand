@@ -26,11 +26,11 @@ public class Calendar : ScriptableObject
     }
     public static void CompleteCurrentEvent()
     {
-        currentEventIdx++;
-        if (events.Count >= currentEventIdx || events[day].Skip(currentEventIdx).All(e => e.IsNight()))
+        if (currentEventIdx + 1 >= events.Count || events[day].Skip(currentEventIdx + 1).All(e => e.IsNight()))
         {
             SetIsNight(true);
         }
+        currentEventIdx++;
     }
 
     public static int GetCurrentEventIdx()
@@ -64,7 +64,14 @@ public class Calendar : ScriptableObject
             {
                 events[i].Add(new BandPracticeEvent(null, null, null, false));
             }
-            events[i].Add(new JobEvent("werk", null, null, null, true, "Coffee Shop"));
+            if (!isWorkScheduled(i))
+            {
+                if (i %2 == 0)
+                    events[i].Add(new JobEvent("werk", null, null, null, false, "Coffee Shop"));
+                else
+                    events[i].Add(new JobEvent("werk", null, null, null, true, "Bar"));
+            }
+            
 
             //// Already booked
             //if (events[i].Count >= 2)
@@ -93,6 +100,11 @@ public class Calendar : ScriptableObject
     private static bool isBandPracticeScheduled(int i)
     {
         return events.ContainsKey(i) ? events[i].Any(e => e is BandPracticeEvent) : false;
+    }
+
+    private static bool isWorkScheduled(int i)
+    {
+        return events.ContainsKey(i) ? events[i].Any(e => e is JobEvent) : false;
     }
 
     private static bool isBandPracticeDay(int i)

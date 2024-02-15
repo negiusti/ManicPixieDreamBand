@@ -1,3 +1,14 @@
+3.5.7
+- Removed legacy dependency-gathering code which requires the UnityEngine.UI library.
+- Resolved issues where ES3UserTypes aren't added to the reference manager on occasion.
+- Reference managers are now no longer merged when using additive scenes.
+- Worked around bug at Unity's end causing the Auto Save window to throw errors on Unity 2021.
+- Resolved issue where ES3Prefab would throw an ArgumentException for writing the same item in the localToGlobal Dictionary.
+- Resolved issue where saving primitives using PlayMaker actions with caching would cause a format error.
+- Worked around issue with PlayMaker where assigning NULL to a GameObject invalidates the type of the FsmVariable.
+- Made a change to ES3Cloud so that an error is manually sent when misconfigured servers reject POST parameters but continue to execute the PHP script.
+- Resolved issue where priority of built-in types conflicted with user-generated types.
+
 3.5.6
 - ES3GameObject Component is now automatically moved to end of Components List to ensure that it's loaded after the Components it references.
 - Resolved merge issue where cached data was being stored with it's generic type rather than actual type.

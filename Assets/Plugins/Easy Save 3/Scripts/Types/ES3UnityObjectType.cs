@@ -36,7 +36,7 @@ namespace ES3Types
 			{
                 var refMgr = ES3ReferenceMgrBase.Current;
                 if (refMgr == null)
-                    throw new InvalidOperationException("An Easy Save 3 Manager is required to load references. To add one to your scene, exit playmode and go to Tools > Easy Save 3 > Add Manager to Scene");
+                    throw new InvalidOperationException($"An Easy Save 3 Manager is required to save references. To add one to your scene, exit playmode and go to Tools > Easy Save 3 > Add Manager to Scene. Object being saved by reference is {instance.GetType()} with name {instance.name}.");
                 writer.WriteRef(instance);
 				if(mode == ES3.ReferenceMode.ByRef)
 					return;
@@ -78,7 +78,7 @@ namespace ES3Types
 				if(propertyName == ES3ReferenceMgrBase.referencePropertyName)
 				{
                     if(refMgr == null)
-                        throw new InvalidOperationException("An Easy Save 3 Manager is required to load references. To add one to your scene, exit playmode and go to Tools > Easy Save 3 > Add Manager to Scene");
+                        throw new InvalidOperationException($"An Easy Save 3 Manager is required to save references. To add one to your scene, exit playmode and go to Tools > Easy Save 3 > Add Manager to Scene. Object being saved by reference is {instance.GetType()} with name {instance.name}.");
                     id = reader.Read_ref();
 					instance = refMgr.Get(id, type);
 

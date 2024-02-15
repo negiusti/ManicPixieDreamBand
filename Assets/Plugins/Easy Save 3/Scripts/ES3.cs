@@ -440,6 +440,9 @@ public class ES3
     /// <param name="settings">The settings we want to use to override the default settings.</param>
     public static T Load<T>(string key, string filePath, ES3Settings settings)
     {
+        if (typeof(T) == typeof(string))
+            ES3Debug.LogWarning("Using ES3.Load<string>(string, string) to load a string, but the second parameter is ambiguous between defaultValue and filePath. By default C# will assume that the second parameter is the filePath. If you want the second parameter to be the defaultValue, use a named parameter. E.g. ES3.Load<string>(\"key\", defaultValue: \"myDefaultValue\")");
+
         return Load<T>(key, new ES3Settings(filePath, settings));
     }
 
@@ -1398,6 +1401,9 @@ public class ES3
         var keys = new List<string>();
         using (var reader = ES3Reader.Create(settings))
         {
+            if (reader == null)
+                throw new System.IO.FileNotFoundException("Could not get keys from file "+settings.FullPath+" as file does not exist");
+
             foreach (string key in reader.Properties)
             {
                 keys.Add(key);

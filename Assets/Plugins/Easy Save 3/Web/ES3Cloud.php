@@ -1,15 +1,15 @@
 <?php
 /* 
 ------------------------------------------------------------------------------------
-	IT IS NOT NECESSARY TO MODIFY THIS SCRIPT TO USE EASY SAVE 3 CLOUD
+			IT IS NOT NECESSARY TO MODIFY THIS SCRIPT TO USE EASY SAVE 3 CLOUD
 ------------------------------------------------------------------------------------
 */
 	
 	
-$tableName 		= 	"es3cloud";		// The name of the table used to store file names.
+$tableName 			= 	"es3cloud";		// The name of the table used to store file names.
 $filenameField 		= 	"filename";		// The name of the field where we save our file name.
 $fileDataField 		= 	"data";			// The name of the field containing the data relating to.
-$userField	  	=	"user";			// The name of the field containing the name of the user this file relates to, if any.
+$userField	  		=	"user";			// The name of the field containing the name of the user this file relates to, if any.
 $lastUpdatedField 	= 	"lastUpdated"; 	// The name of the field containing the last updated timestamp.
 	
 // Handles installation of the database tables and variables script.
@@ -35,10 +35,8 @@ catch(PDOException $e)
 }
 
 if(!isset($_POST["apiKey"]))
-{
-	echo "ES3Cloud is functioning correctly.";
-	exit();
-}
+	// Throw this message as an error so that if this is encountered via ES3Cloud it is put into an error state.
+	Error("ES3Cloud is functioning correctly.", "ES3Cloud is functioning correctly.", 403);
 
 if($_POST["apiKey"] != $api_key)
 	Error("Incorrect API Key", "Incorrect API Key", 403);
@@ -114,6 +112,7 @@ else if(isset($_POST["deleteFile"]))
 // ----- GET FILENAMES WITH PATTERN -----
 else if(isset($_POST["getFilenames"]) && isset($_POST["pattern"]))
 {
+	echo "Here";
 	$stmt = $db->prepare("SELECT $filenameField FROM $tableName WHERE $userField = :user AND $filenameField LIKE :pattern");
 	$postUser = GetPOSTUser();
 	$stmt->bindParam(":user", $postUser);
@@ -296,7 +295,7 @@ PRIMARY KEY (`$filenameField`,`$userField`)
 function ManuallyInstall($phpScript)
 {
 		    	echo "	<p>Couldn't create PHP file on your server. This could be because file_put_contents is not supported on your server, or you do not have permission to write files to this folder on your server.</p>
-	    			<p>To manually install the PHP file, please create a file named <em>ES3Variables.php</em> in the same directory as your ES3Cloud.php file with the following contents:</p>
+	    			<p>To manually install the PHP file, please create a file named <em>ES3Variables.php</em> in the same directory as your ES3.php file with the following contents:</p>
 					<pre>$phpScript</pre>
 					<p>After creating this file, installation will be complete.</p>";
 }

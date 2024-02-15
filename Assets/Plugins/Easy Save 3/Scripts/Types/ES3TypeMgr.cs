@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ES3Types;
+using System.Linq;
 
 namespace ES3Internal
 {
@@ -92,6 +93,11 @@ namespace ES3Internal
                     es3Type = new ES3HashSetType(type);
                 else if (genericType == typeof(Unity.Collections.NativeArray<>))
                     es3Type = new ES3NativeArrayType(type);
+                // Else see if there is an ES3Type with the generic type definition.
+                else if((es3Type = GetES3Type(genericType)) != null)
+                {
+
+                }
                 else if (throwException)
                     throw new NotSupportedException("Generic type \"" + type.ToString() + "\" is not supported by Easy Save.");
                 else
@@ -140,8 +146,11 @@ namespace ES3Internal
             lock (_lock)
             {
                 types = new Dictionary<Type, ES3Type>();
-                // ES3Types add themselves to the types Dictionary.
-                ES3Reflection.GetInstances<ES3Type>();
+                
+                var instances = ES3Reflection.GetInstances<ES3Type>().OrderByDescending(x => x.priority);
+
+                foreach(var instance in instances)
+                    ES3TypeMgr.Add(instance.type, instance);
 
                 // Check that the type list was initialised correctly.
                 if (types == null || types.Count == 0)

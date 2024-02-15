@@ -9,7 +9,7 @@ namespace ES3Types
 	{
 		public static ES3Type Instance = null;
 
-		public ES3Type_Rigidbody() : base(typeof(UnityEngine.Rigidbody)){ Instance = this; priority = 1;}
+		public ES3Type_Rigidbody() : base(typeof(UnityEngine.Rigidbody)){ Instance = this; }
 
 
 		protected override void WriteComponent(object obj, ES3Writer writer)

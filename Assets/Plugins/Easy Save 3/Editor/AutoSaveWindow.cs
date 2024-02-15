@@ -99,13 +99,16 @@ namespace ES3Editor
 
                     using (new EditorGUILayout.HorizontalScope(GUILayout.Width(200)))
                     {
-#if UNITY_2022_3_OR_NEWER
-                        searchTerm = GUILayout.TextField(searchTerm, GUI.skin.FindStyle("ToolbarSearchTextField"));
-                        if (GUILayout.Button("", GUI.skin.FindStyle("ToolbarSearchCancelButton")))
-#else
-                        searchTerm = GUILayout.TextField(searchTerm, GUI.skin.FindStyle("ToolbarSeachTextField"));
-                        if (GUILayout.Button("", GUI.skin.FindStyle("ToolbarSeachCancelButton")))
-#endif
+                        var searchTextFieldSkin = GUI.skin.FindStyle("ToolbarSearchTextField");
+                        if (searchTextFieldSkin == null)
+                            searchTextFieldSkin = GUI.skin.FindStyle("ToolbarSeachTextField");
+
+                        var searchButtonSkin = GUI.skin.FindStyle("ToolbarSearchCancelButton");
+                        if (searchButtonSkin == null)
+                            searchButtonSkin = GUI.skin.FindStyle("ToolbarSeachCancelButton");
+
+                        searchTerm = GUILayout.TextField(searchTerm, searchTextFieldSkin);
+                        if (GUILayout.Button("", searchButtonSkin))
                         {
                             // Remove focus if cleared
                             searchTerm = "";

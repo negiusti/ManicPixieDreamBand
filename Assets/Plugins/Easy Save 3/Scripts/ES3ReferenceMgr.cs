@@ -73,7 +73,7 @@ public class ES3ReferenceMgr : ES3ReferenceMgrBase
                 }
                 catch(Exception e)
                 {
-                    Debug.LogError($"Couldn't update references for scene {scene.name} as the following exception occurred:\n\n" + e);
+                    ES3Debug.LogError($"Couldn't update references for scene {scene.name} as the following exception occurred:\n\n" + e);
                 }
             }
 
@@ -145,7 +145,7 @@ public class ES3ReferenceMgr : ES3ReferenceMgrBase
             {
                 if (EditorApplication.timeSinceStartup - timeStarted > timeout)
                 {
-                    Debug.LogWarning($"Easy Save cancelled gathering of references for object {obj.name} because it took longer than {timeout} seconds. You can increase the timeout length in Tools > Easy Save 3 > Settings > Reference Gathering Timeout, or adjust the settings so that fewer objects are referenced in your scene.");
+                    ES3Debug.LogWarning($"Easy Save cancelled gathering of references for object {obj.name} because it took longer than {timeout} seconds. You can increase the timeout length in Tools > Easy Save 3 > Settings > Reference Gathering Timeout, or adjust the settings so that fewer objects are referenced in your scene.");
                     return;
                 }
 
@@ -162,6 +162,10 @@ public class ES3ReferenceMgr : ES3ReferenceMgrBase
     {
         var folders = ES3Settings.defaultSettingsScriptableObject.referenceFolders;
 
+        // Remove null or empty values.
+        ArrayUtility.Remove(ref folders, "");
+        ArrayUtility.Remove(ref folders, null);
+
         if (folders == null || folders.Length == 0)
             return;
 
@@ -177,7 +181,7 @@ public class ES3ReferenceMgr : ES3ReferenceMgrBase
         }
     }
 
-    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    /*[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public void AddDependenciesLegacy(UnityEngine.Object[] objs)
     {
         for (int i = 0; i < objs.Length; i++)
@@ -203,7 +207,7 @@ public class ES3ReferenceMgr : ES3ReferenceMgrBase
         }
 
         Undo.RecordObject(this, "Update Easy Save 3 Reference List");
-    }
+    }*/
 
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public void AddDependencies(UnityEngine.Object obj)

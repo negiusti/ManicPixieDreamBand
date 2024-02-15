@@ -58,7 +58,9 @@ namespace ES3Internal
                         try
                         {
                             if (assemblyNames.Contains(assembly.GetName().Name))
+                            {
                                 assemblyList.Add(assembly);
+                            }
                         }
                         catch { }
                     }

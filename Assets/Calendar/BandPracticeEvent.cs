@@ -2,11 +2,11 @@
 
 public class BandPracticeEvent : CalendarEvent
 {
-    private string beforeConversation;
-    private string afterConversation;
-    private GameObject minigame;
-    private string location;
-    private bool isNight;
+    [SerializeField] private string beforeConversation;
+    [SerializeField] private string afterConversation;
+    [SerializeField] private GameObject minigame;
+    [SerializeField] private string location;
+    [SerializeField] private bool isNight;
 
     public BandPracticeEvent(string beforeConversation, GameObject minigame, string afterConversation, bool isNight, string location = "Basement")
     {
