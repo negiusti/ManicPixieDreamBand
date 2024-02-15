@@ -15,6 +15,9 @@ public class CrowdSpawner : MonoBehaviour
     {
         spriteLib = this.GetComponent<SpriteLibrary>().spriteLibraryAsset;
         heads = new HashSet<string>(spriteLib.GetCategoryLabelNames("Head"));
+
+
+
         foreach(CrowdMember member in audience)
         {
             if (heads.Count == 0)

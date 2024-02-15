@@ -18,10 +18,10 @@ public class CalendarApp : MonoBehaviour
         tmp = this.GetComponentInChildren<TextMeshPro>();
         eventBubbles = this.GetComponentsInChildren<PhoneCalendarEvent>().ToArray();
         UpdateImage();
-        GetTodaysEvents();
+        ShowTodaysEvents();
     }
 
-    private void GetTodaysEvents()
+    private void ShowTodaysEvents()
     {
         List<CalendarEvent> events = Calendar.GetTodaysEvents();
         int i = 0;
@@ -33,6 +33,14 @@ public class CalendarApp : MonoBehaviour
             } else
             {
                 e.AssignEvent(events[i]);
+                if (i < Calendar.GetCurrentEventIdx())
+                {
+                    e.Complete();
+                }
+                else
+                {
+                    e.NotComplete();
+                }
             }
             i++;
         }
@@ -56,7 +64,7 @@ public class CalendarApp : MonoBehaviour
     {
         Calendar.Sleep();
         UpdateImage();
-        GetTodaysEvents();
+        ShowTodaysEvents();
     }
 
     // Update is called once per frame
@@ -69,20 +77,22 @@ public class CalendarApp : MonoBehaviour
     {
         Calendar.ToggleDayNight();
         UpdateImage();
-        GetTodaysEvents();
+        ShowTodaysEvents();
     }
 
     public void SetIsNight(bool value)
     {
         Calendar.SetIsNight(value);
         UpdateImage();
-        GetTodaysEvents();
+        ShowTodaysEvents();
     }
 
+    // FOR DEBUG BUTTON ONLY
     public void CompleteCurrentEvent() 
     {
+        eventBubbles[Calendar.GetCurrentEventIdx()].Complete();
         Calendar.CompleteCurrentEvent();
         UpdateImage();
-        GetTodaysEvents();
+        ShowTodaysEvents();
     }
 }
