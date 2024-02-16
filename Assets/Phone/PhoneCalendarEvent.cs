@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -7,6 +5,7 @@ public class PhoneCalendarEvent : MonoBehaviour
 {
     private TMP_Text tmp;
     private SpriteRenderer sr;
+    private CalendarEvent e;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,10 +21,17 @@ public class PhoneCalendarEvent : MonoBehaviour
 
     public void AssignEvent(CalendarEvent e)
     {
-        if (e == null)
-            Debug.LogError("e is null");
-        if (tmp == null)
-            Debug.LogError("mtp is null");
+        this.e = e;
         tmp.text = e.Name();
+    }
+
+    public void Complete()
+    {
+        sr.color = Color.gray;
+    }
+
+    public void NotComplete()
+    {
+        sr.color = Color.white;
     }
 }

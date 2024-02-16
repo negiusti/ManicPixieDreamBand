@@ -2,12 +2,12 @@
 
 public class JobEvent : CalendarEvent
 {
-    private string name;
-    private string beforeConversation;
-    private string afterConversation;
-    private GameObject minigame;
-    private string location;
-    private bool isNight;
+    [SerializeField] private string name;
+    [SerializeField] private string beforeConversation;
+    [SerializeField] private string afterConversation;
+    [SerializeField] private GameObject minigame;
+    [SerializeField] private string location;
+    [SerializeField] private bool isNight;
 
     public JobEvent(string name, string beforeConversation, GameObject minigame, string afterConversation, bool isNight, string location)
     {

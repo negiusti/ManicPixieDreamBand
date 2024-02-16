@@ -64,7 +64,7 @@ namespace ES3Internal
             foreach (var kvp in localRefs)
             {
                 long id = refMgr.Add(kvp.Key);
-                localToGlobal.Add(kvp.Value.ToString(), id.ToString());
+                localToGlobal[kvp.Value.ToString()] = id.ToString();
             }
             return localToGlobal;
         }

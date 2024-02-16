@@ -15,13 +15,22 @@ public class CrowdSpawner : MonoBehaviour
     {
         spriteLib = this.GetComponent<SpriteLibrary>().spriteLibraryAsset;
         heads = new HashSet<string>(spriteLib.GetCategoryLabelNames("Head"));
+
+        int ticketSales = BandsManager.GetBandTixSales();
+
         foreach(CrowdMember member in audience)
         {
-            if (heads.Count == 0)
-                break;
-            string head = heads.First();
-            member.SetHeadSprite(head);
-            heads.Remove(head);
+            if (heads.Count > 0)
+            {
+                string head = heads.First();
+                member.SetHeadSprite(head);
+                heads.Remove(head);
+            }
+            ticketSales--;
+            if (ticketSales <= 0)
+            {
+                member.gameObject.SetActive(false);
+            }
         }
     }
 

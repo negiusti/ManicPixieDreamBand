@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 namespace ES3Internal
@@ -132,7 +131,7 @@ namespace ES3Internal
             rng = null;
         }
 
-        private void Awake()
+        internal void Awake()
         {
             if (_current != null && _current != this)
             {
@@ -144,8 +143,8 @@ namespace ES3Internal
                 {
                     RemoveNullValues();
 
-                    existing.Merge(this);
-                    Destroy(this);
+                    //existing.Merge(this);
+                    //Destroy(this);
                     _current = existing; // Undo the call to Current, which may have set it to NULL.
                 }
             }
@@ -218,9 +217,9 @@ namespace ES3Internal
             }
 
             if(type != null)
-                ES3Debug.LogWarning("Reference for " + type + " with ID " + id + " could not be found in Easy Save's reference manager. If you are loading objects dynamically (i.e. objects created at runtime), this warning is expected and can be ignored.", this);
+                ES3Debug.LogWarning("Reference for " + type + " with ID " + id + " could not be found in Easy Save's reference manager. See <a href=\"https://docs.moodkie.com/easy-save-3/es3-guides/saving-and-loading-references/#reference-could-not-be-found-warning\">the Saving and Loading References guide</a> for more information.", this);
             else
-                ES3Debug.LogWarning("Reference with ID " + id + " could not be found in Easy Save's reference manager. If you are loading objects dynamically (i.e. objects created at runtime), this warning is expected and can be ignored.", this);
+                ES3Debug.LogWarning("Reference with ID " + id + " could not be found in Easy Save's reference manager. See <a href=\"https://docs.moodkie.com/easy-save-3/es3-guides/saving-and-loading-references/#reference-could-not-be-found-warning\">the Saving and Loading References guide</a> for more information.", this);
             
             return null;
         }
@@ -241,11 +240,11 @@ namespace ES3Internal
                     continue;
 
                 foreach (var prefab in mgr.prefabs)
-                    if (prefabs != null && prefab.prefabId == id)
+                    if (prefab != null && prefab.prefabId == id)
                         return prefab;
             }
             if (!suppressWarnings)
-                ES3Debug.LogWarning("Prefab with ID " + id + " could not be found in Easy Save's reference manager. Try pressing the Refresh References button on the ES3ReferenceMgr Component of the Easy Save 3 Manager in your scene.", this);
+                ES3Debug.LogWarning("Prefab with ID " + id + " could not be found in Easy Save's reference manager. Try pressing the Refresh References button on the ES3ReferenceMgr Component of the Easy Save 3 Manager in your scene, or exit play mode and right-click the prefab and select Easy Save 3 > Add Reference(s) to Manager.", this);
             return null;
         }
 
@@ -264,7 +263,7 @@ namespace ES3Internal
                         return prefab.prefabId;
             }
             if (!suppressWarnings)
-                ES3Debug.LogWarning("Prefab with name " + prefabToFind.name + " could not be found in Easy Save's reference manager. Try pressing the Refresh References button on the ES3ReferenceMgr Component of the Easy Save 3 Manager in your scene.", prefabToFind);
+                ES3Debug.LogWarning("Prefab with name " + prefabToFind.name + " could not be found in Easy Save's reference manager. Try pressing the Refresh References button on the ES3ReferenceMgr Component of the Easy Save 3 Manager in your scene, or exit play mode and right-click the prefab and select Easy Save 3 > Add Reference(s) to Manager.", prefabToFind);
             return -1;
         }
 
@@ -426,17 +425,16 @@ namespace ES3Internal
             return (System.Math.Abs(longRand % (long.MaxValue - 0)) + 0);
         }
 
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
         public static HashSet<UnityEngine.Object> CollectDependenciesLegacy(UnityEngine.Object obj, HashSet<UnityEngine.Object> dependencies = null, int depth = int.MinValue)
         {
             return CollectDependenciesLegacy(new UnityEngine.Object[] { obj }, dependencies, depth);
         }
 
-        /*
-         * Collects all top-level dependencies of an object.
-         * For GameObjects, it will traverse all children.
-         * For Components or ScriptableObjects, it will get all serialisable UnityEngine.Object fields/properties as dependencies.
-         */
+
+         //Collects all top-level dependencies of an object.
+         //For GameObjects, it will traverse all children.
+         //For Components or ScriptableObjects, it will get all serialisable UnityEngine.Object fields/properties as dependencies.
         public static HashSet<UnityEngine.Object> CollectDependenciesLegacy(UnityEngine.Object[] objs, HashSet<UnityEngine.Object> dependencies = null, int depth = int.MinValue)
         {
             if (depth == int.MinValue)
@@ -669,7 +667,7 @@ namespace ES3Internal
                 DestroyImmediate(this);
             }
         }
-#endif
+#endif*/
 
         internal static bool CanBeSaved(UnityEngine.Object obj)
         {

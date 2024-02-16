@@ -86,7 +86,7 @@ namespace ES3Types
             while (true)
             {
                 if (refMgr == null)
-                    throw new InvalidOperationException("An Easy Save 3 Manager is required to load references. To add one to your scene, exit playmode and go to Tools > Easy Save 3 > Add Manager to Scene");
+                    throw new InvalidOperationException($"An Easy Save 3 Manager is required to save references. To add one to your scene, exit playmode and go to Tools > Easy Save 3 > Add Manager to Scene. Object being saved by reference is {obj.GetType()} with name {obj.name}.");
 
                 var propertyName = ReadPropertyName(reader);
 

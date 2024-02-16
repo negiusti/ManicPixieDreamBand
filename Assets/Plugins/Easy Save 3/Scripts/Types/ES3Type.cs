@@ -28,7 +28,7 @@ namespace ES3Types
 
 		protected ES3Type(Type type)
 		{
-			ES3TypeMgr.Add(type, this);
+			//ES3TypeMgr.Add(type, this); // Type is now added in ES3TypeMgr.Init().
 			this.type = type;
 			this.isValueType = ES3Reflection.IsValueType(type);
 		}

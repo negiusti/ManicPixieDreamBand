@@ -123,8 +123,13 @@ public abstract class ES3Writer : IDisposable
     /// <param name="value">The value we want to write.</param>
     public virtual void Write<T>(string key, object value)
     {
-        if(typeof(T) == typeof(object))
-            Write(value.GetType(), key, value);
+        if (typeof(T) == typeof(object))
+        {
+            if (value == null)
+                Write(typeof(System.Object), key, null);
+            else
+                Write(value.GetType(), key, value);
+        }
         else
             Write(typeof(T), key, value);
     }
@@ -236,7 +241,7 @@ public abstract class ES3Writer : IDisposable
 	{
         var refMgr = ES3ReferenceMgrBase.Current;
         if (refMgr == null)
-            throw new InvalidOperationException("An Easy Save 3 Manager is required to save references. To add one to your scene, exit playmode and go to Tools > Easy Save 3 > Add Manager to Scene");
+            throw new InvalidOperationException($"An Easy Save 3 Manager is required to save references. To add one to your scene, exit playmode and go to Tools > Easy Save 3 > Add Manager to Scene. Object being saved by reference is {obj.GetType()} with name {obj.name}.");
 
         // Get the reference ID, if it exists, and store it.
         long id = refMgr.Get(obj);
@@ -268,7 +273,9 @@ public abstract class ES3Writer : IDisposable
         if (SerializationDepthLimitExceeded())
             return;
 
-        StartWriteProperty(name); Write(value, memberReferenceMode); EndWriteProperty(name);
+        StartWriteProperty(name); 
+        Write(value, memberReferenceMode); 
+        EndWriteProperty(name);
 	}
 
     /// <summary>Writes a field or property to the writer. Note that this should only be called within an ES3Type.</summary>

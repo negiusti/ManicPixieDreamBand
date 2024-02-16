@@ -1,5 +1,6 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using PixelCrushers.DialogueSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -37,6 +38,25 @@ public class GameManager : MonoBehaviour
             //    //
             //}
         }
+    }
+
+    public void CompleteCurrentEvent()
+    {
+        Calendar.CompleteCurrentEvent();
+    }
+
+    void RegisterSOLuaFuncs()
+    {
+        Lua.RegisterFunction(nameof(CompleteCurrentEvent), this, SymbolExtensions.GetMethodInfo(() => CompleteCurrentEvent()));
+    }
+
+    void UnregisterSOLuaFuncs()
+    {
+        //if (unregisterOnDisable)
+        //{
+        // Remove the functions from Lua: (Replace these lines with your own.)
+        Lua.UnregisterFunction(nameof(CompleteCurrentEvent));
+        //}
     }
 
     private void ChangedActiveScene(Scene current, Scene next)

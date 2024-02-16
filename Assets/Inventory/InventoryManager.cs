@@ -9,32 +9,6 @@ public class InventoryManager : ScriptableObject
     private static Dictionary<string, HashSet<string>> categoryToPurchased;
     private static string purchasedSaveKey = "PurchasedInventory";
     private static string MAIN_CHARACTER = "MainCharacter";
-    //private static Dictionary<string, string> SRCategoryToInventoryCategory = new Dictionary<string, string>{
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //    { "",""},
-    //};
 
     public static void SaveInventories()
     {
