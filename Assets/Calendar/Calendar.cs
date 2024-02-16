@@ -33,6 +33,11 @@ public class Calendar : ScriptableObject
         currentEventIdx++;
     }
 
+    public static CalendarEvent GetCurrentEvent()
+    {
+        return events[day].Count > currentEventIdx? events[day][currentEventIdx] : null;
+    }
+
     public static int GetCurrentEventIdx()
     {
         return currentEventIdx;
