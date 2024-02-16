@@ -7,7 +7,7 @@ public class Bar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CalendarEvent e = Calendar.GetCurrentEvent();
+        //CalendarEvent e = Calendar.GetCurrentEvent();
         //if (e is GigEvent)
         //{
 
