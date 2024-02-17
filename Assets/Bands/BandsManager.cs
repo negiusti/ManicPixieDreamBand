@@ -7,6 +7,9 @@ public class BandsManager : ScriptableObject
 {
     private static Dictionary<string, int> bandToTixSales = new Dictionary<string, int> { { "poop", 2 } };
 
+
+
+
     public static int GetBandTixSales()
     {
         return Random.Range(1, 12);
