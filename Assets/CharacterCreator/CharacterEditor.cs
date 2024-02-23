@@ -5,7 +5,7 @@ using UnityEngine.U2D.Animation;
 
 public class CharacterEditor : MonoBehaviour
 {
-    private bool unlockAllOutfits;
+    public bool unlockAllOutfits;
     private static string top = "Top";
     private static string lSleeve = "L_Sleeve";
     private static string rSleeve = "R_Sleeve";
@@ -94,14 +94,14 @@ public class CharacterEditor : MonoBehaviour
         {
             if (unlockAllOutfits)
             {
-                labels = spriteLib.GetCategoryLabelNames(category).Where(l => !l.StartsWith("X_") || l.Equals("X_" + gameObject.name)).ToArray();
+                labels = spriteLib.GetCategoryLabelNames(category).Where(l => !l.StartsWith("X_") || l.Equals("X_" + character.gameObject.name)).ToArray();
             }
             else
             {
                 labels = InventoryManager.GetMCInventory(category).ToArray();
                 // if the inventory is empty, just unlock everything
                 if (labels.Length == 0)
-                    labels = spriteLib.GetCategoryLabelNames(category).Where(l => !l.StartsWith("X_") || l.Equals("X_" + gameObject.name)).ToArray();
+                    labels = spriteLib.GetCategoryLabelNames(category).Where(l => !l.StartsWith("X_") || l.Equals("X_" + character.gameObject.name)).ToArray();
             }
 
             categoryToLabels[category] = labels;
