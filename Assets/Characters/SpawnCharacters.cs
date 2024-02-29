@@ -21,6 +21,7 @@ public class SpawnCharacters : ScriptableObject
         operation.Completed += (operation) => OnPrefabLoaded(operation, p);
         return operation;
     }
+
     public static void SpawnParticipants(Participant [] participants)
     {
         Character[] characters = FindObjectsOfType<Character>();
@@ -44,25 +45,75 @@ public class SpawnCharacters : ScriptableObject
         }
     }
 
+    private static AsyncOperationHandle<GameObject> SpawnBandMember(BandMember m, Stage s)
+    {
+        string characterPrefabPath = "Assets/Prefabs/Characters/" + m.name + ".prefab";
+        AsyncOperationHandle<GameObject> operation = Addressables.LoadAssetAsync<GameObject>(characterPrefabPath);
+        operation.Completed += (operation) => OnPrefabLoaded(operation, m, s);
+        return operation;
+    }
+
+    public static void SpawnBandMembers(BandMember[] members)
+    {
+        Stage stage = FindFirstObjectByType<Stage>();
+        Character[] characters = FindObjectsOfType<Character>();
+        foreach (BandMember m in members)
+        {
+            // character already exists in scene, don't spawn another plz
+            Character c = characters.FirstOrDefault(c => c.name.Equals(m.name));
+            if (c == null)
+            {
+                c = SpawnBandMember(m, stage).WaitForCompletion().GetComponent<Character>();
+                c.MoveToRenderLayer("stage_fg");
+            }
+        }
+    }
+
     private static void OnPrefabLoaded(AsyncOperationHandle<GameObject> handle, Participant p)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             // Instantiate the prefab and spawn it in the current scene
             GameObject spawnedCharacter = Instantiate(handle.Result, p.position, Quaternion.identity);
-            string originalName = spawnedCharacter.name;
+            //string originalName = spawnedCharacter.name;
 
             // Check if the name ends with "(Clone)"
-            if (originalName.EndsWith("(Clone)"))
-            {
-                // Remove "(Clone)" from the end of the name
-                string newName = originalName.Substring(0, originalName.Length - "(Clone)".Length);
+            //if (originalName.EndsWith("(Clone)"))
+            //{
+            //    // Remove "(Clone)" from the end of the name
+            //    string newName = originalName.Substring(0, originalName.Length - "(Clone)".Length);
 
-                // Set the new name to the game object
-                spawnedCharacter.name = newName;
-                spawnedCharacter.GetComponent<Character>().SetCharacterName(newName);
-            }
+            //    // Set the new name to the game object
+            //    spawnedCharacter.name = newName;
+            //    spawnedCharacter.GetComponent<Character>().SetCharacterName(newName);
+            //}
             spawnedCharacter.GetComponent<Usable>().enabled = p.existAtStart;
+        }
+        else
+        {
+            Debug.LogError("Failed to load prefab from Addressables: " + handle.OperationException);
+        }
+    }
+
+    private static void OnPrefabLoaded(AsyncOperationHandle<GameObject> handle, BandMember m, Stage s)
+    {
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            
+            // Instantiate the prefab and spawn it in the current scene
+            GameObject spawnedCharacter = Instantiate(handle.Result, s.GetInstrument(m.position).SpawnPos(), Quaternion.identity);
+            //string originalName = spawnedCharacter.name;
+
+            // Check if the name ends with "(Clone)"
+            //if (originalName.EndsWith("(Clone)"))
+            //{
+            //    // Remove "(Clone)" from the end of the name
+            //    string newName = originalName.Substring(0, originalName.Length - "(Clone)".Length);
+
+            //    // Set the new name to the game object
+            //    spawnedCharacter.name = newName;
+            //    spawnedCharacter.GetComponent<Character>().SetCharacterName(newName);
+            //}
         }
         else
         {

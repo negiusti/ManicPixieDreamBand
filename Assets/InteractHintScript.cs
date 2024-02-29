@@ -29,7 +29,7 @@ public class InteractHintScript : MonoBehaviour
         animator = GetComponent<Animator>();
         if (animationName == null)
         {
-            Debug.Log("No animation given");
+            Debug.LogError("No animation given");
         }
         animator.enabled = false;
         spriteRenderer = this.GetComponent<SpriteRenderer>();

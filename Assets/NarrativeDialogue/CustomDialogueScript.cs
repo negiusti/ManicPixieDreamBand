@@ -4,9 +4,11 @@ using PixelCrushers.DialogueSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class CustomDialogueScript : MonoBehaviour
 {
+    public Action<string> ConvoCompleted;
     public KeyCode keyCode;
     private bool isCoolDown;
     private float coolDown = 1f;
@@ -34,9 +36,7 @@ public class CustomDialogueScript : MonoBehaviour
     {
         phone = FindFirstObjectByType<Phone>();
         currentConvoIdx = 0;
-        //SceneManager.activeSceneChanged += ChangedActiveScene;
-        SceneManager.sceneLoaded += NewActiveScene;
-        SceneManager.sceneUnloaded += EndingActiveScene;
+        SubscribeToEvents();
         isCoolDown = false;
         backLogs = new Dictionary<string, BackLog>();
         convoHeaders = new Dictionary<string, ConvoHeader>();
@@ -44,6 +44,23 @@ public class CustomDialogueScript : MonoBehaviour
         GetAllConversations();
         phoneResponsePanelCanvas = phoneResponsePanel.gameObject.GetComponent<Canvas>();
         CheckForPlotConvo();
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeFromEvents();
+    }
+
+    private void UnsubscribeFromEvents()
+    {
+        SceneManager.sceneLoaded -= NewActiveScene;
+        SceneManager.sceneUnloaded -= EndingActiveScene;
+    }
+
+    private void SubscribeToEvents()
+    {
+        SceneManager.sceneLoaded += NewActiveScene;
+        SceneManager.sceneUnloaded += EndingActiveScene;
     }
 
     private void NewActiveScene(Scene current, LoadSceneMode mode)
@@ -97,7 +114,6 @@ public class CustomDialogueScript : MonoBehaviour
     {
         // TODO sort conversations into trivial, plot, text, etc
         //conversations = DialogueManager.masterDatabase.conversations.ToDictionary(c => c.Name, c => c);
-        ConversationJson.LoadFromJson().WaitForCompletion();
         plotData = ConversationJson.GetPlotData().conversationsData;
     }
 
@@ -236,6 +252,7 @@ public class CustomDialogueScript : MonoBehaviour
             currentConvoIdx++;
         if (IsTxtConvo(convoName))
             phone.CompleteConvo(convoName);
+        ConvoCompleted?.Invoke(convoName);
     }
 
     public void StopCurrentConvo()

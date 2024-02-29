@@ -7,7 +7,7 @@ public class Calendar : ScriptableObject
 {
     private static bool isNight; // is it day or night rn
     private static int day; // the current day
-    private static Dictionary<int, List<CalendarEvent>> events; // day number to list of events
+    private static Dictionary<int, List<ICalendarEvent>> events; // day number to list of events
     private static int currentEventIdx; // the first event of the day that has not already been completed
 
     private class CalendarData
@@ -15,8 +15,8 @@ public class Calendar : ScriptableObject
         public bool n;
         public int d;
         public int i;
-        public Dictionary<int, List<CalendarEvent>> e;
-        public CalendarData(int d, bool n, int i, Dictionary<int, List<CalendarEvent>> e)
+        public Dictionary<int, List<ICalendarEvent>> e;
+        public CalendarData(int d, bool n, int i, Dictionary<int, List<ICalendarEvent>> e)
         {
             this.n = n;
             this.d = d;
@@ -33,7 +33,7 @@ public class Calendar : ScriptableObject
         currentEventIdx++;
     }
 
-    public static CalendarEvent GetCurrentEvent()
+    public static ICalendarEvent GetCurrentEvent()
     {
         return events[day].Count > currentEventIdx? events[day][currentEventIdx] : null;
     }
@@ -43,7 +43,7 @@ public class Calendar : ScriptableObject
         return currentEventIdx;
     }
 
-    public static List<CalendarEvent> GetTodaysEvents()
+    public static List<ICalendarEvent> GetTodaysEvents()
     {
         if (events == null)
         {
@@ -62,19 +62,19 @@ public class Calendar : ScriptableObject
         {
             if (!events.ContainsKey(i))
             {
-                events.Add(i, new List<CalendarEvent>());
+                events.Add(i, new List<ICalendarEvent>());
             }
 
             if (isBandPracticeDay(i) && !isBandPracticeScheduled(i))
             {
-                events[i].Add(new BandPracticeEvent(null, null, null, false));
+                events[i].Add(new BandPracticeEvent(null, false));
             }
             if (!isWorkScheduled(i))
             {
                 if (i %2 == 0)
-                    events[i].Add(new JobEvent("werk", null, null, null, false, "Coffee Shop"));
+                    events[i].Add(new JobEvent("werk", null, false, "Coffee Shop"));
                 else
-                    events[i].Add(new JobEvent("werk", null, null, null, true, "Bar"));
+                    events[i].Add(new JobEvent("werk", null, true, "Bar"));
             }
             
 
@@ -165,7 +165,7 @@ public class Calendar : ScriptableObject
     {
         if (!ES3.KeyExists("Calendar"))
         {
-            events = new Dictionary<int, List<CalendarEvent>>();
+            events = new Dictionary<int, List<ICalendarEvent>>();
             SetIsNight(false);
             currentEventIdx = 0;
             day = 0;
@@ -176,5 +176,10 @@ public class Calendar : ScriptableObject
         isNight = c.n;
         currentEventIdx = c.i;
         events = c.e;
+    }
+
+    public static void OnConversationComplete(string convoName)
+    {
+        GetCurrentEvent()?.OnConversationComplete(convoName);
     }
 }

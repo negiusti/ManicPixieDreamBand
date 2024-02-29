@@ -1,20 +1,16 @@
 ﻿using UnityEngine;
 
-public class JobEvent : CalendarEvent
+public class JobEvent : ICalendarEvent
 {
     [SerializeField] private string name;
-    [SerializeField] private string beforeConversation;
-    [SerializeField] private string afterConversation;
     [SerializeField] private GameObject minigame;
     [SerializeField] private string location;
     [SerializeField] private bool isNight;
 
-    public JobEvent(string name, string beforeConversation, GameObject minigame, string afterConversation, bool isNight, string location)
+    public JobEvent(string name, GameObject minigame, bool isNight, string location)
     {
         this.name = name;
-        this.beforeConversation = beforeConversation;
         this.minigame = minigame;
-        this.afterConversation = afterConversation;
         this.location = location;
         this.isNight = isNight;
     }
@@ -22,11 +18,6 @@ public class JobEvent : CalendarEvent
     public string Name()
     {
         return "work at " + Location();
-    }
-
-    public string BeforeConversation()
-    {
-        return beforeConversation;
     }
 
     public GameObject Minigame()
@@ -39,13 +30,13 @@ public class JobEvent : CalendarEvent
         return location;
     }
 
-    public string AfterConversation()
-    {
-        return afterConversation;
-    }
-
     public bool IsNight()
     {
         return isNight;
+    }
+
+    public void OnConversationComplete(string convoName)
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -28,7 +28,7 @@ public class StarSpawnerScript : MonoBehaviour
     private int hitNotes;
     private int missedNotes;
     private float runwayDelay;
-    private GameObject miniGame;
+    private MiniGame miniGame;
     private string[] notes;
     private string[] times;
     private Coroutine spawnStarCoroutine;
@@ -93,7 +93,7 @@ public class StarSpawnerScript : MonoBehaviour
         asyncOperation1.Completed += OnLoadCompleted1;
         asyncOperation2.Completed += OnLoadCompleted2;
 
-        miniGame = this.transform.parent.gameObject;
+        miniGame = this.transform.parent.gameObject.GetComponent<MiniGame>();
     }
 
     private void OnDisable()
@@ -107,7 +107,8 @@ public class StarSpawnerScript : MonoBehaviour
                 Destroy(star);
             }
         }
-        StopAllCoroutines();
+        if (spawnStarCoroutine != null)
+            StopCoroutine(spawnStarCoroutine);
     }
 
 
@@ -150,7 +151,8 @@ public class StarSpawnerScript : MonoBehaviour
         while(hamster.time < hamster.clip.length - 2)
             yield return null;
 
-        miniGame.SetActive(false);
+        //miniGame.SetActive(false);
+        miniGame.CloseMiniGame();
         
     }
 
@@ -188,12 +190,12 @@ public class StarSpawnerScript : MonoBehaviour
                     
             }
         }
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            if (spawnStarCoroutine != null)
-                StopCoroutine(spawnStarCoroutine);
-            miniGame.SetActive(false);
-        }
+        //if (Input.GetKeyDown(KeyCode.Backspace))
+        //{
+        //    if (spawnStarCoroutine != null)
+        //        StopCoroutine(spawnStarCoroutine);
+        //    miniGame.CloseMiniGame();
+        //}
     }
 
     public float GetScore()

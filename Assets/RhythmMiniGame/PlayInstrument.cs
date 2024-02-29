@@ -8,16 +8,19 @@ public class PlayInstrument : MonoBehaviour
     private bool withinRange;
     public KeyCode keyToTrigger;
     private Movement musicianMovement;
-    public GameObject minigame;
+    public MiniGame minigame;
     private bool isPlayingInstrument;
     private string instLabel;
     private float startTime;
     private Vector3 spawnPos;
     private string layer;
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
+        animator.enabled = false;
         withinRange = false;
         spriteRenderer = this.GetComponent<SpriteRenderer>();
         spriteResolver = this.GetComponent<SpriteResolver>();
@@ -31,14 +34,21 @@ public class PlayInstrument : MonoBehaviour
         // Only applies to MainCharacter
         if (!isPlayingInstrument && withinRange && Input.GetKey(keyToTrigger))
         {
-            Play();
-            JamCoordinator.StartJam();
+            //Play();
+            //JamCoordinator.StartJam("LEMON BOY");
+            JamCoordinator.StartJam("The Storm");
+            minigame.OpenMiniGame();
         }
-        if (isPlayingInstrument && !minigame.activeSelf && Time.time - startTime > 1f)
+        if (isPlayingInstrument && !minigame.IsMiniGameActive() && Time.time - startTime > 1f)
         {
             Stop();
             JamCoordinator.EndJam();
         }
+    }
+
+    public Vector3 SpawnPos()
+    {
+        return spawnPos;
     }
 
     // Used by MainCharacter only (the movement is set by the collider)
@@ -64,6 +74,7 @@ public class PlayInstrument : MonoBehaviour
         spriteRenderer.enabled = true;
         isPlayingInstrument = false;
         musicianMovement.StopPlayingInstrument();
+        minigame.CloseMiniGame();
     }
 
     public bool IsBeingPlayed()
@@ -78,6 +89,7 @@ public class PlayInstrument : MonoBehaviour
         {
             musicianMovement = other.gameObject.GetComponent<Movement>();
             withinRange = true;
+            animator.enabled = true;
         }
     }
 
@@ -86,6 +98,7 @@ public class PlayInstrument : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             withinRange = false;
+            animator.enabled = false;
         }
     }
 }

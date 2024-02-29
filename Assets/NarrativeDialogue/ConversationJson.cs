@@ -24,7 +24,7 @@ public class ConversationData
 }
 
 [System.Serializable]
-public class PlotData
+public class ConversationsData
 {
     public ConversationData[] conversationsData;
 }
@@ -33,7 +33,9 @@ public class PlotData
 public class ConversationJson : ScriptableObject
 {
     private static string plotConvoJsonPath = "Assets/Conversations/plot.json";
-    private static PlotData plotData;
+    //private static string randomQuestsConvoJsonPath = "Assets/Conversations/plot.json";
+    //private static string npcQuestsConvoJsonPath = "Assets/Conversations/plot.json";
+    private static ConversationsData plotData;
 
     public static AsyncOperationHandle<TextAsset> LoadFromJson()
     {
@@ -47,7 +49,7 @@ public class ConversationJson : ScriptableObject
         if (obj.Status == AsyncOperationStatus.Succeeded)
         {
             string jsonData = obj.Result.text;
-            plotData = JsonUtility.FromJson<PlotData>(jsonData);
+            plotData = JsonUtility.FromJson<ConversationsData>(jsonData);
         }
         else
         {
@@ -56,7 +58,7 @@ public class ConversationJson : ScriptableObject
         Addressables.Release(obj);
     }
 
-    public static PlotData GetPlotData()
+    public static ConversationsData GetPlotData()
     {
         return plotData;
     }

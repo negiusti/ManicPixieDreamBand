@@ -5,7 +5,7 @@ public class PhoneCalendarEvent : MonoBehaviour
 {
     private TMP_Text tmp;
     private SpriteRenderer sr;
-    private CalendarEvent e;
+    private ICalendarEvent e;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +19,7 @@ public class PhoneCalendarEvent : MonoBehaviour
         
     }
 
-    public void AssignEvent(CalendarEvent e)
+    public void AssignEvent(ICalendarEvent e)
     {
         this.e = e;
         tmp.text = e.Name();

@@ -23,7 +23,7 @@ public class CalendarApp : MonoBehaviour
 
     private void ShowTodaysEvents()
     {
-        List<CalendarEvent> events = Calendar.GetTodaysEvents();
+        List<ICalendarEvent> events = Calendar.GetTodaysEvents();
         int i = 0;
         foreach (PhoneCalendarEvent e in eventBubbles)
         {

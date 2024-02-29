@@ -1,20 +1,16 @@
 ﻿using UnityEngine;
 
-public class GigEvent : CalendarEvent
+public class GigEvent : ICalendarEvent
 {
     [SerializeField] private string name;
-    [SerializeField] private string beforeConversation;
-    [SerializeField] private string afterConversation;
     [SerializeField] private GameObject minigame;
     [SerializeField] private string location;
     [SerializeField] private bool isNight;
 
-    public GigEvent(string name, string beforeConversation, GameObject minigame, string afterConversation, bool isNight = true, string location = "SmallBar")
+    public GigEvent(string name, GameObject minigame, bool isNight = true, string location = "SmallBar")
     {
         this.name = name;
-        this.beforeConversation = beforeConversation;
         this.minigame = minigame;
-        this.afterConversation = afterConversation;
         this.location = location;
         this.isNight = isNight;
     }
@@ -22,11 +18,6 @@ public class GigEvent : CalendarEvent
     public string Name()
     {
         return "play show at " + Location();
-    }
-
-    public string BeforeConversation()
-    {
-        return beforeConversation;
     }
 
     public GameObject Minigame()
@@ -39,13 +30,13 @@ public class GigEvent : CalendarEvent
         return location;
     }
 
-    public string AfterConversation()
-    {
-        return afterConversation;
-    }
-
     public bool IsNight()
     {
         return isNight;
+    }
+
+    public void OnConversationComplete(string convoName)
+    {
+        throw new System.NotImplementedException();
     }
 }

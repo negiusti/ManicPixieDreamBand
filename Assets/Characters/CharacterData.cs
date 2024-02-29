@@ -18,7 +18,6 @@ public class CharacterData
         this.isWearingFullFit = character.IsWearingFullFit();
         this.categoryToEnabled = character.CategoryToEnabled();
         this.name = character.CharacterName();
-        this.isMusician = character.isMusician;
     }
 
     public Dictionary<string, string> CategoryToLabelMap()

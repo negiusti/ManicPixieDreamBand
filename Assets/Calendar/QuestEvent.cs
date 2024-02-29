@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class QuestEvent : CalendarEvent
+public class QuestEvent : ICalendarEvent
 {
     [SerializeField] private string name;
     [SerializeField] private string beforeConversation;
@@ -47,5 +47,10 @@ public class QuestEvent : CalendarEvent
     public bool IsNight()
     {
         return isNight;
+    }
+
+    public void OnConversationComplete(string convoName)
+    {
+        throw new System.NotImplementedException();
     }
 }

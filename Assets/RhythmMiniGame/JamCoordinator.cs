@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "JamCoordinator", menuName = "Custom/JamCoordinator")]
 public class JamCoordinator : ScriptableObject
 {
-    private static PlayInstrument[] playableInstruments;
-    private static NPCMovement[] musicians;
+    private static Stage stage;
+    private static Dictionary<string,Movement> musicians;
     private static Camera mainCam;
     private static Camera jamCamera;
     private static bool isJamInSession;
@@ -27,17 +27,22 @@ public class JamCoordinator : ScriptableObject
     }
 
     // Start is called before the first frame update
-    public static void StartJam()
+    public static void StartJam(string bandname)
     {
-        GameManager gm = GameManager.Instance;
-        SceneChanger sc = gm.gameObject.GetComponent<SceneChanger>();
-        string currLocation = sc.GetCurrentScene();
-
         if (isJamInSession)
             return;
 
-        playableInstruments = FindObjectsOfType<PlayInstrument>().Where(i => !i.IsBeingPlayed()).ToArray();
-        musicians = FindObjectsOfType<Character>().Where(x => x.isMusician).Select(x => x.gameObject.GetComponent<NPCMovement>()).Where(npc => npc != null).ToArray();
+        GameManager gm = GameManager.Instance;
+        SceneChanger sc = gm.gameObject.GetComponent<SceneChanger>();
+        Band band = BandJson.GetBandsData().First(b => b.Name == bandname);
+        string currLocation = sc.GetCurrentScene();
+        stage = FindFirstObjectByType<Stage>();
+
+        SpawnCharacters.SpawnBandMembers(band.members);
+
+        musicians = FindObjectsOfType<Character>()
+            .Where(x => band.members.Any(m => m.name == x.CharacterName()))
+            .ToDictionary(c => c.CharacterName(), c => c.gameObject.GetComponent<Movement>());
 
         if (musicians.Count() == 0)
             return;
@@ -54,13 +59,10 @@ public class JamCoordinator : ScriptableObject
             jamCamera.transform.position = jamCameras[currLocation].position;
         }
         mainCam.enabled = false;
-        
-        int i = 0;
-        foreach (PlayInstrument instrument in playableInstruments)
+
+        foreach(BandMember member in band.members)
         {
-            if (i > musicians.Length - 1)
-                return;
-            instrument.Play(musicians[i++]);
+            stage.GetInstrument(member.position).Play(musicians[member.name]);
         }
     }
 
@@ -76,9 +78,6 @@ public class JamCoordinator : ScriptableObject
         mainCam.enabled = true;
         jamCamera.enabled = false;
         Destroy(jamCamera.gameObject);
-        foreach (PlayInstrument instrument in playableInstruments)
-        {
-            instrument.Stop();
-        }
+        stage.StopPerformance();
     }
 }

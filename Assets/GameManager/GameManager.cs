@@ -10,18 +10,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gms = FindObjectsOfType<GameManager>();
 
-        // If there is more than one instance, destroy the current object
-        if (gms.Length > 1)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            DontDestroyOnLoad(gameObject);
-            LoadData();
-            SceneManager.activeSceneChanged += ChangedActiveScene;
+            
+            
 
             //try
             //{
@@ -37,7 +28,7 @@ public class GameManager : MonoBehaviour
             //    //     Don't have permission to play app?
             //    //
             //}
-        }
+        
     }
 
     public void CompleteCurrentEvent()
@@ -59,6 +50,18 @@ public class GameManager : MonoBehaviour
         //}
     }
 
+    void SubscribeToEvents()
+    {
+        SceneManager.activeSceneChanged += ChangedActiveScene;
+        DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().ConvoCompleted += Calendar.OnConversationComplete;
+    }
+
+    void UnsubscribeFromEvents()
+    {
+        SceneManager.activeSceneChanged -= ChangedActiveScene;
+        DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().ConvoCompleted -= Calendar.OnConversationComplete;
+    }
+
     private void ChangedActiveScene(Scene current, Scene next)
     {
         SaveData();
@@ -69,6 +72,8 @@ public class GameManager : MonoBehaviour
         MainCharacterState.Load();
         Calendar.Load();
         InventoryManager.LoadInventories();
+        ConversationJson.LoadFromJson().WaitForCompletion();
+        BandJson.LoadFromJson().WaitForCompletion();
     }
 
     private void SaveData()
@@ -86,12 +91,13 @@ public class GameManager : MonoBehaviour
 
     public void Quit()
     {
-    #if UNITY_EDITOR
+        SaveData();
+
+        #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-            SaveData();
-    #else
+        #else
             Application.Quit();
-    #endif
+        #endif
     }
 
     private void OnApplicationQuit()
@@ -101,6 +107,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        UnsubscribeFromEvents();
         //if (gms.Length == 1)
         //    Steamworks.SteamClient.Shutdown();
         // SAVE THE CURRENT STATE OF EVERYTHING
@@ -116,6 +123,8 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            SubscribeToEvents();
+            LoadData();
             DontDestroyOnLoad(gameObject); // Optional: Keeps the object alive across scene changes
         }
         else

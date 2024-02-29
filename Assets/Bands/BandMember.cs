@@ -1,14 +1,15 @@
 ﻿
-
+[System.Serializable]
 public class BandMember
 {
-    private Band band;
-    private string name;
-    private string instrument;
-    private Stage.StagePosition position;
-    private Stage stage;
+    public string band;
+    public string name;
+    public string instrument;
+    public string position;
 
     public BandMember()
     {
     }
+
+       
 }

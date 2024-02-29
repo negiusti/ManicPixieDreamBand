@@ -13,7 +13,6 @@ public class Character : MonoBehaviour
     private SpriteResolver instResolver;
     private SpriteRenderer instRenderer;
     private bool isWearingFullFit; // Set matching Top, Crotch, and (optional) sleeves, (optional) L_Pant and R_Pant
-    public bool isMusician;
     private bool isMC;
 
     private SpriteLibraryAsset libraryAsset;
@@ -167,7 +166,6 @@ public class Character : MonoBehaviour
         categoryToColorMap = characterData.CategoryToColorMap().ToDictionary(pair => pair.Key, pair => new Color(pair.Value[0], pair.Value[1], pair.Value[2], pair.Value[3]));
         characterName = characterData.GetName();
         categoryToEnabled = characterData.CategoryToEnabled();
-        isMusician = characterData.IsMusician();
         UpdateAppearance();
     }
 

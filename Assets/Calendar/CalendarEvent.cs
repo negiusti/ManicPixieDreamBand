@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 
-public interface CalendarEvent
+public interface ICalendarEvent
 {
     string Location();
     string Name();
-    string BeforeConversation();
     GameObject Minigame();
-    string AfterConversation();
     bool IsNight();
+    void OnConversationComplete(string convoName);
 }
