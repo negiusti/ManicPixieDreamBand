@@ -35,6 +35,14 @@ public class Calendar : ScriptableObject
 
     public static ICalendarEvent GetCurrentEvent()
     {
+        if (events == null)
+        {
+            Load();
+        }
+        if (!events.ContainsKey(day))
+        {
+            ScheduleNext7Days();
+        }
         return events[day].Count > currentEventIdx? events[day][currentEventIdx] : null;
     }
 
@@ -104,12 +112,12 @@ public class Calendar : ScriptableObject
 
     private static bool isBandPracticeScheduled(int i)
     {
-        return events.ContainsKey(i) ? events[i].Any(e => e is BandPracticeEvent) : false;
+        return events.ContainsKey(i) && events[i].Any(e => e is BandPracticeEvent);
     }
 
     private static bool isWorkScheduled(int i)
     {
-        return events.ContainsKey(i) ? events[i].Any(e => e is JobEvent) : false;
+        return events.ContainsKey(i) && events[i].Any(e => e is JobEvent);
     }
 
     private static bool isBandPracticeDay(int i)
@@ -163,7 +171,7 @@ public class Calendar : ScriptableObject
 
     public static void Load()
     {
-        if (!ES3.KeyExists("Calendar"))
+        if (!ES3.KeyExists("Calendar") || events == null)
         {
             events = new Dictionary<int, List<ICalendarEvent>>();
             SetIsNight(false);

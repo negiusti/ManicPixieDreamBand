@@ -32,12 +32,12 @@ public class BankApp : MonoBehaviour
 
     public void DebugGiveMeMoney()
     {
-        SetBankBalance(100 + MainCharacterState.GetBankBalance());
+        SetBankBalance(100 + MainCharacterState.CurrentBankBalance());
     }
 
     public void UpdateBankBalance()
     {
-        double currBalance = MainCharacterState.GetBankBalance();
+        double currBalance = MainCharacterState.CurrentBankBalance();
         balance.text = "$" + currBalance.ToString("F2");
         if (currBalance < 30d) {
             poopResolver.SetCategoryAndLabel("Poop", "Sad");

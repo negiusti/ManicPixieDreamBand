@@ -94,6 +94,8 @@ public class CustomDialogueScript : MonoBehaviour
         }
     }
 
+
+
     private void StartConversation(string conversation)
     {
         // TXT_ContactName_ConversationName
@@ -131,8 +133,9 @@ public class CustomDialogueScript : MonoBehaviour
             !IsPCResponseMenuOpen() && !IsTxtConvoActive())
         {
             StartCoroutine(CoolDown());
-            DialogueManager.standardDialogueUI.OnContinue();
             Debug.Log("continuing");
+            DialogueManager.standardDialogueUI.OnContinueConversation();
+            //DialogueManager.standardDialogueUI.OnContinue();
         } else if (Input.GetKeyDown(keyCode) && DialogueManager.IsConversationActive && isCoolDown)
         {
             Debug.Log("cooling down");

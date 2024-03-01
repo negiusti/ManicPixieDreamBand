@@ -37,6 +37,9 @@ public class JobEvent : ICalendarEvent
 
     public void OnConversationComplete(string convoName)
     {
-        throw new System.NotImplementedException();
+        if (SceneChanger.Instance.GetCurrentScene() == location)
+        {
+            Calendar.CompleteCurrentEvent();
+        }
     }
 }

@@ -31,14 +31,12 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void CompleteCurrentEvent()
-    {
-        Calendar.CompleteCurrentEvent();
-    }
 
     void RegisterSOLuaFuncs()
     {
-        Lua.RegisterFunction(nameof(CompleteCurrentEvent), this, SymbolExtensions.GetMethodInfo(() => CompleteCurrentEvent()));
+        Lua.RegisterFunction(nameof(Calendar.CompleteCurrentEvent), this, SymbolExtensions.GetMethodInfo(() => Calendar.CompleteCurrentEvent()));
+        Lua.RegisterFunction(nameof(JamCoordinator.StartJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.StartJam(string.Empty)));
+        Lua.RegisterFunction(nameof(JamCoordinator.EndJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.EndJam()));
     }
 
     void UnregisterSOLuaFuncs()
@@ -46,7 +44,9 @@ public class GameManager : MonoBehaviour
         //if (unregisterOnDisable)
         //{
         // Remove the functions from Lua: (Replace these lines with your own.)
-        Lua.UnregisterFunction(nameof(CompleteCurrentEvent));
+        Lua.UnregisterFunction(nameof(Calendar.CompleteCurrentEvent));
+        Lua.UnregisterFunction(nameof(JamCoordinator.StartJam));
+        Lua.UnregisterFunction(nameof(JamCoordinator.EndJam));
         //}
     }
 
@@ -92,9 +92,11 @@ public class GameManager : MonoBehaviour
     public void Quit()
     {
         SaveData();
+        UnregisterSOLuaFuncs();
+        UnsubscribeFromEvents();
 
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
         #else
             Application.Quit();
         #endif
@@ -107,7 +109,8 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        UnsubscribeFromEvents();
+        
+        
         //if (gms.Length == 1)
         //    Steamworks.SteamClient.Shutdown();
         // SAVE THE CURRENT STATE OF EVERYTHING
@@ -123,6 +126,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            RegisterSOLuaFuncs();
             SubscribeToEvents();
             LoadData();
             DontDestroyOnLoad(gameObject); // Optional: Keeps the object alive across scene changes

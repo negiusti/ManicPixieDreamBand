@@ -39,11 +39,11 @@ public class PlayInstrument : MonoBehaviour
             JamCoordinator.StartJam("The Storm");
             minigame.OpenMiniGame();
         }
-        if (isPlayingInstrument && !minigame.IsMiniGameActive() && Time.time - startTime > 1f)
-        {
-            Stop();
-            JamCoordinator.EndJam();
-        }
+        //if (isPlayingInstrument && !minigame.IsMiniGameActive() && Time.time - startTime > 1f)
+        //{
+        //    Stop();
+        //    JamCoordinator.EndJam();
+        //}
     }
 
     public Vector3 SpawnPos()

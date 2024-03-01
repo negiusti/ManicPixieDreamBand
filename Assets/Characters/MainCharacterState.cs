@@ -55,7 +55,7 @@ public class MainCharacterState : ScriptableObject
         bankBalance = value;
     }
 
-    public static double GetBankBalance()
+    public static double CurrentBankBalance()
     {
         return System.Math.Round(bankBalance, 2);
     }

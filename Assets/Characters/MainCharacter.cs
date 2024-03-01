@@ -27,23 +27,12 @@ public class MainCharacter : MonoBehaviour
 
     // EVERYTHING BELOW USED FOR LUA FUNCTIONS IN DIALOGUE TREE!!!!
 
-    public static bool HasChangedOutfitToday()
-    {
-        return MainCharacterState.HasChangedOutfitToday();
-    }
-
-    public static double CurrentBankBalance()
-    {
-        Debug.Log(" CurrentBankBalance() is " + MainCharacterState.GetBankBalance());
-        return MainCharacterState.GetBankBalance();
-    }
-
     void OnEnable()
     {
         MainCharacterState.Load();
         // Make the functions available to Lua: (Replace these lines with your own.)
-        Lua.RegisterFunction(nameof(HasChangedOutfitToday), this, SymbolExtensions.GetMethodInfo(() => HasChangedOutfitToday()));
-        Lua.RegisterFunction(nameof(CurrentBankBalance), this, SymbolExtensions.GetMethodInfo(() => CurrentBankBalance()));
+        Lua.RegisterFunction(nameof(MainCharacterState.HasChangedOutfitToday), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.HasChangedOutfitToday()));
+        Lua.RegisterFunction(nameof(MainCharacterState.CurrentBankBalance), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.CurrentBankBalance()));
     }
 
     void OnDisable()
@@ -52,8 +41,8 @@ public class MainCharacter : MonoBehaviour
         //if (unregisterOnDisable)
         //{
         // Remove the functions from Lua: (Replace these lines with your own.)
-        Lua.UnregisterFunction(nameof(HasChangedOutfitToday));
-        Lua.UnregisterFunction(nameof(CurrentBankBalance));
+        Lua.UnregisterFunction(nameof(MainCharacterState.HasChangedOutfitToday));
+        Lua.UnregisterFunction(nameof(MainCharacterState.CurrentBankBalance));
         //}
     }
 }

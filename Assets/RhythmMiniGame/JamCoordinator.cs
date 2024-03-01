@@ -48,17 +48,17 @@ public class JamCoordinator : ScriptableObject
             return;
 
         isJamInSession = true;
-        mainCam = Camera.main;
-        jamCamera = Instantiate(mainCam);
-        jamCamera.GetComponent<AudioListener>().enabled = false;
-        Debug.Log("currLocation: " + currLocation);
-        if (jamCameras.ContainsKey(currLocation))
-        {
-            Debug.Log("contains currLocation: " + currLocation);
-            jamCamera.orthographicSize = jamCameras[currLocation].orthographicSize;
-            jamCamera.transform.position = jamCameras[currLocation].position;
-        }
-        mainCam.enabled = false;
+        //mainCam = Camera.main;
+        //jamCamera = Instantiate(mainCam);
+        //jamCamera.GetComponent<AudioListener>().enabled = false;
+        //Debug.Log("currLocation: " + currLocation);
+        //if (jamCameras.ContainsKey(currLocation))
+        //{
+        //    Debug.Log("contains currLocation: " + currLocation);
+        //    jamCamera.orthographicSize = jamCameras[currLocation].orthographicSize;
+        //    jamCamera.transform.position = jamCameras[currLocation].position;
+        //}
+        //mainCam.enabled = false;
 
         foreach(BandMember member in band.members)
         {
@@ -75,9 +75,9 @@ public class JamCoordinator : ScriptableObject
             return;
 
         isJamInSession = false;
-        mainCam.enabled = true;
-        jamCamera.enabled = false;
-        Destroy(jamCamera.gameObject);
+        //mainCam.enabled = true;
+        //jamCamera.enabled = false;
+        //Destroy(jamCamera.gameObject);
         stage.StopPerformance();
     }
 }

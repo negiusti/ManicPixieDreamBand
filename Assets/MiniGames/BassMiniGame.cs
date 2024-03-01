@@ -28,6 +28,7 @@ public class BassMiniGame : MiniGame
     public override void CloseMiniGame()
     {
         isActive = false;
+        JamCoordinator.EndJam();
         DisableAllChildren();
     }
 
