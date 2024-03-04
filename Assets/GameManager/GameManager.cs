@@ -1,6 +1,8 @@
+using System;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,6 +37,7 @@ public class GameManager : MonoBehaviour
     void RegisterSOLuaFuncs()
     {
         Lua.RegisterFunction(nameof(Calendar.CompleteCurrentEvent), this, SymbolExtensions.GetMethodInfo(() => Calendar.CompleteCurrentEvent()));
+        Lua.RegisterFunction(nameof(MiniGameManager.StartMiniGame), this, SymbolExtensions.GetMethodInfo(() => MiniGameManager.StartMiniGame(string.Empty)));
         Lua.RegisterFunction(nameof(JamCoordinator.StartJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.StartJam(string.Empty)));
         Lua.RegisterFunction(nameof(JamCoordinator.EndJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.EndJam()));
     }
@@ -45,6 +48,7 @@ public class GameManager : MonoBehaviour
         //{
         // Remove the functions from Lua: (Replace these lines with your own.)
         Lua.UnregisterFunction(nameof(Calendar.CompleteCurrentEvent));
+        Lua.UnregisterFunction(nameof(MiniGameManager.StartMiniGame));
         Lua.UnregisterFunction(nameof(JamCoordinator.StartJam));
         Lua.UnregisterFunction(nameof(JamCoordinator.EndJam));
         //}
@@ -95,7 +99,7 @@ public class GameManager : MonoBehaviour
         UnregisterSOLuaFuncs();
         UnsubscribeFromEvents();
 
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
         #else
             Application.Quit();

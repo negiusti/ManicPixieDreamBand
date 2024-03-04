@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -33,9 +34,7 @@ public class JamCoordinator : ScriptableObject
             return;
 
         GameManager gm = GameManager.Instance;
-        SceneChanger sc = gm.gameObject.GetComponent<SceneChanger>();
         Band band = BandJson.GetBandsData().First(b => b.Name == bandname);
-        string currLocation = sc.GetCurrentScene();
         stage = FindFirstObjectByType<Stage>();
 
         SpawnCharacters.SpawnBandMembers(band.members);
@@ -48,18 +47,7 @@ public class JamCoordinator : ScriptableObject
             return;
 
         isJamInSession = true;
-        //mainCam = Camera.main;
-        //jamCamera = Instantiate(mainCam);
-        //jamCamera.GetComponent<AudioListener>().enabled = false;
-        //Debug.Log("currLocation: " + currLocation);
-        //if (jamCameras.ContainsKey(currLocation))
-        //{
-        //    Debug.Log("contains currLocation: " + currLocation);
-        //    jamCamera.orthographicSize = jamCameras[currLocation].orthographicSize;
-        //    jamCamera.transform.position = jamCameras[currLocation].position;
-        //}
-        //mainCam.enabled = false;
-
+        // SwitchToJamCamera();
         foreach(BandMember member in band.members)
         {
             stage.GetInstrument(member.position).Play(musicians[member.name]);
@@ -75,9 +63,30 @@ public class JamCoordinator : ScriptableObject
             return;
 
         isJamInSession = false;
-        //mainCam.enabled = true;
-        //jamCamera.enabled = false;
-        //Destroy(jamCamera.gameObject);
-        stage.StopPerformance();
+        //SwitchToMainCamera();
+        FindObjectsOfType<PlayInstrument>().ToList().ForEach(x => x.Stop());
+        stage?.StopPerformance();
+    }
+
+    private static void SwitchToJamCamera()
+    {
+        string currLocation = SceneChanger.Instance.GetCurrentScene();
+        mainCam = Camera.main;
+        jamCamera = Instantiate(mainCam);
+        jamCamera.GetComponent<AudioListener>().enabled = false;
+        Debug.Log("currLocation: " + currLocation);
+        if (jamCameras.ContainsKey(currLocation))
+        {
+            Debug.Log("contains currLocation: " + currLocation);
+            jamCamera.orthographicSize = jamCameras[currLocation].orthographicSize;
+            jamCamera.transform.position = jamCameras[currLocation].position;
+        }
+        mainCam.enabled = false;
+    }
+
+    private static void SwitchToMainCamera() {
+        mainCam.enabled = true;
+        jamCamera.enabled = false;
+        Destroy(jamCamera.gameObject);
     }
 }

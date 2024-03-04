@@ -31,12 +31,13 @@ public class PlayInstrument : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Only applies to MainCharacter
+        // Only applies to MainCharacter, this is only for playing solo, not with the band
         if (!isPlayingInstrument && withinRange && Input.GetKey(keyToTrigger))
         {
             //Play();
             //JamCoordinator.StartJam("LEMON BOY");
-            JamCoordinator.StartJam("The Storm");
+            //JamCoordinator.StartJam("The Storm");
+            Play(FindFirstObjectByType<PlayerMovement>());
             minigame.OpenMiniGame();
         }
         //if (isPlayingInstrument && !minigame.IsMiniGameActive() && Time.time - startTime > 1f)
@@ -73,8 +74,8 @@ public class PlayInstrument : MonoBehaviour
     {
         spriteRenderer.enabled = true;
         isPlayingInstrument = false;
-        musicianMovement.StopPlayingInstrument();
-        minigame.CloseMiniGame();
+        musicianMovement?.StopPlayingInstrument();
+        //minigame.CloseMiniGame();
     }
 
     public bool IsBeingPlayed()

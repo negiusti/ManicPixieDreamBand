@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class BassMiniGame : MiniGame
 {
@@ -7,7 +8,11 @@ public class BassMiniGame : MiniGame
     // Use this for initialization
     void Start()
     {
+    }
 
+    private void OnDestroy()
+    {
+        
     }
 
     // Update is called once per frame
@@ -21,14 +26,23 @@ public class BassMiniGame : MiniGame
 
     public override void OpenMiniGame()
     {
+        MiniGameManager.PrepMiniGame();
         isActive = true;
         EnableAllChildren();
+    }
+
+    public void StartBassMiniGameWithBand(bool repeat)
+    {
+        // TODO: repeat mini game if not gig
+        OpenMiniGame();
+        JamCoordinator.StartJam("LEMON BOY");
     }
 
     public override void CloseMiniGame()
     {
         isActive = false;
         JamCoordinator.EndJam();
+        MiniGameManager.CleanUpMiniGame();
         DisableAllChildren();
     }
 
