@@ -16,6 +16,7 @@ public class Stage : MonoBehaviour
     public PlayInstrument leftInst;
     public PlayInstrument rightInst;
     public PlayInstrument centerInst;
+    public CrowdSpawner crowdSpawner;
 
     // Start is called before the first frame update
     void Start()
@@ -31,11 +32,14 @@ public class Stage : MonoBehaviour
 
     public void StartPerformance(Band band)
     {
-        JamCoordinator.StartJam(band.Name);
+        if (crowdSpawner != null)
+            crowdSpawner.SpawnCrowd(band);
     }
 
     public void StopPerformance()
     {
+        if (crowdSpawner != null)
+            crowdSpawner.DespawnCrowd();
         leftInst.Stop();
         rightInst.Stop();
         centerInst.Stop();

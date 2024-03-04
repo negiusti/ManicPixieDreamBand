@@ -34,8 +34,9 @@ public class JamCoordinator : ScriptableObject
             return;
 
         GameManager gm = GameManager.Instance;
-        Band band = BandJson.GetBandsData().First(b => b.Name == bandname);
+        Band band = BandsManager.GetBandByName(bandname);
         stage = FindFirstObjectByType<Stage>();
+        stage.StartPerformance(band);
 
         SpawnCharacters.SpawnBandMembers(band.members);
 

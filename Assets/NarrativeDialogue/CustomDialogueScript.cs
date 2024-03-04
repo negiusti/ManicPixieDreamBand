@@ -130,7 +130,7 @@ public class CustomDialogueScript : MonoBehaviour
     {
         // the reason I do this is so that the space button selects the dialogue option without also continuing
         if (Input.GetKeyDown(keyCode) && DialogueManager.IsConversationActive && !isCoolDown &&
-            !IsPCResponseMenuOpen() && !IsTxtConvoActive())
+            !IsPCResponseMenuOpen() && !IsTxtConvoActive() && !DialogueTime.IsPaused)
         {
             StartCoroutine(CoolDown());
             Debug.Log("continuing");
@@ -235,11 +235,11 @@ public class CustomDialogueScript : MonoBehaviour
         {
             ConversationComplete(convoName);
         }
-        if (subtitle.dialogueEntry.DialogueText.Length == 0 && !subtitle.dialogueEntry.Title.Equals("START"))
-        {
-            Debug.Log("Continuing after empty line of dialogue!!");
-            DialogueManager.standardDialogueUI.OnContinue();
-        }
+        //if (subtitle.dialogueEntry.DialogueText.Length == 0 && !subtitle.dialogueEntry.Title.Equals("START"))
+        //{
+        //    Debug.Log("Continuing after empty line of dialogue!!");
+        //    DialogueManager.standardDialogueUI.OnContinue();
+        //}
         if (subtitle.dialogueEntry.DialogueText.Length > 0 && IsTxtConvo(convoName)) {
             string contactName = phone.GetContactNameFromConvoName(convoName);
             FocusBackLog(contactName);

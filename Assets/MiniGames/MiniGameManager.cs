@@ -50,6 +50,7 @@ public class MiniGameManager : ScriptableObject
     public static void CleanUpMiniGame()
     {
         DialogueManager.Unpause();
+        DialogueManager.standardDialogueUI.OnContinueConversation();
     }
 
     private static void StartBassMiniGame()

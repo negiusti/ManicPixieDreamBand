@@ -29,6 +29,11 @@ public class CrowdMember : MonoBehaviour
         
     }
 
+    public bool IsForegroundCrowdMember()
+    {
+        return gameObject.name.StartsWith("FG");
+    }
+
     void RandomizeAppearance()
     {
         foreach (string category in spriteResolvers.Keys)
