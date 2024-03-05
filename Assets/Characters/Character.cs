@@ -228,5 +228,11 @@ public class Character : MonoBehaviour
             targetRenderer.sortingLayerName = layerName;
         }
     }
+
+    public void SetFacialExpression(string emotion)
+    {
+        // if emotion == default: set to saved value
+        // NOTE: make sure facial expression changes do not overwrite default eyes/mouth/etc
+    }
 }
 
