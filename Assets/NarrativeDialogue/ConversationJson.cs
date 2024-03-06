@@ -9,7 +9,7 @@ public class Participant
 {
     public string name;
     public Vector3 position;
-    public bool inBackground;
+    public string layer;
     public bool isTrigger; // does interacting with this participant trigger the conversation
     public bool existAtStart;
 }

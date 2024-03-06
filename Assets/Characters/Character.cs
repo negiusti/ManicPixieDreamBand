@@ -218,9 +218,9 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void MoveToRenderLayer(bool inBackground, int idx)
+    public void MoveToRenderLayer(string layer, int idx)
     {
-        string layerName = (inBackground ? "bg" : "fg") + idx;
+        string layerName = layer + idx;
         if (spriteRenderers == null)
             spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
         foreach (var targetRenderer in spriteRenderers)

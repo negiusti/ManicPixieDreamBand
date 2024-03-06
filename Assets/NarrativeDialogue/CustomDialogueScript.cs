@@ -234,12 +234,12 @@ public class CustomDialogueScript : MonoBehaviour
         if (subtitle.dialogueEntry.outgoingLinks.Count == 0)
         {
             ConversationComplete(convoName);
+            if (subtitle.dialogueEntry.DialogueText.Length == 0)// && !subtitle.dialogueEntry.Title.Equals("START"))
+            {
+                Debug.Log("Continuing after empty line of dialogue!!");
+                DialogueManager.standardDialogueUI.OnContinue();
+            }
         }
-        //if (subtitle.dialogueEntry.DialogueText.Length == 0 && !subtitle.dialogueEntry.Title.Equals("START"))
-        //{
-        //    Debug.Log("Continuing after empty line of dialogue!!");
-        //    DialogueManager.standardDialogueUI.OnContinue();
-        //}
         if (subtitle.dialogueEntry.DialogueText.Length > 0 && IsTxtConvo(convoName)) {
             string contactName = phone.GetContactNameFromConvoName(convoName);
             FocusBackLog(contactName);

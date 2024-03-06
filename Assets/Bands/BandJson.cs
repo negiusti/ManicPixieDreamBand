@@ -24,25 +24,6 @@ public class BandJson : ScriptableObject
 
     private static void OnBandDataLoaded(AsyncOperationHandle<TextAsset> obj)
     {
-        var bd = new BandsData();
-        bd.bandsData = new List<Band>();
-        var b = new Band();
-        b.AvgTixSales = 2;
-        b.leftAmp = "sldkfj";
-        b.rightAmp = "sdlkf";
-        b.Name = "LB";
-        var bm = new BandMember();
-        bm.band = "LB";
-        bm.instrument = "gtr";
-        bm.name = "toots";
-        bm.position = "left";
-        b.members = new BandMember[] {bm,bm };
-        bd.bandsData.Add(b);
-
-        Debug.Log("LOOK HERE IDIOT: " + JsonUtility.ToJson(bd));
-        Debug.Log("LOOK HERE IDIOT: " + JsonUtility.ToJson(b));
-        Debug.Log("LOOK HERE IDIOT: " + JsonUtility.ToJson(bm));
-
         if (obj.Status == AsyncOperationStatus.Succeeded)
         {
             string jsonData = obj.Result.text;

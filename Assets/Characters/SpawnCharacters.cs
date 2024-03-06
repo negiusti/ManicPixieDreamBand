@@ -4,6 +4,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Linq;
 using System;
 using PixelCrushers.DialogueSystem;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "SpawnCharacters", menuName = "Custom/SpawnCharacters")]
 public class SpawnCharacters : ScriptableObject
@@ -26,12 +27,12 @@ public class SpawnCharacters : ScriptableObject
     {
         Character[] characters = FindObjectsOfType<Character>();
         Array.Sort(participants, (a, b) => b.position.y.CompareTo(a.position.y));
-        int f = 0;
-        int b = 0;
+        Dictionary<string, int> layerToIdx = new Dictionary<string, int>();
         foreach (Participant p in  participants)
         {
             Character c = characters.FirstOrDefault(c => c.name.Equals(p.name));
-            int idx = p.inBackground ? b++ : f++;
+            int idx = layerToIdx.GetValueOrDefault(p.layer, -1) + 1;
+            layerToIdx[p.layer] = idx;
             if (c == null)
             {
                 c = SpawnParticipant(p).WaitForCompletion().GetComponent<Character>();
@@ -41,7 +42,7 @@ public class SpawnCharacters : ScriptableObject
                 Vector3 newPos = new Vector3(c.transform.position.x, p.position.y, 3f);
                 c.transform.position = newPos;
             }
-            c.MoveToRenderLayer(p.inBackground, idx);
+            c.MoveToRenderLayer(p.layer, idx);
         }
     }
 
