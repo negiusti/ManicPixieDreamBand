@@ -65,7 +65,7 @@ public class SpawnCharacters : ScriptableObject
             if (c == null)
             {
                 c = SpawnBandMember(m, stage).WaitForCompletion().GetComponent<Character>();
-                c.MoveToRenderLayer("stage_fg");
+                c.MoveToRenderLayer("stage_char", 0);
             }
         }
     }

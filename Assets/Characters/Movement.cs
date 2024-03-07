@@ -10,6 +10,7 @@ public abstract class Movement : MonoBehaviour
     protected GameObject background;
     protected Vector3 prevPos;
     protected string prevLayer;
+    protected int prevLayerOrder;
 
     public enum MovementState
     {
@@ -78,7 +79,7 @@ public abstract class Movement : MonoBehaviour
         }
     }
 
-    public void PlayInstrument(string instLabel, Vector3 pos, string layer)
+    public void PlayInstrument(string instLabel, Vector3 pos, string layer, int layerOrder)
     {
         player.SetInstrumentSprite(instLabel);
         if (instLabel.Contains("Guitar") || instLabel.Contains("Bass"))
@@ -90,8 +91,9 @@ public abstract class Movement : MonoBehaviour
         //currentRotation.y = 0;
         prevPos = transform.position;
         transform.position = pos;
-        prevLayer = player.GetCurrentLayer();
-        player.MoveToRenderLayer(layer);
+        prevLayer = player.GetCurrentLayer().sortingLayerName;
+        prevLayerOrder = player.GetCurrentLayer().sortingOrder;
+        player.MoveToRenderLayer(layer, layerOrder);
         //transform.rotation = currentRotation;
     }
 
@@ -100,7 +102,7 @@ public abstract class Movement : MonoBehaviour
         currState = MovementState.Idle;
         player.HideInstrumentSprite();
         transform.position = prevPos;
-        player.MoveToRenderLayer(prevLayer);
+        player.MoveToRenderLayer(prevLayer, prevLayerOrder);
     }
 
     private bool HasStateChanged()

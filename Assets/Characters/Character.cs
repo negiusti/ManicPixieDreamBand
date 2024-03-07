@@ -2,6 +2,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
+using UnityEngine.Rendering;
 
 public class Character : MonoBehaviour
 {
@@ -12,15 +13,16 @@ public class Character : MonoBehaviour
     private Dictionary<string, bool> categoryToEnabled;
     private SpriteResolver instResolver;
     private SpriteRenderer instRenderer;
+    private SortingGroup sortingGroup;
     private bool isWearingFullFit; // Set matching Top, Crotch, and (optional) sleeves, (optional) L_Pant and R_Pant
     private bool isMC;
 
     private SpriteLibraryAsset libraryAsset;
     private string characterName;
 
-    public string GetCurrentLayer()
+    public SortingGroup GetCurrentLayer()
     {
-        return spriteRenderers[0].sortingLayerName;
+        return sortingGroup;
     }
 
     public bool IsWearingFullFit()
@@ -57,6 +59,7 @@ public class Character : MonoBehaviour
         categoryToEnabled = new Dictionary<string, bool>();
         categoryToLabelMap = new Dictionary<string, string>();
         categoryToColorMap = new Dictionary<string, Color>();
+        sortingGroup = this.GetComponent<SortingGroup>();
         
         if (libraryAsset == null)
         {
@@ -208,25 +211,31 @@ public class Character : MonoBehaviour
         return libraryAsset;
     }
 
-    public void MoveToRenderLayer(string layerName)
-    {
-        if (spriteRenderers == null)
-            spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
-        foreach (var targetRenderer in spriteRenderers)
-        {
-            targetRenderer.sortingLayerName = layerName;
-        }
-    }
+    //public void MoveToRenderLayer(string layerName)
+    //{
+    //    if (spriteRenderers == null)
+    //        spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
+    //    foreach (var targetRenderer in spriteRenderers)
+    //    {
+    //        targetRenderer.sortingLayerName = layerName;
+    //    }
+    //}
+
+    //public void MoveToRenderLayer(string layer, int idx)
+    //{
+    //    string layerName = layer + idx;
+    //    if (spriteRenderers == null)
+    //        spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
+    //    foreach (var targetRenderer in spriteRenderers)
+    //    {
+    //        targetRenderer.sortingLayerName = layerName;
+    //    }
+    //}
 
     public void MoveToRenderLayer(string layer, int idx)
     {
-        string layerName = layer + idx;
-        if (spriteRenderers == null)
-            spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
-        foreach (var targetRenderer in spriteRenderers)
-        {
-            targetRenderer.sortingLayerName = layerName;
-        }
+        sortingGroup.sortingLayerName = layer;
+        sortingGroup.sortingOrder = idx;
     }
 
     public void SetFacialExpression(string emotion)

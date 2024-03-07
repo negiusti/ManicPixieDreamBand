@@ -26,13 +26,13 @@ public class CrowdSpawner : MonoBehaviour
 
         foreach (CrowdMember member in audience)
         {
-            member.gameObject.SetActive(ticketSales-- > 0);
             if (heads.Count > 0)
             {
                 string head = heads.First();
                 member.SetHeadSprite(head);
                 heads.Remove(head);
             }
+            member.gameObject.SetActive(ticketSales-- > 0);
             if (member.IsForegroundCrowdMember() && band.Name != "LEMON BOY")
                 member.gameObject.SetActive(false);
         }
