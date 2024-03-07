@@ -16,6 +16,10 @@ public class Character : MonoBehaviour
     private SortingGroup sortingGroup;
     private bool isWearingFullFit; // Set matching Top, Crotch, and (optional) sleeves, (optional) L_Pant and R_Pant
     private bool isMC;
+    private SpriteResolver mouthResolver;
+    private SpriteRenderer mouthRenderer;
+    private SpriteResolver eyesResolver;
+    private SpriteRenderer eyesRenderer;
 
     private SpriteLibraryAsset libraryAsset;
     private string characterName;
@@ -88,7 +92,14 @@ public class Character : MonoBehaviour
                 if (GetSRCategory(targetResolver).Equals("Instrument"))
                 {
                     instResolver = targetResolver;
-                    break;
+                }
+                if (GetSRCategory(targetResolver).Equals("Mouth"))
+                {
+                    mouthResolver = targetResolver;
+                }
+                if (GetSRCategory(targetResolver).Equals("Eyes"))
+                {
+                    eyesResolver = targetResolver;
                 }
         }
         foreach (var targetRenderer in spriteRenderers)
@@ -96,7 +107,14 @@ public class Character : MonoBehaviour
             if (targetRenderer.gameObject.name.Equals("Instrument"))
             {
                 instRenderer = targetRenderer;
-                break;
+            }
+            if (targetRenderer.gameObject.name.Equals("Mouth"))
+            {
+                mouthRenderer = targetRenderer;
+            }
+            if (targetRenderer.gameObject.name.Equals("Eyes"))
+            {
+                eyesRenderer = targetRenderer;
             }
         }
     }
@@ -123,7 +141,9 @@ public class Character : MonoBehaviour
     {
         foreach (var targetResolver in spriteResolvers)
         {
-                categoryToLabelMap[GetSRCategory(targetResolver)] = targetResolver.GetLabel();
+            if (targetResolver.GetLabel().StartsWith("E_")) // don't save emotes
+                continue;
+            categoryToLabelMap[GetSRCategory(targetResolver)] = targetResolver.GetLabel();
         }
 
         foreach (var spriteRenderer in spriteRenderers)
@@ -136,13 +156,19 @@ public class Character : MonoBehaviour
     {
         foreach (var spriteRenderer in spriteRenderers)
         {
+            // don't save emotes
+            if (spriteRenderer.gameObject.name == "Mouth" && mouthResolver.GetLabel().StartsWith("E_"))
+                continue;
+            if (spriteRenderer.gameObject.name == "Eyes" && eyesResolver.GetLabel().StartsWith("E_"))
+                continue;
+
             categoryToColorMap[spriteRenderer.gameObject.name] = spriteRenderer.color;
         }
     }
 
     private string GetSRCategory(SpriteResolver sr)
     {
-        return sr.GetCategory() != null ? sr.GetCategory() : sr.gameObject.name;
+        return sr.GetCategory() ?? sr.gameObject.name;
     }
 
     public void SaveCharacter()
@@ -242,6 +268,26 @@ public class Character : MonoBehaviour
     {
         // if emotion == default: set to saved value
         // NOTE: make sure facial expression changes do not overwrite default eyes/mouth/etc
+    }
+
+    public void EmoteMouth(string emotion)
+    {
+        string label = (emotion == "default") ? categoryToLabelMap["Mouth"] : "E_" + emotion;
+        mouthResolver.SetCategoryAndLabel("Mouth", label);
+        Debug.Log("Setting Mouth resolver to: " + mouthResolver.GetLabel());
+        mouthResolver.ResolveSpriteToSpriteRenderer();
+        Color color = (emotion == "default") ? categoryToColorMap["Mouth"] : Color.white;
+        mouthRenderer.color = color;
+    }
+
+    public void EmoteEyes(string emotion)
+    {
+        string label = (emotion == "default") ? categoryToLabelMap["Eyes"] : "E_" + emotion;
+        eyesResolver.SetCategoryAndLabel("Eyes", label);
+        Debug.Log("Setting Eyes resolver to: " + eyesResolver.GetLabel());
+        eyesResolver.ResolveSpriteToSpriteRenderer();
+        Color color = (emotion == "default") ? categoryToColorMap["Eyes"] : Color.white;
+        eyesRenderer.color = color;
     }
 }
 

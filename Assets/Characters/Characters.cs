@@ -13,6 +13,25 @@ public class Characters : ScriptableObject
     // keep a cache of currently loaded characters and refresh it on each scene change
     public static void RefreshCharactersCache(Scene current, Scene next)
     {
+        RefreshCharactersCache();
+    }
+
+    public static void RefreshCharactersCache()
+    {
         characters = FindObjectsOfType<Character>(true).ToDictionary(c => c.name, c => c);
+    }
+
+    public static void EmoteMouth(string character, string emotion)
+    {
+        if (characters == null)
+            RefreshCharactersCache();
+        characters[character]?.EmoteMouth(emotion);
+    }
+
+    public static void EmoteEyes(string character, string emotion)
+    {
+        if (characters == null)
+            RefreshCharactersCache();
+        characters[character]?.EmoteEyes(emotion);
     }
 }
