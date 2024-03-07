@@ -2,6 +2,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
+using PixelCrushers.DialogueSystem;
 
 public class CharacterEditor : MonoBehaviour
 {
@@ -87,21 +88,27 @@ public class CharacterEditor : MonoBehaviour
         GetAvailableOptions();
     }
 
-    private void GetAvailableOptions()
+   private void GetAvailableOptions()
     {
         string[] labels;
         foreach (string category in spriteLib.GetCategoryNames())
         {
             if (unlockAllOutfits)
             {
-                labels = spriteLib.GetCategoryLabelNames(category).Where(l => !l.StartsWith("X_") || l.Equals("X_" + character.gameObject.name)).ToArray();
+                labels = spriteLib.GetCategoryLabelNames(category)
+                    .Where(l => l.StartsWith("E_"))
+                    .Where(l => !l.StartsWith("X_") || l.Equals("X_" + character.gameObject.name))
+                    .ToArray();
             }
             else
             {
                 labels = InventoryManager.GetMCInventory(category).ToArray();
                 // if the inventory is empty, just unlock everything
                 if (labels.Length == 0)
-                    labels = spriteLib.GetCategoryLabelNames(category).Where(l => !l.StartsWith("X_") || l.Equals("X_" + character.gameObject.name)).ToArray();
+                    labels = spriteLib.GetCategoryLabelNames(category)
+                        .Where(l => l.StartsWith("E_"))
+                        .Where(l => !l.StartsWith("X_") || l.Equals("X_" + character.gameObject.name))
+                        .ToArray();
             }
 
             categoryToLabels[category] = labels;
