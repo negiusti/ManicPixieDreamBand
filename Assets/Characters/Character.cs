@@ -20,6 +20,8 @@ public class Character : MonoBehaviour
     private SpriteRenderer mouthRenderer;
     private SpriteResolver eyesResolver;
     private SpriteRenderer eyesRenderer;
+    private SpriteRenderer eyeshadowRenderer;
+    private SpriteRenderer eyebrowsRenderer;
 
     private SpriteLibraryAsset libraryAsset;
     private string characterName;
@@ -116,6 +118,14 @@ public class Character : MonoBehaviour
             {
                 eyesRenderer = targetRenderer;
             }
+            if (targetRenderer.gameObject.name.Equals("Eyebrows"))
+            {
+                eyebrowsRenderer = targetRenderer;
+            }
+            if (targetRenderer.gameObject.name.Equals("Eyeshadow"))
+            {
+                eyeshadowRenderer = targetRenderer;
+            }
         }
     }
 
@@ -148,7 +158,7 @@ public class Character : MonoBehaviour
 
         foreach (var spriteRenderer in spriteRenderers)
         {
-            categoryToEnabled[spriteRenderer.gameObject.name] = spriteRenderer.enabled;
+            categoryToEnabled[spriteRenderer.gameObject.name] = spriteRenderer.enabled || spriteRenderer.gameObject.name == "Eyeshadow" || spriteRenderer.gameObject.name == "Eyebrows";
         }
     }
 
@@ -278,6 +288,7 @@ public class Character : MonoBehaviour
         mouthResolver.ResolveSpriteToSpriteRenderer();
         Color color = (emotion == "default") ? categoryToColorMap["Mouth"] : Color.white;
         mouthRenderer.color = color;
+
     }
 
     public void EmoteEyes(string emotion)
@@ -288,6 +299,8 @@ public class Character : MonoBehaviour
         eyesResolver.ResolveSpriteToSpriteRenderer();
         Color color = (emotion == "default") ? categoryToColorMap["Eyes"] : Color.white;
         eyesRenderer.color = color;
+        eyeshadowRenderer.enabled = (emotion == "default");
+        eyebrowsRenderer.enabled = (emotion == "default");
     }
 }
 
