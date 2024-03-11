@@ -3,7 +3,8 @@ using UnityEngine;
 
 public abstract class Movement : MonoBehaviour
 {
-    protected static float moveSpeed = 4f;
+    protected static float walkMoveSpeed = 4f;
+    protected static float skateMoveSpeed = 8f;
     protected Character player;
     protected Animator animator;
     protected float minX, maxX;
@@ -11,25 +12,32 @@ public abstract class Movement : MonoBehaviour
     protected Vector3 prevPos;
     protected string prevLayer;
     protected int prevLayerOrder;
+    protected bool isSkating;
 
     public enum MovementState
     {
         Walk,
         Idle,
         Guitar,
-        Drum
+        Drum,
+        Skate,
+        SkateIdle
     };
 
     private static string WalkAnim = "BaseCharacter_Walk";
     private static string IdleAnim = "BaseCharacter_Idle";
     private static string GuitarAnim = "BaseCharacter_Guitar";
     private static string DrumAnim = "BaseCharacter_Drum";
+    private static string SkateAnim = "BaseCharacter_Skateboard";
+    private static string SkateIdleAnim = "BaseCharacter_SkateboardIdle";
 
     private Dictionary<MovementState, string> stateToAnimation = new Dictionary<MovementState, string> {
         {MovementState.Walk, WalkAnim },
         {MovementState.Idle, IdleAnim },
         {MovementState.Guitar, GuitarAnim },
-        {MovementState.Drum, DrumAnim }
+        {MovementState.Drum, DrumAnim },
+        {MovementState.Skate, SkateAnim },
+        {MovementState.SkateIdle, SkateIdleAnim }
             };
     protected MovementState currState;
     private string currAnim;
@@ -37,6 +45,7 @@ public abstract class Movement : MonoBehaviour
     // Use this for initialization
     protected virtual void Start()
     {
+        isSkating = false;
         player = GetComponent<Character>();
         animator = GetComponentInChildren<Animator>();
         currState = MovementState.Idle;
@@ -74,6 +83,13 @@ public abstract class Movement : MonoBehaviour
             else if (currState == MovementState.Walk)
             {
                 currAnim = WalkAnim;
+            } else if (currState == MovementState.Skate)
+            {
+                currAnim = SkateAnim;
+            }
+            else if (currState == MovementState.SkateIdle)
+            {
+                currAnim = SkateIdleAnim;
             }
             animator.CrossFade(currAnim, .05f);
         }
@@ -103,6 +119,11 @@ public abstract class Movement : MonoBehaviour
         player.HideInstrumentSprite();
         transform.position = prevPos;
         player.MoveToRenderLayer(prevLayer, prevLayerOrder);
+    }
+
+    protected void Ollie()
+    {
+        animator.Play("BaseCharacter_SkateJump");
     }
 
     private bool HasStateChanged()

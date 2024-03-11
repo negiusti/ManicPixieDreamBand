@@ -48,6 +48,7 @@ public class NPCMovement : Movement
         }
 
         Vector3 position = transform.position;
+        float moveSpeed = isSkating ? skateMoveSpeed : walkMoveSpeed;
         position.x += moveDirection * moveSpeed * Time.deltaTime;
         position.x = Mathf.Clamp(position.x, minX, maxX);
         transform.position = position;

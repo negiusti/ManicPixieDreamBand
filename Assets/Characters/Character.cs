@@ -151,6 +151,15 @@ public class Character : MonoBehaviour
     {
         foreach (var targetResolver in spriteResolvers)
         {
+            //if (targetResolver.GetLabel() == null)
+            //{
+            //    targetResolver.SetCategoryAndLabel
+            //}
+            if (targetResolver.GetLabel() == null)
+            {
+                Debug.LogError(gameObject.name + "'s targetresolver for " + targetResolver.gameObject.name + " is null");
+                continue;
+            }
             if (targetResolver.GetLabel().StartsWith("E_")) // don't save emotes
                 continue;
             categoryToLabelMap[GetSRCategory(targetResolver)] = targetResolver.GetLabel();
@@ -215,6 +224,8 @@ public class Character : MonoBehaviour
             string category = GetSRCategory(targetResolver);
             if (categoryToLabelMap.ContainsKey(category))
             {
+                if (categoryToLabelMap[category] == null)
+                    continue;
                 targetResolver.SetCategoryAndLabel(category, categoryToLabelMap[category]);
                 targetResolver.ResolveSpriteToSpriteRenderer();
             }
@@ -270,14 +281,12 @@ public class Character : MonoBehaviour
 
     public void MoveToRenderLayer(string layer, int idx)
     {
+        if (sortingGroup == null)
+        {
+            sortingGroup = this.GetComponent<SortingGroup>();
+        }
         sortingGroup.sortingLayerName = layer;
         sortingGroup.sortingOrder = idx;
-    }
-
-    public void SetFacialExpression(string emotion)
-    {
-        // if emotion == default: set to saved value
-        // NOTE: make sure facial expression changes do not overwrite default eyes/mouth/etc
     }
 
     public void EmoteMouth(string emotion)
