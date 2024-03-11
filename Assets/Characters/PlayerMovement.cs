@@ -17,14 +17,26 @@ public class PlayerMovement : Movement
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            isSkating = !isSkating;
+        }
+
         moveInput = Input.GetAxis("Horizontal");
+
+        if (Input.GetKeyDown(KeyCode.Space) && isSkating)
+        {
+            Ollie();
+        }
+
+        animator.SetBool("IsMoving", moveInput != 0f);
         if (moveInput == 0f)
         {
-            currState = MovementState.Idle;
+            currState = isSkating? MovementState.SkateIdle : MovementState.Idle;
         }
         else
         {
-            currState = MovementState.Walk;
+            currState = isSkating ? MovementState.Skate : MovementState.Walk;
             MoveLeftRight();
         }
     }
@@ -43,6 +55,7 @@ public class PlayerMovement : Movement
         }
 
         Vector3 position = transform.position;
+        float moveSpeed = isSkating ? skateMoveSpeed : walkMoveSpeed;
         position.x += moveInput * moveSpeed * Time.deltaTime;
         position.x = Mathf.Clamp(position.x, minX, maxX);
         transform.position = position;
