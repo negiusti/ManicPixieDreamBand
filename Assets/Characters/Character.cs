@@ -176,9 +176,9 @@ public class Character : MonoBehaviour
         foreach (var spriteRenderer in spriteRenderers)
         {
             // don't save emotes
-            if (spriteRenderer.gameObject.name == "Mouth" && mouthResolver.GetLabel().StartsWith("E_"))
+            if (spriteRenderer.gameObject.name == "Mouth" && mouthResolver != null && mouthResolver.GetLabel().StartsWith("E_"))
                 continue;
-            if (spriteRenderer.gameObject.name == "Eyes" && eyesResolver.GetLabel().StartsWith("E_"))
+            if (spriteRenderer.gameObject.name == "Eyes" && eyesResolver != null && eyesResolver.GetLabel().StartsWith("E_"))
                 continue;
 
             categoryToColorMap[spriteRenderer.gameObject.name] = spriteRenderer.color;
@@ -224,8 +224,10 @@ public class Character : MonoBehaviour
             string category = GetSRCategory(targetResolver);
             if (categoryToLabelMap.ContainsKey(category))
             {
-                if (categoryToLabelMap[category] == null)
-                    continue;
+                if (categoryToLabelMap[category] == null && targetResolver.GetLabel() != null)
+                {
+                    categoryToLabelMap[category] = targetResolver.GetLabel();
+                }
                 targetResolver.SetCategoryAndLabel(category, categoryToLabelMap[category]);
                 targetResolver.ResolveSpriteToSpriteRenderer();
             }

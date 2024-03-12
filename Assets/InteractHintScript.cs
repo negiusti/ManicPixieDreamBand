@@ -49,7 +49,7 @@ public class InteractHintScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player"))// && other.GetComponent<Movement>().IsSkating())
         {
             inRange = true;
             animator.enabled = true;

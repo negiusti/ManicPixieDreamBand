@@ -57,11 +57,11 @@ public class JamCoordinator : ScriptableObject
 
     public static void EndJam()
     {
-        if (!isJamInSession)
-            return;
+        //if (!isJamInSession)
+        //    return;
 
-        if (musicians.Count() == 0)
-            return;
+        //if (musicians.Count() == 0)
+        //    return;
 
         isJamInSession = false;
         //SwitchToMainCamera();

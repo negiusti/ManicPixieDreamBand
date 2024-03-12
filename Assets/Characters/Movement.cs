@@ -63,6 +63,11 @@ public abstract class Movement : MonoBehaviour
         prevPos = transform.position;
     }
 
+    public bool IsSkating()
+    {
+        return isSkating;
+    }
+
     // Update is called once per frame
     protected virtual void Update()
     {

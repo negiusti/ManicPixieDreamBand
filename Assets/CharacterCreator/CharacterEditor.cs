@@ -106,7 +106,7 @@ public class CharacterEditor : MonoBehaviour
                 // if the inventory is empty, just unlock everything
                 if (labels.Length == 0)
                     labels = spriteLib.GetCategoryLabelNames(category)
-                        .Where(l => l.StartsWith("E_"))
+                        .Where(l => !l.StartsWith("E_"))
                         .Where(l => !l.StartsWith("X_") || l.Equals("X_" + character.gameObject.name))
                         .ToArray();
             }
