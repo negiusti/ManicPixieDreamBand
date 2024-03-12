@@ -7,21 +7,23 @@ using UnityEngine.Rendering;
 public class Character : MonoBehaviour
 {
     private Dictionary<string, string> categoryToLabelMap;
+    private Dictionary<string, SpriteResolver> categoryToResolver = new Dictionary<string, SpriteResolver>();
+    private Dictionary<string, SpriteRenderer> categoryToRenderer = new Dictionary<string, SpriteRenderer>();
     private SpriteResolver[] spriteResolvers;
     private SpriteRenderer[] spriteRenderers;
     private Dictionary<string, Color> categoryToColorMap;
     private Dictionary<string, bool> categoryToEnabled;
-    private SpriteResolver instResolver;
-    private SpriteRenderer instRenderer;
+    //private SpriteResolver instResolver;
+    //private SpriteRenderer instRenderer;
     private SortingGroup sortingGroup;
     private bool isWearingFullFit; // Set matching Top, Crotch, and (optional) sleeves, (optional) L_Pant and R_Pant
     private bool isMC;
-    private SpriteResolver mouthResolver;
-    private SpriteRenderer mouthRenderer;
-    private SpriteResolver eyesResolver;
-    private SpriteRenderer eyesRenderer;
-    private SpriteRenderer eyeshadowRenderer;
-    private SpriteRenderer eyebrowsRenderer;
+    //private SpriteResolver mouthResolver;
+    //private SpriteRenderer mouthRenderer;
+    //private SpriteResolver eyesResolver;
+    //private SpriteRenderer eyesRenderer;
+    //private SpriteRenderer eyeshadowRenderer;
+    //private SpriteRenderer eyebrowsRenderer;
 
     private SpriteLibraryAsset libraryAsset;
     private string characterName;
@@ -89,45 +91,38 @@ public class Character : MonoBehaviour
         this.characterName = gameObject.name;
         LoadCharacter();
 
-        foreach (var targetResolver in spriteResolvers)
+        foreach (SpriteResolver resolver in spriteResolvers)
         {
-                if (GetSRCategory(targetResolver).Equals("Instrument"))
-                {
-                    instResolver = targetResolver;
-                }
-                if (GetSRCategory(targetResolver).Equals("Mouth"))
-                {
-                    mouthResolver = targetResolver;
-                }
-                if (GetSRCategory(targetResolver).Equals("Eyes"))
-                {
-                    eyesResolver = targetResolver;
-                }
+            categoryToResolver[resolver.gameObject.name] = resolver;
         }
-        foreach (var targetRenderer in spriteRenderers)
+        foreach (SpriteRenderer renderer in spriteRenderers)
         {
-            if (targetRenderer.gameObject.name.Equals("Instrument"))
-            {
-                instRenderer = targetRenderer;
-            }
-            if (targetRenderer.gameObject.name.Equals("Mouth"))
-            {
-                mouthRenderer = targetRenderer;
-            }
-            if (targetRenderer.gameObject.name.Equals("Eyes"))
-            {
-                eyesRenderer = targetRenderer;
-            }
-            if (targetRenderer.gameObject.name.Equals("Eyebrows"))
-            {
-                eyebrowsRenderer = targetRenderer;
-            }
-            if (targetRenderer.gameObject.name.Equals("Eyeshadow"))
-            {
-                eyeshadowRenderer = targetRenderer;
-            }
+            categoryToRenderer[renderer.gameObject.name] = renderer;
         }
-    }
+            //foreach (var targetRenderer in spriteRenderers)
+            //{
+            //    if (targetRenderer.gameObject.name.Equals("Instrument"))
+            //    {
+            //        instRenderer = targetRenderer;
+            //    }
+            //    if (targetRenderer.gameObject.name.Equals("Mouth"))
+            //    {
+            //        mouthRenderer = targetRenderer;
+            //    }
+            //    if (targetRenderer.gameObject.name.Equals("Eyes"))
+            //    {
+            //        eyesRenderer = targetRenderer;
+            //    }
+            //    if (targetRenderer.gameObject.name.Equals("Eyebrows"))
+            //    {
+            //        eyebrowsRenderer = targetRenderer;
+            //    }
+            //    if (targetRenderer.gameObject.name.Equals("Eyeshadow"))
+            //    {
+            //        eyeshadowRenderer = targetRenderer;
+            //    }
+            //}
+        }
 
     // Update is called once per frame
     void Update()
@@ -136,15 +131,15 @@ public class Character : MonoBehaviour
 
     public void SetInstrumentSprite(string s)
     {
-        instRenderer.enabled = true;
-        instResolver.SetCategoryAndLabel("Instrument", s);
-        instResolver.ResolveSpriteToSpriteRenderer();
+        categoryToRenderer["Instrument"].enabled = true;
+        categoryToResolver["Instrument"].SetCategoryAndLabel("Instrument", s);
+        categoryToResolver["Instrument"].ResolveSpriteToSpriteRenderer();
     }
 
     public void HideInstrumentSprite()
     {
-        instResolver.SetCategoryAndLabel("Instrument", "None");
-        instResolver.ResolveSpriteToSpriteRenderer();
+        categoryToResolver["Instrument"].SetCategoryAndLabel("Instrument", "None");
+        categoryToResolver["Instrument"].ResolveSpriteToSpriteRenderer();
     }
 
     private void updateSpriteResolverMap()
@@ -176,9 +171,9 @@ public class Character : MonoBehaviour
         foreach (var spriteRenderer in spriteRenderers)
         {
             // don't save emotes
-            if (spriteRenderer.gameObject.name == "Mouth" && mouthResolver != null && mouthResolver.GetLabel().StartsWith("E_"))
+            if (spriteRenderer.gameObject.name == "Mouth" && categoryToResolver["Mouth"] != null && categoryToResolver["Mouth"].GetLabel().StartsWith("E_"))
                 continue;
-            if (spriteRenderer.gameObject.name == "Eyes" && eyesResolver != null && eyesResolver.GetLabel().StartsWith("E_"))
+            if (spriteRenderer.gameObject.name == "Eyes" && categoryToResolver["Eyes"] != null && categoryToResolver["Eyes"].GetLabel().StartsWith("E_"))
                 continue;
 
             categoryToColorMap[spriteRenderer.gameObject.name] = spriteRenderer.color;
@@ -294,24 +289,38 @@ public class Character : MonoBehaviour
     public void EmoteMouth(string emotion)
     {
         string label = (emotion == "default") ? categoryToLabelMap["Mouth"] : "E_" + emotion;
-        mouthResolver.SetCategoryAndLabel("Mouth", label);
-        Debug.Log("Setting Mouth resolver to: " + mouthResolver.GetLabel());
-        mouthResolver.ResolveSpriteToSpriteRenderer();
+        categoryToResolver["Mouth"].SetCategoryAndLabel("Mouth", label);
+        Debug.Log("Setting Mouth resolver to: " + categoryToResolver["Mouth"].GetLabel());
+        categoryToResolver["Mouth"].ResolveSpriteToSpriteRenderer();
         Color color = (emotion == "default") ? categoryToColorMap["Mouth"] : Color.white;
-        mouthRenderer.color = color;
+        categoryToRenderer["Mouth"].color = color;
 
+    }
+
+    private void SetShoes(string label)
+    {
+        categoryToResolver["R_Shoe"].SetCategoryAndLabel("R_Shoe", label);
+        categoryToResolver["R_Shoe"].ResolveSpriteToSpriteRenderer();
+        categoryToResolver["L_Shoe"].SetCategoryAndLabel("L_Shoe", label);
+        categoryToResolver["L_Shoe"].ResolveSpriteToSpriteRenderer();
     }
 
     public void EmoteEyes(string emotion)
     {
         string label = (emotion == "default") ? categoryToLabelMap["Eyes"] : "E_" + emotion;
-        eyesResolver.SetCategoryAndLabel("Eyes", label);
-        Debug.Log("Setting Eyes resolver to: " + eyesResolver.GetLabel());
-        eyesResolver.ResolveSpriteToSpriteRenderer();
+        categoryToResolver["Eyes"].SetCategoryAndLabel("Eyes", label);
+        Debug.Log("Setting Eyes resolver to: " + categoryToResolver["Eyes"].GetLabel());
+        categoryToResolver["Eyes"].ResolveSpriteToSpriteRenderer();
         Color color = (emotion == "default") ? categoryToColorMap["Eyes"] : Color.white;
-        eyesRenderer.color = color;
-        eyeshadowRenderer.enabled = (emotion == "default");
-        eyebrowsRenderer.enabled = (emotion == "default");
+        categoryToRenderer["Eyes"].color = color;
+        categoryToRenderer["Eyeshadow"].enabled = (emotion == "default");
+        categoryToRenderer["Eyebrows"].enabled = (emotion == "default");
+    }
+
+    public void RollerskatesOnOff(bool isRollerskating)
+    {
+        string label = isRollerskating ? "E_YellowSkate" : categoryToLabelMap["L_Shoe"];
+        SetShoes(label);
     }
 }
 
