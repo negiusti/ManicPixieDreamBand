@@ -5,7 +5,7 @@ public abstract class Movement : MonoBehaviour
 {
     protected static float walkMoveSpeed = 4f;
     protected static float skateMoveSpeed = 8f;
-    protected Character player;
+    protected Character character;
     protected Animator animator;
     protected float minX, maxX;
     protected GameObject background;
@@ -13,6 +13,7 @@ public abstract class Movement : MonoBehaviour
     protected string prevLayer;
     protected int prevLayerOrder;
     protected bool isSkating;
+    protected bool isRollerSkating;
 
     public enum MovementState
     {
@@ -21,7 +22,9 @@ public abstract class Movement : MonoBehaviour
         Guitar,
         Drum,
         Skate,
-        SkateIdle
+        SkateIdle,
+        Rollerskate,
+        RollerskateIdle
     };
 
     private static string WalkAnim = "BaseCharacter_Walk";
@@ -30,6 +33,8 @@ public abstract class Movement : MonoBehaviour
     private static string DrumAnim = "BaseCharacter_Drum";
     private static string SkateAnim = "BaseCharacter_Skateboard";
     private static string SkateIdleAnim = "BaseCharacter_SkateboardIdle";
+    private static string RollerskateAnim = "BaseCharacter_Rollerskate";
+    private static string RollerskateIdleAnim = "BaseCharacter_RollerskateIdle";
 
     private Dictionary<MovementState, string> stateToAnimation = new Dictionary<MovementState, string> {
         {MovementState.Walk, WalkAnim },
@@ -37,7 +42,9 @@ public abstract class Movement : MonoBehaviour
         {MovementState.Guitar, GuitarAnim },
         {MovementState.Drum, DrumAnim },
         {MovementState.Skate, SkateAnim },
-        {MovementState.SkateIdle, SkateIdleAnim }
+        {MovementState.SkateIdle, SkateIdleAnim },
+        {MovementState.Rollerskate, RollerskateAnim },
+        {MovementState.RollerskateIdle, RollerskateIdleAnim }
             };
     protected MovementState currState;
     private string currAnim;
@@ -46,7 +53,8 @@ public abstract class Movement : MonoBehaviour
     protected virtual void Start()
     {
         isSkating = false;
-        player = GetComponent<Character>();
+        isRollerSkating = false;
+        character = GetComponent<Character>();
         animator = GetComponentInChildren<Animator>();
         currState = MovementState.Idle;
         background = GameObject.FindGameObjectWithTag("Background");
@@ -88,7 +96,8 @@ public abstract class Movement : MonoBehaviour
             else if (currState == MovementState.Walk)
             {
                 currAnim = WalkAnim;
-            } else if (currState == MovementState.Skate)
+            }
+            else if (currState == MovementState.Skate)
             {
                 currAnim = SkateAnim;
             }
@@ -96,13 +105,21 @@ public abstract class Movement : MonoBehaviour
             {
                 currAnim = SkateIdleAnim;
             }
+            else if (currState == MovementState.Rollerskate)
+            {
+                currAnim = RollerskateAnim;
+            }
+            else if (currState == MovementState.RollerskateIdle)
+            {
+                currAnim = RollerskateIdleAnim;
+            }
             animator.CrossFade(currAnim, .05f);
         }
     }
 
     public void PlayInstrument(string instLabel, Vector3 pos, string layer, int layerOrder)
     {
-        player.SetInstrumentSprite(instLabel);
+        character.SetInstrumentSprite(instLabel);
         if (instLabel.Contains("Guitar") || instLabel.Contains("Bass"))
             currState = MovementState.Guitar;
         else if (instLabel.Contains("Drum"))
@@ -112,18 +129,18 @@ public abstract class Movement : MonoBehaviour
         //currentRotation.y = 0;
         prevPos = transform.position;
         transform.position = pos;
-        prevLayer = player.GetCurrentLayer().sortingLayerName;
-        prevLayerOrder = player.GetCurrentLayer().sortingOrder;
-        player.MoveToRenderLayer(layer, layerOrder);
+        prevLayer = character.GetCurrentLayer().sortingLayerName;
+        prevLayerOrder = character.GetCurrentLayer().sortingOrder;
+        character.MoveToRenderLayer(layer, layerOrder);
         //transform.rotation = currentRotation;
     }
 
     public void StopPlayingInstrument()
     {
         currState = MovementState.Idle;
-        player.HideInstrumentSprite();
+        character.HideInstrumentSprite();
         transform.position = prevPos;
-        player.MoveToRenderLayer(prevLayer, prevLayerOrder);
+        character.MoveToRenderLayer(prevLayer, prevLayerOrder);
     }
 
     protected void Ollie()
@@ -131,8 +148,19 @@ public abstract class Movement : MonoBehaviour
         animator.Play("BaseCharacter_SkateJump");
     }
 
+    protected void Rollie()
+    {
+        animator.Play("BaseCharacter_RollerskateJump");
+    }
+
     private bool HasStateChanged()
     {
         return stateToAnimation[currState] != currAnim;
+    }
+
+
+    public void RollerskatesOnOff(bool isRollerskating)
+    {
+        character.RollerskatesOnOff(isRollerskating);
     }
 }

@@ -5,11 +5,13 @@ using UnityEngine;
 public class MainCharacter : MonoBehaviour
 {
     private ProximitySelector ps;
+    private Character character;
 
     // Start is called before the first frame update
     void Start()
     {
         ps = this.GetComponent<ProximitySelector>();
+        character = this.GetComponent<Character>();
         MainCharacterState.Load();
     }
 

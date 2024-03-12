@@ -17,26 +17,36 @@ public class PlayerMovement : Movement
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (!isRollerSkating && Input.GetKeyDown(KeyCode.S))
         {
             isSkating = !isSkating;
+        }
+        if (!isSkating && Input.GetKeyDown(KeyCode.R))
+        {
+            isRollerSkating = !isRollerSkating;
+            RollerskatesOnOff(isRollerSkating);
         }
 
         moveInput = Input.GetAxis("Horizontal");
 
-        if (Input.GetKeyDown(KeyCode.Space) && isSkating)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Ollie();
+            if (isSkating)
+                Ollie();
+            if (isRollerSkating)
+                Rollie();
         }
 
         animator.SetBool("IsMoving", moveInput != 0f);
         if (moveInput == 0f)
         {
-            currState = isSkating? MovementState.SkateIdle : MovementState.Idle;
+            currState = isSkating? MovementState.SkateIdle :
+                isRollerSkating? MovementState.RollerskateIdle : MovementState.Idle;
         }
         else
         {
-            currState = isSkating ? MovementState.Skate : MovementState.Walk;
+            currState = isSkating ? MovementState.Skate :
+                isRollerSkating? MovementState.Rollerskate : MovementState.Walk;
             MoveLeftRight();
         }
     }
@@ -55,7 +65,7 @@ public class PlayerMovement : Movement
         }
 
         Vector3 position = transform.position;
-        float moveSpeed = isSkating ? skateMoveSpeed : walkMoveSpeed;
+        float moveSpeed = isSkating || isRollerSkating ? skateMoveSpeed : walkMoveSpeed;
         position.x += moveInput * moveSpeed * Time.deltaTime;
         position.x = Mathf.Clamp(position.x, minX, maxX);
         transform.position = position;
