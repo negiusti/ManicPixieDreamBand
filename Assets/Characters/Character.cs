@@ -68,7 +68,7 @@ public class Character : MonoBehaviour
         categoryToLabelMap = new Dictionary<string, string>();
         categoryToColorMap = new Dictionary<string, Color>();
         sortingGroup = this.GetComponent<SortingGroup>();
-        
+
         if (libraryAsset == null)
         {
             libraryAsset = this.GetComponent<SpriteLibrary>().spriteLibraryAsset;
@@ -89,7 +89,6 @@ public class Character : MonoBehaviour
         }
 
         this.characterName = gameObject.name;
-        LoadCharacter();
 
         foreach (SpriteResolver resolver in spriteResolvers)
         {
@@ -99,30 +98,8 @@ public class Character : MonoBehaviour
         {
             categoryToRenderer[renderer.gameObject.name] = renderer;
         }
-            //foreach (var targetRenderer in spriteRenderers)
-            //{
-            //    if (targetRenderer.gameObject.name.Equals("Instrument"))
-            //    {
-            //        instRenderer = targetRenderer;
-            //    }
-            //    if (targetRenderer.gameObject.name.Equals("Mouth"))
-            //    {
-            //        mouthRenderer = targetRenderer;
-            //    }
-            //    if (targetRenderer.gameObject.name.Equals("Eyes"))
-            //    {
-            //        eyesRenderer = targetRenderer;
-            //    }
-            //    if (targetRenderer.gameObject.name.Equals("Eyebrows"))
-            //    {
-            //        eyebrowsRenderer = targetRenderer;
-            //    }
-            //    if (targetRenderer.gameObject.name.Equals("Eyeshadow"))
-            //    {
-            //        eyeshadowRenderer = targetRenderer;
-            //    }
-            //}
-        }
+        LoadCharacter();
+    }
 
     // Update is called once per frame
     void Update()
