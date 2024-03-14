@@ -1,8 +1,8 @@
-using PixelCrushers.DialogueSystem;
+﻿using PixelCrushers.DialogueSystem;
 
-public class CoffeeShop : Shop
+public class MusicShop : Shop
 {
-    private static string purchaseConvo = "CoffeeShop_Purchase";
+    private static string purchaseConvo = "MusicShop_Purchase";
 
     // Start is called before the first frame update
     new void Start()
@@ -24,7 +24,7 @@ public class CoffeeShop : Shop
 
     public override string ShopName()
     {
-        return "CoffeeShop";
+        return "MusicShop";
     }
 
     new void OnEnable()

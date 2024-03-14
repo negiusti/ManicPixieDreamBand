@@ -171,7 +171,7 @@ public class Calendar : ScriptableObject
 
     public static void Load()
     {
-        if (!ES3.KeyExists("Calendar") || events == null)
+        if (!ES3.KeyExists("Calendar"))
         {
             events = new Dictionary<int, List<ICalendarEvent>>();
             SetIsNight(false);
@@ -183,7 +183,7 @@ public class Calendar : ScriptableObject
         day = c.d;
         isNight = c.n;
         currentEventIdx = c.i;
-        events = c.e;
+        events = c.e ?? new Dictionary<int, List<ICalendarEvent>>();
     }
 
     public static void OnConversationComplete(string convoName)
