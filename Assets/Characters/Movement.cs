@@ -3,8 +3,8 @@ using UnityEngine;
 
 public abstract class Movement : MonoBehaviour
 {
-    protected static float walkMoveSpeed = 4f;
-    protected static float skateMoveSpeed = 8f;
+    protected static float walkMoveSpeed = 8f;
+    protected static float skateMoveSpeed = 16f;
     protected Character character;
     protected Animator animator;
     protected float minX, maxX;
@@ -73,7 +73,7 @@ public abstract class Movement : MonoBehaviour
 
     public bool IsSkating()
     {
-        return isSkating;
+        return isSkating || isRollerSkating;
     }
 
     // Update is called once per frame

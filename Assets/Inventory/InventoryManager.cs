@@ -69,7 +69,8 @@ public class InventoryManager : ScriptableObject
         if (ES3.KeyExists(invSaveKey))
         {
             characterInventories = (Dictionary<string, Dictionary<string, HashSet<string>>>)ES3.Load(invSaveKey);
-        } else
+        }
+        if (characterInventories == null)
         {
             characterInventories = new Dictionary<string, Dictionary<string, HashSet<string>>>();
             Debug.LogError("Could not find characterInventories in easy save system");
@@ -78,7 +79,7 @@ public class InventoryManager : ScriptableObject
         {
             categoryToPurchased = ES3.Load<Dictionary<string, HashSet<string>>>(purchasedSaveKey);
         }
-        else
+        if (categoryToPurchased == null)
         {
             categoryToPurchased = new Dictionary<string, HashSet<string>>();
             Debug.LogError("Could not find cateogoryToPurchased in easy save system");

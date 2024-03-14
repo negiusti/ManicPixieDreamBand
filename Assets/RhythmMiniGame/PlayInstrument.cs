@@ -88,7 +88,7 @@ public class PlayInstrument : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !other.GetComponent<Movement>().IsSkating())
         {
             musicianMovement = other.gameObject.GetComponent<Movement>();
             withinRange = true;

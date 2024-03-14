@@ -16,14 +16,13 @@ public abstract class Shop : MonoBehaviour
         displays = FindObjectsOfType<ShopDisplay>();
 
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
-        lastInventoryRefreshDay = ES3.Load<int>("LastRefresh" + ShopName(), 0);
+        lastInventoryRefreshDay = ES3.Load<int>("LastRefresh" + ShopName(), -1);
         if (HasDayPassed())
         {
             RandomizeDisplays();
         }
     }
 
-    // TO-DO: after implementing calendar system
     protected virtual bool HasDayPassed()
     {
         Debug.Log("lastInventoryRefreshDay" + lastInventoryRefreshDay + "date=" + Calendar.Date());
@@ -41,15 +40,30 @@ public abstract class Shop : MonoBehaviour
         }
     }
 
+    protected virtual void OnEnable()
+    {
+        // Make the functions available to Lua: (Replace these lines with your own.)
+        Lua.RegisterFunction(nameof(MakeAPurchase), this, SymbolExtensions.GetMethodInfo(() => MakeAPurchase()));
+        Lua.RegisterFunction(nameof(CurrentPurchasablePrice), this, SymbolExtensions.GetMethodInfo(() => CurrentPurchasablePrice()));
+        Lua.RegisterFunction(nameof(CurrentPurchasableName), this, SymbolExtensions.GetMethodInfo(() => CurrentPurchasableName()));
+    }
+
+    protected virtual void OnDisable()
+    {
+        //if (unregisterOnDisable)
+        //{
+        // Remove the functions from Lua: (Replace these lines with your own.)
+        Lua.UnregisterFunction(nameof(MakeAPurchase));
+        Lua.UnregisterFunction(nameof(CurrentPurchasablePrice));
+        Lua.UnregisterFunction(nameof(CurrentPurchasableName));
+        //}
+        ES3.Save<int>("LastRefresh" + ShopName(), lastInventoryRefreshDay);
+    }
+
     // Update is called once per frame
     protected virtual void Update()
     {
         
-    }
-
-    private void OnDisable()
-    {
-        ES3.Save<int>("LastRefresh" + ShopName(), lastInventoryRefreshDay);
     }
 
     public abstract void AskToBuy(Purchasable p);
