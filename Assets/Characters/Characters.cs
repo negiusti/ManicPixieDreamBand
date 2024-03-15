@@ -21,17 +21,12 @@ public class Characters : ScriptableObject
         characters = FindObjectsOfType<Character>(true).ToDictionary(c => c.name, c => c);
     }
 
-    public static void EmoteMouth(string character, string emotion)
+    public static void Emote(string character, string eyesEmotion, string mouthEmotion)
     {
         if (characters == null)
             RefreshCharactersCache();
-        characters[character]?.EmoteMouth(emotion);
-    }
-
-    public static void EmoteEyes(string character, string emotion)
-    {
-        if (characters == null)
-            RefreshCharactersCache();
-        characters[character]?.EmoteEyes(emotion);
+        characters[character]?.EmoteMouth(mouthEmotion);
+        characters[character]?.EmoteEyes(eyesEmotion);
+        characters[character]?.FacePop();
     }
 }

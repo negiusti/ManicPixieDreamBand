@@ -24,7 +24,7 @@ public class Character : MonoBehaviour
     //private SpriteRenderer eyesRenderer;
     //private SpriteRenderer eyeshadowRenderer;
     //private SpriteRenderer eyebrowsRenderer;
-
+    private Animator animator;
     private SpriteLibraryAsset libraryAsset;
     private string characterName;
 
@@ -68,6 +68,7 @@ public class Character : MonoBehaviour
         categoryToLabelMap = new Dictionary<string, string>();
         categoryToColorMap = new Dictionary<string, Color>();
         sortingGroup = this.GetComponent<SortingGroup>();
+        animator = this.GetComponent<Animator>();
 
         if (libraryAsset == null)
         {
@@ -232,27 +233,6 @@ public class Character : MonoBehaviour
         return libraryAsset;
     }
 
-    //public void MoveToRenderLayer(string layerName)
-    //{
-    //    if (spriteRenderers == null)
-    //        spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
-    //    foreach (var targetRenderer in spriteRenderers)
-    //    {
-    //        targetRenderer.sortingLayerName = layerName;
-    //    }
-    //}
-
-    //public void MoveToRenderLayer(string layer, int idx)
-    //{
-    //    string layerName = layer + idx;
-    //    if (spriteRenderers == null)
-    //        spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
-    //    foreach (var targetRenderer in spriteRenderers)
-    //    {
-    //        targetRenderer.sortingLayerName = layerName;
-    //    }
-    //}
-
     public void MoveToRenderLayer(string layer, int idx)
     {
         if (sortingGroup == null)
@@ -271,7 +251,11 @@ public class Character : MonoBehaviour
         categoryToResolver["Mouth"].ResolveSpriteToSpriteRenderer();
         Color color = (emotion == "default") ? categoryToColorMap["Mouth"] : Color.white;
         categoryToRenderer["Mouth"].color = color;
+    }
 
+    public void FacePop()
+    {
+        animator.Play("BaseCharacter_FacePop", 1, 0f);
     }
 
     private void SetShoes(string label)

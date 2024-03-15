@@ -40,8 +40,7 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(MiniGameManager.StartMiniGame), this, SymbolExtensions.GetMethodInfo(() => MiniGameManager.StartMiniGame(string.Empty)));
         Lua.RegisterFunction(nameof(JamCoordinator.StartJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.StartJam(string.Empty)));
         Lua.RegisterFunction(nameof(JamCoordinator.EndJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.EndJam()));
-        Lua.RegisterFunction(nameof(Characters.EmoteEyes), this, SymbolExtensions.GetMethodInfo(() => Characters.EmoteEyes(string.Empty, string.Empty)));
-        Lua.RegisterFunction(nameof(Characters.EmoteMouth), this, SymbolExtensions.GetMethodInfo(() => Characters.EmoteMouth(string.Empty, string.Empty)));
+        Lua.RegisterFunction(nameof(Characters.Emote), this, SymbolExtensions.GetMethodInfo(() => Characters.Emote(string.Empty, string.Empty, string.Empty)));
     }
 
     void UnregisterSOLuaFuncs()
@@ -53,8 +52,7 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(MiniGameManager.StartMiniGame));
         Lua.UnregisterFunction(nameof(JamCoordinator.StartJam));
         Lua.UnregisterFunction(nameof(JamCoordinator.EndJam));
-        Lua.UnregisterFunction(nameof(Characters.EmoteEyes));
-        Lua.UnregisterFunction(nameof(Characters.EmoteMouth));
+        Lua.UnregisterFunction(nameof(Characters.Emote));
         //}
     }
 
