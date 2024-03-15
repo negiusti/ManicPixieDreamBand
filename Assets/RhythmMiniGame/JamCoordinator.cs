@@ -66,7 +66,8 @@ public class JamCoordinator : ScriptableObject
         isJamInSession = false;
         //SwitchToMainCamera();
         FindObjectsOfType<PlayInstrument>().ToList().ForEach(x => x.Stop());
-        stage?.StopPerformance();
+        if (stage != null)
+            stage.StopPerformance();
     }
 
     private static void SwitchToJamCamera()

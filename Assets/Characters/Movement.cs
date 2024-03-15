@@ -158,7 +158,7 @@ public abstract class Movement : MonoBehaviour
         if (isRollerSkating)
            animator.Play("BaseCharacter_RollerskateFall");
         if (isSkating)
-            animator.Play("BaseCharacter_SkateboardFall");
+           animator.Play("BaseCharacter_SkateboardFall");
     }
 
     private bool HasStateChanged()

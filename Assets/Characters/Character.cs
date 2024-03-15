@@ -133,7 +133,7 @@ public class Character : MonoBehaviour
                 Debug.LogError(gameObject.name + "'s targetresolver for " + targetResolver.gameObject.name + " is null");
                 continue;
             }
-            if (targetResolver.GetLabel().StartsWith("E_")) // don't save emotes
+            if (targetResolver.GetLabel().StartsWith("E_") || targetResolver.GetCategory() == "Instrument") // don't save emotes
                 continue;
             categoryToLabelMap[GetSRCategory(targetResolver)] = targetResolver.GetLabel();
         }
