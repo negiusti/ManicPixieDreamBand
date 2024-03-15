@@ -153,6 +153,14 @@ public abstract class Movement : MonoBehaviour
         animator.Play("BaseCharacter_RollerskateJump");
     }
 
+    protected void EatShit()
+    {
+        if (isRollerSkating)
+           animator.Play("BaseCharacter_RollerskateFall");
+        if (isSkating)
+            animator.Play("BaseCharacter_SkateboardFall");
+    }
+
     private bool HasStateChanged()
     {
         return stateToAnimation[currState] != currAnim;
