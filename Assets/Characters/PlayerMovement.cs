@@ -71,4 +71,12 @@ public class PlayerMovement : Movement
         transform.position = position;
         transform.rotation = currentRotation;
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Obstacle") && IsSkating())
+        {
+            EatShit();
+        }
+    }
 }

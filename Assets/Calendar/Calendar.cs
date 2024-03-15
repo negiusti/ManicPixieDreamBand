@@ -161,6 +161,7 @@ public class Calendar : ScriptableObject
     public static void SetIsNight(bool value)
     {
         isNight = value;
+        FindFirstObjectByType<Sky>()?.UpdateSky();
     }
 
 
@@ -181,7 +182,7 @@ public class Calendar : ScriptableObject
         }
         CalendarData c = ES3.Load<CalendarData>("Calendar");
         day = c.d;
-        isNight = c.n;
+        SetIsNight(c.n);
         currentEventIdx = c.i;
         events = c.e ?? new Dictionary<int, List<ICalendarEvent>>();
     }
