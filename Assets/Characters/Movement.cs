@@ -14,6 +14,7 @@ public abstract class Movement : MonoBehaviour
     protected int prevLayerOrder;
     protected bool isSkating;
     protected bool isRollerSkating;
+    protected bool lockAnim;
 
     public enum MovementState
     {
@@ -52,6 +53,7 @@ public abstract class Movement : MonoBehaviour
     // Use this for initialization
     protected virtual void Start()
     {
+        lockAnim = false;
         isSkating = false;
         isRollerSkating = false;
         character = GetComponent<Character>();
@@ -76,10 +78,20 @@ public abstract class Movement : MonoBehaviour
         return isSkating || isRollerSkating;
     }
 
+    public void LockAnim()
+    {
+        lockAnim = true;
+    }
+
+    public void UnlockAnim()
+    {
+        lockAnim = false;
+    }
+
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (HasStateChanged())
+        if (HasStateChanged() && !lockAnim)
         {
             if (currState == MovementState.Guitar)
             {
@@ -145,12 +157,14 @@ public abstract class Movement : MonoBehaviour
 
     protected void Ollie()
     {
-        animator.Play("BaseCharacter_SkateJump");
+        if (!lockAnim)
+            animator.Play("BaseCharacter_SkateJump");
     }
 
     protected void Rollie()
     {
-        animator.Play("BaseCharacter_RollerskateJump");
+        if (!lockAnim)
+            animator.Play("BaseCharacter_RollerskateJump");
     }
 
     protected void EatShit()
