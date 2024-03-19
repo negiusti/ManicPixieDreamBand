@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Pin : MonoBehaviour
+public class Pin : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public MapsApp.Location location;
     private TextMeshPro tm;
@@ -84,4 +85,20 @@ public class Pin : MonoBehaviour
     {
         Click();
     }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Hover();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        UnHover();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Click();
+    }
+
 }

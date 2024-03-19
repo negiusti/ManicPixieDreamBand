@@ -1,14 +1,17 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class BiggerWhenHovered : MonoBehaviour
+public class BiggerWhenHovered : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private Vector3 originalScale;
     public float scaleFactor;
+    private RectTransform rect;
 
     // Start is called before the first frame update
     void Start()
     {
-        originalScale = this.gameObject.transform.localScale;
+        rect = this.GetComponent<RectTransform>();
+        originalScale = rect == null ? this.gameObject.transform.localScale : rect.localScale;
         if (scaleFactor < 1f)
         {
             scaleFactor = 1.1f;
@@ -22,13 +25,29 @@ public class BiggerWhenHovered : MonoBehaviour
     }
 
     private void OnMouseExit()
-    {    
-        this.gameObject.transform.localScale = originalScale;
+    {
+        if (rect == null)
+            this.gameObject.transform.localScale = originalScale;
+        else
+            rect.localScale = originalScale;
     }
 
     private void OnMouseEnter()
     {
         Vector3 newScale = originalScale * scaleFactor;
-        this.gameObject.transform.localScale = newScale;
+        if (rect == null)
+            this.gameObject.transform.localScale = newScale;
+        else
+            rect.localScale = newScale;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnMouseEnter();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnMouseExit();
     }
 }
