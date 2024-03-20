@@ -311,11 +311,21 @@ PrefabInstance:
       propertyPath: background
       value: 
       objectReference: {fileID: 1923441004}
-    m_RemovedComponents: []
+    - target: {fileID: 8838391210835976178, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
+      propertyPath: whoToFollow
+      value: 
+      objectReference: {fileID: 81446096}
+    m_RemovedComponents:
+    - {fileID: 8838391210835976178, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
+--- !u!1 &81446096 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6088849421577856185, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
+  m_PrefabInstance: {fileID: 81446095}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &84045365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1390,6 +1400,7 @@ GameObject:
   - component: {fileID: 548681064}
   - component: {fileID: 548681067}
   - component: {fileID: 548681068}
+  - component: {fileID: 548681069}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1531,6 +1542,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 417
   m_MaxRayIntersections: 1
+--- !u!114 &548681069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548681063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eefd5e0480284519960e350b70f3245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background: {fileID: 1923441004}
+  smoothSpeed: 0.125
+  whoToFollow: {fileID: 81446096}
 --- !u!1 &690114805
 GameObject:
   m_ObjectHideFlags: 0

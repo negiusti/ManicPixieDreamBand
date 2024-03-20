@@ -1387,6 +1387,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3931832624080548215, guid: da6d910d6d7324e2f91010b7fdfc1244, type: 3}
   m_PrefabInstance: {fileID: 1097489764421831598}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &723361686 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6088849421577856185, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
+  m_PrefabInstance: {fileID: 4590013266372750193}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &767499970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3634,6 +3639,7 @@ GameObject:
   - component: {fileID: 1539173040}
   - component: {fileID: 1539173044}
   - component: {fileID: 1539173045}
+  - component: {fileID: 1539173046}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3709,7 +3715,7 @@ Transform:
   m_GameObject: {fileID: 1539173039}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.63, y: -0.28, z: -10}
+  m_LocalPosition: {x: -1.63, y: -0.33, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -3775,6 +3781,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 929
   m_MaxRayIntersections: 1
+--- !u!114 &1539173046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539173039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eefd5e0480284519960e350b70f3245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background: {fileID: 880286437}
+  smoothSpeed: 0.125
+  whoToFollow: {fileID: 723361686}
 --- !u!1 &1621580881
 GameObject:
   m_ObjectHideFlags: 0
@@ -3959,7 +3980,7 @@ GameObject:
   - component: {fileID: 1655206696}
   m_Layer: 0
   m_Name: drumpad
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6112,6 +6133,7 @@ PrefabInstance:
       objectReference: {fileID: 880286437}
     m_RemovedComponents:
     - {fileID: 4810571262872496176, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
+    - {fileID: 8838391210835976178, guid: 3c945b9551ade420cb6e9bf6573d07dc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
