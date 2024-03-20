@@ -16,6 +16,8 @@ public class Sky : MonoBehaviour
     public void UpdateSky()
     {
         string label = Calendar.IsDay() ? "Day" : "Night";
+        if (spriteResolver == null)
+            Start();
         spriteResolver.SetCategoryAndLabel("Sky", label);
     }
 
