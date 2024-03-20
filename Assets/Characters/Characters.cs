@@ -19,8 +19,7 @@ public class Characters : ScriptableObject
     public static void RefreshCharactersCache()
     {
         characters = FindObjectsOfType<Character>(true)
-            .GroupBy(c => c.name)
-            .Select(group => group.First())
+            .Where(c => c.gameObject.layer != LayerMask.NameToLayer("LoadingScreen"))
             .ToDictionary(c => c.name, c => c);
     }
 
