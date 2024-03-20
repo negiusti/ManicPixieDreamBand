@@ -18,7 +18,10 @@ public class Characters : ScriptableObject
 
     public static void RefreshCharactersCache()
     {
-        characters = FindObjectsOfType<Character>(true).ToDictionary(c => c.name, c => c);
+        characters = FindObjectsOfType<Character>(true)
+            .GroupBy(c => c.name)
+            .Select(group => group.First())
+            .ToDictionary(c => c.name, c => c);
     }
 
     public static void Emote(string character, string eyesEmotion, string mouthEmotion)
