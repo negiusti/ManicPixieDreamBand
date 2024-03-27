@@ -12,8 +12,8 @@ public class JamCoordinator : ScriptableObject
     private static Camera jamCamera;
     private static bool isJamInSession;
     private static Dictionary<string, JamCamera> jamCameras = new Dictionary<string, JamCamera>{
-        {"BandPracticeRoom", new JamCamera(8f, new Vector3(1.63f, 0f, -10f))},
-        {"SmallBar", new JamCamera(11.9f, new Vector3(0f, 0f, -10f))}
+        {"BandPracticeRoom", new JamCamera(8f, new Vector3(1.63f, 0f, -10f))}
+        //{"SmallBar", new JamCamera(11.9f, new Vector3(0f, 0f, -10f))}
     };
 
     private class JamCamera
@@ -48,7 +48,7 @@ public class JamCoordinator : ScriptableObject
             return;
 
         isJamInSession = true;
-        // SwitchToJamCamera();
+        //SwitchToJamCamera();
         foreach(BandMember member in band.members)
         {
             stage.GetInstrument(member.position).Play(musicians[member.name]);
@@ -70,7 +70,7 @@ public class JamCoordinator : ScriptableObject
             stage.StopPerformance();
     }
 
-    private static void SwitchToJamCamera()
+    public static void SwitchToJamCamera()
     {
         string currLocation = SceneChanger.Instance.GetCurrentScene();
         mainCam = Camera.main;
@@ -86,7 +86,9 @@ public class JamCoordinator : ScriptableObject
         mainCam.enabled = false;
     }
 
-    private static void SwitchToMainCamera() {
+    public static void SwitchToMainCamera() {
+        if (mainCam == null || jamCamera == null)
+            return;
         mainCam.enabled = true;
         jamCamera.enabled = false;
         Destroy(jamCamera.gameObject);

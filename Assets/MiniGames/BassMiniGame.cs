@@ -27,6 +27,7 @@ public class BassMiniGame : MiniGame
     public override void OpenMiniGame()
     {
         MiniGameManager.PrepMiniGame();
+        JamCoordinator.SwitchToJamCamera();
         isActive = true;
         EnableAllChildren();
     }
@@ -41,6 +42,7 @@ public class BassMiniGame : MiniGame
     public override void CloseMiniGame()
     {
         isActive = false;
+        JamCoordinator.SwitchToMainCamera();
         JamCoordinator.EndJam();
         MiniGameManager.CleanUpMiniGame();
         DisableAllChildren();

@@ -55,19 +55,19 @@ public class MiniGameManager : ScriptableObject
 
     private static void StartBassMiniGame()
     {
-        BassMiniGame mg = FindFirstObjectByType<BassMiniGame>();
+        BassMiniGame mg = FindFirstObjectByType<BassMiniGame>(FindObjectsInactive.Include);
         mg.OpenMiniGame();
     }
 
     private static void StartGigMiniGame()
     {
-        BassMiniGame mg = FindFirstObjectByType<BassMiniGame>();
+        BassMiniGame mg = FindFirstObjectByType<BassMiniGame>(FindObjectsInactive.Include);
         mg.StartBassMiniGameWithBand(false);
     }
 
     private static void StartBandPracticeMiniGame()
     {
-        BassMiniGame mg = FindFirstObjectByType<BassMiniGame>();
+        BassMiniGame mg = FindFirstObjectByType<BassMiniGame>(FindObjectsInactive.Include);
         mg.StartBassMiniGameWithBand(true);
     }
 }

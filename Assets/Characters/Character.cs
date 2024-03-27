@@ -124,10 +124,6 @@ public class Character : MonoBehaviour
     {
         foreach (var targetResolver in spriteResolvers)
         {
-            //if (targetResolver.GetLabel() == null)
-            //{
-            //    targetResolver.SetCategoryAndLabel
-            //}
             if (targetResolver.GetLabel() == null)
             {
                 Debug.LogError(gameObject.name + "'s targetresolver for " + targetResolver.gameObject.name + " is null");
@@ -140,7 +136,10 @@ public class Character : MonoBehaviour
 
         foreach (var spriteRenderer in spriteRenderers)
         {
-            categoryToEnabled[spriteRenderer.gameObject.name] = spriteRenderer.enabled || spriteRenderer.gameObject.name == "Eyeshadow" || spriteRenderer.gameObject.name == "Eyebrows";
+            categoryToEnabled[spriteRenderer.gameObject.name] = spriteRenderer.enabled
+                || spriteRenderer.gameObject.name == "Eyeshadow"
+                || spriteRenderer.gameObject.name == "Eyebrows"
+                || spriteRenderer.gameObject.name == "Sk8board";
         }
     }
 

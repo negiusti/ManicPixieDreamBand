@@ -40,7 +40,8 @@ public class PlayInstrument : MonoBehaviour
             //JamCoordinator.StartJam("LEMON BOY");
             //JamCoordinator.StartJam("The Storm");
             Play(FindFirstObjectByType<PlayerMovement>());
-            minigame.OpenMiniGame();
+            MiniGameManager.StartMiniGame("Solo");
+            //minigame.OpenMiniGame();
         }
         //if (isPlayingInstrument && !minigame.IsMiniGameActive() && Time.time - startTime > 1f)
         //{
