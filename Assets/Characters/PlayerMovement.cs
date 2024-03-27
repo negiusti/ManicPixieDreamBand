@@ -67,6 +67,7 @@ public class PlayerMovement : Movement
         Vector3 position = transform.position;
         float moveSpeed = isSkating || isRollerSkating ? skateMoveSpeed : walkMoveSpeed;
         position.x += moveInput * moveSpeed * Time.deltaTime;
+        currentRotation.z = 0f;
         position.x = Mathf.Clamp(position.x, minX, maxX);
         transform.position = position;
         transform.rotation = currentRotation;

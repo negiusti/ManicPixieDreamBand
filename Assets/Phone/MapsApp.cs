@@ -10,7 +10,9 @@ public class MapsApp : MonoBehaviour
         CoffeeShop,
         ThriftStore,
         Bar,
-        MusicShop
+        MusicShop,
+        DowntownNeighborhood,
+        ShoppingDistrict
     };
     private GameManager gm;
     private SceneChanger sc;
@@ -26,7 +28,9 @@ public class MapsApp : MonoBehaviour
         { Location.Basement, "BandPracticeRoom" },
         { Location.ThriftStore, "ThriftStore" },
         { Location.Bar, "SmallBar" },
-        { Location.MusicShop, "MusicShop" },};
+        { Location.MusicShop, "MusicShop" },
+        { Location.DowntownNeighborhood, "DowntownNeighborhood" },
+        { Location.ShoppingDistrict, "ShoppingDistrict" },};
 
     private Dictionary<string, Location> sceneNameToLocation = new Dictionary<string, Location> {
         { "Bedroom", Location.Bedroom },
@@ -34,7 +38,9 @@ public class MapsApp : MonoBehaviour
         { "BandPracticeRoom", Location.Basement },
         { "ThriftStore", Location.ThriftStore },
         { "SmallBar", Location.Bar },
-        { "MusicShop", Location.MusicShop }};
+        { "MusicShop", Location.MusicShop },
+        { "DowntownNeighborhood", Location.DowntownNeighborhood },
+        { "ShoppingDistrict", Location.ShoppingDistrict }};
 
     // Start is called before the first frame update
     void Start()
