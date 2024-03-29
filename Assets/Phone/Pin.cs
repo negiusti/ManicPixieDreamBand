@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,6 +5,7 @@ using UnityEngine.EventSystems;
 public class Pin : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public MapsApp.Location location;
+    public SpriteRenderer pin;
     private TextMeshPro tm;
     private SpriteRenderer spriteRenderer;
     private Vector3 originalScale;
@@ -21,6 +20,7 @@ public class Pin : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPo
         originalScale = this.spriteRenderer.gameObject.transform.localScale;
         app = this.GetComponentInParent<MapsApp>();
         alreadyHere = false;
+        pin.enabled = false;
     }
 
     private void OnEnable()
@@ -51,6 +51,7 @@ public class Pin : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPo
         Vector3 newScale = originalScale + Vector3.one * 5f;
         this.spriteRenderer.gameObject.transform.localScale = newScale;
         this.tm.enabled = true;
+        this.pin.enabled = true;
         Debug.Log("hovering pin: " + location.ToString());
     }
 
@@ -65,6 +66,8 @@ public class Pin : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPo
             tm.enabled = false;
         if (spriteRenderer != null)
             spriteRenderer.gameObject.transform.localScale = originalScale;
+        if (pin != null)
+            pin.enabled = false;
     }
 
     private void OnMouseExit()
