@@ -275,6 +275,7 @@ public class Character : MonoBehaviour
         categoryToRenderer["Eyes"].color = color;
         categoryToRenderer["Eyeshadow"].enabled = (emotion == "default");
         categoryToRenderer["Eyebrows"].enabled = (emotion == "default");
+        categoryToRenderer["Face_Detail"].enabled = (emotion == "default");
     }
 
     public void RollerskatesOnOff(bool isRollerskating)
