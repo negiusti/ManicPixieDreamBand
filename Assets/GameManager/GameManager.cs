@@ -1,8 +1,6 @@
-using System;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
-using System.Linq;
 
 public class GameManager : MonoBehaviour
 {

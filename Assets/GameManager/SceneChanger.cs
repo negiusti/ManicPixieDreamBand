@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -5,10 +6,12 @@ using PixelCrushers.DialogueSystem;
 
 public class SceneChanger : MonoBehaviour
 {
+    private static float minLoadingTime = 2f; // Minimum time to show loading screen (in seconds)
     public static SceneChanger Instance;
+    private LoadingScreen loadingScreen;
     MenuToggleScript menuToggle;
     Stack<string> sceneStack;
-    //private GameObject player;
+
     public void ChangeScene(string sceneName)
     {
         SaveCharacters();
@@ -16,10 +19,52 @@ public class SceneChanger : MonoBehaviour
         //string currentScene = SceneManager.GetActiveScene().name;
         Debug.Log("Loading scene: " + sceneName);
         //AsyncOperation loadOperation =
-        SceneManager.LoadScene(sceneName);
+
+
+        LoadScene(sceneName);
+
         menuToggle.DisableMenu();
         sceneStack.Push(sceneName);
         //loadOperation.completed += (operation) => OnLoadCompleted(operation, currentScene);
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        // Show loading screen
+        if (loadingScreen != null)
+        {
+            Camera.main.enabled = false;
+            loadingScreen.gameObject.SetActive(true);
+            //loadingScreen.SwitchCams();
+        }
+
+        // Start loading the scene asynchronously
+        StartCoroutine(LoadSceneAsync(sceneName));
+    }
+
+    IEnumerator LoadSceneAsync(string sceneName)
+    {
+        // Begin loading the scene asynchronously
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+
+        // Wait for a minimum loading time to ensure loading screen is visible
+        yield return new WaitForSeconds(minLoadingTime);
+
+        // Wait until the asynchronous operation is complete
+        while (!operation.isDone)
+        {
+            // Calculate the progress and update loading screen if needed
+            float progress = Mathf.Clamp01(operation.progress / 0.9f); // 0.9f is the progress value when the scene is fully loaded
+            Debug.Log("Loading progress: " + progress);
+
+            // Optionally, update UI elements on the loading screen to show progress
+
+            yield return null;
+        }
+        if (loadingScreen != null)
+        {
+            loadingScreen.gameObject.SetActive(false);
+        }
     }
 
     public string GetCurrentScene()
@@ -69,10 +114,12 @@ public class SceneChanger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        loadingScreen = FindFirstObjectByType<LoadingScreen>(FindObjectsInactive.Include);
         menuToggle = GetComponent<MenuToggleScript>();
         menuToggle.DisableMenu();
         sceneStack = new Stack<string>();
         sceneStack.Push("Bedroom");
+        
         if (Instance == null)
         {
             Instance = this;
