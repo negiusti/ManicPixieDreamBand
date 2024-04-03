@@ -33,7 +33,6 @@ public class SceneChanger : MonoBehaviour
         // Show loading screen
         if (loadingScreen != null)
         {
-            Camera.main.enabled = false;
             loadingScreen.gameObject.SetActive(true);
             //loadingScreen.SwitchCams();
         }

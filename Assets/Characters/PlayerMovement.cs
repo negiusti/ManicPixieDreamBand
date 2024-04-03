@@ -53,7 +53,7 @@ public class PlayerMovement : Movement
 
     private void MoveLeftRight()
     {   
-        Quaternion currentRotation = transform.localRotation;
+        Quaternion currentRotation = transform.rotation;
         if (moveInput < 0 && currentRotation.y > 0)
         {
             currentRotation.y = 0;

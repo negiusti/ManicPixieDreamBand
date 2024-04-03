@@ -12,8 +12,16 @@ public class LoadingScreen : MonoBehaviour
     private void Start()
     {
         // Hide the loading screen initially
-        loadingCam = this.GetComponentInChildren<Camera>();
+        
         //SceneManager.activeSceneChanged += OnSceneChange;
+    }
+
+    private void OnEnable()
+    {
+        //loadingCam = this.GetComponentInChildren<Camera>();
+        //mainCam = Camera.main;
+        //loadingCam.enabled = true;
+        //mainCam.enabled = false;
     }
 
     //public void OnSceneChange(Scene current, Scene next)
@@ -38,10 +46,9 @@ public class LoadingScreen : MonoBehaviour
 
     public void SwitchCams()
     {
+        loadingCam = this.GetComponentInChildren<Camera>();
         //mainCam = Camera.main;
-        //if (loadingCam == null)
-        //    loadingCam = this.GetComponentInChildren<Camera>();
-        //loadingCam.enabled = true;
+        loadingCam.enabled = true;
         //mainCam.enabled = false;
     }
 
