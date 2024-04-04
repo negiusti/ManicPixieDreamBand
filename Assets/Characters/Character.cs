@@ -59,7 +59,7 @@ public class Character : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         isMC = gameObject.name == "MainCharacter";
         spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
