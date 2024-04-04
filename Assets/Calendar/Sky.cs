@@ -8,7 +8,6 @@ public class Sky : MonoBehaviour
     void Start()
     {
         spriteResolver = this.GetComponent<SpriteResolver>();
-        UpdateSky();
     }
 
     public void UpdateSky()
@@ -17,6 +16,11 @@ public class Sky : MonoBehaviour
         if (spriteResolver == null)
             Start();
         spriteResolver.SetCategoryAndLabel("Sky", label);
+    }
+
+    private void OnEnable()
+    {
+        UpdateSky();
     }
 
     // Update is called once per frame
