@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -34,7 +35,7 @@ public class PlayInstrument : MonoBehaviour
     void Update()
     {
         // Only applies to MainCharacter, this is only for playing solo, not with the band
-        if (!isPlayingInstrument && withinRange && Input.GetKey(keyToTrigger))
+        if (!isPlayingInstrument && withinRange && Input.GetKey(keyToTrigger) && InteractionEnabled())
         {
             //Play();
             //JamCoordinator.StartJam("LEMON BOY");
@@ -86,14 +87,34 @@ public class PlayInstrument : MonoBehaviour
         return isPlayingInstrument;
     }
 
-
-    void OnTriggerEnter2D(Collider2D other)
+    private bool InteractionEnabled()
     {
-        if (other.CompareTag("Player") && !other.GetComponent<Movement>().IsSkating())
+        return !Characters.mc.gameObject.GetComponent<Movement>().IsSkating() &&
+            !SceneChanger.Instance.IsLoadingScreenOpen() &&
+            !DialogueManager.IsConversationActive;
+    }
+
+    //void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (other.CompareTag("Player") && !other.GetComponent<Movement>().IsSkating())
+    //    {
+    //        musicianMovement = other.gameObject.GetComponent<Movement>();
+    //        withinRange = true;
+    //        animator.enabled = true;
+    //    }
+    //}
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && InteractionEnabled())
         {
             musicianMovement = other.gameObject.GetComponent<Movement>();
             withinRange = true;
             animator.enabled = true;
+        } else
+        {
+            withinRange = false;
+            animator.enabled = false;
         }
     }
 

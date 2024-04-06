@@ -12,6 +12,11 @@ public class SceneChanger : MonoBehaviour
     MenuToggleScript menuToggle;
     Stack<string> sceneStack;
 
+    public bool IsLoadingScreenOpen()
+    {
+        return loadingScreen != null && loadingScreen.isActiveAndEnabled;
+    }
+
     public void ChangeScene(string sceneName)
     {
         SaveCharacters();

@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
 public class InteractHintScript : MonoBehaviour
@@ -38,7 +39,7 @@ public class InteractHintScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (inRange && Input.GetKey(keyToTrigger))
+        if (inRange && Input.GetKey(keyToTrigger) && InteractionEnabled())
         {
             if (objToEnable != null)
                 objToEnable.SetActive(true);
@@ -47,13 +48,36 @@ public class InteractHintScript : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private bool InteractionEnabled()
     {
-        if (other.CompareTag("Player") && !other.GetComponent<Movement>().IsSkating())
+        return !Characters.mc.gameObject.GetComponent<Movement>().IsSkating() &&
+            !SceneChanger.Instance.IsLoadingScreenOpen() &&
+            !DialogueManager.IsConversationActive;
+    }
+
+    //void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (other.CompareTag("Player") && InteractionEnabled())
+    //    {
+    //        inRange = true;
+    //        animator.enabled = true;
+    //        animator.Play(animationName);
+    //    }
+    //}
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && InteractionEnabled())
         {
             inRange = true;
             animator.enabled = true;
             animator.Play(animationName);
+        }
+        else
+        {
+            inRange = false;
+            spriteRenderer.color = Color.white;
+            animator.enabled = false;
         }
     }
 
