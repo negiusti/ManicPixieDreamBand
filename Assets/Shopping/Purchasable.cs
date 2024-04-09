@@ -13,6 +13,7 @@ public class Purchasable : MonoBehaviour
     private SpriteResolver spriteResolver;
     private SpriteLibraryAsset spriteLib;
     private string purchaseableName;
+    private PriceTag priceTag;
 
     private class PurchasableData
     {
@@ -37,6 +38,11 @@ public class Purchasable : MonoBehaviour
         spriteLib = sl.spriteLibraryAsset;
         purchaseableName = SceneChanger.Instance.GetCurrentScene() + "_" + this.gameObject.name;
         shop = FindObjectOfType<Shop>();
+        priceTag = this.GetComponentInChildren<PriceTag>();
+        if (priceTag == null)
+        {
+            Debug.LogError("Purchasable is missing price tag: " + gameObject.name);
+        }
         Load();
     }
 
@@ -105,11 +111,13 @@ public class Purchasable : MonoBehaviour
     private void OnMouseEnter()
     {
         // show price
+        priceTag.ShowPrice();
     }
 
     private void OnMouseExit()
     {
         // hide price
+        priceTag.HidePrice();
     }
 
     public void Buy()
