@@ -1147,8 +1147,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1124444369
-  m_SortingLayer: 8
+  m_SortingLayerID: -1627423309
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a6145cf93b711cb4495a3199a0b62a52, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1170,7 +1170,7 @@ Transform:
   m_GameObject: {fileID: 765690529}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.99, y: -4.25, z: 0}
+  m_LocalPosition: {x: -4.99, y: -3.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1572,7 +1572,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1124444369
   m_SortingLayer: 8
-  m_SortingOrder: 10
+  m_SortingOrder: -122
   m_Sprite: {fileID: 21300000, guid: 149caa463e420ea4abba592a25830b9d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1593,7 +1593,7 @@ Transform:
   m_GameObject: {fileID: 1035230457}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.791807, y: -3.74, z: 0}
+  m_LocalPosition: {x: 20.8, y: -3.96, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1780,9 +1780,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1169836417}
   - component: {fileID: 1169836416}
+  - component: {fileID: 1169836418}
   m_Layer: 0
   m_Name: T_Banana
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1827,7 +1828,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1124444369
   m_SortingLayer: 8
-  m_SortingOrder: 2
+  m_SortingOrder: -122
   m_Sprite: {fileID: 21300000, guid: 1d46a632e07eb344da9a077fabdb7eba, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1848,12 +1849,47 @@ Transform:
   m_GameObject: {fileID: 1169836415}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 51.162655, y: -5.31, z: 0}
+  m_LocalPosition: {x: 51.162655, y: -5.81, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1169836418
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1169836415}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.31552124}
+  serializedVersion: 2
+  m_Radius: 2.2994785
 --- !u!1 &1212980468
 GameObject:
   m_ObjectHideFlags: 0
@@ -2761,7 +2797,7 @@ GameObject:
   - component: {fileID: 1978520153}
   - component: {fileID: 1978520152}
   m_Layer: 0
-  m_Name: Triangle
+  m_Name: Cone
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2852,7 +2888,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1124444369
   m_SortingLayer: 8
-  m_SortingOrder: -352
+  m_SortingOrder: -122
   m_Sprite: {fileID: 21300000, guid: 41c774f28d6a53448863dd7a1b090af0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2873,7 +2909,7 @@ Transform:
   m_GameObject: {fileID: 1978520151}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -32.95, y: -5.02, z: 0}
+  m_LocalPosition: {x: -32.95, y: -5.1, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
