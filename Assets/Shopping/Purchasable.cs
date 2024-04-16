@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.U2D.Animation;
 
-public class Purchasable : MonoBehaviour
+public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     [SerializeField] public string itemName;
     [SerializeField] public double price;
@@ -110,14 +111,27 @@ public class Purchasable : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        // show price
         priceTag.ShowPrice();
     }
 
     private void OnMouseExit()
     {
-        // hide price
         priceTag.HidePrice();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnMouseEnter();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnMouseExit();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
     }
 
     public void Buy()
