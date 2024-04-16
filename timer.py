@@ -4,6 +4,8 @@ import pyaudio
 import io
 import sounddevice as sd
 
+# sorry, it's a mess in here :)
+
 def play_wav_file(file_path):
     # Read the WAV file and get the audio data
     wave_data, sample_rate = sd.read(file_path, dtype='int16')
