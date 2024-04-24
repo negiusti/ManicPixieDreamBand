@@ -133,12 +133,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3709877}
   - component: {fileID: 3709876}
-  - component: {fileID: 3709879}
-  - component: {fileID: 3709881}
   - component: {fileID: 3709880}
+  - component: {fileID: 3709882}
+  - component: {fileID: 3709883}
   m_Layer: 0
   m_Name: Wire1
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -204,24 +204,12 @@ Transform:
   m_GameObject: {fileID: 3709875}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.6537, y: -1.3618, z: 0}
+  m_LocalPosition: {x: 7.653517, y: -3.6116638, z: 0}
   m_LocalScale: {x: 0.5808789, y: 0.58135617, z: 0.59759754}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1862166652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3709879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3709875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dfaf234f70444016a524ec1d182ab60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &3709880
 Rigidbody2D:
   serializedVersion: 4
@@ -230,26 +218,40 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3709875}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
---- !u!61 &3709881
+--- !u!114 &3709882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3709875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ec00ec0315a4f06a0bfd37e9603bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockTag: Obstacle
+  snapIncrement: 1
+--- !u!61 &3709883
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -261,7 +263,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -278,7 +280,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1004,12 +1006,12 @@ GameObject:
   m_Component:
   - component: {fileID: 257366869}
   - component: {fileID: 257366868}
-  - component: {fileID: 257366871}
-  - component: {fileID: 257366873}
   - component: {fileID: 257366872}
+  - component: {fileID: 257366874}
+  - component: {fileID: 257366875}
   m_Layer: 0
   m_Name: Amp1
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1075,24 +1077,12 @@ Transform:
   m_GameObject: {fileID: 257366867}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.0030034, y: -0.00000011920929, z: 0}
+  m_LocalPosition: {x: 6.0039134, y: -2.2498639, z: 0}
   m_LocalScale: {x: 0.58433086, y: 0.59759754, z: 0.59759754}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1862166652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &257366871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 257366867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dfaf234f70444016a524ec1d182ab60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &257366872
 Rigidbody2D:
   serializedVersion: 4
@@ -1101,26 +1091,40 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 257366867}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
---- !u!61 &257366873
+--- !u!114 &257366874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 257366867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ec00ec0315a4f06a0bfd37e9603bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockTag: Obstacle
+  snapIncrement: 1
+--- !u!61 &257366875
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1132,7 +1136,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1149,7 +1153,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -2969,12 +2973,12 @@ GameObject:
   m_Component:
   - component: {fileID: 626754119}
   - component: {fileID: 626754118}
-  - component: {fileID: 626754121}
-  - component: {fileID: 626754123}
   - component: {fileID: 626754122}
+  - component: {fileID: 626754124}
+  - component: {fileID: 626754125}
   m_Layer: 0
   m_Name: Case2
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3040,24 +3044,12 @@ Transform:
   m_GameObject: {fileID: 626754117}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 1.8018013, y: 0.8395, z: 0}
+  m_LocalPosition: {x: 10.2081175, y: -1.4103639, z: 0}
   m_LocalScale: {x: 0.61616886, y: 0.559949, z: 0.59759754}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1862166652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
---- !u!114 &626754121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 626754117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dfaf234f70444016a524ec1d182ab60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &626754122
 Rigidbody2D:
   serializedVersion: 4
@@ -3066,26 +3058,40 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 626754117}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
---- !u!61 &626754123
+--- !u!114 &626754124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626754117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ec00ec0315a4f06a0bfd37e9603bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockTag: Obstacle
+  snapIncrement: 1
+--- !u!61 &626754125
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3097,7 +3103,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3114,7 +3120,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -4196,12 +4202,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1046141829}
   - component: {fileID: 1046141828}
-  - component: {fileID: 1046141831}
-  - component: {fileID: 1046141833}
   - component: {fileID: 1046141832}
+  - component: {fileID: 1046141834}
+  - component: {fileID: 1046141835}
   m_Layer: 0
   m_Name: Pedalboard1
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4267,24 +4273,12 @@ Transform:
   m_GameObject: {fileID: 1046141827}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.9881, y: -1.1913, z: 0}
+  m_LocalPosition: {x: 6.3191166, y: -3.441164, z: 0}
   m_LocalScale: {x: 0.58301616, y: 0.6184537, z: 0.59759754}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1862166652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1046141831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1046141827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dfaf234f70444016a524ec1d182ab60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &1046141832
 Rigidbody2D:
   serializedVersion: 4
@@ -4293,26 +4287,40 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046141827}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
---- !u!61 &1046141833
+--- !u!114 &1046141834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046141827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ec00ec0315a4f06a0bfd37e9603bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockTag: Obstacle
+  snapIncrement: 1
+--- !u!61 &1046141835
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4324,7 +4332,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -4341,7 +4349,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -4455,12 +4463,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1054597739}
   - component: {fileID: 1054597738}
-  - component: {fileID: 1054597741}
-  - component: {fileID: 1054597743}
   - component: {fileID: 1054597742}
+  - component: {fileID: 1054597744}
+  - component: {fileID: 1054597745}
   m_Layer: 0
   m_Name: SnareCase
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4526,24 +4534,12 @@ Transform:
   m_GameObject: {fileID: 1054597737}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6108, y: -0.6109, z: 0}
+  m_LocalPosition: {x: 10.2081175, y: -2.8504643, z: 0}
   m_LocalScale: {x: 0.59761655, y: 0.5686376, z: 0.59759754}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1862166652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1054597741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1054597737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dfaf234f70444016a524ec1d182ab60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &1054597742
 Rigidbody2D:
   serializedVersion: 4
@@ -4552,26 +4548,40 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1054597737}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
---- !u!61 &1054597743
+--- !u!114 &1054597744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1054597737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ec00ec0315a4f06a0bfd37e9603bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockTag: Obstacle
+  snapIncrement: 1
+--- !u!61 &1054597745
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4583,7 +4593,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -4600,7 +4610,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -5858,12 +5868,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1324998432}
   - component: {fileID: 1324998431}
-  - component: {fileID: 1324998434}
-  - component: {fileID: 1324998436}
   - component: {fileID: 1324998435}
+  - component: {fileID: 1324998437}
+  - component: {fileID: 1324998438}
   m_Layer: 0
   m_Name: Sticks
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5929,24 +5939,12 @@ Transform:
   m_GameObject: {fileID: 1324998430}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.8618, y: -0.6015, z: 0}
+  m_LocalPosition: {x: 12.169017, y: -2.851364, z: 0}
   m_LocalScale: {x: 0.57756466, y: 0.81006134, z: 0.59759754}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1862166652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1324998434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1324998430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dfaf234f70444016a524ec1d182ab60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &1324998435
 Rigidbody2D:
   serializedVersion: 4
@@ -5955,26 +5953,40 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1324998430}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
---- !u!61 &1324998436
+--- !u!114 &1324998437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324998430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ec00ec0315a4f06a0bfd37e9603bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockTag: Obstacle
+  snapIncrement: 1
+--- !u!61 &1324998438
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5986,7 +5998,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -6003,7 +6015,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -6909,12 +6921,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1534594123}
   - component: {fileID: 1534594122}
-  - component: {fileID: 1534594125}
-  - component: {fileID: 1534594127}
   - component: {fileID: 1534594126}
+  - component: {fileID: 1534594128}
+  - component: {fileID: 1534594129}
   m_Layer: 0
   m_Name: Stand2
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6980,24 +6992,12 @@ Transform:
   m_GameObject: {fileID: 1534594121}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.1093, y: 0.4595, z: 0}
+  m_LocalPosition: {x: 11.416516, y: -1.7903638, z: 0}
   m_LocalScale: {x: 0.69706887, y: 0.78657496, z: 0.59759754}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1862166652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1534594125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1534594121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dfaf234f70444016a524ec1d182ab60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &1534594126
 Rigidbody2D:
   serializedVersion: 4
@@ -7006,26 +7006,40 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1534594121}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
---- !u!61 &1534594127
+--- !u!114 &1534594128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534594121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ec00ec0315a4f06a0bfd37e9603bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockTag: Obstacle
+  snapIncrement: 1
+--- !u!61 &1534594129
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7037,7 +7051,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -7054,7 +7068,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -9103,12 +9117,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2063207304}
   - component: {fileID: 2063207303}
-  - component: {fileID: 2063207306}
-  - component: {fileID: 2063207308}
   - component: {fileID: 2063207307}
+  - component: {fileID: 2063207309}
+  - component: {fileID: 2063207310}
   m_Layer: 0
   m_Name: Speaker1
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9174,24 +9188,12 @@ Transform:
   m_GameObject: {fileID: 2063207302}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -1.1912, y: -0.3103, z: 0}
+  m_LocalPosition: {x: 8.116016, y: -2.560164, z: 0}
   m_LocalScale: {x: 0.7111679, y: 0.815016, z: 0.59759754}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1862166652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!114 &2063207306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2063207302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dfaf234f70444016a524ec1d182ab60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &2063207307
 Rigidbody2D:
   serializedVersion: 4
@@ -9200,26 +9202,40 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2063207302}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
---- !u!61 &2063207308
+--- !u!114 &2063207309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063207302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ec00ec0315a4f06a0bfd37e9603bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockTag: Obstacle
+  snapIncrement: 1
+--- !u!61 &2063207310
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9231,7 +9247,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -9248,7 +9264,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
