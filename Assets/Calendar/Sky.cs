@@ -4,12 +4,12 @@ using UnityEngine.U2D.Animation;
 public class Sky : MonoBehaviour
 {
     private SpriteResolver spriteResolver;
-    private ParticleSystem particles;
+    private ParticleSystem rain;
     // Start is called before the first frame update
     void Start()
     {
         spriteResolver = this.GetComponent<SpriteResolver>();
-        particles = this.GetComponentInChildren<ParticleSystem>();
+        rain = this.GetComponentInChildren<ParticleSystem>(includeInactive: true);
     }
 
     public void UpdateSky()
@@ -18,10 +18,10 @@ public class Sky : MonoBehaviour
         switch (currentWeather)
         {
             case Weather.WeatherState.Rainy:
-                particles.gameObject.SetActive(true);
+                rain.gameObject.SetActive(true);
                 break;
             default:
-                particles.gameObject.SetActive(false);
+                rain.gameObject.SetActive(false);
                 break;
         }
         string label = Calendar.IsDay() ? "Day" : "Night";
@@ -32,6 +32,7 @@ public class Sky : MonoBehaviour
 
     private void OnEnable()
     {
+        Start();
         UpdateSky();
     }
 

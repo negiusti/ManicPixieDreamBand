@@ -31,6 +31,7 @@ public class Calendar : ScriptableObject
             SetIsNight(true);
         }
         currentEventIdx++;
+        Weather.RandomizeWeather();
     }
 
     public static ICalendarEvent GetCurrentEvent()
