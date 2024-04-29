@@ -240,6 +240,15 @@ public class CustomDialogueScript : MonoBehaviour
                 DialogueManager.standardDialogueUI.OnContinue();
             }
         }
+
+        if (subtitle.dialogueEntry.subtitleText.StartsWith('[') && subtitle.dialogueEntry.subtitleText.EndsWith(']'))
+        {
+            Debug.Log("meta dialogue text: " + subtitle.dialogueEntry.DialogueText);
+            DialogueManager.standardDialogueUI.HideSubtitle(subtitle);
+            DialogueManager.standardDialogueUI.OnContinue();
+            return;
+        }
+
         if (subtitle.dialogueEntry.DialogueText.Length > 0 && IsTxtConvo(convoName)) {
             string contactName = phone.GetContactNameFromConvoName(convoName);
             FocusBackLog(contactName);
