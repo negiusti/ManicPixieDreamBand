@@ -7,7 +7,8 @@ using UnityEngine.U2D.Animation;
 public class CalendarApp : MonoBehaviour
 {
     private SpriteResolver spriteResolver;
-    private TextMeshPro tmp;
+    public TextMeshPro dayNum;
+    public TextMeshPro weatherInfo;
     public PhoneCalendarEvent[] eventBubbles;
     public GameObject line;
 
@@ -15,7 +16,6 @@ public class CalendarApp : MonoBehaviour
     void Start()
     {
         spriteResolver = this.GetComponentInChildren<SpriteResolver>();
-        tmp = this.GetComponentInChildren<TextMeshPro>();
         eventBubbles = this.GetComponentsInChildren<PhoneCalendarEvent>().ToArray();
         UpdateImage();
         ShowTodaysEvents();
@@ -51,13 +51,23 @@ public class CalendarApp : MonoBehaviour
     {
         if (Calendar.IsNight())
         {
-            spriteResolver.SetCategoryAndLabel("MoonSun", "moon");
+            if (Weather.Current().Equals(Weather.WeatherState.Rainy))
+                spriteResolver.SetCategoryAndLabel("MoonSun", "moon_rain");
+            else
+                spriteResolver.SetCategoryAndLabel("MoonSun", "moon");
         }
         else
         {
-            spriteResolver.SetCategoryAndLabel("MoonSun", "sun");
+            if (Weather.Current().Equals(Weather.WeatherState.Rainy))
+                spriteResolver.SetCategoryAndLabel("MoonSun", "sun_rain");
+            else
+                spriteResolver.SetCategoryAndLabel("MoonSun", "sun");
         }
-        tmp.text = Calendar.Date().ToString();
+        dayNum.text = Calendar.Date().ToString();
+        if (Weather.Current().Equals(Weather.WeatherState.Rainy))
+            weatherInfo.text = "rainy\n69º";
+        else
+            weatherInfo.text = "partly cloudy\n54º";
     }
 
     public void Sleep()
