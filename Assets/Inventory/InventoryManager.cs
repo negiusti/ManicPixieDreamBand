@@ -8,12 +8,34 @@ public class InventoryManager : ScriptableObject
     private static string invSaveKey = "CharacterInventories";
     private static Dictionary<string, HashSet<string>> categoryToPurchased;
     private static string purchasedSaveKey = "PurchasedInventory";
+    private static Dictionary<Item, int> pockets;
+    private static string pocketsSaveKey = "Pockets";
+    private static Dictionary<PerishableItem, int> pocketsPerishable;
+    private static string pocketsPerishableSaveKey = "PocketsPerishable";
     private static string MAIN_CHARACTER = "MainCharacter";
+
+    public enum PerishableItem
+    {
+        Coffee,
+        Latte,
+        Croissant,
+        Pizza
+    }
+
+    public enum Item
+    {
+        Keys,
+        Book,
+        Zine,
+        Poster
+    }
 
     public static void SaveInventories()
     {
         ES3.Save(invSaveKey, characterInventories);
         ES3.Save(purchasedSaveKey, categoryToPurchased);
+        ES3.Save(pocketsSaveKey, pockets);
+        ES3.Save(pocketsPerishableSaveKey, pocketsPerishable);
     }
 
     public static void AddToInventory(string character, string category, string item)
@@ -84,6 +106,25 @@ public class InventoryManager : ScriptableObject
             categoryToPurchased = new Dictionary<string, HashSet<string>>();
             Debug.LogError("Could not find cateogoryToPurchased in easy save system");
         }
+
+        if (ES3.KeyExists(pocketsSaveKey))
+        {
+            pockets = (Dictionary<Item, int>)ES3.Load(pocketsSaveKey);
+        }
+        if (pockets == null)
+        {
+            pockets = new Dictionary<Item,int>();
+            Debug.LogError("Could not find pockets in easy save system");
+        }
+        if (ES3.KeyExists(pocketsPerishableSaveKey))
+        {
+            pocketsPerishable = (Dictionary<PerishableItem, int>)ES3.Load(pocketsPerishableSaveKey);
+        }
+        if (pocketsPerishable == null)
+        {
+            pocketsPerishable = new Dictionary<PerishableItem, int>();
+            Debug.LogError("Could not find pocketsPerishable in easy save system");
+        }
     }
 
     public static HashSet<string> GetCharacterInventory(string character, string category)
@@ -126,5 +167,77 @@ public class InventoryManager : ScriptableObject
             return "Bottom_Icons";
         else
             return category;
+    }
+
+    private static Item StringToItem(string input)
+    {
+        // Try parsing the input string into the enum value
+        if (System.Enum.TryParse(input, out Item result))
+        {
+            // Parsing succeeded, 'result' contains the enum value
+            Debug.LogError("Parsed enum value: " + result);
+            return result;
+        }
+        else
+        {
+            // Parsing failed, handle invalid input
+            throw new System.ArgumentException("Invalid input string: " + input);
+        }
+    }
+
+    private static PerishableItem StringToPerishableItem(string input)
+    {
+        // Try parsing the input string into the enum value
+        if (System.Enum.TryParse(input, out PerishableItem result))
+        {
+            // Parsing succeeded, 'result' contains the enum value
+            Debug.LogError("Parsed enum value: " + result);
+            return result;
+        }
+        else
+        {
+            // Parsing failed, handle invalid input
+            throw new System.ArgumentException("Invalid input string: " + input);
+        }
+    }
+
+    public static void AddPerishableItem(string input)
+    {
+        PerishableItem pi = StringToPerishableItem(input);
+        if (pocketsPerishable.ContainsKey(pi))
+            pocketsPerishable[pi]++;
+        else
+            pocketsPerishable.Add(pi, 0);
+    }
+
+    public static void AddItem(string input)
+    {
+        Item item = StringToItem(input);
+        if (pockets.ContainsKey(item))
+            pockets[item]++;
+        else
+            pockets.Add(item, 0);
+    }
+
+    public static void RemovePerishableItem(string input)
+    {
+        PerishableItem item = StringToPerishableItem(input);
+        if (pocketsPerishable.ContainsKey(item) && pocketsPerishable[item] <= 1)
+            pocketsPerishable.Remove(item);
+        else if (pocketsPerishable.ContainsKey(item) && pocketsPerishable[item] > 1)
+            pocketsPerishable[item]--;
+        else if (!pocketsPerishable.ContainsKey(item))
+            Debug.LogError("PerishablePockets do not contain item: " + input);
+    }
+
+    public static void RemoveItem(string input)
+    {
+        Item item = StringToItem(input);
+        if (pockets.ContainsKey(item) && pockets[item] <= 1)
+            pockets.Remove(item);
+        else if (pockets.ContainsKey(item) && pockets[item] > 1)
+            pockets[item]--;
+        else if (!pockets.ContainsKey(item))
+            Debug.LogError("Pockets do not contain item: " + input);
     }
 }

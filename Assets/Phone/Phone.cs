@@ -16,6 +16,7 @@ public class Phone : MonoBehaviour
     private BankApp bankApp;
     private MapsApp mapsApp;
     private CalendarApp calendarApp;
+    private PocketsApp pocketsApp;
     private SpriteResolver backgroundResolver;
     private bool isLocked;
     private Animator animator;
@@ -32,7 +33,8 @@ public class Phone : MonoBehaviour
         Photos,
         Bank,
         Convo,
-        Calendar
+        Calendar,
+        Pockets
     };
 
     // State stack
@@ -190,6 +192,18 @@ public class Phone : MonoBehaviour
         HideIcons();
     }
 
+    public void OpenPockets()
+    {
+        //backgroundResolver.SetCategoryAndLabel("Background", "Pockets");
+
+        pocketsApp.gameObject.SetActive(true);
+        //calendarApp.Open();
+        SetAppHeader("Pocketz");
+        if (phoneStateStack.Peek() != PhoneState.Pockets)
+            phoneStateStack.Push(PhoneState.Pockets);
+        HideIcons();
+    }
+
     public void OpenSettings()
     {
         SetAppHeader("Settings");
@@ -248,6 +262,10 @@ public class Phone : MonoBehaviour
                 OpenCalendar();
                 break;
 
+            case PhoneState.Pockets:
+                OpenPockets();
+                break;
+
             default:
                 Debug.Log("State not found: " + state.ToString());
                 break;
@@ -279,6 +297,7 @@ public class Phone : MonoBehaviour
         messagesApp.gameObject.SetActive(false);
         mapsApp.gameObject.SetActive(false);
         calendarApp.gameObject.SetActive(false);
+        pocketsApp.gameObject.SetActive(false);
         backButton.SetActive(false);
         ShowIcons();
     }
