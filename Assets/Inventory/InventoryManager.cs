@@ -17,6 +17,7 @@ public class InventoryManager : ScriptableObject
     public enum PerishableItem
     {
         Coffee,
+        Latte,
         IcedCoffee,
         Croissant,
         Pizza
