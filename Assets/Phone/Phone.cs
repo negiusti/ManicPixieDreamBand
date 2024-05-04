@@ -52,6 +52,7 @@ public class Phone : MonoBehaviour
         mapsApp = this.GetComponentInChildren<MapsApp>();
         messagesApp = this.GetComponentInChildren<PhoneMessages>();
         calendarApp = this.GetComponentInChildren<CalendarApp>();
+        pocketsApp = this.GetComponentInChildren<PocketsApp>();
         animator = this.GetComponent<Animator>();
         isLocked = true;
         Lock();

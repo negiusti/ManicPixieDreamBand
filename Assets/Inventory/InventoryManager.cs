@@ -17,7 +17,7 @@ public class InventoryManager : ScriptableObject
     public enum PerishableItem
     {
         Coffee,
-        Latte,
+        IcedCoffee,
         Croissant,
         Pizza
     }
@@ -239,5 +239,15 @@ public class InventoryManager : ScriptableObject
             pockets[item]--;
         else if (!pockets.ContainsKey(item))
             Debug.LogError("Pockets do not contain item: " + input);
+    }
+
+    public static Dictionary<PerishableItem, int> GetPerishablePocketItems()
+    {
+        return pocketsPerishable;
+    }
+
+    public static Dictionary<Item, int> GetPocketItems()
+    {
+        return pockets;
     }
 }

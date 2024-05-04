@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class SnapToGrid : MonoBehaviour
 {
-    //private bool isDragging = false;
     public string blockTag = "Obstacle";    // The tag to avoid collision with
     public float snapIncrement = 0.3f;
     private Vector3 mousePositionOffset;
@@ -22,7 +21,6 @@ public class SnapToGrid : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            //rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             // Calculate the offset between the click point and the object's position
             mousePositionOffset = gameObject.transform.position - GetMouseWorldPosition();
             //isDragging = true;
@@ -32,15 +30,11 @@ public class SnapToGrid : MonoBehaviour
     private void OnMouseUp()
     {
         selected = false;
-        //rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
     }
 
     private Vector3 GetMouseWorldPosition()
     {
         // Get the mouse position in world coordinates
-        //Vector3 mousePos = Input.mousePosition;
-        //mousePos.z = -Camera.main.transform.position.z;
-        //return Camera.main.ScreenToWorldPoint(mousePos);
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
@@ -63,7 +57,7 @@ public class SnapToGrid : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        
+        selected = true;
     }
 
     private void OnMouseExit()

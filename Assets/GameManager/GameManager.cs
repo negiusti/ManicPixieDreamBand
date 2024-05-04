@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(InventoryManager.AddPerishableItem), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.AddPerishableItem(string.Empty)));
         Lua.RegisterFunction(nameof(InventoryManager.RemoveItem), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.RemoveItem(string.Empty)));
         Lua.RegisterFunction(nameof(InventoryManager.RemovePerishableItem), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.RemovePerishableItem(string.Empty)));
+        Lua.RegisterFunction(nameof(MainCharacterState.HasChangedOutfitToday), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.HasChangedOutfitToday()));
+        Lua.RegisterFunction(nameof(MainCharacterState.CurrentBankBalance), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.CurrentBankBalance()));
     }
 
     void UnregisterSOLuaFuncs()
@@ -59,6 +61,8 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(InventoryManager.AddPerishableItem));
         Lua.UnregisterFunction(nameof(InventoryManager.RemoveItem));
         Lua.UnregisterFunction(nameof(InventoryManager.RemovePerishableItem));
+        Lua.UnregisterFunction(nameof(MainCharacterState.HasChangedOutfitToday));
+        Lua.UnregisterFunction(nameof(MainCharacterState.CurrentBankBalance));
         //}
     }
 
