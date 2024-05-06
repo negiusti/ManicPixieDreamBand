@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ClickAndDrag : MonoBehaviour
 {
-    //private bool isDragging = false;
     private Vector3 mousePositionOffset;
     private bool selected;    
 
@@ -16,7 +15,6 @@ public class ClickAndDrag : MonoBehaviour
         {
             // Calculate the offset between the click point and the object's position
             mousePositionOffset = gameObject.transform.position - GetMouseWorldPosition();
-            //isDragging = true;
         }
     }
 
