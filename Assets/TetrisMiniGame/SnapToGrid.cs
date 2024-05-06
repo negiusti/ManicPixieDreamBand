@@ -23,13 +23,12 @@ public class SnapToGrid : MonoBehaviour
         {
             // Calculate the offset between the click point and the object's position
             mousePositionOffset = gameObject.transform.position - GetMouseWorldPosition();
-            //isDragging = true;
         }
     }
 
     private void OnMouseUp()
     {
-        selected = false;
+        //selected = false;
     }
 
     private Vector3 GetMouseWorldPosition()
@@ -44,15 +43,6 @@ public class SnapToGrid : MonoBehaviour
         Vector3 snappedPosition = GetMouseWorldPosition() + mousePositionOffset;
         // Update the GameObject's position to the snapped position
         transform.position = RoundPosition(snappedPosition, snapIncrement);
-        //IsCollidingWithBlock();
-        //if (!IsCollidingWithBlock())
-        //{
-        //    lastValidPos = transform.position;
-        //}
-        //else
-        //{
-        //    transform.position = lastValidPos;
-        //}
     }
 
     private void OnMouseEnter()
@@ -81,18 +71,6 @@ public class SnapToGrid : MonoBehaviour
   
         // Update the GameObject's position to the snapped position
         transform.position = snappedPosition;
-        //lock (lockObject)
-        //{
-        //    bool isColliding = collidingObjs.Count > 0;
-        //    if (!isColliding)
-        //    {
-        //        lastValidPos = transform.position;
-        //    }
-        //    else
-        //    {
-        //        transform.position = lastValidPos;
-        //    }
-        //}
 
     }
 
@@ -109,23 +87,6 @@ public class SnapToGrid : MonoBehaviour
     {
         return Mathf.Round(value / snapIncrement) * snapIncrement;
     }
-
-    //private bool IsCollidingWithBlock()
-    //{
-    //    lock (lockObject)
-    //    {
-    //        bool isColliding = collidingObjs.Count > 0;
-    //        if (!isColliding)
-    //        {
-    //            lastValidPos = transform.position;
-    //        }
-    //        else
-    //        {
-    //            transform.position = lastValidPos;
-    //        }
-    //        return isColliding;
-    //    }
-    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
