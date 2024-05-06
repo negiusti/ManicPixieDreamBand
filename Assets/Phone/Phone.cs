@@ -48,11 +48,11 @@ public class Phone : MonoBehaviour
         phoneStateStack = new Stack<PhoneState>();
         phoneStateStack.Push(PhoneState.Home);
         //contactsList = SaveSystem.LoadContactsList();
-        bankApp = this.GetComponentInChildren<BankApp>();
-        mapsApp = this.GetComponentInChildren<MapsApp>();
-        messagesApp = this.GetComponentInChildren<PhoneMessages>();
-        calendarApp = this.GetComponentInChildren<CalendarApp>();
-        pocketsApp = this.GetComponentInChildren<PocketsApp>();
+        bankApp = this.GetComponentInChildren<BankApp>(true);
+        mapsApp = this.GetComponentInChildren<MapsApp>(true);
+        messagesApp = this.GetComponentInChildren<PhoneMessages>(true);
+        calendarApp = this.GetComponentInChildren<CalendarApp>(true);
+        pocketsApp = this.GetComponentInChildren<PocketsApp>(true);
         animator = this.GetComponent<Animator>();
         isLocked = true;
         Lock();
@@ -195,10 +195,9 @@ public class Phone : MonoBehaviour
 
     public void OpenPockets()
     {
-        //backgroundResolver.SetCategoryAndLabel("Background", "Pockets");
+        backgroundResolver.SetCategoryAndLabel("Background", "Pockets");
 
         pocketsApp.gameObject.SetActive(true);
-        //calendarApp.Open();
         SetAppHeader("Pocketz");
         if (phoneStateStack.Peek() != PhoneState.Pockets)
             phoneStateStack.Push(PhoneState.Pockets);

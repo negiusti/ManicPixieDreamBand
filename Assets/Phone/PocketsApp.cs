@@ -6,9 +6,11 @@ public class PocketsApp : MonoBehaviour
     public PocketsAppItem itemTemplate;
     private Dictionary<InventoryManager.PerishableItem, int> perishableItems;
     private Dictionary<InventoryManager.Item, int> items;
+    private List<PocketsAppItem> itemIcons;
+
     // Start is called before the first frame update
     void Start()
-    {        
+    {
     }
 
     // Update is called once per frame
@@ -18,6 +20,7 @@ public class PocketsApp : MonoBehaviour
 
     private void OnEnable()
     {
+        itemIcons = new List<PocketsAppItem>();
         items = InventoryManager.GetPocketItems();
         perishableItems = InventoryManager.GetPerishablePocketItems();
         foreach (KeyValuePair<InventoryManager.Item, int> itemAndCount in items) {
@@ -26,6 +29,7 @@ public class PocketsApp : MonoBehaviour
                 PocketsAppItem item = Instantiate(itemTemplate, transform);
                 item.gameObject.SetActive(true);
                 item.SetItemIcon(itemAndCount.Key.ToString());
+                itemIcons.Add(item);
             }
         }
 
@@ -36,7 +40,17 @@ public class PocketsApp : MonoBehaviour
                 PocketsAppItem item = Instantiate(itemTemplate, transform);
                 item.gameObject.SetActive(true);
                 item.SetItemIcon(itemAndCount.Key.ToString());
+                itemIcons.Add(item);
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        foreach (PocketsAppItem i in itemIcons)
+        {
+            Destroy(i.gameObject);
+        }
+        itemIcons.Clear();
     }
 }

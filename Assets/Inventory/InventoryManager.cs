@@ -192,7 +192,7 @@ public class InventoryManager : ScriptableObject
         if (System.Enum.TryParse(input, out PerishableItem result))
         {
             // Parsing succeeded, 'result' contains the enum value
-            Debug.LogError("Parsed enum value: " + result);
+            Debug.Log("Parsed enum value: " + result);
             return result;
         }
         else
