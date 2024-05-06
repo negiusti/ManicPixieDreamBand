@@ -9,13 +9,13 @@ public class PocketsAppItem : MonoBehaviour
 {
     private SpriteResolver itemIcon;
     private SpriteResolver slotIcon;
-    private TextMeshPro tmptmp;
+    public TextMeshPro tmptmp;
     // Start is called before the first frame update
     void Start()
     {
-        itemIcon = this.GetComponentInChildren<SpriteResolver>();
+        itemIcon = this.GetComponentInChildren<SpriteResolver>(true);
         slotIcon = this.GetComponent<SpriteResolver>();
-        tmptmp = this.GetComponentInChildren<TextMeshPro>();
+        tmptmp = this.GetComponentInChildren<TextMeshPro>(true);
     }
 
     // Update is called once per frame
@@ -33,8 +33,7 @@ public class PocketsAppItem : MonoBehaviour
 
     private void OnEnable()
     {
-        if (slotIcon == null)
-            slotIcon = this.GetComponent<SpriteResolver>();
+        slotIcon = this.GetComponent<SpriteResolver>();
         // randomize slot icon
         slotIcon.SetCategoryAndLabel("Slot", Random.Range(0, 3).ToString());
     }
