@@ -282,6 +282,7 @@ public class SnapToGrid : MonoBehaviour
     {
         ignoredCells = new bool[width, height];
 
+        // For each cell in the ignoredCellsTable, copy it into ignored Cells
         for (int j = 0; j < ignoredCells.GetLength(1); j++)
         {
             for (int i = 0; i < ignoredCells.GetLength(0); i++)
@@ -294,6 +295,7 @@ public class SnapToGrid : MonoBehaviour
     }
 
     // Rotates the ignoredCells array by swapping the width and the height and saving the values of the original array to a new array.
+    // The bool determines which direction the function rotates the array in
     private bool[,] RotateArray(bool[,] originalArray, bool clockwise)
     {
         int rows = originalArray.GetLength(0);
@@ -307,10 +309,12 @@ public class SnapToGrid : MonoBehaviour
             {
                 if(!clockwise)
                 {
+                    // Counterclockwise rotation
                     rotatedArray[columns - 1 - j, i] = originalArray[i, j];
                 }
                 else
                 {
+                    // Clockwise rotation
                     rotatedArray[j, rows - 1 - i] = originalArray[i, j];
                 }
             }
