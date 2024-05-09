@@ -22,7 +22,7 @@ public class SnapToGrid : MonoBehaviour
     // Width is rows, height is columns
     public bool[,] ignoredCells;
 
-    void Start()
+    private void Start()
     {
         ignoredCells = new bool[width, height];
         ignoredCells[0, 0] = true;
@@ -127,7 +127,7 @@ public class SnapToGrid : MonoBehaviour
         return new Vector2(Coords.x - Mathf.FloorToInt(w / 2), Coords.y - Mathf.FloorToInt(h / 2));
     }
 
-    public bool ShiftIfNeeded()
+    private bool ShiftIfNeeded()
     {
         if (CheckPosition(0, 1))
         {
@@ -177,7 +177,7 @@ public class SnapToGrid : MonoBehaviour
         return false;
     }
 
-    public void ResetPosition()
+    private void ResetPosition()
     {
         transform.position = startingPos;
 
@@ -186,7 +186,7 @@ public class SnapToGrid : MonoBehaviour
         SetPosition();
     }
 
-    public void Rotate()
+    private void Rotate()
     {
         // Rotate the game object by 90 degrees around the up (Y) axis
         transform.Rotate(Vector3.forward, 90f);
@@ -199,7 +199,7 @@ public class SnapToGrid : MonoBehaviour
         height = Temporary;
     }
 
-    public void Unrotate()
+    private void Unrotate()
     {
         // Rotate the game object by 90 degrees around the up (Y) axis
         transform.Rotate(Vector3.forward, -90f);
@@ -239,7 +239,7 @@ public class SnapToGrid : MonoBehaviour
         return new Vector3(x, y, z);
     }
 
-    public Vector2 GetSnappedPosition()
+    private Vector2 GetSnappedPosition()
     {
         // Get the current position of the GameObject
         Vector3 currentPosition = transform.position;
