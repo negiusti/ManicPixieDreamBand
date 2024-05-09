@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SnapToGrid : MonoBehaviour
@@ -19,13 +17,22 @@ public class SnapToGrid : MonoBehaviour
 
     private TrunkGrid grid;
 
-    // Width is rows, height is columns
+    // Width is rows, height is columns. This is the array in which the shape in the inspector will be stored into
     public bool[,] ignoredCells;
+
+    [System.Serializable]
+    public class IgnoreCellsTable
+    {
+        public bool[] column;
+    }
+
+    [SerializeField]
+    // This is the shape in the inspector with all of the cells that are ignored
+    public IgnoreCellsTable[] rows;
 
     private void Start()
     {
-        ignoredCells = new bool[width, height];
-        ignoredCells[0, 0] = true;
+        ignoredCells = PopulateArray();
 
         startingPos = transform.position;
 
@@ -191,7 +198,8 @@ public class SnapToGrid : MonoBehaviour
         // Rotate the game object by 90 degrees around the up (Y) axis
         transform.Rotate(Vector3.forward, 90f);
 
-        ignoredCells = RotateArray(ignoredCells);
+        // Rotate() go counterclockwise
+        ignoredCells = RotateArray(ignoredCells, false);
 
         // Swapping the width and the height
         int Temporary = width;
@@ -203,6 +211,9 @@ public class SnapToGrid : MonoBehaviour
     {
         // Rotate the game object by 90 degrees around the up (Y) axis
         transform.Rotate(Vector3.forward, -90f);
+
+        // Rotate() go clockwise
+        ignoredCells = RotateArray(ignoredCells, true);
 
         // Swapping the width and the height
         int Temporary = width;
@@ -266,18 +277,46 @@ public class SnapToGrid : MonoBehaviour
         grid.SetPosition(gridPosition, width, height, ignoredCells);
     }
 
-    private bool[,] RotateArray(bool[,] originalArray)
+    // Populating the ignoredCells using the values assigned to the ignoredCellsTable
+    private bool[,] PopulateArray()
+    {
+        ignoredCells = new bool[width, height];
+
+        // For each cell in the ignoredCellsTable, copy it into ignored Cells
+        for (int j = 0; j < ignoredCells.GetLength(1); j++)
+        {
+            for (int i = 0; i < ignoredCells.GetLength(0); i++)
+            {
+                ignoredCells[i, j] = rows[i].column[j];
+            }
+        }
+
+        return ignoredCells;
+    }
+
+    // Rotates the ignoredCells array by swapping the width and the height and saving the values of the original array to a new array.
+    // The bool determines which direction the function rotates the array in
+    private bool[,] RotateArray(bool[,] originalArray, bool clockwise)
     {
         int rows = originalArray.GetLength(0);
-        int cols = originalArray.GetLength(1);
+        int columns = originalArray.GetLength(1);
 
-        bool[,] rotatedArray = new bool[cols, rows];
+        bool[,] rotatedArray = new bool[columns, rows];
 
         for (int i = 0; i < rows; i++)
         {
-            for (int j = 0; j < cols; j++)
+            for (int j = 0; j < columns; j++)
             {
-                rotatedArray[cols - 1 - j, i] = originalArray[i, j];
+                if(!clockwise)
+                {
+                    // Counterclockwise rotation
+                    rotatedArray[columns - 1 - j, i] = originalArray[i, j];
+                }
+                else
+                {
+                    // Clockwise rotation
+                    rotatedArray[j, rows - 1 - i] = originalArray[i, j];
+                }
             }
         }
 
