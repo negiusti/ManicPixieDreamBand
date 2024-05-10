@@ -10,6 +10,9 @@ public class SnapToGrid : MonoBehaviour
 
     private Vector3 startingPos;
 
+    private int startingWidth;
+    private int startingHeight;
+
     public Vector2 gridPosition;
 
     public int width;
@@ -17,8 +20,16 @@ public class SnapToGrid : MonoBehaviour
 
     private TrunkGrid grid;
 
+    public bool inTrunk;
+
     // Width is rows, height is columns. This is the array in which the shape in the inspector will be stored into
     public bool[,] ignoredCells;
+
+    private float resetStartTime;
+    private float resetDuration = 0.5f;
+    private bool resetInProgress;
+
+    private Vector3 resetFromPosition;
 
     [System.Serializable]
     public class IgnoreCellsTable
@@ -32,14 +43,16 @@ public class SnapToGrid : MonoBehaviour
 
     private void Start()
     {
-        ignoredCells = PopulateArray();
+        transform.position = GetSnappedPosition();
 
         startingPos = transform.position;
 
-        grid = GetComponentInParent<TrunkGrid>();
+        startingWidth = width;
+        startingHeight = height;
 
-        // Occupying the cells under this object on start
-        SetPosition();
+        ignoredCells = PopulateArray();
+
+        grid = GetComponentInParent<TrunkGrid>();
     }
 
     private void OnMouseDown()
@@ -47,7 +60,7 @@ public class SnapToGrid : MonoBehaviour
         mousePositionOffset = gameObject.transform.position - GetMouseWorldPosition();
 
         // When an object is grabbed, the cells it was occupying becomes unoccupied.
-        grid.ClearPosition(gridPosition, width, height, ignoredCells);
+        ClearPosition();
     }
 
     private void OnMouseDrag()
@@ -83,18 +96,25 @@ public class SnapToGrid : MonoBehaviour
 
     private void Update()
     {
+        if (resetInProgress)
+        {
+            LerpToStartingPosition();
+            return;
+        }
+
         // Update the GameObject's position to the snapped position
         transform.position = GetSnappedPosition();
 
         // Rotate (Right Mouse Button) while NOT dragging
         if (selected && Input.GetMouseButtonDown(1) && !Input.GetMouseButton(0))
         {
-            grid.ClearPosition(gridPosition, width, height, ignoredCells);
+            ClearPosition();
 
             Rotate();
 
             if (!CheckPosition(0, 0))
             {
+                // Going into here when it shouldn't be
                 if (!ShiftIfNeeded())
                 {
                     Unrotate();
@@ -108,23 +128,6 @@ public class SnapToGrid : MonoBehaviour
         if (selected && Input.GetMouseButtonDown(1) && Input.GetMouseButton(0)) // Right mouse button click while dragging
         {
             Rotate();
-        }
-
-        if(Input.GetKeyDown(KeyCode.B))
-        {
-            PrintIgnoredCells();
-        }
-    }
-
-    private void PrintIgnoredCells()
-    {
-        for (int j = 0; j < ignoredCells.GetLength(1); j++)
-        {
-            for (int i = 0; i < ignoredCells.GetLength(0); i++)
-            {
-                var msg = "[" + i.ToString() + ", " + j.ToString() + "] = " + ignoredCells[i, j].ToString();
-                Debug.Log(msg);
-            }
         }
     }
 
@@ -184,13 +187,36 @@ public class SnapToGrid : MonoBehaviour
         return false;
     }
 
-    private void ResetPosition()
+    private void Reset()
     {
-        transform.position = startingPos;
+        resetInProgress = true;
+        resetStartTime = Time.time;
+        resetFromPosition = transform.position;
 
-        //Debug.Log("Reset");
-        
-        SetPosition();
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        width = startingWidth;
+        height = startingHeight;
+
+        ignoredCells = PopulateArray();
+    }
+
+    private void LerpToStartingPosition()
+    {
+        // Calculate the lerp parameter based on elapsed time
+        float t = (Time.time - resetStartTime) / resetDuration;
+
+        // Interpolate between the start and target positions
+        transform.position = Vector3.Lerp(resetFromPosition, startingPos, t);
+
+        // If the lerp parameter reaches 1, the reset is complete
+        if (t >= 1.0f)
+        {
+            Debug.Log("Reset position complete!");
+            resetInProgress = false;
+
+            SetPosition();
+        }
     }
 
     private void Rotate()
@@ -226,12 +252,18 @@ public class SnapToGrid : MonoBehaviour
         if (CheckPosition(0, 0))
         {
             SetPosition();
+
+            inTrunk = true;
+
+            grid.CheckWin();
         }
         else
         {
             if (!ShiftIfNeeded())
             {
-                ResetPosition();
+                Reset();
+
+                inTrunk = false;
             }
         }
     }
@@ -268,13 +300,39 @@ public class SnapToGrid : MonoBehaviour
     private bool CheckPosition(int xShift, int yShift)
     {
         UpdateGridPositions();
-        return grid.CheckPosition(new Vector2(gridPosition.x + xShift, gridPosition.y + yShift), width, height, ignoredCells);
+
+        // If we're in our starting position, then that's a valid position to be in
+        if (Vector3.Distance(transform.position, startingPos) < 0.01f && xShift == 0 && yShift == 0)
+        {
+            return true;
+        }
+
+        if (grid.CheckIfInGrid(new Vector2(gridPosition.x + xShift, gridPosition.y + yShift), width, height, ignoredCells))
+        {
+            return grid.CheckPosition(new Vector2(gridPosition.x + xShift, gridPosition.y + yShift), width, height, ignoredCells);
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private void SetPosition()
     {
         UpdateGridPositions();
-        grid.SetPosition(gridPosition, width, height, ignoredCells);
+
+        if (grid.CheckIfInGrid(gridPosition, width, height, ignoredCells))
+        {
+            grid.SetPosition(gridPosition, width, height, ignoredCells);
+        }
+    }
+
+    private void ClearPosition()
+    {
+        if (grid.CheckIfInGrid(gridPosition, width, height, ignoredCells))
+        {
+            grid.ClearPosition(gridPosition, width, height, ignoredCells);
+        }
     }
 
     // Populating the ignoredCells using the values assigned to the ignoredCellsTable
