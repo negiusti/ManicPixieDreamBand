@@ -20,6 +20,9 @@ public class MiniGameManager : ScriptableObject
             case "Solo":
                 StartBassMiniGame();
                 break;
+            case "CarPacking":
+                StartCarPackingMiniGame();
+                break;
             default:
                 Debug.LogError("Minigame not found: " + miniGameName);
                 break;
@@ -69,5 +72,11 @@ public class MiniGameManager : ScriptableObject
     {
         BassMiniGame mg = FindFirstObjectByType<BassMiniGame>(FindObjectsInactive.Include);
         mg.StartBassMiniGameWithBand(true);
+    }
+
+    private static void StartCarPackingMiniGame()
+    {
+        CarPackingMinigame mg = FindFirstObjectByType<CarPackingMinigame>(FindObjectsInactive.Include);
+        mg.OpenMiniGame();
     }
 }

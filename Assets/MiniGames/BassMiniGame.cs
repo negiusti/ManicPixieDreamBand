@@ -52,22 +52,4 @@ public class BassMiniGame : MiniGame
     {
         return isActive;
     }
-
-    private void SetChildrenActive(bool active)
-    {
-        foreach (Transform child in transform)
-        {
-            child.gameObject.SetActive(active);
-        }
-    }
-
-    private void EnableAllChildren()
-    {
-        SetChildrenActive(true);
-    }
-
-    private void DisableAllChildren()
-    {
-        SetChildrenActive(false);
-    }
 }

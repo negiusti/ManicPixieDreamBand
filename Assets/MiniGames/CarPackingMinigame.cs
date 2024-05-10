@@ -18,6 +18,8 @@ public class CarPackingMinigame : MiniGame
     {
         mainCamera = Camera.main;
 
+        EnableAllChildren();
+
         mainCamera.enabled = false;
 
         MiniGameManager.PrepMiniGame();
@@ -28,7 +30,10 @@ public class CarPackingMinigame : MiniGame
     {
         mainCamera.enabled = true;
 
+        DisableAllChildren();
+
         isActive = false;
+        MiniGameManager.CleanUpMiniGame();
     }
 
     public void Win()
