@@ -2,10 +2,18 @@ using UnityEngine;
 
 public class TrunkGrid : MonoBehaviour
 {
-    public bool[,] grid = new bool[68, 38];
+    public bool[,] grid;
+
+    public int xUpperBound;
+    public int yUpperBound;
 
     private float trueCells;
     private float falseCells;
+
+    private void Start()
+    {
+        grid = new bool[xUpperBound, yUpperBound];
+    }
 
     private void Update()
     {
@@ -43,7 +51,7 @@ public class TrunkGrid : MonoBehaviour
         {
             for (int j = (int)pos.y; j < (int)pos.y + h; j++)
             {
-                if(grid[i, j] && !ignores[i - (int)pos.x, j - (int)pos.y])
+                if (!ignores[i - (int)pos.x, j - (int)pos.y] && grid[i, j])
                 {
                     return false;
                 }
@@ -87,5 +95,26 @@ public class TrunkGrid : MonoBehaviour
                 }
             }
         }
+    }
+
+    public bool CheckIfInGrid(Vector2 pos, float w, float h, bool[,] ignores)
+    {
+        // Loops through each cell taken up by the object passed in, checking if any of the cells are not in the grid.
+
+        for (int i = (int)pos.x; i < (int)pos.x + w; i++)
+        {
+            for (int j = (int)pos.y; j < (int)pos.y + h; j++)
+            {
+                if (!ignores[i - (int)pos.x, j - (int)pos.y])
+                {
+                    if (i < 0 || i >= grid.GetLength(0) || j < 0 || j >= grid.GetLength(1))
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 }
