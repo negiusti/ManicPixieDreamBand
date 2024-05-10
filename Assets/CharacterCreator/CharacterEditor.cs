@@ -2,7 +2,6 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
-using PixelCrushers.DialogueSystem;
 
 public class CharacterEditor : MonoBehaviour
 {
@@ -40,7 +39,26 @@ public class CharacterEditor : MonoBehaviour
     public Icons socksIcons;
     public Icons shoesIcons;
     public Icons FBIcons;
-    public Icons faceIcons;
+
+    // Face icons
+    public Icons hairIcons;
+    public Icons bangsIcons;
+    public Icons loTailsIcons;
+    public Icons hiTailsIcons;
+
+    public Icons eyebrowsIcons;
+    public Icons eyesIcons;
+    public Icons glassesIcons;
+
+    public Icons mouthIcons;
+    public Icons faceDetailIcons;
+    public Icons eyeshadowIcons;
+
+    public Icons earsIcons;
+    public Icons earringsIcons;
+    public Icons necklaceIcons;
+
+    private Dictionary<string, Icons> icons = new Dictionary<string, Icons>();
     private Phone phone;
     private GameObject characterGameObject;
 
@@ -71,7 +89,7 @@ public class CharacterEditor : MonoBehaviour
             if (renderer.CompareTag("BodyPart"))
                 skinRenderers.Add(renderer);
         }
-        
+        icons = FindObjectsOfType<Icons>(includeInactive: true).ToDictionary(i => i.GetCategory(), i => i);
         SpriteLibrary fuck = characterGameObject.GetComponent<SpriteLibrary>();
         spriteLib = fuck.spriteLibraryAsset;
 
@@ -162,10 +180,10 @@ public class CharacterEditor : MonoBehaviour
         {
             UpdateIcons(bottomsIcons, categoryToLabelIdx[category], labels);
         }
-        //else
-        //{
-        //    UpdateFaceIcons(currentFaceCategory, faceIcons, categoryToLabelIdx[category], labels);
-        //}
+        else if (icons.ContainsKey(category))
+        {
+            UpdateIcons(icons[category], categoryToLabelIdx[category], labels);
+        }
     }
 
     private void UpdateIcons(Icons icons, int idx, string[] labels)
@@ -175,21 +193,11 @@ public class CharacterEditor : MonoBehaviour
         icons.UpdateIcons(labels[leftIdx], labels[idx], labels[rightIdx]);
     }
 
-    private void UpdateFaceIcons(string category, Icons icons, int idx, string[] labels)
-    {
-        int leftIdx = GetWrapAroundIndex(idx - 1, labels.Length - 1);
-        int rightIdx = GetWrapAroundIndex(idx + 1, labels.Length - 1);
-        icons.UpdateIcons(category, labels[leftIdx], labels[idx], labels[rightIdx]);
-        if (currentFaceCategory.Equals("Earrings"))
-            faceIcons.UpdateIconsColor(skinRenderers[0].color);
-        else
-            faceIcons.UpdateIconsColor(categoryToRenderer[currentFaceCategory].color);
-    }
-
     public void SetCurrentFaceCategoryColor(Color c)
     {
         categoryToRenderer[currentFaceCategory].color = c;
-        faceIcons.UpdateIconsColor(c);
+        // TODO:
+        //faceIcons.UpdateIconsColor(c);
     }
 
     public void SetSkinColor(Color c)
@@ -198,8 +206,9 @@ public class CharacterEditor : MonoBehaviour
         {
             sr.color = c;
         }
-        if (currentFaceCategory.Equals("Earrings"))
-            faceIcons.UpdateIconsColor(c);
+        // TODO:
+        //if (currentFaceCategory.Equals("Earrings"))
+        //    faceIcons.UpdateIconsColor(c);
     }
 
     // Update is called once per frame
@@ -416,7 +425,92 @@ public class CharacterEditor : MonoBehaviour
         string label = labels[idx];
         SetCategory(currentFaceCategory, label);
         HideLoTailsAndHairWithHijab();
-        UpdateFaceIcons(currentFaceCategory, faceIcons, idx, labels);
+        //UpdateFaceIcons(currentFaceCategory, faceIcons, idx, labels);
+    }
+
+    public void ChangeFace(string category, int idxDelta)
+    {
+        SetOutfitChangedFlag(idxDelta != 0);
+        int idx = categoryToLabelIdx.GetValueOrDefault(category, 0) + idxDelta;
+        string[] labels = GetUnlockedLabels(category);
+
+        if (idx > labels.Length - 1)
+            idx = 0;
+        else if (idx < 0)
+            idx = labels.Length - 1;
+
+        categoryToLabelIdx[category] = idx;
+        string label = labels[idx];
+        SetCategory(category, label);
+        HideLoTailsAndHairWithHijab();
+        // TODO: update icons
+        UpdateIcons(category, labels);
+        //UpdateFaceIcons(category, faceIcons, idx, labels);
+    }
+
+    public void ChangeBangs(int idxDelta)
+    {
+        ChangeFace("Bangs", idxDelta);
+    }
+
+    public void ChangeHair(int idxDelta)
+    {
+        ChangeFace("Hair", idxDelta);
+    }
+
+    public void ChangeHairDetail(int idxDelta)
+    {
+        ChangeFace("HiTails", idxDelta);
+    }
+
+    public void ChangeLowerHair(int idxDelta)
+    {
+        ChangeFace("LoTails", idxDelta);
+    }
+
+    public void ChangeEyes(int idxDelta)
+    {
+        ChangeFace("Eyes", idxDelta);
+    }
+
+    public void ChangeEyebrows(int idxDelta)
+    {
+        ChangeFace("Eyebrows", idxDelta);
+    }
+
+    public void ChangeGlasses(int idxDelta)
+    {
+        ChangeFace("Glasses", idxDelta);
+    }
+
+    public void ChangeMouth(int idxDelta)
+    {
+        ChangeFace("Mouth", idxDelta);
+    }
+
+    public void ChangeFaceDetail(int idxDelta)
+    {
+        ChangeFace("Face_Detail", idxDelta);
+    }
+
+    public void ChangeEyeshadow(int idxDelta)
+    {
+        ChangeFace("Eyeshadow", idxDelta);
+    }
+
+    public void ChangeEars(int idxDelta)
+    {
+        ChangeFace("Ears", idxDelta);
+    }
+
+    public void ChangeEarrings(int idxDelta)
+    {
+        ChangeFace("Earrings", idxDelta);
+    }
+
+    public void ChangeNecklace(int idxDelta)
+    {
+        ChangeFace("Necklace", idxDelta);
     }
 
     public void SetCurrentFaceCategory(string category)
