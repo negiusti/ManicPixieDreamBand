@@ -25,9 +25,9 @@ public class SnapToGrid : MonoBehaviour
     // Width is rows, height is columns. This is the array in which the shape in the inspector will be stored into
     public bool[,] ignoredCells;
 
-    private float startTime;
-    private float panDuration = 0.5f;
-    private bool moveToStartingPos;
+    private float resetStartTime;
+    private float resetDuration = 0.5f;
+    private bool resetInProgress;
 
     private Vector3 resetFromPosition;
 
@@ -96,9 +96,9 @@ public class SnapToGrid : MonoBehaviour
 
     private void Update()
     {
-        if (moveToStartingPos)
+        if (resetInProgress)
         {
-            MoveToStartingPosition();
+            LerpToStartingPosition();
             return;
         }
 
@@ -189,11 +189,9 @@ public class SnapToGrid : MonoBehaviour
 
     private void Reset()
     {
-        moveToStartingPos = true;
-        startTime = Time.time;
+        resetInProgress = true;
+        resetStartTime = Time.time;
         resetFromPosition = transform.position;
-
-        //transform.position = startingPos;
 
         transform.rotation = Quaternion.Euler(0, 0, 0);
 
@@ -201,24 +199,21 @@ public class SnapToGrid : MonoBehaviour
         height = startingHeight;
 
         ignoredCells = PopulateArray();
-
-        //SetPosition();
     }
 
-    void MoveToStartingPosition()
+    private void LerpToStartingPosition()
     {
         // Calculate the lerp parameter based on elapsed time
-        float t = (Time.time - startTime) / panDuration;
+        float t = (Time.time - resetStartTime) / resetDuration;
 
         // Interpolate between the start and target positions
         transform.position = Vector3.Lerp(resetFromPosition, startingPos, t);
 
-        // If the lerp parameter reaches 1, the pan is complete
+        // If the lerp parameter reaches 1, the reset is complete
         if (t >= 1.0f)
         {
-            // Optionally, you may want to perform some action when the pan is complete
-            Debug.Log("Pan complete!");
-            moveToStartingPos = false;
+            Debug.Log("Reset position complete!");
+            resetInProgress = false;
 
             SetPosition();
         }
