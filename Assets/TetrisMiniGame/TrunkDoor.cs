@@ -6,11 +6,11 @@ public class TrunkDoor : MonoBehaviour
 {
     private Animator anim;
 
-    private CarPackingMinigame mg;
+    private CarPackingMiniGame mg;
 
     private void Start()
     {
-        mg = GetComponentInParent<CarPackingMinigame>();
+        mg = GetComponentInParent<CarPackingMiniGame>();
         anim = GetComponent<Animator>();
     }
 
