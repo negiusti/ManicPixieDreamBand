@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CarPackingMinigame : MiniGame
+public class CarPackingMiniGame : MiniGame
 {
     public TrunkDoor trunkDoor;
 
@@ -18,6 +16,8 @@ public class CarPackingMinigame : MiniGame
     {
         mainCamera = Camera.main;
 
+        EnableAllChildren();
+
         mainCamera.enabled = false;
 
         MiniGameManager.PrepMiniGame();
@@ -28,7 +28,10 @@ public class CarPackingMinigame : MiniGame
     {
         mainCamera.enabled = true;
 
+        DisableAllChildren();
+
         isActive = false;
+        MiniGameManager.CleanUpMiniGame();
     }
 
     public void Win()

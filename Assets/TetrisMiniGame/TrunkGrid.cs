@@ -14,11 +14,11 @@ public class TrunkGrid : MonoBehaviour
 
     public GameObject trunkDoor;
 
-    private CarPackingMinigame minigame;
+    private CarPackingMiniGame minigame;
 
     private void Start()
     {
-        minigame = GetComponentInParent<CarPackingMinigame>();
+        minigame = GetComponentInParent<CarPackingMiniGame>();
 
         grid = new bool[xUpperBound, yUpperBound];
 

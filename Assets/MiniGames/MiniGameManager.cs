@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
 using PixelCrushers.DialogueSystem;
 
 [CreateAssetMenu(fileName = "MiniGameManager", menuName = "Custom/MiniGameManager")]
@@ -20,22 +18,27 @@ public class MiniGameManager : ScriptableObject
             case "Solo":
                 StartBassMiniGame();
                 break;
+            case "CarPacking":
+                StartCarPackingMiniGame();
+                break;
             default:
                 Debug.LogError("Minigame not found: " + miniGameName);
                 break;
         }
     }
 
-    private MiniGame GetMiniGame(string miniGameName)
+    private static MiniGame GetMiniGame(string miniGameName)
     {
         switch (miniGameName)
         {
             case "BandPractice":
-                return FindFirstObjectByType<BassMiniGame>();
+                return FindFirstObjectByType<BassMiniGame>(FindObjectsInactive.Include);
             case "Gig":
-                return FindFirstObjectByType<BassMiniGame>();
+                return FindFirstObjectByType<BassMiniGame>(FindObjectsInactive.Include);
             case "Solo":
-                return FindFirstObjectByType<BassMiniGame>();
+                return FindFirstObjectByType<BassMiniGame>(FindObjectsInactive.Include);
+            case "CarPacking":
+                return FindFirstObjectByType<CarPackingMiniGame>(FindObjectsInactive.Include);
             default:
                 Debug.LogError("Minigame not found: " + miniGameName);
                 return null;
@@ -55,19 +58,25 @@ public class MiniGameManager : ScriptableObject
 
     private static void StartBassMiniGame()
     {
-        BassMiniGame mg = FindFirstObjectByType<BassMiniGame>(FindObjectsInactive.Include);
+        BassMiniGame mg = (BassMiniGame)GetMiniGame("Solo");
         mg.OpenMiniGame();
     }
 
     private static void StartGigMiniGame()
     {
-        BassMiniGame mg = FindFirstObjectByType<BassMiniGame>(FindObjectsInactive.Include);
+        BassMiniGame mg = (BassMiniGame)GetMiniGame("Gig");
         mg.StartBassMiniGameWithBand(false);
     }
 
     private static void StartBandPracticeMiniGame()
     {
-        BassMiniGame mg = FindFirstObjectByType<BassMiniGame>(FindObjectsInactive.Include);
+        BassMiniGame mg = (BassMiniGame)GetMiniGame("BandPractice");
         mg.StartBassMiniGameWithBand(true);
+    }
+
+    private static void StartCarPackingMiniGame()
+    {
+        CarPackingMiniGame mg = (CarPackingMiniGame)GetMiniGame("CarPacking");
+        mg.OpenMiniGame();
     }
 }
