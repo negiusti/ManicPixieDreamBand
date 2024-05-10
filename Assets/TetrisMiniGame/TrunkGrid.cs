@@ -10,9 +10,19 @@ public class TrunkGrid : MonoBehaviour
     private float trueCells;
     private float falseCells;
 
+    private SnapToGrid[] children;
+
+    public GameObject trunkDoor;
+
+    private CarPackingMinigame minigame;
+
     private void Start()
     {
+        minigame = GetComponentInParent<CarPackingMinigame>();
+
         grid = new bool[xUpperBound, yUpperBound];
+
+        children = GetComponentsInChildren<SnapToGrid>();
     }
 
     private void Update()
@@ -116,5 +126,24 @@ public class TrunkGrid : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void CheckWin()
+    {
+        foreach (SnapToGrid child in children)
+        {
+            if(!child.inTrunk)
+            {
+                return;
+            }
+        }
+
+        foreach (SnapToGrid child in children)
+        {
+            child.gameObject.GetComponent<Collider2D>().enabled = false;
+        }
+
+        Debug.Log("You win!!!!!");
+        minigame.Win();
     }
 }

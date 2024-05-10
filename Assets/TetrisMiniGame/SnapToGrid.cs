@@ -25,6 +25,12 @@ public class SnapToGrid : MonoBehaviour
     // Width is rows, height is columns. This is the array in which the shape in the inspector will be stored into
     public bool[,] ignoredCells;
 
+    private float startTime;
+    private float panDuration = 0.5f;
+    private bool moveToStartingPos;
+
+    private Vector3 resetFromPosition;
+
     [System.Serializable]
     public class IgnoreCellsTable
     {
@@ -90,6 +96,12 @@ public class SnapToGrid : MonoBehaviour
 
     private void Update()
     {
+        if (moveToStartingPos)
+        {
+            MoveToStartingPosition();
+            return;
+        }
+
         // Update the GameObject's position to the snapped position
         transform.position = GetSnappedPosition();
 
@@ -177,7 +189,11 @@ public class SnapToGrid : MonoBehaviour
 
     private void Reset()
     {
-        transform.position = startingPos;
+        moveToStartingPos = true;
+        startTime = Time.time;
+        resetFromPosition = transform.position;
+
+        //transform.position = startingPos;
 
         transform.rotation = Quaternion.Euler(0, 0, 0);
 
@@ -186,7 +202,26 @@ public class SnapToGrid : MonoBehaviour
 
         ignoredCells = PopulateArray();
 
-        SetPosition();
+        //SetPosition();
+    }
+
+    void MoveToStartingPosition()
+    {
+        // Calculate the lerp parameter based on elapsed time
+        float t = (Time.time - startTime) / panDuration;
+
+        // Interpolate between the start and target positions
+        transform.position = Vector3.Lerp(resetFromPosition, startingPos, t);
+
+        // If the lerp parameter reaches 1, the pan is complete
+        if (t >= 1.0f)
+        {
+            // Optionally, you may want to perform some action when the pan is complete
+            Debug.Log("Pan complete!");
+            moveToStartingPos = false;
+
+            SetPosition();
+        }
     }
 
     private void Rotate()
@@ -224,6 +259,8 @@ public class SnapToGrid : MonoBehaviour
             SetPosition();
 
             inTrunk = true;
+
+            grid.CheckWin();
         }
         else
         {
