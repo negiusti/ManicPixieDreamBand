@@ -230,7 +230,6 @@ public class CharacterEditor : MonoBehaviour
     private void DisableFBRenderers()
     {
         categoryToRenderer.GetValueOrDefault("FB_" + top).enabled = false;
-        categoryToRenderer.GetValueOrDefault("FB_" + crotch).enabled = false;
         categoryToRenderer.GetValueOrDefault("FB_" + lPant).enabled = false;
         categoryToRenderer.GetValueOrDefault("FB_" + rPant).enabled = false;
         categoryToRenderer.GetValueOrDefault("FB_" + lSleeve).enabled = false;
@@ -265,7 +264,6 @@ public class CharacterEditor : MonoBehaviour
         string label = labels[idx];
         categoryToLabelIdx["FB_" + top] = idx;
         SetCategory("FB_" + top, label);
-        SetCategory("FB_" + crotch, label);
 
         string[] sleeveCategories = GetUnlockedLabels("FB_" + lSleeve);
         if (sleeveCategories.Contains(label))
