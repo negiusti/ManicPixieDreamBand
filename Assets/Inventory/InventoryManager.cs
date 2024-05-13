@@ -208,7 +208,7 @@ public class InventoryManager : ScriptableObject
         if (pocketsPerishable.ContainsKey(pi))
             pocketsPerishable[pi]++;
         else
-            pocketsPerishable.Add(pi, 0);
+            pocketsPerishable.Add(pi, 1);
     }
 
     public static void AddItem(string input)
@@ -217,7 +217,7 @@ public class InventoryManager : ScriptableObject
         if (pockets.ContainsKey(item))
             pockets[item]++;
         else
-            pockets.Add(item, 0);
+            pockets.Add(item, 1);
     }
 
     public static void RemovePerishableItem(string input)
