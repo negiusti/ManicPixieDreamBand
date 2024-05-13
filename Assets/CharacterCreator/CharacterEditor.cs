@@ -408,6 +408,16 @@ public class CharacterEditor : MonoBehaviour
         }
     }
 
+    private void HideEarringsWithoutEars()
+    {
+        SpriteResolver res = categoryToResolver.GetValueOrDefault("Ears");
+        string label = res.GetLabel();
+        if (label.Contains("None"))
+        {
+            SetCategory("Earrings", "None");
+        }
+    }
+
     public void ChangeFace(int idxDelta)
     {
         SetOutfitChangedFlag(idxDelta != 0);
@@ -423,6 +433,7 @@ public class CharacterEditor : MonoBehaviour
         string label = labels[idx];
         SetCategory(currentFaceCategory, label);
         HideLoTailsAndHairWithHijab();
+        HideEarringsWithoutEars();
         //UpdateFaceIcons(currentFaceCategory, faceIcons, idx, labels);
     }
 
@@ -441,6 +452,7 @@ public class CharacterEditor : MonoBehaviour
         string label = labels[idx];
         SetCategory(category, label);
         HideLoTailsAndHairWithHijab();
+        HideEarringsWithoutEars();
         // TODO: update icons
         UpdateIcons(category, labels);
         //UpdateFaceIcons(category, faceIcons, idx, labels);
