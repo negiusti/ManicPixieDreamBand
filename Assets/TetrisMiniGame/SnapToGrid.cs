@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SnapToGrid : MonoBehaviour
@@ -131,12 +132,6 @@ public class SnapToGrid : MonoBehaviour
         }
     }
 
-    private Vector2 WorldToGridCoorindates(Vector2 Coords, float w, float h)
-    {
-        // The gridPosition of each object is at its bottom left corner. This is obtained by subtracting half the width and half the height from the snapped position.
-        return new Vector2(Coords.x - Mathf.FloorToInt(w / 2), Coords.y - Mathf.FloorToInt(h / 2));
-    }
-
     private bool ShiftIfNeeded()
     {
         if (CheckPosition(0, 1))
@@ -212,7 +207,8 @@ public class SnapToGrid : MonoBehaviour
         // If the lerp parameter reaches 1, the reset is complete
         if (t >= 1.0f)
         {
-            Debug.Log("Reset position complete!");
+            //Debug.Log("Reset position complete!");
+
             resetInProgress = false;
 
             SetPosition();
@@ -252,10 +248,6 @@ public class SnapToGrid : MonoBehaviour
         if (CheckPosition(0, 0))
         {
             SetPosition();
-
-            inTrunk = true;
-
-            grid.CheckWin();
         }
         else
         {
@@ -284,16 +276,29 @@ public class SnapToGrid : MonoBehaviour
 
     private Vector2 GetSnappedPosition()
     {
-        // Get the current position of the GameObject
-        Vector3 currentPosition = transform.position;
-
         // Round the position to the nearest snapIncrement
-        return RoundPosition(currentPosition, snapIncrement);
+        Vector2 roundedPosition = RoundPosition(transform.position, snapIncrement);
+
+        // If the width or height is an odd value, correct it so that it's not taking up half a cell
+
+        float xCorrection = (width % 2f) / 2f;
+        float yCorrection = (height % 2f) / 2f;
+
+        // Mathf.Round rounds to even numbers if the number is 0.5, so this makes it round sensibly
+        roundedPosition = new Vector2(roundedPosition.x + xCorrection - 0.001f, roundedPosition.y + yCorrection - 0.001f);
+
+        return roundedPosition;
     }
 
     private void UpdateGridPositions()
     {
         gridPosition = WorldToGridCoorindates(GetSnappedPosition(), width, height);
+    }
+
+    private Vector2 WorldToGridCoorindates(Vector2 Coords, float w, float h)
+    {
+        // The gridPosition of each object is at its bottom left corner. This is obtained by subtracting half the width and half the height from the snapped position.
+        return new Vector2(Mathf.RoundToInt(Coords.x - (w / 2)), Mathf.RoundToInt(Coords.y - (h / 2)));
     }
 
     // CheckPosition takes in two values for where in relation to the gridPosition it should check
@@ -323,13 +328,17 @@ public class SnapToGrid : MonoBehaviour
 
         if (grid.CheckIfInGrid(gridPosition, width, height, ignoredCells))
         {
+            inTrunk = true;
+
+            grid.CheckWin();
+
             grid.SetPosition(gridPosition, width, height, ignoredCells);
         }
     }
 
     private void ClearPosition()
     {
-        if (grid.CheckIfInGrid(gridPosition, width, height, ignoredCells))
+        if (grid.CheckIfInGrid(gridPosition, width, height, ignoredCells) && inTrunk)
         {
             grid.ClearPosition(gridPosition, width, height, ignoredCells);
         }

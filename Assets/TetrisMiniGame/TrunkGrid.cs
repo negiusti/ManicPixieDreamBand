@@ -29,7 +29,7 @@ public class TrunkGrid : MonoBehaviour
     {
         // Press [G] to debug how many cells are marked as unoccupied (false) or occupied (true).
 
-        if(Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G))
         {
             for (int j = 0; j < grid.GetLength(1); j++)
             {
@@ -50,6 +50,20 @@ public class TrunkGrid : MonoBehaviour
 
             trueCells = 0;
             falseCells = 0;
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            for (int j = 0; j < grid.GetLength(1); j++)
+            {
+                for (int i = 0; i < grid.GetLength(0); i++)
+                {
+                    if (grid[i, j] == true)
+                    {
+                        Debug.Log("Cell (" + i + ", " + j + ")");
+                    }
+                }
+            }
         }
     }
 
