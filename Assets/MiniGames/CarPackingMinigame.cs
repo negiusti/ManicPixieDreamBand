@@ -7,6 +7,11 @@ public class CarPackingMiniGame : MiniGame
     private Camera mainCamera;
     private bool isActive;
 
+    private void Start()
+    {
+        DisableAllChildren();
+    }
+
     public override bool IsMiniGameActive()
     {
         return isActive;
