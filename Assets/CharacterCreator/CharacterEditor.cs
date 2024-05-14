@@ -58,7 +58,7 @@ public class CharacterEditor : MonoBehaviour
     public Icons earringsIcons;
     public Icons necklaceIcons;
 
-    private Dictionary<string, Icons> icons = new Dictionary<string, Icons>();
+    //private Dictionary<string, Icons> icons = new Dictionary<string, Icons>();
     private Phone phone;
     private GameObject characterGameObject;
 
@@ -77,19 +77,19 @@ public class CharacterEditor : MonoBehaviour
         skinRenderers = new List<SpriteRenderer>();
         character = GameObject.FindFirstObjectByType<Character>();
         characterGameObject = character.gameObject;
-        SpriteResolver[] resolvers = characterGameObject.GetComponentsInChildren<SpriteResolver>();
+        SpriteResolver[] resolvers = characterGameObject.GetComponentsInChildren<SpriteResolver>(includeInactive: true);
         foreach (SpriteResolver resolver in resolvers)
         {
             categoryToResolver[resolver.gameObject.name] = resolver;
         }
-        SpriteRenderer[] renderers = characterGameObject.GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] renderers = characterGameObject.GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
         foreach (SpriteRenderer renderer in renderers)
         {
             categoryToRenderer[renderer.gameObject.name] = renderer;
             if (renderer.CompareTag("BodyPart"))
                 skinRenderers.Add(renderer);
         }
-        icons = FindObjectsOfType<Icons>(includeInactive: true).ToDictionary(i => i.GetCategory(), i => i);
+        //icons = FindObjectsOfType<Icons>(includeInactive: true).ToDictionary(i => i.GetCategory(), i => i);
         SpriteLibrary fuck = characterGameObject.GetComponent<SpriteLibrary>();
         spriteLib = fuck.spriteLibraryAsset;
 
@@ -106,8 +106,7 @@ public class CharacterEditor : MonoBehaviour
         GetAvailableOptions();
     }
 
-   private void GetAvailableOptions()
-    {
+    public void UpdateAllIcons () {
         string[] labels;
         foreach (string category in spriteLib.GetCategoryNames())
         {
@@ -134,7 +133,11 @@ public class CharacterEditor : MonoBehaviour
             categoryToLabelIdx[category] = categoryToLabelIdx[category] < 0 ? 0 : categoryToLabelIdx[category];
             UpdateIcons(category, labels);
         }
+    }
 
+   private void GetAvailableOptions()
+    {
+        UpdateAllIcons();
         SetCurrentFaceCategory("Hair");
         HideLoTailsAndHairWithHijab();
 
@@ -160,30 +163,65 @@ public class CharacterEditor : MonoBehaviour
 
     private void UpdateIcons(string category, string[] labels)
     {
+        Icons icons = null;
         if (category.Equals(lSock))
         {
-            UpdateIcons(socksIcons, categoryToLabelIdx[category], labels);
+            icons = socksIcons;
         }
         else if (category.Equals(lShoe))
         {
-            UpdateIcons(shoesIcons, categoryToLabelIdx[category], labels);
+            icons = shoesIcons;
         }
         else if (category.Equals("FB_" + top))
         {
-            UpdateIcons(FBIcons, categoryToLabelIdx[category], labels);
+            icons = FBIcons;
         }
         else if (category.Equals(top))
         {
-            UpdateIcons(shirtIcons, categoryToLabelIdx[category], labels);
+            icons = shirtIcons;
         }
         else if (category.Equals(crotch))
         {
-            UpdateIcons(bottomsIcons, categoryToLabelIdx[category], labels);
+            icons = bottomsIcons;
         }
-        else if (icons.ContainsKey(category))
+        else if (category.Equals("Eyebrows"))
         {
-            UpdateIcons(icons[category], categoryToLabelIdx[category], labels);
+            icons = eyebrowsIcons;
         }
+        else if (category.Equals("Eyes"))
+        {
+            icons = eyesIcons;
+        }
+        else if (category.Equals("Glasses"))
+        {
+            icons = glassesIcons;
+        }
+        else if (category.Equals("Mouth"))
+        {
+            icons = mouthIcons;
+        }
+        else if (category.Equals("Face_Detail"))
+        {
+            icons = faceDetailIcons;
+        }
+        else if (category.Equals("Eyeshadow"))
+        {
+            icons = eyeshadowIcons;
+        }
+        else if (category.Equals("Ears"))
+        {
+            icons = earsIcons;
+        }
+        else if (category.Equals("Earrings"))
+        {
+            icons = earringsIcons;
+        }
+        else if (category.Equals("Necklace"))
+        {
+            icons = necklaceIcons;
+        }
+        if (icons != null)
+            UpdateIcons(icons, categoryToLabelIdx[category], labels);
     }
 
     private void UpdateIcons(Icons icons, int idx, string[] labels)

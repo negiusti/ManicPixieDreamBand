@@ -3,6 +3,7 @@ using UnityEngine.U2D.Animation;
 
 public class Icons : MonoBehaviour
 {
+    private CharacterEditor characterEditor;
     private string category;
     public GameObject leftIcon;
     public GameObject middleIcon;
@@ -18,6 +19,7 @@ public class Icons : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        characterEditor = FindFirstObjectByType<CharacterEditor>();
         leftSpriteResolver = leftIcon.GetComponent<SpriteResolver>();
         middleSpriteResolver = middleIcon.GetComponent<SpriteResolver>();
         rightSpriteResolver = rightIcon.GetComponent<SpriteResolver>();
@@ -28,6 +30,14 @@ public class Icons : MonoBehaviour
         midAnim = middleIcon.GetComponent<Animator>();
         midAnim.enabled = false;
         category = leftSpriteResolver.GetCategory() == null ? transform.parent.gameObject.name : leftSpriteResolver.GetCategory();
+        characterEditor.UpdateAllIcons();
+    }
+
+    private void OnEnable()
+    {
+        if (characterEditor == null)
+            characterEditor = FindFirstObjectByType<CharacterEditor>();
+        characterEditor.UpdateAllIcons();
     }
 
     // Update is called once per frame
@@ -44,6 +54,7 @@ public class Icons : MonoBehaviour
 
     public void UpdateIcons(string leftLabel, string middleLabel, string rightLabel)
     {
+        Debug.Log("HI " + gameObject.name);
         midAnim.enabled = false;
         leftSpriteResolver.SetCategoryAndLabel(category, leftLabel);
         middleSpriteResolver.SetCategoryAndLabel(category, middleLabel);
