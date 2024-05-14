@@ -146,6 +146,8 @@ public class SnapToGrid : MonoBehaviour
         }
     }
 
+    // The shiftAmount is the number of cells this function shifts objects in
+    // We need it because sometimes, objects with odd widths or lengths need to be shifted 2 cells to rotate them properly.
     private bool ShiftIfNeeded(int shiftAmount)
     {
         if (CheckPosition(0, shiftAmount))
