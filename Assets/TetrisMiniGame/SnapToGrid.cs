@@ -10,8 +10,12 @@ public class SnapToGrid : MonoBehaviour
 
     private Vector3 startingPos;
 
+    private Collider2D col;
+
     private int startingWidth;
     private int startingHeight;
+
+    private float startingRot;
 
     public Vector2 gridPosition;
 
@@ -45,7 +49,11 @@ public class SnapToGrid : MonoBehaviour
     {
         transform.position = GetSnappedPosition();
 
+        col = GetComponent<Collider2D>();
+
         startingPos = transform.position;
+
+        startingRot = transform.localEulerAngles.z;
 
         startingWidth = width;
         startingHeight = height;
@@ -112,37 +120,40 @@ public class SnapToGrid : MonoBehaviour
 
             Rotate();
 
+            // Call this here so that objects with odd widths or heights won't twitch after rotating because of how we adjust their positions
+            transform.position = GetSnappedPosition();
+
             if (!CheckPosition(0, 0))
             {
-                // Going into here when it shouldn't be
-                if (!ShiftIfNeeded())
+                if (!ShiftIfNeeded(1))
                 {
-                    Unrotate();
+                    // Because of how we are snapping objects with odd widths and heights, sometimes it needs an extra push to shift it into the right position after rotating
+                    if ((width % 2 == 1) || (height % 2 == 1))
+                    {
+                        if (!ShiftIfNeeded(2))
+                        {
+                            Unrotate();
+                        }
+                    }
+                    else
+                    {
+                        Unrotate();
+                    }
                 }
             }
 
             SetPosition();
         }
-
-        // The occupied cells beneath the object does not need to be cleared if you are dragging.
-        if (selected && Input.GetMouseButtonDown(1) && Input.GetMouseButton(0)) // Right mouse button click while dragging
-        {
-            Rotate();
-        }
     }
 
-    private Vector2 WorldToGridCoorindates(Vector2 Coords, float w, float h)
+    // The shiftAmount is the number of cells this function shifts objects in
+    // We need it because sometimes, objects with odd widths or lengths need to be shifted 2 cells to rotate them properly.
+    private bool ShiftIfNeeded(int shiftAmount)
     {
-        // The gridPosition of each object is at its bottom left corner. This is obtained by subtracting half the width and half the height from the snapped position.
-        return new Vector2(Coords.x - Mathf.FloorToInt(w / 2), Coords.y - Mathf.FloorToInt(h / 2));
-    }
-
-    private bool ShiftIfNeeded()
-    {
-        if (CheckPosition(0, 1))
+        if (CheckPosition(0, shiftAmount))
         {
-            // Move the object up by 1 cell
-            transform.position = new Vector2(transform.position.x, transform.position.y + snapIncrement);
+            // Move the object up
+            transform.position = new Vector2(transform.position.x, transform.position.y + snapIncrement * shiftAmount);
 
             //Debug.Log("Up");
 
@@ -150,10 +161,10 @@ public class SnapToGrid : MonoBehaviour
 
             return true;
         }
-        else if (CheckPosition(0, -1))
+        else if (CheckPosition(0, -shiftAmount))
         {
-            // Move the object down by 1 cell
-            transform.position = new Vector2(transform.position.x, transform.position.y - snapIncrement);
+            // Move the object down
+            transform.position = new Vector2(transform.position.x, transform.position.y - snapIncrement * shiftAmount);
 
             //Debug.Log("Down");
 
@@ -161,10 +172,10 @@ public class SnapToGrid : MonoBehaviour
 
             return true;
         }
-        else if (CheckPosition(-1, 0))
+        else if (CheckPosition(-shiftAmount, 0))
         {
-            // Move the object left by 1 cell
-            transform.position = new Vector2(transform.position.x - snapIncrement, transform.position.y);
+            // Move the object left
+            transform.position = new Vector2(transform.position.x - snapIncrement * shiftAmount, transform.position.y);
 
             //Debug.Log("Left");
 
@@ -172,10 +183,10 @@ public class SnapToGrid : MonoBehaviour
 
             return true;
         }
-        else if (CheckPosition(1, 0))
+        else if (CheckPosition(shiftAmount, 0))
         {
-            // Move the object right by 1 cell
-            transform.position = new Vector2(transform.position.x + snapIncrement, transform.position.y);
+            // Move the object right
+            transform.position = new Vector2(transform.position.x + snapIncrement * shiftAmount, transform.position.y);
 
             //Debug.Log("Right");
 
@@ -193,7 +204,10 @@ public class SnapToGrid : MonoBehaviour
         resetStartTime = Time.time;
         resetFromPosition = transform.position;
 
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+        selected = false;
+        col.enabled = false;
+
+        transform.rotation = Quaternion.Euler(0, 0, startingRot);
 
         width = startingWidth;
         height = startingHeight;
@@ -212,7 +226,8 @@ public class SnapToGrid : MonoBehaviour
         // If the lerp parameter reaches 1, the reset is complete
         if (t >= 1.0f)
         {
-            Debug.Log("Reset position complete!");
+            col.enabled = true;
+
             resetInProgress = false;
 
             SetPosition();
@@ -235,6 +250,8 @@ public class SnapToGrid : MonoBehaviour
 
     private void Unrotate()
     {
+        Debug.Log("Unrotating");
+
         // Rotate the game object by 90 degrees around the up (Y) axis
         transform.Rotate(Vector3.forward, -90f);
 
@@ -252,14 +269,10 @@ public class SnapToGrid : MonoBehaviour
         if (CheckPosition(0, 0))
         {
             SetPosition();
-
-            inTrunk = true;
-
-            grid.CheckWin();
         }
         else
         {
-            if (!ShiftIfNeeded())
+            if (!ShiftIfNeeded(1))
             {
                 Reset();
 
@@ -273,27 +286,41 @@ public class SnapToGrid : MonoBehaviour
         return Mathf.Round(value / snapIncrement) * snapIncrement;
     }
 
-    private Vector3 RoundPosition(Vector3 position, float snapValue)
+    private Vector3 RoundPosition(Vector3 position, float snapIncrement)
     {
-        float x = SnapValue(position.x, snapValue);
-        float y = SnapValue(position.y, snapValue);
-        float z = SnapValue(position.z, snapValue);
+        float x = SnapValue(position.x, snapIncrement);
+        float y = SnapValue(position.y, snapIncrement);
+        float z = SnapValue(position.z, snapIncrement);
 
         return new Vector3(x, y, z);
     }
 
     private Vector2 GetSnappedPosition()
     {
-        // Get the current position of the GameObject
-        Vector3 currentPosition = transform.position;
-
         // Round the position to the nearest snapIncrement
-        return RoundPosition(currentPosition, snapIncrement);
+        Vector2 roundedPosition = RoundPosition(transform.position, snapIncrement);
+
+        // If the width or height is an odd value, correct it so that it's not taking up half a cell
+        // Mathf.Round rounds to even numbers if the number is 0.5, so subtracting a tiny value makes it round sensibly
+
+        float xCorrection = ((width % 2f) / 2f) - 0.001f;
+        float yCorrection = ((height % 2f) / 2f) - 0.001f;
+
+        
+        roundedPosition = new Vector2(roundedPosition.x + xCorrection, roundedPosition.y + yCorrection);
+
+        return roundedPosition;
     }
 
     private void UpdateGridPositions()
     {
         gridPosition = WorldToGridCoorindates(GetSnappedPosition(), width, height);
+    }
+
+    private Vector2 WorldToGridCoorindates(Vector2 Coords, float w, float h)
+    {
+        // The gridPosition of each object is at its bottom left corner. This is obtained by subtracting half the width and half the height from the snapped position.
+        return new Vector2(Mathf.RoundToInt(Coords.x - (w / 2)), Mathf.RoundToInt(Coords.y - (h / 2)));
     }
 
     // CheckPosition takes in two values for where in relation to the gridPosition it should check
@@ -302,7 +329,7 @@ public class SnapToGrid : MonoBehaviour
         UpdateGridPositions();
 
         // If we're in our starting position, then that's a valid position to be in
-        if (Vector3.Distance(transform.position, startingPos) < 0.01f && xShift == 0 && yShift == 0)
+        if (Vector3.Distance(transform.position, startingPos) < 1f && xShift == 0 && yShift == 0)
         {
             return true;
         }
@@ -323,13 +350,17 @@ public class SnapToGrid : MonoBehaviour
 
         if (grid.CheckIfInGrid(gridPosition, width, height, ignoredCells))
         {
+            inTrunk = true;
+
+            grid.CheckWin();
+
             grid.SetPosition(gridPosition, width, height, ignoredCells);
         }
     }
 
     private void ClearPosition()
     {
-        if (grid.CheckIfInGrid(gridPosition, width, height, ignoredCells))
+        if (grid.CheckIfInGrid(gridPosition, width, height, ignoredCells) && inTrunk)
         {
             grid.ClearPosition(gridPosition, width, height, ignoredCells);
         }

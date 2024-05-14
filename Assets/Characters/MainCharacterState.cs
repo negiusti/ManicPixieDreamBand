@@ -30,7 +30,7 @@ public class MainCharacterState : ScriptableObject
 
     public static bool HasChangedOutfitToday()
     {
-        Debug.Log("HasChangedOutfitToday: " + hasChangedOutfitToday);
+        //Debug.Log("HasChangedOutfitToday: " + hasChangedOutfitToday);
         return hasChangedOutfitToday;
     }
 
