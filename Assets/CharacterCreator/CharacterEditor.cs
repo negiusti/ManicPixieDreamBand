@@ -28,12 +28,6 @@ public class CharacterEditor : MonoBehaviour
     private bool isFullBody;
     private string currentFaceCategory;
 
-    public ColorPalette hairPalette;
-    public ColorPalette mouthPalette;
-    public ColorPalette shadowPalette;
-    public ColorPalette faceDetailPalette;
-    private Dictionary<string, ColorPalette> categoryToColorPalette;
-
     public Icons shirtIcons;
     public Icons bottomsIcons;
     public Icons socksIcons;
@@ -58,7 +52,7 @@ public class CharacterEditor : MonoBehaviour
     public Icons earringsIcons;
     public Icons necklaceIcons;
 
-    //private Dictionary<string, Icons> icons = new Dictionary<string, Icons>();
+    public ColorPalettes faceColorPalettes;
     private Phone phone;
     private GameObject characterGameObject;
 
@@ -66,6 +60,11 @@ public class CharacterEditor : MonoBehaviour
     {
         unlockAllOutfits = value;
         GetAvailableOptions();
+    }
+
+    public Color GetCategoryColor(string category)
+    {
+        return categoryToRenderer[category].color;
     }
 
     // Start is called before the first frame update
@@ -92,28 +91,17 @@ public class CharacterEditor : MonoBehaviour
         SpriteLibrary fuck = characterGameObject.GetComponent<SpriteLibrary>();
         spriteLib = fuck.spriteLibraryAsset;
 
-        categoryToColorPalette = new Dictionary<string, ColorPalette>();
-        categoryToColorPalette.Add("Hair", hairPalette);
-        categoryToColorPalette.Add("HiTails", hairPalette);
-        categoryToColorPalette.Add("LoTails", hairPalette);
-        categoryToColorPalette.Add("Bangs", hairPalette);
-        categoryToColorPalette.Add("Eyebrows", hairPalette);
-        categoryToColorPalette.Add("Face_Detail", faceDetailPalette);
-        categoryToColorPalette.Add("Mouth", mouthPalette);
-        categoryToColorPalette.Add("Eyeshadow", shadowPalette);
-
         GetAvailableOptions();
+        HideLoTailsAndHairWithHijab();
+        HideEarringsWithoutEars();
+
+        if (character.IsWearingFullFit())
+            SelectFB();
+        else
+            SelectTopAndBottom();
     }
 
-    //private void OnEnable()
-    //{
-    //    if (phone == null)
-    //    {
-    //        Start();
-    //    }
-    //}
-
-    private void UpdateAllIcons () {
+    private void GetAvailableOptions() {
         string[] labels;
         foreach (string category in spriteLib.GetCategoryNames())
         {
@@ -138,25 +126,12 @@ public class CharacterEditor : MonoBehaviour
             categoryToLabels[category] = labels;
             categoryToLabelIdx[category] = System.Array.IndexOf(labels, character.CategoryToLabelMap().GetValueOrDefault(category));
             categoryToLabelIdx[category] = categoryToLabelIdx[category] < 0 ? 0 : categoryToLabelIdx[category];
-            //UpdateIcons(category, labels);
         }
     }
 
     public void UpdateIcons(string category)
     {
         UpdateIcons(category, categoryToLabels[category]);
-    }
-
-   private void GetAvailableOptions()
-    {
-        UpdateAllIcons();
-        //SetCurrentFaceCategory("Hair");
-        HideLoTailsAndHairWithHijab();
-
-        if (character.IsWearingFullFit())
-            SelectFB();
-        else
-            SelectTopAndBottom();
     }
 
     private void SetOutfitChangedFlag(bool changed)
@@ -263,8 +238,7 @@ public class CharacterEditor : MonoBehaviour
     public void SetCurrentFaceCategoryColor(Color c)
     {
         categoryToRenderer[currentFaceCategory].color = c;
-        // TODO:
-        //faceIcons.UpdateIconsColor(c);
+        UpdateIcons(currentFaceCategory);
     }
 
     public void SetSkinColor(Color c)
@@ -273,15 +247,10 @@ public class CharacterEditor : MonoBehaviour
         {
             sr.color = c;
         }
-        // TODO:
-        //if (currentFaceCategory.Equals("Earrings"))
-        //    faceIcons.UpdateIconsColor(c);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (earsIcons != null)
+        {
+            earsIcons.UpdateIconsColor(c);
+        }
     }
 
     private void DisableNonFBRenderers()
@@ -488,27 +457,9 @@ public class CharacterEditor : MonoBehaviour
         }
     }
 
-    public void ChangeFace(int idxDelta)
-    {
-        SetOutfitChangedFlag(idxDelta != 0);
-        int idx = categoryToLabelIdx.GetValueOrDefault(currentFaceCategory,0) + idxDelta;
-        string[] labels = GetUnlockedLabels(currentFaceCategory);
-
-        if (idx > labels.Length - 1)
-            idx = 0; 
-        else if (idx < 0)
-            idx = labels.Length - 1;
-
-        categoryToLabelIdx[currentFaceCategory] = idx;
-        string label = labels[idx];
-        SetCategory(currentFaceCategory, label);
-        HideLoTailsAndHairWithHijab();
-        HideEarringsWithoutEars();
-        //UpdateFaceIcons(currentFaceCategory, faceIcons, idx, labels);
-    }
-
     public void ChangeFace(string category, int idxDelta)
     {
+        SetCurrentFaceCategory(category);
         SetOutfitChangedFlag(idxDelta != 0);
         int idx = categoryToLabelIdx.GetValueOrDefault(category, 0) + idxDelta;
         string[] labels = GetUnlockedLabels(category);
@@ -523,9 +474,11 @@ public class CharacterEditor : MonoBehaviour
         SetCategory(category, label);
         HideLoTailsAndHairWithHijab();
         HideEarringsWithoutEars();
-        // TODO: update icons
         UpdateIcons(category, labels);
-        //UpdateFaceIcons(category, faceIcons, idx, labels);
+        if (label.Equals("None"))
+        {
+            faceColorPalettes.Close();
+        }
     }
 
     public void ChangeBangs(int idxDelta)
@@ -596,13 +549,11 @@ public class CharacterEditor : MonoBehaviour
     public void SetCurrentFaceCategory(string category)
     {
         currentFaceCategory = category;
-        foreach (ColorPalette cp in categoryToColorPalette.Values)
+        faceColorPalettes.SelectColorPalette(category);
+        if (categoryToLabels[category][categoryToLabelIdx[category]].Equals("None"))
         {
-            cp.gameObject.SetActive(false);    
+            faceColorPalettes.Close();
         }
-        if (categoryToColorPalette.ContainsKey(category))
-            categoryToColorPalette[category].gameObject.SetActive(true);
-        //ChangeFace(0);
     }
 
     private string[] GetUnlockedLabels(string category)

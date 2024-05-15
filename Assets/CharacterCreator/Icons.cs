@@ -36,13 +36,6 @@ public class Icons : MonoBehaviour
         characterEditor.UpdateIcons(category);
     }
 
-    //private void OnEnable()
-    //{
-    //    if (characterEditor == null)
-    //        Start();
-    //    characterEditor.UpdateIcons(category);
-    //}
-
     // Update is called once per frame
     void Update()
     {
@@ -53,6 +46,12 @@ public class Icons : MonoBehaviour
     {
         middleSpriteResolver = middleIcon.GetComponent<SpriteResolver>();
         return middleSpriteResolver.GetCategory();
+    }
+
+    // USED FOR FACE CATEGORIES ONLY SO FAR
+    public void SetCurrentCategory()
+    {
+        characterEditor.SetCurrentFaceCategory(category);
     }
 
     public void UpdateIcons(string leftLabel, string middleLabel, string rightLabel)
@@ -78,6 +77,7 @@ public class Icons : MonoBehaviour
         {
             middleSpriteResolver.SetCategoryAndLabel("Sock_Icons", "None");
         }
+        UpdateIconsColor(characterEditor.GetCategoryColor(category));
     }
 
     public void UpdateIconsColor(Color c)
