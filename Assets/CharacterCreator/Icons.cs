@@ -56,6 +56,10 @@ public class Icons : MonoBehaviour
 
     public void UpdateIcons(string leftLabel, string middleLabel, string rightLabel)
     {
+        if (characterEditor == null)
+        {
+            Start();
+        }
         Debug.Log("HI " + gameObject.name);
         midAnim.enabled = false;
         leftSpriteResolver.SetCategoryAndLabel(iconCategory, leftLabel);

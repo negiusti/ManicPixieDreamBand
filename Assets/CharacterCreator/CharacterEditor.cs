@@ -2,6 +2,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
+using System;
 
 public class CharacterEditor : MonoBehaviour
 {
@@ -324,8 +325,8 @@ public class CharacterEditor : MonoBehaviour
             categoryToRenderer.GetValueOrDefault("FB_" + lPant).enabled = false;
             categoryToRenderer.GetValueOrDefault("FB_" + rPant).enabled = false;
         }
-        if (idxDelta != 0)
-            UpdateIcons(FBIcons, idx, labels);
+        //if (idxDelta != 0)
+        //    UpdateIcons(FBIcons, idx, labels);
     }
 
     public void ChangeTop(int idxDelta)
@@ -341,8 +342,8 @@ public class CharacterEditor : MonoBehaviour
         categoryToLabelIdx[top] = idx;
         SetCategory(top, label);
         SetSleevesIfPresent(label);
-        if (idxDelta != 0)
-            UpdateIcons(shirtIcons, idx, labels);
+        //if (idxDelta != 0)
+        //    UpdateIcons(shirtIcons, idx, labels);
     }
 
     private int GetWrapAroundIndex(int idx, int maxIdx)
@@ -365,7 +366,7 @@ public class CharacterEditor : MonoBehaviour
         string label = labels[idx];
         SetCategory(lSock, label);
         SetCategory(rSock, label);
-        UpdateIcons(socksIcons, idx, labels);
+        //UpdateIcons(socksIcons, idx, labels);
     }
 
     public void ChangeShoes(int idxDelta)
@@ -379,7 +380,7 @@ public class CharacterEditor : MonoBehaviour
         categoryToLabelIdx[rShoe] = idx;
         SetCategory(lShoe, label);
         SetCategory(rShoe, label);
-        UpdateIcons(shoesIcons, idx, labels);
+        //UpdateIcons(shoesIcons, idx, labels);
     }
 
     public void ChangeBottom(int idxDelta)
@@ -394,8 +395,8 @@ public class CharacterEditor : MonoBehaviour
         categoryToLabelIdx[crotch] = idx;
         SetCategory(crotch, label);
         SetPantsIfPresent(label);
-        if (idxDelta != 0)
-            UpdateIcons(bottomsIcons, idx, labels);
+        //if (idxDelta != 0)
+        //    UpdateIcons(bottomsIcons, idx, labels);
     }
 
     private void SetSleevesIfPresent(string label)
@@ -434,6 +435,8 @@ public class CharacterEditor : MonoBehaviour
         res.SetCategoryAndLabel(category, label);
         SpriteRenderer ren = categoryToRenderer.GetValueOrDefault(category);
         ren.enabled = true;
+        categoryToLabelIdx[category] = Array.IndexOf(categoryToLabels[category], label);
+        UpdateIcons(category);
     }
 
     private void HideLoTailsAndHairWithHijab()
@@ -474,7 +477,7 @@ public class CharacterEditor : MonoBehaviour
         SetCategory(category, label);
         HideLoTailsAndHairWithHijab();
         HideEarringsWithoutEars();
-        UpdateIcons(category, labels);
+        //UpdateIcons(category, labels);
         if (label.Equals("None"))
         {
             faceColorPalettes.Close();
