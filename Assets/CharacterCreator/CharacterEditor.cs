@@ -138,7 +138,7 @@ public class CharacterEditor : MonoBehaviour
             categoryToLabels[category] = labels;
             categoryToLabelIdx[category] = System.Array.IndexOf(labels, character.CategoryToLabelMap().GetValueOrDefault(category));
             categoryToLabelIdx[category] = categoryToLabelIdx[category] < 0 ? 0 : categoryToLabelIdx[category];
-            UpdateIcons(category, labels);
+            //UpdateIcons(category, labels);
         }
     }
 
@@ -149,8 +149,8 @@ public class CharacterEditor : MonoBehaviour
 
    private void GetAvailableOptions()
     {
-        //UpdateAllIcons();
-        SetCurrentFaceCategory("Hair");
+        UpdateAllIcons();
+        //SetCurrentFaceCategory("Hair");
         HideLoTailsAndHairWithHijab();
 
         if (character.IsWearingFullFit())
@@ -232,6 +232,23 @@ public class CharacterEditor : MonoBehaviour
         {
             icons = necklaceIcons;
         }
+        else if (category.Equals("Hair"))
+        {
+            icons = hairIcons;
+        }
+        else if (category.Equals("Bangs"))
+        {
+            icons = bangsIcons;
+        }
+        else if (category.Equals("LoTails"))
+        {
+            icons = loTailsIcons;
+        }
+        else if (category.Equals("HiTails"))
+        {
+            icons = hiTailsIcons;
+        }
+
         if (icons != null)
             UpdateIcons(icons, categoryToLabelIdx[category], labels);
     }
@@ -355,7 +372,8 @@ public class CharacterEditor : MonoBehaviour
         categoryToLabelIdx[top] = idx;
         SetCategory(top, label);
         SetSleevesIfPresent(label);
-        UpdateIcons(shirtIcons, idx, labels);
+        if (idxDelta != 0)
+            UpdateIcons(shirtIcons, idx, labels);
     }
 
     private int GetWrapAroundIndex(int idx, int maxIdx)
@@ -407,7 +425,8 @@ public class CharacterEditor : MonoBehaviour
         categoryToLabelIdx[crotch] = idx;
         SetCategory(crotch, label);
         SetPantsIfPresent(label);
-        UpdateIcons(bottomsIcons, idx, labels);
+        if (idxDelta != 0)
+            UpdateIcons(bottomsIcons, idx, labels);
     }
 
     private void SetSleevesIfPresent(string label)

@@ -27,7 +27,7 @@ public class Icons : MonoBehaviour
         leftSpriteRen = leftIcon.GetComponent<SpriteRenderer>();
         middleSpriteRen = middleIcon.GetComponent<SpriteRenderer>();
         rightSpriteRen = rightIcon.GetComponent<SpriteRenderer>();
-        colls = this.GetComponentsInChildren<Collider2D>();
+        colls = this.GetComponentsInChildren<Collider2D>(includeInactive:true);
         midAnim = middleIcon.GetComponent<Animator>();
         midAnim.enabled = false;
         iconCategory = middleSpriteResolver.GetCategory() == null ? transform.parent.gameObject.name : middleSpriteResolver.GetCategory();
