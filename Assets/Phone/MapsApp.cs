@@ -93,7 +93,7 @@ public class MapsApp : MonoBehaviour
     public void GoToSelectedLocation()
     {
         Debug.Log("currentlySelectedLocation: " + currentlySelectedLocation);
-        sc.ChangeScene(locationToSceneName[currentlySelectedLocation]);
+        sc.ChangeScene(locationToSceneName[currentlySelectedLocation], SceneChanger.LoadingScreenType.Bus);
         phone.Lock();
     }
 

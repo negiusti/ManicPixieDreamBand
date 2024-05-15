@@ -89,7 +89,6 @@ public class CharacterEditor : MonoBehaviour
             if (renderer.CompareTag("BodyPart"))
                 skinRenderers.Add(renderer);
         }
-        //icons = FindObjectsOfType<Icons>(includeInactive: true).ToDictionary(i => i.GetCategory(), i => i);
         SpriteLibrary fuck = characterGameObject.GetComponent<SpriteLibrary>();
         spriteLib = fuck.spriteLibraryAsset;
 
@@ -106,7 +105,15 @@ public class CharacterEditor : MonoBehaviour
         GetAvailableOptions();
     }
 
-    public void UpdateAllIcons () {
+    //private void OnEnable()
+    //{
+    //    if (phone == null)
+    //    {
+    //        Start();
+    //    }
+    //}
+
+    private void UpdateAllIcons () {
         string[] labels;
         foreach (string category in spriteLib.GetCategoryNames())
         {
@@ -131,14 +138,19 @@ public class CharacterEditor : MonoBehaviour
             categoryToLabels[category] = labels;
             categoryToLabelIdx[category] = System.Array.IndexOf(labels, character.CategoryToLabelMap().GetValueOrDefault(category));
             categoryToLabelIdx[category] = categoryToLabelIdx[category] < 0 ? 0 : categoryToLabelIdx[category];
-            UpdateIcons(category, labels);
+            //UpdateIcons(category, labels);
         }
+    }
+
+    public void UpdateIcons(string category)
+    {
+        UpdateIcons(category, categoryToLabels[category]);
     }
 
    private void GetAvailableOptions()
     {
         UpdateAllIcons();
-        SetCurrentFaceCategory("Hair");
+        //SetCurrentFaceCategory("Hair");
         HideLoTailsAndHairWithHijab();
 
         if (character.IsWearingFullFit())
@@ -220,6 +232,23 @@ public class CharacterEditor : MonoBehaviour
         {
             icons = necklaceIcons;
         }
+        else if (category.Equals("Hair"))
+        {
+            icons = hairIcons;
+        }
+        else if (category.Equals("Bangs"))
+        {
+            icons = bangsIcons;
+        }
+        else if (category.Equals("LoTails"))
+        {
+            icons = loTailsIcons;
+        }
+        else if (category.Equals("HiTails"))
+        {
+            icons = hiTailsIcons;
+        }
+
         if (icons != null)
             UpdateIcons(icons, categoryToLabelIdx[category], labels);
     }
@@ -326,7 +355,8 @@ public class CharacterEditor : MonoBehaviour
             categoryToRenderer.GetValueOrDefault("FB_" + lPant).enabled = false;
             categoryToRenderer.GetValueOrDefault("FB_" + rPant).enabled = false;
         }
-        UpdateIcons(FBIcons, idx, labels);
+        if (idxDelta != 0)
+            UpdateIcons(FBIcons, idx, labels);
     }
 
     public void ChangeTop(int idxDelta)
@@ -342,7 +372,8 @@ public class CharacterEditor : MonoBehaviour
         categoryToLabelIdx[top] = idx;
         SetCategory(top, label);
         SetSleevesIfPresent(label);
-        UpdateIcons(shirtIcons, idx, labels);
+        if (idxDelta != 0)
+            UpdateIcons(shirtIcons, idx, labels);
     }
 
     private int GetWrapAroundIndex(int idx, int maxIdx)
@@ -394,7 +425,8 @@ public class CharacterEditor : MonoBehaviour
         categoryToLabelIdx[crotch] = idx;
         SetCategory(crotch, label);
         SetPantsIfPresent(label);
-        UpdateIcons(bottomsIcons, idx, labels);
+        if (idxDelta != 0)
+            UpdateIcons(bottomsIcons, idx, labels);
     }
 
     private void SetSleevesIfPresent(string label)
@@ -570,7 +602,7 @@ public class CharacterEditor : MonoBehaviour
         }
         if (categoryToColorPalette.ContainsKey(category))
             categoryToColorPalette[category].gameObject.SetActive(true);
-        ChangeFace(0);
+        //ChangeFace(0);
     }
 
     private string[] GetUnlockedLabels(string category)

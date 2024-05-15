@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,10 +7,10 @@ using UnityEngine.SceneManagement;
 public class Characters : ScriptableObject
 {
     private static Dictionary<string, Character> characters;
-    public static Character mc;
+    private static Character mc;
 
     // keep a cache of currently loaded characters and refresh it on each scene change
-    public static void RefreshCharactersCache(Scene current, Scene next)
+    public static void RefreshCharactersCache(Scene scene, LoadSceneMode mode)
     {
         RefreshCharactersCache();
     }
@@ -22,7 +20,7 @@ public class Characters : ScriptableObject
         characters = FindObjectsOfType<Character>(true)
             .Where(c => c.gameObject.layer != LayerMask.NameToLayer("LoadingScreen"))
             .ToDictionary(c => c.name, c => c);
-        mc = characters.First(c => c.Value.isMainCharacter()).Value;
+        mc = characters.FirstOrDefault(c => c.Value.isMainCharacter()).Value;
     }
 
     public static void Emote(string character, string eyesEmotion, string mouthEmotion)
@@ -32,5 +30,14 @@ public class Characters : ScriptableObject
         characters[character]?.EmoteMouth(mouthEmotion);
         characters[character]?.EmoteEyes(eyesEmotion);
         characters[character]?.FacePop();
+    }
+
+    public static Character MainCharacter()
+    {
+        if (mc == null)
+        {
+            RefreshCharactersCache();
+        }
+        return mc;
     }
 }

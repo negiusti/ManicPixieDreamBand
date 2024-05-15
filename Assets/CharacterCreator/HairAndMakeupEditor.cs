@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -7,7 +5,6 @@ public class HairAndMakeupEditor : MonoBehaviour
 {
     private SpriteResolver targetResolver;
     private SpriteRenderer spriteRenderer;
-    private SpriteLibraryAsset LibraryAsset;
     private bool makeupView = false;
     public DrawerScript[] otherDrawers;
     public GameObject makeupMenu;

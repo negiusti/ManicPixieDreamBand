@@ -5,14 +5,15 @@ using System.Linq;
 
 public class LoadingScreen : MonoBehaviour
 {
-    public static LoadingScreen Instance;
+    //public static LoadingScreen Instance;
     private Camera loadingCam;
     private Camera mainCam;
 
     private void Start()
     {
         // Hide the loading screen initially
-        
+        DontDestroyOnLoad(gameObject);
+        gameObject.SetActive(false);
         //SceneManager.activeSceneChanged += OnSceneChange;
     }
 
@@ -33,15 +34,15 @@ public class LoadingScreen : MonoBehaviour
     private void Awake()
     {
         // Ensure only one instance exists
-        if (Instance == null)
-        {
-            Instance = this;
+        //if (Instance == null)
+        //{
+        //    Instance = this;
             DontDestroyOnLoad(gameObject); // Optional: Keeps the object alive across scene changes
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        //}
+        //else
+        //{
+        //    Destroy(gameObject);
+        //}
     }
 
     public void SwitchCams()
