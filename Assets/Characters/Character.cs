@@ -59,7 +59,7 @@ public class Character : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void OnEnable()
+    void Start()
     {
         isMC = gameObject.name == "MainCharacter";
         spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
@@ -102,6 +102,11 @@ public class Character : MonoBehaviour
         LoadCharacter();
     }
 
+    //private void OnEnable()
+    //{
+    //    Start();
+    //}
+
     // Update is called once per frame
     void Update()
     {
@@ -132,6 +137,7 @@ public class Character : MonoBehaviour
             if (targetResolver.GetLabel().StartsWith("E_") || targetResolver.GetCategory() == "Instrument") // don't save emotes
                 continue;
             categoryToLabelMap[GetSRCategory(targetResolver)] = targetResolver.GetLabel();
+            Debug.Log("categoryToLabelMap[GetSRCategory(targetResolver)]" + categoryToLabelMap[GetSRCategory(targetResolver)] + " = targetResolver.GetLabel()" + targetResolver.GetLabel());
         }
 
         foreach (var spriteRenderer in spriteRenderers)
@@ -198,6 +204,7 @@ public class Character : MonoBehaviour
             {
                 if (categoryToLabelMap[category] == null && targetResolver.GetLabel() != null)
                 {
+                    Debug.Log("categoryToLabelMap[category]" + categoryToLabelMap[category] + " = targetResolver.GetLabel()" + targetResolver.GetLabel());
                     categoryToLabelMap[category] = targetResolver.GetLabel();
                 }
                 targetResolver.SetCategoryAndLabel(category, categoryToLabelMap[category]);

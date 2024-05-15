@@ -89,7 +89,7 @@ public class PlayInstrument : MonoBehaviour
 
     private bool InteractionEnabled()
     {
-        return !Characters.mc.gameObject.GetComponent<Movement>().IsSkating() &&
+        return !Characters.MainCharacter().gameObject.GetComponent<Movement>().IsSkating() &&
             !SceneChanger.Instance.IsLoadingScreenOpen() &&
             !DialogueManager.IsConversationActive;
     }

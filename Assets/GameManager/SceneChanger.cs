@@ -8,16 +8,29 @@ public class SceneChanger : MonoBehaviour
 {
     private static float minLoadingTime = 2f; // Minimum time to show loading screen (in seconds)
     public static SceneChanger Instance;
-    private LoadingScreen loadingScreen;
+    public LoadingScreen genericLoadingScreen;
+    public LoadingScreen busLoadingScreen;
     MenuToggleScript menuToggle;
     Stack<string> sceneStack;
 
+    public enum LoadingScreenType
+    {
+        Bus,
+        Generic
+    }
+
     public bool IsLoadingScreenOpen()
     {
-        return loadingScreen != null && loadingScreen.isActiveAndEnabled;
+        return (genericLoadingScreen != null && genericLoadingScreen.isActiveAndEnabled) ||
+            (busLoadingScreen != null && busLoadingScreen.isActiveAndEnabled);
     }
 
     public void ChangeScene(string sceneName)
+    {
+        ChangeScene(sceneName, LoadingScreenType.Generic);
+    }
+
+    public void ChangeScene(string sceneName, LoadingScreenType loadingScreenType)
     {
         SaveCharacters();
         DialogueManager.StopAllConversations();
@@ -26,20 +39,23 @@ public class SceneChanger : MonoBehaviour
         //AsyncOperation loadOperation =
 
 
-        LoadScene(sceneName);
+        LoadScene(sceneName, loadingScreenType);
 
         menuToggle.DisableMenu();
         sceneStack.Push(sceneName);
         //loadOperation.completed += (operation) => OnLoadCompleted(operation, currentScene);
     }
 
-    public void LoadScene(string sceneName)
+    public void LoadScene(string sceneName, LoadingScreenType loadingScreenType)
     {
         // Show loading screen
-        if (loadingScreen != null)
+        if (genericLoadingScreen != null && loadingScreenType == LoadingScreenType.Generic)
         {
-            loadingScreen.gameObject.SetActive(true);
-            //loadingScreen.SwitchCams();
+            genericLoadingScreen.gameObject.SetActive(true);
+        }
+        if (busLoadingScreen != null && loadingScreenType == LoadingScreenType.Bus)
+        {
+            busLoadingScreen.gameObject.SetActive(true);
         }
 
         // Start loading the scene asynchronously
@@ -65,9 +81,13 @@ public class SceneChanger : MonoBehaviour
 
             yield return null;
         }
-        if (loadingScreen != null)
+        if (genericLoadingScreen != null)
         {
-            loadingScreen.gameObject.SetActive(false);
+            genericLoadingScreen.gameObject.SetActive(false);
+        }
+        if (busLoadingScreen != null)
+        {
+            busLoadingScreen.gameObject.SetActive(false);
         }
     }
 
@@ -81,7 +101,7 @@ public class SceneChanger : MonoBehaviour
         if (sceneStack.Peek() != null)
             sceneStack.Pop();
         if (sceneStack.Peek() != null)
-            ChangeScene(sceneStack.Peek());
+            ChangeScene(sceneStack.Peek(), LoadingScreenType.Generic);
     }
 
     private void SaveCharacters()
@@ -118,7 +138,6 @@ public class SceneChanger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        loadingScreen = FindFirstObjectByType<LoadingScreen>(FindObjectsInactive.Include);
         menuToggle = GetComponent<MenuToggleScript>();
         menuToggle.DisableMenu();
         sceneStack = new Stack<string>();

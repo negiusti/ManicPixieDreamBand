@@ -4,7 +4,8 @@ using UnityEngine.U2D.Animation;
 public class Icons : MonoBehaviour
 {
     private CharacterEditor characterEditor;
-    private string category;
+    private string iconCategory;
+    public string category;
     public GameObject leftIcon;
     public GameObject middleIcon;
     public GameObject rightIcon;
@@ -29,16 +30,18 @@ public class Icons : MonoBehaviour
         colls = this.GetComponentsInChildren<Collider2D>();
         midAnim = middleIcon.GetComponent<Animator>();
         midAnim.enabled = false;
-        category = leftSpriteResolver.GetCategory() == null ? transform.parent.gameObject.name : leftSpriteResolver.GetCategory();
-        characterEditor.UpdateAllIcons();
+        iconCategory = middleSpriteResolver.GetCategory() == null ? transform.parent.gameObject.name : middleSpriteResolver.GetCategory();
+        if (category == null)
+            category = iconCategory;
+        characterEditor.UpdateIcons(category);
     }
 
-    private void OnEnable()
-    {
-        if (characterEditor == null)
-            characterEditor = FindFirstObjectByType<CharacterEditor>();
-        characterEditor.UpdateAllIcons();
-    }
+    //private void OnEnable()
+    //{
+    //    if (characterEditor == null)
+    //        Start();
+    //    characterEditor.UpdateIcons(category);
+    //}
 
     // Update is called once per frame
     void Update()
@@ -56,9 +59,9 @@ public class Icons : MonoBehaviour
     {
         Debug.Log("HI " + gameObject.name);
         midAnim.enabled = false;
-        leftSpriteResolver.SetCategoryAndLabel(category, leftLabel);
-        middleSpriteResolver.SetCategoryAndLabel(category, middleLabel);
-        rightSpriteResolver.SetCategoryAndLabel(category, rightLabel);
+        leftSpriteResolver.SetCategoryAndLabel(iconCategory, leftLabel);
+        middleSpriteResolver.SetCategoryAndLabel(iconCategory, middleLabel);
+        rightSpriteResolver.SetCategoryAndLabel(iconCategory, rightLabel);
         midAnim.enabled = true;
         midAnim.Play("IconPop", -1, 0f);
         //midAnim.CrossFade("IconPop", .5f);
