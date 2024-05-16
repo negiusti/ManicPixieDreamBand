@@ -28,6 +28,11 @@ public class CharacterEditor : MonoBehaviour
     private Character character;
     private bool isFullBody;
     private string currentFaceCategory;
+    private string prevEarringsLabel;
+    private string prevHairLabel;
+    private string prevLoTailsLabel;
+    private bool hijabHidingHair;
+    private bool earsHidingEarrings;
 
     public Icons shirtIcons;
     public Icons bottomsIcons;
@@ -445,8 +450,22 @@ public class CharacterEditor : MonoBehaviour
         string label = res.GetLabel();
         if (label.Contains("Hijab"))
         {
+            if (!hijabHidingHair)
+            {
+                prevLoTailsLabel = categoryToResolver["LoTails"].GetLabel();
+                prevHairLabel = categoryToResolver["Hair"].GetLabel();
+            }
             SetCategory("LoTails", "None");
             SetCategory("Hair", "None");
+            hijabHidingHair = true;
+        } else
+        {
+            if (hijabHidingHair)
+            {
+                SetCategory("LoTails", prevLoTailsLabel);
+                SetCategory("Hair", prevHairLabel);
+            }
+            hijabHidingHair = false;
         }
     }
 
@@ -456,13 +475,20 @@ public class CharacterEditor : MonoBehaviour
         string label = res.GetLabel();
         if (label.Contains("None"))
         {
+            if (!earsHidingEarrings)
+                prevEarringsLabel= categoryToResolver["Earrings"].GetLabel();
             SetCategory("Earrings", "None");
+            earsHidingEarrings = true;
+        } else
+        {
+            if (earsHidingEarrings)
+                SetCategory("Earrings", prevEarringsLabel);
+            earsHidingEarrings = false;
         }
     }
 
     public void ChangeFace(string category, int idxDelta)
     {
-        SetCurrentFaceCategory(category);
         SetOutfitChangedFlag(idxDelta != 0);
         int idx = categoryToLabelIdx.GetValueOrDefault(category, 0) + idxDelta;
         string[] labels = GetUnlockedLabels(category);
@@ -477,11 +503,12 @@ public class CharacterEditor : MonoBehaviour
         SetCategory(category, label);
         HideLoTailsAndHairWithHijab();
         HideEarringsWithoutEars();
+        SetCurrentFaceCategory(category);
         //UpdateIcons(category, labels);
-        if (label.Equals("None"))
-        {
-            faceColorPalettes.Close();
-        }
+        //if (label.Equals("None"))
+        //{
+        //    faceColorPalettes.Close();
+        //}
     }
 
     public void ChangeBangs(int idxDelta)

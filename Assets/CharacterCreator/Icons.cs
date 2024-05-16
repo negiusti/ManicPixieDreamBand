@@ -66,7 +66,8 @@ public class Icons : MonoBehaviour
         middleSpriteResolver.SetCategoryAndLabel(iconCategory, middleLabel);
         rightSpriteResolver.SetCategoryAndLabel(iconCategory, rightLabel);
         midAnim.enabled = true;
-        midAnim.Play("IconPop", -1, 0f);
+        if (midAnim.gameObject != null)
+            midAnim.Play("IconPop", -1, 0f);
         //midAnim.CrossFade("IconPop", .5f);
 
         if (rightSpriteResolver.GetLabel().Equals("None"))
