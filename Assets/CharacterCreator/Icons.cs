@@ -68,7 +68,6 @@ public class Icons : MonoBehaviour
         midAnim.enabled = true;
         if (midAnim.gameObject != null)
             midAnim.Play("IconPop", -1, 0f);
-        //midAnim.CrossFade("IconPop", .5f);
 
         if (rightSpriteResolver.GetLabel().Equals("None"))
         {

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.U2D.Animation;
+using TMPro;
 //using UnityEngine.SceneManagement;
 
 public class Phone : MonoBehaviour
@@ -22,6 +23,8 @@ public class Phone : MonoBehaviour
     private Animator animator;
     private CustomDialogueScript customDialogue;
     public StandardUIMenuPanel txtResponsePanel;
+    public TextMeshPro notificationText;
+    
 
     enum PhoneState
     {
@@ -67,6 +70,12 @@ public class Phone : MonoBehaviour
     public bool IsLocked()
     {
         return isLocked;
+    }
+
+    public void NotificationMessage(string txt)
+    {
+        notificationText.text = txt;
+        animator.CrossFade("NotificationText_Show", 0.5f);
     }
 
     // Update is called once per frame

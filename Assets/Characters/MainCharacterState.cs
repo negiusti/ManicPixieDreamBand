@@ -48,6 +48,7 @@ public class MainCharacterState : ScriptableObject
     public static void ModifyBankBalance(double delta)
     {
         bankBalance += delta;
+        Phone.Instance.NotificationMessage(delta >= 0 ? "+" : "" + delta + " in bank account");
     }
 
     public static void SetBankBalance(double value)
