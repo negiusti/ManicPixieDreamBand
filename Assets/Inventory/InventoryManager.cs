@@ -46,6 +46,7 @@ public class InventoryManager : ScriptableObject
 
     public static void AddToMCInventory(string category, string item)
     {
+        Phone.Instance.NotificationMessage("Added " + item + " to home inventory");
         AddToInventory(MAIN_CHARACTER, category, item);
     }
 
@@ -56,10 +57,11 @@ public class InventoryManager : ScriptableObject
 
     public static void RemoveFromMCInventory(string category, string item)
     {
+        Phone.Instance.NotificationMessage("Removed " + item + " from home inventory");
         RemoveFromInventory(MAIN_CHARACTER, category, item);
     }
 
-    public static void TransferBetweenInventories(string rcvCharacter, string sndCharacter, string category, string item)
+    private static void TransferBetweenInventories(string rcvCharacter, string sndCharacter, string category, string item)
     {
         RemoveFromInventory(sndCharacter, category, item);
         AddToInventory(rcvCharacter, category, item);
@@ -82,6 +84,7 @@ public class InventoryManager : ScriptableObject
 
     public static void RecordPurchase(string category, string item)
     {
+        //Phone.Instance.NotificationMessage(item + " " + category + " added to home inventory");
         if (!categoryToPurchased.ContainsKey(category))
             categoryToPurchased[category] = new HashSet<string>();
         categoryToPurchased[category].Add(item);
@@ -204,6 +207,7 @@ public class InventoryManager : ScriptableObject
 
     public static void AddPerishableItem(string input)
     {
+        Phone.Instance.NotificationMessage("Added " + input + " to pockets");
         PerishableItem pi = StringToPerishableItem(input);
         if (pocketsPerishable.ContainsKey(pi))
             pocketsPerishable[pi]++;
@@ -213,6 +217,7 @@ public class InventoryManager : ScriptableObject
 
     public static void AddItem(string input)
     {
+        Phone.Instance.NotificationMessage("Added " + input + " to pockets");
         Item item = StringToItem(input);
         if (pockets.ContainsKey(item))
             pockets[item]++;
@@ -222,6 +227,7 @@ public class InventoryManager : ScriptableObject
 
     public static void RemovePerishableItem(string input)
     {
+        Phone.Instance.NotificationMessage("Removed " + input + " from pockets");
         PerishableItem item = StringToPerishableItem(input);
         if (pocketsPerishable.ContainsKey(item) && pocketsPerishable[item] <= 1)
             pocketsPerishable.Remove(item);
@@ -233,6 +239,7 @@ public class InventoryManager : ScriptableObject
 
     public static void RemoveItem(string input)
     {
+        Phone.Instance.NotificationMessage("Removed " + input + " from pockets");
         Item item = StringToItem(input);
         if (pockets.ContainsKey(item) && pockets[item] <= 1)
             pockets.Remove(item);
