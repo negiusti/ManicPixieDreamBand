@@ -58,6 +58,9 @@ public class CharacterEditor : MonoBehaviour
     public Icons earringsIcons;
     public Icons necklaceIcons;
 
+    public Caboodle caboodle;
+
+
     public ColorPalettes faceColorPalettes;
     private Phone phone;
     private GameObject characterGameObject;
@@ -498,6 +501,8 @@ public class CharacterEditor : MonoBehaviour
         else if (idx < 0)
             idx = labels.Length - 1;
 
+        string prevLabel = labels[categoryToLabelIdx[category]];
+
         categoryToLabelIdx[category] = idx;
         string label = labels[idx];
         SetCategory(category, label);
@@ -505,10 +510,15 @@ public class CharacterEditor : MonoBehaviour
         HideEarringsWithoutEars();
         SetCurrentFaceCategory(category);
         //UpdateIcons(category, labels);
-        //if (label.Equals("None"))
-        //{
-        //    faceColorPalettes.Close();
-        //}
+
+        if (label.Equals("None"))
+        {
+            faceColorPalettes.Close();
+        }
+        if (prevLabel.Equals("None") && prevLabel != label)
+        {
+            faceColorPalettes.SelectColorPalette(category);
+        }
     }
 
     public void ChangeBangs(int idxDelta)
@@ -578,12 +588,21 @@ public class CharacterEditor : MonoBehaviour
 
     public void SetCurrentFaceCategory(string category)
     {
+        if (currentFaceCategory == category)
+        {
+            return;
+        }
         currentFaceCategory = category;
-        faceColorPalettes.SelectColorPalette(category);
+        
         if (categoryToLabels[category][categoryToLabelIdx[category]].Equals("None"))
         {
             faceColorPalettes.Close();
         }
+        else
+        {
+            faceColorPalettes.SelectColorPalette(category);
+        }
+        caboodle.SelectCaboodleSection(category);
     }
 
     private string[] GetUnlockedLabels(string category)
