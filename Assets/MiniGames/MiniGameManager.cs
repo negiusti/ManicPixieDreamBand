@@ -21,6 +21,9 @@ public class MiniGameManager : ScriptableObject
             case "CarPacking":
                 StartCarPackingMiniGame();
                 break;
+            case "ScreenPrinting":
+                StartScreenPrintingMiniGame();
+                break;
             default:
                 Debug.LogError("Minigame not found: " + miniGameName);
                 break;
@@ -39,6 +42,8 @@ public class MiniGameManager : ScriptableObject
                 return FindFirstObjectByType<BassMiniGame>(FindObjectsInactive.Include);
             case "CarPacking":
                 return FindFirstObjectByType<CarPackingMiniGame>(FindObjectsInactive.Include);
+            case "ScreenPrinting":
+                return FindFirstObjectByType<ScreenPrintingMiniGame>(FindObjectsInactive.Include);
             default:
                 Debug.LogError("Minigame not found: " + miniGameName);
                 return null;
@@ -77,6 +82,12 @@ public class MiniGameManager : ScriptableObject
     private static void StartCarPackingMiniGame()
     {
         CarPackingMiniGame mg = (CarPackingMiniGame)GetMiniGame("CarPacking");
+        mg.OpenMiniGame();
+    }
+
+    private static void StartScreenPrintingMiniGame()
+    {
+        ScreenPrintingMiniGame mg = (ScreenPrintingMiniGame)GetMiniGame("ScreenPrinting");
         mg.OpenMiniGame();
     }
 }

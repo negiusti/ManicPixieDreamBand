@@ -4,7 +4,7 @@ public class CarPackingMiniGame : MiniGame
 {
     public TrunkDoor trunkDoor;
 
-    private Camera mainCamera;
+    private GameObject mainCamera;
     private bool isActive;
 
     private void Start()
@@ -19,11 +19,11 @@ public class CarPackingMiniGame : MiniGame
 
     public override void OpenMiniGame()
     {
-        mainCamera = Camera.main;
+        mainCamera = Camera.main.transform.gameObject;
+
+        mainCamera.SetActive(false);
 
         EnableAllChildren();
-
-        mainCamera.enabled = false;
 
         MiniGameManager.PrepMiniGame();
         isActive = true;
@@ -31,9 +31,9 @@ public class CarPackingMiniGame : MiniGame
 
     public override void CloseMiniGame()
     {
-        mainCamera.enabled = true;
-
         DisableAllChildren();
+
+        mainCamera.SetActive(true);
 
         isActive = false;
         MiniGameManager.CleanUpMiniGame();

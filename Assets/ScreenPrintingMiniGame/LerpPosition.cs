@@ -1,9 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
-public class MoveShirt : MonoBehaviour
+public class LerpPosition : MonoBehaviour
 {
-    public IEnumerator LerpPosition(Vector3 targetLocalPosition, float duration, bool destroyAfterLerp)
+    public bool finishedLerp;
+
+    public IEnumerator Lerp(Vector3 targetLocalPosition, float duration, bool destroyAfterLerp)
     {
         Vector3 startPosition = transform.localPosition;
 
@@ -16,6 +18,8 @@ public class MoveShirt : MonoBehaviour
 
             yield return null;
         }
+
+        finishedLerp = true;
 
         transform.localPosition = targetLocalPosition;
 
