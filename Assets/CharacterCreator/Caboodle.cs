@@ -5,6 +5,7 @@ using UnityEngine;
 public class Caboodle : MonoBehaviour
 {
     private Dictionary<string, CaboodleSection> caboodleSections;
+    private CharacterEditor characterEditor;
 
     // Start is called before the first frame update
     void Start()
@@ -14,6 +15,10 @@ public class Caboodle : MonoBehaviour
         {
             caboodleSections.Add(section.gameObject.name, section);
         }
+        characterEditor = GameObject.FindObjectOfType<CharacterEditor>();
+
+        characterEditor.SetCurrentFaceCategory("Bangs");
+
     }
 
     public void SelectCaboodleSection(string category)
