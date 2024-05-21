@@ -14,7 +14,8 @@ public class TattooMiniGame : MonoBehaviour
     // A list of all of the points connected by the guideline's collider
     public List<Vector2> guidelineColliderPoints = new List<Vector2>();
 
-    public GameObject guidelineCheck;
+    public GameObject completionCheck;
+    public int checkSpawnIterator = 5;
 
     private void Start()
     {
@@ -30,13 +31,14 @@ public class TattooMiniGame : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < guidelineColliderPoints.Count; i++)
+        // Iterate i by completionCheckSpawnIterator so it doesn't spawn a bajillion completion checks
+        for (int i = 0; i < guidelineColliderPoints.Count; i += checkSpawnIterator)
         {
             // Multiplying the position being checked by the guideline's local scale to transpose it from local to world position
             Vector2 checkPosition = new Vector2(guidelineColliderPoints[i].x * guideline.transform.localScale.x, guidelineColliderPoints[i].y * guideline.transform.localScale.y);
 
-            // Spawn a check object at each of the positions stored in the list
-            Instantiate(guidelineCheck, checkPosition, Quaternion.identity, guideline.transform);
+            // Spawn a check object at the position stored in the list
+            Instantiate(completionCheck, checkPosition, Quaternion.identity, guideline.transform);
         }
     }
 
@@ -53,7 +55,7 @@ public class TattooMiniGame : MonoBehaviour
         {
             line = null;
 
-            // If all of the guideline's checks have been deleted, delete the guideline, lerp the arm offscreen, delete that arm, and spawn a new arm
+            // If all of the guideline's checks have been destroyed, destroy the guideline
             if (guideline.transform.childCount == 0)
             {
                 Destroy(guideline);

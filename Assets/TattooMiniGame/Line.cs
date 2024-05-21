@@ -15,7 +15,7 @@ public class Line : MonoBehaviour
 
     public float checkRadius;
 
-    public GameObject lineCheck;
+    public GameObject guidelineCheck;
 
     public void UpdateLine(Vector2 position)
     {
@@ -27,7 +27,7 @@ public class Line : MonoBehaviour
 
             return;
         }
-        // If the distance between the last position and the passed in position is greater than the needle's speed, set the passed in position
+        // The minimumDistance is used to limit the minimum distance between points
         if (Vector2.Distance(positions.Last(), position) > minimumDistance)
         {
             SetPoint(position);
@@ -44,6 +44,6 @@ public class Line : MonoBehaviour
         lineRenderer.SetPosition(positions.Count - 1, position);
 
         // Spawn a lineCheck at the passed in position
-        Instantiate(lineCheck, position, Quaternion.identity, transform);
+        Instantiate(guidelineCheck, position, Quaternion.identity, transform);
     }
 }

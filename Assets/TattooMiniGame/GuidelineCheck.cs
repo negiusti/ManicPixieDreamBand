@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class LineCheck : MonoBehaviour
+public class GuidelineCheck : MonoBehaviour
 {
     public bool inGuideline;
 
@@ -23,11 +23,13 @@ public class LineCheck : MonoBehaviour
         }
     }
 
+    // This code is called in OnTriggerStay2D() because it needs to run after the OnTriggerEnter2D() code
     private void OnTriggerStay2D(Collider2D collision)
     {
-
-        if (collision.gameObject.tag == "TattooGuidelineCheck" && inGuideline)
+        // The completion checks are spawned on the guideline's collider and check whether or not the player has finished drawing the design
+        if (collision.gameObject.tag == "TattooCompletionCheck" && inGuideline)
         {
+            // If this object is in the guidelines and overlapping with a completion check, destroy that completion check
             Destroy(collision.gameObject);
         }
     }
