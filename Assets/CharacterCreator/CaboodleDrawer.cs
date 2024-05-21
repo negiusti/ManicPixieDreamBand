@@ -19,6 +19,14 @@ public class CaboodleDrawer : MonoBehaviour
         
     }
 
+    //private void OnEnable()
+    //{
+    //    if (content.activeSelf)
+    //    {
+    //        characterEditor.SetCurrentFaceCategory(DefaultCategory);
+    //    }
+    //}
+
     private void OnMouseDown()
     {
         bool switchedDrawer = !content.activeSelf;
@@ -32,6 +40,11 @@ public class CaboodleDrawer : MonoBehaviour
             characterEditor.SetCurrentFaceCategory(DefaultCategory);
         }
     }
+
+    //public void SetDefaultSection()
+    //{
+    //    characterEditor.SetCurrentFaceCategory(DefaultCategory);
+    //}
 
     public void UnselectDrawer()
     {

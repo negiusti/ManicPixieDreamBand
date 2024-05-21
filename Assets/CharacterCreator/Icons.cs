@@ -69,15 +69,15 @@ public class Icons : MonoBehaviour
         if (midAnim.gameObject != null && midAnim.isActiveAndEnabled)
             midAnim.Play("IconPop", -1, 0f);
 
-        if (rightSpriteResolver.GetLabel().Equals("None"))
+        if (rightSpriteResolver != null && rightSpriteResolver.GetLabel() == "None")
         {
             rightSpriteResolver.SetCategoryAndLabel("Sock_Icons", "None");
         }
-        if (leftSpriteResolver.GetLabel().Equals("None"))
+        if (leftSpriteResolver != null && leftSpriteResolver.GetLabel() == "None")
         {
             leftSpriteResolver.SetCategoryAndLabel("Sock_Icons", "None");
         }
-        if (middleSpriteResolver.GetLabel().Equals("None"))
+        if (middleSpriteResolver != null && middleSpriteResolver.GetLabel() == "None")
         {
             middleSpriteResolver.SetCategoryAndLabel("Sock_Icons", "None");
         }
@@ -93,17 +93,17 @@ public class Icons : MonoBehaviour
         middleSpriteRen.color = c;
         rightSpriteRen.color = faded;
 
-        if (rightSpriteResolver.GetLabel().Equals("None"))
+        if (rightSpriteResolver != null && rightSpriteResolver.GetLabel() == "None")
         {
             rightSpriteRen.color = fadedWhite;
             rightSpriteResolver.SetCategoryAndLabel("Sock_Icons", "None");
         }
-        if (leftSpriteResolver.GetLabel().Equals("None"))
+        if (leftSpriteResolver != null && leftSpriteResolver.GetLabel() == "None")
         {
             leftSpriteRen.color = fadedWhite;
             leftSpriteResolver.SetCategoryAndLabel("Sock_Icons", "None");
         }
-        if (middleSpriteResolver.GetLabel().Equals("None"))
+        if (middleSpriteResolver != null && middleSpriteResolver.GetLabel() == "None")
         {
             middleSpriteRen.color = Color.white;
             middleSpriteResolver.SetCategoryAndLabel("Sock_Icons", "None");

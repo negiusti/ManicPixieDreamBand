@@ -509,6 +509,7 @@ public class CharacterEditor : MonoBehaviour
         HideLoTailsAndHairWithHijab();
         HideEarringsWithoutEars();
         SetCurrentFaceCategory(category);
+        label = labels[categoryToLabelIdx[category]];
         //UpdateIcons(category, labels);
 
         if (label.Equals("None"))
@@ -588,20 +589,20 @@ public class CharacterEditor : MonoBehaviour
 
     public void SetCurrentFaceCategory(string category)
     {
+        Debug.Log("SetCurrentFaceCategory: " + currentFaceCategory + "->" + category);
+        if (categoryToLabels[category][categoryToLabelIdx[category]].Equals("None"))
+        {
+            Debug.Log("Closing palette bc " + category + "label is None");
+            faceColorPalettes.Close();
+        }
+        else
+            faceColorPalettes.SelectColorPalette(category);
+
         if (currentFaceCategory == category)
         {
             return;
         }
         currentFaceCategory = category;
-        
-        if (categoryToLabels[category][categoryToLabelIdx[category]].Equals("None"))
-        {
-            faceColorPalettes.Close();
-        }
-        else
-        {
-            faceColorPalettes.SelectColorPalette(category);
-        }
         caboodle.SelectCaboodleSection(category);
     }
 
