@@ -42,10 +42,10 @@ public class Icons : MonoBehaviour
         
     }
 
+    // TO-DO: use category or icon category ??
     public string GetCategory()
     {
-        middleSpriteResolver = middleIcon.GetComponent<SpriteResolver>();
-        return middleSpriteResolver.GetCategory();
+        return category;
     }
 
     // USED FOR FACE CATEGORIES ONLY SO FAR
@@ -71,15 +71,15 @@ public class Icons : MonoBehaviour
 
         if (rightSpriteResolver != null && rightSpriteResolver.GetLabel() == "None")
         {
-            rightSpriteResolver.SetCategoryAndLabel("Sock_Icons", "None");
+            rightSpriteResolver.SetCategoryAndLabel("None_Icons", category);
         }
         if (leftSpriteResolver != null && leftSpriteResolver.GetLabel() == "None")
         {
-            leftSpriteResolver.SetCategoryAndLabel("Sock_Icons", "None");
+            leftSpriteResolver.SetCategoryAndLabel("None_Icons", category);
         }
         if (middleSpriteResolver != null && middleSpriteResolver.GetLabel() == "None")
         {
-            middleSpriteResolver.SetCategoryAndLabel("Sock_Icons", "None");
+            middleSpriteResolver.SetCategoryAndLabel("None_Icons", category);
         }
         UpdateIconsColor(characterEditor.GetCategoryColor(category));
     }
@@ -93,20 +93,20 @@ public class Icons : MonoBehaviour
         middleSpriteRen.color = c;
         rightSpriteRen.color = faded;
 
-        if (rightSpriteResolver != null && rightSpriteResolver.GetLabel() == "None")
+        if (rightSpriteResolver != null && (rightSpriteResolver.GetCategory() == "None_Icons" || rightSpriteResolver.GetLabel() == "None"))
         {
             rightSpriteRen.color = fadedWhite;
-            rightSpriteResolver.SetCategoryAndLabel("Sock_Icons", "None");
+            rightSpriteResolver.SetCategoryAndLabel("None_Icons", category);
         }
-        if (leftSpriteResolver != null && leftSpriteResolver.GetLabel() == "None")
+        if (leftSpriteResolver != null && (leftSpriteResolver.GetCategory() == "None_Icons" || leftSpriteResolver.GetLabel() == "None"))
         {
             leftSpriteRen.color = fadedWhite;
-            leftSpriteResolver.SetCategoryAndLabel("Sock_Icons", "None");
+            leftSpriteResolver.SetCategoryAndLabel("None_Icons", category);
         }
-        if (middleSpriteResolver != null && middleSpriteResolver.GetLabel() == "None")
+        if (middleSpriteResolver != null && (middleSpriteResolver.GetCategory() == "None_Icons" || middleSpriteResolver.GetLabel() == "None"))
         {
             middleSpriteRen.color = Color.white;
-            middleSpriteResolver.SetCategoryAndLabel("Sock_Icons", "None");
+            middleSpriteResolver.SetCategoryAndLabel("None_Icons", category);
         }
     }
 

@@ -29,9 +29,9 @@ public class ColorPalettes : MonoBehaviour
 
     public void SelectColorPalette(string category)
     {
-        DisableColorPalettes();
         if (categoryToColorPalette.ContainsKey(category))
         {
+            DisableColorPalettesExcept(categoryToColorPalette[category]);
             Debug.Log("Enabling color palette: " + category);
             categoryToColorPalette[category].gameObject.SetActive(true);
             Open();
@@ -52,6 +52,15 @@ public class ColorPalettes : MonoBehaviour
         animator.SetBool("Open", true);
         Debug.Log("BOOL IS " + animator.GetBool("Open"));
         isOpen = true;
+    }
+
+    private void DisableColorPalettesExcept(ColorPalette p)
+    {
+        foreach (ColorPalette cp in categoryToColorPalette.Values)
+        {
+            if (p == null || cp != p)
+                cp.gameObject.SetActive(false);
+        }
     }
 
     private void DisableColorPalettes()
