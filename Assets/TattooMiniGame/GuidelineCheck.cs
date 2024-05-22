@@ -32,21 +32,24 @@ public class GuidelineCheck : MonoBehaviour
             // If this object is in the guidelines and overlapping with a completion check, destroy that completion check
             Destroy(collision.gameObject);
 
+            // Add to the total number of checks that were spawned
             tattooMiniGame.checksSpawned++;
         }
     }
 
-    // Lower the score if this object isn't in the guidelines and destroy itself after a waiting a moment
     private IEnumerator DestroySelf()
     {
         yield return new WaitForSecondsRealtime(0.125f);
 
         if (!inGuideline)
         {
+            // Add to the total number of checks that were spawned
             tattooMiniGame.checksSpawned++;
+            // And add to the total number of checks that were not in the guideline
             tattooMiniGame.checksOutOfGuideline++;
         }
 
+        // Destroy itself after waiting a moment
         Destroy(gameObject);
     }
 }

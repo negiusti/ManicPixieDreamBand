@@ -1,7 +1,8 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
-
 using TMPro;
+using UnityEngine.UI;
 
 public class TattooMiniGame : MonoBehaviour
 {
@@ -40,12 +41,14 @@ public class TattooMiniGame : MonoBehaviour
     // The number of guideline checks which were not in the guideline
     public float checksOutOfGuideline;
 
-    [Header("Thresholds")]
+    [Header("Scoring")]
 
     public float successThreshold;
     public float passThreshold;
 
     [Header("Incomes")]
+
+    private float income;
 
     public float successIncome;
     public float passIncome;
@@ -58,9 +61,28 @@ public class TattooMiniGame : MonoBehaviour
     private bool doTimer;
     private bool hasDoneTimerCheck;
 
+    [Header("Speech")]
+
+    public GameObject speechBubble;
+    private Text speechText;
+
+    public float speechBubbleActiveDuration;
+
+    public string[] successOptions;
+    public string[] passOptions;
+    public string[] failureOptions;
+
+    public string[] timerDoneOptions;
+
+    public GameObject blackScreen;
+
     private void Start()
     {
         doTimer = true;
+
+        blackScreen.SetActive(false);
+
+        speechText = speechBubble.GetComponentInChildren<Text>();
 
         SpawnNewArm();
     }
@@ -90,8 +112,6 @@ public class TattooMiniGame : MonoBehaviour
             if (guideline != null && guideline.transform.childCount <= completionThreshold)
             {
                 Score();
-
-                CloseMiniGameSequence();
             }
         }
 
@@ -108,7 +128,7 @@ public class TattooMiniGame : MonoBehaviour
             // Makes sure this if statement doesn't run again
             hasDoneTimerCheck = true;
 
-            CloseMiniGameSequence();
+            StartCoroutine(CloseMiniGameSequence("Timer done"));
         }
     }
 
@@ -165,25 +185,24 @@ public class TattooMiniGame : MonoBehaviour
         // Your successPercentage is the percentage of total guideline checks spawned that were within the guideline
         float successPercentage = Mathf.Round(100 - ((checksOutOfGuideline / checksSpawned) * 100));
 
-        float income;
-
         if (successPercentage >= successThreshold)
         {
             income = successIncome;
+            StartCoroutine(CloseMiniGameSequence("Success"));
         }
         else if (successPercentage >= passThreshold)
         {
             income = passIncome;
+            StartCoroutine(CloseMiniGameSequence("Pass"));
         }
         else
         {
             income = failureIncome;
+            StartCoroutine(CloseMiniGameSequence("Failure"));
         }
-
-        Debug.Log("Your success percentage is " + successPercentage + "%, your income is $" + income);
     }
 
-    private void CloseMiniGameSequence()
+    private IEnumerator CloseMiniGameSequence(string result)
     {
         line = null;
 
@@ -191,11 +210,52 @@ public class TattooMiniGame : MonoBehaviour
 
         Destroy(guideline);
 
-        // Speech bubble
+        yield return new WaitForSeconds(0.5f);
 
-        // Income icon
+        // Display the speech bubble and the appropriate text
+        StartCoroutine(UpdateSpeechBubbles(result));
+
+        // Wait until after the speech bubble disappear
+        yield return new WaitForSeconds(speechBubbleActiveDuration);
 
         // Lerp the arm offscreen and destroy it
         StartCoroutine(armLerpScript.Lerp(new Vector2(transform.position.x - 50, transform.position.y), armLerpDuration, true));
+
+        // Wait a moment before fading to black
+        yield return new WaitForSeconds(0.25f);
+
+        // Start fading to black
+        blackScreen.SetActive(true);
+    }
+
+    private IEnumerator UpdateSpeechBubbles(string option)
+    {
+        string stringToDisplay;
+
+        // Depending on how high the player's successPercentage is and whether or not the timer has finished, change the string to display to be a random string from the corresponding array
+
+        if (option == "Success")
+        {
+            stringToDisplay = successOptions[Random.Range(0, successOptions.Length)];
+        }
+        else if (option == "Pass")
+        {
+            stringToDisplay = passOptions[Random.Range(0, passOptions.Length)];
+        }
+        else if (option == "Failure")
+        {
+            stringToDisplay = failureOptions[Random.Range(0, failureOptions.Length)];
+        }
+        else
+        {
+            stringToDisplay = timerDoneOptions[Random.Range(0, timerDoneOptions.Length)];
+        }
+
+        speechBubble.SetActive(true);
+        speechText.text = stringToDisplay;
+
+        yield return new WaitForSeconds(speechBubbleActiveDuration);
+
+        speechBubble.SetActive(false);
     }
 }

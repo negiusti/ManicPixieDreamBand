@@ -71,7 +71,7 @@ public class ScreenPrintingMiniGame : MiniGame
 
     public float armsLerpDuration; // How long the arms take to move off the screen; the smaller this value is, the faster it goes
 
-    public GameObject BlackScreen;
+    public GameObject blackScreen;
 
     [HideInInspector] public bool minigameComplete;
 
@@ -117,7 +117,7 @@ public class ScreenPrintingMiniGame : MiniGame
         maxArmsLerpScript = maxArms.GetComponent<LerpPosition>();
         rickiArmsLerpScript = rickiArms.GetComponent<LerpPosition>();
 
-        BlackScreen.SetActive(false);
+        blackScreen.SetActive(false);
 
         screen.SpawnNewShirt();
 
@@ -224,7 +224,7 @@ public class ScreenPrintingMiniGame : MiniGame
     private IEnumerator UpdateSpeechBubbles(string option)
     {
         // Based on what is passed in, choose a random string from the respective array and save that to a new string, then display that string in one of the speech bubbles
-        string stringToDisplay = "";
+        string stringToDisplay;
 
         if (option == "Success")
         {
@@ -294,6 +294,6 @@ public class ScreenPrintingMiniGame : MiniGame
         // How long to pause for before fading to black after the arms start moving
         yield return new WaitForSeconds(1);
 
-        BlackScreen.SetActive(true);
+        blackScreen.SetActive(true);
     }
 }
