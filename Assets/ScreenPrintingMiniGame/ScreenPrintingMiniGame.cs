@@ -25,9 +25,9 @@ public class ScreenPrintingMiniGame : MiniGame
 
     [Header("Timing")]
 
-    private bool doTimer;
     public float timer = 30f; // How much time the player has at the start of the minigame
     public TextMeshPro timerText;
+    private bool doTimer;
     private bool hasDoneTimerCheck;
 
     [Header("Shirt Icons")]
@@ -66,20 +66,18 @@ public class ScreenPrintingMiniGame : MiniGame
     public GameObject maxArms;
     public GameObject rickiArms;
 
-    private LerpPosition lerpMaxArmsScript;
-    private LerpPosition lerpRickiArmsScript;
+    private LerpPosition maxArmsLerpScript;
+    private LerpPosition rickiArmsLerpScript;
 
     public float armsLerpDuration; // How long the arms take to move off the screen; the smaller this value is, the faster it goes
 
-    public GameObject BlackScreen;
+    public GameObject blackScreen;
 
     [HideInInspector] public bool minigameComplete;
 
     private void Start()
     {
         DisableAllChildren();
-
-        //OpenMiniGame();
     }
 
     public override bool IsMiniGameActive()
@@ -116,10 +114,10 @@ public class ScreenPrintingMiniGame : MiniGame
         MaxSpeechBubble.SetActive(false);
         RickiSpeechBubble.SetActive(false);
 
-        lerpMaxArmsScript = maxArms.GetComponent<LerpPosition>();
-        lerpRickiArmsScript = rickiArms.GetComponent<LerpPosition>();
+        maxArmsLerpScript = maxArms.GetComponent<LerpPosition>();
+        rickiArmsLerpScript = rickiArms.GetComponent<LerpPosition>();
 
-        BlackScreen.SetActive(false);
+        blackScreen.SetActive(false);
 
         screen.SpawnNewShirt();
 
@@ -226,7 +224,7 @@ public class ScreenPrintingMiniGame : MiniGame
     private IEnumerator UpdateSpeechBubbles(string option)
     {
         // Based on what is passed in, choose a random string from the respective array and save that to a new string, then display that string in one of the speech bubbles
-        string stringToDisplay = "";
+        string stringToDisplay;
 
         if (option == "Success")
         {
@@ -290,12 +288,12 @@ public class ScreenPrintingMiniGame : MiniGame
         // How long to pause for before moving the arms off the screen after the timer ends or the minigame is complete 
         yield return new WaitForSeconds(1.5f);
        
-        StartCoroutine(lerpMaxArmsScript.Lerp(new Vector2(maxArms.transform.position.x + 25, maxArms.transform.position.y), armsLerpDuration, false));
-        StartCoroutine(lerpRickiArmsScript.Lerp(new Vector2(rickiArms.transform.position.x - 25, rickiArms.transform.position.y), armsLerpDuration, false));
+        StartCoroutine(maxArmsLerpScript.Lerp(new Vector2(maxArms.transform.position.x + 25, maxArms.transform.position.y), armsLerpDuration, false));
+        StartCoroutine(rickiArmsLerpScript.Lerp(new Vector2(rickiArms.transform.position.x - 25, rickiArms.transform.position.y), armsLerpDuration, false));
 
         // How long to pause for before fading to black after the arms start moving
         yield return new WaitForSeconds(1);
 
-        BlackScreen.SetActive(true);
+        blackScreen.SetActive(true);
     }
 }

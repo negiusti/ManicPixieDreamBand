@@ -9,7 +9,8 @@ public class ColorPalettes : MonoBehaviour
     public ColorPalette faceDetailPalette;
     private Dictionary<string, ColorPalette> categoryToColorPalette;
     private Animator animator;
-
+    private bool isOpen;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -23,31 +24,60 @@ public class ColorPalettes : MonoBehaviour
         categoryToColorPalette.Add("Face_Detail", faceDetailPalette);
         categoryToColorPalette.Add("Mouth", mouthPalette);
         categoryToColorPalette.Add("Eyeshadow", shadowPalette);
-        animator.SetBool("Open", false);
+        //Close();
     }
 
     public void SelectColorPalette(string category)
     {
-        foreach (ColorPalette cp in categoryToColorPalette.Values)
-        {
-            cp.gameObject.SetActive(false);
-        }
-        Close();
         if (categoryToColorPalette.ContainsKey(category))
-        {   
+        {
+            DisableColorPalettesExcept(categoryToColorPalette[category]);
+            Debug.Log("Enabling color palette: " + category);
             categoryToColorPalette[category].gameObject.SetActive(true);
             Open();
+        } else
+        {
+            Close();
         }
+    }
+    private void OnEnable()
+    {
+        if (animator != null)
+            animator.SetBool("Open", isOpen);
     }
 
     public void Open()
     {
+        Debug.Log("SETTING ANIMATOR BOOL TO TRUE");
         animator.SetBool("Open", true);
+        Debug.Log("BOOL IS " + animator.GetBool("Open"));
+        isOpen = true;
+    }
+
+    private void DisableColorPalettesExcept(ColorPalette p)
+    {
+        foreach (ColorPalette cp in categoryToColorPalette.Values)
+        {
+            if (p == null || cp != p)
+                cp.gameObject.SetActive(false);
+        }
+    }
+
+    private void DisableColorPalettes()
+    {
+        Debug.Log("Closing color palettes");
+        foreach (ColorPalette cp in categoryToColorPalette.Values)
+        {
+            cp.gameObject.SetActive(false);
+        }
     }
 
     public void Close()
     {
+        Debug.Log("CLOSEING COLOR PALETTES");
+        DisableColorPalettes();
         animator.SetBool("Open", false);
+        isOpen = false;
     }
 
     // Update is called once per frame

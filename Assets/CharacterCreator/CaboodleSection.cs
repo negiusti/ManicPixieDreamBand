@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CaboodleSection : MonoBehaviour
@@ -20,12 +18,15 @@ public class CaboodleSection : MonoBehaviour
 
     public void Select()
     {
+        if (animator == null)
+            animator = GetComponent<Animator>();
         animator.SetBool("Selected", true);
     }
 
     public void Unselect()
     {
-        animator.SetBool("Selected", false);
+        if (animator != null)
+            animator.SetBool("Selected", false);
     }
 
     public void DisableSection()
@@ -35,6 +36,5 @@ public class CaboodleSection : MonoBehaviour
 
     public void EnableSection()
     {
-
     }
 }
