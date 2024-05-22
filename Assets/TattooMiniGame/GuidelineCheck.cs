@@ -44,7 +44,7 @@ public class GuidelineCheck : MonoBehaviour
         if (!inGuideline)
         {
             tattooMiniGame.checksSpawned++;
-            tattooMiniGame.checksFailed++;
+            tattooMiniGame.checksOutOfGuideline++;
         }
 
         Destroy(gameObject);

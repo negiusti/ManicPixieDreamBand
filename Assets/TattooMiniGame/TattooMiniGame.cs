@@ -36,8 +36,9 @@ public class TattooMiniGame : MonoBehaviour
 
     // The number of guideline checks spawned, not counting checks spawned in the guideline that overlap with a previous line so that players can't inflate their scores
     public float checksSpawned;
+
     // The number of guideline checks which were not in the guideline
-    public float checksFailed;
+    public float checksOutOfGuideline;
 
     [Header("Thresholds")]
 
@@ -162,7 +163,7 @@ public class TattooMiniGame : MonoBehaviour
     private void Score()
     {
         // Your successPercentage is the percentage of total guideline checks spawned that were within the guideline
-        float successPercentage = Mathf.Round(100 - ((checksFailed / checksSpawned) * 100));
+        float successPercentage = Mathf.Round(100 - ((checksOutOfGuideline / checksSpawned) * 100));
 
         float income;
 
