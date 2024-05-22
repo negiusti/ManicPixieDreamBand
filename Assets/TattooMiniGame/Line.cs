@@ -13,8 +13,6 @@ public class Line : MonoBehaviour
     // The smaller this value is, faster points are updated on the lines
     public float minimumDistance = 0.025f;
 
-    public float checkRadius;
-
     public GameObject guidelineCheck;
 
     public void UpdateLine(Vector2 position)

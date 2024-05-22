@@ -32,7 +32,7 @@ public class ScreenPrintingScreen : MonoBehaviour
     private GameObject shirt;
     private LerpPosition lerpPositionScript;
 
-    public float lerpDuration; // The smaller this value is, the faster the lerp is
+    public float shirtLerpDuration; // The smaller this value is, the faster the lerp is
 
     private void Start()
     {
@@ -97,7 +97,7 @@ public class ScreenPrintingScreen : MonoBehaviour
         }
 
         // Lerp the shirt out of view to the left of the camera
-        StartCoroutine(lerpPositionScript.Lerp(new Vector2(shirtPrefab.transform.position.x - 25f, shirtPrefab.transform.position.y), lerpDuration, true));
+        StartCoroutine(lerpPositionScript.Lerp(new Vector2(shirtPrefab.transform.position.x - 25f, shirtPrefab.transform.position.y), shirtLerpDuration, true));
 
         // Make sure new shirts don't spawn after the minigame is done
         if (!screenPrintingManager.minigameComplete)
@@ -123,6 +123,6 @@ public class ScreenPrintingScreen : MonoBehaviour
         lerpPositionScript = shirt.GetComponent<LerpPosition>();
 
         // Lerp the shirt to where the center is
-        StartCoroutine(lerpPositionScript.Lerp(shirtPrefab.transform.position, lerpDuration, false));
+        StartCoroutine(lerpPositionScript.Lerp(shirtPrefab.transform.position, shirtLerpDuration, false));
     }
 }

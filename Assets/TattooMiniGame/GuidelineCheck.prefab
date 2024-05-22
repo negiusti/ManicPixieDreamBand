@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 482461488417987597}
   - component: {fileID: 7819955318177912666}
   - component: {fileID: 6284988443825997039}
-  - component: {fileID: 8150330835849731127}
+  - component: {fileID: 6021227378075811192}
   - component: {fileID: 286684616648489304}
   m_Layer: 0
   m_Name: GuidelineCheck
@@ -100,8 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inGuideline: 0
---- !u!61 &8150330835849731127
-BoxCollider2D:
+  tattooMiniGame: {fileID: 0}
+--- !u!58 &6021227378075811192
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -129,22 +130,12 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 0.5
 --- !u!50 &286684616648489304
 Rigidbody2D:
   serializedVersion: 4
