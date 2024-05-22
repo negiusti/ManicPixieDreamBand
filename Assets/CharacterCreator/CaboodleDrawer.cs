@@ -19,15 +19,7 @@ public class CaboodleDrawer : MonoBehaviour
         
     }
 
-    //private void OnEnable()
-    //{
-    //    if (content.activeSelf)
-    //    {
-    //        characterEditor.SetCurrentFaceCategory(DefaultCategory);
-    //    }
-    //}
-
-    private void OnMouseDown()
+    public void Select ()
     {
         bool switchedDrawer = !content.activeSelf;
         foreach (CaboodleDrawer drawer in otherDrawers)
@@ -40,11 +32,6 @@ public class CaboodleDrawer : MonoBehaviour
             characterEditor.SetCurrentFaceCategory(DefaultCategory);
         }
     }
-
-    //public void SetDefaultSection()
-    //{
-    //    characterEditor.SetCurrentFaceCategory(DefaultCategory);
-    //}
 
     public void UnselectDrawer()
     {
