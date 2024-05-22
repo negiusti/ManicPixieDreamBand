@@ -24,6 +24,9 @@ public class MiniGameManager : ScriptableObject
             case "ScreenPrinting":
                 StartScreenPrintingMiniGame();
                 break;
+            case "Tattoo":
+                StartTattooMiniGame();
+                break;
             default:
                 Debug.LogError("Minigame not found: " + miniGameName);
                 break;
@@ -44,6 +47,8 @@ public class MiniGameManager : ScriptableObject
                 return FindFirstObjectByType<CarPackingMiniGame>(FindObjectsInactive.Include);
             case "ScreenPrinting":
                 return FindFirstObjectByType<ScreenPrintingMiniGame>(FindObjectsInactive.Include);
+            case "Tattoo":
+                return FindFirstObjectByType<TattooMiniGame>(FindObjectsInactive.Include);
             default:
                 Debug.LogError("Minigame not found: " + miniGameName);
                 return null;
@@ -88,6 +93,12 @@ public class MiniGameManager : ScriptableObject
     private static void StartScreenPrintingMiniGame()
     {
         ScreenPrintingMiniGame mg = (ScreenPrintingMiniGame)GetMiniGame("ScreenPrinting");
+        mg.OpenMiniGame();
+    }
+
+    private static void StartTattooMiniGame()
+    {
+        TattooMiniGame mg = (TattooMiniGame)GetMiniGame("Tattoo");
         mg.OpenMiniGame();
     }
 }

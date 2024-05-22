@@ -4,8 +4,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 
-public class TattooMiniGame : MonoBehaviour
+public class TattooMiniGame : MiniGame
 {
+    private GameObject mainCamera;
+    public GameObject blackScreen;
+    private bool isActive;
+
     [Header("Drawing")]
 
     public GameObject linePrefab;
@@ -74,24 +78,63 @@ public class TattooMiniGame : MonoBehaviour
 
     public string[] timerDoneOptions;
 
-    public GameObject blackScreen;
-
     private void Start()
     {
-        doTimer = true;
+        DisableAllChildren();
+
+        //OpenMiniGame();
+    }
+
+    public override bool IsMiniGameActive()
+    {
+        return isActive;
+    }
+
+    public override void OpenMiniGame()
+    {
+        // Opening up the minigame
+
+        mainCamera = Camera.main.transform.gameObject;
+
+        mainCamera.SetActive(false);
+
+        EnableAllChildren();
+
+        MiniGameManager.PrepMiniGame();
+        isActive = true;
+
+        // Getting and setting components of the minigame
 
         blackScreen.SetActive(false);
+        speechBubble.SetActive(false);
 
         speechText = speechBubble.GetComponentInChildren<Text>();
 
         SpawnNewArm();
+
+        // Only start the timer after the minigame has started and all its components have been set
+        doTimer = true;
+    }
+
+    public override void CloseMiniGame()
+    {
+        mainCamera.SetActive(true);
+
+        DisableAllChildren();
+
+        isActive = false;
+        MiniGameManager.CleanUpMiniGame();
+
+        // Add the player's score they got into their bank account
+        MainCharacterState.ModifyBankBalance(income);
     }
 
     private void Update()
     {
-        // Spawn a new line as a child of the arm and get its Line component
-        if (Input.GetMouseButtonDown(0) && armLerpScript.finishedLerp && timer >= 0)
+        // If the arm has arrived at the screen's center, the timer has not finished, and the game is active
+        if (isActive && Input.GetMouseButtonDown(0) && armLerpScript.finishedLerp && timer >= 0)
         {
+            // Spawn a new line as a child of the arm and get its Line component
             GameObject newLine = Instantiate(linePrefab);
             newLine.transform.parent = arm.transform;
             line = newLine.GetComponent<Line>();

@@ -78,6 +78,8 @@ public class ScreenPrintingMiniGame : MiniGame
     private void Start()
     {
         DisableAllChildren();
+
+        //OpenMiniGame();
     }
 
     public override bool IsMiniGameActive()
