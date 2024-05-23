@@ -3,7 +3,6 @@ using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.U2D.Animation;
 using TMPro;
-//using UnityEngine.SceneManagement;
 
 public class Phone : MonoBehaviour
 {
