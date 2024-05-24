@@ -93,9 +93,9 @@ public class TattooMiniGame : MiniGame
 
     private void Start()
     {
-        DisableAllChildren();
+        //DisableAllChildren();
 
-        //OpenMiniGame();
+        OpenMiniGame();
     }
 
     public override bool IsMiniGameActive()
@@ -109,7 +109,7 @@ public class TattooMiniGame : MiniGame
 
         mainCamera = Camera.main.transform.gameObject;
 
-        mainCamera.SetActive(false);
+        //mainCamera.SetActive(false);
 
         EnableAllChildren();
 
@@ -133,34 +133,25 @@ public class TattooMiniGame : MiniGame
         doTimer = true;
     }
 
+    public override void CloseMiniGame()
+    {
+        mainCamera.SetActive(true);
+
+        // Resets the cursor to be the heart
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+
+        DisableAllChildren();
+
+        isActive = false;
+        MiniGameManager.CleanUpMiniGame();
+
+        // Add the player's score they got into their bank account
+        MainCharacterState.ModifyBankBalance(income);
+    }
+
     private void Update()
     {
-        // If the arm has arrived at the screen's center, the timer has not finished, and the game is active
-        if (isActive && Input.GetMouseButtonDown(0) && armLerpScript.finishedLerp && timer >= 0)
-        {
-            // Spawn a new line as a child of the arm and get its Line component
-            GameObject newLine = Instantiate(linePrefab);
-            newLine.transform.parent = guideline.transform;
-            line = newLine.GetComponent<Line>();
-        }
-
-        // If a line is being drawn, update that line using the current mouse position
-        if (line != null)
-        {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            line.UpdateLine(mousePosition);
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            line = null;
-
-            // If all of the guideline's checks have been destroyed
-            if (guideline != null && guideline.transform.childCount <= Mathf.RoundToInt(completionThreshold * guidelineColliderPoints.Count))
-            {
-                Score();
-            }
-        }
+        Draw();
 
         if (timer >= 0 && doTimer)
         {
@@ -179,20 +170,34 @@ public class TattooMiniGame : MiniGame
         }
     }
 
-    public override void CloseMiniGame()
+    private void Draw()
     {
-        mainCamera.SetActive(true);
+        // If the arm has arrived at the screen's center, the timer has not finished, and the game is active
+        if (isActive && Input.GetMouseButtonDown(0) && armLerpScript.finishedLerp && timer >= 0)
+        {
+            // Spawn a new line as a child of the arm and get its Line component
+            GameObject newLine = Instantiate(linePrefab);
+            newLine.transform.parent = arm.transform;
+            line = newLine.GetComponent<Line>();
+        }
 
-        // Resets the cursor to be the heart
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        // If a line is being drawn, update that line using the current mouse position
+        if (line != null)
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            line.UpdateLine(mousePosition);
+        }
 
-        DisableAllChildren();
+        if (Input.GetMouseButtonUp(0))
+        {
+            line = null;
 
-        isActive = false;
-        MiniGameManager.CleanUpMiniGame();
-
-        // Add the player's score they got into their bank account
-        MainCharacterState.ModifyBankBalance(income);
+            // If all of the guideline's checks have been destroyed
+            if (guideline != null && guideline.transform.childCount <= (completionThreshold * guidelineColliderPoints.Count))
+            {
+                Score();
+            }
+        }
     }
 
     private void SpawnNewArm()
@@ -275,11 +280,15 @@ public class TattooMiniGame : MiniGame
 
         doTimer = false;
 
-        guideline.GetComponent<SpriteRenderer>().sprite = designPrefabs[guidelineIndex];
-        guideline.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 255);
-        guideline.GetComponent<Animator>().SetTrigger("DoPop");
+        // If the design was finished and the timer didn't run out, display the design
+        if (result != "Timer done")
+        {
+            guideline.GetComponent<SpriteRenderer>().sprite = designPrefabs[guidelineIndex];
+            guideline.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+            guideline.GetComponent<Animator>().SetTrigger("DoPop");
 
-        yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.5f);
+        }
 
         // Display the speech bubble and the appropriate text
         StartCoroutine(UpdateSpeechBubbles(result));
