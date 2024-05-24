@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MainCharacterState", menuName = "Custom/MainCharacterState")]
@@ -48,7 +49,7 @@ public class MainCharacterState : ScriptableObject
     public static void ModifyBankBalance(double delta)
     {
         bankBalance += delta;
-        Phone.Instance.NotificationMessage((delta >= 0 ? "+" : "") + delta + " in bank account");
+        Phone.Instance.NotificationMessage((delta >= 0 ? "+" : "-") + "$" + Math.Abs(delta) + " in bank account");
     }
 
     public static void SetBankBalance(double value)
@@ -58,6 +59,6 @@ public class MainCharacterState : ScriptableObject
 
     public static double CurrentBankBalance()
     {
-        return System.Math.Round(bankBalance, 2);
+        return Math.Round(bankBalance, 2);
     }
 }
