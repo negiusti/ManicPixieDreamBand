@@ -1,17 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public class TravelScreen : MonoBehaviour
 {
     public TextMeshPro locationText;
-    //private MapsApp mapsApp;
+    private SpriteResolver iconResolver;
 
     // Start is called before the first frame update
     void Start()
     {
-        //mapsApp = this.GetComponentInParent<MapsApp>();
+        iconResolver = GetComponentInChildren<SpriteResolver>();
     }
 
     // Update is called once per frame
@@ -23,5 +22,6 @@ public class TravelScreen : MonoBehaviour
     public void SetLocationName(string location)
     {
         locationText.text = location + " ?";
+        iconResolver.SetCategoryAndLabel("Neighborhood", location);
     }
 }

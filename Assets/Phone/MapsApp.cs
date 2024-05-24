@@ -42,6 +42,16 @@ public class MapsApp : MonoBehaviour
         { "DowntownNeighborhood", Location.DowntownNeighborhood },
         { "ShoppingDistrict", Location.ShoppingDistrict }};
 
+    private Dictionary<Location, string> locationToNiceName = new Dictionary<Location, string> {
+        { Location.Bedroom, "Home" },
+        { Location.CoffeeShop, "Coffee Shop" },
+        { Location.Basement, "Basement" },
+        { Location.ThriftStore, "Thrift Store" },
+        { Location.Bar, "Bar" },
+        { Location.MusicShop, "Music Shop" },
+        { Location.DowntownNeighborhood, "Downtown" },
+        { Location.ShoppingDistrict, "Shopping District" },};
+
     // Start is called before the first frame update
     void Start()
     {
@@ -113,7 +123,7 @@ public class MapsApp : MonoBehaviour
         HidePins();
         phone.OpenPin();
         travelScreen.gameObject.SetActive(true);
-        travelScreen.SetLocationName(currentlySelectedLocation.ToString());
+        travelScreen.SetLocationName(locationToNiceName[currentlySelectedLocation]);
     }
 
     private void ShowPins()
