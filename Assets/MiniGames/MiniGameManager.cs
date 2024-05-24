@@ -33,7 +33,7 @@ public class MiniGameManager : ScriptableObject
         }
     }
 
-    private static MiniGame GetMiniGame(string miniGameName)
+    public static MiniGame GetMiniGame(string miniGameName)
     {
         switch (miniGameName)
         {

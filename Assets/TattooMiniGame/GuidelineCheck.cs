@@ -5,6 +5,8 @@ public class GuidelineCheck : MonoBehaviour
 {
     public bool inGuideline;
 
+    private bool onArm;
+
     public TattooMiniGame tattooMiniGame;
 
     private void Start()
@@ -20,6 +22,12 @@ public class GuidelineCheck : MonoBehaviour
         if (collision.gameObject == tattooMiniGame.guideline)
         {
             inGuideline = true;
+        }
+
+        // Check if this object is on the arm
+        if (collision.gameObject.tag == "Obstacle")
+        {
+            onArm = true;
         }
     }
 
@@ -41,7 +49,7 @@ public class GuidelineCheck : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(0.125f);
 
-        if (!inGuideline)
+        if (!inGuideline && onArm)
         {
             // Add to the total number of checks that were spawned
             tattooMiniGame.checksSpawned++;
