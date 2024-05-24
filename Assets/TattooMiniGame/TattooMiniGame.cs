@@ -6,38 +6,43 @@ using UnityEngine.UI;
 
 public class TattooMiniGame : MiniGame
 {
-    private GameObject mainCamera;
-    public GameObject blackScreen;
-    private bool isActive;
-
     [Header("Drawing")]
 
     public GameObject linePrefab;
     private Line line; // The line being used now
 
+    private Dictionary<string, Color> lineAppearances;
+    public Color currentLineAppearance;
+
     [Header("Arm Information")]
 
-    public GameObject armPrefab;
+    public Transform armLerpPosition;
+    public float armLerpDuration;
+
+    public GameObject[] armPrefabs;
 
     private GameObject arm; // The arm being used now
     private LerpPosition armLerpScript;
-    public float armLerpDuration;
-
+    
     [Header("Guideline Information")]
 
-    public GameObject guideline; // The guideline being used now
-    private PolygonCollider2D guidelineCollider;
-
     public GameObject[] guidelinePrefabs;
+
+    public Sprite[] designPrefabs;
+
+    [HideInInspector] public GameObject guideline; // The guideline being used now
+    private PolygonCollider2D guidelineCollider;
 
     // A list of all of the points connected by the guideline's collider
     private List<Vector2> guidelineColliderPoints = new List<Vector2>();
 
+    int guidelineIndex;
+
     [Header("Checking")]
 
     public GameObject completionCheckPrefab;
-    public int completionThreshold = 5;
-    public int spawnIterator = 5;
+    public float completionThreshold = 0.025f; // What percent of completionChecks need to be left for the design to be done
+    public int spawnIterator;
 
     // The number of guideline checks spawned, not counting checks spawned in the guideline that overlap with a previous line so that players can't inflate their scores
     public float checksSpawned;
@@ -78,6 +83,14 @@ public class TattooMiniGame : MiniGame
 
     public string[] timerDoneOptions;
 
+    [Header("Miscellaneous")]
+
+    private GameObject mainCamera;
+    public GameObject blackScreen;
+    private bool isActive;
+
+    public Texture2D tattooGun;
+
     private void Start()
     {
         DisableAllChildren();
@@ -105,28 +118,19 @@ public class TattooMiniGame : MiniGame
 
         // Getting and setting components of the minigame
 
+        // Set the cursor to the tattoo gun followed by an offset that makes the tip of the gun align with where lines are spawned
+        Cursor.SetCursor(tattooGun, new Vector2(0, 260), CursorMode.Auto);
+
         blackScreen.SetActive(false);
         speechBubble.SetActive(false);
 
         speechText = speechBubble.GetComponentInChildren<Text>();
 
+        LoadColors();
         SpawnNewArm();
 
         // Only start the timer after the minigame has started and all its components have been set
         doTimer = true;
-    }
-
-    public override void CloseMiniGame()
-    {
-        mainCamera.SetActive(true);
-
-        DisableAllChildren();
-
-        isActive = false;
-        MiniGameManager.CleanUpMiniGame();
-
-        // Add the player's score they got into their bank account
-        MainCharacterState.ModifyBankBalance(income);
     }
 
     private void Update()
@@ -136,7 +140,7 @@ public class TattooMiniGame : MiniGame
         {
             // Spawn a new line as a child of the arm and get its Line component
             GameObject newLine = Instantiate(linePrefab);
-            newLine.transform.parent = arm.transform;
+            newLine.transform.parent = guideline.transform;
             line = newLine.GetComponent<Line>();
         }
 
@@ -152,7 +156,7 @@ public class TattooMiniGame : MiniGame
             line = null;
 
             // If all of the guideline's checks have been destroyed
-            if (guideline != null && guideline.transform.childCount <= completionThreshold)
+            if (guideline != null && guideline.transform.childCount <= Mathf.RoundToInt(completionThreshold * guidelineColliderPoints.Count))
             {
                 Score();
             }
@@ -175,26 +179,46 @@ public class TattooMiniGame : MiniGame
         }
     }
 
+    public override void CloseMiniGame()
+    {
+        mainCamera.SetActive(true);
+
+        // Resets the cursor to be the heart
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+
+        DisableAllChildren();
+
+        isActive = false;
+        MiniGameManager.CleanUpMiniGame();
+
+        // Add the player's score they got into their bank account
+        MainCharacterState.ModifyBankBalance(income);
+    }
+
     private void SpawnNewArm()
     {
+        // Choose a random arm from the array of arms
+        int armIndex = Random.Range(0, armPrefabs.Length);
+
         // Spawn a new arm offscreen as a child of this object
-        arm = Instantiate(armPrefab, new Vector2(transform.position.x - 50, transform.position.y), Quaternion.identity, transform);
+        arm = Instantiate(armPrefabs[armIndex], new Vector2(armLerpPosition.position.x + 50, armLerpPosition.position.y + 25), Quaternion.identity, transform);
 
         armLerpScript = arm.GetComponent<LerpPosition>();
 
         // Choose a random guideline from the array of guidelines
-        GameObject guidelineToSpawn = guidelinePrefabs[Random.Range(0, guidelinePrefabs.Length)];
+        guidelineIndex = Random.Range(0, guidelinePrefabs.Length);
 
-        // And spawn it as a child of the arm
-        guideline = Instantiate(guidelineToSpawn, arm.transform.position, guidelineToSpawn.transform.rotation, arm.transform);
+        // And spawn it as a child of the arm with an offset so that it's on the arm
+        guideline = Instantiate(guidelinePrefabs[guidelineIndex], new Vector2(arm.transform.position.x, arm.transform.position.y - 4.075f), guidelinePrefabs[guidelineIndex].transform.rotation, arm.transform);
 
         SpawnCompletionChecks();
 
         // Lerp the arm to be centered on the screen
-        StartCoroutine(armLerpScript.Lerp(new Vector2(transform.position.x, transform.position.y), armLerpDuration, false));
+        StartCoroutine(armLerpScript.Lerp(armLerpPosition.position, armLerpDuration, false));
+
+        currentLineAppearance = lineAppearances[guidelinePrefabs[guidelineIndex].name];
     }
 
-    // Spawns completion check objects using the guideline's polygon collider
     private void SpawnCompletionChecks()
     {
         guidelineCollider = guideline.GetComponent<PolygonCollider2D>();
@@ -202,18 +226,18 @@ public class TattooMiniGame : MiniGame
         // Clear the guidelineColliderPoints list so it doesn't use the points of the previous guidelines
         guidelineColliderPoints.Clear();
 
-        // Looping through the paths of the guideline's collider, which contain the points
+        // Looping through the paths of the guideline's polygon collider, which contain the points
         for (int i = 0; i < guidelineCollider.pathCount; i++)
         {
             // Looping through the points in the current path and adding them to the list
-            for (int j = 0; j < guidelineCollider.GetPath(i).Length; j++)
+            // Iterate by spawnIterator so it doesn't spawn a bajillion completion checks
+            for (int j = 0; j < guidelineCollider.GetPath(i).Length; j += spawnIterator)
             {
                 guidelineColliderPoints.Add(guidelineCollider.GetPath(i)[j]);
             }
         }
 
-        // Iterate by spawnIterator so it doesn't spawn a bajillion completion checks
-        for (int i = 0; i < guidelineColliderPoints.Count; i += spawnIterator)
+        for (int i = 0; i < guidelineColliderPoints.Count; i++)
         {
             // Transposing the points from local to world position by multiplying by the guideline's scale and adding the guideline's position
             Vector2 checkPosition = new Vector2(guidelineColliderPoints[i].x * guideline.transform.localScale.x + guideline.transform.position.x, guidelineColliderPoints[i].y * guideline.transform.localScale.y + guideline.transform.position.y);
@@ -251,7 +275,9 @@ public class TattooMiniGame : MiniGame
 
         doTimer = false;
 
-        Destroy(guideline);
+        guideline.GetComponent<SpriteRenderer>().sprite = designPrefabs[guidelineIndex];
+        guideline.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 255);
+        guideline.GetComponent<Animator>().SetTrigger("DoPop");
 
         yield return new WaitForSeconds(0.5f);
 
@@ -262,7 +288,7 @@ public class TattooMiniGame : MiniGame
         yield return new WaitForSeconds(speechBubbleActiveDuration);
 
         // Lerp the arm offscreen and destroy it
-        StartCoroutine(armLerpScript.Lerp(new Vector2(transform.position.x - 50, transform.position.y), armLerpDuration, true));
+        StartCoroutine(armLerpScript.Lerp(new Vector2(transform.position.x + 50, transform.position.y + 25), armLerpDuration, true));
 
         // Wait a moment before fading to black
         yield return new WaitForSeconds(0.25f);
@@ -300,5 +326,16 @@ public class TattooMiniGame : MiniGame
         yield return new WaitForSeconds(speechBubbleActiveDuration);
 
         speechBubble.SetActive(false);
+    }
+
+    private void LoadColors()
+    {
+        lineAppearances = new Dictionary<string, Color>();
+
+        lineAppearances.Add("Garf", new Color(0.6156863f, 0.3411765f, 0.02745098f));
+        lineAppearances.Add("LiveLaughLove", new Color(0.3960784f, 0, 0));
+        lineAppearances.Add("Mech", new Color(0.6745098f, 0.09803922f, 0.2117647f));
+        lineAppearances.Add("CoolS", new Color(0.3254902f, 0.5254902f, 0.5607843f));
+        lineAppearances.Add("Mom", new Color(0.9960785f, 0.6431373f, 0.6470588f));
     }
 }
