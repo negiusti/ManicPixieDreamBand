@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.U2D.Animation;
-using TMPro;
+using System.Collections;
 
 public class Phone : MonoBehaviour
 {
@@ -22,7 +22,8 @@ public class Phone : MonoBehaviour
     private Animator animator;
     private CustomDialogueScript customDialogue;
     public StandardUIMenuPanel txtResponsePanel;
-    public TextMeshPro notificationText;
+    private PhoneNotifications notifications;
+    private bool finishedLerp;
     
 
     enum PhoneState
@@ -56,6 +57,7 @@ public class Phone : MonoBehaviour
         calendarApp = this.GetComponentInChildren<CalendarApp>(true);
         pocketsApp = this.GetComponentInChildren<PocketsApp>(true);
         animator = this.GetComponent<Animator>();
+        notifications = this.GetComponentInChildren<PhoneNotifications>();
         isLocked = true;
         Lock();
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
@@ -73,8 +75,7 @@ public class Phone : MonoBehaviour
 
     public void NotificationMessage(string txt)
     {
-        notificationText.text = txt;
-        animator.CrossFade("NotificationText_Show", 0.5f);
+        notifications.Add(txt);
     }
 
     // Update is called once per frame
@@ -350,7 +351,6 @@ public class Phone : MonoBehaviour
             isLocked = true;
             return;
         }
-        //float deltaY = background.transform.position.y;
         float deltaY = background.transform.position.y - Camera.main.gameObject.transform.position.y;
         foreach (Transform child in transform)
         {
@@ -359,8 +359,27 @@ public class Phone : MonoBehaviour
             // Move each child object
             
             child.Translate(Vector3.up * -deltaY, Space.Self);
+            Vector3 target = child.transform.localPosition;
+            child.Translate(Vector3.up * deltaY, Space.Self);
+
+            StartCoroutine(Lerp(child.gameObject, target, 0.5f));
         }
-        //transform.Translate(Vector3.up * -background.transform.position.y, Space.World);
+    }
+
+    public IEnumerator Lerp(GameObject go, Vector3 targetLocalPosition, float duration)
+    {
+        Vector3 startPosition = go.transform.localPosition;
+
+        for (float timePassed = 0f; timePassed < duration; timePassed += Time.deltaTime)
+        {
+            float factor = timePassed / duration;
+            factor = Mathf.SmoothStep(0, 1, factor);
+
+            go.transform.localPosition = Vector3.Lerp(startPosition, targetLocalPosition, factor);
+
+            yield return null;
+        }
+        go.transform.localPosition = targetLocalPosition;
     }
 
     private void Awake()
