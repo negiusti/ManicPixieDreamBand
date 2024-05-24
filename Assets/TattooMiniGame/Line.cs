@@ -15,6 +15,16 @@ public class Line : MonoBehaviour
 
     public GameObject guidelineCheck;
 
+    private TattooMiniGame tattooMiniGame;
+
+    private void Start()
+    {
+        tattooMiniGame = (TattooMiniGame)MiniGameManager.GetMiniGame("Tattoo");
+
+        lineRenderer.startColor = tattooMiniGame.currentLineAppearance;
+        lineRenderer.endColor = tattooMiniGame.currentLineAppearance;
+    }
+
     public void UpdateLine(Vector2 position)
     {
         // If the positions list has not been initialized, initialize it and set the passed in position
