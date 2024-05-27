@@ -332,9 +332,9 @@ public class Phone : MonoBehaviour
             if (child.tag.Equals("Menu"))
                 continue;
             // Move each child object
-            child.Translate(Vector3.down * 50f, Space.Self);
+            Vector3 target = child.transform.localPosition + (Vector3.down * 1600f);
+            StartCoroutine(Lerp(child.gameObject, target, 0.5f));
         }
-        //transform.Translate(Vector3.down * 20f, Space.World);
     }
 
     // TODO: Don't unlock the phone during conversations, minigames, etc!!!
@@ -351,17 +351,14 @@ public class Phone : MonoBehaviour
             isLocked = true;
             return;
         }
-        float deltaY = background.transform.position.y - Camera.main.gameObject.transform.position.y;
+        float deltaY = background.transform.localPosition.y - Camera.main.gameObject.transform.position.y;
         foreach (Transform child in transform)
         {
             if (child.tag.Equals("Menu"))
                 continue;
             // Move each child object
             
-            child.Translate(Vector3.up * -deltaY, Space.Self);
-            Vector3 target = child.transform.localPosition;
-            child.Translate(Vector3.up * deltaY, Space.Self);
-
+            Vector3 target = child.transform.localPosition + (Vector3.up * -deltaY);
             StartCoroutine(Lerp(child.gameObject, target, 0.5f));
         }
     }
