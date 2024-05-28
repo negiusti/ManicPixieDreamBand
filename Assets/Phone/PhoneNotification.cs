@@ -21,6 +21,8 @@ public class PhoneNotification : MonoBehaviour
 
     public void SetText(string txt)
     {
+        if (notificationText == null)
+            notificationText = this.GetComponent<TextMeshPro>();
         notificationText.text = txt;
     }
 

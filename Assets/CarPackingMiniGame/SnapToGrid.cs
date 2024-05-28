@@ -26,8 +26,8 @@ public class SnapToGrid : MonoBehaviour
 
     public bool inTrunk;
 
-    // Width is rows, height is columns. This is the array in which the shape in the inspector will be stored into
-    public bool[,] ignoredCells;
+    // Width is cols, height is rows. This is the array in which the shape in the inspector will be stored into
+    public bool[,] ignoredCells; // height, width
 
     private float resetStartTime;
     private float resetDuration = 0.5f;

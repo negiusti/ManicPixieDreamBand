@@ -93,7 +93,8 @@ public class TattooMiniGame : MiniGame
     private void Start()
     {
         DisableAllChildren();
-
+        doTimer = false;
+        timer = timeLimit;
         //OpenMiniGame();
     }
 
@@ -122,9 +123,8 @@ public class TattooMiniGame : MiniGame
         Cursor.visible = false;
 
         blackScreen.SetActive(false);
-        speechBubble.SetActive(false);
-
         speechText = speechBubble.GetComponentInChildren<Text>();
+        speechBubble.SetActive(false);
 
         LoadColors();
         SpawnNewArm();
@@ -132,6 +132,7 @@ public class TattooMiniGame : MiniGame
         timer = timeLimit;
         // Only start the timer after the minigame has started and all its components have been set
         doTimer = true;
+        hasDoneTimerCheck = false;
     }
 
     public override void CloseMiniGame()
