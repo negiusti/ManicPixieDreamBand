@@ -27,7 +27,7 @@ public class SnapToGrid : MonoBehaviour
     public bool inTrunk;
 
     // Width is cols, height is rows. This is the array in which the shape in the inspector will be stored into
-    public bool[,] ignoredCells; // height, width
+    public bool[,] ignoredCells; // height, width -> rows, cols
 
     private float resetStartTime;
     private float resetDuration = 0.5f;
@@ -396,7 +396,7 @@ public class SnapToGrid : MonoBehaviour
         {
             for (int j = 0; j < columns; j++)
             {
-                if(!clockwise)
+                if(clockwise)
                 {
                     // Counterclockwise rotation
                     rotatedArray[columns - 1 - j, i] = originalArray[i, j];
