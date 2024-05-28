@@ -220,15 +220,15 @@ public class ScreenPrintingMiniGame : MiniGame
 
         if (result == PrintState.Success)
         {
-            shirtIcons[currentIconIdx++].Success();
+            shirtIcons[currentIconIdx++].Success(successScore);
         }
         else if (result == PrintState.Misprint)
         {
-            shirtIcons[currentIconIdx++].Misprint();
+            shirtIcons[currentIconIdx++].Misprint(misprintScore);
         }
         else if (result == PrintState.Failure)
         {
-            shirtIcons[currentIconIdx++].Failure();
+            shirtIcons[currentIconIdx++].Failure(failScore);
         }
 
         // If the last empty icon of the list has been filled, end the minigame

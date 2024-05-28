@@ -65,7 +65,8 @@ public class TattooMiniGame : MiniGame
 
     [Header("Timing")]
 
-    public float timer = 30f; // How much time the player has at the start of the minigame
+    private float timer;
+    public float timeLimit = 30f; // How much time the player has at the start of the minigame
     public TextMeshPro timerText;
     private bool doTimer;
     private bool hasDoneTimerCheck;
@@ -88,8 +89,6 @@ public class TattooMiniGame : MiniGame
     private GameObject mainCamera;
     public GameObject blackScreen;
     private bool isActive;
-
-    public Texture2D tattooGun;
 
     private void Start()
     {
@@ -119,7 +118,8 @@ public class TattooMiniGame : MiniGame
         // Getting and setting components of the minigame
 
         // Set the cursor to the tattoo gun followed by an offset that makes the tip of the gun align with where lines are spawned
-        Cursor.SetCursor(tattooGun, new Vector2(0, 260), CursorMode.Auto);
+        //Cursor.SetCursor(tattooGun, new Vector2(0, 260), CursorMode.Auto);
+        Cursor.visible = false;
 
         blackScreen.SetActive(false);
         speechBubble.SetActive(false);
@@ -129,6 +129,7 @@ public class TattooMiniGame : MiniGame
         LoadColors();
         SpawnNewArm();
 
+        timer = timeLimit;
         // Only start the timer after the minigame has started and all its components have been set
         doTimer = true;
     }
@@ -138,7 +139,8 @@ public class TattooMiniGame : MiniGame
         mainCamera.SetActive(true);
 
         // Resets the cursor to be the heart
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        Cursor.visible = true;
+        //Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
         DisableAllChildren();
 
