@@ -93,9 +93,9 @@ public class TattooMiniGame : MiniGame
 
     private void Start()
     {
-        //DisableAllChildren();
+        DisableAllChildren();
 
-        OpenMiniGame();
+        //OpenMiniGame();
     }
 
     public override bool IsMiniGameActive()
@@ -109,7 +109,7 @@ public class TattooMiniGame : MiniGame
 
         mainCamera = Camera.main.transform.gameObject;
 
-        //mainCamera.SetActive(false);
+        mainCamera.SetActive(false);
 
         EnableAllChildren();
 

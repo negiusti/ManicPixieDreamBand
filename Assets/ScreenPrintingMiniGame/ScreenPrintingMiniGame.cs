@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 using TMPro;
 
 public class ScreenPrintingMiniGame : MiniGame
@@ -9,6 +10,7 @@ public class ScreenPrintingMiniGame : MiniGame
     private GameObject mainCamera;
     private bool isActive;
     private ScreenPrintingScreen screen;
+    private Vector3 screenStartingPos;
 
     [Header("Scoring")]
     
@@ -25,20 +27,22 @@ public class ScreenPrintingMiniGame : MiniGame
 
     [Header("Timing")]
 
-    public float timer = 30f; // How much time the player has at the start of the minigame
+    public float timeLimit = 30f; // How much time the player has at the start of the minigame
+    public float timer = 30f; 
     public TextMeshPro timerText;
     private bool doTimer;
     private bool hasDoneTimerCheck;
 
     [Header("Shirt Icons")]
 
-    public GameObject shirtIconsParent; // The GameObject with all of the empty shirt icons as its children
+    public GameObject ShirtIconsParent;
+    private List<ShirtIcon> shirtIcons = new List<ShirtIcon>(); // A list of all the empty shirt icons
 
-    public List<GameObject> shirtIcons = new List<GameObject>(); // A list of all the empty shirt icons
+    //public GameObject successIcon;
+    //public GameObject misprintIcon;
+    //public GameObject failureIcon;
+    private int currentIconIdx;
 
-    public GameObject successIcon;
-    public GameObject misprintIcon;
-    public GameObject failureIcon;
 
     [Header("Speech Bubbles")]
 
@@ -66,6 +70,8 @@ public class ScreenPrintingMiniGame : MiniGame
     public GameObject maxArms;
     public GameObject rickiArms;
 
+    private Vector3 maxStartingPos;
+    private Vector3 rickiStartingPos;
     private LerpPosition maxArmsLerpScript;
     private LerpPosition rickiArmsLerpScript;
 
@@ -75,11 +81,27 @@ public class ScreenPrintingMiniGame : MiniGame
 
     [HideInInspector] public bool minigameComplete;
 
+    private enum PrintState {
+        Success,
+        Failure,
+        Misprint,
+        TimerDone,
+        Complete
+    };
+
     private void Start()
     {
+        shirtIcons = ShirtIconsParent.GetComponentsInChildren<ShirtIcon>(includeInactive: true).ToList();
+        screen = GetComponentInChildren<ScreenPrintingScreen>(includeInactive: true);
+        screenStartingPos = screen.transform.position;
+        MaxSpeechText = MaxSpeechBubble.GetComponentInChildren<Text>(includeInactive: true);
+        RickiSpeechText = RickiSpeechBubble.GetComponentInChildren<Text>(includeInactive: true);
+        
+        maxArmsLerpScript = maxArms.GetComponent<LerpPosition>();
+        maxStartingPos = maxArms.transform.position;
+        rickiArmsLerpScript = rickiArms.GetComponent<LerpPosition>();
+        rickiStartingPos = rickiArms.transform.position;
         DisableAllChildren();
-
-        //OpenMiniGame();
     }
 
     public override bool IsMiniGameActive()
@@ -100,31 +122,33 @@ public class ScreenPrintingMiniGame : MiniGame
         MiniGameManager.PrepMiniGame();
         isActive = true;
 
-        // Getting components of the minigame
-
-        screen = GetComponentInChildren<ScreenPrintingScreen>();
-
-        // Adding all of the shirt icons to the shirtIcons list
-        for (int i = 0; i < shirtIconsParent.transform.childCount; i++)
-        {
-            shirtIcons.Add(shirtIconsParent.transform.GetChild(i).gameObject);
-        }
-
-        MaxSpeechText = MaxSpeechBubble.GetComponentInChildren<Text>();
-        RickiSpeechText = RickiSpeechBubble.GetComponentInChildren<Text>();
-
-        MaxSpeechBubble.SetActive(false);
-        RickiSpeechBubble.SetActive(false);
-
-        maxArmsLerpScript = maxArms.GetComponent<LerpPosition>();
-        rickiArmsLerpScript = rickiArms.GetComponent<LerpPosition>();
-
-        blackScreen.SetActive(false);
+        ResetGameState();
 
         screen.SpawnNewShirt();
 
         // Only start the timer after the minigame has started and all its components have been set
         doTimer = true;
+    }
+
+    private void ResetGameState()
+    {
+        // Adding all of the shirt icons to the shirtIcons list
+        foreach (ShirtIcon icon in shirtIcons)
+        {
+            icon.Reset();
+        }
+        currentIconIdx = 0;
+
+        MaxSpeechBubble.SetActive(false);
+        RickiSpeechBubble.SetActive(false);
+        blackScreen.SetActive(false);
+        minigameComplete = false;
+        screen.moveScreen = true;
+        doTimer = false;
+        timer = timeLimit;
+        screen.transform.position = screenStartingPos;
+        maxArms.transform.position = maxStartingPos;
+        rickiArms.transform.position = rickiStartingPos;
     }
 
     public override void CloseMiniGame()
@@ -156,7 +180,7 @@ public class ScreenPrintingMiniGame : MiniGame
             // Makes sure this if statement doesn't run again
             hasDoneTimerCheck = true;
 
-            StartCoroutine(UpdateSpeechBubbles("Timer Done"));
+            StartCoroutine(UpdateSpeechBubbles(PrintState.TimerDone));
 
             // Start the closing sequence
             StartCoroutine(CloseMiniGameSequence());
@@ -171,80 +195,74 @@ public class ScreenPrintingMiniGame : MiniGame
         {
             score += successScore;
 
-            StartCoroutine(UpdateSpeechBubbles("Success"));
-            UpdateIcons("Success");
+            StartCoroutine(UpdateSpeechBubbles(PrintState.Success));
+            UpdateIcons(PrintState.Success);
         }
         else if (distance <= misprintThreshold)
         {
             score += misprintScore;
 
-            StartCoroutine(UpdateSpeechBubbles("Misprint"));
-            UpdateIcons("Misprint");
+            StartCoroutine(UpdateSpeechBubbles(PrintState.Misprint));
+            UpdateIcons(PrintState.Misprint);
         }
         else
         {
             score += failScore;
 
-            StartCoroutine(UpdateSpeechBubbles("Failure"));
-            UpdateIcons("Failure");
+            StartCoroutine(UpdateSpeechBubbles(PrintState.Failure));
+            UpdateIcons(PrintState.Failure);
         }
     }
 
-    public void UpdateIcons(string result)
+    private void UpdateIcons(PrintState result)
     {
         // Spawns the icon prefab corresponding to the result, then destroy the empty shirt icon and remove the now empty first slot from the list
 
-        if (result == "Success")
+        if (result == PrintState.Success)
         {
-            Instantiate(successIcon, shirtIcons[0].transform.position, successIcon.transform.rotation, shirtIconsParent.transform);
-            Destroy(shirtIcons[0]);
-            shirtIcons.RemoveAt(0);
+            shirtIcons[currentIconIdx++].Success();
         }
-        else if (result == "Misprint")
+        else if (result == PrintState.Misprint)
         {
-            Instantiate(misprintIcon, shirtIcons[0].transform.position, misprintIcon.transform.rotation, shirtIconsParent.transform);
-            Destroy(shirtIcons[0]);
-            shirtIcons.RemoveAt(0);
+            shirtIcons[currentIconIdx++].Misprint();
         }
-        else
+        else if (result == PrintState.Failure)
         {
-            Instantiate(failureIcon, shirtIcons[0].transform.position, failureIcon.transform.rotation, shirtIconsParent.transform);
-            Destroy(shirtIcons[0]);
-            shirtIcons.RemoveAt(0);
+            shirtIcons[currentIconIdx++].Failure();
         }
 
         // If the last empty icon of the list has been filled, end the minigame
-        if (shirtIcons.Count == 0)
+        if (currentIconIdx >= shirtIcons.Count)
         {
-            StartCoroutine(UpdateSpeechBubbles("Minigame Complete"));
+            StartCoroutine(UpdateSpeechBubbles(PrintState.Complete));
 
             // Start the closing sequence
             StartCoroutine(CloseMiniGameSequence());
         }
     }
 
-    private IEnumerator UpdateSpeechBubbles(string option)
+    private IEnumerator UpdateSpeechBubbles(PrintState option)
     {
         // Based on what is passed in, choose a random string from the respective array and save that to a new string, then display that string in one of the speech bubbles
-        string stringToDisplay;
+        string stringToDisplay = null;
 
-        if (option == "Success")
+        if (option == PrintState.Success)
         {
             stringToDisplay = successOptions[Random.Range(0, successOptions.Length)];
         }
-        else if (option == "Misprint")
+        else if (option == PrintState.Misprint)
         {
             stringToDisplay = misprintOptions[Random.Range(0, misprintOptions.Length)];
         }
-        else if (option == "Failure")
+        else if (option == PrintState.Failure)
         {
             stringToDisplay = failureOptions[Random.Range(0, failureOptions.Length)];
         }
-        else if (option == "Timer Done")
+        else if (option == PrintState.TimerDone)
         {
             stringToDisplay = timerDoneOptions[Random.Range(0, timerDoneOptions.Length)];
         }
-        else
+        else if (option == PrintState.Complete)
         {
             stringToDisplay = minigameCompleteOptions[Random.Range(0, minigameCompleteOptions.Length)];
 
@@ -258,9 +276,6 @@ public class ScreenPrintingMiniGame : MiniGame
             MaxSpeechBubble.SetActive(true);
             MaxSpeechText.text = stringToDisplay;
 
-            // Swaps whose speaking turn it is
-            SpeakingTurn = false;
-
             yield return new WaitForSeconds(speechBubbleActiveDuration);
 
             MaxSpeechBubble.SetActive(false);
@@ -271,13 +286,12 @@ public class ScreenPrintingMiniGame : MiniGame
             RickiSpeechBubble.SetActive(true);
             RickiSpeechText.text = stringToDisplay;
 
-            // Swaps whose speaking turn it is
-            SpeakingTurn = true;
-
             yield return new WaitForSeconds(speechBubbleActiveDuration);
 
             RickiSpeechBubble.SetActive(false);
         }
+        // Swaps whose speaking turn it is
+        SpeakingTurn = !SpeakingTurn;
     }
 
     private IEnumerator CloseMiniGameSequence()
