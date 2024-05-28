@@ -369,14 +369,14 @@ public class SnapToGrid : MonoBehaviour
     // Populating the ignoredCells using the values assigned to the ignoredCellsTable
     private bool[,] PopulateArray()
     {
-        ignoredCells = new bool[width, height];
+        ignoredCells = new bool[height, width];
 
         // For each cell in the ignoredCellsTable, copy it into ignored Cells
-        for (int j = 0; j < ignoredCells.GetLength(1); j++)
+        for (int j = 0; j < ignoredCells.GetLength(0); j++)
         {
-            for (int i = 0; i < ignoredCells.GetLength(0); i++)
+            for (int i = 0; i < ignoredCells.GetLength(1); i++)
             {
-                ignoredCells[i, j] = rows[i].column[j];
+                ignoredCells[j, i] = rows[j].column[i];
             }
         }
 

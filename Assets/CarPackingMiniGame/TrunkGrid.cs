@@ -75,7 +75,7 @@ public class TrunkGrid : MonoBehaviour
         {
             for (int j = (int)pos.y; j < (int)pos.y + h; j++)
             {
-                if (!ignores[i - (int)pos.x, j - (int)pos.y] && grid[i, j])
+                if (!ignores[j - (int)pos.y, i - (int)pos.x] && grid[i, j])
                 {
                     return false;
                 }
@@ -93,7 +93,7 @@ public class TrunkGrid : MonoBehaviour
         {
             for (int j = (int)pos.y; j < (int)pos.y + h; j++)
             {
-                if (!ignores[i - (int)pos.x, j - (int)pos.y])
+                if (!ignores[j - (int)pos.y, i - (int)pos.x])
                 {
                     grid[i, j] = true;
 
@@ -111,7 +111,7 @@ public class TrunkGrid : MonoBehaviour
         {
             for (int j = (int)pos.y; j < (int)pos.y + h; j++)
             {
-                if (!ignores[i - (int)pos.x, j - (int)pos.y])
+                if (!ignores[j - (int)pos.y, i - (int)pos.x])
                 {
                     grid[i, j] = false;
 
@@ -129,7 +129,7 @@ public class TrunkGrid : MonoBehaviour
         {
             for (int j = (int)pos.y; j < (int)pos.y + h; j++)
             {
-                if (!ignores[i - (int)pos.x, j - (int)pos.y])
+                if (!ignores[j - (int)pos.y, i - (int)pos.x])
                 {
                     if (i < 0 || i >= grid.GetLength(0) || j < 0 || j >= grid.GetLength(1))
                     {
