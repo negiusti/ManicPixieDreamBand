@@ -8,9 +8,9 @@ public class PhoneNotification : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        notificationText = this.GetComponent<TextMeshPro>();
-        animator = this.GetComponent<Animator>();
-        animator.CrossFade("NotificationText_Show", 0.5f);
+        notificationText = this.GetComponentInChildren<TextMeshPro>(includeInactive:true);
+        //animator = this.GetComponent<Animator>();
+        //animator.CrossFade("NotificationText_Show", 0.5f);
     }
 
     // Update is called once per frame
@@ -22,7 +22,7 @@ public class PhoneNotification : MonoBehaviour
     public void SetText(string txt)
     {
         if (notificationText == null)
-            notificationText = this.GetComponent<TextMeshPro>();
+            notificationText = this.GetComponentInChildren<TextMeshPro>();
         notificationText.text = txt;
     }
 
