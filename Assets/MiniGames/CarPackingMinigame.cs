@@ -9,8 +9,8 @@ public class CarPackingMiniGame : MiniGame
 
     private void Start()
     {
-        DisableAllChildren();
-        //OpenMiniGame();
+        //DisableAllChildren();
+        OpenMiniGame();
     }
 
     public override bool IsMiniGameActive()
@@ -22,7 +22,7 @@ public class CarPackingMiniGame : MiniGame
     {
         mainCamera = Camera.main.transform.gameObject;
 
-        mainCamera.SetActive(false);
+        //mainCamera.SetActive(false);
 
         EnableAllChildren();
 
