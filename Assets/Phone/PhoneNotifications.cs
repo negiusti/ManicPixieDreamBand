@@ -45,11 +45,13 @@ public class PhoneNotifications : MonoBehaviour
                 PhoneNotification topNotif = notifications.Dequeue();
                 topNotif.SetTop();
                 yield return new WaitForSeconds(2.5f);
-                Destroy(topNotif.gameObject);
+                topNotif.Hide();
                 if (notifications.Count > 0)
                 {
                     notifications.Peek().SetTop();
                 }
+                yield return new WaitForSeconds(1f);
+                Destroy(topNotif.gameObject);
             } else
             {
                 yield return new WaitForSeconds(2.5f);

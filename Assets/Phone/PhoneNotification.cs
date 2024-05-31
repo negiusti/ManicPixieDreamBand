@@ -35,6 +35,13 @@ public class PhoneNotification : MonoBehaviour
         isTop = true;
     }
 
+    public void Hide()
+    {
+        if (animator == null)
+            animator = this.GetComponent<Animator>();
+        animator.Play("NotificationText_Hide");
+    }
+
     //private void Show()
     //{        
     //    animator.CrossFade("NotificationText_Show", 0.5f);
