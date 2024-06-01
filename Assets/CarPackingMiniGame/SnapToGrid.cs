@@ -73,7 +73,7 @@ public class SnapToGrid : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        selected = true;
+        //selected = true;
         Vector3 snappedPosition = GetMouseWorldPosition() + mousePositionOffset;
 
         // Update the GameObject's position to the snappedPosition.
