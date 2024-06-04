@@ -17,6 +17,8 @@ public class Phone : MonoBehaviour
     private MapsApp mapsApp;
     private CalendarApp calendarApp;
     private PocketsApp pocketsApp;
+    private GearApp gearApp;
+    private DecoratorApp decoratorApp;
     private SpriteResolver backgroundResolver;
     private bool isLocked;
     private CustomDialogueScript customDialogue;
@@ -36,7 +38,9 @@ public class Phone : MonoBehaviour
         Bank,
         Convo,
         Calendar,
-        Pockets
+        Pockets,
+        Decorator,
+        Gear
     };
 
     // State stack
@@ -55,6 +59,8 @@ public class Phone : MonoBehaviour
         messagesApp = this.GetComponentInChildren<PhoneMessages>(true);
         calendarApp = this.GetComponentInChildren<CalendarApp>(true);
         pocketsApp = this.GetComponentInChildren<PocketsApp>(true);
+        decoratorApp = this.GetComponentInChildren<DecoratorApp>(true);
+        gearApp = this.GetComponentInChildren<GearApp>(true);
         //animator = this.GetComponent<Animator>();
         notifications = this.GetComponentInChildren<PhoneNotifications>();
         isLocked = true;
@@ -200,7 +206,7 @@ public class Phone : MonoBehaviour
             phoneStateStack.Push(PhoneState.Calendar);
         HideIcons();
     }
-
+    
     public void OpenPockets()
     {
         backgroundResolver.SetCategoryAndLabel("Background", "Pockets");
@@ -209,6 +215,28 @@ public class Phone : MonoBehaviour
         SetAppHeader("Pocketz");
         if (phoneStateStack.Peek() != PhoneState.Pockets)
             phoneStateStack.Push(PhoneState.Pockets);
+        HideIcons();
+    }
+
+    public void OpenGear()
+    {
+        backgroundResolver.SetCategoryAndLabel("Background", "Gear");
+
+        gearApp.gameObject.SetActive(true);
+        SetAppHeader("Gear");
+        if (phoneStateStack.Peek() != PhoneState.Gear)
+            phoneStateStack.Push(PhoneState.Gear);
+        HideIcons();
+    }
+
+    public void OpenDecorator()
+    {
+        backgroundResolver.SetCategoryAndLabel("Background", "Decorator");
+
+        decoratorApp.gameObject.SetActive(true);
+        SetAppHeader("Decorator");
+        if (phoneStateStack.Peek() != PhoneState.Decorator)
+            phoneStateStack.Push(PhoneState.Decorator);
         HideIcons();
     }
 
@@ -308,6 +336,8 @@ public class Phone : MonoBehaviour
         mapsApp.gameObject.SetActive(false);
         calendarApp.gameObject.SetActive(false);
         pocketsApp.gameObject.SetActive(false);
+        decoratorApp.gameObject.SetActive(false);
+        gearApp.gameObject.SetActive(false);
         backButton.SetActive(false);
         ShowIcons();
     }
