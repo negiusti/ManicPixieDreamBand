@@ -19,11 +19,10 @@ public class Phone : MonoBehaviour
     private PocketsApp pocketsApp;
     private SpriteResolver backgroundResolver;
     private bool isLocked;
-    private Animator animator;
     private CustomDialogueScript customDialogue;
     public StandardUIMenuPanel txtResponsePanel;
     private PhoneNotifications notifications;
-    private bool finishedLerp;
+    public GameObject TransitionScreen;
     
 
     enum PhoneState
@@ -56,7 +55,7 @@ public class Phone : MonoBehaviour
         messagesApp = this.GetComponentInChildren<PhoneMessages>(true);
         calendarApp = this.GetComponentInChildren<CalendarApp>(true);
         pocketsApp = this.GetComponentInChildren<PocketsApp>(true);
-        animator = this.GetComponent<Animator>();
+        //animator = this.GetComponent<Animator>();
         notifications = this.GetComponentInChildren<PhoneNotifications>();
         isLocked = true;
         Lock();
@@ -295,12 +294,14 @@ public class Phone : MonoBehaviour
 
     private void HideIcons()
     {
+        TransitionScreen.GetComponent<Animator>().Play("ScreenTransition");
         backButton.SetActive(true);
         icons.SetActive(false);
     }
 
     private void CloseApps()
     {
+        TransitionScreen.GetComponent<Animator>().Play("ScreenTransition");
         bankApp.gameObject.SetActive(false);
         appHeader.gameObject.SetActive(false);
         messagesApp.gameObject.SetActive(false);
@@ -315,6 +316,7 @@ public class Phone : MonoBehaviour
     {   
         icons.SetActive(true);
     }
+
     public void ToggleLock()
     {
         isLocked = !isLocked;
@@ -323,6 +325,7 @@ public class Phone : MonoBehaviour
         else
             Unlock();
     }
+
     public void Lock()
     {
         isLocked = true;
