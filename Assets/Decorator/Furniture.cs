@@ -10,17 +10,18 @@ public class Furniture : MonoBehaviour
     private string category;
     private string[] labels;
     private SpriteResolver spriteResolver;
-    //private SpriteLibrary spriteLibrary;
+    private SpriteLibrary spriteLibrary;
     private int index;
     private string label;
     // Start is called before the first frame update
     void Start()
     {
         spriteResolver = GetComponent<SpriteResolver>();
-        //spriteLibrary = GetComponent<SpriteLibrary>();
+        spriteLibrary = GetComponent<SpriteLibrary>();
         category = spriteResolver.GetCategory();
         labels = InventoryManager.GetMCInventory(category).ToArray();
-        //labels = spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(category).ToArray();
+        if (labels.Length == 0)
+            labels = spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(category).ToArray();
         label = spriteResolver.GetLabel();
         index = Array.IndexOf(labels, label);
     }
@@ -33,12 +34,21 @@ public class Furniture : MonoBehaviour
 
     public string Category()
     {
+        if (category == null)
+            Start();
         return category;
+    }
+
+    public string Label()
+    {
+        if (label == null)
+            Start();
+        return label;
     }
 
     public void Change(int delta)
     {
-        index = GetWrapAroundIndex(index + delta, labels.Length);
+        index = GetWrapAroundIndex(index + delta, labels.Length-1);
         label = labels[index];
         spriteResolver.SetCategoryAndLabel(category, label);
     }

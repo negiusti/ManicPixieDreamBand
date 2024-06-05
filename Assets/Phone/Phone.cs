@@ -3,6 +3,7 @@ using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.U2D.Animation;
 using System.Collections;
+using System.Threading;
 
 public class Phone : MonoBehaviour
 {
@@ -238,6 +239,28 @@ public class Phone : MonoBehaviour
         if (phoneStateStack.Peek() != PhoneState.Decorator)
             phoneStateStack.Push(PhoneState.Decorator);
         HideIcons();
+
+        foreach (Transform child in transform)
+        {
+            if (child.tag.Equals("Menu"))
+                continue;
+            // Move each child object
+            Vector3 target = child.transform.localPosition + (Vector3.left * 250f);
+            StartCoroutine(Lerp(child.gameObject, target, 0.5f));
+        }
+    }
+
+    private void CloseDecorator()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.tag.Equals("Menu"))
+                continue;
+            // Move each child object
+            float deltaX = background.transform.localPosition.x - Camera.main.gameObject.transform.position.x;
+            Vector3 target = child.transform.localPosition + (Vector3.left * deltaX);
+            StartCoroutine(Lerp(child.gameObject, target, 0.5f));
+        }
     }
 
     public void OpenSettings()
@@ -263,6 +286,10 @@ public class Phone : MonoBehaviour
         {
             GoHome();
             return;
+        }
+        if (state.Equals(PhoneState.Decorator))
+        {
+            CloseDecorator();
         }
 
         phoneStateStack.Pop();
@@ -302,6 +329,14 @@ public class Phone : MonoBehaviour
                 OpenPockets();
                 break;
 
+            case PhoneState.Decorator:
+                OpenDecorator();
+                break;
+
+            case PhoneState.Gear:
+                OpenGear();
+                break;
+
             default:
                 Debug.Log("State not found: " + state.ToString());
                 break;
@@ -330,6 +365,8 @@ public class Phone : MonoBehaviour
     private void CloseApps()
     {
         TransitionScreen.GetComponent<Animator>().Play("ScreenTransition");
+        
+        CloseDecorator();
         bankApp.gameObject.SetActive(false);
         appHeader.gameObject.SetActive(false);
         messagesApp.gameObject.SetActive(false);
