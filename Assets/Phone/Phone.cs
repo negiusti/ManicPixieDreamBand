@@ -402,7 +402,8 @@ public class Phone : MonoBehaviour
             if (child.tag.Equals("Menu"))
                 continue;
             // Move each child object
-            Vector3 target = child.transform.localPosition + (Vector3.down * 1600f);
+            float deltaX = background.transform.localPosition.x - Camera.main.gameObject.transform.position.x;
+            Vector3 target = child.transform.localPosition + (Vector3.down * 1600f) + (Vector3.left * deltaX);
             StartCoroutine(Lerp(child.gameObject, target, 0.5f));
         }
     }
