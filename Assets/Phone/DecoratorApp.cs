@@ -28,9 +28,9 @@ public class DecoratorApp : MonoBehaviour
 
     private void Refresh()
     {
-        for (int i = 0; i < container.childCount; i++)
+        for (int i = 1; i < container.childCount; i++)
         {
-            Destroy(container.GetChild(i));
+            Destroy(container.GetChild(i).gameObject);
         }
         FindEditableItems();
         foreach (Furniture f in furniture)

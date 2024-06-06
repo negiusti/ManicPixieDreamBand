@@ -169,6 +169,10 @@ public class InventoryManager : ScriptableObject
             return "Top_Icons";
         else if (category.Contains("Pant") || category.Contains("Crotch"))
             return "Bottom_Icons";
+        else if (category.Contains("WallFloor"))
+            return "WallFloor_Icons";
+        else if (category.Contains("Rug"))
+            return "Rug_Icons";
         else
             return category;
     }

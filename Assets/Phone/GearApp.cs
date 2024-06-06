@@ -11,7 +11,7 @@ public class GearApp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SceneManager.activeSceneChanged += ChangedActiveScene;
+        SceneManager.sceneLoaded += ChangedActiveScene;
         Refresh();
     }
 
@@ -27,9 +27,9 @@ public class GearApp : MonoBehaviour
 
     private void Refresh()
     {
-        for (int i = 0; i < container.childCount; i++)
+        for (int i = 1; i < container.childCount; i++)
         {
-            Destroy(container.GetChild(i));
+            Destroy(container.GetChild(i).gameObject);
         }
         FindEditableItems();
         foreach (Gear g in Gear)
@@ -40,7 +40,7 @@ public class GearApp : MonoBehaviour
         }
     }
 
-    private void ChangedActiveScene(Scene current, Scene next)
+    private void ChangedActiveScene(Scene current, LoadSceneMode mode)
     {
         Refresh();
     }
