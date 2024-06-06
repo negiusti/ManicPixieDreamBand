@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
-public class Furniture : MonoBehaviour
+public class Gear : MonoBehaviour
 {
     private string category;
     private string[] labels;
@@ -27,7 +27,7 @@ public class Furniture : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public string Category()
@@ -46,7 +46,7 @@ public class Furniture : MonoBehaviour
 
     public void Change(int delta)
     {
-        index = GetWrapAroundIndex(index + delta, labels.Length-1);
+        index = GetWrapAroundIndex(index + delta, labels.Length - 1);
         label = labels[index];
         spriteResolver.SetCategoryAndLabel(category, label);
     }

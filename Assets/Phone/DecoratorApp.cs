@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DecoratorApp : ItemSwapper
+public class DecoratorApp : MonoBehaviour
 {
     public ItemSwapPhoneUI itemSwapTemplate;
     public Transform container;
+    private HashSet<Furniture> furniture;
 
     // Start is called before the first frame update
     void Start()
@@ -36,12 +37,17 @@ public class DecoratorApp : ItemSwapper
         {
             ItemSwapPhoneUI itemSwap = Instantiate(itemSwapTemplate, container);
             itemSwap.gameObject.SetActive(true);
-            itemSwap.AssignFurniture(f);
+            itemSwap.AssignItem(f);
         }
     }
 
     private void ChangedActiveScene(Scene current, Scene next)
     {
         Refresh();
+    }
+
+    private void FindEditableItems()
+    {
+        furniture = new HashSet<Furniture>(FindObjectsOfType<Furniture>());
     }
 }

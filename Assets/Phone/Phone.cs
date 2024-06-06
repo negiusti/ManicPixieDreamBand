@@ -228,6 +228,14 @@ public class Phone : MonoBehaviour
         if (phoneStateStack.Peek() != PhoneState.Gear)
             phoneStateStack.Push(PhoneState.Gear);
         HideIcons();
+        foreach (Transform child in transform)
+        {
+            if (child.tag.Equals("Menu"))
+                continue;
+            // Move each child object
+            Vector3 target = child.transform.localPosition + (Vector3.left * 250f);
+            StartCoroutine(Lerp(child.gameObject, target, 0.5f));
+        }
     }
 
     public void OpenDecorator()
@@ -287,7 +295,7 @@ public class Phone : MonoBehaviour
             GoHome();
             return;
         }
-        if (state.Equals(PhoneState.Decorator))
+        if (state.Equals(PhoneState.Decorator) || state.Equals(PhoneState.Gear))
         {
             CloseDecorator();
         }

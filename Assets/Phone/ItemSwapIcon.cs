@@ -26,12 +26,12 @@ public class ItemSwapIcon : MonoBehaviour
         
     }
 
-    public void AssignFurniture(string furnitureCategory, string label)
+    public void AssignItem(string cat, string label)
     {
-        Debug.Log("Assign category and label: " + category + " " + label);
+        Debug.Log("Assign category and label: " + cat + " " + label);
         if (spriteLibrary == null)
             Start();
-        category = spriteLibrary.spriteLibraryAsset.GetCategoryNames().Contains(furnitureCategory + "_Icons") ? furnitureCategory + "_Icons" : furnitureCategory;
+        category = spriteLibrary.spriteLibraryAsset.GetCategoryNames().Contains(cat + "_Icons") ? cat + "_Icons" : cat;
         UpdateIcon(label);
     }
 
