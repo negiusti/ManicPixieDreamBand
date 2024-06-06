@@ -27,10 +27,6 @@ public class DecoratorApp : MonoBehaviour
         
     }
 
-    private void OnEnable()
-    {
-    }
-
     private void Refresh()
     {
         for (int i = 1; i < container.childCount; i++)
