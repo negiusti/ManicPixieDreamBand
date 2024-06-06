@@ -264,7 +264,7 @@ public class Phone : MonoBehaviour
         }
     }
 
-    private void CloseDecorator()
+    public void CloseDecorator()
     {
         foreach (Transform child in transform)
         {

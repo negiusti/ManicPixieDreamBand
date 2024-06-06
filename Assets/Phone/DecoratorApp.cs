@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,11 +8,16 @@ public class DecoratorApp : MonoBehaviour
     public ItemSwapPhoneUI itemSwapTemplate;
     public Transform container;
     private HashSet<Furniture> furniture;
+    private Camera cam;
+    private TextMeshPro tmp;
+    public GameObject RoomPreview;
 
     // Start is called before the first frame update
     void Start()
     {
         SceneManager.activeSceneChanged += ChangedActiveScene;
+        cam = GetComponentInChildren<Camera>();
+        tmp = GetComponentInChildren<TextMeshPro>();
         Refresh();
     }
 
@@ -32,12 +37,25 @@ public class DecoratorApp : MonoBehaviour
         {
             Destroy(container.GetChild(i).gameObject);
         }
+        furniture?.Clear();
         FindEditableItems();
         foreach (Furniture f in furniture)
         {
             ItemSwapPhoneUI itemSwap = Instantiate(itemSwapTemplate, container);
             itemSwap.gameObject.SetActive(true);
             itemSwap.AssignItem(f);
+        }
+        if (furniture.Count == 0)
+        {
+            tmp.enabled = true;
+            cam.enabled = false;
+            RoomPreview.SetActive(false);
+        }
+        else
+        {
+            tmp.enabled = false;
+            cam.enabled = true;
+            RoomPreview.SetActive(true);
         }
     }
 

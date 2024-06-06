@@ -27,7 +27,7 @@ public class JobFlyer : MonoBehaviour
     {
         corkboard.CloseMiniGame();
         phone.Unlock();
-        phone.ReceiveMsg("TXT_Boss_" + job.ToString() + "_Hire");
-        phone.OpenTxtConvoWith("Boss");
+        phone.ReceiveMsg("TXT_" + job.ToString() + " Boss_" + job.ToString() + "_Hire");
+        phone.OpenTxtConvoWith(job.ToString() + " Boss");
     }
 }
