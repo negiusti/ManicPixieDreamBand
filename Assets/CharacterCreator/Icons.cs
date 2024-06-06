@@ -30,7 +30,7 @@ public class Icons : MonoBehaviour
         colls = this.GetComponentsInChildren<Collider2D>(includeInactive:true);
         midAnim = middleIcon.GetComponent<Animator>();
         midAnim.enabled = false;
-        iconCategory = middleSpriteResolver.GetCategory() == null ? transform.parent.gameObject.name : middleSpriteResolver.GetCategory();
+        iconCategory = (middleSpriteResolver.GetCategory() == null || middleSpriteResolver.GetCategory().Equals("None_Icons")) ? transform.parent.gameObject.name : middleSpriteResolver.GetCategory();
         if (category == null)
             category = iconCategory;
         characterEditor.UpdateIcons(category);

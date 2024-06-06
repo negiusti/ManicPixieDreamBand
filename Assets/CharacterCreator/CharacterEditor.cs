@@ -133,7 +133,7 @@ public class CharacterEditor : MonoBehaviour
             }
 
             categoryToLabels[category] = labels;
-            categoryToLabelIdx[category] = System.Array.IndexOf(labels, character.CategoryToLabelMap().GetValueOrDefault(category));
+            categoryToLabelIdx[category] = Array.IndexOf(labels, character.CategoryToLabelMap().GetValueOrDefault(category));
             categoryToLabelIdx[category] = categoryToLabelIdx[category] < 0 ? 0 : categoryToLabelIdx[category];
         }
     }
