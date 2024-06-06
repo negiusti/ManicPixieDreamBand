@@ -263,7 +263,10 @@ public class CustomDialogueScript : MonoBehaviour
         if (currentConvoIdx < plotData.Count() && plotData[currentConvoIdx].conversation.Equals(convoName))
             currentConvoIdx++;
         if (IsTxtConvo(convoName))
+        {
             phone.CompleteConvo(convoName);
+            backLogs[phone.GetContactNameFromConvoName(convoName)].ResetCurrentEntryID();
+        }
         ConvoCompleted?.Invoke(convoName);
     }
 

@@ -20,7 +20,7 @@ public class PhoneMessages : MonoBehaviour
         contactsMap = new Dictionary<string, Contact>();
 
         // load contacts
-        contactsList = new HashSet<string> { "Ricki", "Max", "Band" };//SaveSystem.LoadContactsList();
+        contactsList = new HashSet<string> { "Ricki", "Max", "Band", "Mom", "Boss" };//SaveSystem.LoadContactsList();
         unfinishedConversations = new Dictionary<string, string>();
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
         foreach (string c in contactsList)

@@ -33,6 +33,11 @@ public class BackLog : MonoBehaviour
 
     private void Start()
     {
+        ResetCurrentEntryID();
+    }
+
+    public void ResetCurrentEntryID()
+    {
         currentEntryID = 0;
     }
 

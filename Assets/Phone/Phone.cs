@@ -153,6 +153,12 @@ public class Phone : MonoBehaviour
         backgroundResolver.SetCategoryAndLabel("Background", "Messages");
     }
 
+    public void OpenTxtConvoWith(string contact)
+    {
+        OpenMessages();
+        messagesApp.OpenTxtConvoWith(contact);
+    }
+
     public void OpenPin()
     {
         backgroundResolver.SetCategoryAndLabel("Background", "Maps2");
@@ -422,7 +428,7 @@ public class Phone : MonoBehaviour
         return DialogueManager.isConversationActive && !customDialogue.IsCurrentConvoTxt();
     }
 
-    private void Unlock()
+    public void Unlock()
     {
         isLocked = false;
         if (ShouldNotUnlock())
