@@ -3,6 +3,7 @@ using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.U2D.Animation;
 using System.Collections;
+using System.Threading;
 
 public class Phone : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class Phone : MonoBehaviour
     private MapsApp mapsApp;
     private CalendarApp calendarApp;
     private PocketsApp pocketsApp;
+    private GearApp gearApp;
+    private DecoratorApp decoratorApp;
     private SpriteResolver backgroundResolver;
     private bool isLocked;
     private CustomDialogueScript customDialogue;
@@ -36,7 +39,9 @@ public class Phone : MonoBehaviour
         Bank,
         Convo,
         Calendar,
-        Pockets
+        Pockets,
+        Decorator,
+        Gear
     };
 
     // State stack
@@ -55,6 +60,8 @@ public class Phone : MonoBehaviour
         messagesApp = this.GetComponentInChildren<PhoneMessages>(true);
         calendarApp = this.GetComponentInChildren<CalendarApp>(true);
         pocketsApp = this.GetComponentInChildren<PocketsApp>(true);
+        decoratorApp = this.GetComponentInChildren<DecoratorApp>(true);
+        gearApp = this.GetComponentInChildren<GearApp>(true);
         //animator = this.GetComponent<Animator>();
         notifications = this.GetComponentInChildren<PhoneNotifications>();
         isLocked = true;
@@ -200,7 +207,7 @@ public class Phone : MonoBehaviour
             phoneStateStack.Push(PhoneState.Calendar);
         HideIcons();
     }
-
+    
     public void OpenPockets()
     {
         backgroundResolver.SetCategoryAndLabel("Background", "Pockets");
@@ -210,6 +217,58 @@ public class Phone : MonoBehaviour
         if (phoneStateStack.Peek() != PhoneState.Pockets)
             phoneStateStack.Push(PhoneState.Pockets);
         HideIcons();
+    }
+
+    public void OpenGear()
+    {
+        backgroundResolver.SetCategoryAndLabel("Background", "Gear");
+
+        gearApp.gameObject.SetActive(true);
+        SetAppHeader("Gear");
+        if (phoneStateStack.Peek() != PhoneState.Gear)
+            phoneStateStack.Push(PhoneState.Gear);
+        HideIcons();
+        foreach (Transform child in transform)
+        {
+            if (child.tag.Equals("Menu"))
+                continue;
+            // Move each child object
+            Vector3 target = child.transform.localPosition + (Vector3.left * 250f);
+            StartCoroutine(Lerp(child.gameObject, target, 0.5f));
+        }
+    }
+
+    public void OpenDecorator()
+    {
+        backgroundResolver.SetCategoryAndLabel("Background", "Decorator");
+
+        decoratorApp.gameObject.SetActive(true);
+        SetAppHeader("Decorator");
+        if (phoneStateStack.Peek() != PhoneState.Decorator)
+            phoneStateStack.Push(PhoneState.Decorator);
+        HideIcons();
+
+        foreach (Transform child in transform)
+        {
+            if (child.tag.Equals("Menu"))
+                continue;
+            // Move each child object
+            Vector3 target = child.transform.localPosition + (Vector3.left * 250f);
+            StartCoroutine(Lerp(child.gameObject, target, 0.5f));
+        }
+    }
+
+    private void CloseDecorator()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.tag.Equals("Menu"))
+                continue;
+            // Move each child object
+            float deltaX = background.transform.localPosition.x - Camera.main.gameObject.transform.position.x;
+            Vector3 target = child.transform.localPosition + (Vector3.left * deltaX);
+            StartCoroutine(Lerp(child.gameObject, target, 0.5f));
+        }
     }
 
     public void OpenSettings()
@@ -235,6 +294,10 @@ public class Phone : MonoBehaviour
         {
             GoHome();
             return;
+        }
+        if (state.Equals(PhoneState.Decorator) || state.Equals(PhoneState.Gear))
+        {
+            CloseDecorator();
         }
 
         phoneStateStack.Pop();
@@ -274,6 +337,14 @@ public class Phone : MonoBehaviour
                 OpenPockets();
                 break;
 
+            case PhoneState.Decorator:
+                OpenDecorator();
+                break;
+
+            case PhoneState.Gear:
+                OpenGear();
+                break;
+
             default:
                 Debug.Log("State not found: " + state.ToString());
                 break;
@@ -302,12 +373,16 @@ public class Phone : MonoBehaviour
     private void CloseApps()
     {
         TransitionScreen.GetComponent<Animator>().Play("ScreenTransition");
+        
+        CloseDecorator();
         bankApp.gameObject.SetActive(false);
         appHeader.gameObject.SetActive(false);
         messagesApp.gameObject.SetActive(false);
         mapsApp.gameObject.SetActive(false);
         calendarApp.gameObject.SetActive(false);
         pocketsApp.gameObject.SetActive(false);
+        decoratorApp.gameObject.SetActive(false);
+        gearApp.gameObject.SetActive(false);
         backButton.SetActive(false);
         ShowIcons();
     }
@@ -335,7 +410,8 @@ public class Phone : MonoBehaviour
             if (child.tag.Equals("Menu"))
                 continue;
             // Move each child object
-            Vector3 target = child.transform.localPosition + (Vector3.down * 1600f);
+            float deltaX = background.transform.localPosition.x - Camera.main.gameObject.transform.position.x;
+            Vector3 target = child.transform.localPosition + (Vector3.down * 1600f) + (Vector3.left * deltaX);
             StartCoroutine(Lerp(child.gameObject, target, 0.5f));
         }
     }
