@@ -1,14 +1,17 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
+using UnityEngine.UI;
+using TMPro;
 
 public class Contact : MonoBehaviour
 {
     private string contactName;
+    private Image img;
+    private SpriteRenderer spriteRenderer;
     private SpriteResolver spriteResolver;
     public PhoneMessages messages;
     public Phone phone;
-    private TextMeshPro contactNameTM;
+    private TextMeshProUGUI contactNameTM;
     public GameObject notificationIndicator;
 
     // Start is called before the first frame update
@@ -22,13 +25,17 @@ public class Contact : MonoBehaviour
         
     }
 
-    public void SetContact(string contactName)
+    public void SetContact(string name)
     {
-        this.spriteResolver = this.GetComponent<SpriteResolver>();
-        this.contactName = contactName;
-        this.contactNameTM = this.GetComponentInChildren<TextMeshPro>();
+        spriteResolver = GetComponentInChildren<SpriteResolver>();
+        contactName = name;
+        contactNameTM = GetComponentInChildren<TextMeshProUGUI>();
+        img = GetComponentInChildren<Image>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         contactNameTM.text = contactName;
         spriteResolver.SetCategoryAndLabel("Pic", contactName);
+        spriteResolver.ResolveSpriteToSpriteRenderer();
+        img.sprite = spriteRenderer.sprite;
     }
 
     public void ShowNotificationIndicator()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PhoneMessages : MonoBehaviour
 {
     public GameObject contacts;
+    public GameObject contactsCanvas;
     public Phone phone;
     public Contact contactTemplate;
     private HashSet<string> contactsList;
@@ -20,24 +21,13 @@ public class PhoneMessages : MonoBehaviour
         contactsMap = new Dictionary<string, Contact>();
 
         // load contacts
-        contactsList = new HashSet<string> { "Ricki", "Max", "Band", "Mom", "Boss" };//SaveSystem.LoadContactsList();
+        contactsList = new HashSet<string> { "Ricki", "Max", "Band", "Mom" };//SaveSystem.LoadContactsList();
         unfinishedConversations = new Dictionary<string, string>();
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
         foreach (string c in contactsList)
         {
-            Debug.Log("Create contact for: " + c);
-            Contact instance = Instantiate(contactTemplate, contacts.transform);
-            instance.gameObject.SetActive(true);
-            instance.SetContact(c);
-            if (unfinishedConversations.ContainsKey(c))
-            {
-                instance.ShowNotificationIndicator();
-            }
-            instances.Add(instance.gameObject);
-            contactsMap.Add(c, instance);
-            customDialogue.AddBackLog(c);
+            AddContact(c);
         }
-
         customDialogue.CloseBacklogs();
     }
 
@@ -68,6 +58,8 @@ public class PhoneMessages : MonoBehaviour
         if (unfinishedConversations.ContainsKey(contactName))
             return;
         unfinishedConversations.Add(contactName, conversation);
+        if (!contactsList.Contains(contactName))
+            AddContact(contactName);
         contactsMap[contactName].ShowNotificationIndicator();
     }
 
@@ -90,7 +82,7 @@ public class PhoneMessages : MonoBehaviour
 
     public void OpenContacts()
     {
-        contacts.SetActive(true);
+        contactsCanvas.SetActive(true);
         customDialogue.CloseBacklogs();
         foreach (string c in contactsList)
         {
@@ -106,12 +98,23 @@ public class PhoneMessages : MonoBehaviour
 
     void CloseContacts()
     {
-        contacts.SetActive(false);
+        contactsCanvas.SetActive(false);
     }
 
     void AddContact(string contactName)
     {
-        contactsList.Add(name);
+        contactsList.Add(contactName);
+        Debug.Log("Create contact for: " + contactName);
+        Contact instance = Instantiate(contactTemplate, contacts.transform);
+        instance.gameObject.SetActive(true);
+        instance.SetContact(contactName);
+        if (unfinishedConversations.ContainsKey(contactName))
+        {
+            instance.ShowNotificationIndicator();
+        }
+        instances.Add(instance.gameObject);
+        contactsMap.Add(contactName, instance);
+        customDialogue.AddBackLog(contactName);
     }
 
 }

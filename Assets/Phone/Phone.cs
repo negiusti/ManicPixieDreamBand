@@ -431,7 +431,7 @@ public class Phone : MonoBehaviour
     public void Unlock()
     {
         isLocked = false;
-        if (ShouldNotUnlock())
+        if (ShouldNotUnlock() || Camera.main == null)
         {
             isLocked = true;
             return;
