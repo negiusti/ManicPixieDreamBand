@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+//using UnityEngine.SceneManagement;
 using UnityEngine.U2D.Animation;
 
 public class Furniture : MonoBehaviour
@@ -11,6 +12,7 @@ public class Furniture : MonoBehaviour
     private SpriteLibrary spriteLibrary;
     private int index;
     private string label;
+    private string saveKey;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,14 +22,22 @@ public class Furniture : MonoBehaviour
         labels = InventoryManager.GetMCInventory(category).ToArray();
         if (labels.Length == 0)
             labels = spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(category).ToArray();
-        label = spriteResolver.GetLabel();
+        saveKey = SceneChanger.Instance.GetCurrentScene() + category + gameObject.name;
+        label = ES3.Load(saveKey, defaultValue: spriteResolver.GetLabel());
+        spriteResolver.SetCategoryAndLabel(category, label);
         index = Array.IndexOf(labels, label);
+        //SceneManager.activeSceneChanged += ChangedActiveScene;
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    private void OnDestroy()
+    {
+        Debug.Log("Saving " + saveKey + " " + spriteResolver.GetLabel());
+        ES3.Save(saveKey, spriteResolver.GetLabel());
     }
 
     public string Category()
@@ -59,4 +69,10 @@ public class Furniture : MonoBehaviour
             idx = maxIdx;
         return idx;
     }
+
+    //private void ChangedActiveScene(Scene current, Scene next)
+    //{
+    //    Debug.Log("Saving " + saveKey + " " + spriteResolver.GetLabel());
+    //    ES3.Save(saveKey, spriteResolver.GetLabel());
+    //}
 }
