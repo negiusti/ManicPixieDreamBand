@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using UnityEngine;
-//using UnityEngine.SceneManagement;
 using UnityEngine.U2D.Animation;
 
 public class Furniture : MonoBehaviour
@@ -13,6 +12,7 @@ public class Furniture : MonoBehaviour
     private int index;
     private string label;
     private string saveKey;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +26,6 @@ public class Furniture : MonoBehaviour
         label = ES3.Load(saveKey, defaultValue: spriteResolver.GetLabel());
         spriteResolver.SetCategoryAndLabel(category, label);
         index = Array.IndexOf(labels, label);
-        //SceneManager.activeSceneChanged += ChangedActiveScene;
     }
 
     // Update is called once per frame
@@ -69,10 +68,4 @@ public class Furniture : MonoBehaviour
             idx = maxIdx;
         return idx;
     }
-
-    //private void ChangedActiveScene(Scene current, Scene next)
-    //{
-    //    Debug.Log("Saving " + saveKey + " " + spriteResolver.GetLabel());
-    //    ES3.Save(saveKey, spriteResolver.GetLabel());
-    //}
 }
