@@ -58,7 +58,7 @@ def play_wav_file2(file_path):
     p.terminate()
 
 def play():
-    playsound.playsound('HamsterBaby.wav',False)
+    playsound.playsound('bodyhorror_pj.wav',False)
     # play_wav_file("HamsterBaby.wav")
 
 def main():

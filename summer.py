@@ -1,5 +1,5 @@
-input_filename = "output_easy"    # Replace with the name of your input file
-output_filename = "hamster_easy"  # Replace with the name of your output file
+input_filename = "bodyhorror_output"    # Replace with the name of your input file
+output_filename = "bodyhorror"  # Replace with the name of your output file
 
 # Open the input and output files
 with open(input_filename, "r") as input_file, open(output_filename, "w") as output_file:

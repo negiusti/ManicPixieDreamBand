@@ -82,8 +82,8 @@ public class StarSpawnerScript : MonoBehaviour
         missedNotes = 0;
         hamster = this.GetComponent<AudioSource>();
         // Specify the addressable path (use the address you set in the Addressables Group)
-        string addressablePath1 = "Assets/RhythmGameNotes/Hamster/hamster_easy_notes.txt";
-        string addressablePath2 = "Assets/RhythmGameNotes/Hamster/hamster_easy.txt";
+        string addressablePath1 = "Assets/RhythmGameNotes/BodyHorror/bodyhorror_notes.txt";
+        string addressablePath2 = "Assets/RhythmGameNotes/BodyHorror/bodyhorror.txt";
 
         // Load the text file asynchronously
         AsyncOperationHandle<TextAsset> asyncOperation1 = Addressables.LoadAssetAsync<TextAsset>(addressablePath1);
@@ -128,7 +128,7 @@ public class StarSpawnerScript : MonoBehaviour
 
     private IEnumerator DelayedActions()
     {
-        while (i < times.Length - 1)
+        while (i < times.Length)
         {
             while (hamster.time < delay - runwayDelay)
             {
@@ -138,9 +138,10 @@ public class StarSpawnerScript : MonoBehaviour
 
             // Perform the action or event here
             SpawnStar();
+            if (++i >= times.Length)
+                break;
             try
-            {
-                i++;
+            {                
                 delay = float.Parse(times[i]);
             }
             catch (FormatException)
@@ -148,7 +149,7 @@ public class StarSpawnerScript : MonoBehaviour
                 Debug.LogError("Invalid float format.");
             }
         }
-        while(hamster.time < hamster.clip.length - 2)
+        while(hamster.time < hamster.clip.length - 0.5f)
             yield return null;
 
         //miniGame.SetActive(false);
