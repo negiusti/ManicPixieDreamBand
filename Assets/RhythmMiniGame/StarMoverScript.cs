@@ -23,13 +23,14 @@ public class StarMoverScript : MonoBehaviour
         {
             hasStarted = true;
             startTime = Time.time;
+            transform.position -= new Vector3(0f, beatTempo * Time.deltaTime, 0f);
         } else
         {
             transform.position -= new Vector3(0f, beatTempo * Time.deltaTime, 0f);
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Activator"))
         {

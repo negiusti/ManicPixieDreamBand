@@ -215,6 +215,7 @@ public class StarSpawnerScript : MonoBehaviour
         if (note == 1)
         {
             GameObject p = Instantiate(pinkStar, pinkSpawnPosition, Quaternion.identity);
+            p.SetActive(true);
             p.transform.parent = gameObject.transform;
             p.transform.localScale = pinkStar.transform.localScale;
             spawnedStars.Enqueue(p);
@@ -222,6 +223,7 @@ public class StarSpawnerScript : MonoBehaviour
         else if (note == 2)
         {
             GameObject b = Instantiate(blackStar, blackSpawnPosition, Quaternion.identity);
+            b.SetActive(true);
             b.transform.parent = gameObject.transform;
             b.transform.localScale = pinkStar.transform.localScale;
             spawnedStars.Enqueue(b);
@@ -229,6 +231,7 @@ public class StarSpawnerScript : MonoBehaviour
         else if (note == 3)
         {
             GameObject p = Instantiate(purpleStar, purpleSpawnPosition, Quaternion.identity);
+            p.SetActive(true);
             p.transform.parent = gameObject.transform;
             p.transform.localScale = pinkStar.transform.localScale;
             spawnedStars.Enqueue(p);
@@ -236,6 +239,7 @@ public class StarSpawnerScript : MonoBehaviour
         else if (note == 4)
         {
             GameObject x = Instantiate(redStar, redSpawnPosition, Quaternion.identity);
+            x.SetActive(true);
             x.transform.parent = gameObject.transform;
             x.transform.localScale = pinkStar.transform.localScale;
             spawnedStars.Enqueue(x);
