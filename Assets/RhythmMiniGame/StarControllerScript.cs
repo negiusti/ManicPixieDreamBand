@@ -27,7 +27,7 @@ public class StarControllerScript : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Activator"))
             canHit = true;

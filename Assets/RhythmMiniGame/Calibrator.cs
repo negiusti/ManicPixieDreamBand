@@ -8,8 +8,8 @@ public class Calibrator : MonoBehaviour
 {
     private AudioSource audioSource; // Assign your AudioSource in the Inspector
     private List<float> beatTimes = new List<float>(); // List of beat times in seconds
-    private float lagAvg = 0f;
-    private float lagRunningSum = 0f;
+    private List<float> lagVals = new List<float>();
+    private CalibrationMiniGame mg;
 
     private int currentBeatIndex = 0;
     private bool isPlaying = false;
@@ -49,6 +49,7 @@ public class Calibrator : MonoBehaviour
 
         // Register a callback for when the load operation completes
         asyncOperation.Completed += OnLoadCompleted;
+        mg = GetComponentInParent<CalibrationMiniGame>();
     }
 
     void Update()
@@ -83,10 +84,9 @@ public class Calibrator : MonoBehaviour
                 float beatTime = beatTimes[currentBeatIndex];
 
                 float lag = inputTime - beatTime;
-                lagRunningSum += lag;
-                lagAvg = lagRunningSum / (currentBeatIndex + 1);
+                lagVals.Add(lag);
 
-                Debug.Log("Beat Time: " + beatTime + ", Input Time: " + inputTime + ", Lag: " + lag + ", lagAvg: " + lagAvg);
+                Debug.Log("Beat Time: " + beatTime + ", Input Time: " + inputTime + ", Lag: " + lag);
 
                 currentBeatIndex++;
             }
@@ -100,9 +100,13 @@ public class Calibrator : MonoBehaviour
         else
         {
             // Stop the game or loop
+            lagVals.Sort();
+            int medianIdx = lagVals.Count / 2;
+            Debug.Log("med lag Time: " + lagVals[medianIdx]);
+            ES3.Save("LagCalibration", lagVals[medianIdx]);
             isPlaying = false;
             audioSource.Stop();
-            //MinCloseMiniGame()
+            mg.CloseMiniGame();
         }
     }
 }
