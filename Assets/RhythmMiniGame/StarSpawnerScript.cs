@@ -128,9 +128,10 @@ public class StarSpawnerScript : MonoBehaviour
 
     private IEnumerator DelayedActions()
     {
+        float lagCorrection = -0.29f;
         while (i < times.Length)
         {
-            while (hamster.time < delay - runwayDelay)
+            while (hamster.time < delay - runwayDelay - lagCorrection) // TODO: ADD LAG CORRECTION HERE!!!!!
             {
                 // Wait until the desired delay time has passed
                 yield return null;

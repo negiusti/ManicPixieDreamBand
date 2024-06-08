@@ -12,8 +12,8 @@ public class JamCoordinator : ScriptableObject
     private static Camera jamCamera;
     private static bool isJamInSession;
     private static Dictionary<string, JamCamera> jamCameras = new Dictionary<string, JamCamera>{
-        {"BandPracticeRoom", new JamCamera(8f, new Vector3(1.63f, 0f, -10f))}
-        //{"SmallBar", new JamCamera(11.9f, new Vector3(0f, 0f, -10f))}
+        {"BandPracticeRoom", new JamCamera(8f, new Vector3(1.63f, 0f, -10f))},
+        {"SmallBar", new JamCamera(11.9f, new Vector3(0f, 0f, -10f))}
     };
 
     private class JamCamera
@@ -76,6 +76,7 @@ public class JamCoordinator : ScriptableObject
         mainCam = Camera.main;
         jamCamera = Instantiate(mainCam);
         jamCamera.GetComponent<AudioListener>().enabled = false;
+        jamCamera.GetComponent<CameraFollow>().enabled = false;
         Debug.Log("currLocation: " + currLocation);
         if (jamCameras.ContainsKey(currLocation))
         {
