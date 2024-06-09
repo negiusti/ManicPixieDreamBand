@@ -24,7 +24,8 @@ public class DecoratorApp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (cam.isActiveAndEnabled)
+            cam.transform.SetPositionAndRotation(new Vector3(0f, 0f, 10f), Quaternion.identity);
     }
 
     private void Refresh()

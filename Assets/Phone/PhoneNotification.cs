@@ -1,16 +1,20 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class PhoneNotification : MonoBehaviour
 {
     private TextMeshPro notificationText;
     private Animator animator;
     private bool isTop;
+    private RectTransform rectTransform;
+
     // Start is called before the first frame update
     void Start()
     {
         notificationText = this.GetComponentInChildren<TextMeshPro>(includeInactive:true);
         animator = this.GetComponent<Animator>();
+        rectTransform = GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
@@ -22,8 +26,9 @@ public class PhoneNotification : MonoBehaviour
     public void SetText(string txt)
     {
         if (notificationText == null)
-            notificationText = this.GetComponentInChildren<TextMeshPro>();
+            Start();
         notificationText.text = txt;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
     }
 
     public void SetTop()

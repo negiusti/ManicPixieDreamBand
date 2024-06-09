@@ -26,7 +26,7 @@ public class PocketsApp : MonoBehaviour
         foreach (KeyValuePair<InventoryManager.Item, int> itemAndCount in items) {
             for (int i = 0; i < itemAndCount.Value; i++)
             {
-                PocketsAppItem item = Instantiate(itemTemplate, transform);
+                PocketsAppItem item = Instantiate(itemTemplate, itemTemplate.gameObject.transform.parent);
                 item.gameObject.SetActive(true);
                 item.SetItemIcon(itemAndCount.Key.ToString());
                 itemIcons.Add(item);
@@ -37,7 +37,7 @@ public class PocketsApp : MonoBehaviour
         {
             for (int i = 0; i < itemAndCount.Value; i++)
             {
-                PocketsAppItem item = Instantiate(itemTemplate, transform);
+                PocketsAppItem item = Instantiate(itemTemplate, itemTemplate.gameObject.transform.parent);
                 item.gameObject.SetActive(true);
                 item.SetItemIcon(itemAndCount.Key.ToString());
                 itemIcons.Add(item);
