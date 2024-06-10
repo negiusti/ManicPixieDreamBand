@@ -129,7 +129,7 @@ public class StarSpawnerScript : MonoBehaviour
 
     private IEnumerator DelayedActions()
     {
-        //lagCorrection = ES3.Load("LagCalibration", 0f);
+        lagCorrection = ES3.Load("LagCalibration", 0f);
         Debug.Log("LAG COORECTION" + lagCorrection);
         while (i < times.Length)
         {

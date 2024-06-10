@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CalibrationMiniGame : MiniGame
 {
     private bool isActive;
+    private GameObject mainCamera;
 
     private void Start()
     {
@@ -16,9 +15,18 @@ public class CalibrationMiniGame : MiniGame
         return isActive;
     }
 
+    private void Awake()
+    {
+        OpenMiniGame();
+    }
+
     public override void OpenMiniGame()
     {
         // Opening up the minigame
+
+        mainCamera = Camera.main.transform.gameObject;
+
+        mainCamera.SetActive(false);
 
         EnableAllChildren();
 
@@ -28,6 +36,7 @@ public class CalibrationMiniGame : MiniGame
 
     public override void CloseMiniGame()
     {
+        mainCamera.SetActive(true);
 
         DisableAllChildren();
 

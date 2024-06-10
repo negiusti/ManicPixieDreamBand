@@ -4,7 +4,7 @@ public class DrumRollScript : MonoBehaviour
 {
     public DrumstickScript leftDrumStick;
     public DrumstickScript rightDrumStick;
-    private SpriteRenderer sr;
+    //private SpriteRenderer sr;
     bool toggleAlternateSticks = false;
     private Vector3 leftStartScale;
     private Vector3 rightStartScale;
@@ -12,14 +12,14 @@ public class DrumRollScript : MonoBehaviour
         // Start is called before the first frame update
     void Start()
     {
-        sr = GetComponent<SpriteRenderer>();
+        //sr = GetComponent<SpriteRenderer>();
         leftStartScale = leftDrumStick.transform.localScale;
         rightStartScale = rightDrumStick.transform.localScale;
     }
     void Update()
     {
-        if (leftDrumStick.Shaking() || rightDrumStick.Shaking())
-            return; 
+        //if (leftDrumStick.Shaking() || rightDrumStick.Shaking())
+        //    return; 
         // Check if the space bar is pressed
         if (Input.GetKeyDown(KeyCode.Space))
         {

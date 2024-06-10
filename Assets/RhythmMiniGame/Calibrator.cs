@@ -89,10 +89,7 @@ public class Calibrator : MonoBehaviour
                 Debug.Log("Beat Time: " + beatTime + ", Input Time: " + inputTime + ", Lag: " + lag);
 
                 currentBeatIndex++;
-            }
-
-            // Automatically move to the next beat if we have passed the current beat time
-            if (currentTime > beatTimes[currentBeatIndex])
+            } else if (currentTime > beatTimes[currentBeatIndex])
             {
                 currentBeatIndex++;
             }
