@@ -15,6 +15,7 @@ public class StarSpawnerScript : MonoBehaviour
     public GameObject blackStar;
     public GameObject purpleStar;
     public GameObject redStar;
+    public GameObject buttons;
     public StarMoverScript starter;
     public Vector3 pinkSpawnPosition;
     public Vector3 blackSpawnPosition;
@@ -83,8 +84,8 @@ public class StarSpawnerScript : MonoBehaviour
         missedNotes = 0;
         hamster = this.GetComponent<AudioSource>();
         // Specify the addressable path (use the address you set in the Addressables Group)
-        string addressablePath1 = "Assets/RhythmGameNotes/BodyHorror/bodyhorror_notes.txt";
-        string addressablePath2 = "Assets/RhythmGameNotes/BodyHorror/bodyhorror.txt";
+        string addressablePath1 = "Assets/RhythmGameNotes/BodyHorror/BodyHorror_notes.txt";
+        string addressablePath2 = "Assets/RhythmGameNotes/BodyHorror/BodyHorror.txt";
 
         // Load the text file asynchronously
         AsyncOperationHandle<TextAsset> asyncOperation1 = Addressables.LoadAssetAsync<TextAsset>(addressablePath1);
@@ -118,19 +119,20 @@ public class StarSpawnerScript : MonoBehaviour
     {
         spawnedStars = new Queue<GameObject>();
         pinkSpawnPosition = pinkStar.transform.position;
-        pinkSpawnPosition.y = starter.transform.position.y;
+        pinkSpawnPosition.y = pinkStar.transform.position.y;
         blackSpawnPosition = blackStar.transform.position;
-        blackSpawnPosition.y = starter.transform.position.y;
+        blackSpawnPosition.y = blackStar.transform.position.y;
         purpleSpawnPosition = purpleStar.transform.position;
-        purpleSpawnPosition.y = starter.transform.position.y;
+        purpleSpawnPosition.y = purpleStar.transform.position.y;
         redSpawnPosition = redStar.transform.position;
-        redSpawnPosition.y = starter.transform.position.y;
+        redSpawnPosition.y = redStar.transform.position.y;
     }
 
     private IEnumerator DelayedActions()
     {
         lagCorrection = ES3.Load("LagCalibration", 0f);
         Debug.Log("LAG COORECTION" + lagCorrection);
+        runwayDelay = 3f;
         while (i < times.Length)
         {
             while (hamster.time < delay - runwayDelay - lagCorrection) // TODO: ADD LAG CORRECTION HERE!!!!!
@@ -140,7 +142,7 @@ public class StarSpawnerScript : MonoBehaviour
             }
 
             // Perform the action or event here
-            SpawnStar();
+            SpawnStar(runwayDelay);
             if (++i >= times.Length)
                 break;
             try
@@ -165,14 +167,14 @@ public class StarSpawnerScript : MonoBehaviour
     {
         if (!hasStarted)
         {
-            if (starter.hasPassed())
-            {
+            //if (starter.hasPassed())
+            //{
                 hamster.Play();
-                runwayDelay = starter.GetRunwayDelay();
-                Debug.Log("runway delay is " + runwayDelay);
+                //runwayDelay = starter.GetRunwayDelay();
+                //Debug.Log("runway delay is " + runwayDelay);
                 spawnStarCoroutine = StartCoroutine(DelayedActions());
                 hasStarted = true;
-            }
+            //}
         } else
         {
             if (spawnedStars.Count > 0)
@@ -187,13 +189,14 @@ public class StarSpawnerScript : MonoBehaviour
                 else if (spawnedStars.Peek().transform.position.y < -20f)
                 {
                     GameObject starToDestroy = spawnedStars.Dequeue();
-                    runwayDelay = starToDestroy.GetComponent<StarMoverScript>().GetRunwayDelay();
+                    //runwayDelay = starToDestroy.GetComponent<StarMoverScript>().GetRunwayDelay();
                     Destroy(starToDestroy);
                     missedNotes++;
                 }
                     
             }
         }
+
         //if (Input.GetKeyDown(KeyCode.Backspace))
         //{
         //    if (spawnStarCoroutine != null)
@@ -202,12 +205,33 @@ public class StarSpawnerScript : MonoBehaviour
         //}
     }
 
+    public float GetDestinationY()
+    {
+        return starter.transform.localPosition.y;
+    }
+
     public float GetScore()
     {
         return hitNotes / (hitNotes + missedNotes);
     }
 
-    private void SpawnStar()
+    public IEnumerator Lerp(GameObject go, Vector3 targetLocalPosition, float duration)
+    {
+        Vector3 startPosition = go.transform.localPosition;
+
+        for (float timePassed = 0f; timePassed < duration; timePassed += Time.deltaTime)
+        {
+            float factor = timePassed / duration;
+            factor = Mathf.Lerp(0, 1, factor);
+
+            go.transform.localPosition = Vector3.Lerp(startPosition, targetLocalPosition, factor);
+
+            yield return null;
+        }
+        go.transform.localPosition = targetLocalPosition;
+    }
+
+    private void SpawnStar(float runwayDelay)
     {
         Debug.Log("runway delay is " + runwayDelay);
         if (i < notes.Length)
@@ -220,32 +244,41 @@ public class StarSpawnerScript : MonoBehaviour
             GameObject p = Instantiate(pinkStar, pinkSpawnPosition, Quaternion.identity);
             p.SetActive(true);
             p.transform.parent = gameObject.transform;
-            p.transform.localScale = pinkStar.transform.localScale;
+            //p.transform.localScale = pinkStar.transform.localScale;
             spawnedStars.Enqueue(p);
+            Vector3 destinationPos = new Vector3(p.transform.localPosition.x, GetDestinationY(), p.transform.localPosition.z);
+            StartCoroutine(Lerp(p, destinationPos, runwayDelay));
         }
         else if (note == 2)
         {
             GameObject b = Instantiate(blackStar, blackSpawnPosition, Quaternion.identity);
             b.SetActive(true);
             b.transform.parent = gameObject.transform;
-            b.transform.localScale = pinkStar.transform.localScale;
+            //b.transform.localScale = pinkStar.transform.localScale;
             spawnedStars.Enqueue(b);
+            Vector3 destinationPos = new Vector3(b.transform.localPosition.x, GetDestinationY(), b.transform.localPosition.z);
+            StartCoroutine(Lerp(b, destinationPos, runwayDelay));
         }
         else if (note == 3)
         {
             GameObject p = Instantiate(purpleStar, purpleSpawnPosition, Quaternion.identity);
             p.SetActive(true);
             p.transform.parent = gameObject.transform;
-            p.transform.localScale = pinkStar.transform.localScale;
+            //p.transform.localScale = pinkStar.transform.localScale;
             spawnedStars.Enqueue(p);
+            Vector3 destinationPos = new Vector3(p.transform.localPosition.x, GetDestinationY(), p.transform.localPosition.z);
+            
+            StartCoroutine(Lerp(p, destinationPos, runwayDelay));
         }
         else if (note == 4)
         {
             GameObject x = Instantiate(redStar, redSpawnPosition, Quaternion.identity);
             x.SetActive(true);
             x.transform.parent = gameObject.transform;
-            x.transform.localScale = pinkStar.transform.localScale;
+            //x.transform.localScale = pinkStar.transform.localScale;
             spawnedStars.Enqueue(x);
+            Vector3 destinationPos = new Vector3(x.transform.localPosition.x, GetDestinationY(), x.transform.localPosition.z);
+            StartCoroutine(Lerp(x, destinationPos, runwayDelay));
         }
     }   
 

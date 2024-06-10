@@ -16,7 +16,7 @@ public class MusicChartCreator : MonoBehaviour
     void Start()
     {
         song = GetComponent<AudioSource>();
-        string directoryPath = Path.Combine(Application.dataPath, "RhythmGameNotes/BodyHorror");
+        string directoryPath = Path.Combine(Application.dataPath, "RhythmGameNotes/"+songname);
         timesFilePath = Path.Combine(directoryPath, songname+".txt");
         notesFilePath = Path.Combine(directoryPath, songname+"_notes.txt");
 

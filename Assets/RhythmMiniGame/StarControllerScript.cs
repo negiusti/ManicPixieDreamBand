@@ -5,6 +5,7 @@ public class StarControllerScript : MonoBehaviour
     public KeyCode keyCode;
     private bool canHit;
     private Animator animator;
+    private bool keepitmoving;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,10 @@ public class StarControllerScript : MonoBehaviour
             this.gameObject.GetComponent<StarMoverScript>().enabled = false;
             animator.Play("DeathStar");
         }
+        if (keepitmoving)
+        {
+            transform.position -= new Vector3(0f, 6f * Time.deltaTime, 0f);
+        }
     }
 
     public void KillStar()
@@ -31,6 +36,7 @@ public class StarControllerScript : MonoBehaviour
     {
         if (other.CompareTag("Activator"))
             canHit = true;
+        keepitmoving = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)

@@ -42,7 +42,7 @@ public class Calibrator : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        string addressablePath = "Assets/RhythmGameNotes/Metronome/metronome.txt";
+        string addressablePath = "Assets/RhythmGameNotes/Metronome/Metronome.txt";
 
         // Load the text file asynchronously
         AsyncOperationHandle<TextAsset> asyncOperation = Addressables.LoadAssetAsync<TextAsset>(addressablePath);
