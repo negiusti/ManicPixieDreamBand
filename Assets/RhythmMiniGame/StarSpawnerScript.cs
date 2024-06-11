@@ -16,7 +16,7 @@ public class StarSpawnerScript : MonoBehaviour
     public GameObject purpleStar;
     public GameObject redStar;
     public GameObject buttons;
-    public StarMoverScript starter;
+    public GameObject starter;
     public Vector3 pinkSpawnPosition;
     public Vector3 blackSpawnPosition;
     public Vector3 purpleSpawnPosition;
@@ -135,7 +135,7 @@ public class StarSpawnerScript : MonoBehaviour
         runwayDelay = 3f;
         while (i < times.Length)
         {
-            while (hamster.time < delay - runwayDelay - lagCorrection) // TODO: ADD LAG CORRECTION HERE!!!!!
+            while (hamster.time < (delay - runwayDelay + lagCorrection)) // TODO: ADD LAG CORRECTION HERE!!!!!
             {
                 // Wait until the desired delay time has passed
                 yield return null;

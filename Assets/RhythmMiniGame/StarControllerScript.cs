@@ -23,7 +23,7 @@ public class StarControllerScript : MonoBehaviour
         }
         if (keepitmoving)
         {
-            transform.position -= new Vector3(0f, 6f * Time.deltaTime, 0f);
+            transform.position -= new Vector3(0f, 3f * Time.deltaTime, 0f);
         }
     }
 

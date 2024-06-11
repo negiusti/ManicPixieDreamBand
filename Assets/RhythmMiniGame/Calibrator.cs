@@ -16,6 +16,11 @@ public class Calibrator : MonoBehaviour
     private bool assetsLoaded;
     private bool ready;
 
+    private void OnDisable()
+    {
+        ready = false;
+    }
+
     private void OnLoadCompleted(AsyncOperationHandle<TextAsset> obj)
     {
         if (obj.Status == AsyncOperationStatus.Succeeded)
@@ -85,7 +90,11 @@ public class Calibrator : MonoBehaviour
         {
             float currentTime = audioSource.time;
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (currentBeatIndex + 1 < beatTimes.Count && currentTime >= beatTimes[currentBeatIndex +1])
+            {
+                Debug.Log("Missed a beat");
+                currentBeatIndex++;
+            } else if (Input.GetKeyDown(KeyCode.Space))
             {
                 float inputTime = currentTime;
                 float beatTime = beatTimes[currentBeatIndex];
@@ -95,9 +104,6 @@ public class Calibrator : MonoBehaviour
 
                 Debug.Log("Beat Time: " + beatTime + ", Input Time: " + inputTime + ", Lag: " + lag);
 
-                currentBeatIndex++;
-            } else if (currentTime > beatTimes[currentBeatIndex])
-            {
                 currentBeatIndex++;
             }
         }
