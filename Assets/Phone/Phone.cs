@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.U2D.Animation;
-using System.Collections;;
+using System.Collections;
 
 public class Phone : MonoBehaviour
 {
