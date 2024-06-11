@@ -211,6 +211,7 @@ public class InventoryManager : ScriptableObject
 
     public static void AddPerishableItem(string input)
     {
+        Phone.Instance.GetPocketsApp().ShowNotificationIndicator();
         Phone.Instance.NotificationMessage("Added " + input + " to pockets");
         PerishableItem pi = StringToPerishableItem(input);
         if (pocketsPerishable.ContainsKey(pi))
@@ -221,6 +222,7 @@ public class InventoryManager : ScriptableObject
 
     public static void AddItem(string input)
     {
+        Phone.Instance.GetPocketsApp().ShowNotificationIndicator();
         Phone.Instance.NotificationMessage("Added " + input + " to pockets");
         Item item = StringToItem(input);
         if (pockets.ContainsKey(item))

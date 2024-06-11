@@ -9,6 +9,7 @@ public class GearApp : MonoBehaviour
     private HashSet<Gear> gear;
     private Camera cam;
     public GameObject RoomPreview;
+    public PhoneIcon phoneIcon;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,8 @@ public class GearApp : MonoBehaviour
 
     private void OnEnable()
     {
+        if (phoneIcon != null)
+            phoneIcon.HideNotificationIndicator();
     }
 
     private void Refresh()

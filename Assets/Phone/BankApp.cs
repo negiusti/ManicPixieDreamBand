@@ -10,7 +10,8 @@ public class BankApp : MonoBehaviour
     public TextMeshPro balance;
     public TextMeshPro status;
     private SpriteResolver poopResolver;
-    
+    public PhoneIcon phoneIcon;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +23,12 @@ public class BankApp : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnEnable()
+    {
+        if (phoneIcon != null)
+            phoneIcon.HideNotificationIndicator();
     }
 
     public void SetBankBalance(double value)

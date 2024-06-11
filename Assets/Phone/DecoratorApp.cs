@@ -11,6 +11,7 @@ public class DecoratorApp : MonoBehaviour
     private Camera cam;
     private TextMeshPro tmp;
     public GameObject RoomPreview;
+    public PhoneIcon phoneIcon;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,11 @@ public class DecoratorApp : MonoBehaviour
     {
         if (cam.isActiveAndEnabled)
             cam.transform.SetPositionAndRotation(new Vector3(0f, 0f, 10f), Quaternion.identity);
+    }
+
+    private void OnEnable()
+    {
+        phoneIcon.HideNotificationIndicator();
     }
 
     private void Refresh()

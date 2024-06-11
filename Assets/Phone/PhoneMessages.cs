@@ -13,6 +13,7 @@ public class PhoneMessages : MonoBehaviour
     private CustomDialogueScript customDialogue;
     private List<GameObject> instances = new List<GameObject>();
     private Dictionary<string, string> unfinishedConversations; // contact name to name of conversation
+    public PhoneIcon phoneIcon;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +56,7 @@ public class PhoneMessages : MonoBehaviour
 
     public void ReceiveMsg(string contactName, string conversation)
     {
+        phoneIcon.ShowNotificationIndicator();
         if (unfinishedConversations.ContainsKey(contactName))
             return;
         unfinishedConversations.Add(contactName, conversation);
@@ -67,6 +69,8 @@ public class PhoneMessages : MonoBehaviour
     {
         unfinishedConversations.Remove(contactName);
         contactsMap[contactName].HideNotificationIndicator();
+        if (unfinishedConversations.Count == 0)
+            phoneIcon.HideNotificationIndicator();
     }
 
     private bool ContactHasPendingConvo(string contact)

@@ -11,14 +11,20 @@ public class CalendarApp : MonoBehaviour
     public TextMeshPro weatherInfo;
     public PhoneCalendarEvent[] eventBubbles;
     public GameObject line;
+    public PhoneIcon phoneIcon;
 
     // Start is called before the first frame update
     void Start()
     {
-        spriteResolver = this.GetComponentInChildren<SpriteResolver>();
-        eventBubbles = this.GetComponentsInChildren<PhoneCalendarEvent>().ToArray();
+        spriteResolver = GetComponentInChildren<SpriteResolver>();
+        eventBubbles = GetComponentsInChildren<PhoneCalendarEvent>().ToArray();
         UpdateImage();
         ShowTodaysEvents();
+    }
+
+    private void OnEnable()
+    {
+        phoneIcon.HideNotificationIndicator();
     }
 
     private void ShowTodaysEvents()

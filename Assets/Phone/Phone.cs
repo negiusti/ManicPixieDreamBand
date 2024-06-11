@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.U2D.Animation;
-using System.Collections;
-using System.Threading;
+using System.Collections;;
 
 public class Phone : MonoBehaviour
 {
@@ -77,6 +76,11 @@ public class Phone : MonoBehaviour
     public bool IsLocked()
     {
         return isLocked;
+    }
+
+    public PocketsApp GetPocketsApp()
+    {
+        return pocketsApp;
     }
 
     public void NotificationMessage(string txt)

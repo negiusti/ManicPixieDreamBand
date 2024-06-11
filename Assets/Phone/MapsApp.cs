@@ -21,6 +21,7 @@ public class MapsApp : MonoBehaviour
     private TravelScreen travelScreen;
     private Location currentlySelectedLocation;
     private string currentSceneName;
+    public PhoneIcon phoneIcon;
 
     private Dictionary<Location, string> locationToSceneName = new Dictionary<Location, string> {
         { Location.Bedroom, "Bedroom" },
@@ -89,6 +90,8 @@ public class MapsApp : MonoBehaviour
 
     private void OnEnable()
     {
+        if (phoneIcon != null)
+            phoneIcon.HideNotificationIndicator();
         if (sc == null)
             return;
         SetCurrentLocation();
