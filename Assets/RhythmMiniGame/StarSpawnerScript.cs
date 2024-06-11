@@ -224,11 +224,13 @@ public class StarSpawnerScript : MonoBehaviour
             float factor = timePassed / duration;
             factor = Mathf.Lerp(0, 1, factor);
 
-            go.transform.localPosition = Vector3.Lerp(startPosition, targetLocalPosition, factor);
+            if (go != null)
+                go.transform.localPosition = Vector3.Lerp(startPosition, targetLocalPosition, factor);
 
             yield return null;
         }
-        go.transform.localPosition = targetLocalPosition;
+        if (go != null)
+            go.transform.localPosition = targetLocalPosition;
     }
 
     private void SpawnStar(float runwayDelay)

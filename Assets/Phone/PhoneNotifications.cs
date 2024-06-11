@@ -8,13 +8,24 @@ public class PhoneNotifications : MonoBehaviour
     private Queue<PhoneNotification> notifications;
     public PhoneNotification templateNotification;
     private RectTransform rectTransform;
+    private Coroutine coroutine;
 
     // Start is called before the first frame update
     void Start()
     {
+
+    }
+
+    private void Awake()
+    {
         rectTransform = GetComponent<RectTransform>();
         notifications = new Queue<PhoneNotification>();
-        StartCoroutine(DeleteTopNotif());
+        coroutine = StartCoroutine(DeleteTopNotif());
+    }
+
+    private void OnDestroy()
+    {
+        StopCoroutine(coroutine);
     }
 
     // Update is called once per frame

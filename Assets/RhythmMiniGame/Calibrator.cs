@@ -13,7 +13,9 @@ public class Calibrator : MonoBehaviour
 
     private int currentBeatIndex = 0;
     private bool isPlaying = false;
+    private bool assetsLoaded;
     private bool ready;
+
     private void OnLoadCompleted(AsyncOperationHandle<TextAsset> obj)
     {
         if (obj.Status == AsyncOperationStatus.Succeeded)
@@ -36,7 +38,7 @@ public class Calibrator : MonoBehaviour
         }
         Addressables.Release(obj);
         Debug.Log("HELLO" + beatTimes);
-        ready = true;
+        assetsLoaded = true;
     }
 
     void Start()
@@ -52,9 +54,14 @@ public class Calibrator : MonoBehaviour
         mg = GetComponentInParent<CalibrationMiniGame>();
     }
 
+    public void Begin()
+    {
+        ready = true;
+    }
+
     void Update()
     {
-        if (!isPlaying && ready && Input.GetKeyDown(KeyCode.Return))
+        if (!isPlaying && assetsLoaded && ready)
         {
             StartGame();
         }
