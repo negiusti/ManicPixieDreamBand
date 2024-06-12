@@ -1,21 +1,29 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GearApp : MonoBehaviour
 {
-    public ItemSwapPhoneUI itemSwapTemplate;
+    //public ItemSwapPhoneUI itemSwapTemplate;
     public Transform container;
-    private HashSet<Gear> gear;
+    private Dictionary<string, Gear> gear;
+    private Dictionary<string, ItemSwapPhoneUI> gearSwapUI;
     private Camera cam;
     public GameObject RoomPreview;
     public PhoneIcon phoneIcon;
+    public Gear defaultBass;
+    public Gear defaultGtr;
+    public Gear defaultDrums;
+    public Gear defaultBAmp;
+    public Gear defaultGAmp;
 
     // Start is called before the first frame update
     void Start()
     {
         SceneManager.sceneLoaded += ChangedActiveScene;
         cam = GetComponentInChildren<Camera>();
+        gearSwapUI = container.gameObject.GetComponentsInChildren<ItemSwapPhoneUI>().ToDictionary(i => i.Category(), i => i);
         Refresh();
     }
 
@@ -34,16 +42,14 @@ public class GearApp : MonoBehaviour
 
     private void Refresh()
     {
-        for (int i = 1; i < container.childCount; i++)
-        {
-            Destroy(container.GetChild(i).gameObject);
-        }
         FindEditableItems();
-        foreach (Gear g in gear)
+        foreach (string gearType in gearSwapUI.Keys)
         {
-            ItemSwapPhoneUI itemSwap = Instantiate(itemSwapTemplate, container);
-            itemSwap.gameObject.SetActive(true);
-            itemSwap.AssignItem(g);
+            if (gear.ContainsKey(gearType))
+                gearSwapUI[gearType].AssignItem(gear[gearType]);
+            else
+                gearSwapUI[gearType].UseDefaultGear();
+
         }
         if (gear.Count == 0)
         {
@@ -55,6 +61,7 @@ public class GearApp : MonoBehaviour
             cam.enabled = true;
             RoomPreview.SetActive(true);
         }
+ 
     }
 
     private void ChangedActiveScene(Scene current, LoadSceneMode mode)
@@ -64,7 +71,7 @@ public class GearApp : MonoBehaviour
 
     private void FindEditableItems()
     {
-        gear = new HashSet<Gear>(FindObjectsOfType<Gear>());
+        gear = FindObjectsOfType<Gear>().Where(g => !g.Def && !g.shared).ToDictionary(g => g.Category(), g => g);
     }
 
 }

@@ -18,6 +18,7 @@ public class ItemSwapIcon : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         resolver = GetComponent<SpriteResolver>();
         spriteLibrary = GetComponent<SpriteLibrary>();
+        category = resolver.GetCategory();
     }
 
     // Update is called once per frame

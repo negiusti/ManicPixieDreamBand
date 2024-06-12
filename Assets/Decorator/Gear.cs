@@ -5,23 +5,60 @@ using UnityEngine.U2D.Animation;
 
 public class Gear : MonoBehaviour
 {
+    public bool Def;
+    public bool shared;
     private string category;
     private string[] labels;
     private SpriteResolver spriteResolver;
     private SpriteLibrary spriteLibrary;
     private int index;
     private string label;
+    private string saveKey;
+    
     // Start is called before the first frame update
     void Start()
     {
         spriteResolver = GetComponent<SpriteResolver>();
         spriteLibrary = GetComponent<SpriteLibrary>();
         category = spriteResolver.GetCategory();
+        saveKey = "gear_" + category;
         labels = InventoryManager.GetMCInventory(category).ToArray();
-        if (labels.Length == 0)
+        if (shared || labels.Length == 0) // unlock everything
             labels = spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(category).ToArray();
-        label = spriteResolver.GetLabel();
+        // if (shared) label = "None";
+        label = ES3.Load(saveKey, defaultValue: spriteResolver.GetLabel());
+        Debug.Log("load gear: " + saveKey + label);
         index = Array.IndexOf(labels, label);
+        spriteResolver.SetCategoryAndLabel(category, label);
+    }
+
+    private void OnEnable()
+    {
+        if (spriteResolver == null)
+            Start();
+        if (Def)
+        {
+            label = ES3.Load(saveKey, defaultValue: spriteResolver.GetLabel());
+            Debug.Log("load gear: " + saveKey + label);
+            index = Array.IndexOf(labels, label);
+            spriteResolver.SetCategoryAndLabel(category, label);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (shared)
+            return;
+        Debug.Log("SAve gear: " + saveKey + spriteResolver.GetLabel());
+        ES3.Save(saveKey, spriteResolver.GetLabel());
+    }
+
+    private void OnDisable()
+    {
+        if (shared)
+            return;
+        Debug.Log("SAve gear: " + saveKey + spriteResolver.GetLabel());
+        ES3.Save(saveKey, spriteResolver.GetLabel());
     }
 
     // Update is called once per frame
@@ -42,6 +79,14 @@ public class Gear : MonoBehaviour
         if (label == null)
             Start();
         return label;
+    }
+
+    public void SetBand(string band)
+    {
+        if (!shared)
+            return;
+        // load addressables??
+        spriteResolver.SetCategoryAndLabel(category, label);
     }
 
     public void Change(int delta)

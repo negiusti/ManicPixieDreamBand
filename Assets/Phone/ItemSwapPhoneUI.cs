@@ -5,10 +5,32 @@ public class ItemSwapPhoneUI : MonoBehaviour
     private ItemSwapIcon icon;
     private Furniture furniture;
     private Gear gear;
+    public Gear defaultGear;
+
+    public string Category()
+    {
+        if (furniture != null)
+            return furniture.Category();
+        if (gear != null)
+            return gear.Category();
+        if (defaultGear != null)
+            return defaultGear.Category();
+        return "None";
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         icon = GetComponentInChildren<ItemSwapIcon>(includeInactive:true);
+    }
+
+    public void UseDefaultGear()
+    {
+        if (icon == null)
+            Start();
+        defaultGear.gameObject.SetActive(true);
+        gear = defaultGear;
+        icon.AssignItem(gear.Category(), gear.Label());
     }
 
     public void AssignItem(Furniture f)
@@ -23,6 +45,7 @@ public class ItemSwapPhoneUI : MonoBehaviour
     {
         if (icon == null)
             Start();
+        defaultGear.gameObject.SetActive(false);
         gear = g;
         icon.AssignItem(g.Category(), g.Label());
     }
