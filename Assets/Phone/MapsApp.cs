@@ -12,7 +12,8 @@ public class MapsApp : MonoBehaviour
         Bar,
         MusicShop,
         DowntownNeighborhood,
-        ShoppingDistrict
+        ShoppingDistrict,
+        Job1Neighborhood
     };
     private GameManager gm;
     private SceneChanger sc;
@@ -31,7 +32,8 @@ public class MapsApp : MonoBehaviour
         { Location.Bar, "SmallBar" },
         { Location.MusicShop, "MusicShop" },
         { Location.DowntownNeighborhood, "DowntownNeighborhood" },
-        { Location.ShoppingDistrict, "ShoppingDistrict" },};
+        { Location.ShoppingDistrict, "ShoppingDistrict" },
+        { Location.Job1Neighborhood, "Job1Neighborhood" },};
 
     private Dictionary<string, Location> sceneNameToLocation = new Dictionary<string, Location> {
         { "Bedroom", Location.Bedroom },
@@ -41,7 +43,8 @@ public class MapsApp : MonoBehaviour
         { "SmallBar", Location.Bar },
         { "MusicShop", Location.MusicShop },
         { "DowntownNeighborhood", Location.DowntownNeighborhood },
-        { "ShoppingDistrict", Location.ShoppingDistrict }};
+        { "ShoppingDistrict", Location.ShoppingDistrict },
+        { "Job1Neighborhood", Location.Job1Neighborhood }};
 
     private Dictionary<Location, string> locationToNiceName = new Dictionary<Location, string> {
         { Location.Bedroom, "Home" },
@@ -51,7 +54,8 @@ public class MapsApp : MonoBehaviour
         { Location.Bar, "Bar" },
         { Location.MusicShop, "Music Shop" },
         { Location.DowntownNeighborhood, "Downtown" },
-        { Location.ShoppingDistrict, "Shopping District" },};
+        { Location.ShoppingDistrict, "Shopping District" },
+        { Location.Job1Neighborhood, "Capitol Valley" }};
 
     // Start is called before the first frame update
     void Start()
