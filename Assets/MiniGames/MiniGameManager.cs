@@ -1,9 +1,17 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using PixelCrushers.DialogueSystem;
 
 [CreateAssetMenu(fileName = "MiniGameManager", menuName = "Custom/MiniGameManager")]
 public class MiniGameManager : ScriptableObject
 {
+    public static bool AnyActiveMiniGames() {
+        foreach (MiniGame mg in FindObjectsOfType<MiniGame>().Where(mg => mg.IsMiniGameActive())) {
+            Debug.Log("ACTIVE MG: " + mg.name + " " + mg.gameObject.name);
+        }
+
+        return FindObjectsOfType<MiniGame>().Any(mg => mg.IsMiniGameActive());
+    }
 
     public static void StartMiniGame(string miniGameName)
     {

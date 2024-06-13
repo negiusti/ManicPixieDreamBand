@@ -49,7 +49,7 @@ public class Gear : MonoBehaviour
     {
         if (shared)
             return;
-        Debug.Log("SAve gear: " + saveKey + spriteResolver.GetLabel());
+        Debug.Log("default: " + Def + " SAve gear: " + saveKey + spriteResolver.GetLabel());
         ES3.Save(saveKey, spriteResolver.GetLabel());
     }
 
@@ -57,7 +57,7 @@ public class Gear : MonoBehaviour
     {
         if (shared)
             return;
-        Debug.Log("SAve gear: " + saveKey + spriteResolver.GetLabel());
+        Debug.Log("default: " + Def + " SAve gear: " + saveKey + spriteResolver.GetLabel());
         ES3.Save(saveKey, spriteResolver.GetLabel());
     }
 

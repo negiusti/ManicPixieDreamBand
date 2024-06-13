@@ -38,10 +38,14 @@ public class GearApp : MonoBehaviour
     {
         if (phoneIcon != null)
             phoneIcon.HideNotificationIndicator();
+        Refresh();
     }
 
     private void Refresh()
     {
+        if (gearSwapUI == null)
+            return;
+
         FindEditableItems();
         foreach (string gearType in gearSwapUI.Keys)
         {

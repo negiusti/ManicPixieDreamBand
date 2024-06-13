@@ -15,10 +15,10 @@ public class CalibrationMiniGame : MiniGame
         return isActive;
     }
 
-    private void Awake()
-    {
-        OpenMiniGame();
-    }
+    //private void Awake()
+    //{
+    //    OpenMiniGame();
+    //}
 
     public override void OpenMiniGame()
     {

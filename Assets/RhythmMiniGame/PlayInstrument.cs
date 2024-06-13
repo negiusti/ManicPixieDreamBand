@@ -91,7 +91,8 @@ public class PlayInstrument : MonoBehaviour
     {
         return !Characters.MainCharacter().gameObject.GetComponent<Movement>().IsSkating() &&
             !SceneChanger.Instance.IsLoadingScreenOpen() &&
-            !DialogueManager.IsConversationActive;
+            !DialogueManager.IsConversationActive &&
+            !MiniGameManager.AnyActiveMiniGames();
     }
 
     //void OnTriggerEnter2D(Collider2D other)
