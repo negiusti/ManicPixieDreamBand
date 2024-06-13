@@ -1765,6 +1765,50 @@ Material:
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _ShineColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
+--- !u!1 &487197628 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3887242512445528783, guid: da6d910d6d7324e2f91010b7fdfc1244, type: 3}
+  m_PrefabInstance: {fileID: 1097489764421831598}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &487197633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487197628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: PhoneHUDIcon
+    m_Hash: 0
+    m_CategoryList:
+    - m_Name: Locked
+      m_Hash: 0
+      m_Sprite: {fileID: 21300000, guid: dd40a444eb8ddf443b6cc4d3544e50ca, type: 3}
+    - m_Name: Unlocked
+      m_Hash: 0
+      m_Sprite: {fileID: 21300000, guid: 6da9c48343f03d7418626e161612fa2e, type: 3}
+  m_SpriteLibraryAsset: {fileID: 0}
+--- !u!114 &487197634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487197628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CategoryHash: 2.182174e-17
+  m_labelHash: 1.4483892e-11
+  m_SpriteKey: 0
+  m_SpriteHash: 615181339
 --- !u!21 &560456642
 Material:
   serializedVersion: 8
@@ -4263,7 +4307,7 @@ SpriteRenderer:
   m_SortingLayerID: 505830879
   m_SortingLayer: 11
   m_SortingOrder: 800
-  m_Sprite: {fileID: 21300000, guid: b334f16cad097454981ac53156b1ab48, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2eca2f44740ea8245883a9cb05c5e6c1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -7511,6 +7555,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 803318097148543642, guid: da6d910d6d7324e2f91010b7fdfc1244, type: 3}
+      propertyPath: HUDIcon
+      value: 
+      objectReference: {fileID: 487197628}
     - target: {fileID: 1406833610692702456, guid: da6d910d6d7324e2f91010b7fdfc1244, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -7531,6 +7579,18 @@ PrefabInstance:
       propertyPath: m_Size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1819642426370408940, guid: da6d910d6d7324e2f91010b7fdfc1244, type: 3}
+      propertyPath: m_Library.Array.data[0].m_CategoryList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1819642426370408940, guid: da6d910d6d7324e2f91010b7fdfc1244, type: 3}
+      propertyPath: m_Library.Array.data[0].m_CategoryList.Array.data[2].m_Name
+      value: Capitol Valley
+      objectReference: {fileID: 0}
+    - target: {fileID: 1819642426370408940, guid: da6d910d6d7324e2f91010b7fdfc1244, type: 3}
+      propertyPath: m_Library.Array.data[0].m_CategoryList.Array.data[2].m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2eca2f44740ea8245883a9cb05c5e6c1, type: 3}
     - target: {fileID: 1911310784367238770, guid: da6d910d6d7324e2f91010b7fdfc1244, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -8083,6 +8143,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.00074005127
       objectReference: {fileID: 0}
+    - target: {fileID: 7033513336105237315, guid: da6d910d6d7324e2f91010b7fdfc1244, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dd40a444eb8ddf443b6cc4d3544e50ca, type: 3}
     - target: {fileID: 7106263892546083765, guid: da6d910d6d7324e2f91010b7fdfc1244, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -8426,6 +8490,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4086726358380564328, guid: da6d910d6d7324e2f91010b7fdfc1244, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 3887242512445528783, guid: da6d910d6d7324e2f91010b7fdfc1244, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 487197634}
+    - targetCorrespondingSourceObject: {fileID: 3887242512445528783, guid: da6d910d6d7324e2f91010b7fdfc1244, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 487197633}
   m_SourcePrefab: {fileID: 100100000, guid: da6d910d6d7324e2f91010b7fdfc1244, type: 3}
 --- !u!4 &1097489764421831599 stripped
 Transform:

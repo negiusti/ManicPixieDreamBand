@@ -7,6 +7,7 @@ using System.Collections;
 public class Phone : MonoBehaviour
 {
     public static Phone Instance;
+    public GameObject HUDIcon;
     public GameObject icons;
     public GameObject background;
     public GameObject backButton;
@@ -414,6 +415,7 @@ public class Phone : MonoBehaviour
     public void Lock()
     {
         isLocked = true;
+        HUDIcon.GetComponent<SpriteResolver>().SetCategoryAndLabel("PhoneHUDIcon", "Locked");
         GoHome();
         foreach (Transform child in transform)
         {
@@ -440,6 +442,7 @@ public class Phone : MonoBehaviour
             isLocked = true;
             return;
         }
+        HUDIcon.GetComponent<SpriteResolver>().SetCategoryAndLabel("PhoneHUDIcon", "Unlocked");
         float deltaY = background.transform.localPosition.y - Camera.main.gameObject.transform.position.y;
         foreach (Transform child in transform)
         {

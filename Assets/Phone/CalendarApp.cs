@@ -26,7 +26,7 @@ public class CalendarApp : MonoBehaviour
     {
         phoneIcon.HideNotificationIndicator();
         if (spriteResolver == null)
-            Start();
+            return;
         UpdateImage();
         ShowTodaysEvents();
     }
