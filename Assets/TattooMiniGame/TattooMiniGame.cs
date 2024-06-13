@@ -222,7 +222,7 @@ public class TattooMiniGame : MiniGame
         SpawnCompletionChecks();
 
         // Lerp the arm to be centered on the screen
-        StartCoroutine(armLerpScript.Lerp(armLerpPosition.position, armLerpDuration, false));
+        StartCoroutine(armLerpScript.Lerp(armLerpPosition.localPosition, armLerpDuration, false));
 
         currentLineAppearance = lineAppearances[guidelinePrefabs[guidelineIndex].name];
     }
