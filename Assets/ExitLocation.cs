@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class ExitLocation : MonoBehaviour
@@ -16,7 +13,7 @@ public class ExitLocation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      if (inRange && Input.GetKeyDown(KeyCode.Return))
+        if (inRange && Input.GetKeyDown(KeyCode.Return))
         {
             SceneChanger.Instance.GoToPreviousScene();
         }   
