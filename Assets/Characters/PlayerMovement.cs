@@ -79,5 +79,17 @@ public class PlayerMovement : Movement
         {
             EatShit();
         }
+        if (other.CompareTag("Seat"))
+        {
+            gameObject.transform.Translate(Vector3.down * .5f);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Seat"))
+        {
+            gameObject.transform.Translate(Vector3.up * .5f);
+        }
     }
 }
