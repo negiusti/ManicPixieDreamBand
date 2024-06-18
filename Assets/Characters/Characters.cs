@@ -10,7 +10,7 @@ public class Characters : ScriptableObject
     private static Character mc;
 
     // keep a cache of currently loaded characters and refresh it on each scene change
-    public static void RefreshCharactersCache(Scene scene, LoadSceneMode mode)
+    public static void RefreshCharactersCache(Scene scene, Scene mode)
     {
         RefreshCharactersCache();
     }

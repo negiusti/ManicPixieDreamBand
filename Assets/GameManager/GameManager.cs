@@ -69,14 +69,14 @@ public class GameManager : MonoBehaviour
     void SubscribeToEvents()
     {
         SceneManager.activeSceneChanged += ChangedActiveScene;
-        SceneManager.sceneLoaded += Characters.RefreshCharactersCache;
+        SceneManager.activeSceneChanged += Characters.RefreshCharactersCache;
         DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().ConvoCompleted += Calendar.OnConversationComplete;
     }
 
     void UnsubscribeFromEvents()
     {
         SceneManager.activeSceneChanged -= ChangedActiveScene;
-        SceneManager.sceneLoaded -= Characters.RefreshCharactersCache;
+        SceneManager.activeSceneChanged -= Characters.RefreshCharactersCache;
         DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().ConvoCompleted -= Calendar.OnConversationComplete;
     }
 

@@ -11,7 +11,18 @@ public class SceneChanger : MonoBehaviour
     public LoadingScreen genericLoadingScreen;
     public LoadingScreen busLoadingScreen;
     MenuToggleScript menuToggle;
-    Stack<string> sceneStack;
+    Stack<SceneInfo> sceneStack;
+
+    private class SceneInfo
+    {
+        public string sceneName;
+        public Vector3 position;
+        public SceneInfo(string sceneName, Vector3 position)
+        {
+            this.sceneName = sceneName;
+            this.position = position;
+        }
+    }
 
     public enum LoadingScreenType
     {
@@ -30,19 +41,45 @@ public class SceneChanger : MonoBehaviour
         ChangeScene(sceneName, LoadingScreenType.Generic);
     }
 
+    private void ChangeScene(SceneInfo sceneInfo)
+    {
+        ChangeScene(sceneInfo, LoadingScreenType.Generic);
+    }
+
     public void ChangeScene(string sceneName, LoadingScreenType loadingScreenType)
     {
+        PushCurrSceneToSceneStack();
         SaveCharacters();
         DialogueManager.StopAllConversations();
         //string currentScene = SceneManager.GetActiveScene().name;
         Debug.Log("Loading scene: " + sceneName);
         //AsyncOperation loadOperation =
 
-
         LoadScene(sceneName, loadingScreenType);
 
         menuToggle.DisableMenu();
-        sceneStack.Push(sceneName);
+        //sceneStack.Push(new SceneInfo(sceneName, Characters.MainCharacter().transform.position));
+        //loadOperation.completed += (operation) => OnLoadCompleted(operation, currentScene);
+    }
+
+    private void PushCurrSceneToSceneStack()
+    {
+        sceneStack.Push(new SceneInfo(GetCurrentScene(), Characters.MainCharacter().transform.position));
+        Debug.Log("PUSH SCENE: " + GetCurrentScene());
+    }
+
+    private void ChangeScene(SceneInfo sceneInfo, LoadingScreenType loadingScreenType)
+    {
+        PushCurrSceneToSceneStack();
+        SaveCharacters();
+        DialogueManager.StopAllConversations();
+        //string currentScene = SceneManager.GetActiveScene().name;
+        Debug.Log("Loading scene: " + sceneInfo.sceneName);
+        //AsyncOperation loadOperation =
+        LoadScene(sceneInfo, loadingScreenType);
+
+        menuToggle.DisableMenu();
+        //sceneStack.Push(new SceneInfo(sceneInfo.sceneName, Characters.MainCharacter().transform.position));
         //loadOperation.completed += (operation) => OnLoadCompleted(operation, currentScene);
     }
 
@@ -91,6 +128,52 @@ public class SceneChanger : MonoBehaviour
         }
     }
 
+    private void LoadScene(SceneInfo sceneInfo, LoadingScreenType loadingScreenType)
+    {
+        // Show loading screen
+        if (genericLoadingScreen != null && loadingScreenType == LoadingScreenType.Generic)
+        {
+            genericLoadingScreen.gameObject.SetActive(true);
+        }
+        if (busLoadingScreen != null && loadingScreenType == LoadingScreenType.Bus)
+        {
+            busLoadingScreen.gameObject.SetActive(true);
+        }
+
+        // Start loading the scene asynchronously
+        StartCoroutine(LoadSceneAsync(sceneInfo));
+    }
+
+    private IEnumerator LoadSceneAsync(SceneInfo sceneInfo)
+    {
+        // Begin loading the scene asynchronously
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneInfo.sceneName);
+
+        // Wait for a minimum loading time to ensure loading screen is visible
+        yield return new WaitForSeconds(minLoadingTime);
+
+        // Wait until the asynchronous operation is complete
+        while (!operation.isDone)
+        {
+            // Calculate the progress and update loading screen if needed
+            float progress = Mathf.Clamp01(operation.progress / 0.9f); // 0.9f is the progress value when the scene is fully loaded
+            Debug.Log("Loading progress: " + progress);
+
+            // Optionally, update UI elements on the loading screen to show progress
+
+            yield return null;
+        }
+        Characters.MainCharacter().transform.position = sceneInfo.position;
+        if (genericLoadingScreen != null)
+        {
+            genericLoadingScreen.gameObject.SetActive(false);
+        }
+        if (busLoadingScreen != null)
+        {
+            busLoadingScreen.gameObject.SetActive(false);
+        }
+    }
+
     public string GetCurrentScene()
     {
         return SceneManager.GetActiveScene().name;
@@ -99,9 +182,9 @@ public class SceneChanger : MonoBehaviour
     public void GoToPreviousScene()
     {
         if (sceneStack.Peek() != null)
-            sceneStack.Pop();
-        if (sceneStack.Peek() != null)
             ChangeScene(sceneStack.Peek(), LoadingScreenType.Generic);
+        if (sceneStack.Peek() != null)
+            sceneStack.Pop();
     }
 
     private void SaveCharacters()
@@ -138,15 +221,15 @@ public class SceneChanger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        menuToggle = GetComponent<MenuToggleScript>();
-        menuToggle.DisableMenu();
-        sceneStack = new Stack<string>();
-        sceneStack.Push("Bedroom");
-        
         if (Instance == null)
         {
             Instance = this;
         }
+        menuToggle = GetComponent<MenuToggleScript>();
+        menuToggle.DisableMenu();
+        sceneStack = new Stack<SceneInfo>();
+        sceneStack.Push(new SceneInfo("DowntownNeighborhood", new Vector3(-57f, -2.4f, 0f)));
+        
         //player = GameObject.Find("Player");
     }
 
