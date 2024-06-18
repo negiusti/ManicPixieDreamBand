@@ -182,9 +182,16 @@ public class SceneChanger : MonoBehaviour
     public void GoToPreviousScene()
     {
         if (sceneStack.Peek() != null)
-            ChangeScene(sceneStack.Peek(), LoadingScreenType.Generic);
-        if (sceneStack.Peek() != null)
-            sceneStack.Pop();
+        {
+            SaveCharacters();
+            DialogueManager.StopAllConversations();
+            //string currentScene = SceneManager.GetActiveScene().name;
+            Debug.Log("Loading scene: " + sceneStack.Peek().sceneName);
+            //AsyncOperation loadOperation =
+            LoadScene(sceneStack.Pop().sceneName, LoadingScreenType.Generic);
+
+            menuToggle.DisableMenu();
+        }
     }
 
     private void SaveCharacters()

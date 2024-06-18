@@ -78,7 +78,9 @@ public class InventoryManager : ScriptableObject
     }
 
     public static HashSet<string> GetPurchasedItems(string category)
-    {       
+    {
+        if (!categoryToPurchased.ContainsKey(category))
+            categoryToPurchased[category] = new HashSet<string>();
         return categoryToPurchased.GetValueOrDefault(category, defaultValue: new HashSet<string>());
     }
 

@@ -33,6 +33,7 @@ public class StarSpawnerScript : MonoBehaviour
     private MiniGame miniGame;
     private string[] notes;
     private string[] times;
+    private bool ready;
     private Coroutine spawnStarCoroutine;
 
     private void OnLoadCompleted1(AsyncOperationHandle<TextAsset> obj)
@@ -69,6 +70,7 @@ public class StarSpawnerScript : MonoBehaviour
             Debug.LogError("Failed to load file. Error: " + obj.OperationException);
         }
         Addressables.Release(obj);
+        ready = true;
     }
 
     public float HighwaySpeed()
@@ -79,6 +81,7 @@ public class StarSpawnerScript : MonoBehaviour
     private void OnEnable()
     {
         i = 0;
+        ready = false;
         hasStarted = false;
         hitNotes = 0;
         missedNotes = 0;
@@ -165,7 +168,7 @@ public class StarSpawnerScript : MonoBehaviour
 
     void Update()
     {
-        if (!hasStarted)
+        if (!hasStarted && ready)
         {
             //if (starter.hasPassed())
             //{

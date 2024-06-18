@@ -88,10 +88,12 @@ public class Icons : MonoBehaviour
     {
         Color faded = new Color(c.r, c.g, c.b, .40f);
         Color fadedWhite = new Color(1f, 1f, 1f, .40f);
-        
-        leftSpriteRen.color = faded;
+
+        if (leftSpriteRen != null)
+            leftSpriteRen.color = faded;
         middleSpriteRen.color = c;
-        rightSpriteRen.color = faded;
+        if (rightSpriteRen != null)
+            rightSpriteRen.color = faded;
 
         if (rightSpriteResolver != null && (rightSpriteResolver.GetCategory() == "None_Icons" || rightSpriteResolver.GetLabel() == "None"))
         {

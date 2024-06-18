@@ -13,19 +13,21 @@ public class PhoneNotifications : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Debug.Log("STARTING NOTIF COROUTINE");
+        coroutine = StartCoroutine(DeleteTopNotif());
     }
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         notifications = new Queue<PhoneNotification>();
-        coroutine = StartCoroutine(DeleteTopNotif());
     }
 
     private void OnDestroy()
     {
-        StopCoroutine(coroutine);
+        Debug.Log("STOPPING NOTIF COROUTINE");
+        if (coroutine != null)
+            StopCoroutine(coroutine);
     }
 
     // Update is called once per frame
@@ -49,10 +51,12 @@ public class PhoneNotifications : MonoBehaviour
 
     private IEnumerator DeleteTopNotif()
     {
-      while(true)
+        Debug.Log("STARTING NOTIF COROUTINE DeleteTopNotif func");
+        while (true)
         {
             if (notifications.Count > 0)
             {
+                Debug.Log("notifications.Count > 0");
                 PhoneNotification topNotif = notifications.Dequeue();
                 topNotif.SetTop();
                 yield return new WaitForSeconds(2.5f);
@@ -65,6 +69,7 @@ public class PhoneNotifications : MonoBehaviour
                 Destroy(topNotif.gameObject);
             } else
             {
+                Debug.Log("notifications.Count < 0");
                 yield return new WaitForSeconds(2.5f);
             }
         }

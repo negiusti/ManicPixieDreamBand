@@ -55,6 +55,8 @@ public class CrowdMember : MonoBehaviour
 
     public void SetHeadSprite(string label)
     {
+        if (spriteResolvers == null)
+            Start();
         spriteResolvers["Head"].SetCategoryAndLabel("Head", label);
     }
 }
