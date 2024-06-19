@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -15,6 +13,24 @@ public class JobFlyer : MonoBehaviour
     {
         spriteResolver = GetComponent<SpriteResolver>();
         phone = Phone.Instance;
+    }
+
+    private void OnEnable()
+    {
+        if (spriteResolver == null)
+            Start();
+
+        if (JobSystem.CurrentJob().Equals(job))
+        {
+            Debug.Log("Current job: " + JobSystem.CurrentJob().ToString() + " flyer job: " + job.ToString());
+            Debug.Log("spriteResolver.SetCategoryAndLabel(Flyer, Close);");
+            spriteResolver.SetCategoryAndLabel("Flyer", "Close");
+        } else
+        {
+            Debug.Log("Current job: " + JobSystem.CurrentJob().ToString() + " flyer job: " + job.ToString());
+            Debug.Log("spriteResolver.SetCategoryAndLabel(Flyer, Open);");
+            spriteResolver.SetCategoryAndLabel("Flyer", "Open");
+        }
     }
 
     // Update is called once per frame

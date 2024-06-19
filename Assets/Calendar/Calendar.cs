@@ -78,12 +78,10 @@ public class Calendar : ScriptableObject
             {
                 events[i].Add(new BandPracticeEvent(null, false));
             }
-            if (!isWorkScheduled(i))
+            if (!isWorkScheduled(i) && JobSystem.CurrentJob() != JobSystem.PunkJob.Unemployed)
             {
                 if (i %2 == 0)
-                    events[i].Add(new JobEvent("werk", null, false, "Coffee Shop"));
-                else
-                    events[i].Add(new JobEvent("werk", null, true, "Bar"));
+                    events[i].Add(new JobEvent("Work", null, false, JobSystem.CurrentJobInfo().Location()));
             }
             
 
