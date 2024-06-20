@@ -42,6 +42,7 @@ public class CalendarApp : MonoBehaviour
                 e.gameObject.SetActive(false);
             } else
             {
+                e.gameObject.SetActive(true);
                 e.AssignEvent(events[i]);
                 if (i < Calendar.GetCurrentEventIdx())
                 {

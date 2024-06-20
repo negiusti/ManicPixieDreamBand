@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(InventoryManager.RemovePerishableItem), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.RemovePerishableItem(string.Empty)));
         Lua.RegisterFunction(nameof(MainCharacterState.HasChangedOutfitToday), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.HasChangedOutfitToday()));
         Lua.RegisterFunction(nameof(MainCharacterState.CurrentBankBalance), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.CurrentBankBalance()));
+        Lua.RegisterFunction(nameof(JobSystem.SetCurrentJob), this, SymbolExtensions.GetMethodInfo(() => JobSystem.SetCurrentJob(string.Empty)));
     }
 
     void UnregisterSOLuaFuncs()
@@ -63,6 +64,7 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(InventoryManager.RemovePerishableItem));
         Lua.UnregisterFunction(nameof(MainCharacterState.HasChangedOutfitToday));
         Lua.UnregisterFunction(nameof(MainCharacterState.CurrentBankBalance));
+        Lua.UnregisterFunction(nameof(JobSystem.SetCurrentJob));
         //}
     }
 
@@ -92,6 +94,7 @@ public class GameManager : MonoBehaviour
         InventoryManager.LoadInventories();
         ConversationJson.LoadFromJson().WaitForCompletion();
         BandJson.LoadFromJson().WaitForCompletion();
+        JobSystem.Load();
     }
 
     private void SaveData()
@@ -99,6 +102,7 @@ public class GameManager : MonoBehaviour
         MainCharacterState.Save();
         Calendar.Save();
         InventoryManager.SaveInventories();
+        JobSystem.Save();
     }
 
     // Update is called once per frame

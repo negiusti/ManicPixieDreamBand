@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -9,12 +7,32 @@ public class JobFlyer : MonoBehaviour
     public JobSystem.PunkJob job;
     private SpriteResolver spriteResolver;
     private Phone phone;
+    private bool taken;
 
     // Start is called before the first frame update
     void Start()
     {
         spriteResolver = GetComponent<SpriteResolver>();
         phone = Phone.Instance;
+    }
+
+    private void OnEnable()
+    {
+        taken = JobSystem.CurrentJob().Equals(job);
+        if (spriteResolver == null)
+            Start();
+
+        if (taken)
+        {
+            Debug.Log("Current job: " + JobSystem.CurrentJob().ToString() + " flyer job: " + job.ToString());
+            Debug.Log("spriteResolver.SetCategoryAndLabel(Flyer, Close);");
+            spriteResolver.SetCategoryAndLabel("Flyer", "Close");
+        } else
+        {
+            Debug.Log("Current job: " + JobSystem.CurrentJob().ToString() + " flyer job: " + job.ToString());
+            Debug.Log("spriteResolver.SetCategoryAndLabel(Flyer, Open);");
+            spriteResolver.SetCategoryAndLabel("Flyer", "Open");
+        }
     }
 
     // Update is called once per frame
@@ -25,6 +43,8 @@ public class JobFlyer : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (taken)
+            return;
         corkboard.CloseMiniGame();
         phone.Unlock();
         phone.ReceiveMsg("TXT_" + job.ToString() + " Boss_" + job.ToString() + "_Hire");

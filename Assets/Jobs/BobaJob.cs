@@ -1,9 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
-public class TattooJob : IJob
+public class BobaJob : IJob
 {
-    public TattooJob()
+    public BobaJob()
     {
     }
 
@@ -14,21 +14,21 @@ public class TattooJob : IJob
 
     public string Location()
     {
-        return "Tattoo Shop";
+        return "BobaShop";
     }
 
     public GameObject Minigame()
     {
-        return MiniGameManager.GetMiniGame("Tattoo").gameObject;
+        return MiniGameManager.GetMiniGame("Boba").gameObject;
     }
 
     public string Name()
     {
-        return "Tattoo";
+        return "Boba";
     }
 
     public JobSystem.PunkJob punkJob()
     {
-        return JobSystem.PunkJob.Tattoo;
+        return JobSystem.PunkJob.Boba;
     }
 }
