@@ -6,7 +6,7 @@ public class LerpPosition : MonoBehaviour
     // This needs to be public so other scripts can access it
     public bool finishedLerp;
 
-    public IEnumerator Lerp(Vector3 targetLocalPosition, float duration, bool destroyAfterLerp)
+    public IEnumerator Lerp(Vector3 targetLocalPosition, float duration, bool destroyAfterLerp = false)
     {
         Vector3 startPosition = transform.localPosition;
 
