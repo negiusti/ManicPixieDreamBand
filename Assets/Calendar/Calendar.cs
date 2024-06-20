@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -52,6 +53,17 @@ public class Calendar : ScriptableObject
         return currentEventIdx;
     }
 
+    public static void ChangeJobs()
+    {
+        Debug.Log("CHANGING JOBS");
+        for (int i = 0; i < day + 7; i++)
+        {
+            unscheduleWork(i);
+            if (i % 2 == 0 && JobSystem.CurrentJob() != JobSystem.PunkJob.Unemployed)
+                events[i].Add(new JobEvent("Work", null, false, JobSystem.CurrentJobInfo().Location()));
+        }
+    }
+
     public static List<ICalendarEvent> GetTodaysEvents()
     {
         if (events == null)
@@ -69,6 +81,7 @@ public class Calendar : ScriptableObject
     {
         for (int i = day; i < day + 7; i++)
         {
+            Debug.Log("Scheduling day " + i);
             if (!events.ContainsKey(i))
             {
                 events.Add(i, new List<ICalendarEvent>());
@@ -117,6 +130,13 @@ public class Calendar : ScriptableObject
     private static bool isWorkScheduled(int i)
     {
         return events.ContainsKey(i) && events[i].Any(e => e is JobEvent);
+    }
+
+    private static void unscheduleWork(int i)
+    {
+        Debug.Log("unscheduleWork for day " + i);
+        if (events.ContainsKey(i))
+            events[i].RemoveAll(e => e is JobEvent);
     }
 
     private static bool isBandPracticeDay(int i)

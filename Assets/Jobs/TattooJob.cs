@@ -14,7 +14,7 @@ public class TattooJob : IJob
 
     public string Location()
     {
-        return "TattooShop";
+        return "Tattoo Shop";
     }
 
     public GameObject Minigame()

@@ -7,6 +7,7 @@ public class JobFlyer : MonoBehaviour
     public JobSystem.PunkJob job;
     private SpriteResolver spriteResolver;
     private Phone phone;
+    private bool taken;
 
     // Start is called before the first frame update
     void Start()
@@ -17,10 +18,11 @@ public class JobFlyer : MonoBehaviour
 
     private void OnEnable()
     {
+        taken = JobSystem.CurrentJob().Equals(job);
         if (spriteResolver == null)
             Start();
 
-        if (JobSystem.CurrentJob().Equals(job))
+        if (taken)
         {
             Debug.Log("Current job: " + JobSystem.CurrentJob().ToString() + " flyer job: " + job.ToString());
             Debug.Log("spriteResolver.SetCategoryAndLabel(Flyer, Close);");
@@ -41,6 +43,8 @@ public class JobFlyer : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (taken)
+            return;
         corkboard.CloseMiniGame();
         phone.Unlock();
         phone.ReceiveMsg("TXT_" + job.ToString() + " Boss_" + job.ToString() + "_Hire");
