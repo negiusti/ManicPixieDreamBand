@@ -22,7 +22,10 @@ public class PhoneCalendarEvent : MonoBehaviour
     public void AssignEvent(ICalendarEvent e)
     {
         this.e = e;
-        tmp.text = e.Name();
+        if (e is JobEvent)
+            tmp.text = "Work at " + JobSystem.CurrentJobInfo().Location();
+        else
+            tmp.text = e.Name();
     }
 
     public void Complete()

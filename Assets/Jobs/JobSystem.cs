@@ -34,8 +34,6 @@ public class JobSystem : ScriptableObject
 
     public static void SetCurrentJob(PunkJob newJob)
     {
-        if (currentJob != newJob)
-            Calendar.ChangeJobs();
         currentJob = newJob;
     }
 
