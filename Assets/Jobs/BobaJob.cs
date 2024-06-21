@@ -14,7 +14,7 @@ public class BobaJob : IJob
 
     public string Location()
     {
-        return "BobaShop";
+        return "Boba Shop";
     }
 
     public GameObject Minigame()

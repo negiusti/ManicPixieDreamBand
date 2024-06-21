@@ -53,17 +53,6 @@ public class Calendar : ScriptableObject
         return currentEventIdx;
     }
 
-    public static void ChangeJobs()
-    {
-        Debug.Log("CHANGING JOBS");
-        for (int i = 0; i < day + 7; i++)
-        {
-            unscheduleWork(i);
-            if (i % 2 == 0 && JobSystem.CurrentJob() != JobSystem.PunkJob.Unemployed)
-                events[i].Add(new JobEvent("Work", null, false, JobSystem.CurrentJobInfo().Location()));
-        }
-    }
-
     public static List<ICalendarEvent> GetTodaysEvents()
     {
         if (events == null)
