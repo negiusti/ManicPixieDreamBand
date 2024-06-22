@@ -17,7 +17,7 @@ public class Milk : MonoBehaviour
     void Start()
     {
         origialPos = transform.localPosition;
-        targetPos = new Vector3(21.2f, origialPos.y, origialPos.z);
+        targetPos = new Vector3(22.2f, origialPos.y, origialPos.z);
         // Store the original rotation of the GameObject
         originalRotation = transform.rotation;
         // Calculate the target rotation
