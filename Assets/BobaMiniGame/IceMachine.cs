@@ -5,7 +5,7 @@ using UnityEngine;
 public class IceMachine : MonoBehaviour
 {
     private ParticleSystem particles;
-    public GameObject ice;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,19 +18,12 @@ public class IceMachine : MonoBehaviour
         
     }
 
-    private void OnMouseDrag()
-    {
-        if (ice.transform.localPosition.y >= -1.58f) // max;
-            return;
-        ice.transform.Translate(Vector3.up * Time.deltaTime);
-    }
-
-    private void OnMouseDown()
+    public void On()
     {
         particles.Play();
     }
 
-    private void OnMouseUp()
+    public void Off()
     {
         particles.Stop();
     }
