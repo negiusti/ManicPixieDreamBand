@@ -6,6 +6,7 @@ public class Ice : MonoBehaviour
 {
     private Animator animator;
     public IceMachine iceMachine;
+    public BobaMiniGame mg;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,7 @@ public class Ice : MonoBehaviour
         animator.SetBool("Medium", false);
         animator.SetBool("Large", false);
         animator.Play("Small");
+        mg.Next();
     }
 
     public void MediumFill()
@@ -41,6 +43,7 @@ public class Ice : MonoBehaviour
         animator.SetBool("Medium", true);
         animator.SetBool("Large", false);
         animator.Play("Small");
+        mg.Next();
     }
 
     public void LargeFill()
@@ -48,5 +51,6 @@ public class Ice : MonoBehaviour
         animator.SetBool("Medium", true);
         animator.SetBool("Large", true);
         animator.Play("Small");
+        mg.Next();
     }
 }
