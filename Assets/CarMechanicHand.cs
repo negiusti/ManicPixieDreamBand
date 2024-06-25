@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-public class Hand : MonoBehaviour
+public class CarMechanicHand : MonoBehaviour
 {
-    public LerpPosition lerpPosition;
+    private LerpPosition lerpPosition;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,19 +15,19 @@ public class Hand : MonoBehaviour
         
     }
 
-    public void move(float targetX, float targetY, float moveTime)
+    public void Move(float targetx, float targety, float moveTime)
     {
-        StartCoroutine(lerpPosition.Lerp(new Vector3(targetX, targetY, 50), moveTime * Time.deltaTime, false));
+        StartCoroutine(lerpPosition.Lerp(new Vector3(targetx, targety, 50), moveTime * Time.deltaTime, false));
     }
 
-    public bool handFull()
+    public bool IsFull()
     {
         return transform.childCount > 0;
     }
 
-    public string getTool()
+    public string GetTool()
     {
-        if (!handFull()) return null;
+        if (!IsFull()) return null;
         return transform.GetChild(0).name;
     }
 }

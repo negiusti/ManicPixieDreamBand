@@ -1,13 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using static UnityEngine.GraphicsBuffer;
-
 public class ClickAndDrag : MonoBehaviour
 {
     Vector3 mousePositionOffset;
@@ -22,8 +14,8 @@ public class ClickAndDrag : MonoBehaviour
     private float timer = 0;
     private bool inToolBox = true;
     private string currTool;
-    public LerpPosition lerpPosition;
-    public Hand hand;
+    private LerpPosition lerpPosition;
+    public CarMechanicHand hand;
     public CarMechanicSpeechBubble sb;
     public Slider slider;
     public float addedAmount = 0.00015f;
@@ -59,7 +51,7 @@ public class ClickAndDrag : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<Hand>() != null)
+        if (collision.gameObject.GetComponent<CarMechanicHand>() != null)
         {
             inHand = true;
         }
@@ -71,7 +63,7 @@ public class ClickAndDrag : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.gameObject.GetComponent<Hand>() != null)
+        if(collision.gameObject.GetComponent<CarMechanicHand>() != null)
         {
             inHand = false;
         }
@@ -88,18 +80,18 @@ public class ClickAndDrag : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
         if (inHand && !game.gameOver)
         {
-            if (!hand.handFull())
+            if (!hand.IsFull())
             {
                 // puts the tool in the hand
                 transform.position = new Vector3(hand.transform.position.x - 0.3f, hand.transform.position.y - 0.3f, hand.transform.position.z - 5);
                 transform.parent = hand.transform;
 
                 // if correct, take tool under car and output positive message
-                if (hand.getTool() == sb.currTool)
+                if (hand.GetTool() == sb.currTool)
                 {
                     gameObject.GetComponent<SpriteRenderer>().sortingOrder = 0;
-                    hand.move(underCarX, underCarY, moveTime);
-                    if(hand.getTool() == "Banana")
+                    hand.Move(underCarX, underCarY, moveTime);
+                    if(hand.GetTool() == "Banana")
                     {
                         sb.speechText.text = "Yummmmm!";
                     }
@@ -139,7 +131,7 @@ public class ClickAndDrag : MonoBehaviour
         gameObject.transform.localScale = new Vector3(transform.localScale.x * 1.5f, transform.localScale.y * 1.5f, 0);
         gameObject.GetComponent<SpriteRenderer>().sortingOrder = 3;
         transform.parent = null;
-        if (sb.angry && !hand.handFull())
+        if (sb.angry && !hand.IsFull())
         {
             sb.AskForTool(sb.currTool);
         }
@@ -164,8 +156,8 @@ public class ClickAndDrag : MonoBehaviour
 
     private void askForNewTool()
     {
-        hand.move(outsideCarX, outsideCarY, moveTime);
-        if (hand.getTool() == "Banana")
+        hand.Move(outsideCarX, outsideCarY, moveTime);
+        if (hand.GetTool() == "Banana")
         {
             throwBanana();
         }
@@ -176,6 +168,7 @@ public class ClickAndDrag : MonoBehaviour
         {
             gameOverScreen.SetActive(true);
             game.gameOver = true;
+            Destroy(sb);
         }
         else if (slider.value >= 0.6f && game.bananaEaten == false)
         {
