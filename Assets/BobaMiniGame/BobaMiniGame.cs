@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class BobaMiniGame : MiniGame
 {
-    private enum Step
+    public enum Step
     {
         Milk,
         Flavor,
@@ -39,7 +39,6 @@ public class BobaMiniGame : MiniGame
 
     public void Next()
     {
-        Debug.Log("next phase");
         currStepIdx++;
         step = steps[currStepIdx];
         StartCoroutine(NextPhase());
