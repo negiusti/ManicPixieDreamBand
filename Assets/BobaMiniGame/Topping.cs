@@ -10,6 +10,7 @@ public class Topping : MonoBehaviour
     private Vector3 targetPos;
     private LerpPosition lerp;
     private BobaMiniGame mg;
+    public Toppings toppings;
 
     void Start()
     {
@@ -30,9 +31,10 @@ public class Topping : MonoBehaviour
         if (mg.toppingsDone)
             return;
         mg.toppingsDone = true;
+        toppings.SetToppingType(gameObject.name);
         StartCoroutine(lerp.Lerp(targetPos, 0.5f));
         animator.Play("FlavorPour");
-        //StartCoroutine(liquid.GetComponent<LerpPosition>().LerpColor(new Vector3(color.r, color.g, color.b), animator.runtimeAnimatorController.animationClips.First(x => x.name == "FlavorPour").length));
+        toppings.AppearInCup();
         mg.Next();
     }
 }

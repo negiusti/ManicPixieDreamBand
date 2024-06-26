@@ -13,6 +13,7 @@ public class Milk : MonoBehaviour
     private Vector3 targetPos;
     private LerpPosition lerp;
     private BobaMiniGame mg;
+    private SpriteRenderer sr;
 
     void Start()
     {
@@ -21,6 +22,7 @@ public class Milk : MonoBehaviour
         mg = (BobaMiniGame)MiniGameManager.GetMiniGame("Boba");
         animator = GetComponent<Animator>();
         lerp = GetComponent<LerpPosition>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -34,6 +36,7 @@ public class Milk : MonoBehaviour
         if (mg.milkDone)
             return;
         mg.milkDone = true;
+        sr.sortingOrder = 10;
         StartCoroutine(lerp.Lerp(targetPos, 0.5f));
         animator.Play("Pour");
         StartCoroutine(liquid.GetComponent<LerpPosition>().Lerp(liquid.transform.localPosition + Vector3.up * 4f, animator.runtimeAnimatorController.animationClips.First(x => x.name == "Pour").length));
