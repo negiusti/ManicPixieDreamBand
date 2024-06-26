@@ -12,8 +12,6 @@ public class ClickAndDrag : MonoBehaviour
     public float workTime = 2;
     private bool underCar = false;
     private float timer = 0;
-    private bool inToolBox = true;
-    private string currTool;
     private LerpPosition lerpPosition;
     public CarMechanicHand hand;
     public CarMechanicSpeechBubble sb;
@@ -22,6 +20,7 @@ public class ClickAndDrag : MonoBehaviour
     public GameObject gameOverScreen;
     public CarMechanicMiniGameManager game;
     public Sprite bananaPeel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +28,6 @@ public class ClickAndDrag : MonoBehaviour
         startSize = transform.localScale;
         lerpPosition = GetComponent<LerpPosition>();
         sb.AskForTool(null);
-
     }
 
     // Update is called once per frame
@@ -55,10 +53,6 @@ public class ClickAndDrag : MonoBehaviour
         {
             inHand = true;
         }
-        if (collision.gameObject.GetComponent<Toolbox>() != null)
-        {
-            inToolBox = true;
-        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -67,11 +61,6 @@ public class ClickAndDrag : MonoBehaviour
         {
             inHand = false;
         }
-        if (collision.gameObject.GetComponent<Toolbox>() != null)
-        {
-            inToolBox = false;
-        }
-
     }
 
     private void OnMouseUp()
