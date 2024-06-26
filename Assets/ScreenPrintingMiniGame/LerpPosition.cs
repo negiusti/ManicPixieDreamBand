@@ -66,14 +66,14 @@ public class LerpPosition : MonoBehaviour
             float factor = timePassed / duration;
             factor = Mathf.SmoothStep(0, 1, factor);
             Vector3 newColor = Vector3.Lerp(startColor, targetLocalColor, factor);
-            sr.color = new Color(newColor.x, newColor.y, newColor.z);
+            sr.color = new Color(newColor.x, newColor.y, newColor.z, sr.color.a);
 
             yield return null;
         }
 
         finishedColorLerp = true;
 
-        sr.color = new Color(targetLocalColor.x, targetLocalColor.y, targetLocalColor.z);
+        sr.color = new Color(targetLocalColor.x, targetLocalColor.y, targetLocalColor.z, sr.color.a);
 
         if (destroyAfterLerp)
         {

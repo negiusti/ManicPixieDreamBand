@@ -9,15 +9,17 @@ public class BobaMiniGame : MiniGame
         Milk,
         Flavor,
         Ice,
-        Toppings
+        Toppings,
+        Done
     }
     private Camera cam;
     public GameObject cup;
     private Step step;
-    private List<Step> steps = new List<Step> { Step.Milk, Step.Flavor, Step.Ice, Step.Toppings };
+    private List<Step> steps = new List<Step> { Step.Milk, Step.Flavor, Step.Ice, Step.Toppings, Step.Done };
     private int currStepIdx;
     public bool milkDone;
     public bool flavorDone;
+    public bool toppingsDone;
     // Use this for initialization
     void Start()
     {
@@ -26,6 +28,7 @@ public class BobaMiniGame : MiniGame
         step = steps[currStepIdx];
         milkDone = false;
         flavorDone = false;
+        toppingsDone = false;
     }
 
     // Update is called once per frame
