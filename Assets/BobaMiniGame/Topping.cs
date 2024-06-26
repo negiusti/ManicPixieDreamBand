@@ -33,7 +33,7 @@ public class Topping : MonoBehaviour
         mg.toppingsDone = true;
         toppings.SetToppingType(gameObject.name);
         StartCoroutine(lerp.Lerp(targetPos, 0.5f));
-        animator.Play("FlavorPour");
+        animator.Play("ToppingsPour");
         toppings.AppearInCup();
         mg.Next();
     }
