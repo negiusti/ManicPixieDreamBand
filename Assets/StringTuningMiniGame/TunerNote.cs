@@ -17,16 +17,13 @@ public class TunerNote : MonoBehaviour
     public GameObject G;
     public List<GameObject> noteDisplays = new List<GameObject>();
     public GameObject TunerBackground;
-     
 
     void Start()
     {
-
         noteDisplays.Add(E);
         noteDisplays.Add(A);
         noteDisplays.Add(D);
         noteDisplays.Add(G);
-        
     }
 
     // Update is called once per frame
