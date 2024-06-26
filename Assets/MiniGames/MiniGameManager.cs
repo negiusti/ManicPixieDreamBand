@@ -62,6 +62,8 @@ public class MiniGameManager : ScriptableObject
                 return FindFirstObjectByType<TattooMiniGame>(FindObjectsInactive.Include);
             case "Corkboard":
                 return FindFirstObjectByType<CorkboardMiniGame>(FindObjectsInactive.Include);
+            case "Boba":
+                return FindFirstObjectByType<BobaMiniGame>(FindObjectsInactive.Include);
             default:
                 Debug.LogError("Minigame not found: " + miniGameName);
                 return null;

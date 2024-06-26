@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Milk : MonoBehaviour
+public class Topping : MonoBehaviour
 {
     private Animator animator;
-    public float rotationAngle = 25f;
-    public float rotationSpeed = 5f;
-    public GameObject liquid;
     private Vector3 origialPos;
     private Vector3 targetPos;
     private LerpPosition lerp;
     private BobaMiniGame mg;
-    private SpriteRenderer sr;
+    public Toppings toppings;
 
     void Start()
     {
@@ -22,27 +19,22 @@ public class Milk : MonoBehaviour
         mg = (BobaMiniGame)MiniGameManager.GetMiniGame("Boba");
         animator = GetComponent<Animator>();
         lerp = GetComponent<LerpPosition>();
-        sr = GetComponent<SpriteRenderer>();
     }
 
+    // Update is called once per frame
     void Update()
     {
-
-
+        
     }
-
     private void OnMouseDown()
     {
-        if (mg.milkDone)
+        if (mg.toppingsDone)
             return;
-        mg.milkDone = true;
-        sr.sortingOrder = 10;
+        mg.toppingsDone = true;
+        toppings.SetToppingType(gameObject.name);
         StartCoroutine(lerp.Lerp(targetPos, 0.5f));
-        animator.Play("Pour");
-        StartCoroutine(liquid.GetComponent<LerpPosition>().Lerp(liquid.transform.localPosition + Vector3.up * 4f, animator.runtimeAnimatorController.animationClips.First(x => x.name == "Pour").length));
+        animator.Play("ToppingsPour");
+        toppings.AppearInCup();
         mg.Next();
     }
-
-
-
 }
