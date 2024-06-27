@@ -54,8 +54,8 @@ public class BobaMiniGame : MiniGame
         if (step == Step.Done)
         {
             cup.GetComponent<Animator>().Play("LidAndStraw");
-            yield return new WaitForSeconds(3f);
-            StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 0.5f));
+            yield return new WaitForSeconds(2f);
+            StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 3f));
             yield return new WaitForSeconds(3f);
         }
         yield return null;
