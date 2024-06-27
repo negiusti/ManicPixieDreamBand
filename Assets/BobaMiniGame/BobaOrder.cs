@@ -6,11 +6,13 @@ using UnityEngine;
 public class BobaOrder : MonoBehaviour
 {
     public BobaOrderItem[] orderItems;
+    private Animator animator;
     private Dictionary<BobaMiniGame.Step, BobaOrderItem> map;
     // Start is called before the first frame update
     void Start()
     {
         map = orderItems.ToDictionary(x => x.step, x => x);
+        animator = GetComponent<Animator>();
     }
 
     public void RandomizeOrder()
@@ -19,6 +21,7 @@ public class BobaOrder : MonoBehaviour
         {
             item.Randomize();
         }
+        animator.Play("NewOrderPop", -1, 0f);
     }
 
     public bool CheckOrderItem(BobaMiniGame.Step step, string key)
