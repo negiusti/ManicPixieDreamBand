@@ -39,20 +39,24 @@ public class BobaMiniGame : MiniGame
 
     public void Next()
     {
-        currStepIdx++;
-        step = steps[currStepIdx];
         StartCoroutine(NextPhase());
+
     }
 
     private IEnumerator NextPhase()
     {
         yield return new WaitForSeconds(2.5f);
+        currStepIdx++;
+        step = steps[currStepIdx];
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cam.transform.localPosition + Vector3.right * 35f, 0.5f));
         StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 0.5f));
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
         if (step == Step.Done)
         {
             cup.GetComponent<Animator>().Play("LidAndStraw");
+            yield return new WaitForSeconds(3f);
+            StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 0.5f));
+            yield return new WaitForSeconds(3f);
         }
         yield return null;
     }
