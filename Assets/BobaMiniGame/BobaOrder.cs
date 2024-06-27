@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,32 @@ using UnityEngine;
 public class BobaOrder : MonoBehaviour
 {
     public BobaOrderItem[] orderItems;
+    private Dictionary<BobaMiniGame.Step, BobaOrderItem> map;
     // Start is called before the first frame update
     void Start()
     {
-        
+        map = orderItems.ToDictionary(x => x.step, x => x);
     }
+
+    public void RandomizeOrder()
+    {
+        foreach(BobaOrderItem item in orderItems)
+        {
+            item.Randomize();
+        }
+    }
+
+    public bool CheckOrderItem(BobaMiniGame.Step step, string key)
+    {
+        bool result = map[step].CurrentRequestedItem() == key;
+        if (result)
+            map[step].Check();
+        else
+            map[step].Fail();
+        return result;
+    }
+
+
 
     // Update is called once per frame
     void Update()

@@ -10,7 +10,6 @@ public class Topping : MonoBehaviour
     private Vector3 targetPos;
     private LerpPosition lerp;
     private BobaMiniGame mg;
-    public Toppings toppings;
 
     void Start()
     {
@@ -26,15 +25,23 @@ public class Topping : MonoBehaviour
     {
         
     }
+
+    public void ResetPosition()
+    {
+        if (mg == null)
+            Start();
+        transform.localPosition = origialPos;
+    }
+
     private void OnMouseDown()
     {
         if (mg.toppingsDone)
             return;
         mg.toppingsDone = true;
-        toppings.SetToppingType(gameObject.name);
+        mg.cup.GetComponentInChildren<Toppings>().SetToppingType(gameObject.name);
         StartCoroutine(lerp.Lerp(targetPos, 0.5f));
         animator.Play("ToppingsPour");
-        toppings.AppearInCup();
-        mg.Next();
+        mg.cup.GetComponentInChildren<Toppings>().AppearInCup();
+        mg.Next(gameObject.name);
     }
 }

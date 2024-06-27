@@ -6,6 +6,7 @@ public class BobaCup : MonoBehaviour
 {
     public GameObject straw;
     public Color[] strawColors;
+    public GameObject liquid;
     
     // Start is called before the first frame update
     void Start()

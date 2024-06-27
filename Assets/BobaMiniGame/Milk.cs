@@ -8,7 +8,6 @@ public class Milk : MonoBehaviour
     private Animator animator;
     public float rotationAngle = 25f;
     public float rotationSpeed = 5f;
-    public GameObject liquid;
     private Vector3 origialPos;
     private Vector3 targetPos;
     private LerpPosition lerp;
@@ -27,8 +26,14 @@ public class Milk : MonoBehaviour
 
     void Update()
     {
+        
+    }
 
-
+    public void ResetPosition()
+    {
+        if (mg == null)
+            Start();
+        transform.localPosition = origialPos;
     }
 
     private void OnMouseDown()
@@ -39,10 +44,7 @@ public class Milk : MonoBehaviour
         sr.sortingOrder = 10;
         StartCoroutine(lerp.Lerp(targetPos, 0.5f));
         animator.Play("Pour");
-        StartCoroutine(liquid.GetComponent<LerpPosition>().Lerp(liquid.transform.localPosition + Vector3.up * 4f, animator.runtimeAnimatorController.animationClips.First(x => x.name == "Pour").length));
-        mg.Next();
+        StartCoroutine(mg.cup.liquid.GetComponent<LerpPosition>().Lerp(mg.cup.liquid.transform.localPosition + Vector3.up * 4f, animator.runtimeAnimatorController.animationClips.First(x => x.name == "Pour").length));
+        mg.Next(gameObject.name);
     }
-
-
-
 }
