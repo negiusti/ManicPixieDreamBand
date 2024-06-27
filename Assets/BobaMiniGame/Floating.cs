@@ -14,6 +14,7 @@ public class Floating : MonoBehaviour
         startPosition = transform.localPosition;
         startRotation = transform.localEulerAngles;
         lerp = GetComponent<LerpPosition>();
+        transform.localEulerAngles = GetRandomAngles();
     }
 
     private void OnEnable()
@@ -21,6 +22,7 @@ public class Floating : MonoBehaviour
         if (lerp == null)
             Start();
         lerp.finishedLerp = true;
+        lerp.finishedRotationLerp = true;
     }
 
     private Vector3 GetRandomTarget()
@@ -36,7 +38,7 @@ public class Floating : MonoBehaviour
 
     private Vector3 GetRandomAngles()
     {
-        return startRotation + new Vector3(0f, 0f, Random.Range(0f, 15f));
+        return startRotation + new Vector3(0f, 0f, Random.Range(0f, 180f));
     }
 
     private void Update()
@@ -49,7 +51,7 @@ public class Floating : MonoBehaviour
         if (lerp.finishedRotationLerp)
         {
             lerp.finishedRotationLerp = false;
-            StartCoroutine(lerp.LerpRotation(GetRandomAngles(), Random.Range(1.5f, 2f)));
+            StartCoroutine(lerp.LerpRotation(GetRandomAngles(), Random.Range(7f, 8f)));
         }
     }
 }
