@@ -19,7 +19,7 @@ public class TattooMiniGame : MiniGame
     public Transform armLerpPosition;
     public float armLerpDuration;
 
-    public GameObject[] armPrefabs;
+    public GameObject armPrefab;
 
     private GameObject arm; // The arm being used now
     private LerpPosition armLerpScript;
@@ -27,6 +27,7 @@ public class TattooMiniGame : MiniGame
     [Header("Guideline Information")]
 
     public GameObject[] guidelinePrefabs;
+    private int prevGuidelineIdx;
 
     public Sprite[] designPrefabs;
 
@@ -177,16 +178,17 @@ public class TattooMiniGame : MiniGame
 
     private void SpawnNewArm()
     {
-        // Choose a random arm from the array of arms
-        int armIndex = Random.Range(0, armPrefabs.Length);
 
         // Spawn a new arm offscreen as a child of this object
-        arm = Instantiate(armPrefabs[armIndex], new Vector2(armLerpPosition.position.x + 50, armLerpPosition.position.y + 25), Quaternion.identity, transform);
+        arm = Instantiate(armPrefab, new Vector2(armLerpPosition.position.x + 50, armLerpPosition.position.y + 25), Quaternion.identity, transform);
 
         armLerpScript = arm.GetComponent<LerpPosition>();
 
         // Choose a random guideline from the array of guidelines
-        guidelineIndex = Random.Range(0, guidelinePrefabs.Length);
+        do {
+            guidelineIndex = Random.Range(0, guidelinePrefabs.Length);
+        } while (guidelineIndex == prevGuidelineIdx);
+        prevGuidelineIdx = guidelineIndex;
 
         // And spawn it as a child of the arm with an offset so that it's on the arm
         guideline = Instantiate(guidelinePrefabs[guidelineIndex], new Vector2(arm.transform.position.x, arm.transform.position.y - 4.075f), guidelinePrefabs[guidelineIndex].transform.rotation, arm.transform);

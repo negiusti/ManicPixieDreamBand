@@ -13,8 +13,11 @@ GameObject:
   - component: {fileID: 5855630414727934566}
   - component: {fileID: 6363969799928495829}
   - component: {fileID: 5885529800715540467}
+  - component: {fileID: 8412978213766351747}
+  - component: {fileID: 83765442246987274}
+  - component: {fileID: 3072195611150356097}
   m_Layer: 8
-  m_Name: ArmNailPolish
+  m_Name: Arm
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,6 +103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finishedLerp: 0
+  finishedRotationLerp: 0
+  finishedColorLerp: 0
 --- !u!331 &6363969799928495829
 SpriteMask:
   m_ObjectHideFlags: 0
@@ -145,7 +150,7 @@ SpriteMask:
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: 1235693389
   m_BackSortingLayerID: 0
-  m_FrontSortingLayer: 12
+  m_FrontSortingLayer: 14
   m_BackSortingLayer: 0
   m_FrontSortingOrder: 0
   m_BackSortingOrder: -10
@@ -518,3 +523,49 @@ PolygonCollider2D:
       - {x: -11.402686, y: -8.0365505}
       - {x: -10.9653225, y: -7.94283}
   m_UseDelaunayMesh: 0
+--- !u!114 &8412978213766351747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4623070034826360695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library: []
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 5c06e56f3da77489e8d9e56231ad3cdf, type: 3}
+--- !u!114 &83765442246987274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4623070034826360695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CategoryHash: 0
+  m_labelHash: 0
+  m_SpriteKey: 0
+  m_SpriteHash: 242612001
+--- !u!114 &3072195611150356097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4623070034826360695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e690d6e2827554db2b273cf5f5a0674f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinColorOptions:
+  - {r: 0.9803922, g: 0.8000001, b: 0.54901963, a: 1}
+  - {r: 0.92549026, g: 0.74509805, b: 0.6745098, a: 1}
+  - {r: 0.49411768, g: 0.34901962, b: 0.23529413, a: 1}

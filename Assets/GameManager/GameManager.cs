@@ -131,8 +131,8 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        
-        
+        SaveData();
+
         //if (gms.Length == 1)
         //    Steamworks.SteamClient.Shutdown();
         // SAVE THE CURRENT STATE OF EVERYTHING
