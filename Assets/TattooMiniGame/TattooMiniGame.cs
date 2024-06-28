@@ -63,14 +63,6 @@ public class TattooMiniGame : MiniGame
     public float passIncome;
     public float failureIncome;
 
-    [Header("Timing")]
-
-    private float timer;
-    public float timeLimit = 30f; // How much time the player has at the start of the minigame
-    public TextMeshPro timerText;
-    private bool doTimer;
-    private bool hasDoneTimerCheck;
-
     [Header("Speech")]
 
     public GameObject speechBubble;
@@ -82,20 +74,17 @@ public class TattooMiniGame : MiniGame
     public string[] passOptions;
     public string[] failureOptions;
 
-    public string[] timerDoneOptions;
-
     [Header("Miscellaneous")]
 
     private GameObject mainCamera;
     public GameObject blackScreen;
     private bool isActive;
+    private Timer timer;
 
     private void Start()
     {
+        timer = GetComponentInChildren<Timer>();
         DisableAllChildren();
-        doTimer = false;
-        timer = timeLimit;
-        //OpenMiniGame();
     }
 
     public override bool IsMiniGameActive()
@@ -129,10 +118,9 @@ public class TattooMiniGame : MiniGame
         LoadColors();
         SpawnNewArm();
 
-        timer = timeLimit;
-        // Only start the timer after the minigame has started and all its components have been set
-        doTimer = true;
-        hasDoneTimerCheck = false;
+        income = 0;
+        timer.Reset();
+        timer.StartTimer();
     }
 
     public override void CloseMiniGame()
@@ -155,28 +143,12 @@ public class TattooMiniGame : MiniGame
     private void Update()
     {
         Draw();
-
-        if (timer >= 0 && doTimer)
-        {
-            timer -= Time.deltaTime;
-        }
-
-        // Set the timer text to the nearest integer
-        timerText.text = Mathf.RoundToInt(timer).ToString();
-
-        if (timer <= 0 && !hasDoneTimerCheck)
-        {
-            // Makes sure this if statement doesn't run again
-            hasDoneTimerCheck = true;
-
-            StartCoroutine(CloseMiniGameSequence("Timer done"));
-        }
     }
 
     private void Draw()
     {
         // If the arm has arrived at the screen's center, the timer has not finished, and the game is active
-        if (isActive && Input.GetMouseButtonDown(0) && armLerpScript.finishedLerp && timer >= 0)
+        if (isActive && Input.GetMouseButtonDown(0) && armLerpScript.finishedLerp && timer.IsRunning())
         {
             // Spawn a new line as a child of the arm and get its Line component
             GameObject newLine = Instantiate(linePrefab);
@@ -262,26 +234,24 @@ public class TattooMiniGame : MiniGame
 
         if (successPercentage >= successThreshold)
         {
-            income = successIncome;
-            StartCoroutine(CloseMiniGameSequence("Success"));
+            income += successIncome;
+            StartCoroutine(FinishTattooSequence("Success"));
         }
         else if (successPercentage >= passThreshold)
         {
-            income = passIncome;
-            StartCoroutine(CloseMiniGameSequence("Pass"));
+            income += passIncome;
+            StartCoroutine(FinishTattooSequence("Pass"));
         }
         else
         {
-            income = failureIncome;
-            StartCoroutine(CloseMiniGameSequence("Failure"));
+            income += failureIncome;
+            StartCoroutine(FinishTattooSequence("Failure"));
         }
     }
 
-    private IEnumerator CloseMiniGameSequence(string result)
+    private IEnumerator FinishTattooSequence(string result)
     {
         line = null;
-
-        doTimer = false;
 
         // If the design was finished and the timer didn't run out, display the design
         if (result != "Timer done")
@@ -305,8 +275,14 @@ public class TattooMiniGame : MiniGame
         // Wait a moment before fading to black
         yield return new WaitForSeconds(0.25f);
 
-        // Start fading to black
-        blackScreen.SetActive(true);
+        if (timer.IsRunning())
+        {
+            SpawnNewArm();
+        }
+        else
+        {
+            blackScreen.SetActive(true);
+        }
     }
 
     private IEnumerator UpdateSpeechBubbles(string option)
@@ -323,13 +299,9 @@ public class TattooMiniGame : MiniGame
         {
             stringToDisplay = passOptions[Random.Range(0, passOptions.Length)];
         }
-        else if (option == "Failure")
+        else // Failure
         {
             stringToDisplay = failureOptions[Random.Range(0, failureOptions.Length)];
-        }
-        else
-        {
-            stringToDisplay = timerDoneOptions[Random.Range(0, timerDoneOptions.Length)];
         }
 
         speechBubble.SetActive(true);
