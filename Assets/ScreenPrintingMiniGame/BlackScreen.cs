@@ -2,25 +2,18 @@ using UnityEngine;
 
 public class BlackScreen : MonoBehaviour
 {
-    private ScreenPrintingMiniGame screenPrintingMiniGame;
-
-    private TattooMiniGame tattooMiniGame;
+    private MiniGame mg;
 
     private void Start()
     {
-        screenPrintingMiniGame = GetComponentInParent<ScreenPrintingMiniGame>();
-        tattooMiniGame = GetComponentInParent<TattooMiniGame>();
+        mg = GetComponentInParent<MiniGame>();
     }
 
     public void CloseMiniGames()
     {
-        if (screenPrintingMiniGame != null)
+        if (mg != null)
         {
-            screenPrintingMiniGame.CloseMiniGame();
-        }
-        else if (tattooMiniGame != null)
-        {
-            tattooMiniGame.CloseMiniGame();
+            mg.CloseMiniGame();
         }
     }
 }

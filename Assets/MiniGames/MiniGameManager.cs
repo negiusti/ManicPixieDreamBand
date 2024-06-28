@@ -38,6 +38,9 @@ public class MiniGameManager : ScriptableObject
             case "Corkboard":
                 StartCorkboardMiniGame();
                 break;
+            case "Boba":
+                StartBobaMiniGame();
+                break;
             default:
                 Debug.LogError("Minigame not found: " + miniGameName);
                 break;
@@ -91,6 +94,12 @@ public class MiniGameManager : ScriptableObject
     {
         BassMiniGame mg = (BassMiniGame)GetMiniGame("Gig");
         mg.StartBassMiniGameWithBand(false);
+    }
+
+    private static void StartBobaMiniGame()
+    {
+        BobaMiniGame mg = (BobaMiniGame)GetMiniGame("Boba");
+        mg.OpenMiniGame();
     }
 
     private static void StartBandPracticeMiniGame()

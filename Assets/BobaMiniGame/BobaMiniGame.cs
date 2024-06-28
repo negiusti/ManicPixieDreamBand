@@ -28,6 +28,11 @@ public class BobaMiniGame : MiniGame
     private Topping[] toppings;
     private Flavor[] flavors;
 
+    private GameObject mainCamera;
+    public GameObject blackScreen;
+    private bool isActive;
+    private float tipsIncome;
+
     // Use this for initialization
     void Start()
     {
@@ -36,7 +41,7 @@ public class BobaMiniGame : MiniGame
         milks = FindObjectsOfType<Milk>();
         toppings = FindObjectsOfType<Topping>();
         flavors = FindObjectsOfType<Flavor>();
-        NewOrder();
+        DisableAllChildren();
     }
 
     // Update is called once per frame
@@ -47,7 +52,10 @@ public class BobaMiniGame : MiniGame
 
     public void Next(string choice)
     {
-        order.CheckOrderItem(step, choice);
+        if(order.CheckOrderItem(step, choice))
+        {
+            tipsIncome += 1f;
+        }
         StartCoroutine(NextPhase());
     }
 
@@ -64,6 +72,11 @@ public class BobaMiniGame : MiniGame
             cup.GetComponent<Animator>().Play("LidAndStraw");
             yield return new WaitForSeconds(1.2f);
             StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 1f, true));
+            if (step == Step.Done && !timer.IsRunning())
+            {
+                StartCoroutine(CloseMiniGameSequence());
+                yield return null;
+            }
             yield return new WaitForSeconds(1.5f);
             StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cam.transform.localPosition + Vector3.left * 35f * 4f, 0.5f));
             NewOrder();
@@ -97,16 +110,46 @@ public class BobaMiniGame : MiniGame
 
     public override void OpenMiniGame()
     {
-        throw new System.NotImplementedException();
+        mainCamera = Camera.main.transform.gameObject;
+
+        mainCamera.SetActive(false);
+
+        EnableAllChildren();
+
+        MiniGameManager.PrepMiniGame();
+        isActive = true;
+
+        blackScreen.SetActive(false);
+        tipsIncome = 0;
+        timer.Reset();
+        timer.StartTimer();
+        NewOrder();
     }
 
     public override void CloseMiniGame()
     {
-        throw new System.NotImplementedException();
+        mainCamera.SetActive(true);
+
+        DisableAllChildren();
+
+        isActive = false;
+        MiniGameManager.CleanUpMiniGame();
+
+        // Add the player's score they got into their bank account
+        MainCharacterState.ModifyBankBalance(tipsIncome);
     }
 
     public override bool IsMiniGameActive()
     {
-        throw new System.NotImplementedException();
+        return isActive;
+    }
+
+    private IEnumerator CloseMiniGameSequence()
+    {
+        // Wait a moment before fading to black
+        yield return new WaitForSeconds(1f);
+
+        // Start fading to black
+        blackScreen.SetActive(true);
     }
 }

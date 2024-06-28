@@ -37,6 +37,11 @@ public class Timer : MonoBehaviour
         StartCoroutine(Countdown());
     }
 
+    public void StartTimer()
+    {
+        StartCoroutine(Countdown());
+    }
+
     public bool IsRunning()
     {
         return timeRemaining > 0 && timeRemaining <= timeInSeconds;
