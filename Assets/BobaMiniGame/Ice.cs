@@ -60,7 +60,7 @@ public class Ice : MonoBehaviour
     {
         if (animator == null)
             Start();
-        if (mg.iceDone)
+        if (mg.iceDone || mg.CurrentStep() != BobaMiniGame.Step.Ice)
             return;
         mg.iceDone = true;
         animator.SetBool("Medium", true);

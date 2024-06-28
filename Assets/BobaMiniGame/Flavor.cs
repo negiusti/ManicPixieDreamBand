@@ -44,7 +44,7 @@ public class Flavor : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (mg.flavorDone)
+        if (mg.flavorDone || mg.CurrentStep() != BobaMiniGame.Step.Flavor)
             return;
         mg.flavorDone = true;
         GetComponent<Renderer>().sortingOrder = 51;

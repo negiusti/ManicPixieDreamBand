@@ -71,6 +71,11 @@ public class BobaMiniGame : MiniGame
         yield return null;
     }
 
+    public Step CurrentStep()
+    {
+        return step;
+    }
+
     private void NewOrder()
     {
         currStepIdx = 0;

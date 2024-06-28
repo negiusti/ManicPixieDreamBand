@@ -38,7 +38,7 @@ public class Milk : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (mg.milkDone)
+        if (mg.milkDone || mg.CurrentStep() != BobaMiniGame.Step.Milk)
             return;
         mg.milkDone = true;
         sr.sortingOrder = 10;

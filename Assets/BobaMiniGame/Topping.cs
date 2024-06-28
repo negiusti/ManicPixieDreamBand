@@ -35,7 +35,7 @@ public class Topping : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (mg.toppingsDone)
+        if (mg.toppingsDone || mg.CurrentStep() != BobaMiniGame.Step.Toppings)
             return;
         mg.toppingsDone = true;
         mg.cup.GetComponentInChildren<Toppings>().SetToppingType(gameObject.name);
