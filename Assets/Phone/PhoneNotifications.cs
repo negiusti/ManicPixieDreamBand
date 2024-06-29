@@ -27,13 +27,19 @@ public class PhoneNotifications : MonoBehaviour
     {
         Debug.Log("STOPPING NOTIF COROUTINE");
         if (coroutine != null)
+        {
             StopCoroutine(coroutine);
+            coroutine = null;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (coroutine == null)
+        {
+            coroutine = StartCoroutine(DeleteTopNotif());
+        }
     }
 
     public void Add(string txt)
