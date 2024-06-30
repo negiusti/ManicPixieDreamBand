@@ -17,6 +17,8 @@ public class BobaOrder : MonoBehaviour
 
     public void RandomizeOrder()
     {
+        if (animator == null)
+            Start();
         foreach(BobaOrderItem item in orderItems)
         {
             item.Randomize();

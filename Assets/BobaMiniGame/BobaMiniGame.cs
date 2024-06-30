@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class BobaMiniGame : MiniGame
 {
@@ -32,6 +33,7 @@ public class BobaMiniGame : MiniGame
     public GameObject blackScreen;
     private bool isActive;
     private float tipsIncome;
+    public Text speechText;
 
     // Use this for initialization
     void Start()
@@ -41,6 +43,7 @@ public class BobaMiniGame : MiniGame
         milks = FindObjectsOfType<Milk>();
         toppings = FindObjectsOfType<Topping>();
         flavors = FindObjectsOfType<Flavor>();
+        speechText.transform.parent.gameObject.SetActive(false);
         DisableAllChildren();
     }
 
@@ -70,14 +73,20 @@ public class BobaMiniGame : MiniGame
         if (step == Step.Done)
         {
             cup.GetComponent<Animator>().Play("LidAndStraw");
-            yield return new WaitForSeconds(1.2f);
+            yield return new WaitForSeconds(0.6f);
+            speechText.text = "u suck";
+            speechText.transform.parent.gameObject.SetActive(true);
+            yield return new WaitForSeconds(1f);
             StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 1f, true));
+            yield return new WaitForSeconds(1.75f);
+
+            speechText.transform.parent.gameObject.SetActive(false);
             if (step == Step.Done && !timer.IsRunning())
             {
                 StartCoroutine(CloseMiniGameSequence());
                 yield return null;
             }
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.5f);
             StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cam.transform.localPosition + Vector3.left * 35f * 4f, 0.5f));
             NewOrder();
         }
