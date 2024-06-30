@@ -33,7 +33,12 @@ public class BobaMiniGame : MiniGame
     public GameObject blackScreen;
     private bool isActive;
     private float tipsIncome;
-    public Text speechText;
+    public GameObject speechBubble;
+    private Text speechText;
+    private int currNumMistakes;
+    public string[] goodResponses; // no mistakes
+    public string[] midResponses; // 1 mistake
+    public string[] badResponses; // 2 or more mistakes
 
     // Use this for initialization
     void Start()
@@ -43,7 +48,8 @@ public class BobaMiniGame : MiniGame
         milks = FindObjectsOfType<Milk>();
         toppings = FindObjectsOfType<Topping>();
         flavors = FindObjectsOfType<Flavor>();
-        speechText.transform.parent.gameObject.SetActive(false);
+        speechText = speechBubble.GetComponentInChildren<Text>();
+        speechBubble.SetActive(false);
         DisableAllChildren();
     }
 
@@ -58,6 +64,9 @@ public class BobaMiniGame : MiniGame
         if(order.CheckOrderItem(step, choice))
         {
             tipsIncome += 1f;
+        } else
+        {
+            currNumMistakes++;
         }
         StartCoroutine(NextPhase());
     }
@@ -73,22 +82,35 @@ public class BobaMiniGame : MiniGame
         if (step == Step.Done)
         {
             cup.GetComponent<Animator>().Play("LidAndStraw");
+            speechBubble.SetActive(true);
+            if (currNumMistakes == 0)
+            {
+                speechText.text = goodResponses[Random.Range(0, goodResponses.Length)];
+            } else if (currNumMistakes == 1)
+            {
+                speechText.text = midResponses[Random.Range(0, midResponses.Length)];
+            } else
+            {
+                speechText.text = badResponses[Random.Range(0, badResponses.Length)];
+            }
             yield return new WaitForSeconds(0.6f);
-            speechText.text = "u suck";
-            speechText.transform.parent.gameObject.SetActive(true);
+            //speechBubble.SetActive(true);
             yield return new WaitForSeconds(1f);
             StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 1f, true));
             yield return new WaitForSeconds(1.75f);
 
-            speechText.transform.parent.gameObject.SetActive(false);
+            speechBubble.SetActive(false);
             if (step == Step.Done && !timer.IsRunning())
             {
                 StartCoroutine(CloseMiniGameSequence());
                 yield return null;
             }
-            yield return new WaitForSeconds(0.5f);
-            StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cam.transform.localPosition + Vector3.left * 35f * 4f, 0.5f));
-            NewOrder();
+            else
+            {
+                yield return new WaitForSeconds(0.5f);
+                StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cam.transform.localPosition + Vector3.left * 35f * 4f, 0.5f));
+                NewOrder();
+            }
         }
         yield return null;
     }
@@ -100,6 +122,7 @@ public class BobaMiniGame : MiniGame
 
     private void NewOrder()
     {
+        currNumMistakes = 0;
         currStepIdx = 0;
         step = steps[currStepIdx];
         milkDone = false;

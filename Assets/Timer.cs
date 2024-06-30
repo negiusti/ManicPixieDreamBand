@@ -8,13 +8,15 @@ public class Timer : MonoBehaviour
     public int timeInSeconds;
     private int timeRemaining;
     private Animator animator;
+    private Coroutine coroutine;
 
     void Start()
     {
         Reset();
         timerText = GetComponent<TextMeshPro>();
         animator = GetComponent<Animator>();
-        StartCoroutine(Countdown()); 
+        if (coroutine == null)
+            coroutine = StartCoroutine(Countdown()); 
     }
 
     private void Update()
@@ -34,12 +36,14 @@ public class Timer : MonoBehaviour
         if (IsRunning())
             return;
         Reset();
-        StartCoroutine(Countdown());
+        if (coroutine == null)
+            coroutine = StartCoroutine(Countdown());
     }
 
     public void StartTimer()
     {
-        StartCoroutine(Countdown());
+        if (coroutine == null)
+            coroutine = StartCoroutine(Countdown());
     }
 
     public bool IsRunning()
@@ -64,5 +68,6 @@ public class Timer : MonoBehaviour
     {
         // Actions to perform when the timer reaches zero
         Debug.Log("Timer has ended!");
+        coroutine = null;
     }
 }

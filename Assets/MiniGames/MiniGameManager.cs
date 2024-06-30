@@ -75,11 +75,15 @@ public class MiniGameManager : ScriptableObject
 
     public static void PrepMiniGame()
     {
+        if (Phone.Instance != null)
+            Phone.Instance.gameObject.SetActive(false);
         DialogueManager.Pause();
     }
 
     public static void CleanUpMiniGame()
     {
+        if (Phone.Instance != null)
+            Phone.Instance.gameObject.SetActive(true);
         DialogueManager.Unpause();
         DialogueManager.standardDialogueUI.OnContinueConversation();
     }
