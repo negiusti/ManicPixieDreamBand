@@ -14,7 +14,14 @@ public class PhoneNotifications : MonoBehaviour
     void Start()
     {
         Debug.Log("STARTING NOTIF COROUTINE");
-        coroutine = StartCoroutine(DeleteTopNotif());
+        if (coroutine == null)
+            coroutine = StartCoroutine(DeleteTopNotif());
+    }
+
+    private void OnEnable()
+    {
+        if (coroutine == null)
+            coroutine = StartCoroutine(DeleteTopNotif());
     }
 
     private void Awake()
@@ -23,7 +30,7 @@ public class PhoneNotifications : MonoBehaviour
         notifications = new Queue<PhoneNotification>();
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         Debug.Log("STOPPING NOTIF COROUTINE");
         if (coroutine != null)

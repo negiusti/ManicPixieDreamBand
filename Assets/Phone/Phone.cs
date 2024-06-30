@@ -474,7 +474,7 @@ public class Phone : MonoBehaviour
     private void Awake()
     {
         // Ensure only one instance exists
-        if (Instance == null)
+        if (Phone.Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject); // Optional: Keeps the object alive across scene changes

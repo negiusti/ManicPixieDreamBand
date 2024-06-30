@@ -62,7 +62,6 @@ public class CharacterEditor : MonoBehaviour
 
 
     public ColorPalettes faceColorPalettes;
-    private Phone phone;
     private GameObject characterGameObject;
 
     public void UnlockAllOutfits(bool value)
@@ -79,9 +78,8 @@ public class CharacterEditor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        phone = GameObject.FindFirstObjectByType<Phone>();
-        if (phone != null)
-            phone.gameObject.SetActive(false);
+        if (Phone.Instance != null)
+            Phone.Instance.gameObject.SetActive(false);
         skinRenderers = new List<SpriteRenderer>();
         character = GameObject.FindFirstObjectByType<Character>();
         characterGameObject = character.gameObject;
@@ -153,8 +151,8 @@ public class CharacterEditor : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (phone != null)
-            phone.gameObject.SetActive(true);
+        if (Phone.Instance != null)
+            Phone.Instance.gameObject.SetActive(true);
     }
 
     private void UpdateIcons(string category, string[] labels)
