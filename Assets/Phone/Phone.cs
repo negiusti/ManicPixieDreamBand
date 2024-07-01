@@ -27,7 +27,6 @@ public class Phone : MonoBehaviour
     private PhoneNotifications notifications;
     public GameObject TransitionScreen;
     
-
     enum PhoneState
     {
         Home,
@@ -128,7 +127,7 @@ public class Phone : MonoBehaviour
         {
             Debug.LogError("conversation is not a txt convo: " + convoName);
         }
-        return convoName.Split('_')[1];
+        return convoName.Split('/')[1];
     }
 
     public void GoHome()
@@ -414,6 +413,8 @@ public class Phone : MonoBehaviour
 
     public void Lock()
     {
+        
+        HUDIcon.GetComponent<Animator>().Play("Lock_HUD", -1, 0f);
         isLocked = true;
         HUDIcon.GetComponent<SpriteResolver>().SetCategoryAndLabel("PhoneHUDIcon", "Locked");
         GoHome();
@@ -442,6 +443,7 @@ public class Phone : MonoBehaviour
             isLocked = true;
             return;
         }
+        HUDIcon.GetComponent<Animator>().Play("Unlock_HUD", -1, 0f);
         HUDIcon.GetComponent<SpriteResolver>().SetCategoryAndLabel("PhoneHUDIcon", "Unlocked");
         float deltaY = background.transform.localPosition.y - Camera.main.gameObject.transform.position.y;
         foreach (Transform child in transform)

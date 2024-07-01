@@ -222,7 +222,7 @@ public class CustomDialogueScript : MonoBehaviour
 
     public bool IsTxtConvo(string convoName)
     {
-        return convoName.StartsWith("TXT_");
+        return convoName.StartsWith("TXT/");
     }
 
     void OnConversationLine(Subtitle subtitle)

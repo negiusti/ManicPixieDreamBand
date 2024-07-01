@@ -1,7 +1,14 @@
 ﻿using System;
-public class QuestManager
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "QuestManager", menuName = "Custom/QuestManager")]
+public class QuestManager : ScriptableObject
 {
-    public QuestManager()
+    private ConversationsData quests = ConversationJson.GetQuestsData();
+    private ConversationData currentQuest;
+
+    private static void StartNewQuest()
     {
+        
     }
 }

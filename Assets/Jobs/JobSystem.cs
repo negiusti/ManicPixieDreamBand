@@ -56,7 +56,7 @@ public class JobSystem : ScriptableObject
         if (failStreak > 2)
         {
             // send fired streak
-            Phone.Instance.ReceiveMsg("TXT_" + currentJob.ToString() + " Boss_" + currentJob.ToString() + "_Fire");
+            Phone.Instance.ReceiveMsg("TXT/" + currentJob.ToString() + " Boss/Fire");
         }
     }
 

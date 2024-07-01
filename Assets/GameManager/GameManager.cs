@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
         Calendar.Load();
         InventoryManager.LoadInventories();
         ConversationJson.LoadFromJson().WaitForCompletion();
+        ConversationJson.LoadQuestsFromJson().WaitForCompletion();
         BandJson.LoadFromJson().WaitForCompletion();
         JobSystem.Load();
     }
