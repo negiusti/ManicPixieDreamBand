@@ -15,14 +15,29 @@ public class Timer : MonoBehaviour
         Reset();
         timerText = GetComponent<TextMeshPro>();
         animator = GetComponent<Animator>();
-        if (coroutine == null)
-            coroutine = StartCoroutine(Countdown()); 
     }
 
     private void Update()
     {
         animator.SetBool("TimerLow", timeRemaining > 0 && timeRemaining < 10);
         animator.SetBool("TimerDone", timeRemaining <= 0);
+    }
+
+    private void OnDisable()
+    {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+        }
+        coroutine = null;
+    }
+
+    private void OnEnable()
+    {
+        if (animator == null)
+            Start();
+        if (coroutine == null)
+            coroutine = StartCoroutine(Countdown());
     }
 
     public void Reset()

@@ -80,6 +80,9 @@ public class Calendar : ScriptableObject
             {
                 events[i].Add(new BandPracticeEvent(null, false));
             }
+            if (isWorkScheduled(i) && JobSystem.CurrentJob() == JobSystem.PunkJob.Unemployed) {
+                events[i].RemoveAll(e => e is JobEvent);
+            }
             if (!isWorkScheduled(i) && JobSystem.CurrentJob() != JobSystem.PunkJob.Unemployed)
             {
                 if (i %2 == 0)
@@ -111,6 +114,7 @@ public class Calendar : ScriptableObject
         }
     }
 
+
     private static bool isBandPracticeScheduled(int i)
     {
         return events.ContainsKey(i) && events[i].Any(e => e is BandPracticeEvent);
@@ -119,13 +123,6 @@ public class Calendar : ScriptableObject
     private static bool isWorkScheduled(int i)
     {
         return events.ContainsKey(i) && events[i].Any(e => e is JobEvent);
-    }
-
-    private static void unscheduleWork(int i)
-    {
-        Debug.Log("unscheduleWork for day " + i);
-        if (events.ContainsKey(i))
-            events[i].RemoveAll(e => e is JobEvent);
     }
 
     private static bool isBandPracticeDay(int i)

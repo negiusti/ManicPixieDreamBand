@@ -49,6 +49,7 @@ public class BobaMiniGame : MiniGame
         toppings = FindObjectsOfType<Topping>();
         flavors = FindObjectsOfType<Flavor>();
         speechText = speechBubble.GetComponentInChildren<Text>();
+        StartCoroutine(speechBubble.GetComponent<LerpPosition>().Lerp(speechBubble.transform.localPosition + Vector3.right * 35f, 1f));
         speechBubble.SetActive(false);
         DisableAllChildren();
     }
@@ -83,23 +84,23 @@ public class BobaMiniGame : MiniGame
         {
             cup.GetComponent<Animator>().Play("LidAndStraw");
             speechBubble.SetActive(true);
+            StartCoroutine(speechBubble.GetComponent<LerpPosition>().Lerp(speechBubble.transform.localPosition + Vector3.left * 35f, 1f));
             if (currNumMistakes == 0)
             {
+                JobSystem.GoodJob();
                 speechText.text = goodResponses[Random.Range(0, goodResponses.Length)];
             } else if (currNumMistakes == 1)
             {
                 speechText.text = midResponses[Random.Range(0, midResponses.Length)];
             } else
             {
+                JobSystem.BadJob();
                 speechText.text = badResponses[Random.Range(0, badResponses.Length)];
             }
-            yield return new WaitForSeconds(0.6f);
-            //speechBubble.SetActive(true);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.5f);
             StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 1f, true));
             yield return new WaitForSeconds(1.75f);
-
-            speechBubble.SetActive(false);
+            
             if (step == Step.Done && !timer.IsRunning())
             {
                 StartCoroutine(CloseMiniGameSequence());
@@ -107,7 +108,8 @@ public class BobaMiniGame : MiniGame
             }
             else
             {
-                yield return new WaitForSeconds(0.5f);
+                StartCoroutine(speechBubble.GetComponent<LerpPosition>().Lerp(speechBubble.transform.localPosition + Vector3.right * 35f, 1f));
+                speechBubble.SetActive(false);
                 StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cam.transform.localPosition + Vector3.left * 35f * 4f, 0.5f));
                 NewOrder();
             }

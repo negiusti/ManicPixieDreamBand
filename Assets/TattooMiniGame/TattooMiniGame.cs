@@ -296,6 +296,7 @@ public class TattooMiniGame : MiniGame
         if (option == "Success")
         {
             stringToDisplay = successOptions[Random.Range(0, successOptions.Length)];
+            JobSystem.GoodJob();
         }
         else if (option == "Pass")
         {
@@ -303,6 +304,7 @@ public class TattooMiniGame : MiniGame
         }
         else // Failure
         {
+            JobSystem.BadJob();
             stringToDisplay = failureOptions[Random.Range(0, failureOptions.Length)];
         }
 
