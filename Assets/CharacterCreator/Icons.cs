@@ -91,7 +91,8 @@ public class Icons : MonoBehaviour
 
         if (leftSpriteRen != null)
             leftSpriteRen.color = faded;
-        middleSpriteRen.color = c;
+        if (middleSpriteRen != null)
+            middleSpriteRen.color = c;
         if (rightSpriteRen != null)
             rightSpriteRen.color = faded;
 
