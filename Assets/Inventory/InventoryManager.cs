@@ -1,5 +1,8 @@
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.AddressableAssets;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 [CreateAssetMenu(fileName = "InventoryManager", menuName = "Custom/InventoryManager")]
 public class InventoryManager : ScriptableObject
@@ -13,6 +16,21 @@ public class InventoryManager : ScriptableObject
     private static Dictionary<PerishableItem, int> pocketsPerishable;
     private static string pocketsPerishableSaveKey = "PocketsPerishable";
     private static string MAIN_CHARACTER = "MainCharacter";
+    private static string addressableDefaultsKey = "Assets/Defaults/default-purchaseables.json";
+    private static DefaultPurchaseables defaultPurchaseables;
+
+    [System.Serializable]
+    private class DefaultPurchaseables
+    {
+        public List<DefaultPurchaseable> data;
+    }
+
+    [System.Serializable]
+    private class DefaultPurchaseable
+    {
+        public string category;
+        public List<string> items;
+    }   
 
     public enum PerishableItem
     {
@@ -94,6 +112,7 @@ public class InventoryManager : ScriptableObject
 
     public static void LoadInventories()
     {
+        LoadFromJson().WaitForCompletion();
         if (ES3.KeyExists(invSaveKey))
         {
             characterInventories = (Dictionary<string, Dictionary<string, HashSet<string>>>)ES3.Load(invSaveKey);
@@ -101,6 +120,7 @@ public class InventoryManager : ScriptableObject
         if (characterInventories == null)
         {
             characterInventories = new Dictionary<string, Dictionary<string, HashSet<string>>>();
+            characterInventories.Add(MAIN_CHARACTER, defaultPurchaseables.data.ToDictionary(d => d.category, d => d.items.ToHashSet()));
             Debug.LogError("Could not find characterInventories in easy save system");
         }
         if (ES3.KeyExists(purchasedSaveKey))
@@ -109,7 +129,7 @@ public class InventoryManager : ScriptableObject
         }
         if (categoryToPurchased == null)
         {
-            categoryToPurchased = new Dictionary<string, HashSet<string>>();
+            categoryToPurchased = defaultPurchaseables.data.ToDictionary(d => d.category, d => d.items.ToHashSet());
             Debug.LogError("Could not find cateogoryToPurchased in easy save system");
         }
 
@@ -265,5 +285,26 @@ public class InventoryManager : ScriptableObject
     public static Dictionary<Item, int> GetPocketItems()
     {
         return pockets;
+    }
+
+    private static AsyncOperationHandle<TextAsset> LoadFromJson()
+    {
+        AsyncOperationHandle<TextAsset> p = Addressables.LoadAssetAsync<TextAsset>(addressableDefaultsKey);
+        p.Completed += OnDefaultsDataLoaded;
+        return p;
+    }
+
+    private static void OnDefaultsDataLoaded(AsyncOperationHandle<TextAsset> obj)
+    {
+        if (obj.Status == AsyncOperationStatus.Succeeded)
+        {
+            string jsonData = obj.Result.text;
+            defaultPurchaseables = JsonUtility.FromJson<DefaultPurchaseables>(jsonData);
+        }
+        else
+        {
+            Debug.LogError("Failed to load prefab from Addressables: " + obj.OperationException);
+        }
+        Addressables.Release(obj);
     }
 }

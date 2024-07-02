@@ -145,7 +145,8 @@ public class Character : MonoBehaviour
             categoryToEnabled[spriteRenderer.gameObject.name] = spriteRenderer.enabled
                 || spriteRenderer.gameObject.name == "Eyeshadow"
                 || spriteRenderer.gameObject.name == "Eyebrows"
-                || spriteRenderer.gameObject.name == "Sk8board";
+                || spriteRenderer.gameObject.name == "Sk8board"
+                || spriteRenderer.gameObject.name.Contains("Shoe");
         }
     }
 
