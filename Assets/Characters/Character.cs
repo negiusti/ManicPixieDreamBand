@@ -185,7 +185,7 @@ public class Character : MonoBehaviour
             // Character does not exist yet...
             updateSpriteResolverMap();
             updateSpriteColorMap();
-            SetIsWearingFullFit(true);
+            SetIsWearingFullFit(false);
             return;
         }
         CharacterData characterData = (CharacterData)ES3.Load(characterName);

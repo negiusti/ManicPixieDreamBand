@@ -121,7 +121,7 @@ public class CharacterEditor : MonoBehaviour
             }
             else
             {
-                labels = InventoryManager.GetMCInventory(category).ToArray();
+                labels = spriteLib.GetCategoryLabelNames(category).Where(i => InventoryManager.GetMCInventory(category).Contains(i)).ToArray();
                 // if the inventory is empty, just unlock everything
                 if (labels.Length == 0)
                     labels = spriteLib.GetCategoryLabelNames(category)
