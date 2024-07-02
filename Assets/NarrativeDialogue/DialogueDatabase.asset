@@ -320,7 +320,7 @@ MonoBehaviour:
   - id: 1
     fields:
     - title: Title
-      value: CoffeeShop_Barista_FirstOrder
+      value: CoffeeShop/FirstOrder
       type: 0
       typeString: 
     - title: Description
@@ -1211,18 +1211,18 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 565.68884, y: 359.91882}
-    canvasZoom: 0.8871206
+    canvasScrollPosition: {x: 365.2813, y: 174.92729}
+    canvasZoom: 0.63787776
   - id: 2
     fields:
     - title: Title
       value: Spanish Lessons
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Actor
       value: 1
       type: 5
@@ -4940,7 +4940,7 @@ MonoBehaviour:
   - id: 4
     fields:
     - title: Title
-      value: TXT_Band
+      value: TXT/Band/0
       type: 0
       typeString: CustomFieldType_Text
     - title: Description
@@ -5374,7 +5374,7 @@ MonoBehaviour:
   - id: 5
     fields:
     - title: Title
-      value: TXT_Ricki
+      value: TXT/Ricki/0
       type: 0
       typeString: CustomFieldType_Text
     - title: Description
@@ -6528,7 +6528,7 @@ MonoBehaviour:
   - id: 7
     fields:
     - title: Title
-      value: Plot_Tutorial_1
+      value: Plot/Tutorial/1
       type: 0
       typeString: 
     - title: Description
@@ -6649,8 +6649,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: that's the last time I'm dressing up as a cheese, everyone thought
-          I was a banana at the party last night
+        value: ugh... my head hurts
         type: 0
         typeString: 
       - title: Sequence
@@ -6705,7 +6704,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: UGH i need to get out of these sweaty clothes
+        value: oh mY GOODNESS THAT AUDITION IS TODAY ISN'T IT!! i need to get dressed
+          NOW!!!
         type: 0
         typeString: 
       - title: Sequence
@@ -6727,7 +6727,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: HasChangedOutfitToday() == false
-      userScript: 
+      userScript: Emote("MainCharacter", "Angry", "Stress");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -9357,7 +9357,7 @@ MonoBehaviour:
   - id: 13
     fields:
     - title: Title
-      value: TXT_Tattoo Boss_Tattoo_Hire
+      value: TXT/Tattoo Boss/Hire
       type: 0
       typeString: CustomFieldType_Text
     - title: Description
@@ -9740,7 +9740,7 @@ MonoBehaviour:
   - id: 14
     fields:
     - title: Title
-      value: TXT_Boba Boss_Boba_Hire
+      value: TXT/Boba Boss/Hire
       type: 0
       typeString: CustomFieldType_Text
     - title: Description
@@ -11173,7 +11173,7 @@ MonoBehaviour:
   - id: 19
     fields:
     - title: Title
-      value: TXT_Tattoo Boss_Tattoo_Fire
+      value: TXT/Tattoo Boss/Fire
       type: 0
       typeString: CustomFieldType_Text
     - title: Description
@@ -11724,7 +11724,7 @@ MonoBehaviour:
   - id: 20
     fields:
     - title: Title
-      value: TXT_Boba Boss_Boba_Fire
+      value: TXT/Boba Boss/Fire
       type: 0
       typeString: CustomFieldType_Text
     - title: Description
@@ -12267,6 +12267,104 @@ MonoBehaviour:
         serializedVersion: 2
         x: 185
         y: 329
+        width: 160
+        height: 30
+    entryGroups: []
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 1
+  - id: 21
+    fields:
+    - title: Title
+      value: Quests/ScreenPrinting/0
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Description
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Actor
+      value: 1
+      type: 5
+      typeString: CustomFieldType_Actor
+    - title: Conversant
+      value: 2
+      type: 5
+      typeString: CustomFieldType_Actor
+    overrideSettings:
+      useOverrides: 0
+      overrideSubtitleSettings: 0
+      showNPCSubtitlesDuringLine: 1
+      showNPCSubtitlesWithResponses: 1
+      showPCSubtitlesDuringLine: 0
+      skipPCSubtitleAfterResponseMenu: 0
+      subtitleCharsPerSecond: 30
+      minSubtitleSeconds: 2
+      continueButton: 0
+      overrideSequenceSettings: 0
+      defaultSequence: 
+      defaultPlayerSequence: 
+      defaultResponseMenuSequence: 
+      overrideInputSettings: 0
+      alwaysForceResponseMenu: 1
+      includeInvalidEntries: 0
+      responseTimeout: 0
+      emTagForOldResponses: 0
+      emTagForInvalidResponses: 0
+      cancelSubtitle:
+        key: 27
+        buttonName: 
+      cancelConversation:
+        key: 27
+        buttonName: 
+    nodeColor: 
+    dialogueEntries:
+    - id: 0
+      fields:
+      - title: Title
+        value: START
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: None()
+        type: 0
+        typeString: 
+      conversationID: 0
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: 
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 160
+        y: 30
         width: 160
         height: 30
     entryGroups: []

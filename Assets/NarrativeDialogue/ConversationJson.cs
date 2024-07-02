@@ -33,15 +33,24 @@ public class ConversationsData
 public class ConversationJson : ScriptableObject
 {
     private static string plotConvoJsonPath = "Assets/Conversations/plot.json";
+    private static string questsConvoJsonPath = "Assets/Conversations/quests.json";
     //private static string randomQuestsConvoJsonPath = "Assets/Conversations/plot.json";
     //private static string npcQuestsConvoJsonPath = "Assets/Conversations/plot.json";
     private static ConversationsData plotData;
+    private static ConversationsData questsData;
 
     public static AsyncOperationHandle<TextAsset> LoadFromJson()
     {
-        AsyncOperationHandle<TextAsset> x = Addressables.LoadAssetAsync<TextAsset>(plotConvoJsonPath);
-        x.Completed += OnPlotDataLoaded;
-        return x;
+        AsyncOperationHandle<TextAsset> p = Addressables.LoadAssetAsync<TextAsset>(plotConvoJsonPath);
+        p.Completed += OnPlotDataLoaded;
+        return p;
+    }
+
+    public static AsyncOperationHandle<TextAsset> LoadQuestsFromJson()
+    {
+        AsyncOperationHandle<TextAsset> q = Addressables.LoadAssetAsync<TextAsset>(questsConvoJsonPath);
+        q.Completed += OnQuestsDataLoaded;
+        return q;
     }
 
     private static void OnPlotDataLoaded(AsyncOperationHandle<TextAsset> obj)
@@ -58,9 +67,28 @@ public class ConversationJson : ScriptableObject
         Addressables.Release(obj);
     }
 
+    private static void OnQuestsDataLoaded(AsyncOperationHandle<TextAsset> obj)
+    {
+        if (obj.Status == AsyncOperationStatus.Succeeded)
+        {
+            string jsonData = obj.Result.text;
+            questsData = JsonUtility.FromJson<ConversationsData>(jsonData);
+        }
+        else
+        {
+            Debug.LogError("Failed to load prefab from Addressables: " + obj.OperationException);
+        }
+        Addressables.Release(obj);
+    }
+
     public static ConversationsData GetPlotData()
     {
         return plotData;
+    }
+
+    public static ConversationsData GetQuestsData()
+    {
+        return questsData;
     }
 
 }
