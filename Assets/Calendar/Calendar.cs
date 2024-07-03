@@ -35,6 +35,12 @@ public class Calendar : ScriptableObject
         Weather.RandomizeWeather();
     }
 
+    public static bool DoneForTheDay()
+    {
+        GetTodaysEvents();
+        return currentEventIdx >= events[day].Count;
+    }
+
     public static ICalendarEvent GetCurrentEvent()
     {
         if (events == null)
