@@ -83,8 +83,8 @@ public class ScreenPrintingScreen : MonoBehaviour
         Destroy(shirt.transform.GetChild(0).gameObject);
 
         // Print the design onto the shirt in the form of a child object to the shirt
-        GameObject newDesign = Instantiate(designPrefab, transform.position + designPrefab.transform.position, Quaternion.identity);
-        newDesign.transform.parent = shirt.transform;
+        GameObject newDesign = Instantiate(designPrefab, transform.position + designPrefab.transform.position, Quaternion.identity, shirt.transform);
+        //GameObject newDesign = Instantiate(designPrefab, transform.position, Quaternion.identity, shirt.transform);
 
         // Stop the screen's movement for a moment
         moveScreen = false;
