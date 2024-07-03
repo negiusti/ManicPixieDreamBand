@@ -15,9 +15,6 @@ public class BandNameMiniGame : MiniGame
     public Text rickiSpeechText;
     public BandNamePatch lbPatch;
     public BandNamePatch pjPatch;
-    private bool pickedLemonBoy;
-    private float cooldown = 2f;
-    private float timer;
     private BlackScreen blackScreen;
     private bool waitingForClick;
     public GameObject clickHint;
@@ -48,7 +45,6 @@ public class BandNameMiniGame : MiniGame
 
         MiniGameManager.PrepMiniGame();
         isActive = true;
-        timer = 0;
         waitingForClick = true;
         clickHint.SetActive(false);
         rickiSpeechBubble.SetActive(false);
@@ -101,7 +97,6 @@ public class BandNameMiniGame : MiniGame
     {
         if (bandName == "LEMON BOY")
         {
-            pickedLemonBoy = true;
             rickiSpeechBubble.SetActive(false);
             StartCoroutine(maxBark("nah that's a dumb name"));
             lbPatch.Explode();
