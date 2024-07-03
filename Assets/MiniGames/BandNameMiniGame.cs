@@ -18,12 +18,14 @@ public class BandNameMiniGame : MiniGame
     private BlackScreen blackScreen;
     private bool waitingForClick;
     public GameObject clickHint;
+    private Camera mgCamera;
 
 
     private void Start()
     {
         blackScreen = GetComponentInChildren<BlackScreen>();
         blackScreen.gameObject.SetActive(false);
+        mgCamera = GetComponentInChildren<Camera>();
         DisableAllChildren();
     }
 
@@ -105,8 +107,6 @@ public class BandNameMiniGame : MiniGame
             maxSpeechBubble.SetActive(false);
             StartCoroutine(rickiBark("ok punk juice it is"));
             StartCoroutine(maxBark("huh. that'd be a cool name for a video game", true));
-            waitingForClick = true;
-            StartCoroutine(WaitForClick(CloseMiniGameCR()));
         }
     }
 
@@ -122,7 +122,16 @@ public class BandNameMiniGame : MiniGame
     private IEnumerator maxBark(string speechText, bool waitFirst = false)
     {
         if (waitFirst)
+        {
             yield return new WaitForSeconds(2f);
+            rickiSpeechBubble.SetActive(false);
+            StartCoroutine(mgCamera.GetComponent<CameraLerp>().PanCameraTo(new Vector3(8.22f, 3.14f, 0f), 6.3f, 1f));
+            yield return new WaitForSeconds(2f);
+            maxCloseup.EmoteEyes("MaxStare");
+            maxCloseup.FacePop();
+            waitingForClick = true;
+            StartCoroutine(WaitForClick(CloseMiniGameCR()));
+        }
         maxSpeechText.text = speechText;
         maxSpeechBubble.SetActive(true);
         yield return null;
