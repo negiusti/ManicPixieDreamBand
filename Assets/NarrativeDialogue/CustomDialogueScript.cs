@@ -102,7 +102,7 @@ public class CustomDialogueScript : MonoBehaviour
         if (IsTxtConvo(conversation))
         {
             // Send notification to phone
-            phone.ReceiveMsg(conversation);
+            phone.ReceiveMsg(conversation, true);
         }
         else
         {

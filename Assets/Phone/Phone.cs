@@ -170,10 +170,15 @@ public class Phone : MonoBehaviour
             phoneStateStack.Push(PhoneState.Pin);
     }
 
-    public void ReceiveMsg(string conversation)
+    public void ReceiveMsg(string conversation, bool forceOpenPhone = false)
     {
+        if (forceOpenPhone)
+            Unlock();
         messagesApp.ReceiveMsg(GetContactNameFromConvoName(conversation), conversation);
-        EnableNotificationIndicator();
+        if (forceOpenPhone)
+            OpenTxtConvoWith(GetContactNameFromConvoName(conversation));
+        else
+            EnableNotificationIndicator();
     }
 
     public void OpenBank()
