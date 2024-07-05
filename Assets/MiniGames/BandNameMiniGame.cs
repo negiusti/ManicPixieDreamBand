@@ -19,7 +19,7 @@ public class BandNameMiniGame : MiniGame
     private bool waitingForClick;
     public GameObject clickHint;
     private Camera mgCamera;
-
+    private bool pickedPunkJuice;
 
     private void Start()
     {
@@ -47,6 +47,7 @@ public class BandNameMiniGame : MiniGame
 
         MiniGameManager.PrepMiniGame();
         isActive = true;
+        pickedPunkJuice = false;
         waitingForClick = true;
         clickHint.SetActive(false);
         rickiSpeechBubble.SetActive(false);
@@ -97,6 +98,8 @@ public class BandNameMiniGame : MiniGame
 
     public void SelectBandName(string bandName)
     {
+        if (pickedPunkJuice)
+            return;
         if (bandName == "LEMON BOY")
         {
             rickiSpeechBubble.SetActive(false);
@@ -104,6 +107,7 @@ public class BandNameMiniGame : MiniGame
             lbPatch.Explode();
         } else
         {
+            pickedPunkJuice = true;
             maxSpeechBubble.SetActive(false);
             StartCoroutine(rickiBark("ok punk juice it is"));
             StartCoroutine(maxBark("huh. that'd be a cool name for a video game", true));

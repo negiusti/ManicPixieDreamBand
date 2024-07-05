@@ -33,8 +33,7 @@ public class DrawerScript : MonoBehaviour
 
     private void HideIcons()
     {
-        // Dont hide the shoe icons
-        icons.gameObject.SetActive(icons.gameObject.name.Contains("Shoe"));
+        icons.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
