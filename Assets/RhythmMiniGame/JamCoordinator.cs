@@ -36,7 +36,8 @@ public class JamCoordinator : ScriptableObject
         GameManager gm = GameManager.Instance;
         Band band = BandsManager.GetBandByName(bandname);
         stage = FindFirstObjectByType<Stage>();
-        stage.StartPerformance(band);
+        if (stage != null)
+            stage.StartPerformance(band);
 
         SpawnCharacters.SpawnBandMembers(band.members);
 
