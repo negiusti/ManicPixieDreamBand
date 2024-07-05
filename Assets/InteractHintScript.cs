@@ -5,6 +5,7 @@ public class InteractHintScript : MonoBehaviour
 {
     private bool inRange;
     public string sceneToTrigger;
+    public MiniGame mgToTrigger;
     public KeyCode keyToTrigger;
     private SceneChanger sc;
     public GameObject objToEnable;
@@ -41,6 +42,8 @@ public class InteractHintScript : MonoBehaviour
     {
         if (inRange && Input.GetKey(keyToTrigger) && InteractionEnabled())
         {
+            if (mgToTrigger != null)
+                mgToTrigger.OpenMiniGame();
             if (objToEnable != null)
                 objToEnable.SetActive(true);
             if (sceneToTrigger != null && sceneToTrigger.Length > 0)
