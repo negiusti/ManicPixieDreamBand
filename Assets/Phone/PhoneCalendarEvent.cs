@@ -30,7 +30,7 @@ public class PhoneCalendarEvent : MonoBehaviour
 
     public void Complete()
     {
-        sr.color = Color.gray;
+        sr.color = new Color(1f, 1f, 1f, 0.5f);
     }
 
     public void NotComplete()

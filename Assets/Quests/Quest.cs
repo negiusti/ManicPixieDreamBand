@@ -2,7 +2,7 @@
 
 public class Quest
 {
-    private ConversationsData convos;
+    private ConversationsData convos; // conversations to be had in order
 
     public Quest()
     {
