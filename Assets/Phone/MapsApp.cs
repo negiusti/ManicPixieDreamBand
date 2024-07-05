@@ -26,6 +26,20 @@ public class MapsApp : MonoBehaviour
     private string currentSceneName;
     public PhoneIcon phoneIcon;
 
+    private Dictionary<Location, Location> locationToNeighborhood = new Dictionary<Location, Location>
+    {
+        { Location.Bedroom, Location.DowntownNeighborhood },
+        { Location.CoffeeShop, Location.DowntownNeighborhood },
+        { Location.Basement, Location.DowntownNeighborhood },
+        { Location.ThriftStore, Location.ShoppingDistrict },
+        { Location.Bar, Location.ShoppingDistrict },
+        { Location.MusicShop, Location.ShoppingDistrict },
+        { Location.DowntownNeighborhood, Location.DowntownNeighborhood },
+        { Location.ShoppingDistrict, Location.ShoppingDistrict },
+        { Location.Job1Neighborhood, Location.Job1Neighborhood },
+        { Location.TattooShop, Location.Job1Neighborhood },
+        { Location.BobaShop, Location.Job1Neighborhood },};
+
     private Dictionary<Location, string> locationToSceneName = new Dictionary<Location, string> {
         { Location.Bedroom, "Bedroom" },
         { Location.CoffeeShop, "CoffeeShop" },
@@ -81,10 +95,10 @@ public class MapsApp : MonoBehaviour
         currentSceneName = sc.GetCurrentScene();
         if (sceneNameToLocation.ContainsKey(currentSceneName))
         {
-            Location l = sceneNameToLocation[currentSceneName];
+            Location currentNeighborhood = locationToNeighborhood[sceneNameToLocation[currentSceneName]];
             foreach (Pin p in pins)
             {
-                if (p.location == l)
+                if (p.location == currentNeighborhood)
                 {
                     p.SetHere();
                 }
