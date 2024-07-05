@@ -4,10 +4,14 @@ using UnityEngine;
 public class BassMiniGame : MiniGame
 {
     private bool isActive;
+    private GameObject mainCamera;
+    private Camera mgCamera;
 
     // Use this for initialization
     void Start()
     {
+        mgCamera = GetComponentInChildren<Camera>();
+        DisableAllChildren();
     }
 
     private void OnDestroy()
@@ -26,8 +30,13 @@ public class BassMiniGame : MiniGame
 
     public override void OpenMiniGame()
     {
+        if (mgCamera != null)
+        {
+            mainCamera = Camera.main.transform.gameObject;
+            mainCamera.SetActive(false);
+        }
         MiniGameManager.PrepMiniGame();
-        JamCoordinator.SwitchToJamCamera();
+        //JamCoordinator.SwitchToJamCamera();
         isActive = true;
         EnableAllChildren();
     }
@@ -41,8 +50,12 @@ public class BassMiniGame : MiniGame
 
     public override void CloseMiniGame()
     {
+        if (mgCamera != null)
+        {
+            mainCamera.SetActive(true);
+        }
         isActive = false;
-        JamCoordinator.SwitchToMainCamera();
+        //JamCoordinator.SwitchToMainCamera();
         JamCoordinator.EndJam();
         MiniGameManager.CleanUpMiniGame();
         DisableAllChildren();
