@@ -5,6 +5,7 @@ public class ForegroundVehicle : MonoBehaviour
     private GameObject background;
     private float minX, maxX;
     public bool left;
+    public float moveSpeed = 30f;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +42,6 @@ public class ForegroundVehicle : MonoBehaviour
     {
         Vector3 position = transform.position;
         //float moveSpeed = Random.Range(27f, 28f);
-        float moveSpeed = 30f;
         float moveInput = left ? -1f : 1f;
         position.x += moveInput * moveSpeed * Time.deltaTime;
         transform.position = position;
