@@ -6,6 +6,7 @@ public class ForegroundVehicle : MonoBehaviour
     private float minX, maxX;
     public bool left;
     public float moveSpeed = 30f;
+    public Color[] colors;
 
     // Start is called before the first frame update
     void Start()
