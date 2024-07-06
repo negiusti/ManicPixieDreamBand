@@ -7,6 +7,7 @@ public class ForegroundVehicle : MonoBehaviour
     public bool left;
     public float moveSpeed = 30f;
     public Color[] colors;
+    public SpriteRenderer car;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +38,8 @@ public class ForegroundVehicle : MonoBehaviour
         currentRotation.y = left ? 180 : 0;
         currentRotation.z = 0f;
         transform.rotation = currentRotation;
+        if (colors != null && colors.Length > 0)
+            car.color = colors[Random.Range(0, colors.Length)];
     }
 
     private void Move()
