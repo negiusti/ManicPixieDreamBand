@@ -4,8 +4,8 @@ public class Band
     public string Name;
     public int AvgTixSales;
     public BandMember[] members;
-    public string gAmp;
-    public string bAmp;
+    public string leftAmp;
+    public string rightAmp;
 
 
     public Band()

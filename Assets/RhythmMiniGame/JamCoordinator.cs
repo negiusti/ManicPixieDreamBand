@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 [CreateAssetMenu(fileName = "JamCoordinator", menuName = "Custom/JamCoordinator")]
 public class JamCoordinator : ScriptableObject
@@ -52,12 +53,17 @@ public class JamCoordinator : ScriptableObject
         //SwitchToJamCamera();
         foreach(BandMember member in band.members)
         {
-            if (member.instrumentName == null)
+            stage.GetInstrument(member.position).SetInstrument(member.instrument, member.instrumentName ?? ES3.Load<string>("gear_" + member.instrument));
+
+            if (member.position == "Left")
             {
-                stage.GetInstrument(member.position).SetInstrument(member.instrument, ES3.Load<string>("gear_" + member.instrument));
-            } else
+                string amp = (member.instrument == "Bass" ? "B_Amp" : "G_Amp");
+                stage.leftAmp.GetComponent<SpriteResolver>().SetCategoryAndLabel(amp, band.leftAmp ?? ES3.Load<string>("gear_" + amp));
+            }
+            if (member.position == "Right")
             {
-                stage.GetInstrument(member.position).SetInstrument(member.instrument, member.instrumentName);
+                string amp = (member.instrument == "Bass" ? "B_Amp" : "G_Amp");
+                stage.rightAmp.GetComponent<SpriteResolver>().SetCategoryAndLabel(amp, band.rightAmp ?? ES3.Load<string>("gear_" + amp));
             }
             stage.GetInstrument(member.position).Play(musicians[member.name]);
         }
