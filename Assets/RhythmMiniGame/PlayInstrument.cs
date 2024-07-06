@@ -105,6 +105,11 @@ public class PlayInstrument : MonoBehaviour
     //    }
     //}
 
+    public void SetInstrument(string category, string label)
+    {
+        spriteResolver.SetCategoryAndLabel(category, label);
+    }
+
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Player") && InteractionEnabled())

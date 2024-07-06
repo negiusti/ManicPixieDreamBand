@@ -1,102 +1,62 @@
 {
-
-    "conversationsData": [
+    "quests": [
         {
-            "locations": [ "Bedroom" ],
-            "participants": [
-                {
-                    "name": "MainCharacter",
-                    "position": {
-                        "x": -2.24,
-                        "y": -1.5,
-                        "z": 3.0
+            "questName": "Fetch Dylan's keys",
+            "conversationsData": {
+                "conversationsData": [
+                    {
+                        "locations": [ "MusicShop" ],
+                        "trigger": "Start",
+                        "conversation": "Quests/Dylans_Keys/0"
                     },
-                    "layer": "fg_char",
-                    "existAtStart": true
-                }
-            ],
-            "trigger": "Start",
-            "conversation": "Plot_Tutorial_1"
-        },
-        {
-            "locations": [ "Bedroom" ],
-            "participants": [],
-            "trigger": "Start",
-            "conversation": "TXT_Ricki"
-        },
-        {
-            "locations": [ "CoffeeShop" ],
-            "participants": [],
-            "trigger": "Start",
-            "conversation": "TXT_Band"
-        },
-        {
-            "locations": [ "CoffeeShop" ],
-            "participants": [
-                {
-                    "name": "Barista",
-                    "position": {
-                        "x": 2.07,
-                        "y": -0.31,
-                        "z": 3.0
+                    {
+                        "locations": [ "CoffeeShop" ],
+                        "trigger": "Start",
+                        "conversation": "Quests/Dylans_Keys/1"
                     },
-                    "layer": "bg_char",
-                    "existAtStart": true
-                }
-            ],
-            "trigger": "Barista",
-            "conversation": "CoffeeShop_Barista_FirstOrder"
+                    {
+                        "locations": [ "MusicShop" ],
+                        "trigger": "Start",
+                        "conversation": "Quests/Dylans_Keys/2"
+                    }
+                ]
+            }
         },
         {
-            "locations": [ "BandPracticeRoom" ],
-            "participants": [
-                {
-                    "name": "MainCharacter",
-                    "position": {
-                        "x": -2.24,
-                        "y": -2.35,
-                        "z": 3.0
-                    },
-                    "layer": "fg_char",
-                    "existAtStart": true
-                },
-                {
-                    "name": "Ricki",
-                    "position": {
-                        "x": -3.24,
-                        "y": -1.75,
-                        "z": 3.0
-                    },
-                    "layer": "fg_char",
-                    "existAtStart": true
-                },
-                {
-                    "name": "Max",
-                    "position": {
-                        "x": 7.24,
-                        "y": -3.17,
-                        "z": 3.0
-                    },
-                    "layer": "fg_char",
-                    "existAtStart": true
-                }
-            ],
-            "trigger": "Ricki",
-            "conversation": "Audition"
-        },
-        {
-            "locations": [ "SmallBar" ],
-            "participants": [
-            ],
-            "trigger": "Ricki",
-            "conversation": "First Gig"
-        },
-        {
-            "locations": [ "SmallBar" ],
-            "participants": [
-            ],
-            "trigger": "Ricki",
-            "conversation": "The Storm Show"
+            "questName": "Second Quest",
+            "conversationsData": {
+                "conversationsData": [
+                    {
+                        "locations": [ "Castle", "Dungeon" ],
+                        "participants": [
+                            {
+                                "name": "NPC4",
+                                "position": {
+                                    "x": 10.0,
+                                    "y": 11.0,
+                                    "z": 12.0
+                                },
+                                "layer": "Layer3",
+                                "isTrigger": false,
+                                "existAtStart": true
+                            },
+                            {
+                                "name": "NPC5",
+                                "position": {
+                                    "x": 13.0,
+                                    "y": 14.0,
+                                    "z": 15.0
+                                },
+                                "layer": "Layer4",
+                                "isTrigger": true,
+                                "existAtStart": false
+                            }
+                        ],
+                        "trigger": "NPC5",
+                        "conversation": "The king is in danger!"
+                    }
+                ]
+            }
         }
     ]
 }
