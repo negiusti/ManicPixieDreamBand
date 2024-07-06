@@ -73,16 +73,16 @@ public class CustomDialogueScript : MonoBehaviour
         StopCurrentConvo();
     }
 
-    private void CheckForPlotConvo()
+    private bool CheckForPlotConvo()
     {
         if (currentConvoIdx > plotData.Length -1)
         {
-            return;
+            return false;
         }
         if (!phone.IsLocked())
-            return;
+            return false;
         if (DialogueManager.IsConversationActive)
-            return;
+            return false;
         if (plotData[currentConvoIdx].locations.Contains(currentLocation))
         {
             //if (!conversations.ContainsKey(plotData.conversationsData[currentConvoIdx].conversation))
@@ -91,7 +91,9 @@ public class CustomDialogueScript : MonoBehaviour
             //    return;
             //}
             StartConversation(plotData[currentConvoIdx].conversation);
+            return true;
         }
+        return false;
     }
 
 
@@ -143,7 +145,10 @@ public class CustomDialogueScript : MonoBehaviour
         }
         if (!DialogueManager.IsConversationActive)
         {
-            CheckForPlotConvo();
+            if (!CheckForPlotConvo())
+            {
+                // Check for QuestConvo
+            }
         }
     }
 

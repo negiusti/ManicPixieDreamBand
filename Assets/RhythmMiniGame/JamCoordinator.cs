@@ -52,6 +52,13 @@ public class JamCoordinator : ScriptableObject
         //SwitchToJamCamera();
         foreach(BandMember member in band.members)
         {
+            if (member.instrumentName == null)
+            {
+                stage.GetInstrument(member.position).SetInstrument(member.instrument, ES3.Load<string>("gear_" + member.instrument));
+            } else
+            {
+                stage.GetInstrument(member.position).SetInstrument(member.instrument, member.instrumentName);
+            }
             stage.GetInstrument(member.position).Play(musicians[member.name]);
         }
     }

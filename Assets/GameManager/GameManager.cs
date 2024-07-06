@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour
         ConversationJson.LoadQuestsFromJson().WaitForCompletion();
         BandJson.LoadFromJson().WaitForCompletion();
         JobSystem.Load();
+        QuestManager.Load();
     }
 
     private void SaveData()
@@ -104,6 +105,7 @@ public class GameManager : MonoBehaviour
         Calendar.Save();
         InventoryManager.SaveInventories();
         JobSystem.Save();
+        QuestManager.Save();
     }
 
     // Update is called once per frame

@@ -28,13 +28,13 @@ public class CameraLerp : MonoBehaviour
             float factor = timePassed / duration;
             factor = Mathf.SmoothStep(0, 1, factor);
 
-            transform.position = Vector3.Lerp(startPosition, targetLocalPosition, factor);
+            transform.localPosition = Vector3.Lerp(startPosition, targetLocalPosition, factor);
             cam.orthographicSize = Mathf.Lerp(startOrthographicSize, targetOrthographicSize, factor);
 
             yield return null;
         }
 
 
-        transform.position = targetLocalPosition;
+        transform.localPosition = targetLocalPosition;
     }
 }
