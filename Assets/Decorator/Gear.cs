@@ -81,13 +81,12 @@ public class Gear : MonoBehaviour
         return label;
     }
 
-    public void SetBand(string band)
-    {
-        if (!shared)
-            return;
-        // load addressables??
-        spriteResolver.SetCategoryAndLabel(category, label);
-    }
+    //public void SetBand(string band)
+    //{
+    //    if (!shared)
+    //        return;
+    //    spriteResolver.SetCategoryAndLabel(category, label);
+    //}
 
     public void Change(int delta)
     {
