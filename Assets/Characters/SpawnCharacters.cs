@@ -25,6 +25,8 @@ public class SpawnCharacters : ScriptableObject
 
     public static void SpawnParticipants(Participant [] participants)
     {
+        if (participants == null)
+            return;
         Character[] characters = FindObjectsOfType<Character>();
         Array.Sort(participants, (a, b) => b.position.y.CompareTo(a.position.y));
         Dictionary<string, int> layerToIdx = new Dictionary<string, int>();

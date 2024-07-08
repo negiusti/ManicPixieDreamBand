@@ -30,15 +30,16 @@ public class Requirements
     public string currentJob;
     public RelationshipScore relationshipScore;
 
-    public float minMoney;
-    public float maxMoney;
+    public float minMoney = -1f;
+    public float maxMoney = -1f;
 
-    public int dayNum;
-    public int maxDay;
-    public int minDay;
+    public int dayNum = -1;
+    public int maxDay = -1;
+    public int minDay = -1;
     public string[] pocketsItems;
     public string[] completedQuests;
     public string currentEventType;
+    public string[] locations;
 }
 
 [System.Serializable]

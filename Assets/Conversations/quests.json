@@ -6,69 +6,29 @@
                 {
                     "locations": [ "MusicShop" ],
                     "trigger": "Start",
-                    "conversation": "Quests/Dylans_Keys/0"
+                    "conversation": "Quests/Dylans_Keys/0",
+                    "requirements": {
+                        "locations": [ "MusicShop" ]
+                    }
                 },
                 {
-                    "locations": [ "CoffeeShop" ],
+                    "locations": [ "SmallBar" ],
                     "trigger": "Start",
-                    "conversation": "Quests/Dylans_Keys/1"
+                    "conversation": "Quests/Dylans_Keys/1",
+                    "requirements": {
+                        "locations": [ "SmallBar" ]
+                    }
                 },
                 {
                     "locations": [ "MusicShop" ],
                     "trigger": "Start",
                     "conversation": "Quests/Dylans_Keys/2",
                     "requirements": {
+                        "locations": [ "MusicShop" ],
                         "pocketsItems": [ "Keys" ]
                     }
                 }
             ]
-        },
-        {
-            "questName": "Get a Croissant for Max",
-            "conversationsData": [
-                {
-                    "locations": [ "Any" ],
-                    "trigger": "Start",
-                    "conversation": "TXT/Max/Quests/Max_Croissant/0"
-                },
-                {
-                    "locations": [ "BandPracticeRoom" ],
-                    "trigger": "Start",
-                    "conversation": "Quests/Max_Croissant/1",
-                    "participants": [
-                        {
-                            "name": "MainCharacter",
-                            "position": {
-                                "x": -2.24,
-                                "y": -2.35,
-                                "z": 3.0
-                            },
-                            "layer": "fg_char",
-                            "existAtStart": true
-                        },
-                        {
-                            "name": "Ricki",
-                            "position": {
-                                "x": -3.24,
-                                "y": -1.75,
-                                "z": 3.0
-                            },
-                            "layer": "fg_char",
-                            "existAtStart": true
-                        },
-                        {
-                            "name": "Max",
-                            "position": {
-                                "x": 0.24,
-                                "y": -3.17,
-                                "z": 3.0
-                            },
-                            "layer": "fg_char",
-                            "existAtStart": true
-                        }
-                    ]
-                ]
-            }
         }
     ]
 }

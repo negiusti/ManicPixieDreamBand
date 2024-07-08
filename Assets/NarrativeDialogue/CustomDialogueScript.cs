@@ -96,8 +96,6 @@ public class CustomDialogueScript : MonoBehaviour
         return false;
     }
 
-
-
     private void StartConversation(string conversation)
     {
         // TXT_ContactName_ConversationName
@@ -111,6 +109,22 @@ public class CustomDialogueScript : MonoBehaviour
             if (currentConvoIdx < plotData.Count() && plotData[currentConvoIdx].conversation.Equals(conversation))
                 SpawnCharacters.SpawnParticipants(plotData[currentConvoIdx].participants);
             DialogueManager.StartConversation(conversation);
+        }
+    }
+
+    public void StartConversation(ConversationData convoData)
+    {
+        // TXT_ContactName_ConversationName
+        if (IsTxtConvo(convoData.conversation))
+        {
+            // Send notification to phone
+            phone.ReceiveMsg(convoData.conversation, true);
+        }
+        else
+        {
+            //if (currentConvoIdx < plotData.Count() && plotData[currentConvoIdx].conversation.Equals(convoData.conversation))
+            SpawnCharacters.SpawnParticipants(convoData.participants);
+            DialogueManager.StartConversation(convoData.conversation);
         }
     }
 
@@ -145,9 +159,12 @@ public class CustomDialogueScript : MonoBehaviour
         }
         if (!DialogueManager.IsConversationActive)
         {
+            Debug.Log("no active conversations");
             if (!CheckForPlotConvo())
             {
+                Debug.Log("no plot convos found, checking for quest convo...");
                 // Check for QuestConvo
+                QuestManager.CheckForQuestConvo();
             }
         }
     }
