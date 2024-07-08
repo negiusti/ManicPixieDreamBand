@@ -27,7 +27,25 @@ public class ConversationData
 [System.Serializable] 
 public class Requirements
 {
+    public string currentJob;
+    public RelationshipScore relationshipScore;
 
+    public float minMoney;
+    public float maxMoney;
+
+    public int dayNum;
+    public int maxDay;
+    public int minDay;
+    public string[] pocketsItems;
+    public string[] completedQuests;
+    public string currentEventType;
+}
+
+[System.Serializable]
+public class RelationshipScore
+{
+    public string npc;
+    public int score;
 }
 
 [System.Serializable]
