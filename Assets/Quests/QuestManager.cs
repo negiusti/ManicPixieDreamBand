@@ -83,7 +83,7 @@ public class QuestManager : ScriptableObject
         quests = ConversationJson.GetQuestsData().quests.ToDictionary(q => q.questName, q => q);
         string currentQuestName = ES3.Load<string>("CurrentQuest", defaultValue: null);
         currentQuest = currentQuestName == null ? null : quests[currentQuestName];
-        currQuestConvoIdx = ES3.Load<int>("CurrentQuestIdx", currQuestConvoIdx);
+        currQuestConvoIdx = ES3.Load("CurrentQuestIdx", 0);
         completedQuests = ES3.Load("CompletedQuests", new HashSet<string>());
         availableQuests = quests.Keys.Where(q => !completedQuests.Contains(q)).ToHashSet();
     }

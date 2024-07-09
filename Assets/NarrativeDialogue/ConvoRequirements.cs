@@ -123,6 +123,10 @@ public class ConvoRequirements : ScriptableObject
         {
             return false;
         }
+        if (requirements.relationshipScore != null && requirements.relationshipScore.npc != null && RomanceManager.GetRelationshipScore(requirements.relationshipScore.npc) < requirements.relationshipScore.score)
+        {
+            return false;
+        }
         return true;
     }
 }

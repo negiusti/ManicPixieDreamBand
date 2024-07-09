@@ -68,13 +68,28 @@ public class QuestsData
     public Quest[] quests;
 }
 
+[System.Serializable]
+public class Romance
+{
+    public string npcName;
+    public ConversationData[] conversationsData;
+}
+
+[System.Serializable]
+public class RomancesData
+{
+    public Romance[] romances;
+}
+
 [CreateAssetMenu(fileName = "ConversationJson", menuName = "Custom/ConversationJson")]
 public class ConversationJson : ScriptableObject
 {
     private static string plotConvoJsonPath = "Assets/Conversations/plot.json";
     private static string questsConvoJsonPath = "Assets/Conversations/quests.json";
+    private static string romancesConvoJsonPath = "Assets/Conversations/romances.json";
     private static PlotConversationsData plotData;
     private static QuestsData questsData;
+    private static RomancesData romancesData;
 
     public static AsyncOperationHandle<TextAsset> LoadFromJson()
     {
@@ -87,6 +102,13 @@ public class ConversationJson : ScriptableObject
     {
         AsyncOperationHandle<TextAsset> q = Addressables.LoadAssetAsync<TextAsset>(questsConvoJsonPath);
         q.Completed += OnQuestsDataLoaded;
+        return q;
+    }
+
+    public static AsyncOperationHandle<TextAsset> LoadRomancesFromJson()
+    {
+        AsyncOperationHandle<TextAsset> q = Addressables.LoadAssetAsync<TextAsset>(romancesConvoJsonPath);
+        q.Completed += OnRomancesDataLoaded;
         return q;
     }
 
@@ -118,6 +140,20 @@ public class ConversationJson : ScriptableObject
         Addressables.Release(obj);
     }
 
+    private static void OnRomancesDataLoaded(AsyncOperationHandle<TextAsset> obj)
+    {
+        if (obj.Status == AsyncOperationStatus.Succeeded)
+        {
+            string jsonData = obj.Result.text;
+            romancesData = JsonUtility.FromJson<RomancesData>(jsonData);
+        }
+        else
+        {
+            Debug.LogError("Failed to load prefab from Addressables: " + obj.OperationException);
+        }
+        Addressables.Release(obj);
+    }
+
     public static PlotConversationsData GetPlotData()
     {
         return plotData;
@@ -126,6 +162,11 @@ public class ConversationJson : ScriptableObject
     public static QuestsData GetQuestsData()
     {
         return questsData;
+    }
+
+    public static RomancesData GetRomancesData()
+    {
+        return romancesData;
     }
 
 }

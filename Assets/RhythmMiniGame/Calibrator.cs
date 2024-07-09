@@ -42,7 +42,6 @@ public class Calibrator : MonoBehaviour
             Debug.LogError("Failed to load file. Error: " + obj.OperationException);
         }
         Addressables.Release(obj);
-        Debug.Log("HELLO" + beatTimes);
         assetsLoaded = true;
     }
 

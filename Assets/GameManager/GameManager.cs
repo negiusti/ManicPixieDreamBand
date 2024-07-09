@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(MainCharacterState.CurrentBankBalance), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.CurrentBankBalance()));
         Lua.RegisterFunction(nameof(JobSystem.SetCurrentJob), this, SymbolExtensions.GetMethodInfo(() => JobSystem.SetCurrentJob(string.Empty)));
         Lua.RegisterFunction(nameof(QuestManager.CompleteCurrentQuest), this, SymbolExtensions.GetMethodInfo(() => QuestManager.CompleteCurrentQuest()));
+        Lua.RegisterFunction(nameof(RomanceManager.ChangeRelationshipScore), this, SymbolExtensions.GetMethodInfo(() => RomanceManager.ChangeRelationshipScore(string.Empty, 0)));
     }
 
     void UnregisterSOLuaFuncs()
@@ -69,6 +70,7 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(MainCharacterState.CurrentBankBalance));
         Lua.UnregisterFunction(nameof(JobSystem.SetCurrentJob));
         Lua.UnregisterFunction(nameof(QuestManager.CompleteCurrentQuest));
+        Lua.UnregisterFunction(nameof(RomanceManager.ChangeRelationshipScore));
         //}
     }
 
@@ -98,9 +100,11 @@ public class GameManager : MonoBehaviour
         InventoryManager.LoadInventories();
         ConversationJson.LoadFromJson().WaitForCompletion();
         ConversationJson.LoadQuestsFromJson().WaitForCompletion();
+        ConversationJson.LoadRomancesFromJson().WaitForCompletion();
         BandJson.LoadFromJson().WaitForCompletion();
         JobSystem.Load();
         QuestManager.Load();
+        RomanceManager.Load();
     }
 
     private void SaveData()
@@ -110,6 +114,7 @@ public class GameManager : MonoBehaviour
         InventoryManager.SaveInventories();
         JobSystem.Save();
         QuestManager.Save();
+        RomanceManager.Save();
     }
 
     // Update is called once per frame
