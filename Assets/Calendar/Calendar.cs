@@ -35,6 +35,14 @@ public class Calendar : ScriptableObject
         Weather.RandomizeWeather();
     }
 
+    public static void SchedulePlotEvent(string eventName, string conversation, string location, bool isNight, double daysFromNow)
+    {
+        GetTodaysEvents();
+        if (!events.ContainsKey(day + (int)daysFromNow))
+            events.Add(day + (int)daysFromNow, new List<ICalendarEvent>());
+        events[day + (int)daysFromNow].Add(new QuestEvent(eventName, conversation, isNight, location));
+    }
+
     public static bool DoneForTheDay()
     {
         GetTodaysEvents();

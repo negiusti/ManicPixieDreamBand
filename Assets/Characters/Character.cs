@@ -79,6 +79,7 @@ public class Character : MonoBehaviour
         // Check if the name ends with "(Clone)"
         if (originalName.EndsWith("(Clone)"))
         {
+            Debug.Log("renaming: " + originalName);
             // Remove "(Clone)" from the end of the name
             string newName = originalName.Substring(0, originalName.Length - "(Clone)".Length);
 
@@ -137,7 +138,6 @@ public class Character : MonoBehaviour
             if (targetResolver.GetLabel().StartsWith("E_") || targetResolver.GetCategory() == "Instrument") // don't save emotes
                 continue;
             categoryToLabelMap[GetSRCategory(targetResolver)] = targetResolver.GetLabel();
-            Debug.Log("categoryToLabelMap[GetSRCategory(targetResolver)]" + categoryToLabelMap[GetSRCategory(targetResolver)] + " = targetResolver.GetLabel()" + targetResolver.GetLabel());
         }
 
         foreach (var spriteRenderer in spriteRenderers)
@@ -253,11 +253,11 @@ public class Character : MonoBehaviour
 
     public void EmoteMouth(string emotion)
     {
-        string label = (emotion == "default") ? categoryToLabelMap["Mouth"] : "E_" + emotion;
+        string label = (emotion.ToLower() == "default") ? categoryToLabelMap["Mouth"] : "E_" + emotion;
         categoryToResolver["Mouth"].SetCategoryAndLabel("Mouth", label);
         Debug.Log("Setting Mouth resolver to: " + categoryToResolver["Mouth"].GetLabel());
         categoryToResolver["Mouth"].ResolveSpriteToSpriteRenderer();
-        Color color = (emotion == "default") ? categoryToColorMap["Mouth"] : Color.white;
+        Color color = (emotion.ToLower() == "default") ? categoryToColorMap["Mouth"] : Color.white;
         categoryToRenderer["Mouth"].color = color;
     }
 
@@ -276,15 +276,15 @@ public class Character : MonoBehaviour
 
     public void EmoteEyes(string emotion)
     {
-        string label = (emotion == "default") ? categoryToLabelMap["Eyes"] : "E_" + emotion;
+        string label = (emotion.ToLower() == "default") ? categoryToLabelMap["Eyes"] : "E_" + emotion;
         categoryToResolver["Eyes"].SetCategoryAndLabel("Eyes", label);
         Debug.Log("Setting Eyes resolver to: " + categoryToResolver["Eyes"].GetLabel());
         categoryToResolver["Eyes"].ResolveSpriteToSpriteRenderer();
-        Color color = (emotion == "default") ? categoryToColorMap["Eyes"] : Color.white;
+        Color color = (emotion.ToLower() == "default") ? categoryToColorMap["Eyes"] : Color.white;
         categoryToRenderer["Eyes"].color = color;
-        categoryToRenderer["Eyeshadow"].enabled = (emotion == "default");
-        categoryToRenderer["Eyebrows"].enabled = (emotion == "default");
-        categoryToRenderer["Face_Detail"].enabled = (emotion == "default");
+        categoryToRenderer["Eyeshadow"].enabled = (emotion.ToLower() == "default");
+        categoryToRenderer["Eyebrows"].enabled = (emotion.ToLower() == "default");
+        categoryToRenderer["Face_Detail"].enabled = (emotion.ToLower() == "default");
     }
 
     public void RollerskatesOnOff(bool isRollerskating)

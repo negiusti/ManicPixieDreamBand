@@ -41,12 +41,12 @@ public class RomanceManager : ScriptableObject
         return relationshipScores[npc];
     }
 
-    public static void ChangeRelationshipScore(string npc, int delta)
+    public static void ChangeRelationshipScore(string npc, double delta)
     {
         if (relationshipScores.ContainsKey(npc))
-            relationshipScores[npc] += delta;
+            relationshipScores[npc] += (int)delta;
         else
-            relationshipScores.Add(npc, delta);
+            relationshipScores.Add(npc, (int)delta);
     }
 
     public static void Save()

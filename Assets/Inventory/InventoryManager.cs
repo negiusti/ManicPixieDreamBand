@@ -17,16 +17,16 @@ public class InventoryManager : ScriptableObject
     private static string pocketsPerishableSaveKey = "PocketsPerishable";
     private static string MAIN_CHARACTER = "MainCharacter";
     private static string addressableDefaultsKey = "Assets/Defaults/default-purchaseables.json";
-    private static DefaultPurchaseables defaultPurchaseables;
+    public static DefaultPurchaseables defaultPurchaseables;
 
     [System.Serializable]
-    private class DefaultPurchaseables
+    public class DefaultPurchaseables
     {
         public List<DefaultPurchaseable> data;
     }
 
     [System.Serializable]
-    private class DefaultPurchaseable
+    public class DefaultPurchaseable
     {
         public string category;
         public List<string> items;
@@ -93,6 +93,26 @@ public class InventoryManager : ScriptableObject
     public static void MCReceivesFrom(string npc, string category, string item)
     {
         TransferBetweenInventories(MAIN_CHARACTER, npc, category, item);
+    }
+
+    public static int GetNumInPockets(string item)
+    {
+        try
+        {
+            Item i = StringToItem(item);
+            if (pockets.ContainsKey(i))
+            {
+                return pockets[i];
+            }
+        } catch
+        {
+            PerishableItem i = StringToPerishableItem(item);
+            if (pocketsPerishable.ContainsKey(i))
+            {
+                return pocketsPerishable[i];
+            }
+        }
+        return 0;
     }
 
     public static HashSet<string> GetPurchasedItems(string category)

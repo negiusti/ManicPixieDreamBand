@@ -25,6 +25,7 @@ public class SpawnCharacters : ScriptableObject
 
     public static void SpawnParticipants(Participant [] participants)
     {
+        Debug.Log("SpawnParticipants");
         if (participants == null)
             return;
         Character[] characters = FindObjectsOfType<Character>();
@@ -32,12 +33,26 @@ public class SpawnCharacters : ScriptableObject
         Dictionary<string, int> layerToIdx = new Dictionary<string, int>();
         foreach (Participant p in  participants)
         {
+            Debug.Log("SpawnParticipant: " + p.name);
             Character c = characters.FirstOrDefault(c => c.name.Equals(p.name));
             int idx = layerToIdx.GetValueOrDefault(p.layer, -1) + 1;
             layerToIdx[p.layer] = idx;
             if (c == null)
             {
                 c = SpawnParticipant(p).WaitForCompletion().GetComponent<Character>();
+                Debug.Log("Spawned Participant: " + c.name + " " + c.gameObject.name);
+                if (c.gameObject.name.Contains("Clone"))
+                {
+                    Debug.Log("Removing clone from name: " + c.gameObject.name);
+                    // Remove "(Clone)" from the end of the name
+                    Debug.Log("Setting name from/to: " + c.gameObject.name + " " + p.name);
+                    c.gameObject.name = p.name;
+                    c.SetCharacterName(p.name);
+                    Debug.Log("Name is: " + c.gameObject.name);
+                }
+                c.gameObject.name = p.name;
+                Debug.Log("Set to active: " + c.name + " " + p.existAtStart + " " + c.gameObject.name);
+                c.gameObject.SetActive(p.existAtStart);
             }
             else
             {
@@ -78,6 +93,7 @@ public class SpawnCharacters : ScriptableObject
         {
             // Instantiate the prefab and spawn it in the current scene
             GameObject spawnedCharacter = Instantiate(handle.Result, p.position, Quaternion.identity);
+            spawnedCharacter.name = handle.Result.name;
             //string originalName = spawnedCharacter.name;
 
             // Check if the name ends with "(Clone)"
@@ -90,7 +106,7 @@ public class SpawnCharacters : ScriptableObject
             //    spawnedCharacter.name = newName;
             //    spawnedCharacter.GetComponent<Character>().SetCharacterName(newName);
             //}
-            spawnedCharacter.GetComponent<Usable>().enabled = p.existAtStart;
+            //spawnedCharacter.GetComponent<Usable>().enabled = p.existAtStart;
         }
         else
         {

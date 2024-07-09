@@ -32,6 +32,22 @@ public class Characters : ScriptableObject
         characters[character]?.FacePop();
     }
 
+    public static void EnableCharacter(string name)
+    {
+        if (characters == null || !characters.ContainsKey(name))
+            RefreshCharactersCache();
+        if (characters.ContainsKey(name))
+            characters[name].gameObject.SetActive(true);
+    }
+
+    public static void DisableCharacter(string name)
+    {
+        if (characters == null || !characters.ContainsKey(name))
+            RefreshCharactersCache();
+        if (characters.ContainsKey(name))
+            characters[name].gameObject.SetActive(false);
+    }
+
     public static Character MainCharacter()
     {
         if (mc == null)

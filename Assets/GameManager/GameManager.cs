@@ -39,16 +39,20 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(JamCoordinator.StartJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.StartJam(string.Empty)));
         Lua.RegisterFunction(nameof(JamCoordinator.EndJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.EndJam()));
         Lua.RegisterFunction(nameof(Characters.Emote), this, SymbolExtensions.GetMethodInfo(() => Characters.Emote(string.Empty, string.Empty, string.Empty)));
+        Lua.RegisterFunction(nameof(Characters.EnableCharacter), this, SymbolExtensions.GetMethodInfo(() => Characters.EnableCharacter(string.Empty)));
+        Lua.RegisterFunction(nameof(Characters.DisableCharacter), this, SymbolExtensions.GetMethodInfo(() => Characters.DisableCharacter(string.Empty)));
         Lua.RegisterFunction(nameof(InventoryManager.AddToMCInventory), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.AddToMCInventory(string.Empty, string.Empty)));
         Lua.RegisterFunction(nameof(InventoryManager.AddItem), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.AddItem(string.Empty)));
         Lua.RegisterFunction(nameof(InventoryManager.AddPerishableItem), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.AddPerishableItem(string.Empty)));
         Lua.RegisterFunction(nameof(InventoryManager.RemoveItem), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.RemoveItem(string.Empty)));
         Lua.RegisterFunction(nameof(InventoryManager.RemovePerishableItem), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.RemovePerishableItem(string.Empty)));
+        Lua.RegisterFunction(nameof(InventoryManager.GetNumInPockets), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.GetNumInPockets(string.Empty)));
         Lua.RegisterFunction(nameof(MainCharacterState.HasChangedOutfitToday), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.HasChangedOutfitToday()));
         Lua.RegisterFunction(nameof(MainCharacterState.CurrentBankBalance), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.CurrentBankBalance()));
         Lua.RegisterFunction(nameof(JobSystem.SetCurrentJob), this, SymbolExtensions.GetMethodInfo(() => JobSystem.SetCurrentJob(string.Empty)));
         Lua.RegisterFunction(nameof(QuestManager.CompleteCurrentQuest), this, SymbolExtensions.GetMethodInfo(() => QuestManager.CompleteCurrentQuest()));
-        Lua.RegisterFunction(nameof(RomanceManager.ChangeRelationshipScore), this, SymbolExtensions.GetMethodInfo(() => RomanceManager.ChangeRelationshipScore(string.Empty, 0)));
+        Lua.RegisterFunction(nameof(RomanceManager.ChangeRelationshipScore), this, SymbolExtensions.GetMethodInfo(() => RomanceManager.ChangeRelationshipScore(string.Empty, (double)0)));
+        Lua.RegisterFunction(nameof(Calendar.SchedulePlotEvent), this, SymbolExtensions.GetMethodInfo(() => Calendar.SchedulePlotEvent(string.Empty, string.Empty, string.Empty, false, (double)0)));
     }
 
     void UnregisterSOLuaFuncs()
@@ -61,16 +65,20 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(JamCoordinator.StartJam));
         Lua.UnregisterFunction(nameof(JamCoordinator.EndJam));
         Lua.UnregisterFunction(nameof(Characters.Emote));
+        Lua.UnregisterFunction(nameof(Characters.EnableCharacter));
+        Lua.UnregisterFunction(nameof(Characters.DisableCharacter));
         Lua.UnregisterFunction(nameof(InventoryManager.AddToMCInventory));
         Lua.UnregisterFunction(nameof(InventoryManager.AddItem));
         Lua.UnregisterFunction(nameof(InventoryManager.AddPerishableItem));
         Lua.UnregisterFunction(nameof(InventoryManager.RemoveItem));
         Lua.UnregisterFunction(nameof(InventoryManager.RemovePerishableItem));
+        Lua.UnregisterFunction(nameof(InventoryManager.GetNumInPockets));
         Lua.UnregisterFunction(nameof(MainCharacterState.HasChangedOutfitToday));
         Lua.UnregisterFunction(nameof(MainCharacterState.CurrentBankBalance));
         Lua.UnregisterFunction(nameof(JobSystem.SetCurrentJob));
         Lua.UnregisterFunction(nameof(QuestManager.CompleteCurrentQuest));
         Lua.UnregisterFunction(nameof(RomanceManager.ChangeRelationshipScore));
+        Lua.UnregisterFunction(nameof(Calendar.SchedulePlotEvent));
         //}
     }
 

@@ -25,27 +25,57 @@
             "conversation": "TXT/Ricki/0"
         },
         {
-            "locations": [ "CoffeeShop" ],
+            "locations": [ "Bedroom" ],
             "participants": [],
             "trigger": "Start",
-            "conversation": "TXT/Band/0"
+            "conversation": "Plot/Tutorial/2"
         },
         {
-            "locations": [ "CoffeeShop" ],
+            "locations": [ "BandPracticeRoom" ],
             "participants": [
                 {
-                    "name": "Barista",
+                    "name": "MainCharacter",
                     "position": {
-                        "x": 2.07,
-                        "y": -0.31,
+                        "x": -2.24,
+                        "y": -2.35,
                         "z": 3.0
                     },
-                    "layer": "bg_char",
+                    "layer": "fg_char",
                     "existAtStart": true
+                },
+                {
+                    "name": "Ricki",
+                    "position": {
+                        "x": -3.24,
+                        "y": -1.75,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Max",
+                    "position": {
+                        "x": 7.24,
+                        "y": -3.17,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Cliff",
+                    "position": {
+                        "x": 4.24,
+                        "y": -3,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": false
                 }
             ],
-            "trigger": "Barista",
-            "conversation": "CoffeeShop/FirstOrder"
+            "trigger": "Start",
+            "conversation": "Audition"
         },
         {
             "locations": [ "BandPracticeRoom" ],
@@ -83,43 +113,6 @@
             ],
             "trigger": "Ricki",
             "conversation": "Pick A Band Name V2"
-        },
-        {
-            "locations": [ "BandPracticeRoom" ],
-            "participants": [
-                {
-                    "name": "MainCharacter",
-                    "position": {
-                        "x": -2.24,
-                        "y": -2.35,
-                        "z": 3.0
-                    },
-                    "layer": "fg_char",
-                    "existAtStart": true
-                },
-                {
-                    "name": "Ricki",
-                    "position": {
-                        "x": -3.24,
-                        "y": -1.75,
-                        "z": 3.0
-                    },
-                    "layer": "fg_char",
-                    "existAtStart": true
-                },
-                {
-                    "name": "Max",
-                    "position": {
-                        "x": 7.24,
-                        "y": -3.17,
-                        "z": 3.0
-                    },
-                    "layer": "fg_char",
-                    "existAtStart": true
-                }
-            ],
-            "trigger": "Ricki",
-            "conversation": "Audition"
         },
         {
             "locations": [ "SmallBar" ],

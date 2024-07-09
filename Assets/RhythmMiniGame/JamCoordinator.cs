@@ -53,17 +53,17 @@ public class JamCoordinator : ScriptableObject
         //SwitchToJamCamera();
         foreach(BandMember member in band.members)
         {
-            stage.GetInstrument(member.position).SetInstrument(member.instrument, member.instrumentName ?? ES3.Load<string>("gear_" + member.instrument));
+            stage.GetInstrument(member.position).SetInstrument(member.instrument, member.instrumentName ?? Gear.GetGearLabel(member.instrument));
 
             if (member.position == "Left")
             {
                 string amp = (member.instrument == "Bass" ? "B_Amp" : "G_Amp");
-                stage.leftAmp.GetComponent<SpriteResolver>().SetCategoryAndLabel(amp, band.leftAmp ?? ES3.Load<string>("gear_" + amp));
+                stage.leftAmp.GetComponent<SpriteResolver>().SetCategoryAndLabel(amp, band.leftAmp ?? Gear.GetGearLabel(amp));
             }
             if (member.position == "Right")
             {
                 string amp = (member.instrument == "Bass" ? "B_Amp" : "G_Amp");
-                stage.rightAmp.GetComponent<SpriteResolver>().SetCategoryAndLabel(amp, band.rightAmp ?? ES3.Load<string>("gear_" + amp));
+                stage.rightAmp.GetComponent<SpriteResolver>().SetCategoryAndLabel(amp, band.rightAmp ?? Gear.GetGearLabel(amp));
             }
             stage.GetInstrument(member.position).Play(musicians[member.name]);
         }

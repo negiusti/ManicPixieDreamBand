@@ -3,8 +3,7 @@
 public interface ICalendarEvent
 {
     string Location();
-    string Name();
-    GameObject Minigame();
+    string Name();    
     bool IsNight();
     void OnConversationComplete(string convoName);
 }

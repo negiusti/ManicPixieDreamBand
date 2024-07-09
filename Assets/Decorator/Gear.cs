@@ -32,6 +32,11 @@ public class Gear : MonoBehaviour
         spriteResolver.SetCategoryAndLabel(category, label);
     }
 
+    public static string GetGearLabel(string category)
+    {
+        return ES3.Load("gear_" + category, defaultValue: InventoryManager.defaultPurchaseables.data.First(p => p.category == category).items.First());
+    }
+
     private void OnEnable()
     {
         if (spriteResolver == null)
