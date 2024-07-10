@@ -32,6 +32,17 @@ public class Characters : ScriptableObject
         characters[character]?.FacePop();
     }
 
+    public static void NPCWalkTo(string npc, double targetX)
+    {
+        if (characters == null || !characters.ContainsKey(npc))
+            RefreshCharactersCache();
+        if (characters.ContainsKey(npc))
+        {
+            characters[npc].gameObject.SetActive(true);
+            characters[npc].GetComponent<NPCMovement>().WalkTo((float)targetX);
+        }
+    }
+
     public static void EnableCharacter(string name)
     {
         if (characters == null || !characters.ContainsKey(name))
