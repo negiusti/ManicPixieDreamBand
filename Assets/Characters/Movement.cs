@@ -10,6 +10,7 @@ public abstract class Movement : MonoBehaviour
     protected float minX, maxX;
     protected GameObject background;
     protected Vector3 prevPos;
+    protected Quaternion prevRotation;
     protected string prevLayer;
     protected int prevLayerOrder;
     protected bool isSkating;
@@ -137,14 +138,15 @@ public abstract class Movement : MonoBehaviour
         else if (instLabel.Contains("Drum"))
             currState = MovementState.Drum;
 
-        //Quaternion currentRotation = transform.localRotation;
-        //currentRotation.y = 0;
+        Quaternion currentRotation = transform.localRotation;
+        prevRotation = transform.localRotation;
+        currentRotation.y = 0;
         prevPos = transform.position;
         transform.position = pos;
         prevLayer = character.GetCurrentLayer().sortingLayerName;
         prevLayerOrder = character.GetCurrentLayer().sortingOrder;
         character.MoveToRenderLayer(layer, layerOrder);
-        //transform.rotation = currentRotation;
+        transform.rotation = currentRotation;
     }
 
     public void StopPlayingInstrument()
@@ -152,6 +154,7 @@ public abstract class Movement : MonoBehaviour
         currState = MovementState.Idle;
         character.HideInstrumentSprite();
         transform.position = prevPos;
+        transform.rotation = prevRotation;
         character.MoveToRenderLayer(prevLayer, prevLayerOrder);
     }
 

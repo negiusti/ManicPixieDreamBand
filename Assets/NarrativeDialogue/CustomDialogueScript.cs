@@ -83,7 +83,7 @@ public class CustomDialogueScript : MonoBehaviour
             return false;
         if (DialogueManager.IsConversationActive)
             return false;
-        if (plotData[currentConvoIdx].locations.Contains(currentLocation))
+        if (plotData[currentConvoIdx].locations.Contains(currentLocation) && ConvoRequirements.RequirementsMet(plotData[currentConvoIdx].requirements))
         {
             //if (!conversations.ContainsKey(plotData.conversationsData[currentConvoIdx].conversation))
             //{

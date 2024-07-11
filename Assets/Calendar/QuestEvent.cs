@@ -12,11 +12,12 @@ public class QuestEvent : ICalendarEvent
         this.name = name;
         this.location = location;
         this.isNight = isNight;
+        this.conversation = conversation;
     }
 
     public string Name()
     {
-        return name + " at " + Location();
+        return name;
     }
 
     public string Location()

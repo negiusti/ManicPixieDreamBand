@@ -7101,7 +7101,7 @@ MonoBehaviour:
       - originConversationID: 6
         originDialogueID: 32
         destinationConversationID: 6
-        destinationDialogueID: 33
+        destinationDialogueID: 49
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -7111,8 +7111,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 564.687
-        y: 876.909
+        x: 541.6804
+        y: 876.90906
         width: 160
         height: 30
     - id: 33
@@ -7352,11 +7352,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 2
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 6
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -7407,11 +7407,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 2
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 6
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -7518,7 +7518,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 2
+        value: 3
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
@@ -7718,7 +7718,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: SchedulePlotEvent("First gig OMG!!", "First Gig", "SmallBar", true,
+        3);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -7769,7 +7770,7 @@ MonoBehaviour:
       - originConversationID: 6
         originDialogueID: 44
         destinationConversationID: 6
-        destinationDialogueID: 45
+        destinationDialogueID: 50
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -7806,7 +7807,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Great, another butt kick and idiot to cyberbully.
+        value: Great, another butt to kick and idiot to cyberbully.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -7828,7 +7829,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: DisableCharacter("Cliff")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -7916,8 +7917,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: It's getting late. You should get home before "traffic" starts. Get
-          some sleep, we have a big day tomorrow.
+        value: Go home and get some sleep, we have a big day tomorrow.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -7945,8 +7945,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 568.8805
-        y: 1663.5737
+        x: 663.02313
+        y: 1654.2631
         width: 160
         height: 30
     - id: 48
@@ -7994,13 +7994,123 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 568.8805
-        y: 1713.5737
+        x: 558.5351
+        y: 1766.3353
+        width: 160
+        height: 30
+    - id: 49
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 6
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 6
+        originDialogueID: 49
+        destinationConversationID: 6
+        destinationDialogueID: 33
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: EnableCharacter("Cliff"); NPCWalkTo("Cliff", 2)
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 783.2502
+        y: 898.9724
+        width: 160
+        height: 30
+    - id: 50
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 6
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 6
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 6
+        originDialogueID: 50
+        destinationConversationID: 6
+        destinationDialogueID: 45
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: NPCWalkTo("Cliff", 15)
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 757.7428
+        y: 1530.3953
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 215.12723, y: 1226.2421}
-    canvasZoom: 1.3335212
+    canvasScrollPosition: {x: 393.04877, y: 1285.5101}
+    canvasZoom: 0.96661615
   - id: 7
     fields:
     - title: Title

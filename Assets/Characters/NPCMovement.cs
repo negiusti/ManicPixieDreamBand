@@ -15,11 +15,14 @@ public class NPCMovement : Movement
     {
         base.Update();
         float currentX = transform.position.x;
-        Debug.Log("LOOK HERE: "+ currState.ToString() + " " + currentX + " " + targetX);
+        //Debug.Log("LOOK HERE: "+ currState.ToString() + " " + currentX + " " + targetX);
+        if (gameObject.name == "Cliff")
+            Debug.Log("transform.rotation.eulerAngles.y: " + transform.rotation.eulerAngles.y);
         if (moving && Mathf.Abs(currentX - targetX) > 0.1f)
         {
             Debug.Log("Walking: " + currentX + " " + targetX);
             WalkToTargetX();
+            //Debug.Log("transform.rotation.eulerAngles.y: " + transform.rotation.eulerAngles.y);
         } else if (moving)
         {
             currState = MovementState.Idle;
@@ -43,19 +46,18 @@ public class NPCMovement : Movement
     private void WalkToTargetX()
     {
         currState = MovementState.Walk;
-        Quaternion currentRotation = transform.localRotation;
+        Quaternion currentRotation = transform.rotation;
         float currentX = transform.position.x;
         float moveDirection = currentX > targetX ? -1 : 1;
         Debug.Log("currentX: " + currentX + " targetX: " + targetX);
-        if (currentX > targetX)
+        if (moveDirection < 0f && currentRotation.eulerAngles.y > 0f)
         {
-            currentRotation.y = 0;
-            Debug.Log("currentRotation.y: " + currentRotation.y);
+            currentRotation.eulerAngles = new Vector3(0f, 0f, 0f);
+
         }
-        else
+        else if (moveDirection > 0f && currentRotation.eulerAngles.y < 180f)
         {
-            currentRotation.y = 180;
-            Debug.Log("currentRotation.y: " + currentRotation.y);
+            currentRotation.eulerAngles = new Vector3(0f, 180f, 0f);
         }
 
         Vector3 position = transform.position;
@@ -63,7 +65,8 @@ public class NPCMovement : Movement
         position.x += moveDirection * moveSpeed * Time.deltaTime;
         //position.x = Mathf.Clamp(position.x, minX, maxX);
         transform.position = position;
-        transform.localRotation = currentRotation;
-        //Debug.Log("currentRotation.y: " + currentRotation.y);
+        //transform.rotation = Quaternion.Euler(0f, currentRotation.y, 0f);
+        transform.rotation = currentRotation;
+        Debug.Log("transform.rotation.eulerAngles.y: " + transform.rotation.eulerAngles.y);
     }
 }

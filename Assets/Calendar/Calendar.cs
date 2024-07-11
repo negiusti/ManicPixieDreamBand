@@ -46,7 +46,7 @@ public class Calendar : ScriptableObject
     public static bool DoneForTheDay()
     {
         GetTodaysEvents();
-        return currentEventIdx >= events[day].Count;
+        return currentEventIdx >= events[day].Count && events[day].Count > 0;
     }
 
     public static ICalendarEvent GetCurrentEvent()
@@ -141,6 +141,8 @@ public class Calendar : ScriptableObject
 
     private static bool isBandPracticeDay(int i)
     {
+        if (i == 0)
+            return false;
         return true;
     }
 

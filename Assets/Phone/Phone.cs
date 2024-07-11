@@ -173,7 +173,10 @@ public class Phone : MonoBehaviour
     public void ReceiveMsg(string conversation, bool forceOpenPhone = false)
     {
         if (forceOpenPhone)
+        {
+            GoHome();
             Unlock();
+        }
         messagesApp.ReceiveMsg(GetContactNameFromConvoName(conversation), conversation);
         if (forceOpenPhone)
             OpenTxtConvoWith(GetContactNameFromConvoName(conversation));
