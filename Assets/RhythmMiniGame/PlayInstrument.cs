@@ -107,6 +107,7 @@ public class PlayInstrument : MonoBehaviour
 
     public void SetInstrument(string category, string label)
     {
+        Debug.Log("FUCK YOU setting category and label: " + category + " " + label);
         spriteResolver.SetCategoryAndLabel(category, label);
     }
 

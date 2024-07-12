@@ -140,7 +140,7 @@ public abstract class Movement : MonoBehaviour
 
         Quaternion currentRotation = transform.localRotation;
         prevRotation = transform.localRotation;
-        currentRotation.y = 0;
+        currentRotation.y = 180;
         prevPos = transform.position;
         transform.position = pos;
         prevLayer = character.GetCurrentLayer().sortingLayerName;

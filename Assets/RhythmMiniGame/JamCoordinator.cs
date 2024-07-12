@@ -53,17 +53,21 @@ public class JamCoordinator : ScriptableObject
         //SwitchToJamCamera();
         foreach(BandMember member in band.members)
         {
-            stage.GetInstrument(member.position).SetInstrument(member.instrument, member.instrumentName ?? Gear.GetGearLabel(member.instrument));
-
+            stage.GetInstrument(member.position).SetInstrument(member.instrument, (member.instrumentName == null || member.instrumentName.Length == 0 ? Gear.GetGearLabel(member.instrument) : member.instrumentName));
+            //Debug.Log("FUCK YUOU THE CATEGORY IS NOW" + stage.GetInstrument(member.position).GetComponent<SpriteResolver>().GetCategory());
             if (member.position == "Left")
             {
                 string amp = (member.instrument == "Bass" ? "B_Amp" : "G_Amp");
-                stage.leftAmp.GetComponent<SpriteResolver>().SetCategoryAndLabel(amp, band.leftAmp ?? Gear.GetGearLabel(amp));
+                //Debug.Log("FUCK YOU setting category and label: " + amp + " " + (band.leftAmp == null || band.leftAmp.Length == 0 ? Gear.GetGearLabel(amp) : band.leftAmp));
+                stage.leftAmp.GetComponent<SpriteResolver>().SetCategoryAndLabel(amp, (band.leftAmp == null || band.leftAmp.Length == 0 ? Gear.GetGearLabel(amp) : band.leftAmp));
+                //Debug.Log("FUCK YUOU THE CATEGORY IS NOW" + stage.leftAmp.GetComponent<SpriteResolver>().GetCategory());
             }
             if (member.position == "Right")
             {
                 string amp = (member.instrument == "Bass" ? "B_Amp" : "G_Amp");
-                stage.rightAmp.GetComponent<SpriteResolver>().SetCategoryAndLabel(amp, band.rightAmp ?? Gear.GetGearLabel(amp));
+                //Debug.Log("FUCK YOU setting category and label: " + amp + " " + (band.rightAmp == null || band.rightAmp.Length == 0 ? Gear.GetGearLabel(amp) : band.rightAmp));
+                stage.rightAmp.GetComponent<SpriteResolver>().SetCategoryAndLabel(amp, (band.rightAmp == null || band.rightAmp.Length == 0 ? Gear.GetGearLabel(amp) : band.rightAmp));
+                //Debug.Log("FUCK YUOU THE CATEGORY IS NOW" + stage.rightAmp.GetComponent<SpriteResolver>().GetCategory());
             }
             stage.GetInstrument(member.position).Play(musicians[member.name]);
         }
