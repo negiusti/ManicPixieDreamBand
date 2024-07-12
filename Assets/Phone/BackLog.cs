@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using PixelCrushers.DialogueSystem;
@@ -117,7 +118,7 @@ public class BackLog : MonoBehaviour
     private IEnumerator AddToBacklogWithDelay(Subtitle subtitle)
     {
         bool isFirstTxt = subtitle.dialogueEntry.Title.Equals("FIRST");
-        bool isGroupChat = groupChats.Contains(DialogueManager.LastConversationStarted);
+        bool isGroupChat = groupChats.Any(gc => DialogueManager.LastConversationStarted.Contains(gc));
         if (!isFirstTxt && !subtitle.speakerInfo.IsPlayer && currentEntryID > 0 && !string.IsNullOrEmpty(subtitle.formattedText.text))
         {
             // add typing bubble here
