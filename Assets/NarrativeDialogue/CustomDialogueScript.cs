@@ -5,13 +5,14 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Linq;
 using System;
+using UnityEngine.UI;
 
 public class CustomDialogueScript : MonoBehaviour
 {
     public Action<string> ConvoCompleted;
     public KeyCode keyCode;
     private bool isCoolDown;
-    private float coolDown = 1f;
+    private float coolDown = 1.5f;
     public BackLog backLogTemplate;
     public ConvoHeader convoHeaderTemplate;
     private Dictionary<string, BackLog> backLogs;
@@ -144,18 +145,30 @@ public class CustomDialogueScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //DialogueManager.standardDialogueUI.GetTypewriterSpeed
         // the reason I do this is so that the space button selects the dialogue option without also continuing
         if (Input.GetKeyDown(keyCode) && DialogueManager.IsConversationActive && !isCoolDown &&
             !IsPCResponseMenuOpen() && !IsTxtConvoActive() && !DialogueTime.IsPaused)
         {
             StartCoroutine(CoolDown());
             Debug.Log("continuing");
-            DialogueManager.standardDialogueUI.OnContinueConversation();
+            UnityUITypewriterEffect[] fucks = FindObjectsOfType<UnityUITypewriterEffect>().Where(t => t.IsPlaying).ToArray();
+            foreach (UnityUITypewriterEffect t in fucks)
+            {
+                t.Stop();
+            }
+            if (fucks.Length == 0)
+                DialogueManager.standardDialogueUI.OnContinueConversation();
             //DialogueManager.standardDialogueUI.OnContinue();
         } else if (Input.GetKeyDown(keyCode) && DialogueManager.IsConversationActive && isCoolDown)
         {
+            //FindObjectsOfType<UnityUITypewriterEffect>().Select(t => t.enabled = false);
             Debug.Log("cooling down");
-            //isCoolDown = false;
+            UnityUITypewriterEffect[] fucks = FindObjectsOfType<UnityUITypewriterEffect>().Where(t => t.IsPlaying).ToArray();
+            foreach (UnityUITypewriterEffect t in fucks)
+            {
+                t.Stop();
+            }
         }
         if (!DialogueManager.IsConversationActive)
         {
