@@ -230,7 +230,7 @@ public class CustomDialogueScript : MonoBehaviour
 
     private void PrepSpokenConvo()
     {
-        DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = false;
+        DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = true;
         DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = true;
         DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = true;
         DialogueManager.SetDialoguePanel(true, true);
