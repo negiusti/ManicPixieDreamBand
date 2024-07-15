@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using PixelCrushers.DialogueSystem;
 public class ExitLocation : MonoBehaviour
 {
     private bool inRange;
@@ -13,7 +13,7 @@ public class ExitLocation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (inRange && Input.GetKeyDown(KeyCode.Return))
+        if (inRange && Input.GetKeyDown(KeyCode.Return) && !DialogueManager.IsConversationActive && Phone.Instance.IsLocked())
         {
             SceneChanger.Instance.GoToPreviousScene();
         }   

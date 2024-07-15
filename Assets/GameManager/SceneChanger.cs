@@ -186,9 +186,10 @@ public class SceneChanger : MonoBehaviour
             SaveCharacters();
             DialogueManager.StopAllConversations();
             //string currentScene = SceneManager.GetActiveScene().name;
-            Debug.Log("Loading scene: " + sceneStack.Peek().sceneName);
+            Debug.Log("Popping scene: " + sceneStack.Peek().sceneName);
             //AsyncOperation loadOperation =
-            LoadScene(sceneStack.Pop().sceneName, LoadingScreenType.Generic);
+            //LoadScene(sceneStack.Pop().sceneName, LoadingScreenType.Generic);
+            LoadScene(sceneStack.Pop(), LoadingScreenType.Generic);
 
             menuToggle.DisableMenu();
         }
