@@ -42,6 +42,9 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(Characters.EnableCharacter), this, SymbolExtensions.GetMethodInfo(() => Characters.EnableCharacter(string.Empty)));
         Lua.RegisterFunction(nameof(Characters.DisableCharacter), this, SymbolExtensions.GetMethodInfo(() => Characters.DisableCharacter(string.Empty)));
         Lua.RegisterFunction(nameof(Characters.NPCWalkTo), this, SymbolExtensions.GetMethodInfo(() => Characters.NPCWalkTo(string.Empty, (double)0)));
+        Lua.RegisterFunction(nameof(Characters.NPCSkateTo), this, SymbolExtensions.GetMethodInfo(() => Characters.NPCSkateTo(string.Empty, (double)0)));
+        Lua.RegisterFunction(nameof(Characters.NPCFaceRight), this, SymbolExtensions.GetMethodInfo(() => Characters.NPCFaceRight(string.Empty)));
+        Lua.RegisterFunction(nameof(Characters.NPCFaceLeft), this, SymbolExtensions.GetMethodInfo(() => Characters.NPCFaceLeft(string.Empty)));
         Lua.RegisterFunction(nameof(InventoryManager.AddToMCInventory), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.AddToMCInventory(string.Empty, string.Empty)));
         Lua.RegisterFunction(nameof(InventoryManager.AddItem), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.AddItem(string.Empty)));
         Lua.RegisterFunction(nameof(InventoryManager.AddPerishableItem), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.AddPerishableItem(string.Empty)));
@@ -69,6 +72,9 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(Characters.EnableCharacter));
         Lua.UnregisterFunction(nameof(Characters.DisableCharacter));
         Lua.UnregisterFunction(nameof(Characters.NPCWalkTo));
+        Lua.UnregisterFunction(nameof(Characters.NPCSkateTo));
+        Lua.UnregisterFunction(nameof(Characters.NPCFaceLeft));
+        Lua.UnregisterFunction(nameof(Characters.NPCFaceRight));
         Lua.UnregisterFunction(nameof(InventoryManager.AddToMCInventory));
         Lua.UnregisterFunction(nameof(InventoryManager.AddItem));
         Lua.UnregisterFunction(nameof(InventoryManager.AddPerishableItem));

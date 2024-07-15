@@ -58,6 +58,20 @@ public class Character : MonoBehaviour
         return isMC;
     }
 
+    public void FaceRight()
+    {
+        Quaternion currentRotation = transform.rotation;
+        currentRotation.eulerAngles = new Vector3(0f, 180f, 0f);
+        transform.rotation = currentRotation;
+    }
+
+    public void FaceLeft()
+    {
+        Quaternion currentRotation = transform.rotation;
+        currentRotation.eulerAngles = new Vector3(0f, 0f, 0f);
+        transform.rotation = currentRotation;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

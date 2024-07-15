@@ -17,7 +17,7 @@ public class KeepInView : MonoBehaviour
         originalXParent = transform.parent.position.x;
         originalX = rectTransform.position.x;
         offsetX = originalX - originalXParent;
-        //rectTransform.TransformPoint(rectTransform.anchoredPosition).x;
+        
     }
 
     void Update()
@@ -46,6 +46,9 @@ public class KeepInView : MonoBehaviour
         offset = (rectTransform.rect.width * rectTransform.lossyScale.x)/2;
 
         originalX = transform.parent.position.x + offsetX;
+
+        bool negOffset = transform.parent.rotation.eulerAngles.y > 170;
+        originalX = negOffset ? transform.parent.position.x - offsetX : originalX;
 
         // Calculate the target x position to stay within the camera view
         float targetX = Mathf.Clamp(originalX, Camera.main.ScreenToWorldPoint(Vector3.zero).x + offset, Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x - offset);

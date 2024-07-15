@@ -43,6 +43,39 @@ public class Characters : ScriptableObject
         }
     }
 
+    public static void NPCSkateTo(string npc, double targetX)
+    {
+        if (characters == null || !characters.ContainsKey(npc))
+            RefreshCharactersCache();
+        if (characters.ContainsKey(npc))
+        {
+            characters[npc].gameObject.SetActive(true);
+            characters[npc].GetComponent<NPCMovement>().SkateTo((float)targetX);
+        }
+    }
+
+    public static void NPCFaceRight(string npc)
+    {
+        if (characters == null || !characters.ContainsKey(npc))
+            RefreshCharactersCache();
+        if (characters.ContainsKey(npc))
+        {
+            characters[npc].gameObject.SetActive(true);
+            characters[npc].FaceRight();
+        }
+    }
+
+    public static void NPCFaceLeft(string npc)
+    {
+        if (characters == null || !characters.ContainsKey(npc))
+            RefreshCharactersCache();
+        if (characters.ContainsKey(npc))
+        {
+            characters[npc].gameObject.SetActive(true);
+            characters[npc].FaceLeft();
+        }
+    }
+
     public static void EnableCharacter(string name)
     {
         if (characters == null || !characters.ContainsKey(name))
