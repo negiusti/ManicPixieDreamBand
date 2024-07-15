@@ -4,15 +4,20 @@ public class KeepInView : MonoBehaviour
 {
     private RectTransform rectTransform;
     private float originalX;
+    private float originalXParent;
     private float offset;
     public float movementSpeed = 5f;
+    private float offsetX;
 
     void Start()
     {
         // Get the RectTransform component of the object
         rectTransform = GetComponent<RectTransform>();
         // Store the original x position
-        originalX = rectTransform.position.x;//rectTransform.TransformPoint(rectTransform.anchoredPosition).x;
+        originalXParent = transform.parent.position.x;
+        originalX = rectTransform.position.x;
+        offsetX = originalX - originalXParent;
+        //rectTransform.TransformPoint(rectTransform.anchoredPosition).x;
     }
 
     void Update()
@@ -39,6 +44,8 @@ public class KeepInView : MonoBehaviour
         Vector3 maxWorldPos = rectTransform.TransformPoint(new Vector3(rectTransform.rect.xMax, 0, 0));
         offset = (maxWorldPos.x - minWorldPos.x);
         offset = (rectTransform.rect.width * rectTransform.lossyScale.x)/2;
+
+        originalX = transform.parent.position.x + offsetX;
 
         // Calculate the target x position to stay within the camera view
         float targetX = Mathf.Clamp(originalX, Camera.main.ScreenToWorldPoint(Vector3.zero).x + offset, Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x - offset);

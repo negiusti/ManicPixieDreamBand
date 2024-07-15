@@ -145,7 +145,6 @@ public class CustomDialogueScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //DialogueManager.standardDialogueUI.GetTypewriterSpeed
         // the reason I do this is so that the space button selects the dialogue option without also continuing
         if (Input.GetKeyDown(keyCode) && DialogueManager.IsConversationActive && !isCoolDown &&
             !IsPCResponseMenuOpen() && !IsTxtConvoActive() && !DialogueTime.IsPaused)
@@ -157,7 +156,7 @@ public class CustomDialogueScript : MonoBehaviour
             {
                 t.Stop();
             }
-            if (fucks.Length == 0)
+            if (fucks.Length == 0 && DialogueManager.currentConversationState.subtitle.dialogueEntry.currentDialogueText.Length > 0)
                 DialogueManager.standardDialogueUI.OnContinueConversation();
             //DialogueManager.standardDialogueUI.OnContinue();
         } else if (Input.GetKeyDown(keyCode) && DialogueManager.IsConversationActive && isCoolDown)
