@@ -536,6 +536,12 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
             DrawOtherConversationPrimaryFields();
 
+            if (customDrawConversationInspector != null)
+            {
+                customDrawConversationInspector(database, currentConversation);
+            }
+
+
             if (customDrawAssetInspector != null)
             {
                 customDrawAssetInspector(database, currentConversation);
@@ -806,7 +812,16 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         {
             if (o == null || o.GetType() != typeof(int)) return;
             int entryID = (int)o;
-            EditModePlayerWindow.Open(database, currentConversation.id, entryID);
+            if (Application.isPlaying && DialogueManager.isConversationActive)
+            {
+                var entry = DialogueManager.masterDatabase.GetDialogueEntry(DialogueManager.currentConversationState.subtitle.dialogueEntry.conversationID, entryID);
+                var state = DialogueManager.conversationModel.GetState(entry);
+                DialogueManager.conversationController.GotoState(state);
+            }
+            else
+            {
+                EditModePlayerWindow.Open(database, currentConversation.id, entryID);
+            }
         }
 
     }

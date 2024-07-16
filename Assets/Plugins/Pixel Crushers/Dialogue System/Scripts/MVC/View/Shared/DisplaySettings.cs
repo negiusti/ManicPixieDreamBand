@@ -254,6 +254,7 @@ namespace PixelCrushers.DialogueSystem
                 this.alternateCameraObject = source.alternateCameraObject;
                 this.cameraAngles = source.cameraAngles;
                 this.keepCameraPositionAtConversationEnd = source.keepCameraPositionAtConversationEnd;
+                this.showSubtitleOnEmptyContinue = source.showSubtitleOnEmptyContinue;
                 this.defaultSequence = source.defaultSequence;
                 this.defaultPlayerSequence = source.defaultPlayerSequence;
                 this.defaultResponseMenuSequence = source.defaultResponseMenuSequence;
@@ -290,6 +291,9 @@ namespace PixelCrushers.DialogueSystem
             /// </summary>
             [Tooltip("If conversation's sequences use Main Camera, leave camera in current position at end of conversation instead of restoring pre-conversation position.")]
             public bool keepCameraPositionAtConversationEnd = false;
+
+            [Tooltip("Show subtitle if sequence is only 'Continue()'. Typically only useful in UIs that accumulate text.")]
+            public bool showSubtitleOnEmptyContinue = false;
 
             /// <summary>
             /// The default sequence to use if the dialogue entry doesn't have a sequence defined 

@@ -36,6 +36,9 @@ namespace PixelCrushers.DialogueSystem
         [Tooltip("Check for subtitle panels that are configured to immediately open when conversation starts. Untick to bypass check.")]
         public bool allowOpenSubtitlePanelsOnStartConversation = true;
 
+        [Tooltip("Allow Dialogue Actor components to use custom subtitle and menu panels.")]
+        public bool allowDialogueActorCustomPanels = true;
+
         public StandardUIMenuPanel[] menuPanels;
 
         [Tooltip("Default panel for response menus.")]
@@ -70,6 +73,8 @@ namespace PixelCrushers.DialogueSystem
         {
             m_standardSubtitleControls.Initialize(subtitlePanels, defaultNPCSubtitlePanel, defaultPCSubtitlePanel);
             m_standardMenuControls.Initialize(menuPanels, defaultMenuPanel, useFirstResponseForMenuPortrait);
+            m_standardSubtitleControls.allowDialogueActorCustomPanels = allowDialogueActorCustomPanels;
+            m_standardMenuControls.allowDialogueActorCustomPanels = allowDialogueActorCustomPanels;
         }
 
         #endregion

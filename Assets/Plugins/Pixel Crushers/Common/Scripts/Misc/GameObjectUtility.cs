@@ -204,7 +204,7 @@ namespace PixelCrushers
         /// </summary>
         public static T[] FindObjectsOfTypeAlsoInactive<T>(bool checkAllScenes = true) where T : Component
         {
-#if UNITY_2023_1_OR_NEWER
+#if UNITY_2022_3_OR_NEWER || UNITY_2023_1_OR_NEWER
             return UnityEngine.Object.FindObjectsByType<T>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 #else
             var list = new List<T>();

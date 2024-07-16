@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEngine.UIElements;
 
 namespace PixelCrushers.DialogueSystem.ArcweaveSupport
 {
@@ -67,6 +66,7 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
         public bool componentsFoldout = true;
 
         public bool importPortraits = true;
+        public bool importDialogueEntryAttributes = false;
         public bool importGuids = false;
         public int numPlayers = 1;
         public string globalVariables;
@@ -101,6 +101,7 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
         public List<string> globalVariables = new List<string>();
 
         public bool importPortraits = true;
+        public bool importDialogueEntryAttributes = false;
         public bool importGuids = false;
 
         public Template template = Template.FromDefault();
@@ -143,6 +144,63 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
         /// <param name="boardsFoldout">Settings from Arcweave importer window's prefs.</param>
         /// <param name="componentsFoldout">Settings from Arcweave importer window's prefs.</param>
         /// <param name="importPortraits">Assign portrait images to actors. (Editor only)</param>
+        /// <param name="importDialogueEntryAttributes">Import dialogue element attributes as custom fields in dialogue entry.</param>
+        /// <param name="importGuids">In actors, locations, conversations, and quests, add a field containing Arcweave GUID.</param>
+        /// <param name="merge">Merge into existing database, keeping/overwriting existing assets, instead of clearing database first.</param>
+        /// <param name="numPlayers">Set to value greater than 1 to import set of variables for each player.</param>
+        /// <param name="globalVariables">If numPlayers > 1, this is a comma-separated list of global variables that aren't player-specific.</param>
+        /// <param name="template">Template to use to create new actors, conversations, etc.</param>
+        public virtual void Setup(string arcweaveProjectPath,
+            string contentJson,
+            List<string> questBoardGuids,
+            List<ArcweaveConversationInfo> conversationInfo,
+            List<string> playerComponentGuids,
+            List<string> npcComponentGuids,
+            List<string> itemComponentGuids,
+            List<string> locationComponentGuids,
+            bool boardsFoldout,
+            bool componentsFoldout,
+            bool importPortraits,
+            bool importDialogueEntryAttributes,
+            bool importGuids,
+            int numPlayers,
+            string globalVariables,
+            bool merge,
+            Template template)
+        {
+            this.arcweaveProjectPath = arcweaveProjectPath;
+            this.contentJson = contentJson;
+            this.questBoardGuids = questBoardGuids;
+            this.conversationInfo = conversationInfo;
+            this.playerComponentGuids = playerComponentGuids;
+            this.npcComponentGuids = npcComponentGuids;
+            this.itemComponentGuids = itemComponentGuids;
+            this.locationComponentGuids = locationComponentGuids;
+            this.boardsFoldout = boardsFoldout;
+            this.componentsFoldout = componentsFoldout;
+            this.importPortraits = importPortraits;
+            this.importDialogueEntryAttributes = importDialogueEntryAttributes;
+            this.importGuids = importGuids;
+            this.numPlayers = numPlayers;
+            this.globalVariables = ParseGlobalVariables(globalVariables);
+            this.merge = merge;
+            this.template = (template != null) ? template : Template.FromDefault();
+        }
+
+        /// <summary>
+        /// Prepares the Arcweave importer with parameters ready to perform an import.
+        /// </summary>
+        /// <param name="arcweaveProjectPath">Path to Arcweave project files. This path should contain project_settings.json exported from Arcweave.</param>
+        /// <param name="contentJson">Arcweave project_settings.json text. Can be blank. If non-blank, import uses this instead of reading JSON file from arcweaveProjectPath.</param>
+        /// <param name="questBoardGuids">Settings from Arcweave importer window's prefs.</param>
+        /// <param name="conversationInfo">Settings from Arcweave importer window's prefs.</param>
+        /// <param name="playerComponentGuids">Settings from Arcweave importer window's prefs.</param>
+        /// <param name="npcComponentGuids">Settings from Arcweave importer window's prefs.</param>
+        /// <param name="itemComponentGuids">Settings from Arcweave importer window's prefs.</param>
+        /// <param name="locationComponentGuids">Settings from Arcweave importer window's prefs.</param>
+        /// <param name="boardsFoldout">Settings from Arcweave importer window's prefs.</param>
+        /// <param name="componentsFoldout">Settings from Arcweave importer window's prefs.</param>
+        /// <param name="importPortraits">Assign portrait images to actors. (Editor only)</param>
         /// <param name="importGuids">In actors, locations, conversations, and quests, add a field containing Arcweave GUID.</param>
         /// <param name="merge">Merge into existing database, keeping/overwriting existing assets, instead of clearing database first.</param>
         /// <param name="numPlayers">Set to value greater than 1 to import set of variables for each player.</param>
@@ -165,22 +223,9 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
             bool merge,
             Template template)
         {
-            this.arcweaveProjectPath = arcweaveProjectPath;
-            this.contentJson = contentJson;
-            this.questBoardGuids = questBoardGuids;
-            this.conversationInfo = conversationInfo;
-            this.playerComponentGuids = playerComponentGuids;
-            this.npcComponentGuids = npcComponentGuids;
-            this.itemComponentGuids = itemComponentGuids;
-            this.locationComponentGuids = locationComponentGuids;
-            this.boardsFoldout = boardsFoldout;
-            this.componentsFoldout = componentsFoldout;
-            this.importPortraits = importPortraits;
-            this.importGuids = importGuids;
-            this.numPlayers = numPlayers;
-            this.globalVariables = ParseGlobalVariables(globalVariables);
-            this.merge = merge;
-            this.template = (template != null) ? template : Template.FromDefault();
+            Setup(arcweaveProjectPath, contentJson, questBoardGuids, conversationInfo, playerComponentGuids, npcComponentGuids,
+                itemComponentGuids, locationComponentGuids, boardsFoldout, componentsFoldout, importPortraits, false,
+                importGuids, numPlayers, globalVariables, merge, template);
         }
 
         /// <summary>
@@ -205,6 +250,7 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
                     prefs.boardsFoldout,
                     prefs.componentsFoldout,
                     prefs.importPortraits,
+                    prefs.importDialogueEntryAttributes,
                     prefs.importGuids,
                     prefs.numPlayers,
                     prefs.globalVariables,
@@ -554,6 +600,8 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
             }
         }
 
+        protected static string[] ImageExtensions = new string[] { ".png", ".jpg", ".tga", ".tif", ".psd", ".psb" };
+
         protected virtual void AddActors(List<string> guids, string defaultActorName, bool isPlayer)
         {
             Actor actor = null;
@@ -576,24 +624,61 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
                         ArcweaveAsset asset;
                         if (arcweaveProject.assets.TryGetValue(component.assets.cover.id, out asset))
                         {
-                            var pathInProject = (!string.IsNullOrEmpty(arcweaveProjectPath) && arcweaveProjectPath.StartsWith("Assets"))
-                                ? arcweaveProjectPath : "Assets";
-                            var assetPath = pathInProject + "/assets/" + asset.name;
-                            Sprite sprite = UnityEditor.AssetDatabase.LoadAssetAtPath(assetPath, typeof(Sprite)) as Sprite;
+                            Sprite sprite;
+                            Texture2D texture;
+                            TryLoadPortrait(asset.name, out sprite, out texture);
                             if (sprite != null)
                             {
                                 actor.spritePortrait = sprite;
                             }
+                            else if (texture != null)
+                            {
+                                actor.portrait = texture;
+                            }
                             else
                             {
-                                Texture2D texture = UnityEditor.AssetDatabase.LoadAssetAtPath(assetPath, typeof(Texture2D)) as Texture2D;
-                                if (texture != null)
+                                Debug.LogWarning($"Dialogue System: Can't find portrait image '{GetAssetPath(asset.name)}' for actor {actor.Name}.");
+                            }
+                        }
+
+                        // Alternate portraits:
+                        foreach (var attributeId in component.attributes)
+                        {
+                            Attribute attribute;
+                            if (arcweaveProject.attributes.TryGetValue(attributeId, out attribute))
+                            {
+                                if (attribute != null && attribute.name != null &&
+                                    attribute.name.StartsWith("Portrait "))
                                 {
-                                    actor.portrait = texture;
-                                }
-                                else
-                                {
-                                    Debug.LogWarning($"Dialogue System: Can't find portrait image '{assetPath}' for actor {actor.Name}.");
+                                    int portraitNum = SafeConvert.ToInt(attribute.name.Substring("Portrait ".Length).Trim());
+                                    var assetName = (string)attribute.value.data;
+                                    Sprite sprite = null;
+                                    Texture2D texture = null;
+                                    foreach (var extension in ImageExtensions)
+                                    { 
+                                        TryLoadPortrait(assetName + extension, out sprite, out texture);
+                                        if (sprite != null || texture != null) break;
+                                    }
+                                    if (sprite != null)
+                                    {
+                                        for (int i = actor.spritePortraits.Count; i < (portraitNum - 1); i++)
+                                        {
+                                            actor.spritePortraits.Add(null);
+                                        }
+                                        actor.spritePortraits[portraitNum - 2] = sprite;
+                                    }
+                                    else if (texture != null)
+                                    {
+                                        for (int i = actor.alternatePortraits.Count; i < portraitNum; i++)
+                                        {
+                                            actor.alternatePortraits.Add(null);
+                                        }
+                                        actor.alternatePortraits[portraitNum - 2] = texture;
+                                    }
+                                    else
+                                    {
+                                        Debug.LogWarning($"Dialogue System: Can't find portrait {portraitNum} image '{GetAssetPath(assetName)}' for actor {actor.Name}.");
+                                    }
                                 }
                             }
                         }
@@ -607,6 +692,29 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
                 actor = template.CreateActor(template.GetNextActorID(database), defaultActorName, isPlayer);
                 database.actors.Add(actor);
             }
+        }
+
+        protected virtual void TryLoadPortrait(string assetName, out Sprite sprite, out Texture2D texture)
+        {
+#if UNITY_EDITOR
+            string assetPath = GetAssetPath(assetName);
+            texture = null;
+            sprite = UnityEditor.AssetDatabase.LoadAssetAtPath(assetPath, typeof(Sprite)) as Sprite;
+            if (sprite == null)
+            {
+                texture = UnityEditor.AssetDatabase.LoadAssetAtPath(assetPath, typeof(Texture2D)) as Texture2D;
+            }
+#else
+            sprite = null;
+            texture = null;
+#endif
+        }
+
+        protected virtual string GetAssetPath(string assetName)
+        {
+            var pathInProject = (!string.IsNullOrEmpty(arcweaveProjectPath) && arcweaveProjectPath.StartsWith("Assets"))
+                                ? arcweaveProjectPath : "Assets";
+            return pathInProject + "/assets/" + assetName;
         }
 
         protected virtual void AddAttributes(List<Field> fields, List<string> attributes)
@@ -1006,6 +1114,24 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
                 {
                     entry.fields.Add(new Field("Guid", guid, FieldType.Text));
                 }
+                if (importDialogueEntryAttributes)
+                {
+                    ArcweaveType arcweaveType;
+                    if (arcweaveLookup.TryGetValue(guid, out arcweaveType))
+                    {
+                        var element = arcweaveType as Element;
+                        if (element != null && element.attributes != null)
+                        {
+                            foreach (var attributeId in element.attributes)
+                            {
+                                var attribute = LookupArcweave<Attribute>(attributeId);
+                                var templateField = template.dialogueEntryFields.Find(x => x.title == attribute.name);
+                                var fieldType = (templateField != null) ? templateField.type : FieldType.Text;
+                                Field.SetValue(entry.fields, attribute.name, attribute.value.data.ToString(), fieldType);
+                            }
+                        }
+                    }
+                }
             }
             return entry;
         }
@@ -1125,10 +1251,10 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
                                         Field.SetValue(quest.fields, attribute.name, attribute.value.data.ToString().ToLower());
                                         break;
                                     default:
-                                    //case "Group":
-                                    //case "Description":
-                                    //case "Success Description":
-                                    //case "Failure Description":
+                                        //case "Group":
+                                        //case "Description":
+                                        //case "Success Description":
+                                        //case "Failure Description":
                                         Field.SetValue(quest.fields, attribute.name, attribute.value.data.ToString());
                                         break;
                                 }
@@ -1161,7 +1287,7 @@ namespace PixelCrushers.DialogueSystem.ArcweaveSupport
             }
         }
 
-        #endregion
+#endregion
 
         #region Touch Up Database
 

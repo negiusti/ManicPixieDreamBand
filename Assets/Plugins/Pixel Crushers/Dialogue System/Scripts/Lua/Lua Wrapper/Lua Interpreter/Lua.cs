@@ -4,6 +4,7 @@
 using UnityEngine;
 using System;
 using System.Reflection;
+using Language.Lua;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -97,6 +98,7 @@ namespace PixelCrushers.DialogueSystem
         {
             m_environment = Language.Lua.LuaInterpreter.CreateGlobalEnviroment();
             m_noResult = new Result(null);
+            Assignment.InitializeVariableMonitoring();
         }
 #endif
 

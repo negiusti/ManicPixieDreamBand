@@ -95,7 +95,7 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
                                     audioSource.Play();
                                 }
                                 playedAudio = true;
-                                stopTime = DialogueTime.time + audioClip.length;
+                                stopTime = DialogueTime.time + GetAudioClipLength(audioSource, audioClip);
                             }
                         });
                 }
@@ -104,6 +104,27 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
             catch (System.Exception)
             {
                 stopTime = 0;
+            }
+        }
+
+        public static float GetAudioClipLength(AudioSource audioSource, AudioClip audioClip)
+        {
+            if (audioClip == null) return 0;
+            if (audioSource == null) return audioClip.length;
+            var pitchAbs = Mathf.Abs(audioSource.pitch);
+            if (Time.timeScale > 0)
+            {
+                if (pitchAbs == 1 || Mathf.Approximately(0, pitchAbs))
+                    return audioClip.length / Time.timeScale;
+                else
+                    return (audioClip.length / Time.timeScale) / pitchAbs;
+            }
+            else
+            {
+                if (pitchAbs == 1 || Mathf.Approximately(0, pitchAbs))
+                    return audioClip.length;
+                else
+                    return audioClip.length / pitchAbs;
             }
         }
 

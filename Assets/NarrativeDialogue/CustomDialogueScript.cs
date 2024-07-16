@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Linq;
 using System;
-using UnityEngine.UI;
 
 public class CustomDialogueScript : MonoBehaviour
 {
@@ -76,14 +75,19 @@ public class CustomDialogueScript : MonoBehaviour
 
     private bool CheckForPlotConvo()
     {
-        if (currentConvoIdx > plotData.Length -1)
-        {
-            return false;
-        }
+        //if (currentConvoIdx > plotData.Length -1)
+        //{
+        //    return false;
+        //}
         if (!phone.IsLocked())
             return false;
         if (DialogueManager.IsConversationActive)
             return false;
+
+        if (!plotData[currentConvoIdx].locations.Contains(currentLocation))
+        {
+            Debug.Log("plotData[currentConvoIdx]" + plotData[currentConvoIdx].conversation + " " + plotData[currentConvoIdx].locations + " " + currentLocation);
+        }
         if (plotData[currentConvoIdx].locations.Contains(currentLocation) && ConvoRequirements.RequirementsMet(plotData[currentConvoIdx].requirements))
         {
             //if (!conversations.ContainsKey(plotData.conversationsData[currentConvoIdx].conversation))

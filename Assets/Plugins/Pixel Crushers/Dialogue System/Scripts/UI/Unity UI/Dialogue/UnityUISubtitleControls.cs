@@ -112,7 +112,7 @@ namespace PixelCrushers.DialogueSystem
 
         public override void SetActive(bool value)
         {
-            if (value == true || uiVisibility == UIVisibility.AlwaysFromStart || ((uiVisibility == UIVisibility.AlwaysOnceShown || uiVisibility == UIVisibility.UntilSuperceded) && isVisible))
+            if (value == true || uiVisibility == UIVisibility.AlwaysFromStart || ((uiVisibility == UIVisibility.AlwaysOnceShown || UITools.CanBeSuperceded(uiVisibility)) && isVisible))
             {
                 ShowPanel();
             }

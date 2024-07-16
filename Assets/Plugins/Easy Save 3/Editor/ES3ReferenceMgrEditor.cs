@@ -131,9 +131,9 @@ public class ES3ReferenceMgrEditor : Editor
         }
     }
 
-    [MenuItem("GameObject/Easy Save 3/Add Reference(s) to Manager", false, 33)]
-    [MenuItem("Assets/Easy Save 3/Add Reference(s) to Manager", false, 33)]
-    public static void AddReferenceToManager()
+    [MenuItem("GameObject/Easy Save 3/Add Dependencies to Manager", false, 33)]
+    [MenuItem("Assets/Easy Save 3/Add Dependencies to Manager", false, 33)]
+    public static void AddDependenciesToManager()
     {
         var mgr = ES3ReferenceMgr.Current;
         if (mgr == null)
@@ -142,9 +142,10 @@ public class ES3ReferenceMgrEditor : Editor
             return;
         }
 
-        var selected = Selection.GetFiltered<UnityEngine.Object>(SelectionMode.DeepAssets);
+        var selected = new HashSet<UnityEngine.Object>(Selection.GetFiltered<UnityEngine.Object>(SelectionMode.DeepAssets));
+        selected.UnionWith(Selection.GetFiltered<UnityEngine.Object>(SelectionMode.TopLevel));
 
-        if (selected == null || selected.Length == 0)
+        if (selected == null || selected.Count == 0)
             return;
 
         Undo.RecordObject(mgr, "Update Easy Save 3 Reference Manager");
@@ -165,8 +166,44 @@ public class ES3ReferenceMgrEditor : Editor
         }
     }
 
+    [MenuItem("GameObject/Easy Save 3/Add Reference(s) to Manager", false, 33)]
+    [MenuItem("Assets/Easy Save 3/Add Reference(s) to Manager", false, 33)]
+    public static void AddReferencesToManager()
+    {
+        var mgr = ES3ReferenceMgr.Current;
+        if (mgr == null)
+        {
+            EditorUtility.DisplayDialog("Could not add reference to manager", "This object could not be added to the reference manager because no reference manager exists in this scene. To create one, go to Tools > Easy Save 3 > Add Manager to Scene", "Ok");
+            return;
+        }
+
+        var selected = Selection.GetFiltered<UnityEngine.Object>(SelectionMode.TopLevel);
+
+        if (selected == null || selected.Length == 0)
+            return;
+
+        Undo.RecordObject(mgr, "Update Easy Save 3 Reference Manager");
+
+        foreach (var obj in selected)
+        {
+            if (obj == null)
+                continue;
+
+            if (obj.GetType() == typeof(GameObject))
+            {
+                var go = (GameObject)obj;
+                if (ES3EditorUtility.IsPrefabInAssets(go) && go.GetComponent<ES3Internal.ES3Prefab>() != null)
+                    mgr.AddPrefab(go.GetComponent<ES3Internal.ES3Prefab>());
+            }
+
+            ((ES3ReferenceMgr)mgr).Add(obj);
+        }
+    }
+
     [MenuItem("GameObject/Easy Save 3/Add Reference(s) to Manager", true, 33)]
     [MenuItem("Assets/Easy Save 3/Add Reference(s) to Manager", true, 33)]
+    [MenuItem("GameObject/Easy Save 3/Add Dependencies to Manager", true, 33)]
+    [MenuItem("Assets/Easy Save 3/Add Dependencies to Manager", true, 33)]
     private static bool CanAddReferenceToManager()
     {
         var selected = Selection.GetFiltered<UnityEngine.Object>(SelectionMode.Deep);

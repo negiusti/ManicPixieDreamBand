@@ -235,7 +235,14 @@ namespace PixelCrushers.DialogueSystem
             {
                 DisableInput();
                 if (InputDeviceManager.autoFocus) SetFocus(firstSelected);
-                Invoke(nameof(EnableInput), blockInputDuration);
+                if (Mathf.Approximately(0, Time.timeScale))
+                { 
+                    StartCoroutine(EnableInputAfterDuration(blockInputDuration));
+                }
+                else
+                {
+                    Invoke(nameof(EnableInput), blockInputDuration);
+                }
             }
             else
             {
@@ -245,6 +252,12 @@ namespace PixelCrushers.DialogueSystem
 #if TMP_PRESENT
             DialogueManager.instance.StartCoroutine(CheckTMProAutoScroll());
 #endif
+        }
+
+        private IEnumerator EnableInputAfterDuration(float duration)
+        {
+            yield return new WaitForSecondsRealtime(duration);
+            EnableInput();
         }
 
 #if TMP_PRESENT
@@ -539,16 +552,27 @@ namespace PixelCrushers.DialogueSystem
                 if (autonumber.enabled)
                 {
                     button.text = string.Format(m_processedAutonumberFormat, buttonNumber + 1, button.text);
-                    var keyTrigger = button.GetComponent<UIButtonKeyTrigger>();
+                    // Add UIButtonKeyTrigger(s) if needed:
+                    var numKeyTriggersNeeded = 0;
+                    if (autonumber.regularNumberHotkeys) numKeyTriggersNeeded++;
+                    if (autonumber.numpadHotkeys) numKeyTriggersNeeded++;
+                    var keyTriggers = button.GetComponents<UIButtonKeyTrigger>();
+                    if (keyTriggers.Length < numKeyTriggersNeeded)
+                    {
+                        for (int i = keyTriggers.Length; i < numKeyTriggersNeeded; i++)
+                        {
+                            button.gameObject.AddComponent<UIButtonKeyTrigger>();
+                        }
+                        keyTriggers = button.GetComponents<UIButtonKeyTrigger>();
+                    }
+                    int index = 0;
                     if (autonumber.regularNumberHotkeys)
                     {
-                        if (keyTrigger == null) keyTrigger = button.gameObject.AddComponent<UIButtonKeyTrigger>();
-                        keyTrigger.key = (KeyCode)((int)KeyCode.Alpha1 + buttonNumber);
+                        keyTriggers[index++].key = (KeyCode)((int)KeyCode.Alpha1 + buttonNumber);
                     }
                     if (autonumber.numpadHotkeys)
                     {
-                        if (autonumber.regularNumberHotkeys || keyTrigger == null) keyTrigger = button.gameObject.AddComponent<UIButtonKeyTrigger>();
-                        keyTrigger.key = (KeyCode)((int)KeyCode.Keypad1 + buttonNumber);
+                        keyTriggers[index].key = (KeyCode)((int)KeyCode.Keypad1 + buttonNumber);
                     }
                 }
             }

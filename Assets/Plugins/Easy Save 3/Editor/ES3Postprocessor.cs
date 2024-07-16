@@ -94,7 +94,7 @@ public class ES3Postprocessor : UnityEditor.AssetModificationProcessor
 
         var mgr = (ES3ReferenceMgr)ES3ReferenceMgr.GetManagerFromScene(scene);
 
-        if (mgr != null)
+        if (mgr != null && ES3Settings.defaultSettingsScriptableObject.autoUpdateReferences && ES3Settings.defaultSettingsScriptableObject.updateReferencesWhenSceneChanges)
             mgr.AddDependencies(c);
     }
 

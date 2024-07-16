@@ -26,6 +26,9 @@ namespace PixelCrushers.DialogueSystem
         [Tooltip("Stop SkipAll() when end of conversation is reached.")]
         public bool stopSkipAllOnConversationEnd;
 
+        [Tooltip("If Skip All is enabled, don't skip last conversation line.")]
+        public bool dontSkipAllOnLastConversationLine;
+
         protected AbstractDialogueUI dialogueUI;
 
         protected virtual void Awake()
@@ -65,7 +68,11 @@ namespace PixelCrushers.DialogueSystem
         {
             if (skipAll)
             {
-                subtitle.sequence = "Continue(); " + subtitle.sequence;
+                if (!dontSkipAllOnLastConversationLine ||
+                    DialogueManager.currentConversationState.hasAnyResponses)
+                {
+                    subtitle.sequence = "Continue(); " + subtitle.sequence;
+                }
             }
         }
 

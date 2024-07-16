@@ -48,7 +48,7 @@ namespace PixelCrushers.DialogueSystem
 
         private enum MenuResult
         {
-            Unselected, DefaultSequence, Delay, DefaultCameraAngle, UpdateTracker, RandomizeNextEntry, None, Continue, ContinueTrue, ContinueFalse, OtherCommand
+            Unselected, DefaultSequence, Delay, DefaultCameraAngle, UpdateTracker, RandomizeNextEntry, RandomizeNextEntryNoDuplicate, None, Continue, ContinueTrue, ContinueFalse, OtherCommand
         }
 
         private static MenuResult menuResult = MenuResult.Unselected;
@@ -180,9 +180,12 @@ namespace PixelCrushers.DialogueSystem
                                     var path = AssetDatabase.GetAssetPath(clip);
 #if USE_ADDRESSABLES
                                     if (true) // If using addressables, doesn't need to be in Resources
+                                    {
+                                        sequence = AddCommandToSequence(sequence, currentAudioCommand + "(" + GetResourceName(path) + ")");
+                                        GUI.changed = true;
+                                    }
 #else
                                     if (path.Contains("Resources"))
-#endif
                                     {
                                         sequence = AddCommandToSequence(sequence, currentAudioCommand + "(" + GetResourceName(path) + ")");
                                         GUI.changed = true;
@@ -196,6 +199,7 @@ namespace PixelCrushers.DialogueSystem
                                     {
                                         EditorUtility.DisplayDialog("Not in Resources Folder", "To use drag-n-drop, audio clips must be located in the hierarchy of a Resources folder or must be marked Addressable.", "OK");
                                     }
+#endif
                                 }
                                 else if (obj is GameObject)
                                 {
@@ -259,7 +263,8 @@ namespace PixelCrushers.DialogueSystem
             menu.AddItem(new GUIContent("Delay for subtitle length"), false, SetMenuResult, MenuResult.Delay);
             menu.AddItem(new GUIContent("Cut to speaker's default camera angle"), false, SetMenuResult, MenuResult.DefaultCameraAngle);
             menu.AddItem(new GUIContent("Update quest tracker"), false, SetMenuResult, MenuResult.UpdateTracker);
-            menu.AddItem(new GUIContent("Randomize next entry"), false, SetMenuResult, MenuResult.RandomizeNextEntry);
+            menu.AddItem(new GUIContent("Randomize next entry/Any"), false, SetMenuResult, MenuResult.RandomizeNextEntry);
+            menu.AddItem(new GUIContent("Randomize next entry/Don't repeat previous random choice"), false, SetMenuResult, MenuResult.RandomizeNextEntryNoDuplicate);
             menu.AddItem(new GUIContent("None (null command with zero duration)"), false, SetMenuResult, MenuResult.None);
             menu.AddItem(new GUIContent("Continue/Simulate continue button click"), false, SetMenuResult, MenuResult.Continue);
             menu.AddItem(new GUIContent("Continue/Enable continue button"), false, SetMenuResult, MenuResult.ContinueTrue);
@@ -417,6 +422,8 @@ namespace PixelCrushers.DialogueSystem
                     return "UpdateTracker()";
                 case MenuResult.RandomizeNextEntry:
                     return "RandomizeNextEntry()";
+                case MenuResult.RandomizeNextEntryNoDuplicate:
+                    return "RandomizeNextEntry(true)";
                 case MenuResult.None:
                     return "None()";
                 case MenuResult.Continue:
@@ -530,8 +537,6 @@ namespace PixelCrushers.DialogueSystem
             {
                 foreach (var shortcut in sequencerShortcuts.shortcuts)
                 {
-                    //list.Add(@"{{" + shortcut.shortcut + @"}}");
-
                     // Check if the shortcut has a submenu specified
                     if (!string.IsNullOrEmpty(shortcut.subMenu))
                     {
@@ -550,7 +555,7 @@ namespace PixelCrushers.DialogueSystem
                         {
                             submenuDict["General"] = new List<string>();
                         }
-                        submenuDict["General"].Add(shortcut.shortcut);
+                        submenuDict["General"].Add(@"{{" + shortcut.shortcut + @"}}");
                     }
                 }
             }
@@ -561,7 +566,7 @@ namespace PixelCrushers.DialogueSystem
                 submenuDict[submenu].Sort(); // Sort the shortcuts
                 foreach (var shortcut in submenuDict[submenu])
                 {
-                    string menuPath = string.IsNullOrEmpty(submenu) ? shortcut : $"{submenu}/{shortcut}";
+                    string menuPath = string.IsNullOrEmpty(submenu) ? shortcut : $"{submenu}/{shortcut.Replace('/', '\u2215')}";
                     menu.AddItem(new GUIContent("Shortcuts/" + menuPath), false, StartOtherCommand, shortcut);
                 }
             }

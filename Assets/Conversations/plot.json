@@ -124,9 +124,102 @@
             "conversation": "Pick A Band Name V2"
         },
         {
+            "locations": [ "BandPracticeRoom" ],
+            "participants": [
+                {
+                    "name": "MainCharacter",
+                    "position": {
+                        "x": -2.24,
+                        "y": -2.35,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Ricki",
+                    "position": {
+                        "x": -3.24,
+                        "y": -1.75,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Max",
+                    "position": {
+                        "x": 7.24,
+                        "y": -3.17,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                }
+            ],
+            "requirements": {
+                "dayNum": 2
+            },
+            "trigger": "Start",
+            "conversation": "BandPractice/ScreenPrinting"
+        },
+        {
+            "locations": [ "MusicShop" ],
+            "participants": [
+                {
+                    "name": "MainCharacter",
+                    "position": {
+                        "x": -0.91,
+                        "y": -1.2,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Ricki",
+                    "position": {
+                        "x": -4.63,
+                        "y": -0.8,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Max",
+                    "position": {
+                        "x": 25.66,
+                        "y": -1,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Dylan",
+                    "position": {
+                        "x": -8.59,
+                        "y": -0.1,
+                        "z": 3.0
+                    },
+                    "layer": "bg_char",
+                    "existAtStart": true
+                }
+            ],
+            "requirements": {
+                "dayNum": 3
+            },
+            "trigger": "Start",
+            "conversation": "Plot/Tutorial/3"
+        },
+        {
             "locations": [ "SmallBar" ],
             "participants": [
             ],
+            "requirements": {
+                "dayNum": 3
+            },
             "trigger": "Start",
             "conversation": "First Gig"
         },
@@ -134,6 +227,9 @@
             "locations": [ "SmallBar" ],
             "participants": [
             ],
+            "requirements": {
+                "dayNum": 3
+            },
             "trigger": "Start",
             "conversation": "The Storm Show"
         }

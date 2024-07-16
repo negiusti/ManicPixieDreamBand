@@ -215,6 +215,16 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
+        public static bool CanBeSuperceded(UIVisibility visibility)
+        {
+            return
+                visibility == UIVisibility.UntilSuperceded ||
+                visibility == UIVisibility.UntilSupercededOrActorChange ||
+                visibility == UIVisibility.UntilSupercededOrActorChangeOrMenu;
+        }
+
+
+
     }
 
 }

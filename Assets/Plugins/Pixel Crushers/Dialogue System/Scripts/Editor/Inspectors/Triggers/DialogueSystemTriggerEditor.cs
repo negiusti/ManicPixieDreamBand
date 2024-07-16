@@ -638,12 +638,17 @@ namespace PixelCrushers.DialogueSystem
                             entryTitleProperty.stringValue = string.Empty;
                         }
 
+                        EditorGUILayout.PropertyField(serializedObject.FindProperty("overrideDialogueUI"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("exclusive"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("replace"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("queue"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("skipIfNoValidEntries"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("preventRestartOnSameFrameEnded"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("stopConversationOnTriggerExit"), true);
+                        if (serializedObject.FindProperty("stopConversationOnTriggerExit").boolValue)
+                        {
+                            EditorGUILayout.PropertyField(serializedObject.FindProperty("marginToAllowTriggerExit"), true);
+                        }
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("stopConversationIfTooFar"), true);
                         if (serializedObject.FindProperty("stopConversationIfTooFar").boolValue)
                         {

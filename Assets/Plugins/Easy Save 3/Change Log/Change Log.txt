@@ -1,3 +1,15 @@
+3.5.10
+- Resolved issue where loading a value with a dervied type using caching would cause it to be loaded as it's parent type.
+
+3.5.9
+- Added support for Unity 6.
+
+3.5.8
+- Separated Add References to Mgr into Add References to Mgr and Add Dependencies to Mgr.
+- Resolved issue where references were added to manager when Auto Add References was disabled as Component was created in scene.
+- Resolved issue in some cases where Optimize would not remove cached references to deleted objects.
+- Resolved issue where creating an ES3Type for an object which has generic collection field with an element of the same type as itself would cause a stack overflow in certain edge cases. 
+
 3.5.7
 - Removed legacy dependency-gathering code which requires the UnityEngine.UI library.
 - Resolved issues where ES3UserTypes aren't added to the reference manager on occasion.

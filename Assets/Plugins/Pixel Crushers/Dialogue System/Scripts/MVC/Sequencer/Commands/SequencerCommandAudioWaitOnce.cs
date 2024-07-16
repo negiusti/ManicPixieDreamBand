@@ -117,7 +117,7 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
                                     _audioSource.clip = audioClip;
                                     _audioSource.Play();
                                 }
-                                _stopTime = DialogueTime.time + audioClip.length;
+                                _stopTime = DialogueTime.time + SequencerCommandAudioWait.GetAudioClipLength(_audioSource, audioClip);
                             }
                         });
                 }

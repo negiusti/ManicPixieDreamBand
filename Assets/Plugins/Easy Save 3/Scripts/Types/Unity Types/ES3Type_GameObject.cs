@@ -199,6 +199,7 @@ namespace ES3Types
                     // We're reading null, so skip this Component.
                     continue;
 
+                string typeName = null;
                 Type type = null;
 
                 string propertyName;
@@ -207,11 +208,24 @@ namespace ES3Types
                     propertyName = ReadPropertyName(reader);
 
                     if (propertyName == ES3Type.typeFieldName)
-                        type = reader.ReadType();
+                    {
+                        typeName = reader.Read<string>(ES3Type_string.Instance);
+                        type = ES3Reflection.GetType(typeName);
+                    }
                     else if (propertyName == ES3ReferenceMgrBase.referencePropertyName)
                     {
                         if (type == null)
-                            throw new InvalidOperationException("Cannot load Component because no type data has been stored with it, so it's not possible to determine it's type");
+                        {
+                            if (string.IsNullOrEmpty(typeName))
+                                throw new InvalidOperationException("Cannot load Component because no type data has been stored with it, so it's not possible to determine it's type");
+                            else
+                                Debug.LogWarning($"Cannot load Component of type {typeName} because this type no longer exists in your project. Note that this issue will create an empty GameObject named 'New Game Object' in your scene due to the way in which this Component needs to be skipped.");
+
+                            // Read past the Component.
+                            reader.overridePropertiesName = propertyName;
+                            ReadObject<Component>(reader);
+                            break;
+                        }
 
                         var componentRef = reader.Read_ref();
 

@@ -15,7 +15,12 @@ namespace PixelCrushers.DialogueSystem.Articy
 
         public static ArticyData LoadArticyDataFromXmlData(string xmlData, Encoding encoding, ConverterPrefs.ConvertDropdownsModes convertDropdownAs = ConverterPrefs.ConvertDropdownsModes.Int)
         {
-            if (Articy_3_1.Articy_3_1_Tools.IsSchema(xmlData))
+
+            if (Articy_4_0.Articy_4_0_Tools.IsSchema(xmlData))
+            {
+                return Articy_4_0.Articy_4_0_Tools.LoadArticyDataFromXmlData(xmlData, encoding, convertDropdownAs);
+            }
+            else if (Articy_3_1.Articy_3_1_Tools.IsSchema(xmlData))
             {
                 return Articy_3_1.Articy_3_1_Tools.LoadArticyDataFromXmlData(xmlData, encoding, convertDropdownAs);
             }
@@ -33,13 +38,18 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
             else
             {
+                UnityEngine.Debug.LogWarning($"No valid schema data found in XML data. Remember to tick 'Export XML Namespace' when exporting.");
                 return null;
             }
         }
 
         public static ArticyData LoadArticyDataFromXmlData(string xmlData, ConverterPrefs prefs)
         {
-            if (Articy_3_1.Articy_3_1_Tools.IsSchema(xmlData))
+            if (Articy_4_0.Articy_4_0_Tools.IsSchema(xmlData))
+            {
+                return Articy_4_0.Articy_4_0_Tools.LoadArticyDataFromXmlData(xmlData, prefs.Encoding, prefs.ConvertDropdownsAs, prefs);
+            }
+            else if (Articy_3_1.Articy_3_1_Tools.IsSchema(xmlData))
             {
                 return Articy_3_1.Articy_3_1_Tools.LoadArticyDataFromXmlData(xmlData, prefs.Encoding, prefs.ConvertDropdownsAs, prefs);
             }
@@ -57,6 +67,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
             else
             {
+                UnityEngine.Debug.LogWarning($"No valid schema data found in XML data. Remember to tick 'Export XML Namespace' when exporting.");
                 return null;
             }
         }

@@ -5,6 +5,8 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+
 #if USE_NEW_INPUT
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -96,6 +98,7 @@ namespace PixelCrushers
 
         private Vector3 m_lastMousePosition;
         private bool m_ignoreMouse = false;
+        private CursorLockMode m_cursorLockMode = CursorLockMode.Locked;
         private bool m_inputAllowed = true;
 
         private static InputDeviceManager m_instance = null;
@@ -105,6 +108,10 @@ namespace PixelCrushers
             set { m_instance = value; }
         }
 
+        /// <summary>
+        /// Current input device detected by InputDeviceManager. May changed based on
+        /// input from other devices.
+        /// </summary>
         public static InputDevice currentInputDevice
         {
             get
@@ -113,9 +120,21 @@ namespace PixelCrushers
             }
         }
 
+        /// <summary>
+        /// Returns true if current input device uses mouse cursor.
+        /// </summary>
         public static bool deviceUsesCursor
         {
             get { return currentInputDevice == InputDevice.Mouse; }
+        }
+
+        /// <summary>
+        /// Lock mode to use when locking cursor.
+        /// </summary>
+        public static CursorLockMode cursorLockMode
+        {
+            get { return (m_instance != null) ? m_instance.m_cursorLockMode : CursorLockMode.Locked; }
+            set { if (m_instance != null) m_instance.m_cursorLockMode = value; }
         }
 
         /// <summary>
@@ -123,7 +142,7 @@ namespace PixelCrushers
         /// </summary>
         public static bool autoFocus
         {
-            get { return (instance != null && instance.alwaysAutoFocus) || currentInputDevice == InputDevice.Joystick || currentInputDevice == InputDevice.Keyboard; }
+            get { return (m_instance != null && instance.alwaysAutoFocus) || currentInputDevice == InputDevice.Joystick || currentInputDevice == InputDevice.Keyboard; }
         }
 
         public static bool isBackButtonDown
@@ -216,9 +235,7 @@ namespace PixelCrushers
 
         public void OnDestroy()
         {
-#if !UNITY_5_3
             SceneManager.sceneLoaded -= OnSceneLoaded;
-#endif
         }
 
         public void Start()
@@ -226,10 +243,33 @@ namespace PixelCrushers
             m_lastMousePosition = GetMousePosition();
             SetInputDevice(inputDevice);
             BrieflyIgnoreMouseMovement();
-#if !UNITY_5_3
             SceneManager.sceneLoaded += OnSceneLoaded;
+#if USE_NEW_INPUT
+            InputSystem.onDeviceChange += OnInputSystemDeviceChange;
 #endif
         }
+
+#if USE_NEW_INPUT
+        private void OnInputSystemDeviceChange(UnityEngine.InputSystem.InputDevice device, InputDeviceChange change)
+        {
+            if (change == InputDeviceChange.Added ||
+               (change == InputDeviceChange.UsageChanged && device.lastUpdateTime >= Time.time - 1))
+            {
+                if (device is Joystick || device is Gamepad)
+                {
+                    SetInputDevice(InputDevice.Joystick);
+                }
+                else if (device is Keyboard)
+                {
+                    SetInputDevice((keyInputSwitchesModeTo == KeyInputSwitchesModeTo.Mouse) ? InputDevice.Mouse : InputDevice.Keyboard);
+                }
+                else
+                {
+                    SetInputDevice(InputDevice.Mouse);
+                }
+            }
+        }
+#endif
 
         private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
         {
@@ -416,7 +456,7 @@ namespace PixelCrushers
         public void ForceCursor(bool visible)
         {
             Cursor.visible = visible;
-            Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.lockState = visible ? CursorLockMode.None : cursorLockMode;
             m_lastMousePosition = GetMousePosition();
             StartCoroutine(ForceCursorAfterOneFrameCoroutine(visible));
         }
@@ -425,7 +465,7 @@ namespace PixelCrushers
         {
             yield return CoroutineUtility.endOfFrame;
             Cursor.visible = visible;
-            Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.lockState = visible ? CursorLockMode.None : cursorLockMode;
         }
 
 #if USE_NEW_INPUT
@@ -501,7 +541,7 @@ namespace PixelCrushers
         public static bool DefaultGetAnyKeyDown()
         {
 #if USE_NEW_INPUT
-            return Keyboard.current != null && Keyboard.current.anyKey.isPressed;
+            return Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame;
 #else
             return Input.anyKeyDown;
 #endif
@@ -601,9 +641,9 @@ namespace PixelCrushers
             if (Mouse.current == null) return false;
             switch (buttonNumber)
             {
-                case 0: return Mouse.current.leftButton.isPressed;
-                case 1: return Mouse.current.rightButton.isPressed;
-                case 2: return Mouse.current.middleButton.isPressed;
+                case 0: return Mouse.current.leftButton.wasPressedThisFrame;
+                case 1: return Mouse.current.rightButton.wasPressedThisFrame;
+                case 2: return Mouse.current.middleButton.wasPressedThisFrame;
                 default: return false;
             }
 #else

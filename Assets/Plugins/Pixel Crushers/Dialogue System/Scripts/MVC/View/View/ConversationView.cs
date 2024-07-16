@@ -361,8 +361,11 @@ namespace PixelCrushers.DialogueSystem
             if ((subtitle != null) && (settings != null) && (settings.subtitleSettings != null))
             {
                 if (subtitle.formattedText.noSubtitle || 
-                    string.Equals(subtitle.sequence, "None()") || string.Equals(subtitle.sequence, "None();") ||
-                    string.Equals(subtitle.sequence, "Continue()") || string.Equals(subtitle.sequence, "Continue();"))
+                    string.Equals(subtitle.sequence, "None()") || 
+                    string.Equals(subtitle.sequence, "None();") ||
+                    (!settings.cameraSettings.showSubtitleOnEmptyContinue && 
+                        (string.Equals(subtitle.sequence, "Continue()") || 
+                        string.Equals(subtitle.sequence, "Continue();"))))
                 {
                     return false;
                 }
@@ -430,7 +433,7 @@ namespace PixelCrushers.DialogueSystem
                 if (notifyOnFinishSubtitle)
                 {
                     notifyOnFinishSubtitle = false;
-                    if (_subtitle != null) NotifyParticipantsOnConversationLineEnd(lastSubtitle);
+                    if (lastSubtitle != null) NotifyParticipantsOnConversationLineEnd(lastSubtitle);
                     if (FinishedSubtitleHandler != null) FinishedSubtitleHandler(this, EventArgs.Empty);
                 }
             }

@@ -14,6 +14,13 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
     public delegate void DrawAssetInspectorDelegate(DialogueDatabase database, Asset asset);
 
     /// <summary>
+    /// Draw additional information in conversation inspector.
+    /// </summary>
+    /// <param name="database">Dialogue database.</param>
+    /// <param name="conversation">Conversation to draw.</param>
+    public delegate void DrawConversationInspectorDelegate(DialogueDatabase database, Conversation conversation);
+
+    /// <summary>
     /// Draw additional information in dialogue entry inspector.
     /// </summary>
     /// <param name="database">Dialogue database.</param>
@@ -64,6 +71,11 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         /// Assign handler(s) to perform extra drawing in Actor, Item, and Location inspector views.
         /// </summary>
         public static event DrawAssetInspectorDelegate customDrawAssetInspector = null;
+
+        /// <summary>
+        /// Assign handler(s) to perform extra drawing in the conversation inspector view.
+        /// </summary>
+        public static event DrawConversationInspectorDelegate customDrawConversationInspector = null;
 
         /// <summary>
         /// Assign handler(s) to perform extra drawing in the dialogue entry inspector view.

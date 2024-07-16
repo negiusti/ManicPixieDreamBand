@@ -71,8 +71,12 @@ else if(isset($_POST["putFile"]))
 	$filePath = $_FILES["data"]["tmp_name"];
 	
 	// If file doesn't exist or it contains no data, throw an error.
-	if(!file_exists($filePath) || filesize($filePath) == 0)
-		Error("Uploaded file does not exist or is empty.", "Uploaded file does not exist or is empty.", 400);
+	if(!file_exists($filePath))
+		Error("Uploaded file does not exist.", "Uploaded file does not exist.", 400);
+	
+	// If file doesn't exist or it contains no data, throw an error.
+	if(filesize($filePath) == 0)
+		Error("Uploaded file is empty.", "Uploaded file is empty.", 400);
 	
 	$fp = fopen($filePath, 'rb');
 	

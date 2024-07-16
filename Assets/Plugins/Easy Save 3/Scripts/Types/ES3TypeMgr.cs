@@ -147,10 +147,10 @@ namespace ES3Internal
             {
                 types = new Dictionary<Type, ES3Type>();
                 
-                var instances = ES3Reflection.GetInstances<ES3Type>().OrderByDescending(x => x.priority);
+                var instances = ES3Reflection.GetInstances<ES3Type>(); // ES3Types add themselves to the manager when instantiated to ensure they don't cause cyclic references if they contain a field which is the same type as themselves.
 
-                foreach(var instance in instances)
-                    ES3TypeMgr.Add(instance.type, instance);
+                /*foreach(var instance in instances)
+                    ES3TypeMgr.Add(instance.type, instance);*/
 
                 // Check that the type list was initialised correctly.
                 if (types == null || types.Count == 0)

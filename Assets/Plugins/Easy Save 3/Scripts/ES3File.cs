@@ -239,7 +239,8 @@ public class ES3File
         unencryptedSettings.encryptionType = ES3.EncryptionType.None;
         unencryptedSettings.compressionType = ES3.CompressionType.None;
 
-        if (typeof(T) == typeof(object))
+        // If we're loading a derived type using it's parent type, ensure that we use the ES3Type from the ES3Data.
+        if (typeof(T) != es3Data.type.type && ES3Reflection.IsAssignableFrom(typeof(T), es3Data.type.type))
             return (T)ES3.Deserialize(es3Data.type, es3Data.bytes, unencryptedSettings);
         return ES3.Deserialize<T>(es3Data.bytes, unencryptedSettings);
     }
@@ -257,7 +258,8 @@ public class ES3File
         unencryptedSettings.encryptionType = ES3.EncryptionType.None;
         unencryptedSettings.compressionType = ES3.CompressionType.None;
 
-        if (typeof(T) == typeof(object))
+        // If we're loading a derived type using it's parent type, ensure that we use the ES3Type from the ES3Data.
+        if (typeof(T) != es3Data.type.type && ES3Reflection.IsAssignableFrom(typeof(T), es3Data.type.type))
             return (T)ES3.Deserialize(es3Data.type, es3Data.bytes, unencryptedSettings);
         return ES3.Deserialize<T>(es3Data.bytes, unencryptedSettings);
     }
@@ -276,7 +278,8 @@ public class ES3File
         unencryptedSettings.encryptionType = ES3.EncryptionType.None;
         unencryptedSettings.compressionType = ES3.CompressionType.None;
 
-        if (typeof(T) == typeof(object))
+        // If we're loading a derived type using it's parent type, ensure that we use the ES3Type from the ES3Data.
+        if (typeof(T) != es3Data.type.type && ES3Reflection.IsAssignableFrom(typeof(T), es3Data.type.type))
             ES3.DeserializeInto(es3Data.type, es3Data.bytes, obj, unencryptedSettings);
         else
             ES3.DeserializeInto(es3Data.bytes, obj, unencryptedSettings);
