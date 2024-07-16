@@ -75,10 +75,10 @@ public class CustomDialogueScript : MonoBehaviour
 
     private bool CheckForPlotConvo()
     {
-        //if (currentConvoIdx > plotData.Length -1)
-        //{
-        //    return false;
-        //}
+        if (currentConvoIdx > plotData.Length - 1)
+        {
+            return false;
+        }
         if (!phone.IsLocked())
             return false;
         if (DialogueManager.IsConversationActive)
