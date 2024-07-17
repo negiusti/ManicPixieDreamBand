@@ -16,7 +16,8 @@ public class BandsManager : ScriptableObject
 
     public static int GetBandTixSales(int avg)
     {
-        return Random.Range(Mathf.Max(1, avg -2), Mathf.Max(avg + 2, 12));
+        return avg;
+        //return Random.Range(Mathf.Max(1, avg -2), Mathf.Max(avg + 2, 12));
     }
 
     //public static int GetBandTixSales(string bandname)

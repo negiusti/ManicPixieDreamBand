@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(InventoryManager.GetNumInPockets));
         Lua.UnregisterFunction(nameof(MainCharacterState.HasChangedOutfitToday));
         Lua.UnregisterFunction(nameof(MainCharacterState.CurrentBankBalance));
+        Lua.UnregisterFunction(nameof(MainCharacterState.ModifyBankBalance)); 
         Lua.UnregisterFunction(nameof(JobSystem.SetCurrentJob));
         Lua.UnregisterFunction(nameof(QuestManager.CompleteCurrentQuest));
         Lua.UnregisterFunction(nameof(RomanceManager.ChangeRelationshipScore));
