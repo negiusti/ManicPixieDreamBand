@@ -157,7 +157,7 @@ public class StarSpawnerScript : MonoBehaviour
                 Debug.LogError("Invalid float format.");
             }
         }
-        while(hamster.time < hamster.clip.length - 0.5f)
+        while(hamster.time < hamster.clip.length - 1f)
             yield return null;
 
         //miniGame.SetActive(false);

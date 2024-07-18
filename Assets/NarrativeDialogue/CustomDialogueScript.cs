@@ -150,7 +150,7 @@ public class CustomDialogueScript : MonoBehaviour
     void Update()
     {
         // the reason I do this is so that the space button selects the dialogue option without also continuing
-        if (Input.GetKeyDown(keyCode) && DialogueManager.IsConversationActive && !isCoolDown &&
+        if ((Input.GetKeyDown(keyCode) || Input.GetKeyDown(KeyCode.Return)) && DialogueManager.IsConversationActive && !isCoolDown &&
             !IsPCResponseMenuOpen() && !IsTxtConvoActive() && !DialogueTime.IsPaused)
         {
             StartCoroutine(CoolDown());
@@ -163,7 +163,7 @@ public class CustomDialogueScript : MonoBehaviour
             if (fucks.Length == 0 && DialogueManager.currentConversationState.subtitle.dialogueEntry.currentDialogueText.Length > 0)
                 DialogueManager.standardDialogueUI.OnContinueConversation();
             //DialogueManager.standardDialogueUI.OnContinue();
-        } else if (Input.GetKeyDown(keyCode) && DialogueManager.IsConversationActive && isCoolDown)
+        } else if ((Input.GetKeyDown(keyCode) || Input.GetKeyDown(KeyCode.Return)) && DialogueManager.IsConversationActive && isCoolDown)
         {
             //FindObjectsOfType<UnityUITypewriterEffect>().Select(t => t.enabled = false);
             Debug.Log("cooling down");
