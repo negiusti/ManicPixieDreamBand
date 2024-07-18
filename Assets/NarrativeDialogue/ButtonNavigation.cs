@@ -8,6 +8,7 @@ public class ButtonNavigation : MonoBehaviour
     private Button[] selectables;
     private DialogueResponseOption[] responses;
     private int currentIndex = 0;
+    private RectTransform rect;
 
     //private int topIdx;
     //private int bottomIdx;
@@ -17,6 +18,7 @@ public class ButtonNavigation : MonoBehaviour
         // Get all Selectable components in the GameObject's children
         selectables = GetComponentsInChildren<Button>().Where(b => b.enabled).ToArray();
         responses = selectables.Select(b => b.gameObject.GetComponent<DialogueResponseOption>()).ToArray();
+        rect = GetComponent<RectTransform>();
 
         UnselectAll();
         // Ensure there is at least one selectable
@@ -34,6 +36,7 @@ public class ButtonNavigation : MonoBehaviour
         currentIndex = 0;
         UnselectAll();
         Select(currentIndex);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
     }
 
     void Update()
@@ -87,6 +90,7 @@ public class ButtonNavigation : MonoBehaviour
         {
             responses[idx].ShowDownArrow();
         }
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
     }
 
     private void Unselect(int idx)
