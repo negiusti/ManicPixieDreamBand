@@ -36,7 +36,10 @@ public class ButtonNavigation : MonoBehaviour
         currentIndex = 0;
         UnselectAll();
         Select(currentIndex);
-        LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+        if (rect == null)
+            rect = GetComponent<RectTransform>();
+        if (rect != null)
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
     }
 
     void Update()
@@ -90,7 +93,10 @@ public class ButtonNavigation : MonoBehaviour
         {
             responses[idx].ShowDownArrow();
         }
-        LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+        if (rect == null)
+            rect = GetComponent<RectTransform>();
+        if (rect != null)
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
     }
 
     private void Unselect(int idx)

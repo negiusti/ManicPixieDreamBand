@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
 public class PlayerMovement : Movement
@@ -14,6 +15,13 @@ public class PlayerMovement : Movement
         base.Update();
         if (currState == MovementState.Guitar || currState == MovementState.Drum)
         {
+            return;
+        }
+        if (!Phone.Instance.IsLocked() || DialogueManager.Instance.IsConversationActive)
+        {
+            animator.SetBool("IsMoving", false);
+            currState = isSkating ? MovementState.SkateIdle :
+                isRollerSkating ? MovementState.RollerskateIdle : MovementState.Idle;
             return;
         }
 
