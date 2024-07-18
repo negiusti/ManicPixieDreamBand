@@ -17,7 +17,8 @@ public class KeepInView : MonoBehaviour
         originalXParent = transform.parent.position.x;
         originalX = rectTransform.position.x;
         offsetX = originalX - originalXParent;
-        
+        bool negOffset = transform.parent.rotation.eulerAngles.y > 170;
+        if (negOffset) offsetX *= -1;
     }
 
     void Update()

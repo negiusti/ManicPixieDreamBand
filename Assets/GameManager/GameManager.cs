@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(InventoryManager.GetNumInPockets), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.GetNumInPockets(string.Empty)));
         Lua.RegisterFunction(nameof(MainCharacterState.HasChangedOutfitToday), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.HasChangedOutfitToday()));
         Lua.RegisterFunction(nameof(MainCharacterState.CurrentBankBalance), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.CurrentBankBalance()));
+        Lua.RegisterFunction(nameof(MainCharacterState.ModifyBankBalance), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.ModifyBankBalance((double)0)));
         Lua.RegisterFunction(nameof(JobSystem.SetCurrentJob), this, SymbolExtensions.GetMethodInfo(() => JobSystem.SetCurrentJob(string.Empty)));
         Lua.RegisterFunction(nameof(QuestManager.CompleteCurrentQuest), this, SymbolExtensions.GetMethodInfo(() => QuestManager.CompleteCurrentQuest()));
         Lua.RegisterFunction(nameof(RomanceManager.ChangeRelationshipScore), this, SymbolExtensions.GetMethodInfo(() => RomanceManager.ChangeRelationshipScore(string.Empty, (double)0)));

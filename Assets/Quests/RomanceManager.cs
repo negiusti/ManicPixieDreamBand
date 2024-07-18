@@ -11,7 +11,7 @@ public class RomanceManager : ScriptableObject
     private static HashSet<string> completedRomanceConvos;
     private static Dictionary<string, int> relationshipScores;
 
-    public static bool CheckForQuestConvo()
+    public static bool CheckForRomanceConvo()
     {
         foreach (string single in hornySingles.Keys)
         {

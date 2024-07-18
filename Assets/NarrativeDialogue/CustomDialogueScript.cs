@@ -180,7 +180,10 @@ public class CustomDialogueScript : MonoBehaviour
             {
                 Debug.Log("no plot convos found, checking for quest convo...");
                 // Check for QuestConvo
-                QuestManager.CheckForQuestConvo();
+                if (!QuestManager.CheckForQuestConvo())
+                {
+                    RomanceManager.CheckForRomanceConvo();
+                }
             }
         }
     }

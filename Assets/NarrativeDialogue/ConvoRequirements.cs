@@ -12,6 +12,7 @@
 //    public string[] pocketsItems;
 //    public string[] completedQuests;
 //    public string currentEventType;
+//    string location;
 //}
 using System.Linq;
 using UnityEngine;

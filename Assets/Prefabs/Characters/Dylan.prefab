@@ -510,7 +510,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861529570297295178}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.0082129, y: -0.64664793, z: 0}
   m_LocalScale: {x: 0.91, y: 0.91, z: 0.91}
   m_ConstrainProportionsScale: 1
@@ -558,7 +558,7 @@ Transform:
   - {fileID: 3317581884712001450}
   - {fileID: 7199596373011483410}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2809441459227544427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -696,8 +696,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274b80ab5b659c646ba9338870d14625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overrideName: 
-  overrideUseMessage: 
+  m_overrideName: 
+  m_overrideUseMessage: 
   maxUseDistance: 10
   events:
     onSelect:
@@ -778,12 +778,14 @@ MonoBehaviour:
   conversationActor: {fileID: 0}
   startConversationEntryID: -1
   startConversationEntryTitle: 
+  overrideDialogueUI: {fileID: 0}
   exclusive: 0
   replace: 0
   queue: 0
   skipIfNoValidEntries: 0
   preventRestartOnSameFrameEnded: 0
   stopConversationOnTriggerExit: 0
+  marginToAllowTriggerExit: 0.2
   stopConversationIfTooFar: 0
   maxConversationDistance: 5
   monitorConversationDistanceFrequency: 1
