@@ -90,6 +90,7 @@ public class PlayInstrument : MonoBehaviour
     private bool InteractionEnabled()
     {
         return !Characters.MainCharacter().gameObject.GetComponent<Movement>().IsSkating() &&
+            Phone.Instance.IsLocked() &&
             !SceneChanger.Instance.IsLoadingScreenOpen() &&
             !DialogueManager.IsConversationActive &&
             !MiniGameManager.AnyActiveMiniGames();

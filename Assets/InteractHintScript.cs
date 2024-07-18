@@ -55,6 +55,7 @@ public class InteractHintScript : MonoBehaviour
     {
         return !Characters.MainCharacter().gameObject.GetComponent<Movement>().IsSkating() &&
             !SceneChanger.Instance.IsLoadingScreenOpen() &&
+            Phone.Instance.IsLocked() &&
             !DialogueManager.IsConversationActive &&
             !MiniGameManager.AnyActiveMiniGames();
     }
