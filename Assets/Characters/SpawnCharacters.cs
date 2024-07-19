@@ -54,7 +54,7 @@ public class SpawnCharacters : ScriptableObject
             }
             else
             {
-                Vector3 newPos = new Vector3(c.transform.position.x, p.position.y, 3f);
+                Vector3 newPos = new Vector3(p.position.x, p.position.y, 3f);
                 c.transform.position = newPos;
             }
             c.MoveToRenderLayer(p.layer, idx);
