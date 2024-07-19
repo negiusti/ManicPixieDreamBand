@@ -11,7 +11,6 @@ public class InteractHintScript : MonoBehaviour
     public GameObject objToEnable;
     private GameManager gm;
     private Animator animator;
-    private SpriteRenderer spriteRenderer;
 
     //private Vector3 originalScale;
     //private bool isInsideTrigger = false;
@@ -33,14 +32,12 @@ public class InteractHintScript : MonoBehaviour
         {
             Debug.LogError("No animation given");
         }
-        animator.enabled = false;
-        spriteRenderer = this.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (inRange && Input.GetKey(keyToTrigger) && InteractionEnabled())
+        if (inRange && (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Return)) && InteractionEnabled())
         {
             if (mgToTrigger != null)
                 mgToTrigger.OpenMiniGame();
@@ -75,14 +72,12 @@ public class InteractHintScript : MonoBehaviour
         if (other.CompareTag("Player") && InteractionEnabled())
         {
             inRange = true;
-            animator.enabled = true;
-            animator.Play(animationName);
+            animator.SetBool("InRange", true);
         }
         else
         {
             inRange = false;
-            spriteRenderer.color = Color.white;
-            animator.enabled = false;
+            animator.SetBool("InRange", false);
         }
     }
 
@@ -91,8 +86,7 @@ public class InteractHintScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             inRange = false;
-            spriteRenderer.color = Color.white;
-            animator.enabled = false;
+            animator.SetBool("InRange", false);
         }
     }
 }
