@@ -21,8 +21,6 @@ public class PlayInstrument : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
-        animator.enabled = false;
         withinRange = false;
         spriteRenderer = this.GetComponent<SpriteRenderer>();
         spriteResolver = this.GetComponent<SpriteResolver>();
@@ -35,7 +33,7 @@ public class PlayInstrument : MonoBehaviour
     void Update()
     {
         // Only applies to MainCharacter, this is only for playing solo, not with the band
-        if (!isPlayingInstrument && withinRange && Input.GetKey(keyToTrigger) && InteractionEnabled())
+        if (!isPlayingInstrument && withinRange && (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Return)) && InteractionEnabled())
         {
             //Play();
             //JamCoordinator.StartJam("LEMON BOY");
@@ -118,11 +116,9 @@ public class PlayInstrument : MonoBehaviour
         {
             musicianMovement = other.gameObject.GetComponent<Movement>();
             withinRange = true;
-            animator.enabled = true;
         } else
         {
             withinRange = false;
-            animator.enabled = false;
         }
     }
 
@@ -131,7 +127,6 @@ public class PlayInstrument : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             withinRange = false;
-            animator.enabled = false;
         }
     }
 }
