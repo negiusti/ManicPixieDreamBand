@@ -23,7 +23,6 @@ public class CustomDialogueScript : MonoBehaviour
     private Canvas phoneResponsePanelCanvas;
     public int currentConvoIdx;
     private string currentLocation;
-    private Phone phone;
 
     private void Awake()
     {
@@ -34,7 +33,6 @@ public class CustomDialogueScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        phone = FindFirstObjectByType<Phone>();
         currentConvoIdx = 0;
         SubscribeToEvents();
         isCoolDown = false;
@@ -79,7 +77,7 @@ public class CustomDialogueScript : MonoBehaviour
         {
             return false;
         }
-        if (!phone.IsLocked())
+        if (!Phone.Instance.IsLocked())
             return false;
         if (DialogueManager.IsConversationActive)
             return false;
@@ -106,8 +104,8 @@ public class CustomDialogueScript : MonoBehaviour
         // TXT_ContactName_ConversationName
         if (IsTxtConvo(conversation))
         {
-            // Send notification to phone
-            phone.ReceiveMsg(conversation, true);
+            // Send notification to Phone.Instance
+            Phone.Instance.ReceiveMsg(conversation, true);
         }
         else
         {
@@ -122,8 +120,8 @@ public class CustomDialogueScript : MonoBehaviour
         // TXT_ContactName_ConversationName
         if (IsTxtConvo(convoData.conversation))
         {
-            // Send notification to phone
-            phone.ReceiveMsg(convoData.conversation, true);
+            // Send notification to Phone.Instance
+            Phone.Instance.ReceiveMsg(convoData.conversation, true);
         }
         else
         {
@@ -291,7 +289,7 @@ public class CustomDialogueScript : MonoBehaviour
         }
 
         if (subtitle.dialogueEntry.DialogueText.Length > 0 && IsTxtConvo(convoName)) {
-            string contactName = phone.GetContactNameFromConvoName(convoName);
+            string contactName = Phone.Instance.GetContactNameFromConvoName(convoName);
             FocusBackLog(contactName);
             backLogs[contactName].AddToBacklog(subtitle);
             return;
@@ -305,8 +303,8 @@ public class CustomDialogueScript : MonoBehaviour
             currentConvoIdx++;
         if (IsTxtConvo(convoName))
         {
-            phone.CompleteConvo(convoName);
-            backLogs[phone.GetContactNameFromConvoName(convoName)].ResetCurrentEntryID();
+            Phone.Instance.CompleteConvo(convoName);
+            backLogs[Phone.Instance.GetContactNameFromConvoName(convoName)].ResetCurrentEntryID();
         }
         ConvoCompleted?.Invoke(convoName);
     }
