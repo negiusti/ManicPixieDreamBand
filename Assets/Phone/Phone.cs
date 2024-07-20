@@ -421,9 +421,14 @@ public class Phone : MonoBehaviour
 
     public void Lock()
     {
-        
-        HUDIcon.GetComponent<Animator>().Play("Lock_HUD", -1, 0f);
         isLocked = true;
+        // For text responses
+        if (DialogueManager.isConversationActive && customDialogue.IsCurrentConvoTxt())
+        {
+            isLocked = false;
+            return;
+        }
+        HUDIcon.GetComponent<Animator>().Play("Lock_HUD", -1, 0f);
         HUDIcon.GetComponent<SpriteResolver>().SetCategoryAndLabel("PhoneHUDIcon", "Locked");
         GoHome();
         foreach (Transform child in transform)
