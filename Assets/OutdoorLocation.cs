@@ -3,15 +3,12 @@ using UnityEngine;
 
 public class OutdoorLocation : MonoBehaviour
 {
-    private TextMeshPro tmp;
     private bool inRange;
     private string location;
 
     // Start is called before the first frame update
     void Start()
     {
-        tmp = this.GetComponentInChildren<TextMeshPro>();
-        tmp.enabled = false;
         inRange = false;
         location = gameObject.name;
     }
@@ -29,7 +26,7 @@ public class OutdoorLocation : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            tmp.enabled = true;
+            EnableAllChildren();
             inRange = true;
         }
     }
@@ -38,8 +35,26 @@ public class OutdoorLocation : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            tmp.enabled = false;
+            DisableAllChildren();
             inRange = false;
         }
+    }
+
+    private void SetChildrenActive(bool active)
+    {
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(active);
+        }
+    }
+
+    private void EnableAllChildren()
+    {
+        SetChildrenActive(true);
+    }
+
+    private void DisableAllChildren()
+    {
+        SetChildrenActive(false);
     }
 }
