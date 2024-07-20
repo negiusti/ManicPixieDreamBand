@@ -11,6 +11,7 @@ public class OutdoorLocation : MonoBehaviour
     {
         inRange = false;
         location = gameObject.name;
+        DisableAllChildren();
     }
 
     // Update is called once per frame
