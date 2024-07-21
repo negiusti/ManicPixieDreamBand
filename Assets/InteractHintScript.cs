@@ -16,7 +16,6 @@ public class InteractHintScript : MonoBehaviour
     //private bool isInsideTrigger = false;
     //public float scaleFactor = 0.1f; // 10% scale factor change
     //public float pulseSpeed = 2.0f; // Adjust the speed of the pulse
-    public string animationName;
 
     // Start is called before the first frame update
     void Start()
@@ -28,10 +27,6 @@ public class InteractHintScript : MonoBehaviour
         gm = GameManager.Instance;
         sc = gm.gameObject.GetComponent<SceneChanger>();
         animator = GetComponent<Animator>();
-        if (animationName == null)
-        {
-            Debug.LogError("No animation given");
-        }
     }
 
     // Update is called once per frame
