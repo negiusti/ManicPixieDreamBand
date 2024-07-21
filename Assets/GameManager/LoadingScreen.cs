@@ -37,7 +37,7 @@ public class LoadingScreen : MonoBehaviour
         //if (Instance == null)
         //{
         //    Instance = this;
-            DontDestroyOnLoad(gameObject); // Optional: Keeps the object alive across scene changes
+            //DontDestroyOnLoad(gameObject); // Optional: Keeps the object alive across scene changes
         //}
         //else
         //{

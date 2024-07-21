@@ -8,6 +8,7 @@ public class Phone : MonoBehaviour
 {
     public static Phone Instance;
     public GameObject HUDIcon;
+    public GameObject PhoneCase;
     public GameObject icons;
     public GameObject background;
     public GameObject backButton;
@@ -20,13 +21,14 @@ public class Phone : MonoBehaviour
     private PocketsApp pocketsApp;
     private GearApp gearApp;
     private DecoratorApp decoratorApp;
+    private SettingsApp settingsApp;
     private SpriteResolver backgroundResolver;
     private bool isLocked;
     private CustomDialogueScript customDialogue;
     public StandardUIMenuPanel txtResponsePanel;
     private PhoneNotifications notifications;
     public GameObject TransitionScreen;
-    
+
     enum PhoneState
     {
         Home,
@@ -61,6 +63,7 @@ public class Phone : MonoBehaviour
         pocketsApp = this.GetComponentInChildren<PocketsApp>(true);
         decoratorApp = this.GetComponentInChildren<DecoratorApp>(true);
         gearApp = this.GetComponentInChildren<GearApp>(true);
+        settingsApp = this.GetComponentInChildren<SettingsApp>(true);
         //animator = this.GetComponent<Animator>();
         notifications = this.GetComponentInChildren<PhoneNotifications>();
         isLocked = true;
@@ -81,6 +84,12 @@ public class Phone : MonoBehaviour
     public PocketsApp GetPocketsApp()
     {
         return pocketsApp;
+    }
+
+    public void ChangePhoneColor (Color c) {
+        Debug.Log("CHANGE COLOR to: "+ c.r + " " + c.g + " " + c.b);
+        HUDIcon.GetComponent<SpriteRenderer>().color = c;
+        PhoneCase.GetComponent<SpriteRenderer>().color = c;
     }
 
     public void NotificationMessage(string txt)
@@ -295,6 +304,7 @@ public class Phone : MonoBehaviour
         if (phoneStateStack.Peek() != PhoneState.Settings)
             phoneStateStack.Push(PhoneState.Settings);
         HideIcons();
+        settingsApp.gameObject.SetActive(true);
     }
 
     public void OpenPhotos()
@@ -401,6 +411,7 @@ public class Phone : MonoBehaviour
         pocketsApp.gameObject.SetActive(false);
         decoratorApp.gameObject.SetActive(false);
         gearApp.gameObject.SetActive(false);
+        settingsApp.gameObject.SetActive(false);
         backButton.SetActive(false);
         ShowIcons();
     }
