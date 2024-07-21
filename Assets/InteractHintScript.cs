@@ -1,7 +1,8 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class InteractHintScript : MonoBehaviour
+public class InteractHintScript : MonoBehaviour, IPointerClickHandler
 {
     private bool inRange;
     public string sceneToTrigger;
@@ -62,6 +63,19 @@ public class InteractHintScript : MonoBehaviour
     //    }
     //}
 
+    private void OnMouseDown()
+    {
+        if (inRange && InteractionEnabled())
+        {
+            if (mgToTrigger != null)
+                mgToTrigger.OpenMiniGame();
+            if (objToEnable != null)
+                objToEnable.SetActive(true);
+            if (sceneToTrigger != null && sceneToTrigger.Length > 0)
+                sc.ChangeScene(sceneToTrigger);
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Player") && InteractionEnabled())
@@ -82,6 +96,19 @@ public class InteractHintScript : MonoBehaviour
         {
             inRange = false;
             animator.SetBool("InRange", false);
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (inRange && InteractionEnabled())
+        {
+            if (mgToTrigger != null)
+                mgToTrigger.OpenMiniGame();
+            if (objToEnable != null)
+                objToEnable.SetActive(true);
+            if (sceneToTrigger != null && sceneToTrigger.Length > 0)
+                sc.ChangeScene(sceneToTrigger);
         }
     }
 }

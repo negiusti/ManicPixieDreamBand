@@ -1,8 +1,9 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.U2D.Animation;
 
-public class PlayInstrument : MonoBehaviour
+public class PlayInstrument : MonoBehaviour, IPointerClickHandler
 {
     private SpriteRenderer spriteRenderer;
     private SpriteResolver spriteResolver;
@@ -47,6 +48,15 @@ public class PlayInstrument : MonoBehaviour
         //    Stop();
         //    JamCoordinator.EndJam();
         //}
+    }
+
+    private void OnMouseDown()
+    {
+        if (!isPlayingInstrument && withinRange && InteractionEnabled())
+        {
+            Play(FindFirstObjectByType<PlayerMovement>());
+            MiniGameManager.StartMiniGame("Solo");
+        }
     }
 
     public Vector3 SpawnPos()
@@ -106,7 +116,6 @@ public class PlayInstrument : MonoBehaviour
 
     public void SetInstrument(string category, string label)
     {
-        Debug.Log("FUCK YOU setting category and label: " + category + " " + label);
         spriteResolver.SetCategoryAndLabel(category, label);
     }
 
@@ -127,6 +136,15 @@ public class PlayInstrument : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             withinRange = false;
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (!isPlayingInstrument && withinRange && InteractionEnabled())
+        {
+            Play(FindFirstObjectByType<PlayerMovement>());
+            MiniGameManager.StartMiniGame("Solo");
         }
     }
 }

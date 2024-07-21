@@ -11,7 +11,7 @@ public class CustomDialogueScript : MonoBehaviour
     public Action<string> ConvoCompleted;
     public KeyCode keyCode;
     private bool isCoolDown;
-    private float coolDown = 1f;
+    private float coolDown = 0.5f;
     public BackLog backLogTemplate;
     public ConvoHeader convoHeaderTemplate;
     private Dictionary<string, BackLog> backLogs;
