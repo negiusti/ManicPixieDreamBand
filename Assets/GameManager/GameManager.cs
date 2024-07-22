@@ -123,6 +123,7 @@ public class GameManager : MonoBehaviour
         JobSystem.Load();
         QuestManager.Load();
         RomanceManager.Load();
+        Tutorial.Load();
     }
 
     private void SaveData()
@@ -133,6 +134,7 @@ public class GameManager : MonoBehaviour
         JobSystem.Save();
         QuestManager.Save();
         RomanceManager.Save();
+        Tutorial.Save();
     }
 
     // Update is called once per frame

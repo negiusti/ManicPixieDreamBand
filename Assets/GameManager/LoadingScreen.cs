@@ -12,7 +12,7 @@ public class LoadingScreen : MonoBehaviour
     private void Start()
     {
         // Hide the loading screen initially
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         gameObject.SetActive(false);
         //SceneManager.activeSceneChanged += OnSceneChange;
     }

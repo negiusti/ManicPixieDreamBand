@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 using System;
+using PixelCrushers.DialogueSystem;
 
 public class CharacterEditor : MonoBehaviour
 {
@@ -63,6 +64,8 @@ public class CharacterEditor : MonoBehaviour
 
     public ColorPalettes faceColorPalettes;
     private GameObject characterGameObject;
+    private GameObject goToPreviousSceneButton;
+    private Coroutine cr;
 
     public void UnlockAllOutfits(bool value)
     {
@@ -97,6 +100,7 @@ public class CharacterEditor : MonoBehaviour
         }
         SpriteLibrary fuck = characterGameObject.GetComponent<SpriteLibrary>();
         spriteLib = fuck.spriteLibraryAsset;
+        goToPreviousSceneButton = FindFirstObjectByType<GoToPreviousSceneButton>().gameObject;
 
         GetAvailableOptions();
         HideLoTailsAndHairWithHijab();
@@ -106,6 +110,26 @@ public class CharacterEditor : MonoBehaviour
             SelectFB();
         else
             SelectTopAndBottom();
+        cr = StartCoroutine(ComplainAboutBodyPaint());
+    }
+
+    private System.Collections.IEnumerator ComplainAboutBodyPaint()
+    {
+        Debug.Log("HI");
+        while (!Tutorial.changedSkin)
+        {
+            Debug.Log("HELLO");
+            yield return new WaitForSeconds(5);
+            if (!DialogueManager.IsConversationActive && !caboodle.isActiveAndEnabled)
+                DialogueManager.Instance.StartConversation("Tutorial/SkinTone" + UnityEngine.Random.Range(0, 3));
+        }
+        Debug.Log("BYE");
+        yield return null;
+    }
+
+    private void Update()
+    {
+        goToPreviousSceneButton.SetActive(Tutorial.changedSkin);
     }
 
     private void GetAvailableOptions() {
@@ -153,6 +177,8 @@ public class CharacterEditor : MonoBehaviour
     {
         if (Phone.Instance != null)
             Phone.Instance.gameObject.SetActive(true);
+        if (cr != null)
+            StopCoroutine(cr);
     }
 
     private void UpdateIcons(string category, string[] labels)
@@ -250,6 +276,7 @@ public class CharacterEditor : MonoBehaviour
 
     public void SetSkinColor(Color c)
     {
+        Tutorial.changedSkin = true;
         foreach (SpriteRenderer sr in skinRenderers)
         {
             sr.color = c;
