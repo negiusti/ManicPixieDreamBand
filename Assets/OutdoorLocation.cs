@@ -32,7 +32,8 @@ public class OutdoorLocation : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             prompt.SetActive(true);
-            sign.SetBool("Show", true);
+            if (sign != null)
+                sign.SetBool("Show", true);
             inRange = true;
         }
     }
@@ -42,7 +43,8 @@ public class OutdoorLocation : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             prompt.SetActive(false);
-            sign.SetBool("Show", false);
+            if (sign != null)
+                sign.SetBool("Show", false);
             inRange = false;
         }
     }
