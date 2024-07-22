@@ -5,13 +5,17 @@ public class OutdoorLocation : MonoBehaviour
 {
     private bool inRange;
     private string location;
+    private GameObject prompt;
+    private Animator sign;
 
     // Start is called before the first frame update
     void Start()
     {
         inRange = false;
         location = gameObject.name;
-        DisableAllChildren();
+        prompt = GetComponentInChildren<Pulsate>().gameObject;
+        prompt.SetActive(false);
+        sign = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -27,7 +31,8 @@ public class OutdoorLocation : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            EnableAllChildren();
+            prompt.SetActive(true);
+            sign.SetBool("Show", true);
             inRange = true;
         }
     }
@@ -36,26 +41,9 @@ public class OutdoorLocation : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            DisableAllChildren();
+            prompt.SetActive(false);
+            sign.SetBool("Show", false);
             inRange = false;
         }
-    }
-
-    private void SetChildrenActive(bool active)
-    {
-        foreach (Transform child in transform)
-        {
-            child.gameObject.SetActive(active);
-        }
-    }
-
-    private void EnableAllChildren()
-    {
-        SetChildrenActive(true);
-    }
-
-    private void DisableAllChildren()
-    {
-        SetChildrenActive(false);
     }
 }
