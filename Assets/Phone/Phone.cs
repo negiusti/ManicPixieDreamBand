@@ -429,6 +429,7 @@ public class Phone : MonoBehaviour
 
     public void ToggleLock()
     {
+        Tutorial.hasClosedPhone = true;
         isLocked = !isLocked;
         if (isLocked)
             Lock();

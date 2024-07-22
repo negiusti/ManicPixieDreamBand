@@ -115,15 +115,12 @@ public class CharacterEditor : MonoBehaviour
 
     private System.Collections.IEnumerator ComplainAboutBodyPaint()
     {
-        Debug.Log("HI");
         while (!Tutorial.changedSkin)
         {
-            Debug.Log("HELLO");
-            yield return new WaitForSeconds(5);
             if (!DialogueManager.IsConversationActive && !caboodle.isActiveAndEnabled)
                 DialogueManager.Instance.StartConversation("Tutorial/SkinTone" + UnityEngine.Random.Range(0, 3));
+            yield return new WaitForSeconds(10);
         }
-        Debug.Log("BYE");
         yield return null;
     }
 
