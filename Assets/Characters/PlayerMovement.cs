@@ -27,10 +27,12 @@ public class PlayerMovement : Movement
 
         if (!isRollerSkating && Input.GetKeyDown(KeyCode.S))
         {
+            Tutorial.hasSkated = true;
             isSkating = !isSkating;
         }
         if (!isSkating && Input.GetKeyDown(KeyCode.R))
         {
+            Tutorial.hasSkated = true;
             isRollerSkating = !isRollerSkating;
             RollerskatesOnOff(isRollerSkating);
         }
@@ -60,7 +62,9 @@ public class PlayerMovement : Movement
     }
 
     private void MoveLeftRight()
-    {   
+    {
+        if (moveInput != 0) Tutorial.hasWalked = true;
+
         Quaternion currentRotation = transform.rotation;
         if (moveInput < 0 && currentRotation.y > 0)
         {
