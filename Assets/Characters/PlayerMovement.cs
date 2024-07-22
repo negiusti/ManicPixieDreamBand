@@ -27,11 +27,13 @@ public class PlayerMovement : Movement
 
         if (!isRollerSkating && Input.GetKeyDown(KeyCode.S))
         {
+            if (!Tutorial.hasSkated) Tutorial.hasWalked = false;
             Tutorial.hasSkated = true;
             isSkating = !isSkating;
         }
         if (!isSkating && Input.GetKeyDown(KeyCode.R))
         {
+            if (!Tutorial.hasSkated) Tutorial.hasWalked = false;
             Tutorial.hasSkated = true;
             isRollerSkating = !isRollerSkating;
             RollerskatesOnOff(isRollerSkating);
