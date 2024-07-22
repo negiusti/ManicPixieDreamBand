@@ -318,6 +318,12 @@ public class Phone : MonoBehaviour
     public void GoBack()
     {
         PhoneState state = phoneStateStack.Peek();
+        // Force text messages to be answered
+        if (state.Equals(PhoneState.Convo) && customDialogue.IsTxtConvoActive())
+        {
+            return;
+        }
+
         if (state.Equals(PhoneState.Home))
         {
             GoHome();
