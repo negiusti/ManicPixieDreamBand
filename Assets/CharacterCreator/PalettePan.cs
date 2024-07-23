@@ -15,7 +15,8 @@ public class PalettePan : MonoBehaviour
         image = this.GetComponent<Image>();
         palette = this.GetComponentInParent<ColorPalette>();
         pans = palette.gameObject.GetComponentsInChildren<PalettePan>();
-        startingScale = gameObject.transform.localScale;
+        startingScale = Vector3.one;
+        transform.localScale = Vector3.one;
     }
 
     private void OnDisable()

@@ -40,9 +40,12 @@ public class SleepingScreenMiniGame : MiniGame
 
     public override void CloseMiniGame()
     {
+
+        if (mainCamera == null)
+            return;
+
+        mainCamera.SetActive(true);
         mainCamera.transform.position = new Vector3(mgCamera.transform.position.x, mainCamera.transform.position.y, mainCamera.transform.position.z);
-        if (mainCamera != null)
-            mainCamera.SetActive(true);
 
         DisableAllChildren();
 

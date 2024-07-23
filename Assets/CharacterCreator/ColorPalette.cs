@@ -12,6 +12,8 @@ public class ColorPalette : MonoBehaviour
     void Start()
     {
         characterEditor = GameObject.FindObjectOfType<CharacterEditor>();
+        if (!category.Equals("Skin"))
+            return;
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(false);
@@ -53,11 +55,26 @@ public class ColorPalette : MonoBehaviour
             StartCoroutine(HideSkinTones());
     }
 
+    public void TogglePaletteVisibility()
+    {
+        Debug.Log("coroutineDone: " + coroutineDone);
+        if (!coroutineDone)
+            return;
+        if (!category.Equals("Skin"))
+            return;
+        coroutineDone = false;
+        showSkinTones = !showSkinTones;
+        if (showSkinTones)
+            StartCoroutine(ShowSkinTones());
+        else
+            StartCoroutine(HideSkinTones());
+    }
+
     private IEnumerator ShowSkinTones()
     {
         for (int i = 0; i < transform.childCount; i++) {
             transform.GetChild(i).gameObject.SetActive(true);
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.01f);
         }
         coroutineDone = true;
     }
@@ -67,7 +84,7 @@ public class ColorPalette : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(false);
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.01f);
         }
         coroutineDone = true;
     }
