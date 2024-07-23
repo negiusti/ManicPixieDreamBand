@@ -155,7 +155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 112178113}
   - component: {fileID: 112178114}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: NightBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -563,7 +563,7 @@ GameObject:
   m_Component:
   - component: {fileID: 169934720}
   - component: {fileID: 169934721}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Z3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1123,6 +1123,143 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc87a340359d4ed7a4a74a61b336f26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &275454158
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 275454159}
+  - component: {fileID: 275454162}
+  - component: {fileID: 275454161}
+  - component: {fileID: 275454160}
+  m_Layer: 0
+  m_Name: Main Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &275454159
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275454158}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.61, z: -110}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1930819395}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &275454160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275454158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
+--- !u!81 &275454161
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275454158}
+  m_Enabled: 1
+--- !u!20 &275454162
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275454158}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 6.25
+  m_Depth: -1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!21 &299198284
 Material:
   serializedVersion: 8
@@ -2066,7 +2203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 703743180}
   - component: {fileID: 703743181}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Z2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2155,7 +2292,7 @@ GameObject:
   m_Component:
   - component: {fileID: 868479626}
   - component: {fileID: 868479627}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: MorningBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2811,7 +2948,7 @@ GameObject:
   m_Component:
   - component: {fileID: 948971872}
   - component: {fileID: 948971873}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Moon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3881,7 +4018,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1198298044}
   - component: {fileID: 1198298045}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Sun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4551,7 +4688,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1387840391}
   - component: {fileID: 1387840392}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Z1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4823,8 +4960,7 @@ Transform:
   m_LocalPosition: {x: -1.63, y: 0.33, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 1930819395}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1539173044
@@ -4914,7 +5050,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - OVERLAY_ON
+  - TEXTURESCROLL_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -4967,7 +5103,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OverlayTex:
-        m_Texture: {fileID: 2800000, guid: 677cca399782dea41aedc1d292ecb67d, type: 3}
+        m_Texture: {fileID: 2800000, guid: ec5448ef8aaa0504aadd792fb128aed2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 1, y: 1}
     - _ShineMask:
@@ -5077,8 +5213,8 @@ Material:
     - _OutlineWidth: 0.004
     - _OverlayBlend: 1
     - _OverlayGlow: 1
-    - _OverlayTextureScrollXSpeed: -2.18
-    - _OverlayTextureScrollYSpeed: -2.13
+    - _OverlayTextureScrollXSpeed: 1
+    - _OverlayTextureScrollYSpeed: 1
     - _PinchUvAmount: 0.35
     - _PixelateSize: 32
     - _PosterizeGamma: 0.75
@@ -5102,8 +5238,8 @@ Material:
     - _ShineLocation: 0.5
     - _ShineRotate: 0
     - _ShineWidth: 0.1
-    - _TextureScrollXSpeed: 1
-    - _TextureScrollYSpeed: 0
+    - _TextureScrollXSpeed: 0.01
+    - _TextureScrollYSpeed: -0.01
     - _TwistUvAmount: 1
     - _TwistUvPosX: 0.5
     - _TwistUvPosY: 0.5
@@ -5156,7 +5292,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1553807493}
   - component: {fileID: 1553807494}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: BlackBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6359,7 +6495,8 @@ GameObject:
   - component: {fileID: 1930819395}
   - component: {fileID: 1930819397}
   - component: {fileID: 1930819396}
-  m_Layer: 9
+  - component: {fileID: 1930819398}
+  m_Layer: 8
   m_Name: SleepingScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6375,7 +6512,7 @@ Transform:
   m_GameObject: {fileID: 1930819394}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.69, z: 110}
+  m_LocalPosition: {x: 0.1500001, y: -0.16000009, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -6389,7 +6526,8 @@ Transform:
   - {fileID: 948971872}
   - {fileID: 1553807493}
   - {fileID: 1953590873}
-  m_Father: {fileID: 1539173042}
+  - {fileID: 275454159}
+  m_Father: {fileID: 2123595581}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!210 &1930819396
 SortingGroup:
@@ -6399,8 +6537,8 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1930819394}
   m_Enabled: 1
-  m_SortingLayerID: -1551659607
-  m_SortingLayer: 13
+  m_SortingLayerID: 1235693389
+  m_SortingLayer: 14
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!95 &1930819397
@@ -6424,6 +6562,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1930819398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930819394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d202c2806e70b465aa6c832a6fe4cb3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1953590872
 GameObject:
   m_ObjectHideFlags: 0
@@ -6435,7 +6585,7 @@ GameObject:
   - component: {fileID: 1953590873}
   - component: {fileID: 1953590875}
   - component: {fileID: 1953590874}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: BlackBG (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6452,7 +6602,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.6, z: 0}
-  m_LocalScale: {x: 2.03, y: 2.03, z: 2.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1930819395}
@@ -6514,7 +6664,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: facbe0de7af4c3843b540c72466c6300, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ec5448ef8aaa0504aadd792fb128aed2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6879,7 +7029,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 9008551953766152821, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1930819395}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1433586430601418677, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
       insertIndex: -1
@@ -6905,7 +7058,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2126718179}
   - component: {fileID: 2126718180}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
