@@ -15,6 +15,7 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private SpriteLibraryAsset spriteLib;
     private string purchaseableName;
     private PriceTag priceTag;
+    private HashSet<string> questExclusives = new HashSet<string> { "Vintage Poster" };
 
     private class PurchasableData
     {
@@ -84,7 +85,8 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private string[] GetAvailableStock()
     {
         HashSet<string> purchasedItems = InventoryManager.GetPurchasedItems(category);
-        return spriteLib.GetCategoryLabelNames(category).Where(i => !purchasedItems.Contains(i)).ToArray();
+        // Don't sell already purchased items or quest exclusives.
+        return spriteLib.GetCategoryLabelNames(category).Where(i => !purchasedItems.Contains(i) && !questExclusives.Contains(i)).ToArray();
     }
 
     public void Randomize()
