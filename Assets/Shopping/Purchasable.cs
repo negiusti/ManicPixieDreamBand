@@ -85,8 +85,8 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private string[] GetAvailableStock()
     {
         HashSet<string> purchasedItems = InventoryManager.GetPurchasedItems(category);
-        // Don't sell already purchased items or quest exclusives.
-        return spriteLib.GetCategoryLabelNames(category).Where(i => !purchasedItems.Contains(i) && !questExclusives.Contains(i)).ToArray();
+        // Don't sell already purchased items or quest exclusives or items exclusive to NPCs.
+        return spriteLib.GetCategoryLabelNames(category).Where(i => !i.Equals("None") && !purchasedItems.Contains(i) && !questExclusives.Contains(i) && !i.StartsWith("X_")).ToArray();
     }
 
     public void Randomize()

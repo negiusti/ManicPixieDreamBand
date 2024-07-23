@@ -7,6 +7,7 @@ public class PalettePan : MonoBehaviour
     private Image image;
     private PalettePan[] pans;
     private bool isSelected;
+    private Vector3 startingScale;
 
     // Start is called before the first frame update
     void Start()
@@ -14,6 +15,8 @@ public class PalettePan : MonoBehaviour
         image = this.GetComponent<Image>();
         palette = this.GetComponentInParent<ColorPalette>();
         pans = palette.gameObject.GetComponentsInChildren<PalettePan>();
+        startingScale = Vector3.one;
+        transform.localScale = Vector3.one;
     }
 
     private void OnDisable()
@@ -45,7 +48,7 @@ public class PalettePan : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        Vector3 newScale = Vector3.one * 1.1f;
+        Vector3 newScale = startingScale * 1.1f;
         this.gameObject.transform.localScale = newScale;
     }
 
@@ -60,20 +63,20 @@ public class PalettePan : MonoBehaviour
     public void Unselect()
     {
         isSelected = false;
-        this.gameObject.transform.localScale = Vector3.one;
+        this.gameObject.transform.localScale = startingScale;
     }
 
     public void Select()
     {
         UnselectAll();
         isSelected = true;
-        Vector3 newScale = Vector3.one * 1.1f;
+        Vector3 newScale = startingScale * 1.1f;
         this.gameObject.transform.localScale = newScale;
     }
 
     private void OnMouseExit()
     {
         if (!isSelected)
-            this.gameObject.transform.localScale = Vector3.one;
+            this.gameObject.transform.localScale = startingScale;
     }
 }
