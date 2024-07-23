@@ -11,6 +11,7 @@ public class Tutorial : ScriptableObject
     public static bool hasSkated;
     public static bool changedSkin;
     public static bool hasClosedPhone;
+    public static bool playedBass;
 
     public static void Load()
     {
@@ -18,6 +19,7 @@ public class Tutorial : ScriptableObject
         hasSkated = ES3.Load("Tutorial/" + hasSkated, false);
         changedSkin = ES3.Load("Tutorial/" + changedSkin, false);
         hasClosedPhone = ES3.Load("Tutorial/" + hasClosedPhone, false);
+        playedBass = ES3.Load("Tutorial/" + playedBass, false);
     }
 
     public static void Save()
@@ -26,5 +28,6 @@ public class Tutorial : ScriptableObject
         ES3.Save("Tutorial/" + hasSkated, hasSkated);
         ES3.Save("Tutorial/" + changedSkin, changedSkin);
         ES3.Save("Tutorial/" + hasClosedPhone, hasClosedPhone);
+        ES3.Save("Tutorial/" + playedBass, playedBass);
     }
 }
