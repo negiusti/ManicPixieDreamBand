@@ -429,11 +429,14 @@ public class Phone : MonoBehaviour
 
     public void ToggleLock()
     {
+        bool prev = isLocked;
         isLocked = !isLocked;
         if (isLocked)
             Lock();
         else
             Unlock();
+        if (prev != isLocked)
+            Tutorial.hasClosedPhone = true;
     }
 
     public void Lock()

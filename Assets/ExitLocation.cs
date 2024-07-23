@@ -19,7 +19,14 @@ public class ExitLocation : MonoBehaviour
     {
         if (inRange && Input.GetKeyDown(KeyCode.Return) && !DialogueManager.IsConversationActive && Phone.Instance.IsLocked())
         {
-            SceneChanger.Instance.GoToPreviousScene();
+            if (!Tutorial.changedSkin)
+            {
+                DialogueManager.StartConversation("Tutorial/IShouldGetChanged");
+            }
+            else
+            {
+                SceneChanger.Instance.GoToPreviousScene();
+            }
         }   
     }
 

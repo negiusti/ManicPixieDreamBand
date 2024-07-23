@@ -32,6 +32,8 @@ public class Caboodle : MonoBehaviour
 
     private void UnselectCaboodleSections()
     {
+        if (caboodleSections == null)
+            return;
         foreach (CaboodleSection section in caboodleSections.Values)
         {
             section.Unselect();

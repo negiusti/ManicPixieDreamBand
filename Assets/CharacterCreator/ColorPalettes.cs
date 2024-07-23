@@ -29,6 +29,8 @@ public class ColorPalettes : MonoBehaviour
 
     public void SelectColorPalette(string category)
     {
+        if (categoryToColorPalette == null)
+            Start();
         if (categoryToColorPalette.ContainsKey(category))
         {
             DisableColorPalettesExcept(categoryToColorPalette[category]);
