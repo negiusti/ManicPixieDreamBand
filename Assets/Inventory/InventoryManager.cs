@@ -215,6 +215,8 @@ public class InventoryManager : ScriptableObject
             return "WallFloor_Icons";
         else if (category.Contains("Rug"))
             return "Rug_Icons";
+        else if (category.Contains("Earrings"))
+            return "Earrings_Icons";
         else if (category.Contains("WindowTrinkets"))
             return "WindowTrinkets_Icons";
         else
