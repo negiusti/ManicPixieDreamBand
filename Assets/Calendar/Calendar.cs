@@ -40,7 +40,8 @@ public class Calendar : ScriptableObject
         GetTodaysEvents();
         if (!events.ContainsKey(day + (int)daysFromNow))
             events.Add(day + (int)daysFromNow, new List<ICalendarEvent>());
-        events[day + (int)daysFromNow].Add(new QuestEvent(eventName, conversation, isNight, location));
+        if (!events[day + (int)daysFromNow].Any(e => e.Name().Equals(eventName))) // Don't schedule duplicate events!
+            events[day + (int)daysFromNow].Add(new QuestEvent(eventName, conversation, isNight, location));
     }
 
     public static bool DoneForTheDay()
