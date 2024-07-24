@@ -107,6 +107,14 @@ public class Phone : MonoBehaviour
             txtResponsePanel.Close();
             customDialogue.StopCurrentConvo();
         }
+        // Don't let the HUD icon block speech bubbles
+        if (DialogueManager.IsConversationActive && !customDialogue.IsTxtConvoActive())
+        {
+            HUDIcon.SetActive(false);
+        } else
+        {
+            HUDIcon.SetActive(true);
+        }
 
         if (Input.GetKeyDown(KeyCode.P))
         {

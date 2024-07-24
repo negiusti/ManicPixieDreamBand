@@ -17,7 +17,7 @@ public class PlayerMovement : Movement
         {
             return;
         }
-        if (!Phone.Instance.IsLocked() || DialogueManager.Instance.IsConversationActive)
+        if (!Phone.Instance.IsLocked() || (DialogueManager.Instance.IsConversationActive && !DialogueManager.LastConversationStarted.EndsWith("_Purchase")))
         {
             animator.SetBool("IsMoving", false);
             currState = isSkating ? MovementState.SkateIdle :
