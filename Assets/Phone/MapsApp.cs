@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class MapsApp : MonoBehaviour
 {
@@ -40,6 +41,11 @@ public class MapsApp : MonoBehaviour
         { Location.TattooShop, Location.Job1Neighborhood },
         { Location.BobaShop, Location.Job1Neighborhood },};
 
+    private List<string> GetLocationsInNeighborhood(Location neighborhoodLoc)
+    {
+        return locationToNeighborhood.Where(x => x.Value == neighborhoodLoc && x.Value != x.Key).Select(x => locationToNiceName[x.Key]).ToList();
+    }
+
     private Dictionary<Location, string> locationToSceneName = new Dictionary<Location, string> {
         { Location.Bedroom, "Bedroom" },
         { Location.CoffeeShop, "CoffeeShop" },
@@ -68,8 +74,8 @@ public class MapsApp : MonoBehaviour
 
     private Dictionary<Location, string> locationToNiceName = new Dictionary<Location, string> {
         { Location.Bedroom, "Home" },
-        { Location.CoffeeShop, "Coffee Shop" },
-        { Location.Basement, "Basement" },
+        { Location.CoffeeShop, "Coffee Zone" },
+        { Location.Basement, "Practice Space" },
         { Location.ThriftStore, "Thrift Store" },
         { Location.Bar, "Bar" },
         { Location.MusicShop, "Music Shop" },
@@ -77,7 +83,7 @@ public class MapsApp : MonoBehaviour
         { Location.ShoppingDistrict, "Shopping District" },
         { Location.Job1Neighborhood, "Capitol Valley" },
         { Location.TattooShop, "Tattoo Shop" },
-        { Location.BobaShop, "Boba Shop" }};
+        { Location.BobaShop, "Cutie Boba Shop" }};
 
     // Start is called before the first frame update
     void Start()
@@ -153,6 +159,7 @@ public class MapsApp : MonoBehaviour
         phone.OpenPin();
         travelScreen.gameObject.SetActive(true);
         travelScreen.SetLocationName(locationToNiceName[currentlySelectedLocation]);
+        travelScreen.SetLocationsList(GetLocationsInNeighborhood(currentlySelectedLocation));
     }
 
     private void ShowPins()

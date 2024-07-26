@@ -114,6 +114,16 @@ public class Phone : MonoBehaviour
         } else
         {
             HUDIcon.SetActive(true);
+            if (isLocked)
+            {
+                HUDIcon.GetComponent<Animator>().SetBool("Locked", true);
+                HUDIcon.GetComponent<SpriteResolver>().SetCategoryAndLabel("PhoneHUDIcon", "Locked");
+            }
+            else
+            {
+                HUDIcon.GetComponent<Animator>().SetBool("Locked", false);
+                HUDIcon.GetComponent<SpriteResolver>().SetCategoryAndLabel("PhoneHUDIcon", "Unlocked");
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.P))
@@ -456,7 +466,7 @@ public class Phone : MonoBehaviour
             isLocked = false;
             return;
         }
-        HUDIcon.GetComponent<Animator>().Play("Lock_HUD", -1, 0f);
+        HUDIcon.GetComponent<Animator>().SetBool("Locked", true);
         HUDIcon.GetComponent<SpriteResolver>().SetCategoryAndLabel("PhoneHUDIcon", "Locked");
         GoHome();
         foreach (Transform child in transform)
@@ -484,7 +494,8 @@ public class Phone : MonoBehaviour
             isLocked = true;
             return;
         }
-        HUDIcon.GetComponent<Animator>().Play("Unlock_HUD", -1, 0f);
+        HUDIcon.SetActive(true);
+        HUDIcon.GetComponent<Animator>().SetBool("Locked", false);
         HUDIcon.GetComponent<SpriteResolver>().SetCategoryAndLabel("PhoneHUDIcon", "Unlocked");
         float deltaY = background.transform.localPosition.y - Camera.main.gameObject.transform.position.y;
         foreach (Transform child in transform)
