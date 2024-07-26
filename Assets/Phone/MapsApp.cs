@@ -26,7 +26,7 @@ public class MapsApp : MonoBehaviour
     private string currentSceneName;
     public PhoneIcon phoneIcon;
 
-    private Dictionary<Location, Location> locationToNeighborhood = new Dictionary<Location, Location>
+    public static Dictionary<Location, Location> locationToNeighborhood = new Dictionary<Location, Location>
     {
         { Location.Bedroom, Location.DowntownNeighborhood },
         { Location.CoffeeShop, Location.DowntownNeighborhood },
@@ -53,7 +53,7 @@ public class MapsApp : MonoBehaviour
         { Location.TattooShop, "TattooShop" },
         { Location.BobaShop, "BobaShop" },};
 
-    private Dictionary<string, Location> sceneNameToLocation = new Dictionary<string, Location> {
+    public static Dictionary<string, Location> sceneNameToLocation = new Dictionary<string, Location> {
         { "Bedroom", Location.Bedroom },
         { "CoffeeShop", Location.CoffeeShop },
         { "BandPracticeRoom", Location.Basement },

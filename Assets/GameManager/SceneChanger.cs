@@ -13,7 +13,7 @@ public class SceneChanger : MonoBehaviour
     MenuToggleScript menuToggle;
     Stack<SceneInfo> sceneStack;
 
-    private class SceneInfo
+    public class SceneInfo
     {
         public string sceneName;
         public Vector3 position;
@@ -41,7 +41,7 @@ public class SceneChanger : MonoBehaviour
         ChangeScene(sceneName, LoadingScreenType.Generic);
     }
 
-    private void ChangeScene(SceneInfo sceneInfo)
+    public void ChangeScene(SceneInfo sceneInfo)
     {
         ChangeScene(sceneInfo, LoadingScreenType.Generic);
     }
