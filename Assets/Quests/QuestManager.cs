@@ -22,7 +22,7 @@ public class QuestManager : ScriptableObject
     {
         if (currentQuest != null)
         {
-            Debug.Log("current quest is: " + currentQuest.questName);
+            //Debug.Log("current quest is: " + currentQuest.questName);
             if (currQuestConvoIdx >= currentQuest.conversationsData.Length)
             {
                 CompleteCurrentQuest();
@@ -37,8 +37,8 @@ public class QuestManager : ScriptableObject
         {
             foreach (string questName in availableQuests)
             {
-                Debug.Log("searching for new quest: " + questName);
-                Debug.Log("checking requirements for: " + quests[questName].conversationsData[0].conversation);
+                //Debug.Log("searching for new quest: " + questName);
+                //Debug.Log("checking requirements for: " + quests[questName].conversationsData[0].conversation);
                 bool requirementsMet = ConvoRequirements.RequirementsMet(quests[questName].conversationsData[0].requirements);
                 if (requirementsMet)
                 {

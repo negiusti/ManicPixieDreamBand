@@ -89,7 +89,6 @@ public class PhoneNotifications : MonoBehaviour
                 Destroy(topNotif.gameObject);
             } else
             {
-                Debug.Log("Notifs empty");
                 yield return new WaitForSeconds(2.5f);
             }
         }

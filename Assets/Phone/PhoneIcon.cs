@@ -6,12 +6,10 @@ public class PhoneIcon : MonoBehaviour
 {
     private GameObject notifIndicator;
     public string appName;
-    //private bool notif;
-    // Start is called before the first frame update
+
     void Start()
     {
         notifIndicator = transform.GetChild(0).gameObject;
-        //notif = false;
     }
 
     private void OnEnable()
@@ -39,7 +37,6 @@ public class PhoneIcon : MonoBehaviour
     {
         if (notifIndicator == null)
             Start();
-        //notif = true;
         notifIndicator.SetActive(true);
     }
 
@@ -47,7 +44,6 @@ public class PhoneIcon : MonoBehaviour
     {
         if (notifIndicator == null)
             Start();
-        //notif = false;
         notifIndicator.SetActive(false);
     }
 
