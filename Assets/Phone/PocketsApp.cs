@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PocketsApp : MonoBehaviour
+public class PocketsApp : PhoneApp
 {
     public PocketsAppItem itemTemplate;
     private Dictionary<InventoryManager.PerishableItem, int> perishableItems;
     private Dictionary<InventoryManager.Item, int> items;
     private List<PocketsAppItem> itemIcons;
-    public PhoneIcon phoneIcon;
 
     // Start is called before the first frame update
     void Start()
@@ -19,13 +18,11 @@ public class PocketsApp : MonoBehaviour
     {   
     }
 
-    public void ShowNotificationIndicator()
-    {
-        phoneIcon.ShowNotificationIndicator();
-    }
-
     private void OnEnable()
     {
+        if (Phone.Instance == null)
+            return;
+        Phone.Instance.ClearNotificationFor("Pockets");
         phoneIcon.HideNotificationIndicator();
         itemIcons = new List<PocketsAppItem>();
         items = InventoryManager.GetPocketItems();

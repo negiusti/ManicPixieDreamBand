@@ -2,18 +2,17 @@ using System.Collections.Generic;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
-public class PhoneMessages : MonoBehaviour
+public class PhoneMessages : PhoneApp
 {
     public GameObject contacts;
     public GameObject contactsCanvas;
-    public Phone phone;
     public Contact contactTemplate;
     private HashSet<string> contactsList;
     private Dictionary<string, Contact> contactsMap;
     private CustomDialogueScript customDialogue;
     private List<GameObject> instances = new List<GameObject>();
     private Dictionary<string, string> unfinishedConversations; // contact name to name of conversation
-    public PhoneIcon phoneIcon;
+    public string AppName;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +21,7 @@ public class PhoneMessages : MonoBehaviour
         contactsMap = new Dictionary<string, Contact>();
 
         // load contacts
-        contactsList = new HashSet<string> { "Ricki", "Max", "Band", "Mom" };//SaveSystem.LoadContactsList();
+        contactsList = new HashSet<string>();//new HashSet<string> { "Ricki", "Max", "Band", "Mom" };//SaveSystem.LoadContactsList();
         unfinishedConversations = new Dictionary<string, string>();
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
         foreach (string c in contactsList)
@@ -37,6 +36,19 @@ public class PhoneMessages : MonoBehaviour
         contactTemplate.gameObject.SetActive(false);
     }
 
+    private void OnEnable()
+    {
+        if (Phone.Instance == null)
+            return;
+
+        //TODO: idk if this works yet
+        if (Phone.Instance.appNotifications.Contains(AppName))
+            phoneIcon.ShowNotificationIndicator();
+        else
+            phoneIcon.HideNotificationIndicator();
+
+    }
+
     public bool HasPendingConvos()
     {
         return unfinishedConversations.Count > 0;
@@ -45,7 +57,7 @@ public class PhoneMessages : MonoBehaviour
     public void OpenTxtConvoWith(string contact)
     {
         CloseContacts();
-        phone.OpenConvo();
+        Phone.Instance.OpenConvo();
         if (ContactHasPendingConvo(contact))
             customDialogue.ResumeTxtConvo(contact, unfinishedConversations[contact]);
         else

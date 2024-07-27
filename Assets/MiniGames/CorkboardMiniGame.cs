@@ -21,6 +21,10 @@ public class CorkboardMiniGame : MiniGame
 
     public override void OpenMiniGame()
     {
+        // TODO: this may be necessary for other mingames!!!
+        if (!MiniGameManager.InteractionEnabled())
+            return;
+
         // Opening up the minigame
 
         mainCamera = Camera.main.transform.gameObject;

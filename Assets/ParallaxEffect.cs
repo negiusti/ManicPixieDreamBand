@@ -13,6 +13,8 @@ public class ParallaxEffect : MonoBehaviour
 
     void Update()
     {
+        if (Camera.main == null)
+            return;
         // Calculate the distance to move based on the camera's movement
         float distanceToMove = (Camera.main.transform.position.x - initialPosition) * parallaxSpeed;
 

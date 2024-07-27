@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DecoratorApp : MonoBehaviour
+public class DecoratorApp : PhoneApp
 {
     public ItemSwapPhoneUI itemSwapTemplate;
     public Transform container;
@@ -11,7 +11,6 @@ public class DecoratorApp : MonoBehaviour
     private Camera cam;
     private TextMeshPro tmp;
     public GameObject RoomPreview;
-    public PhoneIcon phoneIcon;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +30,9 @@ public class DecoratorApp : MonoBehaviour
 
     private void OnEnable()
     {
+        if (Phone.Instance == null)
+            return;
+        Phone.Instance.ClearNotificationFor("Decorator");
         phoneIcon.HideNotificationIndicator();
     }
 

@@ -4,13 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
-public class BankApp : MonoBehaviour
+public class BankApp : PhoneApp
 {
     private Phone phone;
     public TextMeshPro balance;
     public TextMeshPro status;
     private SpriteResolver poopResolver;
-    public PhoneIcon phoneIcon;
 
     // Start is called before the first frame update
     void Start()
@@ -27,8 +26,14 @@ public class BankApp : MonoBehaviour
 
     private void OnEnable()
     {
+        if (Phone.Instance == null)
+            return;
         if (phoneIcon != null)
+        {
+            Phone.Instance.ClearNotificationFor("Bank");
             phoneIcon.HideNotificationIndicator();
+        }
+            
     }
 
     public void SetBankBalance(double value)

@@ -6,14 +6,12 @@ public class JobFlyer : MonoBehaviour
     public CorkboardMiniGame corkboard;
     public JobSystem.PunkJob job;
     private SpriteResolver spriteResolver;
-    private Phone phone;
     private bool taken;
 
     // Start is called before the first frame update
     void Start()
     {
         spriteResolver = GetComponent<SpriteResolver>();
-        phone = Phone.Instance;
     }
 
     private void OnEnable()
@@ -46,8 +44,8 @@ public class JobFlyer : MonoBehaviour
         if (taken)
             return;
         corkboard.CloseMiniGame();
-        phone.Unlock();
-        phone.ReceiveMsg("TXT/" + job.ToString() + " Boss/Hire");
-        phone.OpenTxtConvoWith(job.ToString() + " Boss");
+        Phone.Instance.Unlock();
+        Phone.Instance.ReceiveMsg("TXT/" + job.ToString() + " Boss/Hire");
+        Phone.Instance.OpenTxtConvoWith(job.ToString() + " Boss");
     }
 }

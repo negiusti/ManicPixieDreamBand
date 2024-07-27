@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GearApp : MonoBehaviour
+public class GearApp : PhoneApp
 {
     //public ItemSwapPhoneUI itemSwapTemplate;
     public Transform container;
@@ -11,7 +11,6 @@ public class GearApp : MonoBehaviour
     private Dictionary<string, ItemSwapPhoneUI> gearSwapUI;
     private Camera cam;
     public GameObject RoomPreview;
-    public PhoneIcon phoneIcon;
     public Gear defaultBass;
     public Gear defaultGtr;
     public Gear defaultDrums;
@@ -36,8 +35,14 @@ public class GearApp : MonoBehaviour
 
     private void OnEnable()
     {
+        if (Phone.Instance == null)
+            return;
         if (phoneIcon != null)
+        {
+            Phone.Instance.ClearNotificationFor("Maps");
             phoneIcon.HideNotificationIndicator();
+        }
+            
         Refresh();
     }
 

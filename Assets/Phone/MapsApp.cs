@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class MapsApp : MonoBehaviour
+public class MapsApp : PhoneApp
 {
     public enum Location
     {
@@ -25,7 +25,6 @@ public class MapsApp : MonoBehaviour
     private TravelScreen travelScreen;
     private Location currentlySelectedLocation;
     private string currentSceneName;
-    public PhoneIcon phoneIcon;
 
     public static Dictionary<Location, Location> locationToNeighborhood = new Dictionary<Location, Location>
     {
@@ -122,8 +121,14 @@ public class MapsApp : MonoBehaviour
 
     private void OnEnable()
     {
+        if (Phone.Instance == null)
+            return;
         if (phoneIcon != null)
+        {
+            Phone.Instance.ClearNotificationFor("Maps");
             phoneIcon.HideNotificationIndicator();
+        }
+            
         if (sc == null)
             return;
         SetCurrentLocation();

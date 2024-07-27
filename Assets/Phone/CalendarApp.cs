@@ -4,14 +4,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
-public class CalendarApp : MonoBehaviour
+public class CalendarApp : PhoneApp
 {
     private SpriteResolver spriteResolver;
     public TextMeshPro dayNum;
     public TextMeshPro weatherInfo;
     public PhoneCalendarEvent[] eventBubbles;
     public GameObject line;
-    public PhoneIcon phoneIcon;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +23,9 @@ public class CalendarApp : MonoBehaviour
 
     private void OnEnable()
     {
+        if (Phone.Instance == null)
+            return;
+        Phone.Instance.ClearNotificationFor("Calendar");
         phoneIcon.HideNotificationIndicator();
         if (spriteResolver == null)
             return;

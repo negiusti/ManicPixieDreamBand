@@ -64,7 +64,21 @@ public class InventoryManager : ScriptableObject
 
     public static void AddToMCInventory(string category, string item)
     {
-        Phone.Instance.NotificationMessage("Added " + item + " to home inventory");
+        if (category.Contains("Top") ||
+            category.Contains("Bottom") ||
+            category.Contains("Sock") ||
+            category.Contains("Shoe") ||
+            category.Contains("FB") ||
+            category.Contains("Glasses") ||
+            category.Contains("Necklace") ||
+            category.Contains("Earring"))
+            Phone.Instance.NotificationMessage("Added " + item + " to closet");
+        else if (category.Contains("Guitar") ||
+            category.Contains("Amp") ||
+            category.Contains("Drum"))
+            Phone.Instance.NotificationMessage("Added " + item + " to gear");
+        else
+            Phone.Instance.NotificationMessage("Added " + item + " to home");
         AddToInventory(MAIN_CHARACTER, category, item);
     }
 
@@ -75,7 +89,21 @@ public class InventoryManager : ScriptableObject
 
     public static void RemoveFromMCInventory(string category, string item)
     {
-        Phone.Instance.NotificationMessage("Removed " + item + " from home inventory");
+        if (category.Contains("Top") ||
+            category.Contains("Bottom") ||
+            category.Contains("Sock") ||
+            category.Contains("Shoe") ||
+            category.Contains("FB") ||
+            category.Contains("Glasses") ||
+            category.Contains("Necklace") ||
+            category.Contains("Earring"))
+            Phone.Instance.NotificationMessage("Removed " + item + " from closet");
+        else if (category.Contains("Guitar") ||
+            category.Contains("Amp") ||
+            category.Contains("Drum"))
+            Phone.Instance.NotificationMessage("Removed " + item + " from gear");
+        else
+            Phone.Instance.NotificationMessage("Removed " + item + " from home");
         RemoveFromInventory(MAIN_CHARACTER, category, item);
     }
 
@@ -257,7 +285,7 @@ public class InventoryManager : ScriptableObject
 
     public static void AddPerishableItem(string input)
     {
-        Phone.Instance.GetPocketsApp().ShowNotificationIndicator();
+        Phone.Instance.SendNotificationTo("Pockets");
         Phone.Instance.NotificationMessage("Added " + input + " to pockets");
         PerishableItem pi = StringToPerishableItem(input);
         if (pocketsPerishable.ContainsKey(pi))
@@ -268,7 +296,7 @@ public class InventoryManager : ScriptableObject
 
     public static void AddItem(string input)
     {
-        Phone.Instance.GetPocketsApp().ShowNotificationIndicator();
+        Phone.Instance.SendNotificationTo("Pockets");
         Phone.Instance.NotificationMessage("Added " + input + " to pockets");
         Item item = StringToItem(input);
         if (pockets.ContainsKey(item))

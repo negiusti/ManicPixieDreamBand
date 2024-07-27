@@ -80,14 +80,16 @@ public class MiniGameManager : ScriptableObject
 
     public static void PrepMiniGame()
     {
-        if (Phone.Instance != null)
-            Phone.Instance.gameObject.SetActive(false);
+        Debug.Log("disabling phone");
+        //if (Phone.Instance != null)
+        Phone.Instance.gameObject.SetActive(false);
         DialogueManager.Pause();
     }
 
     public static void CleanUpMiniGame()
     {
-        if (Phone.Instance != null)
+        Debug.Log("enabling phone");
+        //if (Phone.Instance != null)
             Phone.Instance.gameObject.SetActive(true);
         DialogueManager.Unpause();
         DialogueManager.standardDialogueUI.OnContinueConversation();
@@ -145,5 +147,13 @@ public class MiniGameManager : ScriptableObject
     {
         BandNameMiniGame mg = (BandNameMiniGame)GetMiniGame("BandName");
         mg.OpenMiniGame();
+    }
+
+    public static bool InteractionEnabled()
+    {
+        return !SceneChanger.Instance.IsLoadingScreenOpen() &&
+            Phone.Instance.IsLocked() &&
+            !DialogueManager.IsConversationActive &&
+            !AnyActiveMiniGames();
     }
 }

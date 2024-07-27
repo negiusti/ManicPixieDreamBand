@@ -40,8 +40,13 @@ public class Calendar : ScriptableObject
         GetTodaysEvents();
         if (!events.ContainsKey(day + (int)daysFromNow))
             events.Add(day + (int)daysFromNow, new List<ICalendarEvent>());
-        if (!events[day + (int)daysFromNow].Any(e => e.Name().Equals(eventName))) // Don't schedule duplicate events!
+        if (!events[day + (int)daysFromNow].Any(e => e.Name().Equals(eventName)))  // Don't schedule duplicate events!
+        {
             events[day + (int)daysFromNow].Add(new QuestEvent(eventName, conversation, isNight, location));
+            // TODO: trigger calendar app notif
+            if (daysFromNow == 0) // New event was added today!
+                Phone.Instance.SendNotificationTo("Calendar");
+        }
     }
 
     public static bool DoneForTheDay()

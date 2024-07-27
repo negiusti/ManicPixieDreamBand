@@ -28,6 +28,7 @@ public class Phone : MonoBehaviour
     public StandardUIMenuPanel txtResponsePanel;
     private PhoneNotifications notifications;
     public GameObject TransitionScreen;
+    public HashSet<string> appNotifications;
 
     enum PhoneState
     {
@@ -69,16 +70,59 @@ public class Phone : MonoBehaviour
         isLocked = true;
         Lock();
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
+        appNotifications = new HashSet<string>();
         if (messagesApp.HasPendingConvos())
-            EnableNotificationIndicator();
-        else
-            DisableNotificationIndicator();
+            appNotifications.Add("Messages");
         //txtResponsePanel = this.GetComponentInChildren<PixelCrushers.DialogueSystem.Wrappers.StandardUIMenuPanel>();
     }
 
     public bool IsLocked()
     {
         return isLocked;
+    }
+
+    public void SendNotificationTo(string app)
+    {
+        appNotifications.Add(app);
+        switch (app)
+        {
+            case "Calendar":
+                calendarApp.ShowNotification();
+                break;
+            case "Messages":
+                messagesApp.ShowNotification();
+                break;
+            case "Pockets":
+                pocketsApp.ShowNotification();
+                break;
+            case "Decorator":
+                decoratorApp.ShowNotification();
+                break;
+            case "Maps":
+                mapsApp.ShowNotification();
+                break;
+            case "Gear":
+                gearApp.ShowNotification();
+                break;
+            case "Bank":
+                bankApp.ShowNotification();
+                break;
+            case "Settings":
+                settingsApp.ShowNotification();
+                break;
+            case "Photos":
+                // TODO: add photos app
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void ClearNotificationFor(string app)
+    {
+        if (appNotifications == null)
+            return;
+        appNotifications.Remove(app);
     }
 
     public PocketsApp GetPocketsApp()
@@ -125,6 +169,11 @@ public class Phone : MonoBehaviour
                 HUDIcon.GetComponent<SpriteResolver>().SetCategoryAndLabel("PhoneHUDIcon", "Unlocked");
             }
         }
+        if (appNotifications.Count > 0)
+            EnableNotificationIndicator();
+        else
+            DisableNotificationIndicator();
+
 
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -208,7 +257,7 @@ public class Phone : MonoBehaviour
         if (forceOpenPhone)
             OpenTxtConvoWith(GetContactNameFromConvoName(conversation));
         else
-            EnableNotificationIndicator();
+            appNotifications.Add("Messages");
     }
 
     public void OpenBank()
@@ -412,7 +461,8 @@ public class Phone : MonoBehaviour
     public void CompleteConvo(string convoName)
     {
         messagesApp.CompleteConvo(GetContactNameFromConvoName(convoName));
-        DisableNotificationIndicator();
+        appNotifications.Remove("Messages");
+        //DisableNotificationIndicator();
     }
 
     private void HideIcons()
