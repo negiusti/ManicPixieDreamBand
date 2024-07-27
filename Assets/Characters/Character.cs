@@ -77,7 +77,7 @@ public class Character : MonoBehaviour
     {
         isMC = gameObject.name == "MainCharacter";
         spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
-        spriteResolvers = this.GetComponentsInChildren<SpriteResolver>();
+        spriteResolvers = this.GetComponentsInChildren<SpriteResolver>(includeInactive:true);
         categoryToEnabled = new Dictionary<string, bool>();
         categoryToLabelMap = new Dictionary<string, string>();
         categoryToColorMap = new Dictionary<string, Color>();
@@ -117,6 +117,13 @@ public class Character : MonoBehaviour
         LoadCharacter();
     }
 
+    private void OnDisable()
+    {
+        if (gameObject.layer == LayerMask.NameToLayer("LoadingScreen") || gameObject.layer == LayerMask.NameToLayer("MiniGame"))
+            return;
+        SaveCharacter();
+    }
+
     //private void OnEnable()
     //{
     //    Start();
@@ -149,7 +156,7 @@ public class Character : MonoBehaviour
                 Debug.LogError(gameObject.name + "'s targetresolver for " + targetResolver.gameObject.name + " is null");
                 continue;
             }
-            if (targetResolver.GetLabel().StartsWith("E_") || targetResolver.GetCategory() == "Instrument") // don't save emotes
+            if (targetResolver.GetLabel().StartsWith("E_") || targetResolver.GetCategory() == "Instrument" || targetResolver.GetCategory().Contains("Holding")) // don't save emotes
                 continue;
             categoryToLabelMap[GetSRCategory(targetResolver)] = targetResolver.GetLabel();
         }

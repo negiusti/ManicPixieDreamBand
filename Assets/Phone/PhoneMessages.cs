@@ -12,7 +12,6 @@ public class PhoneMessages : PhoneApp
     private CustomDialogueScript customDialogue;
     private List<GameObject> instances = new List<GameObject>();
     private Dictionary<string, string> unfinishedConversations; // contact name to name of conversation
-    public string AppName;
 
     // Start is called before the first frame update
     void Start()
@@ -36,19 +35,6 @@ public class PhoneMessages : PhoneApp
         contactTemplate.gameObject.SetActive(false);
     }
 
-    private void OnEnable()
-    {
-        if (Phone.Instance == null)
-            return;
-
-        //TODO: idk if this works yet
-        if (Phone.Instance.appNotifications.Contains(AppName))
-            phoneIcon.ShowNotificationIndicator();
-        else
-            phoneIcon.HideNotificationIndicator();
-
-    }
-
     public bool HasPendingConvos()
     {
         return unfinishedConversations.Count > 0;
@@ -68,7 +54,7 @@ public class PhoneMessages : PhoneApp
 
     public void ReceiveMsg(string contactName, string conversation)
     {
-        phoneIcon.ShowNotificationIndicator();
+        Phone.Instance.SendNotificationTo("Messages");
         if (unfinishedConversations.ContainsKey(contactName))
             return;
         unfinishedConversations.Add(contactName, conversation);
@@ -82,7 +68,7 @@ public class PhoneMessages : PhoneApp
         unfinishedConversations.Remove(contactName);
         contactsMap[contactName].HideNotificationIndicator();
         if (unfinishedConversations.Count == 0)
-            phoneIcon.HideNotificationIndicator();
+            Phone.Instance.ClearNotificationFor("Messages");
     }
 
     private bool ContactHasPendingConvo(string contact)

@@ -3,8 +3,6 @@ using System.Collections;
 
 public class PhoneApp : MonoBehaviour
 {
-    public PhoneIcon phoneIcon;
-
     // Use this for initialization
     void Start()
     {
@@ -15,10 +13,5 @@ public class PhoneApp : MonoBehaviour
     void Update()
     {
 
-    }
-
-    public void ShowNotification()
-    {
-        phoneIcon.ShowNotificationIndicator();
     }
 }

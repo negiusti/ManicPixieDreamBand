@@ -20,10 +20,6 @@ public class PocketsApp : PhoneApp
 
     private void OnEnable()
     {
-        if (Phone.Instance == null)
-            return;
-        Phone.Instance.ClearNotificationFor("Pockets");
-        phoneIcon.HideNotificationIndicator();
         itemIcons = new List<PocketsAppItem>();
         items = InventoryManager.GetPocketItems();
         perishableItems = InventoryManager.GetPerishablePocketItems();

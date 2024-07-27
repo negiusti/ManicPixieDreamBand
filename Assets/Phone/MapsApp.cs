@@ -123,12 +123,6 @@ public class MapsApp : PhoneApp
     {
         if (Phone.Instance == null)
             return;
-        if (phoneIcon != null)
-        {
-            Phone.Instance.ClearNotificationFor("Maps");
-            phoneIcon.HideNotificationIndicator();
-        }
-            
         if (sc == null)
             return;
         SetCurrentLocation();

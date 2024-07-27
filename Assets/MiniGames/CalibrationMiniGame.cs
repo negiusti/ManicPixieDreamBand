@@ -46,7 +46,7 @@ public class CalibrationMiniGame : MiniGame
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        if (isActive && Input.GetKeyDown(KeyCode.Backspace))
             CloseMiniGame();
     }
 }

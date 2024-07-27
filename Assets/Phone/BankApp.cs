@@ -24,18 +24,6 @@ public class BankApp : PhoneApp
         
     }
 
-    private void OnEnable()
-    {
-        if (Phone.Instance == null)
-            return;
-        if (phoneIcon != null)
-        {
-            Phone.Instance.ClearNotificationFor("Bank");
-            phoneIcon.HideNotificationIndicator();
-        }
-            
-    }
-
     public void SetBankBalance(double value)
     {
         MainCharacterState.SetBankBalance(value);

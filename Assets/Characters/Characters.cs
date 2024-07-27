@@ -14,7 +14,15 @@ public class Characters : ScriptableObject
     {
         RefreshCharactersCache();
     }
-
+    //public static void Save()
+    //{
+    //    if (characters == null)
+    //        RefreshCharactersCache();
+    //    foreach (Character c in characters.Values)
+    //    {
+    //        c.SaveCharacter();
+    //    }
+    //}
     public static void RefreshCharactersCache()
     {
         characters = FindObjectsOfType<Character>(true)

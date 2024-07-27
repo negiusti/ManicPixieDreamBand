@@ -32,8 +32,8 @@ public class DecoratorApp : PhoneApp
     {
         if (Phone.Instance == null)
             return;
-        Phone.Instance.ClearNotificationFor("Decorator");
-        phoneIcon.HideNotificationIndicator();
+        if (SceneChanger.Instance.GetCurrentScene().Equals("Bedroom"))
+            Phone.Instance.ClearNotificationFor("Decorator");
     }
 
     private void Refresh()

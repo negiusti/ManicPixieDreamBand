@@ -19,6 +19,18 @@ public class PhoneNotifications : MonoBehaviour
 
     private void OnEnable()
     {
+        if (notifications == null)
+        {
+            notifications = new Queue<PhoneNotification>();
+        }
+
+        notifications.Clear();
+        foreach (PhoneNotification n in GetComponentsInChildren<PhoneNotification>())
+        {
+            notifications.Enqueue(n);
+        }
+        
+            
         if (coroutine == null)
             coroutine = StartCoroutine(DeleteTopNotif());
     }
@@ -26,7 +38,6 @@ public class PhoneNotifications : MonoBehaviour
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        notifications = new Queue<PhoneNotification>();
     }
 
     private void OnDisable()
@@ -78,6 +89,7 @@ public class PhoneNotifications : MonoBehaviour
                 Destroy(topNotif.gameObject);
             } else
             {
+                Debug.Log("Notifs empty");
                 yield return new WaitForSeconds(2.5f);
             }
         }

@@ -18,12 +18,18 @@ public class PhoneIcon : MonoBehaviour
     {
         if (notifIndicator == null)
             Start();
+        Refresh();
+    }
+
+    public void Refresh()
+    {
         if (Phone.Instance == null)
             return;
         if (Phone.Instance.appNotifications.Contains(appName))
         {
             ShowNotificationIndicator();
-        } else
+        }
+        else
         {
             HideNotificationIndicator();
         }

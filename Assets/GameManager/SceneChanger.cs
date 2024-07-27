@@ -49,7 +49,7 @@ public class SceneChanger : MonoBehaviour
     public void ChangeScene(string sceneName, LoadingScreenType loadingScreenType)
     {
         PushCurrSceneToSceneStack();
-        SaveCharacters();
+        //SaveCharacters();
         DialogueManager.StopAllConversations();
         //string currentScene = SceneManager.GetActiveScene().name;
         Debug.Log("Loading scene: " + sceneName);
@@ -71,7 +71,7 @@ public class SceneChanger : MonoBehaviour
     private void ChangeScene(SceneInfo sceneInfo, LoadingScreenType loadingScreenType)
     {
         PushCurrSceneToSceneStack();
-        SaveCharacters();
+        //SaveCharacters();
         DialogueManager.StopAllConversations();
         //string currentScene = SceneManager.GetActiveScene().name;
         Debug.Log("Loading scene: " + sceneInfo.sceneName);
@@ -183,7 +183,7 @@ public class SceneChanger : MonoBehaviour
     {
         if (sceneStack.Peek() != null)
         {
-            SaveCharacters();
+            //SaveCharacters();
             DialogueManager.StopAllConversations();
             //string currentScene = SceneManager.GetActiveScene().name;
             Debug.Log("Popping scene: " + sceneStack.Peek().sceneName);
@@ -195,14 +195,10 @@ public class SceneChanger : MonoBehaviour
         }
     }
 
-    private void SaveCharacters()
-    {
-        Character[] characters = FindObjectsOfType<Character>();
-        foreach (Character c in characters)
-        {
-            c.SaveCharacter();
-        }
-    }
+    //private void SaveCharacters()
+    //{
+    //    Characters.Save();
+    //}
 
     void OnEnable()
     {

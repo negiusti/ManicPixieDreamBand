@@ -76,9 +76,15 @@ public class InventoryManager : ScriptableObject
         else if (category.Contains("Guitar") ||
             category.Contains("Amp") ||
             category.Contains("Drum"))
+        {
             Phone.Instance.NotificationMessage("Added " + item + " to gear");
+            Phone.Instance.SendNotificationTo("Gear");
+        }
         else
+        {
             Phone.Instance.NotificationMessage("Added " + item + " to home");
+            Phone.Instance.SendNotificationTo("Decorator");
+        }
         AddToInventory(MAIN_CHARACTER, category, item);
     }
 

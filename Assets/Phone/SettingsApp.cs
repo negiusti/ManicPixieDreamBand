@@ -15,15 +15,4 @@ public class SettingsApp : PhoneApp
     {
         
     }
-
-    private void OnEnable()
-    {
-        if (Phone.Instance == null)
-            return;
-        if (phoneIcon != null)
-        {
-            Phone.Instance.ClearNotificationFor("Settings");
-            phoneIcon.HideNotificationIndicator();
-        }
-    }
 }

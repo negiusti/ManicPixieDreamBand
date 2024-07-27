@@ -70,7 +70,7 @@ public class Phone : MonoBehaviour
         isLocked = true;
         Lock();
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
-        appNotifications = new HashSet<string>();
+        if (appNotifications == null) appNotifications = new HashSet<string>();
         if (messagesApp.HasPendingConvos())
             appNotifications.Add("Messages");
         //txtResponsePanel = this.GetComponentInChildren<PixelCrushers.DialogueSystem.Wrappers.StandardUIMenuPanel>();
@@ -83,43 +83,47 @@ public class Phone : MonoBehaviour
 
     public void SendNotificationTo(string app)
     {
+        Debug.Log("Send notifs for: " + app);
+        if (appNotifications == null)
+            appNotifications = new HashSet<string>();
         appNotifications.Add(app);
-        switch (app)
-        {
-            case "Calendar":
-                calendarApp.ShowNotification();
-                break;
-            case "Messages":
-                messagesApp.ShowNotification();
-                break;
-            case "Pockets":
-                pocketsApp.ShowNotification();
-                break;
-            case "Decorator":
-                decoratorApp.ShowNotification();
-                break;
-            case "Maps":
-                mapsApp.ShowNotification();
-                break;
-            case "Gear":
-                gearApp.ShowNotification();
-                break;
-            case "Bank":
-                bankApp.ShowNotification();
-                break;
-            case "Settings":
-                settingsApp.ShowNotification();
-                break;
-            case "Photos":
-                // TODO: add photos app
-                break;
-            default:
-                break;
-        }
+        //switch (app)
+        //{
+        //    case "Calendar":
+        //        calendarApp.ShowNotification();
+        //        break;
+        //    case "Messages":
+        //        messagesApp.ShowNotification();
+        //        break;
+        //    case "Pockets":
+        //        pocketsApp.ShowNotification();
+        //        break;
+        //    case "Decorator":
+        //        decoratorApp.ShowNotification();
+        //        break;
+        //    case "Maps":
+        //        mapsApp.ShowNotification();
+        //        break;
+        //    case "Gear":
+        //        gearApp.ShowNotification();
+        //        break;
+        //    case "Bank":
+        //        bankApp.ShowNotification();
+        //        break;
+        //    case "Settings":
+        //        settingsApp.ShowNotification();
+        //        break;
+        //    case "Photos":
+        //        // TODO: add photos app
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
 
     public void ClearNotificationFor(string app)
     {
+        Debug.Log("Clear notifs for: " + app);
         if (appNotifications == null)
             return;
         appNotifications.Remove(app);
@@ -250,6 +254,7 @@ public class Phone : MonoBehaviour
     {
         if (forceOpenPhone)
         {
+            gameObject.SetActive(true);
             GoHome();
             Unlock();
         }
@@ -263,6 +268,7 @@ public class Phone : MonoBehaviour
     public void OpenBank()
     {
         SetAppHeader("Hellcorp Bank");
+        ClearNotificationFor("Bank");
         bankApp.gameObject.SetActive(true);
         bankApp.UpdateBankBalance();
         if (phoneStateStack.Peek() != PhoneState.Bank)
@@ -281,6 +287,7 @@ public class Phone : MonoBehaviour
         backgroundResolver.SetCategoryAndLabel("Background", "Maps1");
         mapsApp.gameObject.SetActive(true);
         mapsApp.Open();
+        ClearNotificationFor("Maps");
         SetAppHeader("");
         if (phoneStateStack.Peek() != PhoneState.Map)
             phoneStateStack.Push(PhoneState.Map);
@@ -289,6 +296,10 @@ public class Phone : MonoBehaviour
 
     public void OpenCalendar()
     {
+        if (Instance == null)
+            return;
+        
+        ClearNotificationFor("Calendar");
         if (Calendar.IsNight())
             backgroundResolver.SetCategoryAndLabel("Background", "Calendar_Night");
         else
@@ -305,7 +316,7 @@ public class Phone : MonoBehaviour
     public void OpenPockets()
     {
         backgroundResolver.SetCategoryAndLabel("Background", "Pockets");
-
+        ClearNotificationFor("Pockets");
         pocketsApp.gameObject.SetActive(true);
         SetAppHeader("Pocketz");
         if (phoneStateStack.Peek() != PhoneState.Pockets)
@@ -316,7 +327,7 @@ public class Phone : MonoBehaviour
     public void OpenGear()
     {
         backgroundResolver.SetCategoryAndLabel("Background", "Gear");
-
+        ClearNotificationFor("Gear");
         gearApp.gameObject.SetActive(true);
         SetAppHeader("Gear");
         if (phoneStateStack.Peek() != PhoneState.Gear)
@@ -368,6 +379,7 @@ public class Phone : MonoBehaviour
     public void OpenSettings()
     {
         SetAppHeader("Settings");
+        ClearNotificationFor("Settings");
         if (phoneStateStack.Peek() != PhoneState.Settings)
             phoneStateStack.Push(PhoneState.Settings);
         HideIcons();
@@ -544,6 +556,9 @@ public class Phone : MonoBehaviour
             isLocked = true;
             return;
         }
+        GoHome();
+        foreach (PhoneIcon i in icons.GetComponentsInChildren<PhoneIcon>())
+            i.Refresh();
         HUDIcon.SetActive(true);
         HUDIcon.GetComponent<Animator>().SetBool("Locked", false);
         HUDIcon.GetComponent<SpriteResolver>().SetCategoryAndLabel("PhoneHUDIcon", "Unlocked");

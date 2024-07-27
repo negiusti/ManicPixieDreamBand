@@ -23,10 +23,10 @@ public class CalendarApp : PhoneApp
 
     private void OnEnable()
     {
-        if (Phone.Instance == null)
-            return;
-        Phone.Instance.ClearNotificationFor("Calendar");
-        phoneIcon.HideNotificationIndicator();
+        //if (Phone.Instance == null)
+        //    return;
+        //Phone.Instance.ClearNotificationFor("Calendar");
+        //phoneIcon.HideNotificationIndicator();
         if (spriteResolver == null)
             return;
         UpdateImage();
