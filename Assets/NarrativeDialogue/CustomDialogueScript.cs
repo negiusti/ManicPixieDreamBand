@@ -164,7 +164,7 @@ public class CustomDialogueScript : MonoBehaviour
         } else if ((Input.GetKeyDown(keyCode) || Input.GetKeyDown(KeyCode.Return)) && DialogueManager.IsConversationActive && isCoolDown)
         {
             //FindObjectsOfType<UnityUITypewriterEffect>().Select(t => t.enabled = false);
-            Debug.Log("cooling down");
+            //Debug.Log("cooling down");
             UnityUITypewriterEffect[] fucks = FindObjectsOfType<UnityUITypewriterEffect>().Where(t => t.IsPlaying).ToArray();
             foreach (UnityUITypewriterEffect t in fucks)
             {
@@ -173,10 +173,10 @@ public class CustomDialogueScript : MonoBehaviour
         }
         if (!DialogueManager.IsConversationActive)
         {
-            Debug.Log("no active conversations");
+            //Debug.Log("no active conversations");
             if (!CheckForPlotConvo())
             {
-                Debug.Log("no plot convos found, checking for quest convo...");
+                //Debug.Log("no plot convos found, checking for quest convo...");
                 // Check for QuestConvo
                 if (!QuestManager.CheckForQuestConvo())
                 {

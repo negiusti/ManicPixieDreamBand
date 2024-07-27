@@ -74,6 +74,7 @@ public class InventoryManager : ScriptableObject
             category.Contains("Earring"))
             Phone.Instance.NotificationMessage("Added " + item + " to closet");
         else if (category.Contains("Guitar") ||
+            category.Contains("Bass") ||
             category.Contains("Amp") ||
             category.Contains("Drum"))
         {
@@ -105,6 +106,7 @@ public class InventoryManager : ScriptableObject
             category.Contains("Earring"))
             Phone.Instance.NotificationMessage("Removed " + item + " from closet");
         else if (category.Contains("Guitar") ||
+            category.Contains("Bass") ||
             category.Contains("Amp") ||
             category.Contains("Drum"))
             Phone.Instance.NotificationMessage("Removed " + item + " from gear");
