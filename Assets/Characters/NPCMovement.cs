@@ -17,11 +17,10 @@ public class NPCMovement : Movement
         base.Update();
         float currentX = transform.position.x;
         //Debug.Log("LOOK HERE: "+ currState.ToString() + " " + currentX + " " + targetX);
-        if (gameObject.name == "Cliff")
-            Debug.Log("transform.rotation.eulerAngles.y: " + transform.rotation.eulerAngles.y);
+        
         if (walking && Mathf.Abs(currentX - targetX) > 0.1f)
         {
-            Debug.Log("Walking: " + currentX + " " + targetX);
+            //Debug.Log("Walking: " + currentX + " " + targetX);
             WalkToTargetX();
             //Debug.Log("transform.rotation.eulerAngles.y: " + transform.rotation.eulerAngles.y);
         } else if (walking)

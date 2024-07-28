@@ -26,6 +26,11 @@ public class JobSystem : ScriptableObject
         return currentJob;
     }
 
+    public static string CurrentJobString()
+    {
+        return currentJob.ToString();
+    }
+
     public static IJob CurrentJobInfo()
     {
         if (currentJob == PunkJob.Tattoo)

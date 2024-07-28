@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(MainCharacterState.CurrentBankBalance), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.CurrentBankBalance()));
         Lua.RegisterFunction(nameof(MainCharacterState.ModifyBankBalance), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.ModifyBankBalance((double)0)));
         Lua.RegisterFunction(nameof(JobSystem.SetCurrentJob), this, SymbolExtensions.GetMethodInfo(() => JobSystem.SetCurrentJob(string.Empty)));
+        Lua.RegisterFunction(nameof(JobSystem.CurrentJobString), this, SymbolExtensions.GetMethodInfo(() => JobSystem.CurrentJobString()));
         Lua.RegisterFunction(nameof(QuestManager.CompleteCurrentQuest), this, SymbolExtensions.GetMethodInfo(() => QuestManager.CompleteCurrentQuest()));
         Lua.RegisterFunction(nameof(RomanceManager.ChangeRelationshipScore), this, SymbolExtensions.GetMethodInfo(() => RomanceManager.ChangeRelationshipScore(string.Empty, (double)0)));
         Lua.RegisterFunction(nameof(Calendar.SchedulePlotEvent), this, SymbolExtensions.GetMethodInfo(() => Calendar.SchedulePlotEvent(string.Empty, string.Empty, string.Empty, false, (double)0)));
@@ -86,6 +87,7 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(MainCharacterState.CurrentBankBalance));
         Lua.UnregisterFunction(nameof(MainCharacterState.ModifyBankBalance)); 
         Lua.UnregisterFunction(nameof(JobSystem.SetCurrentJob));
+        Lua.UnregisterFunction(nameof(JobSystem.CurrentJobString));
         Lua.UnregisterFunction(nameof(QuestManager.CompleteCurrentQuest));
         Lua.UnregisterFunction(nameof(RomanceManager.ChangeRelationshipScore));
         Lua.UnregisterFunction(nameof(Calendar.SchedulePlotEvent));

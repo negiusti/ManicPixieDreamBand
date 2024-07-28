@@ -93,8 +93,6 @@ public class Calendar : ScriptableObject
             Debug.Log("Scheduling day " + i);
             if (!events.ContainsKey(i))
             {
-                if (i == day)
-                    Phone.Instance.SendNotificationTo("Calendar");
                 events.Add(i, new List<ICalendarEvent>());
             }
 
@@ -180,6 +178,9 @@ public class Calendar : ScriptableObject
         SetIsNight(false);
         currentEventIdx = 0;
         ScheduleNext7Days();
+        MainCharacterState.SetOutfitChangedFlag(false);
+        InventoryManager.SpoilPerishables();
+        Phone.Instance.SendNotificationTo("Calendar");
     }
 
     public static int Date()

@@ -128,6 +128,10 @@ public class ConvoRequirements : ScriptableObject
         {
             return false;
         }
+        if (requirements.changedOutfitToday && !MainCharacterState.HasChangedOutfitToday())
+        {
+            return false;
+        }
         return true;
     }
 }

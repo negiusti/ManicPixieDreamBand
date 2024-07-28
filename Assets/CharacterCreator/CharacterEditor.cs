@@ -274,6 +274,7 @@ public class CharacterEditor : MonoBehaviour
     public void SetSkinColor(Color c)
     {
         Tutorial.changedSkin = true;
+        SetOutfitChangedFlag(true);
         foreach (SpriteRenderer sr in skinRenderers)
         {
             sr.color = c;

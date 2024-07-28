@@ -35,8 +35,6 @@ public class InventoryManager : ScriptableObject
     public enum PerishableItem
     {
         Coffee,
-        Latte,
-        IcedCoffee,
         Croissant,
         Pizza
     }
@@ -142,10 +140,17 @@ public class InventoryManager : ScriptableObject
             }
         } catch
         {
-            PerishableItem i = StringToPerishableItem(item);
-            if (pocketsPerishable.ContainsKey(i))
+            try
             {
-                return pocketsPerishable[i];
+                PerishableItem i = StringToPerishableItem(item);
+                if (pocketsPerishable.ContainsKey(i))
+                {
+                    return pocketsPerishable[i];
+                }
+            } catch
+            {
+                Debug.Log("Couldn't parse pockets item: " + item);
+                return 0;
             }
         }
         return 0;
@@ -300,6 +305,11 @@ public class InventoryManager : ScriptableObject
             pocketsPerishable[pi]++;
         else
             pocketsPerishable.Add(pi, 1);
+    }
+
+    public static void SpoilPerishables()
+    {
+        pocketsPerishable.Clear();
     }
 
     public static void AddItem(string input)

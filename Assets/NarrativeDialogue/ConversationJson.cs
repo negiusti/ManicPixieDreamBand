@@ -40,6 +40,7 @@ public class Requirements
     public string[] completedQuests;
     public string currentEventType;
     public string[] locations;
+    public bool changedOutfitToday;
 }
 
 [System.Serializable]
