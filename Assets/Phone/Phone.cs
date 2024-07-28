@@ -22,6 +22,7 @@ public class Phone : MonoBehaviour
     private GearApp gearApp;
     private DecoratorApp decoratorApp;
     private SettingsApp settingsApp;
+    private PhotosApp photosApp;
     private SpriteResolver backgroundResolver;
     private bool isLocked;
     private CustomDialogueScript customDialogue;
@@ -65,6 +66,7 @@ public class Phone : MonoBehaviour
         decoratorApp = this.GetComponentInChildren<DecoratorApp>(true);
         gearApp = this.GetComponentInChildren<GearApp>(true);
         settingsApp = this.GetComponentInChildren<SettingsApp>(true);
+        photosApp = this.GetComponentInChildren<PhotosApp>(true);
         //animator = this.GetComponent<Animator>();
         notifications = this.GetComponentInChildren<PhoneNotifications>();
         isLocked = true;
@@ -389,9 +391,11 @@ public class Phone : MonoBehaviour
     public void OpenPhotos()
     {
         SetAppHeader("Photos");
+        ClearNotificationFor("Photos");
         if (phoneStateStack.Peek() != PhoneState.Photos)
             phoneStateStack.Push(PhoneState.Photos);
         HideIcons();
+        photosApp.gameObject.SetActive(true);
     }
 
     public void GoBack()
@@ -498,6 +502,7 @@ public class Phone : MonoBehaviour
         decoratorApp.gameObject.SetActive(false);
         gearApp.gameObject.SetActive(false);
         settingsApp.gameObject.SetActive(false);
+        photosApp.gameObject.SetActive(false);
         backButton.SetActive(false);
         ShowIcons();
     }
