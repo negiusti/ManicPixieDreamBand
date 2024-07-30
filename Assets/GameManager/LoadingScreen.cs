@@ -31,20 +31,6 @@ public class LoadingScreen : MonoBehaviour
     //    mainCam = cams.Where(c => !c.Equals(loadingCam)).First();
     //}
 
-    private void Awake()
-    {
-        // Ensure only one instance exists
-        //if (Instance == null)
-        //{
-        //    Instance = this;
-            //DontDestroyOnLoad(gameObject); // Optional: Keeps the object alive across scene changes
-        //}
-        //else
-        //{
-        //    Destroy(gameObject);
-        //}
-    }
-
     public void SwitchCams()
     {
         loadingCam = this.GetComponentInChildren<Camera>();

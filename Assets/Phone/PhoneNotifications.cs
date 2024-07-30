@@ -13,6 +13,7 @@ public class PhoneNotifications : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rectTransform = GetComponent<RectTransform>();
         if (coroutine == null)
             coroutine = StartCoroutine(DeleteTopNotif());
     }
@@ -33,11 +34,6 @@ public class PhoneNotifications : MonoBehaviour
             
         if (coroutine == null)
             coroutine = StartCoroutine(DeleteTopNotif());
-    }
-
-    private void Awake()
-    {
-        rectTransform = GetComponent<RectTransform>();
     }
 
     private void OnDisable()
@@ -89,6 +85,7 @@ public class PhoneNotifications : MonoBehaviour
                 Destroy(topNotif.gameObject);
             } else
             {
+                Debug.Log("Notifs empty");
                 yield return new WaitForSeconds(2.5f);
             }
         }

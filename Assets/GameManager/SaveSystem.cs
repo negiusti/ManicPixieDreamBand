@@ -28,13 +28,14 @@ public static class SaveSystem
         return Load(characterSavePath);
     }
 
-    public static void DeleteMainCharacterData()
+    public static void DeleteSaveData()
     {
-        string characterSavePath = Application.persistentDataPath + "/MainCharacter/character.save";
-        if (File.Exists(characterSavePath))
-        {
-            File.Delete(characterSavePath);
-        }
+        ES3.DeleteFile();
+        //string characterSavePath = Application.persistentDataPath + "/MainCharacter/character.save";
+        //if (File.Exists(characterSavePath))
+        //{
+        //    File.Delete(characterSavePath);
+        //}
     }
 
     private static CharacterData Load(string characterSavePath)

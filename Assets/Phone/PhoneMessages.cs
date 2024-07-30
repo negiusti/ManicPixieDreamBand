@@ -16,6 +16,7 @@ public class PhoneMessages : PhoneApp
     // Start is called before the first frame update
     void Start()
     {
+        contactTemplate.gameObject.SetActive(false);
         // wait until message app is opened before enabling the canvas
         contactsMap = new Dictionary<string, Contact>();
 
@@ -28,11 +29,6 @@ public class PhoneMessages : PhoneApp
             AddContact(c);
         }
         customDialogue.CloseBacklogs();
-    }
-
-    private void Awake()
-    {
-        contactTemplate.gameObject.SetActive(false);
     }
 
     public bool HasPendingConvos()

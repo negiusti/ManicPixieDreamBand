@@ -34,6 +34,12 @@ public class BackLog : MonoBehaviour
 
     private void Start()
     {
+        logEntryTemplate.gameObject.SetActive(false);
+        speakerNameTemplate.gameObject.SetActive(false);
+        typingBubbleTemplate.SetActive(false);
+        responseMenuView = false;
+        rectTransform = GetComponent<RectTransform>();
+        scrollbar = GetComponentInChildren<Scrollbar>();
         ResetCurrentEntryID();
     }
 
@@ -52,17 +58,6 @@ public class BackLog : MonoBehaviour
             typingBubble = null;
         }
         StopAllCoroutines();
-    }
-
-    private void Awake()
-    {
-        logEntryTemplate.gameObject.SetActive(false);
-        speakerNameTemplate.gameObject.SetActive(false);
-        typingBubbleTemplate.SetActive(false);
-        responseMenuView = false;
-        rectTransform = GetComponent<RectTransform>();
-        scrollbar = GetComponentInChildren<Scrollbar>();
-        //coroutines = new Queue<IEnumerator>();
     }
 
     private void Update()

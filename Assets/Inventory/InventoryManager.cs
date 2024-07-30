@@ -349,12 +349,12 @@ public class InventoryManager : ScriptableObject
 
     public static Dictionary<PerishableItem, int> GetPerishablePocketItems()
     {
-        return pocketsPerishable;
+        return pocketsPerishable ?? new Dictionary<PerishableItem, int>();
     }
 
     public static Dictionary<Item, int> GetPocketItems()
     {
-        return pockets;
+        return pockets ?? new Dictionary<Item, int>();
     }
 
     private static AsyncOperationHandle<TextAsset> LoadFromJson()

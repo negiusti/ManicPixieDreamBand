@@ -10,40 +10,40 @@ public class AudioLoopController : MonoBehaviour
     {
         audioSource = this.GetComponent<AudioSource>();
 
-        if (videoPlayer == null)
-        {
-            Debug.LogError("VideoPlayer component not assigned!");
-            return;
-        }
-        videoPlayer.loopPointReached += OnVideoEnd;
+        //if (videoPlayer == null)
+        //{
+        //    Debug.LogError("VideoPlayer component not assigned!");
+        //    return;
+        //}
+        //videoPlayer.loopPointReached += OnVideoEnd;
 
         // Start looping the audio
         PlayAudioLoop();
     }
 
-    void OnVideoEnd(VideoPlayer vp)
-    {
-        Debug.Log("Video has ended!");
-        PlayAudioLoop();
-    }
+    //void OnVideoEnd(VideoPlayer vp)
+    //{
+    //    Debug.Log("Video has ended!");
+    //    PlayAudioLoop();
+    //}
 
-    void Update()
-    {
-        // Check if the VideoPlayer is currently playing
-        if (videoPlayer.isPlaying)
-        {
-            // Pause the audio when the video is playing
-            PauseAudio();
-        }
-        else
-        {
-            // Resume or start the audio loop when the video is not playing
-            if (!audioSource.isPlaying)
-            {
-                PlayAudioLoop();
-            }
-        }
-    }
+    //void Update()
+    //{
+    //    // Check if the VideoPlayer is currently playing
+    //    if (videoPlayer.isPlaying)
+    //    {
+    //        // Pause the audio when the video is playing
+    //        PauseAudio();
+    //    }
+    //    else
+    //    {
+    //        // Resume or start the audio loop when the video is not playing
+    //        if (!audioSource.isPlaying)
+    //        {
+    //            PlayAudioLoop();
+    //        }
+    //    }
+    //}
 
     void PlayAudioLoop()
     {
@@ -52,10 +52,10 @@ public class AudioLoopController : MonoBehaviour
         audioSource.Play();
     }
 
-    void PauseAudio()
-    {
-        // Pause the audio playback
-        if (audioSource.isPlaying)
-            audioSource.Pause();
-    }
+    //void PauseAudio()
+    //{
+    //    // Pause the audio playback
+    //    if (audioSource.isPlaying)
+    //        audioSource.Pause();
+    //}
 }

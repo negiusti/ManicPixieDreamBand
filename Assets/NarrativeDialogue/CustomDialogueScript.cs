@@ -24,15 +24,11 @@ public class CustomDialogueScript : MonoBehaviour
     public int currentConvoIdx;
     private string currentLocation;
 
-    private void Awake()
-    {
-        backLogTemplate.gameObject.SetActive(false);
-        convoHeaderTemplate.gameObject.SetActive(false);
-    }
-
     // Start is called before the first frame update
     void Start()
     {
+        backLogTemplate.gameObject.SetActive(false);
+        convoHeaderTemplate.gameObject.SetActive(false);
         currentConvoIdx = 0;
         SubscribeToEvents();
         isCoolDown = false;
@@ -53,12 +49,14 @@ public class CustomDialogueScript : MonoBehaviour
     {
         SceneManager.sceneLoaded -= NewActiveScene;
         SceneManager.sceneUnloaded -= EndingActiveScene;
+        ConvoCompleted -= Calendar.OnConversationComplete;
     }
 
     private void SubscribeToEvents()
     {
         SceneManager.sceneLoaded += NewActiveScene;
         SceneManager.sceneUnloaded += EndingActiveScene;
+        ConvoCompleted += Calendar.OnConversationComplete;
     }
 
     private void NewActiveScene(Scene current, LoadSceneMode mode)

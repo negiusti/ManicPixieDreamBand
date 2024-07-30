@@ -11,24 +11,26 @@ public class GameManager : MonoBehaviour
     void Start()
     {
 
-            
-            
+        RegisterSOLuaFuncs();
+        SubscribeToEvents();
+        LoadData();
 
-            //try
-            //{
-            //    Steamworks.SteamClient.Init(2772090);
-            //}
-            //catch (System.Exception e)
-            //{
-            //    Debug.LogError("Could not initialize steam client: + " + e.ToString());
-            //    // Something went wrong - it's one of these:
-            //    //
-            //    //     Steam is closed?
-            //    //     Can't find steam_api dll?
-            //    //     Don't have permission to play app?
-            //    //
-            //}
-        
+
+        //try
+        //{
+        //    Steamworks.SteamClient.Init(2772090);
+        //}
+        //catch (System.Exception e)
+        //{
+        //    Debug.LogError("Could not initialize steam client: + " + e.ToString());
+        //    // Something went wrong - it's one of these:
+        //    //
+        //    //     Steam is closed?
+        //    //     Can't find steam_api dll?
+        //    //     Don't have permission to play app?
+        //    //
+        //}
+
     }
 
 
@@ -98,14 +100,12 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.activeSceneChanged += ChangedActiveScene;
         SceneManager.activeSceneChanged += Characters.RefreshCharactersCache;
-        DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().ConvoCompleted += Calendar.OnConversationComplete;
     }
 
     void UnsubscribeFromEvents()
     {
         SceneManager.activeSceneChanged -= ChangedActiveScene;
         SceneManager.activeSceneChanged -= Characters.RefreshCharactersCache;
-        DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().ConvoCompleted -= Calendar.OnConversationComplete;
     }
 
     private void ChangedActiveScene(Scene current, Scene next)
@@ -182,9 +182,6 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            RegisterSOLuaFuncs();
-            SubscribeToEvents();
-            LoadData();
             DontDestroyOnLoad(gameObject); // Optional: Keeps the object alive across scene changes
         }
         else

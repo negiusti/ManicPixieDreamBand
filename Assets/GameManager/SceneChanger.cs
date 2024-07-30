@@ -50,21 +50,22 @@ public class SceneChanger : MonoBehaviour
     {
         PushCurrSceneToSceneStack();
         //SaveCharacters();
-        DialogueManager.StopAllConversations();
+        if (DialogueManager.Instance != null)
+            DialogueManager.StopAllConversations();
         //string currentScene = SceneManager.GetActiveScene().name;
         Debug.Log("Loading scene: " + sceneName);
         //AsyncOperation loadOperation =
 
         LoadScene(sceneName, loadingScreenType);
-
-        menuToggle.DisableMenu();
+        if (menuToggle != null)
+            menuToggle.DisableMenu();
         //sceneStack.Push(new SceneInfo(sceneName, Characters.MainCharacter().transform.position));
         //loadOperation.completed += (operation) => OnLoadCompleted(operation, currentScene);
     }
 
     private void PushCurrSceneToSceneStack()
     {
-        sceneStack.Push(new SceneInfo(GetCurrentScene(), Characters.MainCharacter().transform.position));
+        sceneStack.Push(new SceneInfo(GetCurrentScene(), Characters.MainCharacter() == null ? Vector3.zero : Characters.MainCharacter().transform.position));
         Debug.Log("PUSH SCENE: " + GetCurrentScene());
     }
 
@@ -77,8 +78,8 @@ public class SceneChanger : MonoBehaviour
         Debug.Log("Loading scene: " + sceneInfo.sceneName);
         //AsyncOperation loadOperation =
         LoadScene(sceneInfo, loadingScreenType);
-
-        menuToggle.DisableMenu();
+        if (menuToggle != null)
+            menuToggle.DisableMenu();
         //sceneStack.Push(new SceneInfo(sceneInfo.sceneName, Characters.MainCharacter().transform.position));
         //loadOperation.completed += (operation) => OnLoadCompleted(operation, currentScene);
     }
@@ -99,25 +100,8 @@ public class SceneChanger : MonoBehaviour
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 
-    IEnumerator LoadSceneAsync(string sceneName)
+    void DisableLoadingScreens(AsyncOperation asyncOperation)
     {
-        // Begin loading the scene asynchronously
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
-
-        // Wait for a minimum loading time to ensure loading screen is visible
-        yield return new WaitForSeconds(minLoadingTime);
-
-        // Wait until the asynchronous operation is complete
-        while (!operation.isDone)
-        {
-            // Calculate the progress and update loading screen if needed
-            float progress = Mathf.Clamp01(operation.progress / 0.9f); // 0.9f is the progress value when the scene is fully loaded
-            Debug.Log("Loading progress: " + progress);
-
-            // Optionally, update UI elements on the loading screen to show progress
-
-            yield return null;
-        }
         if (genericLoadingScreen != null)
         {
             genericLoadingScreen.gameObject.SetActive(false);
@@ -126,6 +110,19 @@ public class SceneChanger : MonoBehaviour
         {
             busLoadingScreen.gameObject.SetActive(false);
         }
+    }
+
+    IEnumerator LoadSceneAsync(string sceneName)
+    {
+        // Begin loading the scene asynchronously
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+        operation.completed += DisableLoadingScreens;
+        // Wait until the asynchronous scene fully loads
+        while (!operation.isDone)
+        {
+            yield return new WaitForSeconds(1);
+        }
+        yield return null;
     }
 
     private void LoadScene(SceneInfo sceneInfo, LoadingScreenType loadingScreenType)
@@ -148,30 +145,22 @@ public class SceneChanger : MonoBehaviour
     {
         // Begin loading the scene asynchronously
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneInfo.sceneName);
+        operation.completed += DisableLoadingScreens;
+        operation.completed += (AsyncOperation operation) => ResetMCPosition(sceneInfo);
 
-        // Wait for a minimum loading time to ensure loading screen is visible
-        yield return new WaitForSeconds(minLoadingTime);
-
-        // Wait until the asynchronous operation is complete
+        // Wait until the asynchronous scene fully loads
         while (!operation.isDone)
         {
-            // Calculate the progress and update loading screen if needed
-            float progress = Mathf.Clamp01(operation.progress / 0.9f); // 0.9f is the progress value when the scene is fully loaded
-            Debug.Log("Loading progress: " + progress);
-
-            // Optionally, update UI elements on the loading screen to show progress
-
-            yield return null;
+            yield return new WaitForSeconds(1);
         }
+        yield return null;
+        //Characters.MainCharacter().transform.position = sceneInfo.position;
+    }
+
+    private void ResetMCPosition(SceneInfo sceneInfo) {
+        if (Characters.MainCharacter() == null)
+            return;
         Characters.MainCharacter().transform.position = sceneInfo.position;
-        if (genericLoadingScreen != null)
-        {
-            genericLoadingScreen.gameObject.SetActive(false);
-        }
-        if (busLoadingScreen != null)
-        {
-            busLoadingScreen.gameObject.SetActive(false);
-        }
     }
 
     public string GetCurrentScene()
@@ -190,8 +179,8 @@ public class SceneChanger : MonoBehaviour
             //AsyncOperation loadOperation =
             //LoadScene(sceneStack.Pop().sceneName, LoadingScreenType.Generic);
             LoadScene(sceneStack.Pop(), LoadingScreenType.Generic);
-
-            menuToggle.DisableMenu();
+            if (menuToggle != null)
+                menuToggle.DisableMenu();
         }
     }
 
@@ -230,7 +219,8 @@ public class SceneChanger : MonoBehaviour
             Instance = this;
         }
         menuToggle = GetComponent<MenuToggleScript>();
-        menuToggle.DisableMenu();
+        if (menuToggle != null)
+            menuToggle.DisableMenu();
         sceneStack = new Stack<SceneInfo>();
         sceneStack.Push(new SceneInfo("DowntownNeighborhood", new Vector3(-57f, -2.4f, 0f)));
         
