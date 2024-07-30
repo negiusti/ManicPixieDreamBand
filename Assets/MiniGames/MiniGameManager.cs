@@ -80,6 +80,7 @@ public class MiniGameManager : ScriptableObject
 
     public static void PrepMiniGame()
     {
+        GameManager.Instance.GetComponent<MenuToggleScript>().DisableMenu();
         Debug.Log("disabling phone");
         //if (Phone.Instance != null)
         Phone.Instance.gameObject.SetActive(false);
