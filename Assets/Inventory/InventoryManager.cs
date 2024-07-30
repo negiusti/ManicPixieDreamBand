@@ -36,7 +36,8 @@ public class InventoryManager : ScriptableObject
     {
         Coffee,
         Croissant,
-        Pizza
+        Pizza,
+        Boba
     }
 
     public enum Item

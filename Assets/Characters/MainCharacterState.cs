@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MainCharacterState", menuName = "Custom/MainCharacterState")]
@@ -9,12 +10,27 @@ public class MainCharacterState : ScriptableObject
     private static string characterName;
     private static double bankBalance;
     private static bool hasChangedOutfitToday;
+    private static HashSet<string> unlockedPhotos;
 
     public static void Save()
     {
         ES3.Save("MC_Name", characterName);
         ES3.Save("MC_Money", bankBalance);
         ES3.Save("MC_Flag_HasChangedOutfitToday", hasChangedOutfitToday);
+        ES3.Save("Photos", unlockedPhotos);
+    }
+
+    public static void UnlockPhoto(string photoName)
+    {
+        unlockedPhotos.Add(photoName);
+        Phone.Instance.SendNotificationTo("Photos");
+    }
+
+    public static HashSet<string> UnlockedPhotos()
+    {
+        if (unlockedPhotos == null)
+            unlockedPhotos =  ES3.Load("Photos", new HashSet<string>() { "Boxes", "PizzaRat" });
+        return unlockedPhotos;
     }
 
     public static void Load()
@@ -22,6 +38,7 @@ public class MainCharacterState : ScriptableObject
         characterName = ES3.Load<string>("MC_Name", defaultValue:"");
         bankBalance = ES3.Load<double>("MC_Money", 100d);
         hasChangedOutfitToday = ES3.Load<bool>("MC_Flag_HasChangedOutfitToday", false);
+        unlockedPhotos = ES3.Load("Photos", new HashSet<string>() { "Boxes", "PizzaRat" });
     }
 
     public static string GetCharacterName()
