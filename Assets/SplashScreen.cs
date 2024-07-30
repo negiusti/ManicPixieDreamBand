@@ -15,7 +15,7 @@ public class SplashScreen : MonoBehaviour
         //sc = gm.GetComponent<SceneChanger>();
 
         //TODO for demo
-        //SaveSystem.DeleteSaveData();
+        SaveSystem.DeleteSaveData();
     }
 
     // Update is called once per frame
