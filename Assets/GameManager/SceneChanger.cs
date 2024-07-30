@@ -100,7 +100,7 @@ public class SceneChanger : MonoBehaviour
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 
-    void DisableLoadingScreens(AsyncOperation asyncOperation)
+    void DisableLoadingScreens()
     {
         if (genericLoadingScreen != null)
         {
@@ -116,12 +116,14 @@ public class SceneChanger : MonoBehaviour
     {
         // Begin loading the scene asynchronously
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
-        operation.completed += DisableLoadingScreens;
+        // Minimum time for loading screen
+        yield return new WaitForSeconds(2);
         // Wait until the asynchronous scene fully loads
         while (!operation.isDone)
         {
             yield return new WaitForSeconds(1);
         }
+        DisableLoadingScreens();
         yield return null;
     }
 
@@ -145,16 +147,17 @@ public class SceneChanger : MonoBehaviour
     {
         // Begin loading the scene asynchronously
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneInfo.sceneName);
-        operation.completed += DisableLoadingScreens;
-        operation.completed += (AsyncOperation operation) => ResetMCPosition(sceneInfo);
 
+        // Minimum time for loading screen
+        yield return new WaitForSeconds(2);
         // Wait until the asynchronous scene fully loads
         while (!operation.isDone)
         {
             yield return new WaitForSeconds(1);
         }
+        DisableLoadingScreens();
+        ResetMCPosition(sceneInfo);
         yield return null;
-        //Characters.MainCharacter().transform.position = sceneInfo.position;
     }
 
     private void ResetMCPosition(SceneInfo sceneInfo) {
