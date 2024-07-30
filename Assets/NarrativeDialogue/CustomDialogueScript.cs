@@ -75,10 +75,6 @@ public class CustomDialogueScript : MonoBehaviour
         {
             return false;
         }
-        if (!Phone.Instance.IsLocked())
-            return false;
-        if (DialogueManager.IsConversationActive)
-            return false;
 
         //if (!plotData[currentConvoIdx].locations.Contains(currentLocation))
         //{
@@ -169,7 +165,10 @@ public class CustomDialogueScript : MonoBehaviour
                 t.Stop();
             }
         }
-        if (!DialogueManager.IsConversationActive)
+        if (!DialogueManager.IsConversationActive &&
+            !SceneChanger.Instance.IsLoadingScreenOpen() &&
+            !MiniGameManager.AnyActiveMiniGames() &&
+            Phone.Instance.IsLocked())
         {
             //Debug.Log("no active conversations");
             if (!CheckForPlotConvo())

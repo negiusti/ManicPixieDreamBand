@@ -70,11 +70,11 @@ public class Phone : MonoBehaviour
         //animator = this.GetComponent<Animator>();
         notifications = this.GetComponentInChildren<PhoneNotifications>();
         isLocked = true;
-        Lock();
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
         if (appNotifications == null) appNotifications = new HashSet<string>();
         if (messagesApp.HasPendingConvos())
             appNotifications.Add("Messages");
+        Lock();
         //txtResponsePanel = this.GetComponentInChildren<PixelCrushers.DialogueSystem.Wrappers.StandardUIMenuPanel>();
     }
 
