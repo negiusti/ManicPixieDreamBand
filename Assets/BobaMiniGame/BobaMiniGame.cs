@@ -43,12 +43,12 @@ public class BobaMiniGame : MiniGame
     // Use this for initialization
     void Start()
     {
-        cam = GetComponentInChildren<Camera>();
-        order = GetComponentInChildren<BobaOrder>();
-        milks = FindObjectsOfType<Milk>();
-        toppings = FindObjectsOfType<Topping>();
-        flavors = FindObjectsOfType<Flavor>();
-        speechText = speechBubble.GetComponentInChildren<Text>();
+        cam = GetComponentInChildren<Camera>(true);
+        order = GetComponentInChildren<BobaOrder>(true);
+        milks = FindObjectsOfType<Milk>(true);
+        toppings = FindObjectsOfType<Topping>(true);
+        flavors = FindObjectsOfType<Flavor>(true);
+        speechText = speechBubble.GetComponentInChildren<Text>(true);
         StartCoroutine(speechBubble.GetComponent<LerpPosition>().Lerp(speechBubble.transform.localPosition + Vector3.right * 35f, 1f));
         speechBubble.SetActive(false);
         DisableAllChildren();

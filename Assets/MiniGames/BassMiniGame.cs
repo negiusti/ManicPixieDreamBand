@@ -10,7 +10,7 @@ public class BassMiniGame : MiniGame
     // Use this for initialization
     void Start()
     {
-        mgCamera = GetComponentInChildren<Camera>();
+        mgCamera = GetComponentInChildren<Camera>(true);
         DisableAllChildren();
     }
 

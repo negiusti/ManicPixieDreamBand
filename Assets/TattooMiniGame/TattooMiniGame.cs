@@ -84,7 +84,7 @@ public class TattooMiniGame : MiniGame
 
     private void Start()
     {
-        timer = GetComponentInChildren<Timer>();
+        timer = GetComponentInChildren<Timer>(true);
         DisableAllChildren();
     }
 

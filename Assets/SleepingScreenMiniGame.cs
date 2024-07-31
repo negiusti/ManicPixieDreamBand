@@ -10,7 +10,7 @@ public class SleepingScreenMiniGame : MiniGame
     private void Start()
     {
         animator = GetComponent<Animator>();
-        mgCamera = GetComponentInChildren<Camera>().gameObject;
+        mgCamera = GetComponentInChildren<Camera>(true).gameObject;
         DisableAllChildren();
         //OpenMiniGame();
     }

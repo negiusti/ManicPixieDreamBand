@@ -23,9 +23,9 @@ public class BandNameMiniGame : MiniGame
 
     private void Start()
     {
-        blackScreen = GetComponentInChildren<BlackScreen>();
+        blackScreen = GetComponentInChildren<BlackScreen>(true);
         blackScreen.gameObject.SetActive(false);
-        mgCamera = GetComponentInChildren<Camera>();
+        mgCamera = GetComponentInChildren<Camera>(true);
         DisableAllChildren();
     }
 
