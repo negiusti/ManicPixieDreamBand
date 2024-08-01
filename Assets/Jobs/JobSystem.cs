@@ -48,6 +48,8 @@ public class JobSystem : ScriptableObject
             Calendar.ScheduleNext7Days();
         }
         currentJob = newJob;
+        if (newJob == PunkJob.Unemployed)
+            Calendar.RemoveAllJobEvents();
     }
 
     public static void GoodJob()

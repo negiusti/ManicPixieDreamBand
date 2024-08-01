@@ -104,6 +104,12 @@ public class ScreenPrintingMiniGame : MiniGame
         DisableAllChildren();
     }
 
+    private void OnEnable()
+    {
+        if (shirtIcons == null)
+            Start();
+    }
+
     public override bool IsMiniGameActive()
     {
         return isActive;
