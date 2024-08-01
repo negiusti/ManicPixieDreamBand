@@ -43,10 +43,12 @@ public class CustomDialogueScript : MonoBehaviour
     public void Reset()
     {
         currentConvoIdx = 0;
+        convoHeaders = new Dictionary<string, ConvoHeader>();
         backLogs = new Dictionary<string, BackLog>();
-        for (int i = 0; i < backLogTemplate.transform.parent.transform.childCount; i++)
+        for (int i = 0; i < backLogTemplate.transform.parent.childCount; i++)
         {
-            Destroy(backLogTemplate.transform.parent.transform.gameObject);
+            if (backLogTemplate.transform.parent.GetChild(i).gameObject.name.Contains("Clone"))
+                Destroy(backLogTemplate.transform.parent.GetChild(i).gameObject);
         }
     }
 
@@ -197,10 +199,10 @@ public class CustomDialogueScript : MonoBehaviour
 
     public void AddBackLog(string contactName)
     {
-        BackLog instance = Instantiate(backLogTemplate, backLogTemplate.transform.parent.transform);
+        BackLog instance = Instantiate(backLogTemplate, backLogTemplate.transform.parent);
         instance.gameObject.SetActive(true);
         backLogs.Add(contactName, instance);
-        ConvoHeader instance2 = Instantiate(convoHeaderTemplate, convoHeaderTemplate.transform.parent.transform);
+        ConvoHeader instance2 = Instantiate(convoHeaderTemplate, convoHeaderTemplate.transform.parent);
         instance2.gameObject.SetActive(true);
         instance2.SetConvoHeader(contactName);
         convoHeaders.Add(contactName, instance2);
