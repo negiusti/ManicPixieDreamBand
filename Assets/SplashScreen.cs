@@ -12,10 +12,7 @@ public class SplashScreen : MonoBehaviour
     void Start()
     {
         //gm = GameManager.Instance;
-        //sc = gm.GetComponent<SceneChanger>();
-
-        //TODO for demo
-        SaveSystem.DeleteSaveData();
+        //sc = gm.GetComponent<SceneChanger>()
     }
 
     // Update is called once per frame
@@ -25,6 +22,8 @@ public class SplashScreen : MonoBehaviour
         {
             //vc.Play();
             //SceneChanger.Instance.ChangeScene("Bedroom");
+            SaveSystem.DeleteSaveData();
+            GameManager.Instance.RefreshGameState();
             SceneChanger.Instance.ChangeScene("Bedroom");
         }
     }

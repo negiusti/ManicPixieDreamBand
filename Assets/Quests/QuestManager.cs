@@ -29,7 +29,8 @@ public class QuestManager : ScriptableObject
                 return false;
             }
                 
-            bool requirementsMet = ConvoRequirements.RequirementsMet(currentQuest.conversationsData[currQuestConvoIdx].requirements);
+            bool requirementsMet = ConvoRequirements.RequirementsMet(currentQuest.conversationsData[currQuestConvoIdx].requirements) &&
+                (!SceneChanger.Instance.IsLoadingScreenOpen() || !DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().IsTxtConvo(currentQuest.conversationsData[currQuestConvoIdx].conversation));
             if (requirementsMet)
                 DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().StartConversation(currentQuest.conversationsData[currQuestConvoIdx++]);
             return requirementsMet;
@@ -39,7 +40,8 @@ public class QuestManager : ScriptableObject
             {
                 //Debug.Log("searching for new quest: " + questName);
                 //Debug.Log("checking requirements for: " + quests[questName].conversationsData[0].conversation);
-                bool requirementsMet = ConvoRequirements.RequirementsMet(quests[questName].conversationsData[0].requirements);
+                bool requirementsMet = ConvoRequirements.RequirementsMet(quests[questName].conversationsData[0].requirements) &&
+                     (!SceneChanger.Instance.IsLoadingScreenOpen() || !DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().IsTxtConvo(quests[questName].conversationsData[0].conversation));
                 if (requirementsMet)
                 {
                     currQuestConvoIdx = 0;

@@ -29,7 +29,7 @@ public class CustomDialogueScript : MonoBehaviour
     {
         backLogTemplate.gameObject.SetActive(false);
         convoHeaderTemplate.gameObject.SetActive(false);
-        currentConvoIdx = 0;
+        currentConvoIdx = ES3.Load("PlotConvoIdx", 0);
         SubscribeToEvents();
         isCoolDown = false;
         backLogs = new Dictionary<string, BackLog>();
@@ -37,11 +37,24 @@ public class CustomDialogueScript : MonoBehaviour
         currentLocation = SceneManager.GetActiveScene().name;
         GetAllConversations();
         phoneResponsePanelCanvas = phoneResponsePanel.gameObject.GetComponent<Canvas>();
-        CheckForPlotConvo();
+        //CheckForPlotConvo();
+    }
+
+    public void Reset()
+    {
+        currentConvoIdx = 0;
+        convoHeaders = new Dictionary<string, ConvoHeader>();
+        backLogs = new Dictionary<string, BackLog>();
+        for (int i = 0; i < backLogTemplate.transform.parent.childCount; i++)
+        {
+            if (backLogTemplate.transform.parent.GetChild(i).gameObject.name.Contains("Clone"))
+                Destroy(backLogTemplate.transform.parent.GetChild(i).gameObject);
+        }
     }
 
     private void OnDestroy()
     {
+        ES3.Save("PlotConvoIdx", currentConvoIdx);
         UnsubscribeFromEvents();
     }
 
@@ -87,6 +100,8 @@ public class CustomDialogueScript : MonoBehaviour
             //    Debug.Log("Could not find conversation in database: " + plotData.conversationsData[currentConvoIdx].conversation);
             //    return;
             //}
+            if (SceneChanger.Instance.IsLoadingScreenOpen() && IsTxtConvo(plotData[currentConvoIdx].conversation))
+                return false;
             StartConversation(plotData[currentConvoIdx].conversation);
             return true;
         }
@@ -166,7 +181,6 @@ public class CustomDialogueScript : MonoBehaviour
             }
         }
         if (!DialogueManager.IsConversationActive &&
-            !SceneChanger.Instance.IsLoadingScreenOpen() &&
             !MiniGameManager.AnyActiveMiniGames() &&
             Phone.Instance.IsLocked())
         {
@@ -185,10 +199,10 @@ public class CustomDialogueScript : MonoBehaviour
 
     public void AddBackLog(string contactName)
     {
-        BackLog instance = Instantiate(backLogTemplate, backLogTemplate.transform.parent.transform);
+        BackLog instance = Instantiate(backLogTemplate, backLogTemplate.transform.parent);
         instance.gameObject.SetActive(true);
         backLogs.Add(contactName, instance);
-        ConvoHeader instance2 = Instantiate(convoHeaderTemplate, convoHeaderTemplate.transform.parent.transform);
+        ConvoHeader instance2 = Instantiate(convoHeaderTemplate, convoHeaderTemplate.transform.parent);
         instance2.gameObject.SetActive(true);
         instance2.SetConvoHeader(contactName);
         convoHeaders.Add(contactName, instance2);
@@ -275,14 +289,6 @@ public class CustomDialogueScript : MonoBehaviour
                 Debug.Log("Continuing after empty line of dialogue!!");
                 DialogueManager.standardDialogueUI.OnContinue();
             }
-        }
-
-        if (subtitle.dialogueEntry.subtitleText.StartsWith('[') && subtitle.dialogueEntry.subtitleText.EndsWith(']'))
-        {
-            Debug.Log("meta dialogue text: " + subtitle.dialogueEntry.DialogueText);
-            DialogueManager.standardDialogueUI.HideSubtitle(subtitle);
-            DialogueManager.standardDialogueUI.OnContinue();
-            return;
         }
 
         if (subtitle.dialogueEntry.DialogueText.Length > 0 && IsTxtConvo(convoName)) {

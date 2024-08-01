@@ -58,8 +58,8 @@ public class SpawnCharacters : ScriptableObject
                 c.transform.position = newPos;
             }
             c.MoveToRenderLayer(p.layer, idx);
-            Debug.Log("Set to active: " + c.name + " " + p.existAtStart + " " + c.gameObject.name);
-            c.gameObject.SetActive(p.existAtStart);
+            //Debug.Log("Set to active: " + c.name + " " + p.existAtStart + " " + c.gameObject.name);
+            //c.gameObject.SetActive(p.existAtStart);
         }
     }
 

@@ -149,7 +149,7 @@ public class TattooMiniGame : MiniGame
     private void Draw()
     {
         // If the arm has arrived at the screen's center, the timer has not finished, and the game is active
-        if (isActive && Input.GetMouseButtonDown(0) && armLerpScript.finishedLerp && timer.IsRunning())
+        if (isActive && Input.GetMouseButtonDown(0) && armLerpScript.finishedLerp)// && timer.IsRunning())
         {
             // Spawn a new line as a child of the arm and get its Line component
             GameObject newLine = Instantiate(linePrefab);

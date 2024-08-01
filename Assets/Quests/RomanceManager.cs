@@ -18,7 +18,8 @@ public class RomanceManager : ScriptableObject
             HashSet<ConversationData> availableConvos = hornySingles[single].conversationsData.Where(c => !completedRomanceConvos.Contains(c.conversation)).ToHashSet();
             foreach (ConversationData romanceConvo in availableConvos)
             {
-                bool requirementsMet = ConvoRequirements.RequirementsMet(romanceConvo.requirements);
+                bool requirementsMet = ConvoRequirements.RequirementsMet(romanceConvo.requirements) &&
+                    (!SceneChanger.Instance.IsLoadingScreenOpen() || !DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().IsTxtConvo(romanceConvo.conversation));
                 if (requirementsMet)
                 {
                     DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().StartConversation(romanceConvo);

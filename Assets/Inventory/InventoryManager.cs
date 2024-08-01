@@ -334,6 +334,8 @@ public class InventoryManager : ScriptableObject
             pocketsPerishable[item]--;
         else if (!pocketsPerishable.ContainsKey(item))
             Debug.LogError("PerishablePockets do not contain item: " + input);
+        if (pocketsPerishable.Count == 0 && pockets.Count == 0)
+            Phone.Instance.ClearNotificationFor("Pockets");
     }
 
     public static void RemoveItem(string input)
@@ -346,6 +348,8 @@ public class InventoryManager : ScriptableObject
             pockets[item]--;
         else if (!pockets.ContainsKey(item))
             Debug.LogError("Pockets do not contain item: " + input);
+        if (pocketsPerishable.Count == 0 && pockets.Count == 0)
+            Phone.Instance.ClearNotificationFor("Pockets");
     }
 
     public static Dictionary<PerishableItem, int> GetPerishablePocketItems()
