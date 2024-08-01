@@ -115,6 +115,19 @@ public class GameManager : MonoBehaviour
         SaveData();
     }
 
+    public void RefreshGameState()
+    {
+        MainCharacterState.Load();
+        Calendar.Load();
+        InventoryManager.LoadInventories();
+        JobSystem.Load();
+        QuestManager.Load();
+        RomanceManager.Load();
+        Tutorial.Load();
+        if (DialogueManager.Instance != null)
+            DialogueManager.Instance.GetComponent<CustomDialogueScript>().Reset();
+    }
+
     private void LoadData()
     {
         MainCharacterState.Load();

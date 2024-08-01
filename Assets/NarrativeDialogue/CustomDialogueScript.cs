@@ -29,7 +29,7 @@ public class CustomDialogueScript : MonoBehaviour
     {
         backLogTemplate.gameObject.SetActive(false);
         convoHeaderTemplate.gameObject.SetActive(false);
-        currentConvoIdx = 0;
+        currentConvoIdx = ES3.Load("PlotConvoIdx", 0);
         SubscribeToEvents();
         isCoolDown = false;
         backLogs = new Dictionary<string, BackLog>();
@@ -37,11 +37,22 @@ public class CustomDialogueScript : MonoBehaviour
         currentLocation = SceneManager.GetActiveScene().name;
         GetAllConversations();
         phoneResponsePanelCanvas = phoneResponsePanel.gameObject.GetComponent<Canvas>();
-        CheckForPlotConvo();
+        //CheckForPlotConvo();
+    }
+
+    public void Reset()
+    {
+        currentConvoIdx = 0;
+        backLogs = new Dictionary<string, BackLog>();
+        for (int i = 0; i < backLogTemplate.transform.parent.transform.childCount; i++)
+        {
+            Destroy(backLogTemplate.transform.parent.transform.gameObject);
+        }
     }
 
     private void OnDestroy()
     {
+        ES3.Save("PlotConvoIdx", currentConvoIdx);
         UnsubscribeFromEvents();
     }
 
@@ -87,6 +98,8 @@ public class CustomDialogueScript : MonoBehaviour
             //    Debug.Log("Could not find conversation in database: " + plotData.conversationsData[currentConvoIdx].conversation);
             //    return;
             //}
+            if (SceneChanger.Instance.IsLoadingScreenOpen() && IsTxtConvo(plotData[currentConvoIdx].conversation))
+                return false;
             StartConversation(plotData[currentConvoIdx].conversation);
             return true;
         }
@@ -166,7 +179,6 @@ public class CustomDialogueScript : MonoBehaviour
             }
         }
         if (!DialogueManager.IsConversationActive &&
-            !SceneChanger.Instance.IsLoadingScreenOpen() &&
             !MiniGameManager.AnyActiveMiniGames() &&
             Phone.Instance.IsLocked())
         {
@@ -275,14 +287,6 @@ public class CustomDialogueScript : MonoBehaviour
                 Debug.Log("Continuing after empty line of dialogue!!");
                 DialogueManager.standardDialogueUI.OnContinue();
             }
-        }
-
-        if (subtitle.dialogueEntry.subtitleText.StartsWith('[') && subtitle.dialogueEntry.subtitleText.EndsWith(']'))
-        {
-            Debug.Log("meta dialogue text: " + subtitle.dialogueEntry.DialogueText);
-            DialogueManager.standardDialogueUI.HideSubtitle(subtitle);
-            DialogueManager.standardDialogueUI.OnContinue();
-            return;
         }
 
         if (subtitle.dialogueEntry.DialogueText.Length > 0 && IsTxtConvo(convoName)) {

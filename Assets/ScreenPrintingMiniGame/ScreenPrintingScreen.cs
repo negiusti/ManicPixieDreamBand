@@ -71,7 +71,7 @@ public class ScreenPrintingScreen : MonoBehaviour
                 StartCoroutine(DoPrintCooldown());
 
                 distanceFromCenter = Mathf.Abs(center.transform.position.x - transform.position.x);
-
+                //distanceFromCenter = Mathf.Abs(shirt.transform.position.x - transform.position.x);
                 screenPrintingManager.Score(distanceFromCenter);
             }
         }

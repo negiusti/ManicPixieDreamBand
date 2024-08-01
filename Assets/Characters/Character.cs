@@ -124,10 +124,11 @@ public class Character : MonoBehaviour
         SaveCharacter();
     }
 
-    //private void OnEnable()
-    //{
-    //    Start();
-    //}
+    private void OnEnable()
+    {
+        if (categoryToColorMap == null)
+            Start();
+    }
 
     // Update is called once per frame
     void Update()
@@ -192,6 +193,8 @@ public class Character : MonoBehaviour
 
     public void SaveCharacter()
     {
+        if (characterName.StartsWith("MG_") || characterName.StartsWith("_Closeup"))
+            return;
         Debug.Log("Saving... " + characterName);
         updateSpriteResolverMap();
         updateSpriteColorMap();
