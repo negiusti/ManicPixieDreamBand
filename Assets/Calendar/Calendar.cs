@@ -25,6 +25,19 @@ public class Calendar : ScriptableObject
             this.e = e;
         }
     }
+
+    public static void RemoveAllJobEvents()
+    {
+        for (int i = day; i < day + 7; i++)
+        {
+            Debug.Log("Unscheduling job for day " + i);
+            if (events.ContainsKey(i))
+            {
+                events[i].RemoveAll(e => e is JobEvent);
+            }
+        }
+    }
+
     public static void CompleteCurrentEvent()
     {
         if (currentEventIdx + 1 >= events.Count || events[day].Skip(currentEventIdx + 1).All(e => e.IsNight()))
