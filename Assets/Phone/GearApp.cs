@@ -22,7 +22,7 @@ public class GearApp : PhoneApp
     {
         SceneManager.sceneLoaded += ChangedActiveScene;
         cam = GetComponentInChildren<Camera>();
-        gearSwapUI = container.gameObject.GetComponentsInChildren<ItemSwapPhoneUI>().ToDictionary(i => i.Category(), i => i);
+        gearSwapUI = container.gameObject.GetComponentsInChildren<ItemSwapPhoneUI>(true).ToDictionary(i => i.Category(), i => i);
         Refresh();
     }
 
@@ -37,7 +37,8 @@ public class GearApp : PhoneApp
     {
         if (Phone.Instance == null)
             return;
-            
+        if (cam == null)
+            Start();
         Refresh();
     }
 

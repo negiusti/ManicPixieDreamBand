@@ -24,6 +24,8 @@ public class ShirtIcon : MonoBehaviour
 
     private void ChangeIcon(string label)
     {
+        if (spriteResolver == null)
+            Start();
         spriteResolver.SetCategoryAndLabel("ShirtIcon", label);
         animator.Play("Pop");
     }

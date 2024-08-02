@@ -7,7 +7,7 @@ public class ShopDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        childPurchasables = this.GetComponentsInChildren<Purchasable>();
+        childPurchasables = this.GetComponentsInChildren<Purchasable>(true);
     }
 
     // Update is called once per frame
@@ -18,6 +18,8 @@ public class ShopDisplay : MonoBehaviour
 
     public void Randomize()
     {
+        if (childPurchasables == null)
+            Start();
         int randomIdx = Random.Range(0, childPurchasables.Length);
         Debug.Log("randomize displays " + randomIdx);
 

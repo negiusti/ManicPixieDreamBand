@@ -9,6 +9,8 @@ public class ItemSwapPhoneUI : MonoBehaviour
 
     public string Category()
     {
+        //if (furniture == null && gear == null && defaultGear == null)
+        //    Start();
         if (furniture != null)
             return furniture.Category();
         if (gear != null)

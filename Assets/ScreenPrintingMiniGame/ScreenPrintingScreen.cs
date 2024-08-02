@@ -64,7 +64,7 @@ public class ScreenPrintingScreen : MonoBehaviour
             transform.position = new Vector3(newX, transform.position.y, transform.position.z);
 
             // Make sure the printKey is pressed, the print is not on cooldown, and the shirt has arrived at where it should be at the center
-            if (Input.GetKeyDown(printKey) && !onPrintCooldown && lerpPositionScript.finishedLerp)
+            if (Input.GetKeyDown(printKey) && !onPrintCooldown && lerpPositionScript != null && lerpPositionScript.finishedLerp)
             {
                 StartCoroutine(Print());
 
