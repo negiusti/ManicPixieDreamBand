@@ -56,6 +56,8 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private void OnEnable()
     {
+        if (spriteResolver == null)
+            Start();
     }
 
     private void Save()
@@ -84,6 +86,8 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private string[] GetAvailableStock()
     {
+        if (category == null)
+            Start();
         HashSet<string> purchasedItems = InventoryManager.GetPurchasedItems(category);
         // Don't sell already purchased items or quest exclusives or items exclusive to NPCs.
         return spriteLib.GetCategoryLabelNames(category).Where(i => !i.Equals("None") && !purchasedItems.Contains(i) && !questExclusives.Contains(i) && !i.StartsWith("X_")).ToArray();

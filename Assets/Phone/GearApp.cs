@@ -5,77 +5,77 @@ using UnityEngine.SceneManagement;
 
 public class GearApp : PhoneApp
 {
-    //public ItemSwapPhoneUI itemSwapTemplate;
-    public Transform container;
-    private Dictionary<string, Gear> gear;
-    private Dictionary<string, ItemSwapPhoneUI> gearSwapUI;
-    private Camera cam;
-    public GameObject RoomPreview;
-    public Gear defaultBass;
-    public Gear defaultGtr;
-    public Gear defaultDrums;
-    public Gear defaultBAmp;
-    public Gear defaultGAmp;
+    //public Transform container;
+    //private Dictionary<string, Gear> gear;
+    //private Dictionary<string, ItemSwapPhoneUI> gearSwapUI;
+    //private Camera cam;
+    //public GameObject RoomPreview;
 
     // Start is called before the first frame update
     void Start()
     {
-        SceneManager.sceneLoaded += ChangedActiveScene;
-        cam = GetComponentInChildren<Camera>();
-        gearSwapUI = container.gameObject.GetComponentsInChildren<ItemSwapPhoneUI>().ToDictionary(i => i.Category(), i => i);
-        Refresh();
+        //SceneManager.sceneLoaded += ChangedActiveScene;
+        //cam = GetComponentInChildren<Camera>();
+        //gearSwapUI = container.gameObject.GetComponentsInChildren<ItemSwapPhoneUI>(true).ToDictionary(i => i.Category(), i => i);
+        //Refresh();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (cam.isActiveAndEnabled)
-            cam.transform.SetPositionAndRotation(new Vector3(0f, 0f, 10f), Quaternion.identity);
+        //if (cam.isActiveAndEnabled)
+        //    cam.transform.SetPositionAndRotation(new Vector3(0f, 0f, 10f), Quaternion.identity);
     }
 
-    private void OnEnable()
-    {
-        if (Phone.Instance == null)
-            return;
-            
-        Refresh();
-    }
+    //private void OnEnable()
+    //{
+    //    if (Phone.Instance == null)
+    //        return;
+    //    if (cam == null)
+    //        Start();
+    //    if (gear.Count == 0)
+    //    {
+    //        cam.enabled = false;
+    //        RoomPreview.SetActive(false);
+    //    }
+    //    else
+    //    {
+    //        cam.enabled = true;
+    //        RoomPreview.SetActive(true);
+    //    }
+    //}
 
-    private void Refresh()
-    {
-        if (gearSwapUI == null)
-            return;
+    //private void Refresh()
+    //{
+    //    if (gearSwapUI == null)
+    //        return;
 
-        FindEditableItems();
-        foreach (string gearType in gearSwapUI.Keys)
-        {
-            if (gear.ContainsKey(gearType))
-                gearSwapUI[gearType].AssignItem(gear[gearType]);
-            else
-                gearSwapUI[gearType].UseDefaultGear();
+    //    FindEditableItems();
+    //    foreach (string gearType in gearSwapUI.Keys)
+    //    {
+    //        if (gear.ContainsKey(gearType))
+    //            gearSwapUI[gearType].AssignItem(gear[gearType]);
+    //    }
+    //    if (gear.Count == 0)
+    //    {
+    //        cam.enabled = false;
+    //        RoomPreview.SetActive(false);
+    //    }
+    //    else
+    //    {
+    //        cam.enabled = true;
+    //        RoomPreview.SetActive(true);
+    //    }
 
-        }
-        if (gear.Count == 0)
-        {
-            cam.enabled = false;
-            RoomPreview.SetActive(false);
-        }
-        else
-        {
-            cam.enabled = true;
-            RoomPreview.SetActive(true);
-        }
- 
-    }
+    //}
 
-    private void ChangedActiveScene(Scene current, LoadSceneMode mode)
-    {
-        Refresh();
-    }
+    //private void ChangedActiveScene(Scene current, LoadSceneMode mode)
+    //{
+    //    Refresh();
+    //}
 
-    private void FindEditableItems()
-    {
-        gear = FindObjectsOfType<Gear>().Where(g => !g.Def && !g.shared).ToDictionary(g => g.Category(), g => g);
-    }
-
+    //private void FindEditableItems()
+    //{
+    //    gear = FindObjectsOfType<Gear>().Where(g => !g.shared).ToDictionary(g => g.Category(), g => g);
+    //}
 }

@@ -5,13 +5,9 @@ using UnityEngine.U2D.Animation;
 
 public class Gear : MonoBehaviour
 {
-    public bool Def;
     public bool shared;
     private string category;
-    private string[] labels;
     private SpriteResolver spriteResolver;
-    private SpriteLibrary spriteLibrary;
-    private int index;
     private string label;
     private string saveKey;
     
@@ -19,23 +15,14 @@ public class Gear : MonoBehaviour
     void Start()
     {
         spriteResolver = GetComponent<SpriteResolver>();
-        spriteLibrary = GetComponent<SpriteLibrary>();
         category = spriteResolver.GetCategory();
         saveKey = "gear_" + category;
         if (category == null)
         {
             Debug.Log("WHY THE FUCK IS THE CATEGORY NULL HERE: " + gameObject.name);
         }
-        labels = InventoryManager.GetMCInventory(category).ToArray();
-        if (shared || labels.Length == 0) // unlock everything
-            labels = spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(category).ToArray();
-        // if (shared) label = "None";
         label = GetGearLabel(category);
-        //Debug.Log("load gear: " + saveKey + label);
-        index = Array.IndexOf(labels, label);
-        //Debug.Log("FUCK YOU setting category and label: " + category + " " + label);
         spriteResolver.SetCategoryAndLabel(category, label);
-        //Debug.Log("FUCK YOU the category is now: " + spriteResolver.GetCategory());
     }
 
     public static string GetGearLabel(string c)
@@ -43,27 +30,31 @@ public class Gear : MonoBehaviour
         return ES3.Load("gear_" + c, defaultValue: InventoryManager.defaultPurchaseables.data.First(p => p.category == c).items.First());
     }
 
-    private void OnEnable()
+    public void UpdateGearSelection()
     {
+        if (shared)
+            return;
         if (spriteResolver == null)
             Start();
-        if (Def)
-        {
-            label = ES3.Load(saveKey, defaultValue: spriteResolver.GetLabel());
-            Debug.Log("load gear: " + saveKey + label);
-            index = Array.IndexOf(labels, label);
-            //Debug.Log("FUCK YOU setting category and label: " + category + " " + label);
-            spriteResolver.SetCategoryAndLabel(category, label);
-            //Debug.Log("FUCK YOU the category is now: " + spriteResolver.GetCategory());
-        }
+        label = ES3.Load(saveKey, defaultValue: spriteResolver.GetLabel());
+        spriteResolver.SetCategoryAndLabel(category, label);
     }
+
+    //private void OnEnable()
+    //{
+    //    if (spriteResolver == null)
+    //        Start();
+    //    label = ES3.Load(saveKey, defaultValue: spriteResolver.GetLabel());
+    //    Debug.Log("load gear: " + saveKey + label);
+    //    spriteResolver.SetCategoryAndLabel(category, label);
+    //}
 
     private void OnDestroy()
     {
         if (shared)
             return;
         saveKey = "gear_" + spriteResolver.GetCategory();
-        Debug.Log("default: " + Def + " SAve gear: " + saveKey + spriteResolver.GetLabel());
+        Debug.Log("Save gear: " + saveKey + spriteResolver.GetLabel());
         ES3.Save(saveKey, spriteResolver.GetLabel());
     }
 
@@ -72,7 +63,7 @@ public class Gear : MonoBehaviour
         if (shared)
             return;
         saveKey = "gear_" + spriteResolver.GetCategory();
-        Debug.Log("default: " + Def + " SAve gear: " + saveKey + spriteResolver.GetLabel());
+        Debug.Log("Save gear: " + saveKey + spriteResolver.GetLabel());
         ES3.Save(saveKey, spriteResolver.GetLabel());
     }
 
@@ -103,21 +94,21 @@ public class Gear : MonoBehaviour
     //    spriteResolver.SetCategoryAndLabel(category, label);
     //}
 
-    public void Change(int delta)
-    {
-        index = GetWrapAroundIndex(index + delta, labels.Length - 1);
-        label = labels[index];
-        //Debug.Log("FUCK YOU setting category and label: " + category + " " + label);
-        spriteResolver.SetCategoryAndLabel(category, label);
-        //Debug.Log("FUCK YOU the category is now: " + spriteResolver.GetCategory());
-    }
+    //public void Change(int delta)
+    //{
+    //    index = GetWrapAroundIndex(index + delta, labels.Length - 1);
+    //    label = labels[index];
+    //    //Debug.Log("FUCK YOU setting category and label: " + category + " " + label);
+    //    spriteResolver.SetCategoryAndLabel(category, label);
+    //    //Debug.Log("FUCK YOU the category is now: " + spriteResolver.GetCategory());
+    //}
 
-    private int GetWrapAroundIndex(int idx, int maxIdx)
-    {
-        if (idx > maxIdx)
-            idx = 0;
-        else if (idx < 0)
-            idx = maxIdx;
-        return idx;
-    }
+    //private int GetWrapAroundIndex(int idx, int maxIdx)
+    //{
+    //    if (idx > maxIdx)
+    //        idx = 0;
+    //    else if (idx < 0)
+    //        idx = maxIdx;
+    //    return idx;
+    //}
 }
