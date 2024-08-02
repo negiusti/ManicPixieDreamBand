@@ -1,38 +1,55 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public class ItemSwapPhoneUI : MonoBehaviour
 {
     private ItemSwapIcon icon;
     private Furniture furniture;
-    private Gear gear;
-    public Gear defaultGear;
+    private SpriteLibrary spriteLibrary;
+
+    public string gearCategory;
+    private List<Gear> gearInScene;
+    private string[] gearLabels;
+    private int gearIdx;
+    private string gearLabel;
 
     public string Category()
     {
-        //if (furniture == null && gear == null && defaultGear == null)
-        //    Start();
         if (furniture != null)
             return furniture.Category();
-        if (gear != null)
-            return gear.Category();
-        if (defaultGear != null)
-            return defaultGear.Category();
+        if (gearCategory != null)
+            return gearCategory;
         return "None";
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        icon = GetComponentInChildren<ItemSwapIcon>(includeInactive:true);
+        icon = GetComponentInChildren<ItemSwapIcon>(includeInactive: true);
+        spriteLibrary = GetComponentInChildren<SpriteLibrary>(includeInactive: true);
     }
 
-    public void UseDefaultGear()
+    private void OnEnable()
     {
+        if (gearCategory == null || gearCategory.Length == 0)
+            return;
+        if (InventoryManager.defaultPurchaseables == null)
+            return;
         if (icon == null)
             Start();
-        defaultGear.gameObject.SetActive(true);
-        gear = defaultGear;
-        icon.AssignItem(gear.Category(), gear.Label());
+        gearInScene = FindObjectsOfType<Gear>().Where(g => !g.shared).ToList();
+        gearLabels = InventoryManager.GetMCInventory(gearCategory).ToArray();
+        if (gearLabels.Length == 0) // unlock everything
+        {
+            Debug.Log("Unlocking everything bc there's nothing in inventory for category: " + gearCategory);
+            gearLabels = spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(gearCategory).ToArray();
+        }
+        gearLabel = Gear.GetGearLabel(gearCategory);
+        gearIdx = Array.IndexOf(gearLabels, gearLabel);
+        icon.AssignItem(gearCategory, gearLabel);
     }
 
     public void AssignItem(Furniture f)
@@ -43,13 +60,24 @@ public class ItemSwapPhoneUI : MonoBehaviour
         icon.AssignItem(f.Category(), f.Label());
     }
 
-    public void AssignItem(Gear g)
+    //public void AssignItem(Gear g)
+    //{
+    //    if (icon == null)
+    //        Start();
+
+    //    gearLabel = g.Label();
+    //    gearIdx = Array.IndexOf(gearLabels, gearLabel);
+    //    icon.AssignItem(g.Category(), g.Label());
+    //}
+
+    private void UpdateGearInScene()
     {
-        if (icon == null)
-            Start();
-        defaultGear.gameObject.SetActive(false);
-        gear = g;
-        icon.AssignItem(g.Category(), g.Label());
+        if (gearInScene == null)
+            OnEnable();
+        foreach (Gear g in gearInScene)
+        {
+            g.UpdateGearSelection();
+        }
     }
 
     public void SwapFurniture(int delta)
@@ -60,8 +88,21 @@ public class ItemSwapPhoneUI : MonoBehaviour
 
     public void SwapGear(int delta)
     {
-        gear.Change(delta);
-        icon.UpdateIcon(gear.Label());
+        gearIdx = GetWrapAroundIndex(gearIdx + delta, gearLabels.Length - 1);
+        gearLabel = gearLabels[gearIdx];
+        icon.UpdateIcon(gearLabel);
+        string saveKey = "gear_" + gearCategory;
+        ES3.Save(saveKey, gearLabel);
+        UpdateGearInScene();
+    }
+
+    private int GetWrapAroundIndex(int idx, int maxIdx)
+    {
+        if (idx > maxIdx)
+            idx = 0;
+        else if (idx < 0)
+            idx = maxIdx;
+        return idx;
     }
 
     // Update is called once per frame
