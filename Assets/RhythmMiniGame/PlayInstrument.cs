@@ -34,7 +34,7 @@ public class PlayInstrument : MonoBehaviour, IPointerClickHandler
     void Update()
     {
         // Only applies to MainCharacter, this is only for playing solo, not with the band
-        if (!isPlayingInstrument && withinRange && (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Return)) && InteractionEnabled())
+        if (!isPlayingInstrument && withinRange && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && InteractionEnabled())
         {
             //Play();
             //JamCoordinator.StartJam("LEMON BOY");

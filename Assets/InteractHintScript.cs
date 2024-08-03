@@ -33,7 +33,7 @@ public class InteractHintScript : MonoBehaviour, IPointerClickHandler
     // Update is called once per frame
     void Update()
     {
-        if (inRange && (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Return)) && InteractionEnabled())
+        if (inRange && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && InteractionEnabled())
         {
             if (mgToTrigger != null)
                 mgToTrigger.OpenMiniGame();

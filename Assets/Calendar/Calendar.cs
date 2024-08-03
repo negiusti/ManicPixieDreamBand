@@ -232,6 +232,7 @@ public class Calendar : ScriptableObject
 
     public static void OnConversationComplete(string convoName)
     {
-        GetCurrentEvent()?.OnConversationComplete(convoName);
+        // TODO: complete your event in the Dialogue tree
+        //GetCurrentEvent()?.OnConversationComplete(convoName);
     }
 }
