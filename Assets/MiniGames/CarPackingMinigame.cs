@@ -49,7 +49,7 @@ public class CarPackingMiniGame : MiniGame
     private void Start()
     {
         DisableAllChildren();
-        OpenMiniGame();
+        //OpenMiniGame();
     }
 
     public override bool IsMiniGameActive()

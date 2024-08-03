@@ -25,13 +25,13 @@ public class PlayerMovement : Movement
             return;
         }
 
-        if (!isRollerSkating && Input.GetKeyDown(KeyCode.S))
+        if (!isRollerSkating && Input.GetKeyDown(KeyCode.S) && Tutorial.changedSkin) // Make sure you get dressed and put on shoes before skating
         {
             if (!Tutorial.hasSkated) Tutorial.hasWalked = false;
             Tutorial.hasSkated = true;
             isSkating = !isSkating;
         }
-        if (!isSkating && Input.GetKeyDown(KeyCode.R))
+        if (!isSkating && Input.GetKeyDown(KeyCode.R) && Tutorial.changedSkin) // Make sure you get dressed and put on shoes before skating+
         {
             if (!Tutorial.hasSkated) Tutorial.hasWalked = false;
             Tutorial.hasSkated = true;

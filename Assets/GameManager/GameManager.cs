@@ -167,9 +167,9 @@ public class GameManager : MonoBehaviour
         UnsubscribeFromEvents();
 
         #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+                UnityEditor.EditorApplication.isPlaying = false;
         #else
-            Application.Quit();
+                    Application.Quit();
         #endif
     }
 

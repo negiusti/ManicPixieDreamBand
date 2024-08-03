@@ -54,6 +54,28 @@ namespace ES3Internal
             /*if (!scene.isLoaded)
                 return null;*/
 
+            // If we're in DontDestroyOnLoad, there won't be an Easy Save 3 Manager in this scene, so find any manager.
+            if (scene.buildIndex == -1)
+            {
+                for (int i = 0; i < SceneManager.sceneCount; i++)
+                {
+                    var loadedScene = SceneManager.GetSceneAt(i);
+                    // Ensure that the scene exists and it's not DontDestroyOnLoad (to avoid an infinte loop)
+                    if (loadedScene != null && loadedScene.buildIndex != -1)
+                    {
+                        var manager = GetManagerFromScene(loadedScene);
+                        if (manager != null)
+                            return manager;
+                    }
+                }
+                return null;
+            }
+
+            // Check whether the mgr is already in the mgr list.
+            foreach (var addedMgr in mgrs)
+                if (addedMgr.gameObject.scene == scene)
+                    return addedMgr;
+
             GameObject[] roots;
             try
             {

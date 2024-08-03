@@ -109,7 +109,7 @@ public class ES3AutoSaveMgr : MonoBehaviour
 
     public void Awake()
     {
-        managers.Add(this.gameObject.scene, this);
+        managers[this.gameObject.scene] = this;
         GetAutoSaves();
 
         if (loadEvent == LoadEvent.Awake)

@@ -1860,13 +1860,17 @@ namespace ES3Types
         }
     }
 
-    [UnityEngine.Scripting.Preserve]
+    /*[UnityEngine.Scripting.Preserve]
     [ES3Properties("Fsm")]
     public class ES3Type_PlayMakerFSM : ES3ComponentType
     {
         public static ES3Type Instance = null;
 
-        public ES3Type_PlayMakerFSM() : base(typeof(PlayMakerFSM)) { Instance = this; priority = 1; }
+        public ES3Type_PlayMakerFSM() : base(typeof(PlayMakerFSM))
+        {
+            Instance = this; 
+            priority = 1;
+        }
 
 
         protected override void WriteComponent(object obj, ES3Writer writer)
@@ -1896,7 +1900,7 @@ namespace ES3Types
                 }
             }
         }
-    }
+    }*/
 }
 
 

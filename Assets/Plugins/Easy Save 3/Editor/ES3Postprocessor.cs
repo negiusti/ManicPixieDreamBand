@@ -257,10 +257,10 @@ public class ES3Postprocessor : UnityEditor.AssetModificationProcessor
 
         if (mgr.GetComponent<ES3ReferenceMgr>() == null)
         {
-            mgr.AddComponent<ES3ReferenceMgr>();
+            var refMgr = mgr.AddComponent<ES3ReferenceMgr>();
 
             if (!Application.isPlaying && ES3Settings.defaultSettingsScriptableObject.autoUpdateReferences)
-                RefMgr.RefreshDependencies();
+                refMgr.RefreshDependencies();
         }
 
         if (mgr.GetComponent<ES3AutoSaveMgr>() == null)

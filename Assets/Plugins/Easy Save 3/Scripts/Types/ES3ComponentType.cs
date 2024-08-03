@@ -21,7 +21,7 @@ namespace ES3Types
             if (obj != null && instance == null)
                 throw new ArgumentException("Only types of UnityEngine.Component can be written with this method, but argument given is type of " + obj.GetType());
 
-            var refMgr = ES3ReferenceMgrBase.Current;
+            var refMgr = ES3ReferenceMgrBase.GetManagerFromScene(instance.gameObject.scene);
 
             if (refMgr != null)
             {

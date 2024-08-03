@@ -446,6 +446,8 @@ namespace ES3Editor
 
 		private void Init()
 		{
+			ES3.Init(); // Initialize ES3 as we rely on the Type list being generated to determine whether a type is explicit or not.
+
 			componentTemplateFile = "ES3ComponentTypeTemplate.txt";
 			classTemplateFile = "ES3ClassTypeTemplate.txt";
 			valueTemplateFile = "ES3ValueTypeTemplate.txt";

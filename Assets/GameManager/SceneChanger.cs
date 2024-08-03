@@ -117,7 +117,7 @@ public class SceneChanger : MonoBehaviour
         // Begin loading the scene asynchronously
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
         // Minimum time for loading screen
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(minLoadingTime);
         // Wait until the asynchronous scene fully loads
         while (!operation.isDone)
         {
@@ -149,7 +149,7 @@ public class SceneChanger : MonoBehaviour
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneInfo.sceneName);
 
         // Minimum time for loading screen
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(minLoadingTime);
         // Wait until the asynchronous scene fully loads
         while (!operation.isDone)
         {

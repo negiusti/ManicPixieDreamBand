@@ -24,7 +24,30 @@ public class ES3ScriptingDefineSymbols
             SetDefineSymbol("BOLT_VISUAL_SCRIPTING");
     }
 
-    static void SetDefineSymbol(string symbol)
+    internal static bool HasDefineSymbol(string symbol)
+    {
+#if UNITY_2021_2_OR_NEWER
+        foreach (var target in GetAllNamedBuildTargets())
+        {
+            string[] defines;
+            try
+            {
+                PlayerSettings.GetScriptingDefineSymbols(target, out defines);
+                if (defines.Contains(symbol))
+                    return true;
+            }
+            catch { }
+        }
+#else
+        string definesString = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
+        var allDefines = new HashSet<string>(definesString.Split(';'));
+        if (allDefines.Contains(symbol))
+            return true;
+#endif
+        return false;
+    }
+
+    internal static void SetDefineSymbol(string symbol)
     {
 #if UNITY_2021_2_OR_NEWER
         foreach (var target in GetAllNamedBuildTargets())
@@ -48,6 +71,29 @@ public class ES3ScriptingDefineSymbols
             PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, string.Join(";", allDefines.Concat(new string[] { symbol }).ToArray()));
 #endif
             return;
+    }
+
+    internal static void RemoveDefineSymbol(string symbol)
+    {
+#if UNITY_2021_2_OR_NEWER
+        foreach (var target in GetAllNamedBuildTargets())
+        {
+            string[] defines;
+            try
+            {
+                PlayerSettings.GetScriptingDefineSymbols(target, out defines);
+                ArrayUtility.Remove(ref defines, symbol);
+                PlayerSettings.SetScriptingDefineSymbols(target, defines);
+            }
+            catch { }
+        }
+#else
+        string definesString = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
+        definesString.Replace(symbol + ";", ""); // With semicolon
+        definesString.Replace(symbol, ""); // Without semicolon
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, definesString);
+#endif
+        return;
     }
 
 #if UNITY_2021_2_OR_NEWER

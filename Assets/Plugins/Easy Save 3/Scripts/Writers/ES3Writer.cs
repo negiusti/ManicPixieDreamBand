@@ -237,9 +237,18 @@ public abstract class ES3Writer : IDisposable
         }
 	}
 
-	internal virtual void WriteRef(UnityEngine.Object obj)
-	{
-        var refMgr = ES3ReferenceMgrBase.Current;
+    internal virtual void WriteRef(UnityEngine.Object obj)
+    {
+        WriteRef(obj, ES3ReferenceMgrBase.referencePropertyName);
+    }
+
+    internal virtual void WriteRef(UnityEngine.Object obj, string propertyName)
+    {
+        WriteRef(obj, ES3ReferenceMgrBase.referencePropertyName, ES3ReferenceMgrBase.Current);
+    }
+
+    internal virtual void WriteRef(UnityEngine.Object obj, string propertyName, ES3ReferenceMgrBase refMgr)
+    {
         if (refMgr == null)
             throw new InvalidOperationException($"An Easy Save 3 Manager is required to save references. To add one to your scene, exit playmode and go to Tools > Easy Save 3 > Add Manager to Scene. Object being saved by reference is {obj.GetType()} with name {obj.name}.");
 
@@ -248,18 +257,18 @@ public abstract class ES3Writer : IDisposable
         // If reference ID doesn't exist, create reference.
         if (id == -1)
             id = refMgr.Add(obj);
-        WriteProperty(ES3ReferenceMgrBase.referencePropertyName, id.ToString());
+        WriteProperty(propertyName, id.ToString());
     }
 
-	#endregion
+    #endregion
 
-	/* Writes a property as a name value pair. */
-	#region WriteProperty(name, value) methods
+    /* Writes a property as a name value pair. */
+    #region WriteProperty(name, value) methods
 
-	/// <summary>Writes a field or property to the writer. Note that this should only be called within an ES3Type.</summary>
-	/// <param name="name">The name of the field or property.</param>
-	/// <param name="value">The value we want to write.</param>
-	public virtual void WriteProperty(string name, object value)
+    /// <summary>Writes a field or property to the writer. Note that this should only be called within an ES3Type.</summary>
+    /// <param name="name">The name of the field or property.</param>
+    /// <param name="value">The value we want to write.</param>
+    public virtual void WriteProperty(string name, object value)
 	{
         WriteProperty(name, value, settings.memberReferenceMode);
 	}

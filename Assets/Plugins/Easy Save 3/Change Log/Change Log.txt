@@ -1,3 +1,14 @@
+3.5.13
+- Resolved issue where adding a manager to scene or enabling Auto Save would throw a NullReferenceException.
+
+3.5.12
+- References in DontDestroyOnLoad are now added to the first available reference manager rather than requiring it's own manager.
+
+3.5.11
+- GameObjects and Components are now added to their scene's reference manager when using additive scenes.
+- Resolved issue where enums were incorrectly generated in ES3Types due to the type list not being initialized intermittently.
+- Resolved harmless bug where an ArgumentException is thrown when trying to add scene which has already been added to scene manager.
+
 3.5.10
 - Resolved issue where loading a value with a dervied type using caching would cause it to be loaded as it's parent type.
 
