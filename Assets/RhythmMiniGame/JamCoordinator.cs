@@ -34,6 +34,7 @@ public class JamCoordinator : ScriptableObject
         if (isJamInSession)
             return;
 
+        isJamInSession = true;
         GameManager gm = GameManager.Instance;
         Band band = BandsManager.GetBandByName(bandname);
         stage = FindFirstObjectByType<Stage>();
@@ -49,7 +50,6 @@ public class JamCoordinator : ScriptableObject
         if (musicians.Count() == 0)
             return;
 
-        isJamInSession = true;
         //SwitchToJamCamera();
         foreach(BandMember member in band.members)
         {

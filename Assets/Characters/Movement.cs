@@ -143,8 +143,10 @@ public abstract class Movement : MonoBehaviour
         currentRotation.y = 180;
         prevPos = transform.position;
         transform.position = pos;
+        
         prevLayer = character.GetCurrentLayer().sortingLayerName;
         prevLayerOrder = character.GetCurrentLayer().sortingOrder;
+        Debug.Log("Prev order:" + prevLayer + prevLayerOrder);
         character.MoveToRenderLayer(layer, layerOrder);
         transform.rotation = currentRotation;
     }

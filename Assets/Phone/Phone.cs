@@ -152,7 +152,7 @@ public class Phone : MonoBehaviour
     {
 
         // if we don't have the convo open rn, stop the convo when it needs our response
-        if (!phoneStateStack.Peek().Equals(PhoneState.Convo) && customDialogue.IsTxtConvoActive())
+        if (!phoneStateStack.Peek().Equals(PhoneState.Convo) && customDialogue.IsTxtConvoActive() && !DialogueManager.lastConversationStarted.Contains("Opt"))
         {
             txtResponsePanel.Close();
             customDialogue.StopCurrentConvo();
@@ -261,6 +261,8 @@ public class Phone : MonoBehaviour
             Unlock();
         }
         messagesApp.ReceiveMsg(GetContactNameFromConvoName(conversation), conversation);
+        if (conversation.Contains("Opt"))
+            DialogueManager.Instance.StartConversation(conversation);
         if (forceOpenPhone)
             OpenTxtConvoWith(GetContactNameFromConvoName(conversation));
         else

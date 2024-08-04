@@ -114,7 +114,7 @@ public class CustomDialogueScript : MonoBehaviour
         if (IsTxtConvo(conversation))
         {
             // Send notification to Phone.Instance
-            Phone.Instance.ReceiveMsg(conversation, true);
+            Phone.Instance.ReceiveMsg(conversation, !conversation.Contains("Opt"));
         }
         else
         {
@@ -130,7 +130,7 @@ public class CustomDialogueScript : MonoBehaviour
         if (IsTxtConvo(convoData.conversation))
         {
             // Send notification to Phone.Instance
-            Phone.Instance.ReceiveMsg(convoData.conversation, true);
+            Phone.Instance.ReceiveMsg(convoData.conversation, !convoData.conversation.Contains("Opt"));
         }
         else
         {

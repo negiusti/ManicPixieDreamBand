@@ -64,6 +64,7 @@ public class BackLog : MonoBehaviour
     {
         if (!responseMenuView && responseMenu.gameObject.activeSelf && responseMenu.isOpen)
         {
+            Debug.Log("shorten view");
             // Shorten scroll view
             responseMenuView = true;
 
@@ -77,6 +78,7 @@ public class BackLog : MonoBehaviour
             r.sizeDelta = sizeDelta;
         } else if (responseMenuView && (!responseMenu.gameObject.activeSelf || !responseMenu.isOpen))
         {
+            Debug.Log("extend view");
             // Extend scroll view
             responseMenuView = false;
 
@@ -102,12 +104,69 @@ public class BackLog : MonoBehaviour
         {
             Debug.Log("oncontinuing");
             DialogueManager.standardDialogueUI.OnContinueConversation();
+        } else if (subtitle.activeConversationRecord.conversationTitle.Contains("Opt"))
+        {
+            AddToBacklogWitouthDelay(subtitle);
         }
         else
         {
             DialogueManager.Pause();
             StartCoroutine(AddToBacklogWithDelay(subtitle));
         }
+    }
+
+    private void AddToBacklogWitouthDelay(Subtitle subtitle)
+    {
+        bool isFirstTxt = subtitle.dialogueEntry.Title.Equals("FIRST");
+        bool isGroupChat = groupChats.Any(gc => DialogueManager.LastConversationStarted.Contains(gc));
+
+        if (!string.IsNullOrEmpty(subtitle.formattedText.text))
+        {
+            if (isGroupChat && !subtitle.speakerInfo.IsPlayer)
+            {
+                // add a name header
+                Text speakerName = Instantiate(speakerNameTemplate, logEntryContainer);
+                speakerName.text = subtitle.speakerInfo.Name;
+                speakerName.gameObject.SetActive(true);
+            }
+
+            log.Add(subtitle);
+            LogEntry instance = Instantiate(logEntryTemplate, logEntryContainer);
+            instances.Add(instance.gameObject);
+            instance.gameObject.SetActive(true);
+            instance.Assign(subtitle);
+
+            if (!subtitle.speakerInfo.IsPlayer)
+            {
+                instance.transform.rotation = new Quaternion(instance.transform.rotation.x, 180f, instance.transform.rotation.z, instance.transform.rotation.w);
+            }
+            else
+            {
+                instance.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.UpperRight;
+            }
+
+            RectTransform rectTransform = instance.GetComponent<RectTransform>();
+            Text[] texts = instance.GetComponentsInChildren<Text>();
+            float preferredHeight = 30f;
+            foreach (Text t in texts)
+            {
+                preferredHeight += t.preferredHeight;
+            }
+            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, preferredHeight);
+
+            Image image = instance.GetComponent<Image>();
+            if (subtitle.speakerInfo.IsPlayer)
+            {
+                image.color = new Color(0.6f, 0.94f, 1f);
+            }
+            else
+            {
+                image.color = new Color(0.98f, 0.89f, 1f);
+            }
+        }
+        currentEntryID = subtitle.dialogueEntry.id;
+        DialogueManager.standardDialogueUI.OnContinue();
+        ScrollToBottomOfScrollView();
     }
 
     private IEnumerator AddToBacklogWithDelay(Subtitle subtitle)

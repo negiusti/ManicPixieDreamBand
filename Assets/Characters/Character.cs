@@ -267,6 +267,7 @@ public class Character : MonoBehaviour
 
     public void MoveToRenderLayer(string layer, int idx)
     {
+        Debug.Log("Move " + gameObject.name + " " + layer + idx);
         if (sortingGroup == null)
         {
             sortingGroup = this.GetComponent<SortingGroup>();
