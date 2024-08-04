@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
 public abstract class Movement : MonoBehaviour
@@ -162,13 +163,13 @@ public abstract class Movement : MonoBehaviour
 
     protected void Ollie()
     {
-        if (!lockAnim)
+        if (!lockAnim && !DialogueManager.IsConversationActive)
             animator.Play("BaseCharacter_SkateJump");
     }
 
     protected void Rollie()
     {
-        if (!lockAnim)
+        if (!lockAnim && !DialogueManager.IsConversationActive)
             animator.Play("BaseCharacter_RollerskateJump");
     }
 
