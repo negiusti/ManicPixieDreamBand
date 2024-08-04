@@ -5,16 +5,19 @@ public class NPCCharacterController : MonoBehaviour
 {
     private Character character;
     private TalkToMeHint hint;
-    private bool shouldHint;
 
     // Start is called before the first frame update
     void Start()
     {
-        character = this.GetComponentInChildren<Character>();
+        character = gameObject.GetComponent<Character>();
         character.SetCharacterName(transform.name);
         character.LoadCharacter();
-        hint = GetComponentInChildren<TalkToMeHint>();
-        shouldHint = hint != null && GetComponentInChildren<DialogueSystemTrigger>() != null && GetComponentInChildren<DialogueSystemTrigger>().isActiveAndEnabled;
+        hint = gameObject.GetComponentInChildren<TalkToMeHint>(true);
+    }
+
+    private bool shouldHint()
+    {
+        return hint != null && gameObject.GetComponent<DialogueSystemTrigger>() != null && gameObject.GetComponent<DialogueSystemTrigger>().enabled;
     }
 
     // Update is called once per frame
@@ -26,7 +29,7 @@ public class NPCCharacterController : MonoBehaviour
             {
                 hint.gameObject.SetActive(false);
             }
-        } else if (shouldHint)
+        } else if (shouldHint())
         {
             hint.gameObject.SetActive(true);
         }
@@ -36,7 +39,7 @@ public class NPCCharacterController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (shouldHint)
+            if (shouldHint())
             {
                 hint.ShowButtonPrompt();
             }
@@ -47,7 +50,7 @@ public class NPCCharacterController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (shouldHint)
+            if (shouldHint())
             {
                 hint.HideButtonPrompt();
             }

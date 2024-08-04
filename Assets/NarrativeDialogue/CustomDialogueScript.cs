@@ -63,6 +63,7 @@ public class CustomDialogueScript : MonoBehaviour
         SceneManager.sceneLoaded -= NewActiveScene;
         SceneManager.sceneUnloaded -= EndingActiveScene;
         ConvoCompleted -= Calendar.OnConversationComplete;
+        ConvoCompleted -= RomanceManager.OnConversationComplete;
     }
 
     private void SubscribeToEvents()
@@ -70,6 +71,7 @@ public class CustomDialogueScript : MonoBehaviour
         SceneManager.sceneLoaded += NewActiveScene;
         SceneManager.sceneUnloaded += EndingActiveScene;
         ConvoCompleted += Calendar.OnConversationComplete;
+        ConvoCompleted += RomanceManager.OnConversationComplete;
     }
 
     private void NewActiveScene(Scene current, LoadSceneMode mode)

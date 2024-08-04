@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -29,6 +30,19 @@ public class Characters : ScriptableObject
             .Where(c => c.gameObject.layer != LayerMask.NameToLayer("LoadingScreen"))
             .ToDictionary(c => c.name, c => c);
         mc = characters.FirstOrDefault(c => c.Value.isMainCharacter()).Value;
+    }
+
+    public static void DisableDialogueTrigger(string npc)
+    {
+        if (characters == null || !characters.ContainsKey(npc))
+            RefreshCharactersCache();
+        if (characters.ContainsKey(npc))
+        {
+            if (characters[npc].gameObject.GetComponent<DialogueSystemTrigger>() != null)
+                characters[npc].gameObject.GetComponent<DialogueSystemTrigger>().enabled = false;
+            if (characters[npc].gameObject.GetComponent<Usable>() != null)
+                characters[npc].gameObject.GetComponent<Usable>().enabled = false;
+        }
     }
 
     public static void Emote(string character, string eyesEmotion, string mouthEmotion)
@@ -98,6 +112,23 @@ public class Characters : ScriptableObject
             RefreshCharactersCache();
         if (characters.ContainsKey(name))
             characters[name].gameObject.SetActive(false);
+    }
+
+    public static void SetConvoTrigger(string name, string convo)
+    {
+        if (characters == null || !characters.ContainsKey(name))
+            RefreshCharactersCache();
+        if (characters.ContainsKey(name))
+        {
+            if (characters[name].gameObject.GetComponent<Usable>() == null)
+                characters[name].gameObject.AddComponent<Usable>();
+            if (characters[name].gameObject.GetComponent<DialogueSystemTrigger>() == null)
+                characters[name].gameObject.AddComponent<DialogueSystemTrigger>();
+
+            DialogueSystemTrigger trigger = characters[name].gameObject.GetComponent<DialogueSystemTrigger>();
+            trigger.trigger = DialogueSystemTriggerEvent.OnUse;
+            trigger.conversation = convo;
+        }
     }
 
     public static Character MainCharacter()

@@ -164,6 +164,7 @@ public class Character : MonoBehaviour
 
         foreach (var spriteRenderer in spriteRenderers)
         {
+            // Skip the stupid hint for starting convos
             categoryToEnabled[spriteRenderer.gameObject.name] = spriteRenderer.enabled
                 || spriteRenderer.gameObject.name == "Eyeshadow"
                 || spriteRenderer.gameObject.name == "Eyebrows"
@@ -240,6 +241,8 @@ public class Character : MonoBehaviour
 
         foreach (var spriteRenderer in spriteRenderers)
         {
+            if (spriteRenderer.GetComponentInParent<TalkToMeHint>() != null)
+                continue;
             spriteRenderer.color = categoryToColorMap.TryGetValue(spriteRenderer.gameObject.name, out Color value) ? value : Color.white;
             spriteRenderer.enabled = categoryToEnabled.GetValueOrDefault(spriteRenderer.gameObject.name);
         }

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "SpawnCharacters", menuName = "Custom/SpawnCharacters")]
 public class SpawnCharacters : ScriptableObject
 {
-    private static AsyncOperationHandle<GameObject> SpawnParticipant(Participant p)
+    private static AsyncOperationHandle<GameObject> SpawnParticipant(Participant p, string convo = null)
     {
         // character already exists in scene, don't spawn another plz
         if (FindObjectsOfType<Character>().Any(x => x.name == p.name))
@@ -17,13 +17,13 @@ public class SpawnCharacters : ScriptableObject
             Debug.Log("Not spawning: " + p.name + " because they're already in the scene");
             return new AsyncOperationHandle<GameObject>();
         }
-        string characterPrefabPath = "Assets/Prefabs/Characters/"+ p.name + ".prefab";
+        string characterPrefabPath = "Assets/Prefabs/Characters/" + p.name + ".prefab";
         AsyncOperationHandle<GameObject> operation = Addressables.LoadAssetAsync<GameObject>(characterPrefabPath);
-        operation.Completed += (operation) => OnPrefabLoaded(operation, p);
+        operation.Completed += (operation) => OnPrefabLoaded(operation, p, convo);
         return operation;
     }
 
-    public static void SpawnParticipants(Participant [] participants)
+    public static void SpawnParticipants(Participant[] participants, string convo = null)
     {
         Debug.Log("SpawnParticipants");
         if (participants == null)
@@ -33,7 +33,7 @@ public class SpawnCharacters : ScriptableObject
         // Sort characters by their y position
         Array.Sort(participants, (a, b) => b.position.y.CompareTo(a.position.y));
         Dictionary<string, int> layerToIdx = new Dictionary<string, int>();
-        foreach (Participant p in  participants)
+        foreach (Participant p in participants)
         {
             Debug.Log("SpawnParticipant: " + p.name);
             Character c = characters.FirstOrDefault(c => c.name.Equals(p.name));
@@ -41,7 +41,7 @@ public class SpawnCharacters : ScriptableObject
             layerToIdx[p.layer] = idx;
             if (c == null)
             {
-                c = SpawnParticipant(p).WaitForCompletion().GetComponent<Character>();
+                c = SpawnParticipant(p, convo).WaitForCompletion().GetComponent<Character>();
                 Debug.Log("Spawned Participant: " + c.name + " " + c.gameObject.name);
                 if (c.gameObject.name.Contains("Clone"))
                 {
@@ -89,26 +89,53 @@ public class SpawnCharacters : ScriptableObject
         }
     }
 
-    private static void OnPrefabLoaded(AsyncOperationHandle<GameObject> handle, Participant p)
+    private static void OnPrefabLoaded(AsyncOperationHandle<GameObject> handle, Participant p, string convo = null)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             // Instantiate the prefab and spawn it in the current scene
             GameObject spawnedCharacter = Instantiate(handle.Result, p.position, Quaternion.identity);
             spawnedCharacter.name = handle.Result.name;
-            //string originalName = spawnedCharacter.name;
 
-            // Check if the name ends with "(Clone)"
-            //if (originalName.EndsWith("(Clone)"))
-            //{
-            //    // Remove "(Clone)" from the end of the name
-            //    string newName = originalName.Substring(0, originalName.Length - "(Clone)".Length);
+            if (p.faceLeftOrRight != null)
+            {
+                switch (p.faceLeftOrRight)
+                {
+                    case "left":
+                        Characters.NPCFaceLeft(p.name);
+                        break;
+                    case "right":
+                        Characters.NPCFaceRight(p.name);
+                        break;
+                    default:
+                        break;
+                }
+            }
 
-            //    // Set the new name to the game object
-            //    spawnedCharacter.name = newName;
-            //    spawnedCharacter.GetComponent<Character>().SetCharacterName(newName);
-            //}
-            //spawnedCharacter.GetComponent<Usable>().enabled = p.existAtStart;
+            if (p.isTrigger)
+            {
+                if (convo == null)
+                {
+                    Debug.LogError("why tf is the convo null here");
+                    return;
+                }
+                if (spawnedCharacter.gameObject.GetComponent<Usable>() == null)
+                    spawnedCharacter.gameObject.AddComponent<Usable>();
+                if (spawnedCharacter.gameObject.GetComponent<DialogueSystemTrigger>() == null)
+                    spawnedCharacter.gameObject.AddComponent<DialogueSystemTrigger>();
+
+                DialogueSystemTrigger trigger = spawnedCharacter.gameObject.GetComponent<DialogueSystemTrigger>();
+                trigger.trigger = DialogueSystemTriggerEvent.OnUse;
+                trigger.conversation = convo;
+                trigger.enabled = true;
+            }
+            else
+            {
+                if (spawnedCharacter.gameObject.GetComponent<DialogueSystemTrigger>() != null)
+                    spawnedCharacter.gameObject.GetComponent<DialogueSystemTrigger>().enabled = false;
+                if (spawnedCharacter.gameObject.GetComponent<Usable>() != null)
+                    spawnedCharacter.gameObject.GetComponent<Usable>().enabled = false;
+            }
         }
         else
         {
@@ -120,7 +147,7 @@ public class SpawnCharacters : ScriptableObject
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            
+
             // Instantiate the prefab and spawn it in the current scene
             GameObject spawnedCharacter = Instantiate(handle.Result, s.GetInstrument(m.position).SpawnPos(), Quaternion.identity);
             //string originalName = spawnedCharacter.name;
@@ -141,4 +168,5 @@ public class SpawnCharacters : ScriptableObject
             Debug.LogError("Failed to load prefab from Addressables: " + handle.OperationException);
         }
     }
+
 }

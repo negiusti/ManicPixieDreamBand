@@ -10,8 +10,20 @@ public class RomanceManager : ScriptableObject
     private static Dictionary<string, Romance> hornySingles;
     private static HashSet<string> completedRomanceConvos;
     private static Dictionary<string, int> relationshipScores;
+    private static string prevScene;
 
-    public static bool  CheckForRomanceConvo()
+    public static void OnConversationComplete(string convoName)
+    {
+        // If the convo that was just completed was a romance convo, add it to the list of convos completed
+        if (hornySingles.Any(h => h.Value.conversationsData.Any(c => c.conversation == convoName)))
+            completedRomanceConvos.Add(convoName);
+    }
+
+    private static bool HasSceneChanged() {
+        return prevScene != SceneChanger.Instance.GetCurrentScene();
+    }
+
+    public static bool CheckForRomanceConvo()
     {
         foreach (string single in hornySingles.Keys)
         {
@@ -22,12 +34,21 @@ public class RomanceManager : ScriptableObject
                     (!SceneChanger.Instance.IsLoadingScreenOpen() || !DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().IsTxtConvo(romanceConvo.conversation));
                 if (requirementsMet)
                 {
-                    DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().StartConversation(romanceConvo);
-                    completedRomanceConvos.Add(romanceConvo.conversation);
+                    if (romanceConvo.trigger == null || romanceConvo.trigger == "Start")
+                    {
+                        DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().StartConversation(romanceConvo);
+                        completedRomanceConvos.Add(romanceConvo.conversation);
+                    } else if (HasSceneChanged()) // Only try to do this once per scene
+                    {
+                        SpawnCharacters.SpawnParticipants(romanceConvo.participants, romanceConvo.conversation);
+                        // TODO mark when convo is complete
+                    }
+                    prevScene = SceneChanger.Instance.GetCurrentScene();
                     return requirementsMet;
                 }
             }
         }
+        prevScene = SceneChanger.Instance.GetCurrentScene();
         return false;
     }
 
