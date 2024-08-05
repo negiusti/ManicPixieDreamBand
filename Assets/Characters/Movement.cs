@@ -133,11 +133,7 @@ public abstract class Movement : MonoBehaviour
 
     public void PlayInstrument(string instLabel, Vector3 pos, string layer, int layerOrder)
     {
-        character.SetInstrumentSprite(instLabel);
-        if (instLabel.Contains("Guitar") || instLabel.Contains("Bass"))
-            currState = MovementState.Guitar;
-        else if (instLabel.Contains("Drum"))
-            currState = MovementState.Drum;
+
 
         Quaternion currentRotation = transform.localRotation;
         prevRotation = transform.localRotation;
@@ -150,6 +146,12 @@ public abstract class Movement : MonoBehaviour
         Debug.Log("Prev order:" + prevLayer + prevLayerOrder);
         character.MoveToRenderLayer(layer, layerOrder);
         transform.rotation = currentRotation;
+
+        character.SetInstrumentSprite(instLabel);
+        if (instLabel.Contains("Guitar") || instLabel.Contains("Bass"))
+            currState = MovementState.Guitar;
+        else if (instLabel.Contains("Drum"))
+            currState = MovementState.Drum;
     }
 
     public void StopPlayingInstrument()
