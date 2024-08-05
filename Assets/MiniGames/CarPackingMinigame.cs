@@ -16,9 +16,10 @@ public class CarPackingMiniGame : MiniGame
     private bool isActive;
     private Coroutine cr;
     private List<MaxRickiDialogue> maxRickiDialogue = new List<MaxRickiDialogue> {
-        new MaxRickiDialogue(MaxOrRicki.Max, "Can you hurry up please?"),
-        new MaxRickiDialogue(MaxOrRicki.Ricki, "Be careful with my breakables!"),
-        new MaxRickiDialogue(MaxOrRicki.Max, "Don't forget my pickles!", eyesEmote:"Angry"),
+        new MaxRickiDialogue(MaxOrRicki.Ricki, "What happened to your pedal board dude?"),
+        new MaxRickiDialogue(MaxOrRicki.Max, "I don't wanna talk about it, okay?"),
+        new MaxRickiDialogue(MaxOrRicki.Ricki, "Hey! Be careful with my breakables!"),
+        new MaxRickiDialogue(MaxOrRicki.Max, "And don't forget my pickles!", eyesEmote:"Angry"),
         new MaxRickiDialogue(MaxOrRicki.Ricki, "Yeah, Max needs her pickles!!"),
         new MaxRickiDialogue(MaxOrRicki.Max, "Lift with your knees, not your back."),
         new MaxRickiDialogue(MaxOrRicki.Ricki, "I would totally help but I just got a manicure.",eyesEmote:"Pathetic")
