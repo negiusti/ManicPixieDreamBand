@@ -10,14 +10,15 @@ public class ButtonController : MonoBehaviour
     public Sprite pressedSprite;
     public SpriteResolver guitarString;
     public KeyCode keyCode;
-    private Color pressedColor = new Color(219/255f, 101/255f, 156/255f);
-    private Color unpressedColor = new Color(1f, 197/255f, 220/255f);
+    private Color pressedColor = new Color(254/255f, 89/255f, 136/255f);
+    private Color unpressedColor = new Color(253/255f, 197/255f, 235/255f);
 
     // Start is called before the first frame update
     void Start()
     {
-        this.spriteRenderer = GetComponent<SpriteRenderer>();
-        this.spriteRenderer.sprite = defaultSprite;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = defaultSprite;
+        spriteRenderer.color = unpressedColor;
     }
 
     // Update is called once per frame
