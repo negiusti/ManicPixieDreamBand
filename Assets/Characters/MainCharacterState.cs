@@ -10,7 +10,7 @@ public class MainCharacterState : ScriptableObject
     private static string characterName;
     private static double bankBalance;
     private static bool hasChangedOutfitToday;
-    private static HashSet<string> unlockedPhotos;
+    private static List<string> unlockedPhotos;
 
     public static void Save()
     {
@@ -22,14 +22,14 @@ public class MainCharacterState : ScriptableObject
 
     public static void UnlockPhoto(string photoName)
     {
-        unlockedPhotos.Add(photoName);
+        unlockedPhotos.Insert(0, photoName);
         Phone.Instance.SendNotificationTo("Photos");
     }
 
-    public static HashSet<string> UnlockedPhotos()
+    public static List<string> UnlockedPhotos()
     {
         if (unlockedPhotos == null)
-            unlockedPhotos =  ES3.Load("Photos", new HashSet<string>() { "Boxes", "PizzaRat" });
+            unlockedPhotos =  ES3.Load("Photos", new List<string>() { "Boxes", "PizzaRat" });
         return unlockedPhotos;
     }
 
@@ -38,7 +38,7 @@ public class MainCharacterState : ScriptableObject
         characterName = ES3.Load<string>("MC_Name", defaultValue:"");
         bankBalance = ES3.Load<double>("MC_Money", 100d);
         hasChangedOutfitToday = ES3.Load<bool>("MC_Flag_HasChangedOutfitToday", false);
-        unlockedPhotos = ES3.Load("Photos", new HashSet<string>() { "Boxes", "PizzaRat" });
+        unlockedPhotos = ES3.Load("Photos", new List<string>() { "Boxes", "PizzaRat" });
     }
 
     public static string GetCharacterName()
