@@ -2814,7 +2814,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 125922083290289952, guid: 780657d65df674c649e55cbce9e924e5, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 779326300653863073, guid: 780657d65df674c649e55cbce9e924e5, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -5022,6 +5022,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1529687398}
   - component: {fileID: 1529687399}
+  - component: {fileID: 1529687400}
   m_Layer: 8
   m_Name: ButtonHints
   m_TagString: Untagged
@@ -5060,6 +5061,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3803c6d0713aa4ebb8a44525b583fb52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1529687400
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1529687397}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9e4d3324d3293644ba7fd67c2388e360, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1531615723
 GameObject:
   m_ObjectHideFlags: 0
@@ -6349,9 +6371,9 @@ Material:
     - _ShadowAlpha: 0.5
     - _ShadowX: 0.1
     - _ShadowY: -0.05
-    - _ShakeUvSpeed: 2.5
-    - _ShakeUvX: 1.5
-    - _ShakeUvY: 1
+    - _ShakeUvSpeed: 0
+    - _ShakeUvX: 0
+    - _ShakeUvY: 0
     - _ShineGlow: 1
     - _ShineLocation: 0.5
     - _ShineRotate: 0
