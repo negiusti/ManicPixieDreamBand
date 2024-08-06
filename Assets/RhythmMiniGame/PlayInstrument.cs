@@ -73,8 +73,13 @@ public class PlayInstrument : MonoBehaviour, IPointerClickHandler
     // Used by NPCs
     public void Play(Movement movement)
     {
-        spriteRenderer.enabled = false;
+        if (isPlayingInstrument)
+        {
+            Debug.Log("Already playing...");
+            return;
+        }
         isPlayingInstrument = true;
+        spriteRenderer.enabled = false;
         instLabel = spriteResolver.GetLabel();
         startTime = Time.time;
         musicianMovement = movement;
@@ -84,9 +89,11 @@ public class PlayInstrument : MonoBehaviour, IPointerClickHandler
     // Used by NPCs as well as MainCharacter
     public void Stop()
     {
-        spriteRenderer.enabled = true;
+        if (!isPlayingInstrument)
+            return;
         isPlayingInstrument = false;
-        musicianMovement?.StopPlayingInstrument();
+        spriteRenderer.enabled = true;
+        musicianMovement.StopPlayingInstrument();
         //minigame.CloseMiniGame();
     }
 

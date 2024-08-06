@@ -30,7 +30,7 @@ public class StarSpawnerScript : MonoBehaviour
     private int hitNotes;
     private int missedNotes;
     private float runwayDelay;
-    private MiniGame miniGame;
+    private BassMiniGame miniGame;
     private string[] notes;
     private string[] times;
     private bool ready;
@@ -98,7 +98,7 @@ public class StarSpawnerScript : MonoBehaviour
         asyncOperation1.Completed += OnLoadCompleted1;
         asyncOperation2.Completed += OnLoadCompleted2;
 
-        miniGame = this.transform.parent.gameObject.GetComponent<MiniGame>();
+        miniGame = this.transform.parent.gameObject.GetComponent<BassMiniGame>();
     }
 
     private void OnDisable()
@@ -160,9 +160,9 @@ public class StarSpawnerScript : MonoBehaviour
         while(hamster.time < hamster.clip.length - 1f)
             yield return null;
 
-        //miniGame.SetActive(false);
+        //miniGame.Fade();
         miniGame.CloseMiniGame();
-        
+        yield return null;
     }
 
 

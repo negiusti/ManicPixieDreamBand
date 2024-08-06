@@ -83,6 +83,11 @@ public class Phone : MonoBehaviour
         return isLocked;
     }
 
+    public void Reset()
+    {
+        messagesApp.Reset();
+    }
+
     public void SendNotificationTo(string app)
     {
         Debug.Log("Send notifs for: " + app);

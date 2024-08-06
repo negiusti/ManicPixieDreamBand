@@ -132,6 +132,8 @@ public class GameManager : MonoBehaviour
         QuestManager.Load();
         RomanceManager.Load();
         Tutorial.Load();
+        if (Phone.Instance != null)
+            Phone.Instance.Reset();
         if (DialogueManager.Instance != null)
             DialogueManager.Instance.GetComponent<CustomDialogueScript>().Reset();
     }

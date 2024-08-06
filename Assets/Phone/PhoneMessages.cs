@@ -31,6 +31,17 @@ public class PhoneMessages : PhoneApp
         customDialogue.CloseBacklogs();
     }
 
+    public void Reset()
+    {
+        contactsList = new HashSet<string>();
+        unfinishedConversations = new Dictionary<string, string>();
+        foreach(Contact c in contactsMap.Values)
+        {
+            Destroy(c.gameObject);
+        }
+        contactsMap.Clear();
+    }
+
     public bool HasPendingConvos()
     {
         return unfinishedConversations.Count > 0;
