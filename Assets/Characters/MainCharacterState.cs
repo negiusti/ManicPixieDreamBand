@@ -5,19 +5,31 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MainCharacterState", menuName = "Custom/MainCharacterState")]
 public class MainCharacterState : ScriptableObject
 {
-    // We store MC-specific info here like: 
-    // money, unlocked clothes/furniture/instruments, inventory, etc
     private static string characterName;
     private static double bankBalance;
     private static bool hasChangedOutfitToday;
     private static List<string> unlockedPhotos;
+    private static Dictionary<string, bool> flags;
 
     public static void Save()
     {
         ES3.Save("MC_Name", characterName);
         ES3.Save("MC_Money", bankBalance);
         ES3.Save("MC_Flag_HasChangedOutfitToday", hasChangedOutfitToday);
+        ES3.Save("MC_Flags", hasChangedOutfitToday);
         ES3.Save("Photos", unlockedPhotos);
+    }
+    
+    public static void SetFlag(string flag, bool val)
+    {
+        Debug.Log("Set flag: " + flag + val);
+        flags[flag] = val;
+    }
+
+    public static bool CheckFlag(string flag)
+    {
+        Debug.Log("Check flag: " + flag + (flags.ContainsKey(flag) ? flags[flag] : "DNE!!"));
+        return flags.GetValueOrDefault(flag, false);
     }
 
     public static void UnlockPhoto(string photoName)
@@ -39,6 +51,7 @@ public class MainCharacterState : ScriptableObject
         bankBalance = ES3.Load<double>("MC_Money", 100d);
         hasChangedOutfitToday = ES3.Load<bool>("MC_Flag_HasChangedOutfitToday", false);
         unlockedPhotos = ES3.Load("Photos", new List<string>() { "Boxes", "PizzaRat" });
+        flags = ES3.Load("Flags", new Dictionary<string, bool>());
     }
 
     public static string GetCharacterName()
