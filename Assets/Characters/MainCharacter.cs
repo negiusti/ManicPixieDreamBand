@@ -10,7 +10,6 @@ public class MainCharacter : MonoBehaviour
     void Start()
     {
         ps = this.GetComponent<ProximitySelector>();
-        MainCharacterState.Load();
     }
 
     // Update is called once per frame

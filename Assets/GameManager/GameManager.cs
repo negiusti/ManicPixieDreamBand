@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(MainCharacterState.CurrentBankBalance), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.CurrentBankBalance()));
         Lua.RegisterFunction(nameof(MainCharacterState.ModifyBankBalance), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.ModifyBankBalance((double)0)));
         Lua.RegisterFunction(nameof(MainCharacterState.UnlockPhoto), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.UnlockPhoto(string.Empty)));
+        Lua.RegisterFunction(nameof(MainCharacterState.SetFlag), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.SetFlag(string.Empty, false)));
+        Lua.RegisterFunction(nameof(MainCharacterState.CheckFlag), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.CheckFlag(string.Empty)));
         Lua.RegisterFunction(nameof(JobSystem.SetCurrentJob), this, SymbolExtensions.GetMethodInfo(() => JobSystem.SetCurrentJob(string.Empty)));
         Lua.RegisterFunction(nameof(JobSystem.CurrentJobString), this, SymbolExtensions.GetMethodInfo(() => JobSystem.CurrentJobString()));
         Lua.RegisterFunction(nameof(QuestManager.CompleteCurrentQuest), this, SymbolExtensions.GetMethodInfo(() => QuestManager.CompleteCurrentQuest()));
@@ -94,6 +96,8 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(MainCharacterState.CurrentBankBalance));
         Lua.UnregisterFunction(nameof(MainCharacterState.ModifyBankBalance));
         Lua.UnregisterFunction(nameof(MainCharacterState.UnlockPhoto));
+        Lua.UnregisterFunction(nameof(MainCharacterState.SetFlag));
+        Lua.UnregisterFunction(nameof(MainCharacterState.CheckFlag));
         Lua.UnregisterFunction(nameof(JobSystem.SetCurrentJob));
         Lua.UnregisterFunction(nameof(JobSystem.CurrentJobString));
         Lua.UnregisterFunction(nameof(QuestManager.CompleteCurrentQuest));
