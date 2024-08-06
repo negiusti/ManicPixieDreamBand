@@ -54,6 +54,16 @@ public class Characters : ScriptableObject
         characters[character]?.FacePop();
     }
 
+    public static void MoveYPos(string character, double y)
+    {
+        if (characters == null)
+            RefreshCharactersCache();
+        if (characters.ContainsKey(character))
+        {
+            characters[character].gameObject.transform.position = new Vector3(characters[character].gameObject.transform.position.x, (float)y, characters[character].gameObject.transform.position.z);
+        }
+    }
+
     public static void NPCWalkTo(string npc, double targetX)
     {
         if (characters == null || !characters.ContainsKey(npc))
