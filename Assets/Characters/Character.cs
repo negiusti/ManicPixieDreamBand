@@ -128,6 +128,7 @@ public class Character : MonoBehaviour
     {
         if (categoryToColorMap == null)
             Start();
+        LoadCharacter();
     }
 
     // Update is called once per frame
