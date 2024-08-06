@@ -12,6 +12,7 @@ public class CarPackingMiniGame : MiniGame
     public Text maxSpeechText;
     public GameObject rickiSpeechBubble;
     public Text rickiSpeechText;
+    private BlackScreen blackScreen;
     private GameObject mainCamera;
     private bool isActive;
     private Coroutine cr;
@@ -49,6 +50,7 @@ public class CarPackingMiniGame : MiniGame
 
     private void Start()
     {
+        blackScreen = GetComponentInChildren<BlackScreen>(true);
         DisableAllChildren();
         //OpenMiniGame();
     }
@@ -69,6 +71,15 @@ public class CarPackingMiniGame : MiniGame
         MiniGameManager.PrepMiniGame();
         isActive = true;
         cr = StartCoroutine(maxAndRickiConvo());
+        blackScreen.Unfade();
+    }
+
+    public void Fade()
+    {
+        if (blackScreen == null)
+            CloseMiniGame();
+        else
+            blackScreen.Fade();
     }
 
     public override void CloseMiniGame()

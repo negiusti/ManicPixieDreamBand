@@ -77,7 +77,7 @@ public class ScreenPrintingMiniGame : MiniGame
 
     public float armsLerpDuration; // How long the arms take to move off the screen; the smaller this value is, the faster it goes
 
-    public GameObject blackScreen;
+    private BlackScreen blackScreen;
 
     [HideInInspector] public bool minigameComplete;
 
@@ -91,6 +91,7 @@ public class ScreenPrintingMiniGame : MiniGame
 
     private void Start()
     {
+        blackScreen = GetComponentInChildren<BlackScreen>(true);
         shirtIcons = ShirtIconsParent.GetComponentsInChildren<ShirtIcon>(includeInactive: true).ToList();
         screen = GetComponentInChildren<ScreenPrintingScreen>(includeInactive: true);
         screenStartingPos = screen.transform.position;
@@ -120,7 +121,6 @@ public class ScreenPrintingMiniGame : MiniGame
         // Opening up the minigame
 
         mainCamera = Camera.main.transform.gameObject;
-
         mainCamera.SetActive(false);
 
         EnableAllChildren();
@@ -131,6 +131,7 @@ public class ScreenPrintingMiniGame : MiniGame
         ResetGameState();
 
         screen.SpawnNewShirt();
+        blackScreen.Unfade();
 
         // Only start the timer after the minigame has started and all its components have been set
         doTimer = true;
@@ -147,7 +148,6 @@ public class ScreenPrintingMiniGame : MiniGame
 
         MaxSpeechBubble.SetActive(false);
         RickiSpeechBubble.SetActive(false);
-        blackScreen.SetActive(false);
         minigameComplete = false;
         screen.moveScreen = true;
         doTimer = false;
@@ -316,6 +316,6 @@ public class ScreenPrintingMiniGame : MiniGame
         // How long to pause for before fading to black after the arms start moving
         yield return new WaitForSeconds(1);
 
-        blackScreen.SetActive(true);
+        blackScreen.Fade();
     }
 }

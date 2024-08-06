@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,9 +22,8 @@ public class BandNameMiniGame : MiniGame
 
     private void Start()
     {
-        blackScreen = GetComponentInChildren<BlackScreen>(true);
-        blackScreen.gameObject.SetActive(false);
         mgCamera = GetComponentInChildren<Camera>(true);
+        blackScreen = GetComponentInChildren<BlackScreen>(true);
         DisableAllChildren();
     }
 
@@ -36,15 +34,10 @@ public class BandNameMiniGame : MiniGame
 
     public override void OpenMiniGame()
     {
-        // Opening up the minigame
-
         mainCamera = Camera.main.transform.gameObject;
-
         mainCamera.SetActive(false);
-        blackScreen.gameObject.SetActive(true);
-        blackScreen.GetComponent<Animator>().Play("BlackScreenUnfade", -1, 0f);
         EnableAllChildren();
-
+        blackScreen.Unfade();
         MiniGameManager.PrepMiniGame();
         isActive = true;
         pickedPunkJuice = false;
@@ -91,8 +84,7 @@ public class BandNameMiniGame : MiniGame
 
     private IEnumerator CloseMiniGameCR()
     {
-        blackScreen.gameObject.SetActive(true);
-        blackScreen.GetComponent<Animator>().Play("BlackScreenFade", -1, 0f);
+        blackScreen.Fade();
         yield return null;
     }
 

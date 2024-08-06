@@ -133,18 +133,19 @@ public abstract class Movement : MonoBehaviour
 
     public void PlayInstrument(string instLabel, Vector3 pos, string layer, int layerOrder)
     {
-
-
         Quaternion currentRotation = transform.localRotation;
         prevRotation = transform.localRotation;
-        currentRotation.y = 180;
+
         prevPos = transform.position;
+        Debug.Log("Prev pos:" + prevPos);
+
         transform.position = pos;
-        
+
         prevLayer = character.GetCurrentLayer().sortingLayerName;
         prevLayerOrder = character.GetCurrentLayer().sortingOrder;
         Debug.Log("Prev order:" + prevLayer + prevLayerOrder);
         character.MoveToRenderLayer(layer, layerOrder);
+        currentRotation.y = 180;
         transform.rotation = currentRotation;
 
         character.SetInstrumentSprite(instLabel);
@@ -158,6 +159,7 @@ public abstract class Movement : MonoBehaviour
     {
         currState = MovementState.Idle;
         character.HideInstrumentSprite();
+        Debug.Log("Prev pos:" + prevPos);
         transform.position = prevPos;
         transform.rotation = prevRotation;
         character.MoveToRenderLayer(prevLayer, prevLayerOrder);

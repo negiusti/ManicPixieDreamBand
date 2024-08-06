@@ -78,12 +78,13 @@ public class TattooMiniGame : MiniGame
     [Header("Miscellaneous")]
 
     private GameObject mainCamera;
-    public GameObject blackScreen;
+    private BlackScreen blackScreen;
     private bool isActive;
     private Timer timer;
 
     private void Start()
     {
+        blackScreen = GetComponentInChildren<BlackScreen>(true);
         timer = GetComponentInChildren<Timer>(true);
         DisableAllChildren();
     }
@@ -112,7 +113,7 @@ public class TattooMiniGame : MiniGame
         //Cursor.SetCursor(tattooGun, new Vector2(0, 260), CursorMode.Auto);
         Cursor.visible = false;
 
-        blackScreen.SetActive(false);
+        blackScreen.Unfade();
         speechText = speechBubble.GetComponentInChildren<Text>();
         speechBubble.SetActive(false);
 
@@ -283,7 +284,7 @@ public class TattooMiniGame : MiniGame
         }
         else
         {
-            blackScreen.SetActive(true);
+            blackScreen.Fade();
         }
     }
 

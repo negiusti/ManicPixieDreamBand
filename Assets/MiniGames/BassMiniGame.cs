@@ -6,11 +6,14 @@ public class BassMiniGame : MiniGame
     private bool isActive;
     private GameObject mainCamera;
     private Camera mgCamera;
+    private BlackScreen blackScreen;
+    private bool closingInProgress;
 
     // Use this for initialization
     void Start()
     {
         mgCamera = GetComponentInChildren<Camera>(true);
+        blackScreen = GetComponentInChildren<BlackScreen>(true);
         DisableAllChildren();
     }
 
@@ -34,10 +37,12 @@ public class BassMiniGame : MiniGame
         {
             mainCamera = Camera.main.transform.gameObject;
             mainCamera.SetActive(false);
+            blackScreen.Unfade();
         }
         MiniGameManager.PrepMiniGame();
         //JamCoordinator.SwitchToJamCamera();
         isActive = true;
+        closingInProgress = false;
         EnableAllChildren();
     }
 
@@ -48,8 +53,16 @@ public class BassMiniGame : MiniGame
         JamCoordinator.StartJam("LEMON BOY");
     }
 
-    public override void CloseMiniGame()
+    public void Fade()
     {
+        if (closingInProgress)
+            return;
+        closingInProgress = true;
+        blackScreen.Fade();
+    }
+
+    public override void CloseMiniGame()
+    {   
         if (mgCamera != null)
         {
             mainCamera.SetActive(true);

@@ -5,11 +5,12 @@ using UnityEngine;
 public class CorkboardMiniGame : MiniGame
 {
     private GameObject mainCamera;
-    public GameObject blackScreen;
+    private BlackScreen blackScreen;
     private bool isActive;
 
     private void Start()
     {
+        blackScreen = GetComponentInChildren<BlackScreen>(true);
         DisableAllChildren();
         //OpenMiniGame();
     }
@@ -36,7 +37,7 @@ public class CorkboardMiniGame : MiniGame
         MiniGameManager.PrepMiniGame();
         isActive = true;
 
-        blackScreen.SetActive(false);
+        blackScreen.Unfade();
     }
 
     public override void CloseMiniGame()
@@ -47,6 +48,14 @@ public class CorkboardMiniGame : MiniGame
 
         isActive = false;
         MiniGameManager.CleanUpMiniGame();
+    }
+
+    public void Fade()
+    {
+        if (blackScreen != null)
+            blackScreen.Fade();
+        else
+            CloseMiniGame();
     }
 
     private void Update()

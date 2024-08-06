@@ -19,6 +19,7 @@ public class TrunkDoor : MonoBehaviour
 
     public void CloseCarPacking()
     {
-        mg.CloseMiniGame();
+        mg.Fade();
+        //mg.CloseMiniGame();
     }
 }

@@ -30,7 +30,7 @@ public class BobaMiniGame : MiniGame
     private Flavor[] flavors;
 
     private GameObject mainCamera;
-    public GameObject blackScreen;
+    private BlackScreen blackScreen;
     private bool isActive;
     private float tipsIncome;
     public GameObject speechBubble;
@@ -43,6 +43,7 @@ public class BobaMiniGame : MiniGame
     // Use this for initialization
     void Start()
     {
+        blackScreen = GetComponentInChildren<BlackScreen>(true);
         cam = GetComponentInChildren<Camera>(true);
         order = GetComponentInChildren<BobaOrder>(true);
         milks = FindObjectsOfType<Milk>(true);
@@ -153,7 +154,7 @@ public class BobaMiniGame : MiniGame
         MiniGameManager.PrepMiniGame();
         isActive = true;
 
-        blackScreen.SetActive(false);
+        blackScreen.Unfade();
         tipsIncome = 0;
         timer.Reset();
         timer.StartTimer();
@@ -184,6 +185,6 @@ public class BobaMiniGame : MiniGame
         yield return new WaitForSeconds(1f);
 
         // Start fading to black
-        blackScreen.SetActive(true);
+        blackScreen.Fade();
     }
 }
