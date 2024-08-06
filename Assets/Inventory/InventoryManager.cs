@@ -172,6 +172,16 @@ public class InventoryManager : ScriptableObject
         categoryToPurchased[category].Add(item);
     }
 
+    public static void ResetInventories()
+    {
+        LoadFromJson().WaitForCompletion();
+        characterInventories = new Dictionary<string, Dictionary<string, HashSet<string>>>();
+        characterInventories.Add(MAIN_CHARACTER, defaultPurchaseables.data.ToDictionary(d => d.category, d => d.items.ToHashSet()));
+        categoryToPurchased = defaultPurchaseables.data.ToDictionary(d => d.category, d => d.items.ToHashSet());
+        pockets = new Dictionary<Item, int>();
+        pocketsPerishable = new Dictionary<PerishableItem, int>();
+    }
+
     public static void LoadInventories()
     {
         LoadFromJson().WaitForCompletion();

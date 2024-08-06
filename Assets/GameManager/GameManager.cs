@@ -125,9 +125,10 @@ public class GameManager : MonoBehaviour
 
     public void RefreshGameState()
     {
+        SaveSystem.DeleteSaveData();
         MainCharacterState.Load();
         Calendar.Load();
-        InventoryManager.LoadInventories();
+        InventoryManager.ResetInventories();
         JobSystem.Load();
         QuestManager.Load();
         RomanceManager.Load();
