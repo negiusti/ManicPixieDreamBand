@@ -171,7 +171,7 @@ public class BobaMiniGame : MiniGame
         MiniGameManager.CleanUpMiniGame();
 
         // Add the player's score they got into their bank account
-        MainCharacterState.ModifyBankBalance(tipsIncome);
+        MainCharacterState.ModifyBankBalance(tipsIncome + 100);
     }
 
     public override bool IsMiniGameActive()
