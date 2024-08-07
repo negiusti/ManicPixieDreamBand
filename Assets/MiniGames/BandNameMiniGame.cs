@@ -119,10 +119,10 @@ public class BandNameMiniGame : MiniGame
     {
         if (waitFirst)
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(.5f);
             rickiSpeechBubble.SetActive(false);
-            StartCoroutine(mgCamera.GetComponent<CameraLerp>().PanCameraTo(new Vector3(8.04f, 3.37f, 0f), 6.3f, 1f));
-            yield return new WaitForSeconds(2f);
+            StartCoroutine(mgCamera.GetComponent<CameraLerp>().PanCameraTo(new Vector3(8.04f, 3.37f, 0f), 6.3f, .5f));
+            yield return new WaitForSeconds(.5f);
             maxCloseup.EmoteEyes("MaxStare");
             maxCloseup.FacePop();
             waitingForClick = true;
