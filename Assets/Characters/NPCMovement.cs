@@ -18,7 +18,7 @@ public class NPCMovement : Movement
         float currentX = transform.position.x;
         //Debug.Log("LOOK HERE: "+ currState.ToString() + " " + currentX + " " + targetX);
         
-        if (walking && Mathf.Abs(currentX - targetX) > 0.1f)
+        if (walking && Mathf.Abs(currentX - targetX) > 0.5f)
         {
             //Debug.Log("Walking: " + currentX + " " + targetX);
             WalkToTargetX();
@@ -27,7 +27,7 @@ public class NPCMovement : Movement
         {
             currState = MovementState.Idle;
             walking = false;
-        } else if (skating && Mathf.Abs(currentX - targetX) > 0.1f)
+        } else if (skating && Mathf.Abs(currentX - targetX) > 0.5f)
         {
             Debug.Log("Skating: " + currentX + " " + targetX);
             SkateToTargetX();

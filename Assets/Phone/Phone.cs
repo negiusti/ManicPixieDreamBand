@@ -3,6 +3,7 @@ using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.U2D.Animation;
 using System.Collections;
+using System.Linq;
 
 public class Phone : MonoBehaviour
 {
@@ -509,6 +510,18 @@ public class Phone : MonoBehaviour
     private void ShowIcons()
     {   
         icons.SetActive(true);
+
+        // Lock the maps app until the appropriate time in the tutorial
+        GameObject mapIcon = icons.GetComponentsInChildren<PhoneIcon>(true).First(i => i.appName == "Maps").gameObject;
+        if (!Tutorial.joinedTheBand)
+        {
+            mapIcon.SetActive(false);
+        }
+        else if (!mapIcon.activeSelf && Tutorial.joinedTheBand)
+        {
+            mapIcon.SetActive(true);
+            SendNotificationTo("Maps");
+        }
     }
 
     public void ToggleLock()
