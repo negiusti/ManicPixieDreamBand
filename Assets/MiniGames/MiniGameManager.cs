@@ -44,6 +44,9 @@ public class MiniGameManager : ScriptableObject
             case "BandName":
                 StartBandNameMiniGame();
                 break;
+            case "DemoEnding":
+                StartDemoEnding();
+                break;
             default:
                 Debug.LogError("Minigame not found: " + miniGameName);
                 break;
@@ -72,6 +75,8 @@ public class MiniGameManager : ScriptableObject
                 return FindFirstObjectByType<BobaMiniGame>(FindObjectsInactive.Include);
             case "BandName":
                 return FindFirstObjectByType<BandNameMiniGame>(FindObjectsInactive.Include);
+            case "DemoEnding":
+                return FindFirstObjectByType<DemoEndingMiniGame>(FindObjectsInactive.Include);
             default:
                 Debug.LogError("Minigame not found: " + miniGameName);
                 return null;
@@ -147,6 +152,12 @@ public class MiniGameManager : ScriptableObject
     private static void StartBandNameMiniGame()
     {
         BandNameMiniGame mg = (BandNameMiniGame)GetMiniGame("BandName");
+        mg.OpenMiniGame();
+    }
+
+    private static void StartDemoEnding()
+    {
+        DemoEndingMiniGame mg = (DemoEndingMiniGame)GetMiniGame("DemoEnding");
         mg.OpenMiniGame();
     }
 
