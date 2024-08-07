@@ -47,7 +47,7 @@ public class Characters : ScriptableObject
 
     public static void Emote(string character, string eyesEmotion, string mouthEmotion)
     {
-        if (characters == null)
+        if (characters == null || !characters.ContainsKey(character))
             RefreshCharactersCache();
         characters[character]?.EmoteMouth(mouthEmotion);
         characters[character]?.EmoteEyes(eyesEmotion);
