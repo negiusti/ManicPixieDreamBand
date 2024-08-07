@@ -22,9 +22,20 @@
                             "layer": "fg_char",
                             "existAtStart": true,
                             "isTrigger": true,
-                            "faceLeftOrRight":  "right"
+                            "faceLeftOrRight": "right"
                         }
                     ]
+                },
+                {
+                    "locations": [ "Bedroom" ],
+                    "trigger": "Start",
+                    "conversation": "TXT/Pixie/FollowUp",
+                    "requirements": {
+                        "minDay": 1,
+                        "trueFlags": [ "Gave_Pixie_Number" ],
+                        "locations": [ "Bedroom" ]
+                    },
+                    "participants": []
                 }
             ]
         }

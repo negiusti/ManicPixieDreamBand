@@ -42,6 +42,8 @@ public class Requirements
     public string currentEventType;
     public string[] locations;
     public bool changedOutfitToday;
+    public string[] trueFlags;
+    public string[] falseFlags;
 }
 
 [System.Serializable]

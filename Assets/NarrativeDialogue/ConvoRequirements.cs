@@ -122,15 +122,36 @@ public class ConvoRequirements : ScriptableObject
         }
         if (requirements.locations != null && !requirements.locations.Contains(CurrentLocation()))
         {
+            Debug.Log("location req not met");
             return false;
         }
         if (requirements.relationshipScore != null && requirements.relationshipScore.npc != null && RomanceManager.GetRelationshipScore(requirements.relationshipScore.npc) < requirements.relationshipScore.score)
         {
+            Debug.Log("relationshipScore req not met: " + requirements.relationshipScore.npc);
             return false;
         }
         if (requirements.changedOutfitToday && !MainCharacterState.HasChangedOutfitToday())
         {
+            Debug.Log("HasChangedOutfitToday req not met");
             return false;
+        }
+
+        if (requirements.falseFlags != null)
+        {
+            Debug.Log("falseFlags req not met");
+            if (requirements.falseFlags.Any(f => MainCharacterState.CheckFlag(f)))
+            {
+                return false;
+            }
+        }
+
+        if (requirements.trueFlags != null)
+        {
+            Debug.Log("trueFlags req not met");
+            if (requirements.trueFlags.Any(f => !MainCharacterState.CheckFlag(f)))
+            {
+                return false;
+            }
         }
         return true;
     }
