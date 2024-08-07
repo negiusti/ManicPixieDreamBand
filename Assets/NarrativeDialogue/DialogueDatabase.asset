@@ -4491,8 +4491,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 26.414124, y: 184.73709}
-    canvasZoom: 0.7241129
+    canvasScrollPosition: {x: 0, y: 444.31467}
+    canvasZoom: 0.72329634
   - id: 7
     fields:
     - title: Title
@@ -24338,8 +24338,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 278.96103
-        y: 870.97766
+        x: 392.00763
+        y: 912.8938
         width: 160
         height: 30
     - id: 16
@@ -24393,8 +24393,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 278.96103
-        y: 920.97766
+        x: 414.87097
+        y: 1025.1329
         width: 160
         height: 30
     - id: 17
@@ -24434,7 +24434,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 29
+        originDialogueID: 17
+        destinationConversationID: 29
+        destinationDialogueID: 19
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: StartMiniGame("CarPacking");
       onExecute:
@@ -24442,13 +24448,66 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 278.96103
-        y: 970.97766
+        x: 306.90512
+        y: 1143.723
+        width: 160
+        height: 30
+    - id: 19
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Response Menu Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 29
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: 
+      userScript: ChangeScene("SmallBar");
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 306.90512
+        y: 1193.723
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 102.36778, y: 97.52155}
-    canvasZoom: 1.0138022
+    canvasScrollPosition: {x: 110.64667, y: 722.3834}
+    canvasZoom: 0.78628606
   - id: 30
     fields:
     - title: Title

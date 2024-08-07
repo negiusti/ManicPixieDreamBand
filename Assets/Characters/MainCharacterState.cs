@@ -36,6 +36,9 @@ public class MainCharacterState : ScriptableObject
     {
         unlockedPhotos.Insert(0, photoName);
         Phone.Instance.SendNotificationTo("Photos");
+
+        if (photoName == "Band")
+            Tutorial.joinedTheBand = true;
     }
 
     public static List<string> UnlockedPhotos()

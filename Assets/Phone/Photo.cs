@@ -15,8 +15,8 @@ public class Photo : MonoBehaviour
         { "PizzaRat", "This city STINKS" },
         { "Boxes", "A fresh start :')" },
         { "Band", "I think I'm in the band??" },
-        { "Party1", "Zombie party at Rick's house!!" },
-        { "Party2", "They want me to try out for their band!!" } };
+        { "Party1", "Zombie party at Ricki's!!" },
+        { "Party2", "They want me to join their band??" } };
     // Start is called before the first frame update
     void Start()
     {
