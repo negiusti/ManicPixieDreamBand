@@ -118,7 +118,7 @@ public class Calendar : ScriptableObject
             }
             if (!isWorkScheduled(i) && JobSystem.CurrentJob() != JobSystem.PunkJob.Unemployed)
             {
-                //if (i %2 == 0)
+                if (i != 3) // GIG DAY
                     events[i].Add(new JobEvent("Work", null, false, JobSystem.CurrentJobInfo().Location()));
             }
             
