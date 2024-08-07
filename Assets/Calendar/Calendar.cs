@@ -194,6 +194,8 @@ public class Calendar : ScriptableObject
         MainCharacterState.SetOutfitChangedFlag(false);
         InventoryManager.SpoilPerishables();
         Phone.Instance.SendNotificationTo("Calendar");
+        if (day == 2)
+            MainCharacterState.UnlockPhoto("PizzaRat");
     }
 
     public static int Date()

@@ -41,7 +41,7 @@ public class MainCharacterState : ScriptableObject
     public static List<string> UnlockedPhotos()
     {
         if (unlockedPhotos == null)
-            unlockedPhotos =  ES3.Load("Photos", new List<string>() { "Boxes", "PizzaRat" });
+            unlockedPhotos =  ES3.Load("Photos", new List<string>() { "Party1", "Party2", "Boxes" });
         return unlockedPhotos;
     }
 
@@ -50,7 +50,7 @@ public class MainCharacterState : ScriptableObject
         characterName = ES3.Load<string>("MC_Name", defaultValue:"");
         bankBalance = ES3.Load<double>("MC_Money", 100d);
         hasChangedOutfitToday = ES3.Load<bool>("MC_Flag_HasChangedOutfitToday", false);
-        unlockedPhotos = ES3.Load("Photos", new List<string>() { "Boxes", "PizzaRat" });
+        unlockedPhotos = ES3.Load("Photos", new List<string>() { "Party1", "Party2", "Boxes" });
         flags = ES3.Load("Flags", new Dictionary<string, bool>());
     }
 
