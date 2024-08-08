@@ -61,6 +61,7 @@ public abstract class Movement : MonoBehaviour
         character = GetComponent<Character>();
         animator = GetComponentInChildren<Animator>();
         currState = MovementState.Idle;
+        animator.Play(IdleAnim, -1, Random.Range(0f, 1f));
         background = GameObject.FindGameObjectWithTag("Background");
 
         if (background != null)
