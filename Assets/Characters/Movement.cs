@@ -128,7 +128,7 @@ public abstract class Movement : MonoBehaviour
             {
                 currAnim = RollerskateIdleAnim;
             }
-            animator.CrossFade(currAnim, .05f);
+            animator.CrossFade(currAnim, .05f, -1, Random.Range(0f, 1f));
         }
     }
 
