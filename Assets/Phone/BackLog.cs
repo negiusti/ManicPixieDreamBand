@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using PixelCrushers.DialogueSystem;
 using System.Collections;
+using System;
 
 /// <summary>
 /// This script runs the back log. It records dialogue lines as they're played.
@@ -62,13 +63,15 @@ public class BackLog : MonoBehaviour
 
     private void Update()
     {
-        if (!responseMenuView && responseMenu.gameObject.activeSelf && responseMenu.isOpen)
+        Vector2 sizeDelta = rectTransform.sizeDelta;
+        bool rView = Math.Abs(sizeDelta.y - shortScrollViewHeight) < 0.1;
+        if (!rView && responseMenu.gameObject.activeSelf && responseMenu.isOpen)
         {
             Debug.Log("shorten view");
             // Shorten scroll view
             responseMenuView = true;
 
-            Vector2 sizeDelta = rectTransform.sizeDelta;
+            //Vector2 sizeDelta = rectTransform.sizeDelta;
             sizeDelta.y = shortScrollViewHeight;
             rectTransform.sizeDelta = sizeDelta;
 
@@ -76,13 +79,13 @@ public class BackLog : MonoBehaviour
             sizeDelta = r.sizeDelta;
             sizeDelta.y = shortScrollViewHeight;
             r.sizeDelta = sizeDelta;
-        } else if (responseMenuView && (!responseMenu.gameObject.activeSelf || !responseMenu.isOpen))
+        } else if (rView && (!responseMenu.gameObject.activeSelf || !responseMenu.isOpen))
         {
             Debug.Log("extend view");
             // Extend scroll view
             responseMenuView = false;
 
-            Vector2 sizeDelta = rectTransform.sizeDelta;
+            //Vector2 sizeDelta = rectTransform.sizeDelta;
             sizeDelta.y = longScrollViewHeight;
             rectTransform.sizeDelta = sizeDelta;
 

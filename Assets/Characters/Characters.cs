@@ -49,14 +49,20 @@ public class Characters : ScriptableObject
     {
         if (characters == null || !characters.ContainsKey(character))
             RefreshCharactersCache();
-        characters[character]?.EmoteMouth(mouthEmotion);
-        characters[character]?.EmoteEyes(eyesEmotion);
-        characters[character]?.FacePop();
+        if (!characters.ContainsKey(character))
+        {
+            Debug.LogError("Couldn't find character: " + character);
+            return;
+        }
+        bool changedMouth = characters[character].EmoteMouth(mouthEmotion);
+        bool changedEyes = characters[character].EmoteEyes(eyesEmotion);
+        if (changedEyes || changedMouth)
+            characters[character].FacePop();
     }
 
     public static void MoveYPos(string character, double y)
     {
-        if (characters == null)
+        if (characters == null || !characters.ContainsKey(character))
             RefreshCharactersCache();
         if (characters.ContainsKey(character))
         {
