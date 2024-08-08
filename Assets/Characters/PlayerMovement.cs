@@ -25,13 +25,15 @@ public class PlayerMovement : Movement
             return;
         }
 
-        if (!isRollerSkating && Input.GetKeyDown(KeyCode.S) && Tutorial.changedSkin) // Make sure you get dressed and put on shoes before skating
+        // No skating outside and make sure you put on some shoes
+        if (!isRollerSkating && Input.GetKeyDown(KeyCode.S) && Tutorial.changedSkin && FindObjectsOfType<OutdoorLocation>().Length > 0)
         {
             if (!Tutorial.hasSkated) Tutorial.hasWalked = false;
             Tutorial.hasSkated = true;
             isSkating = !isSkating;
         }
-        if (!isSkating && Input.GetKeyDown(KeyCode.R) && Tutorial.changedSkin) // Make sure you get dressed and put on shoes before skating+
+        // No skating outside and make sure you put on some shoes
+        if (!isSkating && Input.GetKeyDown(KeyCode.R) && Tutorial.changedSkin && FindObjectsOfType<OutdoorLocation>().Length > 0)
         {
             if (!Tutorial.hasSkated) Tutorial.hasWalked = false;
             Tutorial.hasSkated = true;

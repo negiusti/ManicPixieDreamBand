@@ -280,14 +280,16 @@ public class Character : MonoBehaviour
         sortingGroup.sortingOrder = idx;
     }
 
-    public void EmoteMouth(string emotion)
+    public bool EmoteMouth(string emotion)
     {
         string label = (emotion.ToLower() == "default") ? categoryToLabelMap["Mouth"] : "E_" + emotion;
+        bool hasChanged = label != categoryToResolver["Mouth"].GetLabel();
         categoryToResolver["Mouth"].SetCategoryAndLabel("Mouth", label);
         Debug.Log("Setting Mouth resolver to: " + categoryToResolver["Mouth"].GetLabel());
         categoryToResolver["Mouth"].ResolveSpriteToSpriteRenderer();
         Color color = (emotion.ToLower() == "default") ? categoryToColorMap["Mouth"] : Color.white;
         categoryToRenderer["Mouth"].color = color;
+        return hasChanged;
     }
 
     public void FacePop()
@@ -303,9 +305,10 @@ public class Character : MonoBehaviour
         categoryToResolver["L_Shoe"].ResolveSpriteToSpriteRenderer();
     }
 
-    public void EmoteEyes(string emotion)
+    public bool EmoteEyes(string emotion)
     {
         string label = (emotion.ToLower() == "default") ? categoryToLabelMap["Eyes"] : "E_" + emotion;
+        bool hasChanged = label != categoryToResolver["Eyes"].GetLabel();
         categoryToResolver["Eyes"].SetCategoryAndLabel("Eyes", label);
         Debug.Log("Setting Eyes resolver to: " + categoryToResolver["Eyes"].GetLabel());
         categoryToResolver["Eyes"].ResolveSpriteToSpriteRenderer();
@@ -314,6 +317,7 @@ public class Character : MonoBehaviour
         categoryToRenderer["Eyeshadow"].enabled = (emotion.ToLower() == "default");
         categoryToRenderer["Eyebrows"].enabled = (emotion.ToLower() == "default");
         categoryToRenderer["Face_Detail"].enabled = (emotion.ToLower() == "default");
+        return hasChanged;
     }
 
     public void RollerskatesOnOff(bool isRollerskating)
