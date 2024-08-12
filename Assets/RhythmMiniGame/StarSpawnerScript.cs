@@ -21,7 +21,7 @@ public class StarSpawnerScript : MonoBehaviour
     public Vector3 blackSpawnPosition;
     public Vector3 purpleSpawnPosition;
     public Vector3 redSpawnPosition;
-    public float highwaySpeed = 5f;
+    public float highwaySpeed = 2.5f;
     private int i;
     private float delay;
     private int note;
@@ -29,7 +29,6 @@ public class StarSpawnerScript : MonoBehaviour
     private Queue<GameObject> spawnedStars;
     private int hitNotes;
     private int missedNotes;
-    private float runwayDelay;
     private BassMiniGame miniGame;
     private string[] notes;
     private string[] times;
@@ -135,17 +134,16 @@ public class StarSpawnerScript : MonoBehaviour
     {
         lagCorrection = ES3.Load("LagCalibration", 0f);
         Debug.Log("LAG COORECTION" + lagCorrection);
-        runwayDelay = 3f;
         while (i < times.Length)
         {
-            while (hamster.time < (delay - runwayDelay + lagCorrection)) // TODO: ADD LAG CORRECTION HERE!!!!!
+            while (hamster.time < (delay - highwaySpeed + lagCorrection)) 
             {
                 // Wait until the desired delay time has passed
                 yield return null;
             }
 
             // Perform the action or event here
-            SpawnStar(runwayDelay);
+            SpawnStar();
             if (++i >= times.Length)
                 break;
             try
@@ -236,9 +234,8 @@ public class StarSpawnerScript : MonoBehaviour
             go.transform.localPosition = targetLocalPosition;
     }
 
-    private void SpawnStar(float runwayDelay)
+    private void SpawnStar()
     {
-        Debug.Log("runway delay is " + runwayDelay);
         if (i < notes.Length)
         {
             note = int.Parse(notes[i]);
@@ -252,7 +249,7 @@ public class StarSpawnerScript : MonoBehaviour
             //p.transform.localScale = pinkStar.transform.localScale;
             spawnedStars.Enqueue(p);
             Vector3 destinationPos = new Vector3(p.transform.localPosition.x, GetDestinationY(), p.transform.localPosition.z);
-            StartCoroutine(Lerp(p, destinationPos, runwayDelay));
+            StartCoroutine(Lerp(p, destinationPos, highwaySpeed));
         }
         else if (note == 2)
         {
@@ -262,7 +259,7 @@ public class StarSpawnerScript : MonoBehaviour
             //b.transform.localScale = pinkStar.transform.localScale;
             spawnedStars.Enqueue(b);
             Vector3 destinationPos = new Vector3(b.transform.localPosition.x, GetDestinationY(), b.transform.localPosition.z);
-            StartCoroutine(Lerp(b, destinationPos, runwayDelay));
+            StartCoroutine(Lerp(b, destinationPos, highwaySpeed));
         }
         else if (note == 3)
         {
@@ -273,7 +270,7 @@ public class StarSpawnerScript : MonoBehaviour
             spawnedStars.Enqueue(p);
             Vector3 destinationPos = new Vector3(p.transform.localPosition.x, GetDestinationY(), p.transform.localPosition.z);
             
-            StartCoroutine(Lerp(p, destinationPos, runwayDelay));
+            StartCoroutine(Lerp(p, destinationPos, highwaySpeed));
         }
         else if (note == 4)
         {
@@ -283,7 +280,7 @@ public class StarSpawnerScript : MonoBehaviour
             //x.transform.localScale = pinkStar.transform.localScale;
             spawnedStars.Enqueue(x);
             Vector3 destinationPos = new Vector3(x.transform.localPosition.x, GetDestinationY(), x.transform.localPosition.z);
-            StartCoroutine(Lerp(x, destinationPos, runwayDelay));
+            StartCoroutine(Lerp(x, destinationPos, highwaySpeed));
         }
     }   
 

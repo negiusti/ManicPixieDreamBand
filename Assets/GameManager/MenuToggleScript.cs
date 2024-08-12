@@ -3,6 +3,7 @@ using UnityEngine;
 public class MenuToggleScript : MonoBehaviour
 {
     public GameObject menuToToggle;
+
     //private SpriteRenderer menuBackground;
 
     private void Start()
@@ -29,6 +30,11 @@ public class MenuToggleScript : MonoBehaviour
         //menuBackground.enabled = false;
         menuToToggle.SetActive(false);
         Time.timeScale = 1f;
+        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource audio in audioSources)
+        {
+            audio.UnPause();
+        }
     }
 
     public void EnableMenu()
@@ -36,5 +42,10 @@ public class MenuToggleScript : MonoBehaviour
         menuToToggle.SetActive(true);
         //menuBackground.enabled = true;
         Time.timeScale = 0f;
+        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource audio in audioSources)
+        {
+            audio.Pause();
+        }
     }
 }
