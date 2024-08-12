@@ -6,7 +6,7 @@ using PixelCrushers.DialogueSystem;
 
 public class SceneChanger : MonoBehaviour
 {
-    private static float minLoadingTime = 2f; // Minimum time to show loading screen (in seconds)
+    private static float minLoadingTime = 1f; // Minimum time to show loading screen (in seconds)
     public static SceneChanger Instance;
     public LoadingScreen genericLoadingScreen;
     public LoadingScreen busLoadingScreen;
@@ -123,6 +123,7 @@ public class SceneChanger : MonoBehaviour
         {
             yield return new WaitForSeconds(1);
         }
+        yield return new WaitForSeconds(1);
         DisableLoadingScreens();
         yield return null;
     }
@@ -155,6 +156,7 @@ public class SceneChanger : MonoBehaviour
         {
             yield return new WaitForSeconds(1);
         }
+        yield return new WaitForSeconds(1);
         DisableLoadingScreens();
         ResetMCPosition(sceneInfo);
         yield return null;
