@@ -37,7 +37,8 @@ public class CustomDialogueScript : MonoBehaviour
         currentLocation = SceneManager.GetActiveScene().name;
         GetAllConversations();
         phoneResponsePanelCanvas = phoneResponsePanel.gameObject.GetComponent<Canvas>();
-        //CheckForPlotConvo();
+        StartCoroutine(CheckForConvos());
+        CheckForConvo();
     }
 
     public void Reset()
@@ -56,6 +57,7 @@ public class CustomDialogueScript : MonoBehaviour
     {
         ES3.Save("PlotConvoIdx", currentConvoIdx);
         UnsubscribeFromEvents();
+        StopAllCoroutines();
     }
 
     private void UnsubscribeFromEvents()
@@ -77,6 +79,7 @@ public class CustomDialogueScript : MonoBehaviour
     private void NewActiveScene(Scene current, LoadSceneMode mode)
     {
         currentLocation = SceneManager.GetActiveScene().name;
+        CheckForConvo();
     }
 
     private void EndingActiveScene(Scene current)
@@ -95,6 +98,7 @@ public class CustomDialogueScript : MonoBehaviour
         //{
         //    Debug.Log("plotData[currentConvoIdx]" + plotData[currentConvoIdx].conversation + " " + plotData[currentConvoIdx].locations + " " + currentLocation);
         //}
+
         if (plotData[currentConvoIdx].locations.Contains(currentLocation) && ConvoRequirements.RequirementsMet(plotData[currentConvoIdx].requirements))
         {
             //if (!conversations.ContainsKey(plotData.conversationsData[currentConvoIdx].conversation))
@@ -102,7 +106,12 @@ public class CustomDialogueScript : MonoBehaviour
             //    Debug.Log("Could not find conversation in database: " + plotData.conversationsData[currentConvoIdx].conversation);
             //    return;
             //}
-            if (SceneChanger.Instance.IsLoadingScreenOpen() && IsTxtConvo(plotData[currentConvoIdx].conversation))
+
+            // THIS IS INSANITY:
+            // I WANT spoken convos to start during loading screen to ensure characters are spawned before loading screen completes.
+            // I DON'T WANT the loading screen to hide the unlock animation for the phone, so it shouldn't start a text convo until loading screen completes
+            // UNLESS the text convo is happening in the background without unlocking the phone. Then I want it to start immediately without delaying further convos.
+            if (SceneChanger.Instance.IsLoadingScreenOpen() && (IsTxtConvo(plotData[currentConvoIdx].conversation) && !plotData[currentConvoIdx].conversation.Contains("Opt")))
                 return false;
             StartConversation(plotData[currentConvoIdx].conversation);
             return true;
@@ -182,20 +191,31 @@ public class CustomDialogueScript : MonoBehaviour
                 t.Stop();
             }
         }
+    }
+
+    private void CheckForConvo()
+    {
         if (!DialogueManager.IsConversationActive &&
-            !MiniGameManager.AnyActiveMiniGames() &&
-            Phone.Instance.IsLocked())
+                !MiniGameManager.AnyActiveMiniGames() &&
+                Phone.Instance != null &&
+                Phone.Instance.IsLocked())
         {
-            //Debug.Log("no active conversations");
             if (!CheckForPlotConvo())
             {
-                //Debug.Log("no plot convos found, checking for quest convo...");
-                // Check for QuestConvo
                 if (!QuestManager.CheckForQuestConvo())
                 {
                     RomanceManager.CheckForRomanceConvo();
                 }
             }
+        }
+    }
+
+    private IEnumerator CheckForConvos()
+    {
+        while(true)
+        {
+            CheckForConvo();
+            yield return new WaitForSeconds(1f);
         }
     }
 
@@ -312,6 +332,7 @@ public class CustomDialogueScript : MonoBehaviour
             backLogs[Phone.Instance.GetContactNameFromConvoName(convoName)].ResetCurrentEntryID();
         }
         ConvoCompleted?.Invoke(convoName);
+        CheckForConvo();
     }
 
     public void StopCurrentConvo()

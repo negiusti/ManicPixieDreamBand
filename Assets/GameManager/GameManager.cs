@@ -136,7 +136,10 @@ public class GameManager : MonoBehaviour
         if (Phone.Instance != null)
             Phone.Instance.Reset();
         if (DialogueManager.Instance != null)
+        {
             DialogueManager.Instance.GetComponent<CustomDialogueScript>().Reset();
+            DialogueManager.StopAllConversations();
+        }
     }
 
     private void LoadData()

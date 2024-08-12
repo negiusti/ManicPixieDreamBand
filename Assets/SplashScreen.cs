@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,7 @@ public class SplashScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DialogueManager.StopAllConversations();
         //gm = GameManager.Instance;
         //sc = gm.GetComponent<SceneChanger>()
     }

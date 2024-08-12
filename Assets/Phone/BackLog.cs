@@ -40,7 +40,7 @@ public class BackLog : MonoBehaviour
         typingBubbleTemplate.SetActive(false);
         responseMenuView = false;
         rectTransform = GetComponent<RectTransform>();
-        scrollbar = GetComponentInChildren<Scrollbar>();
+        scrollbar = GetComponentInChildren<Scrollbar>(true);
         ResetCurrentEntryID();
     }
 

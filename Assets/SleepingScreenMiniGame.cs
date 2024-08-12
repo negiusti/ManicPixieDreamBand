@@ -23,7 +23,8 @@ public class SleepingScreenMiniGame : MiniGame
     public override void OpenMiniGame()
     {
         // Opening up the minigame
-
+        if (!MiniGameManager.InteractionEnabled())
+            return;
         mainCamera = Camera.main.transform.gameObject;
 
         mainCamera.SetActive(false);
