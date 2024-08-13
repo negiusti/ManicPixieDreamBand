@@ -25,7 +25,7 @@ public class BassMiniGame : MiniGame
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        if (Input.GetKeyDown(KeyCode.Backspace) && !GameManager.Instance.GetComponent<MenuToggleScript>().IsMenuOpen())
         {
             CloseMiniGame();
         }

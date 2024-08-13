@@ -41,7 +41,8 @@ public class MenuToggleScript : MonoBehaviour
             Phone.Instance.gameObject.SetActive(true);
         DialogueManager.Unpause();
         menuToToggle.SetActive(false);
-        prevCamera.enabled = true;
+        if (prevCamera != null)
+            prevCamera.enabled = true;
         Time.timeScale = 1f;
         AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
         foreach (AudioSource audio in audioSources)

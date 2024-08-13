@@ -29,15 +29,11 @@ public class CorkboardMiniGame : MiniGame
         // Opening up the minigame
 
         mainCamera = Camera.main.transform.gameObject;
-
-        mainCamera.SetActive(false);
-
         EnableAllChildren();
-
+        mainCamera.SetActive(false);
+        blackScreen.Unfade();
         MiniGameManager.PrepMiniGame();
         isActive = true;
-
-        blackScreen.Unfade();
     }
 
     public override void CloseMiniGame()
