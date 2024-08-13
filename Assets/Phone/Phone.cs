@@ -79,6 +79,13 @@ public class Phone : MonoBehaviour
         //txtResponsePanel = this.GetComponentInChildren<PixelCrushers.DialogueSystem.Wrappers.StandardUIMenuPanel>();
     }
 
+    private void OnEnable()
+    {
+        if (backgroundResolver == null)
+            return;
+        Lock();
+    }
+
     public bool IsLocked()
     {
         return isLocked;
@@ -579,6 +586,7 @@ public class Phone : MonoBehaviour
         HUDIcon.SetActive(true);
         HUDIcon.GetComponent<Animator>().SetBool("Locked", false);
         HUDIcon.GetComponent<SpriteResolver>().SetCategoryAndLabel("PhoneHUDIcon", "Unlocked");
+        float deltaX = background.transform.localPosition.x - Camera.main.gameObject.transform.position.x;
         float deltaY = background.transform.localPosition.y - Camera.main.gameObject.transform.position.y;
         foreach (Transform child in transform)
         {
@@ -586,7 +594,7 @@ public class Phone : MonoBehaviour
                 continue;
             // Move each child object
             
-            Vector3 target = child.transform.localPosition + (Vector3.up * -deltaY);
+            Vector3 target = child.transform.localPosition + (Vector3.up * -deltaY) + (Vector3.left * deltaX);
             StartCoroutine(Lerp(child.gameObject, target, 0.5f));
         }
     }

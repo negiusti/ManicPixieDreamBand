@@ -49,6 +49,7 @@ public class InteractHintScript : MonoBehaviour, IPointerClickHandler
         return !Characters.MainCharacter().gameObject.GetComponent<Movement>().IsSkating() &&
             !SceneChanger.Instance.IsLoadingScreenOpen() &&
             Phone.Instance.IsLocked() &&
+            !GameManager.Instance.GetComponent<MenuToggleScript>().IsMenuOpen() &&
             !DialogueManager.IsConversationActive &&
             !MiniGameManager.AnyActiveMiniGames();
     }

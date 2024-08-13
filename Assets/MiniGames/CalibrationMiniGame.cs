@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
 public class CalibrationMiniGame : MiniGame
@@ -23,6 +24,8 @@ public class CalibrationMiniGame : MiniGame
     public override void OpenMiniGame()
     {
         // Opening up the minigame
+        //MiniGameManager.PrepMiniGame();
+        // Let's not prep minigames started from GM menu
 
         mainCamera = Camera.main.transform.gameObject;
 
@@ -30,7 +33,6 @@ public class CalibrationMiniGame : MiniGame
 
         EnableAllChildren();
 
-        MiniGameManager.PrepMiniGame();
         isActive = true;
     }
 
@@ -41,7 +43,7 @@ public class CalibrationMiniGame : MiniGame
         DisableAllChildren();
 
         isActive = false;
-        MiniGameManager.CleanUpMiniGame();
+        //MiniGameManager.CleanUpMiniGame();
     }
 
     private void Update()

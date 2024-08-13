@@ -20,7 +20,7 @@ public class SplashScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && InteractionEnabled())
         {
             //vc.Play();
             //SceneChanger.Instance.ChangeScene("Bedroom");
@@ -28,6 +28,15 @@ public class SplashScreen : MonoBehaviour
             GameManager.Instance.RefreshGameState();
             SceneChanger.Instance.ChangeScene("Bedroom");
         }
+    }
+
+    private bool InteractionEnabled()
+    {
+        return !SceneChanger.Instance.IsLoadingScreenOpen() &&
+            (Phone.Instance == null || Phone.Instance.IsLocked()) &&
+            !GameManager.Instance.GetComponent<MenuToggleScript>().IsMenuOpen() &&
+            !DialogueManager.IsConversationActive &&
+            !MiniGameManager.AnyActiveMiniGames();
     }
 
     public void TrailerDone()

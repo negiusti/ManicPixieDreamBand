@@ -25,20 +25,15 @@ public class BackLog : MonoBehaviour
     private List<GameObject> instances = new List<GameObject>();
     private RectTransform rectTransform;
     private Scrollbar scrollbar;
-    private bool responseMenuView;
     private static float longScrollViewHeight = 310.6017f;
     private static float shortScrollViewHeight = 203.4449f;
-    //private Queue<IEnumerator> coroutines;
-    //private bool inprogress;
     private GameObject typingBubble;
-    //private object coroutineLock = new object();
 
     private void Start()
     {
         logEntryTemplate.gameObject.SetActive(false);
         speakerNameTemplate.gameObject.SetActive(false);
         typingBubbleTemplate.SetActive(false);
-        responseMenuView = false;
         rectTransform = GetComponent<RectTransform>();
         scrollbar = GetComponentInChildren<Scrollbar>(true);
         ResetCurrentEntryID();
@@ -68,10 +63,6 @@ public class BackLog : MonoBehaviour
         if (!rView && responseMenu.gameObject.activeSelf && responseMenu.isOpen)
         {
             Debug.Log("shorten view");
-            // Shorten scroll view
-            responseMenuView = true;
-
-            //Vector2 sizeDelta = rectTransform.sizeDelta;
             sizeDelta.y = shortScrollViewHeight;
             rectTransform.sizeDelta = sizeDelta;
 
@@ -82,10 +73,6 @@ public class BackLog : MonoBehaviour
         } else if (rView && (!responseMenu.gameObject.activeSelf || !responseMenu.isOpen))
         {
             Debug.Log("extend view");
-            // Extend scroll view
-            responseMenuView = false;
-
-            //Vector2 sizeDelta = rectTransform.sizeDelta;
             sizeDelta.y = longScrollViewHeight;
             rectTransform.sizeDelta = sizeDelta;
 

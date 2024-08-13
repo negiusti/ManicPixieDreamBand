@@ -19,6 +19,7 @@ public class Calibrator : MonoBehaviour
     private void OnDisable()
     {
         ready = false;
+        isPlaying = false;
     }
 
     private void OnLoadCompleted(AsyncOperationHandle<TextAsset> obj)
@@ -74,6 +75,9 @@ public class Calibrator : MonoBehaviour
         {
             DetectInput();
         }
+
+        if (isPlaying && !audioSource.isPlaying)
+            mg.CloseMiniGame();
     }
 
     void StartGame()

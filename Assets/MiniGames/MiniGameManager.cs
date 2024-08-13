@@ -47,6 +47,9 @@ public class MiniGameManager : ScriptableObject
             case "DemoEnding":
                 StartDemoEnding();
                 break;
+            case "Calibration":
+                StartCalibration();
+                break;
             default:
                 Debug.LogError("Minigame not found: " + miniGameName);
                 break;
@@ -75,6 +78,8 @@ public class MiniGameManager : ScriptableObject
                 return FindFirstObjectByType<BobaMiniGame>(FindObjectsInactive.Include);
             case "BandName":
                 return FindFirstObjectByType<BandNameMiniGame>(FindObjectsInactive.Include);
+            case "Calibration":
+                return FindFirstObjectByType<CalibrationMiniGame>(FindObjectsInactive.Include);
             case "DemoEnding":
                 return FindFirstObjectByType<DemoEndingMiniGame>(FindObjectsInactive.Include);
             default:
@@ -87,15 +92,15 @@ public class MiniGameManager : ScriptableObject
     {
         GameManager.Instance.GetComponent<MenuToggleScript>().DisableMenu();
         Debug.Log("disabling phone");
-        //if (Phone.Instance != null)
-        Phone.Instance.gameObject.SetActive(false);
+        if (Phone.Instance != null)
+            Phone.Instance.gameObject.SetActive(false);
         DialogueManager.Pause();
     }
 
     public static void CleanUpMiniGame()
     {
         Debug.Log("enabling phone");
-        //if (Phone.Instance != null)
+        if (Phone.Instance != null)
             Phone.Instance.gameObject.SetActive(true);
         DialogueManager.Unpause();
         DialogueManager.standardDialogueUI.OnContinueConversation();
@@ -161,7 +166,13 @@ public class MiniGameManager : ScriptableObject
         mg.OpenMiniGame();
     }
 
-    public static bool InteractionEnabled()
+    private static void StartCalibration()
+    {
+        CalibrationMiniGame mg = (CalibrationMiniGame)GetMiniGame("Calibration");
+        mg.OpenMiniGame();
+    }
+
+        public static bool InteractionEnabled()
     {
         return !SceneChanger.Instance.IsLoadingScreenOpen() &&
             Phone.Instance.IsLocked() &&

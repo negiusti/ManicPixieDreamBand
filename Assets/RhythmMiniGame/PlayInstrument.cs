@@ -106,6 +106,7 @@ public class PlayInstrument : MonoBehaviour, IPointerClickHandler
     {
         return !Characters.MainCharacter().gameObject.GetComponent<Movement>().IsSkating() &&
             Phone.Instance.IsLocked() &&
+            !GameManager.Instance.GetComponent<MenuToggleScript>().IsMenuOpen() &&
             !SceneChanger.Instance.IsLoadingScreenOpen() &&
             !DialogueManager.IsConversationActive &&
             !MiniGameManager.AnyActiveMiniGames();
