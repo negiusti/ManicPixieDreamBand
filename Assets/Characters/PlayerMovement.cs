@@ -43,7 +43,7 @@ public class PlayerMovement : Movement
 
         moveInput = Input.GetAxis("Horizontal");
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             if (isSkating)
                 Ollie();

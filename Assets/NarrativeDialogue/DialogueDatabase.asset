@@ -590,14 +590,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("MainCharacter", "Pathetic", "default");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1259.1564
-        y: 704.9993
+        x: 1137.5675
+        y: 686.2084
         width: 160
         height: 30
     - id: 20
@@ -700,7 +700,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("MainCharacter", "Pathetic", "default");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -766,15 +766,16 @@ MonoBehaviour:
         destinationDialogueID: 29
         isConnector: 0
         priority: 2
-      conditionsString: 
-      userScript: Emote("MainCharacter", "default", "default");
+      conditionsString: CheckFlag("Tipped") == false
+      userScript: Emote("MainCharacter", "default", "default");SetFlag("Tipped",
+        true);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 875.3041
-        y: 890.68524
+        x: 795.21875
+        y: 981.6786
         width: 160
         height: 30
     - id: 26
@@ -828,8 +829,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 796.3134
-        y: 971.42944
+        x: 720.6516
+        y: 1063.8973
         width: 160
         height: 30
     - id: 27
@@ -887,8 +888,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 971.9064
-        y: 972.56226
+        x: 896.2446
+        y: 1065.0302
         width: 160
         height: 30
     - id: 29
@@ -948,8 +949,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1144.899
-        y: 973.70996
+        x: 1069.2377
+        y: 1066.1779
         width: 160
         height: 30
     - id: 30
@@ -1003,8 +1004,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1447.8809
-        y: 1046.2661
+        x: 1372.2194
+        y: 1138.7338
         width: 160
         height: 30
     - id: 31
@@ -1058,8 +1059,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1257.0432
-        y: 1044.5569
+        x: 1181.3817
+        y: 1137.0245
         width: 160
         height: 30
     - id: 32
@@ -1089,7 +1090,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 1
@@ -1100,15 +1101,15 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: 
-      userScript: 
+      conditionsString: CheckFlag("Tipped")
+      userScript: Emote("MainCharacter", "default", "default");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1159.2498
-        y: 1252.0413
+        x: 1083.5883
+        y: 1344.5092
         width: 160
         height: 30
     - id: 33
@@ -1154,6 +1155,12 @@ MonoBehaviour:
         originDialogueID: 33
         destinationConversationID: 1
         destinationDialogueID: 25
+        isConnector: 0
+        priority: 2
+      - originConversationID: 1
+        originDialogueID: 33
+        destinationConversationID: 1
+        destinationDialogueID: 32
         isConnector: 0
         priority: 2
       conditionsString: CurrentJobString() == "Unemployed"
@@ -1616,13 +1623,13 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1200.5221
-        y: 266.5951
+        x: 714.6699
+        y: 268.1553
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 766.6343, y: 0}
-    canvasZoom: 0.6986891
+    canvasScrollPosition: {x: 690.6944, y: 655.13696}
+    canvasZoom: 0.5916892
   - id: 4
     fields:
     - title: Title
@@ -10447,8 +10454,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 225.732, y: 2484.0178}
-    canvasZoom: 0.7508252
+    canvasScrollPosition: {x: 10.6373825, y: 2431.4048}
+    canvasZoom: 0.5818254
   - id: 12
     fields:
     - title: Title

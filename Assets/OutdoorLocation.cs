@@ -21,7 +21,7 @@ public class OutdoorLocation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && inRange)
+        if ((Input.GetKeyDown(KeyCode.Return)  || Input.GetKeyDown(KeyCode.Space)) && inRange)
         {
             SceneChanger.Instance.ChangeScene(location);
         }

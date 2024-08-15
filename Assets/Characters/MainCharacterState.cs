@@ -16,7 +16,7 @@ public class MainCharacterState : ScriptableObject
         ES3.Save("MC_Name", characterName);
         ES3.Save("MC_Money", bankBalance);
         ES3.Save("MC_Flag_HasChangedOutfitToday", hasChangedOutfitToday);
-        ES3.Save("MC_Flags", hasChangedOutfitToday);
+        ES3.Save("Flags", flags);
         ES3.Save("Photos", unlockedPhotos);
     }
     

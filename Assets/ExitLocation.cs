@@ -31,7 +31,7 @@ public class ExitLocation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (inRange && Input.GetKeyDown(KeyCode.Return) && !DialogueManager.IsConversationActive && Phone.Instance.IsLocked())
+        if (inRange && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) && InteractionEnabled())
         {
             if (!Tutorial.changedSkin && locationName.Equals("Bedroom"))
             {
@@ -68,5 +68,15 @@ public class ExitLocation : MonoBehaviour
                 transform.GetChild(i).gameObject.SetActive(false);
             }
         }
+    }
+
+
+    private bool InteractionEnabled()
+    {
+        return !SceneChanger.Instance.IsLoadingScreenOpen() &&
+            Phone.Instance.IsLocked() &&
+            !GameManager.Instance.GetComponent<MenuToggleScript>().IsMenuOpen() &&
+            !DialogueManager.IsConversationActive &&
+            !MiniGameManager.AnyActiveMiniGames();
     }
 }
