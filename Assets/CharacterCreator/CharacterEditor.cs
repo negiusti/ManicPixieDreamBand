@@ -111,6 +111,8 @@ public class CharacterEditor : MonoBehaviour
         else
             SelectTopAndBottom();
         cr = StartCoroutine(ComplainAboutBodyPaint());
+
+        GameManager.bgMusic.PauseAudio();
     }
 
     private System.Collections.IEnumerator ComplainAboutBodyPaint()
@@ -176,6 +178,7 @@ public class CharacterEditor : MonoBehaviour
             Phone.Instance.gameObject.SetActive(true);
         if (cr != null)
             StopCoroutine(cr);
+        GameManager.bgMusic.UnpauseAudio();
     }
 
     private void UpdateIcons(string category, string[] labels)

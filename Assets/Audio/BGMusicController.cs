@@ -7,43 +7,56 @@ public class BGMusicController : MonoBehaviour
     private AudioSource audioSource;
     private int currentClipIndex = -1;
 
-    private static BGMusicController instance;
+    //public static BGMusicController Instance;
     private bool isPaused;
+    private bool isFocused;
 
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-            audioSource = GetComponent<AudioSource>();
-            if (audioSource == null)
-            {
-                audioSource = gameObject.AddComponent<AudioSource>();
-            }
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    //private void Awake()
+    //{
+    //    if (Instance == null)
+    //    {
+    //        Instance = this;
+    //        DontDestroyOnLoad(gameObject);
+    //        audioSource = GetComponent<AudioSource>();
+    //        //if (audioSource == null)
+    //        //{
+    //        //    audioSource = gameObject.AddComponent<AudioSource>();
+    //        //}
+    //    }
+    //    else
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //}
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         PlayRandomClip();
+    }
+
+    private void OnDestroy()
+    {
+        audioSource.Stop();
     }
 
     private void Update()
     {
-        if (!audioSource.isPlaying && !isPaused)
+        if (!audioSource.isPlaying && !isPaused && isFocused)
         {
             PlayRandomClip();
         }
+        if (audioSource.isPlaying && isPaused)
+        {
+            Debug.Log("What the fuck");
+            PauseAudio();
+        }
+            
     }
 
     private void OnApplicationFocus(bool focus)
     {
-        isPaused = !focus;
+        isFocused = focus;
     }
 
     private void PlayRandomClip()
@@ -66,12 +79,14 @@ public class BGMusicController : MonoBehaviour
 
     public void PauseAudio()
     {
-        audioSource.Pause();
+        Debug.Log("Pause audio");
         isPaused = true;
+        audioSource.Pause();
     }
 
     public void UnpauseAudio()
     {
+        Debug.Log("Unpause audio");
         audioSource.UnPause();
         isPaused = false;
     }

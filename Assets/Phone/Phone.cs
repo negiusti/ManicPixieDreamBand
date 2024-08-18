@@ -374,6 +374,8 @@ public class Phone : MonoBehaviour
 
     public void CloseDecorator()
     {
+        if (Camera.main == null)
+            return;
         foreach (Transform child in transform)
         {
             if (child.tag.Equals("Menu"))

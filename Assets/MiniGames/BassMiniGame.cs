@@ -33,6 +33,7 @@ public class BassMiniGame : MiniGame
 
     public override void OpenMiniGame()
     {
+        GameManager.bgMusic.PauseAudio();
         if (mgCamera != null)
         {
             mainCamera = Camera.main.transform.gameObject;
@@ -62,7 +63,8 @@ public class BassMiniGame : MiniGame
     }
 
     public override void CloseMiniGame()
-    {   
+    {
+        GameManager.bgMusic.UnpauseAudio();
         if (mgCamera != null)
         {
             mainCamera.SetActive(true);
