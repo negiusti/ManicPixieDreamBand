@@ -11,6 +11,7 @@ public class DecoratorApp : PhoneApp
     private Camera cam;
     private TextMeshPro tmp;
     public GameObject RoomPreview;
+    private HashSet<string> furnitureCategoryNotifications;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,7 @@ public class DecoratorApp : PhoneApp
         SceneManager.activeSceneChanged += ChangedActiveScene;
         cam = GetComponentInChildren<Camera>();
         tmp = GetComponentInChildren<TextMeshPro>();
+        furnitureCategoryNotifications = new HashSet<string>();
         Refresh();
     }
 
@@ -36,6 +38,22 @@ public class DecoratorApp : PhoneApp
             Phone.Instance.ClearNotificationFor("Decorator");
     }
 
+    public void ClearNotification(string category)
+    {
+        if (furnitureCategoryNotifications == null)
+            Start();
+        furnitureCategoryNotifications.Remove(category);
+        furnitureCategoryNotifications.Remove(InventoryManager.GetInventoryCategory(category));
+    }
+
+    public void AddNotification(string category)
+    {
+        if (furnitureCategoryNotifications == null)
+            Start();
+        furnitureCategoryNotifications.Add(category);
+        furnitureCategoryNotifications.Add(InventoryManager.GetInventoryCategory(category));
+    }
+
     private void Refresh()
     {
         for (int i = 1; i < container.childCount; i++)
@@ -48,7 +66,7 @@ public class DecoratorApp : PhoneApp
         {
             ItemSwapPhoneUI itemSwap = Instantiate(itemSwapTemplate, container);
             itemSwap.gameObject.SetActive(true);
-            itemSwap.AssignItem(f);
+            itemSwap.AssignItem(f, furnitureCategoryNotifications.Contains(f.Category()) || furnitureCategoryNotifications.Contains(InventoryManager.GetInventoryCategory(f.Category())));
         }
         if (furniture.Count == 0)
         {

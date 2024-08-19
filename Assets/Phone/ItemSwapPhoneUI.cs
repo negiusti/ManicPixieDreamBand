@@ -10,11 +10,13 @@ public class ItemSwapPhoneUI : MonoBehaviour
     private Furniture furniture;
     private SpriteLibrary spriteLibrary;
 
+    public GameObject notifIndicator;
     public string gearCategory;
     private List<Gear> gearInScene;
     private string[] gearLabels;
     private int gearIdx;
     private string gearLabel;
+    private DecoratorApp decoratorApp;
 
     public string Category()
     {
@@ -30,6 +32,7 @@ public class ItemSwapPhoneUI : MonoBehaviour
     {
         icon = GetComponentInChildren<ItemSwapIcon>(includeInactive: true);
         spriteLibrary = GetComponentInChildren<SpriteLibrary>(includeInactive: true);
+        decoratorApp = GetComponentInParent<DecoratorApp>(includeInactive: true);
     }
 
     private void OnEnable()
@@ -52,23 +55,14 @@ public class ItemSwapPhoneUI : MonoBehaviour
         icon.AssignItem(gearCategory, gearLabel);
     }
 
-    public void AssignItem(Furniture f)
+    public void AssignItem(Furniture f, bool showNotif=false)
     {
         if (icon == null)
             Start();
         furniture = f;
         icon.AssignItem(f.Category(), f.Label());
+        notifIndicator.SetActive(showNotif);
     }
-
-    //public void AssignItem(Gear g)
-    //{
-    //    if (icon == null)
-    //        Start();
-
-    //    gearLabel = g.Label();
-    //    gearIdx = Array.IndexOf(gearLabels, gearLabel);
-    //    icon.AssignItem(g.Category(), g.Label());
-    //}
 
     private void UpdateGearInScene()
     {
@@ -84,6 +78,8 @@ public class ItemSwapPhoneUI : MonoBehaviour
     {
         furniture.Change(delta);
         icon.UpdateIcon(furniture.Label());
+        notifIndicator.SetActive(false);
+        decoratorApp.ClearNotification(furniture.Category());
     }
 
     public void SwapGear(int delta)

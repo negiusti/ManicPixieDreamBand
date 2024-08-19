@@ -83,7 +83,7 @@ public class InventoryManager : ScriptableObject
         else
         {
             Phone.Instance.NotificationMessage("Added " + item + " to home");
-            Phone.Instance.SendNotificationTo("Decorator");
+            Phone.Instance.SendNotificationTo("Decorator", category);
         }
         AddToInventory(MAIN_CHARACTER, category, item);
     }
@@ -251,7 +251,7 @@ public class InventoryManager : ScriptableObject
     //    SaveInventories();
     //}
 
-    private static string GetInventoryCategory(string category)
+    public static string GetInventoryCategory(string category)
     {
         if (category.Contains("Shoe"))
             return "Shoe_Icons";

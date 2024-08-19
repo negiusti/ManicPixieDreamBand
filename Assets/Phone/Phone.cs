@@ -94,6 +94,23 @@ public class Phone : MonoBehaviour
     public void Reset()
     {
         messagesApp.Reset();
+        appNotifications.Clear();
+    }
+
+    public void SendNotificationTo(string app, string arg)
+    {
+        Debug.Log("Send notifs for: " + app);
+        if (appNotifications == null)
+            appNotifications = new HashSet<string>();
+        appNotifications.Add(app);
+        switch (app)
+        {
+            case "Decorator":
+                decoratorApp.AddNotification(arg);
+                break;
+            default:
+                break;
+        }
     }
 
     public void SendNotificationTo(string app)
