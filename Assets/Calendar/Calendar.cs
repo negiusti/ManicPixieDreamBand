@@ -187,6 +187,7 @@ public class Calendar : ScriptableObject
 
     public static void Sleep()
     {
+        DailyRandoms.Refresh();
         day++;
         SetIsNight(false);
         currentEventIdx = 0;

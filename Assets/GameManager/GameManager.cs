@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(QuestManager.CompleteCurrentQuest), this, SymbolExtensions.GetMethodInfo(() => QuestManager.CompleteCurrentQuest()));
         Lua.RegisterFunction(nameof(RomanceManager.ChangeRelationshipScore), this, SymbolExtensions.GetMethodInfo(() => RomanceManager.ChangeRelationshipScore(string.Empty, (double)0)));
         Lua.RegisterFunction(nameof(Calendar.SchedulePlotEvent), this, SymbolExtensions.GetMethodInfo(() => Calendar.SchedulePlotEvent(string.Empty, string.Empty, string.Empty, false, (double)0)));
+        Lua.RegisterFunction(nameof(DailyRandoms.DrinkSpecial), this, SymbolExtensions.GetMethodInfo(() => DailyRandoms.DrinkSpecial()));
     }
 
     void UnregisterSOLuaFuncs()
@@ -104,6 +105,7 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(QuestManager.CompleteCurrentQuest));
         Lua.UnregisterFunction(nameof(RomanceManager.ChangeRelationshipScore));
         Lua.UnregisterFunction(nameof(Calendar.SchedulePlotEvent));
+        Lua.UnregisterFunction(nameof(DailyRandoms.DrinkSpecial));
         //}
     }
 
@@ -148,6 +150,7 @@ public class GameManager : MonoBehaviour
         MainCharacterState.Load();
         Calendar.Load();
         InventoryManager.LoadInventories();
+        DailyRandoms.LoadFromJson().WaitForCompletion();
         ConversationJson.LoadFromJson().WaitForCompletion();
         ConversationJson.LoadQuestsFromJson().WaitForCompletion();
         ConversationJson.LoadRomancesFromJson().WaitForCompletion();

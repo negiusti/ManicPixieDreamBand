@@ -35,11 +35,6 @@ public class BGMusicController : MonoBehaviour
         PlayRandomClip();
     }
 
-    private void OnDestroy()
-    {
-        audioSource.Stop();
-    }
-
     private void Update()
     {
         if (!audioSource.isPlaying && !isPaused && isFocused)
@@ -48,10 +43,8 @@ public class BGMusicController : MonoBehaviour
         }
         if (audioSource.isPlaying && isPaused)
         {
-            Debug.Log("What the fuck");
-            PauseAudio();
+             PauseAudio();
         }
-            
     }
 
     private void OnApplicationFocus(bool focus)

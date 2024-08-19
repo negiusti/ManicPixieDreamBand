@@ -1197,8 +1197,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: 'Can I interest you in our Drink Of The Day: The Ultra Double Chunky
-          Munky Malt Mocha Madness Deluxe?'
+        value: 'Can I interest you in our Drink Of The Day: [lua( DrinkSpecial()
+          )]?'
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -1223,6 +1223,12 @@ MonoBehaviour:
         originDialogueID: 34
         destinationConversationID: 1
         destinationDialogueID: 36
+        isConnector: 0
+        priority: 2
+      - originConversationID: 1
+        originDialogueID: 34
+        destinationConversationID: 1
+        destinationDialogueID: 38
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -1259,7 +1265,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Sounds good, I'll take three.
+        value: Sounds good, gimme three of those!
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -1287,8 +1293,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1065.3004
-        y: 599.5761
+        x: 1042.5498
+        y: 580.82434
         width: 160
         height: 30
     - id: 36
@@ -1335,14 +1341,14 @@ MonoBehaviour:
         destinationDialogueID: 37
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: CheckFlag("Tipped") == false
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1460.8235
+        x: 1459.1334
         y: 326.48517
         width: 160
         height: 30
@@ -1430,7 +1436,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Right. I'll take 3 oat milk lattes.
+        value: Uh... I'll take 3 oat milk lattes.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -1485,7 +1491,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Ok. I'll have the monkey dunky deluxe or whatever.
+        value: Ok. I'll have [lua( DrinkSpecial() )] or whatever.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -1628,8 +1634,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 690.6944, y: 655.13696}
-    canvasZoom: 0.5916892
+    canvasScrollPosition: {x: 703.96906, y: 126.66043}
+    canvasZoom: 0.76318973
   - id: 4
     fields:
     - title: Title
