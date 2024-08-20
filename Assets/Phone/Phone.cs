@@ -108,6 +108,9 @@ public class Phone : MonoBehaviour
             case "Decorator":
                 decoratorApp.AddNotification(arg);
                 break;
+            case "Gear":
+                gearApp.AddNotification(arg);
+                break;
             default:
                 break;
         }
@@ -564,6 +567,10 @@ public class Phone : MonoBehaviour
 
     public void Lock()
     {
+        Camera mainCam = Camera.main;
+        if (mainCam == null)
+            return;
+
         isLocked = true;
         // For text responses
         if (DialogueManager.isConversationActive && customDialogue.IsCurrentConvoTxt())
@@ -574,12 +581,13 @@ public class Phone : MonoBehaviour
         HUDIcon.GetComponent<Animator>().SetBool("Locked", true);
         HUDIcon.GetComponent<SpriteResolver>().SetCategoryAndLabel("PhoneHUDIcon", "Locked");
         GoHome();
+
         foreach (Transform child in transform)
         {
             if (child.tag.Equals("Menu"))
                 continue;
             // Move each child object
-            float deltaX = background.transform.localPosition.x - Camera.main.gameObject.transform.position.x;
+            float deltaX = background.transform.localPosition.x - mainCam.gameObject.transform.position.x;
             Vector3 target = child.transform.localPosition + (Vector3.down * 1600f) + (Vector3.left * deltaX);
             StartCoroutine(Lerp(child.gameObject, target, 0.5f));
         }

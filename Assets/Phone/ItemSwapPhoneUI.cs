@@ -17,6 +17,7 @@ public class ItemSwapPhoneUI : MonoBehaviour
     private int gearIdx;
     private string gearLabel;
     private DecoratorApp decoratorApp;
+    private GearApp gearApp;
 
     public string Category()
     {
@@ -33,16 +34,22 @@ public class ItemSwapPhoneUI : MonoBehaviour
         icon = GetComponentInChildren<ItemSwapIcon>(includeInactive: true);
         spriteLibrary = GetComponentInChildren<SpriteLibrary>(includeInactive: true);
         decoratorApp = GetComponentInParent<DecoratorApp>(includeInactive: true);
+        gearApp = GetComponentInParent<GearApp>(includeInactive: true);
     }
 
     private void OnEnable()
     {
-        if (gearCategory == null || gearCategory.Length == 0)
-            return;
         if (InventoryManager.defaultPurchaseables == null)
             return;
         if (icon == null)
             Start();
+        if (gearCategory == null || gearCategory.Length == 0)
+        {
+            if (furniture != null)
+                notifIndicator.SetActive(decoratorApp.HasNotification(furniture.Category()));
+            return;
+        }
+        
         gearInScene = FindObjectsOfType<Gear>().Where(g => !g.shared).ToList();
         gearLabels = InventoryManager.GetMCInventory(gearCategory).ToArray();
         if (gearLabels.Length == 0) // unlock everything
@@ -53,6 +60,7 @@ public class ItemSwapPhoneUI : MonoBehaviour
         gearLabel = Gear.GetGearLabel(gearCategory);
         gearIdx = Array.IndexOf(gearLabels, gearLabel);
         icon.AssignItem(gearCategory, gearLabel);
+        notifIndicator.SetActive(gearApp.HasNotification(gearCategory));
     }
 
     public void AssignItem(Furniture f, bool showNotif=false)
@@ -90,6 +98,8 @@ public class ItemSwapPhoneUI : MonoBehaviour
         string saveKey = "gear_" + gearCategory;
         ES3.Save(saveKey, gearLabel);
         UpdateGearInScene();
+        notifIndicator.SetActive(false);
+        gearApp.ClearNotification(gearCategory);
     }
 
     private int GetWrapAroundIndex(int idx, int maxIdx)

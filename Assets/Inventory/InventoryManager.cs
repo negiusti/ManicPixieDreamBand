@@ -79,10 +79,12 @@ public class InventoryManager : ScriptableObject
         {
             Phone.Instance.NotificationMessage("Added " + item + " to gear");
             Phone.Instance.SendNotificationTo("Gear");
+            Phone.Instance.SendNotificationTo("Gear", category);
         }
         else
         {
             Phone.Instance.NotificationMessage("Added " + item + " to home");
+            Phone.Instance.SendNotificationTo("Decorator");
             Phone.Instance.SendNotificationTo("Decorator", category);
         }
         AddToInventory(MAIN_CHARACTER, category, item);
