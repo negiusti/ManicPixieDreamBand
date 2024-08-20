@@ -63,8 +63,6 @@ public class DecoratorApp : PhoneApp
 
     public void ClearNotification(string category)
     {
-        Debug.Log("REMOVE NOTIF FOR: " + category);
-        Debug.Log("REMOVE NOTIF FOR: " + InventoryManager.GetInventoryCategory(category));
         if (furnitureCategoryNotifications == null)
             Start();
         furnitureCategoryNotifications.Remove(category);
@@ -73,8 +71,6 @@ public class DecoratorApp : PhoneApp
 
     public void AddNotification(string category)
     {
-        Debug.Log("ADD NOTIF FOR: " + category);
-        Debug.Log("ADD NOTIF FOR: " + InventoryManager.GetInventoryCategory(category));
         if (furnitureCategoryNotifications == null)
             Start();
         furnitureCategoryNotifications.Add(category);
@@ -83,8 +79,6 @@ public class DecoratorApp : PhoneApp
 
     public bool HasNotification(string category)
     {
-        Debug.Log("HAS NOTIF FOR: " + category + furnitureCategoryNotifications.Contains(category));
-        Debug.Log("HAS NOTIF FOR: " + InventoryManager.GetInventoryCategory(category) + furnitureCategoryNotifications.Contains(InventoryManager.GetInventoryCategory(category)));
         if (furnitureCategoryNotifications == null)
             Start();
         return furnitureCategoryNotifications.Contains(category) || furnitureCategoryNotifications.Contains(InventoryManager.GetInventoryCategory(category));

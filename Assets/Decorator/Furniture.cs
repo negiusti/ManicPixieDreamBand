@@ -22,7 +22,20 @@ public class Furniture : MonoBehaviour
         labels = InventoryManager.GetMCInventory(category).ToArray();
         if (labels.Length == 0)
             labels = spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(category).ToArray();
-        saveKey = SceneChanger.Instance.GetCurrentScene() + category + gameObject.name;
+        saveKey = (SceneChanger.Instance.GetCurrentScene() == "Character_Editor" ? "Bedroom" : SceneChanger.Instance.GetCurrentScene()) + category + gameObject.name;
+        label = ES3.Load(saveKey, defaultValue: spriteResolver.GetLabel());
+        spriteResolver.SetCategoryAndLabel(category, label);
+        index = Array.IndexOf(labels, label);
+    }
+
+    private void OnEnable()
+    {
+        if (spriteResolver == null)
+            return;
+        category = spriteResolver.GetCategory();
+        labels = InventoryManager.GetMCInventory(category).ToArray();
+        if (labels.Length == 0)
+            labels = spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(category).ToArray();
         label = ES3.Load(saveKey, defaultValue: spriteResolver.GetLabel());
         spriteResolver.SetCategoryAndLabel(category, label);
         index = Array.IndexOf(labels, label);
