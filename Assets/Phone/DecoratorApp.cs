@@ -28,6 +28,12 @@ public class DecoratorApp : PhoneApp
         Refresh();
     }
 
+    public void Reset()
+    {
+        if (furnitureCategoryNotifications != null)
+            furnitureCategoryNotifications.Clear();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -43,10 +49,6 @@ public class DecoratorApp : PhoneApp
             scrollView.verticalNormalizedPosition = Mathf.Clamp(scrollView.verticalNormalizedPosition, 1f, 1f);
             scrollView.verticalScrollbar.value = 1f;
             scrollView.verticalNormalizedPosition = 1f;
-        }
-        else
-        {
-            Debug.LogWarning("ScrollView or its verticalScrollbar is not assigned.");
         }
     }
 

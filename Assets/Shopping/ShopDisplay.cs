@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class ShopDisplay : MonoBehaviour
@@ -20,7 +21,17 @@ public class ShopDisplay : MonoBehaviour
     {
         if (childPurchasables == null)
             Start();
-        int randomIdx = Random.Range(0, childPurchasables.Length);
+
+        // All of this displays purchaseables have been purchased
+        if (childPurchasables.All(p => p.GetAvailableStock().Length == 0))
+            return;
+
+        // Find a purchaseable that still has some items left to be purchased
+        int randomIdx;
+        do {
+            randomIdx = Random.Range(0, childPurchasables.Length);
+        } while (childPurchasables[randomIdx].GetAvailableStock().Length == 0);
+
         Debug.Log("randomize displays " + randomIdx);
 
         for (int i = 0; i < childPurchasables.Length; i ++)

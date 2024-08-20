@@ -10,6 +10,12 @@ public class GearApp : PhoneApp
         gearCategoryNotifications = new HashSet<string>();
     }
 
+    public void Reset()
+    {
+        if (gearCategoryNotifications != null)
+            gearCategoryNotifications.Clear();
+    }
+
     public void ClearNotification(string category)
     {
         if (gearCategoryNotifications == null)

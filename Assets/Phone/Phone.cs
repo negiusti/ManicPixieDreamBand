@@ -95,6 +95,8 @@ public class Phone : MonoBehaviour
     {
         messagesApp.Reset();
         appNotifications.Clear();
+        decoratorApp.Reset();
+        gearApp.Reset();
     }
 
     public void SendNotificationTo(string app, string arg)

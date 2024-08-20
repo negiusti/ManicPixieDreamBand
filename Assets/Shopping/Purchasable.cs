@@ -84,7 +84,7 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         Save();
     }
 
-    private string[] GetAvailableStock()
+    public string[] GetAvailableStock()
     {
         if (category == null)
             Start();
