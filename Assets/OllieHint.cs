@@ -17,7 +17,7 @@ public class OllieHint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!DialogueManager.Instance.IsConversationActive && movement.IsSkating() && !Tutorial.hasOllied && Tutorial.hasSkated && Phone.Instance.IsLocked() && isOutside)
+        if (!DialogueManager.Instance.IsConversationActive && movement.IsSkating() && !Tutorial.hasOllied && Phone.Instance.IsLocked() && isOutside)
         {
             EnableAllChildren();
         }
