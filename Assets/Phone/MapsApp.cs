@@ -152,12 +152,12 @@ public class MapsApp : PhoneApp
         currentlySelectedLocation = location;
     }
 
-    public void OpenPin()
+    public void OpenPin(bool alreadyHere = false)
     {
         HidePins();
         phone.OpenPin();
         travelScreen.gameObject.SetActive(true);
-        travelScreen.SetLocationName(locationToNiceName[currentlySelectedLocation]);
+        travelScreen.SetLocationName(locationToNiceName[currentlySelectedLocation], alreadyHere);
         travelScreen.SetLocationsList(GetLocationsInNeighborhood(currentlySelectedLocation));
     }
 

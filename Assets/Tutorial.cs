@@ -9,6 +9,7 @@ public class Tutorial : ScriptableObject
 {
     public static bool hasWalked;
     public static bool hasSkated;
+    public static bool hasOllied;
     public static bool changedSkin;
     public static bool hasClosedPhone;
     public static bool playedBass;
@@ -18,6 +19,7 @@ public class Tutorial : ScriptableObject
     {
         hasWalked = ES3.Load("Tutorial/hasWalked", false);
         hasSkated = ES3.Load("Tutorial/hasSkated", false);
+        hasSkated = ES3.Load("Tutorial/hasOllied", false);
         changedSkin = ES3.Load("Tutorial/changedSkin", false);
         hasClosedPhone = ES3.Load("Tutorial/hasClosedPhone", false);
         playedBass = ES3.Load("Tutorial/playedBass", false);
@@ -28,6 +30,7 @@ public class Tutorial : ScriptableObject
     {
         ES3.Save("Tutorial/hasWalked", hasWalked);
         ES3.Save("Tutorial/hasSkated", hasSkated);
+        ES3.Save("Tutorial/hasOllied", hasOllied);
         ES3.Save("Tutorial/changedSkin", changedSkin);
         ES3.Save("Tutorial/hasClosedPhone", hasClosedPhone);
         ES3.Save("Tutorial/playedBass", playedBass);
