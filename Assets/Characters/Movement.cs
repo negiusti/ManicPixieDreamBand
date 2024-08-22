@@ -169,13 +169,19 @@ public abstract class Movement : MonoBehaviour
     protected void Ollie()
     {
         if (!lockAnim && !DialogueManager.IsConversationActive)
+        {
             animator.Play("BaseCharacter_SkateJump");
+            Tutorial.hasOllied = true;
+        }
     }
 
     protected void Rollie()
     {
         if (!lockAnim && !DialogueManager.IsConversationActive)
+        {
             animator.Play("BaseCharacter_RollerskateJump");
+            Tutorial.hasOllied = true;
+        }
     }
 
     protected void EatShit()
