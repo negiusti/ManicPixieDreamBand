@@ -3,16 +3,20 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
+using UnityEngine.UI;
 
 public class TravelScreen : MonoBehaviour
 {
+    public TextMeshPro startNavText;
     public TextMeshPro locationText;
     private SpriteResolver iconResolver;
     public TextMeshPro locationsList;
+    private Button button;
     // Start is called before the first frame update
     void Start()
     {
-        iconResolver = GetComponentInChildren<SpriteResolver>();
+        iconResolver = GetComponentInChildren<SpriteResolver>(true);
+        button = GetComponentInChildren<Button>(true);
     }
 
     // Update is called once per frame
@@ -21,9 +25,20 @@ public class TravelScreen : MonoBehaviour
         
     }
 
-    public void SetLocationName(string location)
+    public void SetLocationName(string location, bool alreadyHere = false)
     {
-        locationText.text = location + " ?";
+        if (alreadyHere)
+        {
+            startNavText.text = "You're already here!";
+            locationText.text = location;
+            button.gameObject.SetActive(false);
+        } else
+        {
+            startNavText.text = "Start navigation to";
+            locationText.text = location + "?";
+            button.gameObject.SetActive(true);
+        }
+        
         iconResolver.SetCategoryAndLabel("Neighborhood", location);
     }
 

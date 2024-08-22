@@ -37,13 +37,13 @@ public class Pin : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPo
     public void SetHere()
     {
         alreadyHere = true;
-        this.spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+        this.spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
     }
 
     public void SetNotHere()
     {
         alreadyHere = false;
-        this.spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+        this.spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
     }
 
     public void Hover()
@@ -77,11 +77,9 @@ public class Pin : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPo
 
     public void Click()
     {
-        if (alreadyHere)
-            return;
         Debug.Log("hovering pin: " + location.ToString());
         app.SetLocation(location);
-        app.OpenPin();
+        app.OpenPin(alreadyHere);
     }
 
     private void OnMouseDown()
