@@ -76,7 +76,7 @@ public class MapsApp : PhoneApp
         { Location.CoffeeShop, "Coffee Zone" },
         { Location.Basement, "Practice Space" },
         { Location.ThriftStore, "Thrift Store" },
-        { Location.Bar, "Bar" },
+        { Location.Bar, "Dumpster Dive Bar" },
         { Location.MusicShop, "Music Shop" },
         { Location.DowntownNeighborhood, "Downtown" },
         { Location.ShoppingDistrict, "Shopping District" },

@@ -17501,13 +17501,16 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Dylan", "Happy", "Default");
+      userScript: Emote("Dylan", "Happy", "Default");SchedulePlotEvent("Give keys
+        to Dylan @ music shop", "Plot/PackUpForFirstGig", "MusicShop", false, 0);SchedulePlotEvent("grab
+        keys from JJ @ dumpster dive", "Plot/PackUpForFirstGig", "SmallBar", false,
+        0);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 293.80035
+        x: 295.17004
         y: 836.43494
         width: 160
         height: 30
@@ -17841,8 +17844,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 149.43793, y: 696.066}
-    canvasZoom: 0.72909296
+    canvasScrollPosition: {x: 0.8810917, y: 377.27423}
+    canvasZoom: 0.730093
   - id: 25
     fields:
     - title: Title
@@ -19334,7 +19337,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 25
@@ -19346,14 +19349,14 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: CompleteCurrentEvent()
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1444.6437
-        y: 1734.9812
+        x: 1443.5226
+        y: 1733.8604
         width: 160
         height: 30
     - id: 40
@@ -20870,7 +20873,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: RemoveItem("Keys");AddToMCInventory("Posters", "Vintage Poster")
+      userScript: RemoveItem("Keys");AddToMCInventory("Posters", "Vintage Poster");CompleteCurrentEvent()
       onExecute:
         m_PersistentCalls:
           m_Calls: []
