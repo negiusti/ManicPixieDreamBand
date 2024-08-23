@@ -15,7 +15,7 @@ public class BandPracticeEvent : ICalendarEvent
 
     public string Name()
     {
-        return "band practice at " + Location();
+        return "band practice @ warehouse";
     }
 
     public GameObject Minigame()

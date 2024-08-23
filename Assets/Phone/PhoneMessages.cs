@@ -10,7 +10,7 @@ public class PhoneMessages : PhoneApp
     private HashSet<string> contactsList;
     private Dictionary<string, Contact> contactsMap;
     private CustomDialogueScript customDialogue;
-    private List<GameObject> instances = new List<GameObject>();
+    private List<GameObject> instances = new List<GameObject>(); // contact game objects
     private Dictionary<string, string> unfinishedConversations; // contact name to name of conversation
 
     // Start is called before the first frame update
@@ -68,6 +68,7 @@ public class PhoneMessages : PhoneApp
         if (!contactsList.Contains(contactName))
             AddContact(contactName);
         contactsMap[contactName].ShowNotificationIndicator();
+        contactsMap[contactName].transform.SetAsFirstSibling();
     }
 
     public void CompleteConvo(string contactName)
