@@ -17,11 +17,14 @@ public class Stage : MonoBehaviour
     public PlayInstrument rightInst;
     public PlayInstrument centerInst;
     public CrowdSpawner crowdSpawner;
+    private AudioSource audioSource;
+    public List<AudioClip> CloudyKingsClips;
+
 
     // Start is called before the first frame update
     void Start()
     {
-
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -34,6 +37,17 @@ public class Stage : MonoBehaviour
     {
         if (crowdSpawner != null)
             crowdSpawner.SpawnCrowd(band);
+        if (audioSource != null && band.Name.Equals("Cloudy Kings"))
+        {
+            if (CloudyKingsClips.Count == 0)
+                return;
+            GameManager.Instance.PauseBGMusic();
+            int clipIndex = Random.Range(0, CloudyKingsClips.Count);
+            Debug.Log("Playing: " + CloudyKingsClips[clipIndex].name);
+            audioSource.clip = CloudyKingsClips[clipIndex];
+            audioSource.loop = true;
+            audioSource.Play();
+        }
     }
 
     public void StopPerformance()
@@ -43,6 +57,11 @@ public class Stage : MonoBehaviour
         leftInst.Stop();
         rightInst.Stop();
         centerInst.Stop();
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+            GameManager.Instance.UnpauseBGMusic();
+        }
     }
 
     public PlayInstrument GetInstrument(string position)
