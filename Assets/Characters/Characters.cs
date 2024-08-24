@@ -32,6 +32,12 @@ public class Characters : ScriptableObject
         mc = characters.FirstOrDefault(c => c.Value.isMainCharacter()).Value;
     }
 
+    public static Dictionary<string, Character> CharactersInScene() {
+        if (mc == null)
+            RefreshCharactersCache();
+        return characters;
+    }
+
     public static void DisableDialogueTrigger(string npc)
     {
         if (characters == null || !characters.ContainsKey(npc))

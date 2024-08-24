@@ -6,7 +6,7 @@ public class BandPracticeEvent : ICalendarEvent
     [SerializeField] private string location;
     [SerializeField] private bool isNight;
 
-    public BandPracticeEvent(GameObject minigame, bool isNight, string location = "Basement")
+    public BandPracticeEvent(GameObject minigame, bool isNight, string location = "Warehouse")
     {
         this.minigame = minigame;
         this.location = location;
@@ -15,7 +15,7 @@ public class BandPracticeEvent : ICalendarEvent
 
     public string Name()
     {
-        return "band practice at " + Location();
+        return "band practice @ warehouse";
     }
 
     public GameObject Minigame()

@@ -28,7 +28,6 @@ public class JamCoordinator : ScriptableObject
         }
     }
 
-    // Start is called before the first frame update
     public static void StartJam(string bandname)
     {
         if (isJamInSession)

@@ -68,6 +68,8 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(RomanceManager.ChangeRelationshipScore), this, SymbolExtensions.GetMethodInfo(() => RomanceManager.ChangeRelationshipScore(string.Empty, (double)0)));
         Lua.RegisterFunction(nameof(Calendar.SchedulePlotEvent), this, SymbolExtensions.GetMethodInfo(() => Calendar.SchedulePlotEvent(string.Empty, string.Empty, string.Empty, false, (double)0)));
         Lua.RegisterFunction(nameof(DailyRandoms.DrinkSpecial), this, SymbolExtensions.GetMethodInfo(() => DailyRandoms.DrinkSpecial()));
+        Lua.RegisterFunction(nameof(AudioController.PauseBGMusic), this, SymbolExtensions.GetMethodInfo(() => AudioController.PauseBGMusic()));
+        Lua.RegisterFunction(nameof(AudioController.UnpauseBGMusic), this, SymbolExtensions.GetMethodInfo(() => AudioController.UnpauseBGMusic()));
     }
 
     void UnregisterSOLuaFuncs()
@@ -106,6 +108,8 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(RomanceManager.ChangeRelationshipScore));
         Lua.UnregisterFunction(nameof(Calendar.SchedulePlotEvent));
         Lua.UnregisterFunction(nameof(DailyRandoms.DrinkSpecial));
+        Lua.UnregisterFunction(nameof(AudioController.PauseBGMusic));
+        Lua.UnregisterFunction(nameof(AudioController.UnpauseBGMusic));
         //}
     }
 
@@ -124,6 +128,16 @@ public class GameManager : MonoBehaviour
     private void ChangedActiveScene(Scene current, Scene next)
     {
         SaveData();
+    }
+
+    public void PauseBGMusic()
+    {
+        bgMusic.PauseAudio();
+    }
+
+    public void UnpauseBGMusic()
+    {
+        bgMusic.UnpauseAudio();
     }
 
     public void RefreshGameState()

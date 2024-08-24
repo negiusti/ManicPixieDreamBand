@@ -122,7 +122,7 @@ public class ConvoRequirements : ScriptableObject
         }
         if (requirements.locations != null && !requirements.locations.Contains(CurrentLocation()))
         {
-            Debug.Log("location req not met");
+            Debug.Log("location req not met: " + requirements.locations[0] + " " + CurrentLocation());
             return false;
         }
         if (requirements.relationshipScore != null && requirements.relationshipScore.npc != null && RomanceManager.GetRelationshipScore(requirements.relationshipScore.npc) < requirements.relationshipScore.score)

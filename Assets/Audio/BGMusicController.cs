@@ -69,7 +69,6 @@ public class BGMusicController : MonoBehaviour
         audioSource.Play();
     }
 
-
     public void PauseAudio()
     {
         Debug.Log("Pause audio");

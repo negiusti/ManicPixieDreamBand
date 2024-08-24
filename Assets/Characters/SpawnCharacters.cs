@@ -28,7 +28,7 @@ public class SpawnCharacters : ScriptableObject
         Debug.Log("SpawnParticipants");
         if (participants == null)
             return;
-        Character[] characters = FindObjectsOfType<Character>();
+        Dictionary<string, Character> characters = Characters.CharactersInScene();
 
         // Sort characters by their y position
         Array.Sort(participants, (a, b) => b.position.y.CompareTo(a.position.y));
@@ -36,7 +36,7 @@ public class SpawnCharacters : ScriptableObject
         foreach (Participant p in participants)
         {
             Debug.Log("SpawnParticipant: " + p.name);
-            Character c = characters.FirstOrDefault(c => c.name.Equals(p.name));
+            Character c = characters.GetValueOrDefault(p.name, null);
             int idx = layerToIdx.GetValueOrDefault(p.layer, -1) + 1;
             layerToIdx[p.layer] = idx;
             if (c == null)
