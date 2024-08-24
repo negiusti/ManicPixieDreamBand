@@ -6,6 +6,7 @@ public class Pin : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPo
 {
     public MapsApp.Location location;
     public SpriteRenderer pin;
+    public SpriteRenderer icon;
     private TextMeshPro tm;
     private SpriteRenderer spriteRenderer;
     private Vector3 originalScale;
@@ -17,7 +18,7 @@ public class Pin : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPo
     {
         tm = this.GetComponent<TextMeshPro>();
         spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
-        originalScale = this.spriteRenderer.gameObject.transform.localScale;
+        originalScale = spriteRenderer.gameObject.transform.localScale;
         app = this.GetComponentInParent<MapsApp>();
         alreadyHere = false;
         pin.enabled = false;
@@ -37,21 +38,23 @@ public class Pin : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPo
     public void SetHere()
     {
         alreadyHere = true;
-        this.spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+        spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+        Hover();
     }
 
     public void SetNotHere()
     {
         alreadyHere = false;
-        this.spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+        spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
     }
 
     public void Hover()
     {
         Vector3 newScale = originalScale + Vector3.one * 5f;
-        this.spriteRenderer.gameObject.transform.localScale = newScale;
-        this.tm.enabled = true;
-        this.pin.enabled = true;
+        spriteRenderer.gameObject.transform.localScale = newScale;
+        tm.enabled = true;
+        pin.enabled = true;
+        icon.color = new Color(1f, 1f, 1f, 1f);
         Debug.Log("hovering pin: " + location.ToString());
     }
 
@@ -62,12 +65,15 @@ public class Pin : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPo
 
     public void UnHover()
     {
+        if (alreadyHere)
+            return;
         if (tm!= null)
             tm.enabled = false;
         if (spriteRenderer != null)
             spriteRenderer.gameObject.transform.localScale = originalScale;
         if (pin != null)
             pin.enabled = false;
+        icon.color = new Color(1f, 1f, 1f, 0.7f);
     }
 
     private void OnMouseExit()
