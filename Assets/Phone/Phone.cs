@@ -192,6 +192,17 @@ public class Phone : MonoBehaviour
             txtResponsePanel.Close();
             customDialogue.StopCurrentConvo();
         }
+
+        if (!phoneStateStack.Peek().Equals(PhoneState.Convo) && txtResponsePanel.isActiveAndEnabled)
+        {
+            txtResponsePanel.gameObject.SetActive(false);
+        }
+
+        if (phoneStateStack.Peek().Equals(PhoneState.Convo) && !txtResponsePanel.isActiveAndEnabled)
+        {
+            txtResponsePanel.gameObject.SetActive(true);
+        }
+
         // Don't let the HUD icon block speech bubbles
         if (DialogueManager.IsConversationActive && !customDialogue.IsTxtConvoActive())
         {
