@@ -12,6 +12,7 @@ public class Pin : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPo
     private Vector3 originalScale;
     private MapsApp app;
     private bool alreadyHere;
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -21,11 +22,14 @@ public class Pin : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPo
         originalScale = spriteRenderer.gameObject.transform.localScale;
         app = this.GetComponentInParent<MapsApp>();
         alreadyHere = false;
-        pin.enabled = false;
+        //pin.enabled = false;
+        animator = GetComponent<Animator>();
     }
 
     private void OnEnable()
     {
+        if (animator == null)
+            return;
         UnHover();
     }
 
@@ -50,10 +54,11 @@ public class Pin : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPo
 
     public void Hover()
     {
+        animator.SetBool("Hovered", true);
         Vector3 newScale = originalScale + Vector3.one * 5f;
         spriteRenderer.gameObject.transform.localScale = newScale;
-        tm.enabled = true;
-        pin.enabled = true;
+        //tm.enabled = true;
+        //pin.enabled = true;
         icon.color = new Color(1f, 1f, 1f, 1f);
         Debug.Log("hovering pin: " + location.ToString());
     }
@@ -67,12 +72,13 @@ public class Pin : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPo
     {
         if (alreadyHere)
             return;
-        if (tm!= null)
-            tm.enabled = false;
+        animator.SetBool("Hovered", false);
+        //if (tm!= null)
+        //    tm.enabled = false;
         if (spriteRenderer != null)
             spriteRenderer.gameObject.transform.localScale = originalScale;
-        if (pin != null)
-            pin.enabled = false;
+        //if (pin != null)
+        //    pin.enabled = false;
         icon.color = new Color(1f, 1f, 1f, 0.7f);
     }
 
