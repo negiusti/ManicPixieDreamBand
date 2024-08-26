@@ -167,6 +167,7 @@ public class MapsApp : PhoneApp
         {
             p.gameObject.SetActive(true);
         }
+        SetCurrentLocation();
     }
 
     private void HidePins()
