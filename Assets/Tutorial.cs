@@ -19,7 +19,7 @@ public class Tutorial : ScriptableObject
     {
         hasWalked = ES3.Load("Tutorial/hasWalked", false);
         hasSkated = ES3.Load("Tutorial/hasSkated", false);
-        hasSkated = ES3.Load("Tutorial/hasOllied", false);
+        hasOllied = ES3.Load("Tutorial/hasOllied", false);
         changedSkin = ES3.Load("Tutorial/changedSkin", false);
         hasClosedPhone = ES3.Load("Tutorial/hasClosedPhone", false);
         playedBass = ES3.Load("Tutorial/playedBass", false);

@@ -690,6 +690,7 @@ GameObject:
   - component: {fileID: 7588756009785470716}
   - component: {fileID: 8769387184501495315}
   - component: {fileID: 1079072740874734869}
+  - component: {fileID: 6895357439255162733}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -874,6 +875,23 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b56c3138d217e48539eef5c31153b8dd, type: 3}
   - {fileID: 8300000, guid: fc9566846ab634d6383775f3e39ef93a, type: 3}
   - {fileID: 8300000, guid: 86407c33bfdc44b0283453515d06a09c, type: 3}
+--- !u!114 &6895357439255162733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4816398035597759301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 83c4d7573410c4eaba99983fa8963d25, type: 2}
 --- !u!1 &4970768381034391059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1400,7 +1418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
+  m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
@@ -1411,7 +1429,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -1554,7 +1572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
+  m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
@@ -1565,7 +1583,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -3335,7 +3353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2602022730736838388, guid: 4e72b200450ec451ca8bcc7674a475ca, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3680972191313253840, guid: 4e72b200450ec451ca8bcc7674a475ca, type: 3}
       propertyPath: text
@@ -3344,6 +3362,14 @@ PrefabInstance:
     - target: {fileID: 4187783426048577615, guid: 4e72b200450ec451ca8bcc7674a475ca, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 4357396488320579743, guid: 4e72b200450ec451ca8bcc7674a475ca, type: 3}
+      propertyPath: m_RenderShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4357396488320579743, guid: 4e72b200450ec451ca8bcc7674a475ca, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4661916803215343867, guid: 4e72b200450ec451ca8bcc7674a475ca, type: 3}
       propertyPath: m_LocalPosition.x
