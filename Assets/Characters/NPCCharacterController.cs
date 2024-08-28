@@ -10,8 +10,8 @@ public class NPCCharacterController : MonoBehaviour
     void Start()
     {
         character = gameObject.GetComponent<Character>();
-        character.SetCharacterName(transform.name);
-        character.LoadCharacter();
+        //character.SetCharacterName(transform.name);
+        //character.LoadCharacter();
         hint = gameObject.GetComponentInChildren<TalkToMeHint>(true);
     }
 

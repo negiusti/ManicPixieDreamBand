@@ -165,10 +165,23 @@ public class StarSpawnerScript : MonoBehaviour
             yield return null;
 
         // Display score here!!!
-        scoreTxt.text = "You hit " + GetScore().ToString() + "% of the notes";
 
-
-        while (hamster.time < hamster.clip.length)
+        scoreTxt.text = "Score: " + GetScore().ToString() + "%";
+        scoreTxt.text += "\n";
+        if (GetScore() > 90f)
+        {
+            scoreTxt.text += "Well done, rock star!";
+        } else if (GetScore() > 70f)
+        {
+            scoreTxt.text += "Not bad, punk!";
+        } else if (GetScore() > 50f)
+        {
+            scoreTxt.text += "Keep practicing!!";
+        } else
+        {
+            scoreTxt.text += "Be honest, did u even try? :)";
+        }
+        while (hamster.time < hamster.clip.length - 1f && hamster.isPlaying)
             yield return null;
 
         //miniGame.Fade();
@@ -178,7 +191,15 @@ public class StarSpawnerScript : MonoBehaviour
 
     public void HitNote()
     {
+        Debug.Log("HIT NOTE");
         hitNotes++;
+    }
+
+    public void WrongNote()
+    {
+        Debug.Log("WRONG NOTE");
+        if (hitNotes > 0)
+            hitNotes--;
     }
 
     void Update()
@@ -301,6 +322,6 @@ public class StarSpawnerScript : MonoBehaviour
             Vector3 destinationPos = new Vector3(x.transform.localPosition.x, GetDestinationY(), x.transform.localPosition.z);
             StartCoroutine(Lerp(x, destinationPos, highwaySpeed));
         }
-    }   
+    }
 
 }

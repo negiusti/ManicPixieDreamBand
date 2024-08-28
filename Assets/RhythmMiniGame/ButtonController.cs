@@ -5,6 +5,7 @@ using UnityEngine.U2D.Animation;
 
 public class ButtonController : MonoBehaviour
 {
+    public StarSpawnerScript starSpawner;
     private SpriteRenderer spriteRenderer;
     public Sprite defaultSprite;
     public Sprite pressedSprite;
@@ -12,6 +13,7 @@ public class ButtonController : MonoBehaviour
     public KeyCode keyCode;
     private Color pressedColor = new Color(254/255f, 89/255f, 136/255f);
     private Color unpressedColor = new Color(253/255f, 197/255f, 235/255f);
+    private bool touchingStar;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +21,7 @@ public class ButtonController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = defaultSprite;
         spriteRenderer.color = unpressedColor;
+        touchingStar = false;
     }
 
     // Update is called once per frame
@@ -29,6 +32,10 @@ public class ButtonController : MonoBehaviour
             spriteRenderer.sprite = pressedSprite;
             spriteRenderer.color = pressedColor;
             guitarString.SetCategoryAndLabel("String", "Wiggly");
+            if (!touchingStar)
+            {
+                starSpawner.WrongNote();
+            }
         }
         if (Input.GetKeyUp(keyCode))
         {
@@ -36,5 +43,23 @@ public class ButtonController : MonoBehaviour
             spriteRenderer.color = unpressedColor;
             guitarString.SetCategoryAndLabel("String", "Still");
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Star"))
+        {
+            touchingStar = true;
+        }
+
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Star"))
+        {
+            touchingStar = false;
+        }
+            
     }
 }
