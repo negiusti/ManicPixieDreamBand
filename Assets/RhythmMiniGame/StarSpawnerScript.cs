@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -28,11 +29,12 @@ public class StarSpawnerScript : MonoBehaviour
     private AudioSource hamster;
     private Queue<GameObject> spawnedStars;
     private int hitNotes;
-    private int missedNotes;
+    private int totalNotes;
     private BassMiniGame miniGame;
     private string[] notes;
     private string[] times;
     private bool ready;
+    public TextMeshPro scoreTxt;
     private Coroutine spawnStarCoroutine;
 
     private void OnLoadCompleted1(AsyncOperationHandle<TextAsset> obj)
@@ -41,6 +43,7 @@ public class StarSpawnerScript : MonoBehaviour
         {
             string songNotes = obj.Result.text;
             notes = songNotes.Split(new char[] { '\n', '\r', '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            totalNotes = notes.Length;
         }
         else
         {
@@ -83,7 +86,8 @@ public class StarSpawnerScript : MonoBehaviour
         ready = false;
         hasStarted = false;
         hitNotes = 0;
-        missedNotes = 0;
+        totalNotes = 0;
+        scoreTxt.text = "";
         hamster = this.GetComponent<AudioSource>();
         // Specify the addressable path (use the address you set in the Addressables Group)
         string addressablePath1 = "Assets/RhythmGameNotes/BodyHorror/BodyHorror_notes.txt";
@@ -155,7 +159,16 @@ public class StarSpawnerScript : MonoBehaviour
                 Debug.LogError("Invalid float format.");
             }
         }
-        while(hamster.time < hamster.clip.length - 1f)
+
+        // wait until last note passes
+        while (hamster.time < (delay + lagCorrection + 0.5f))
+            yield return null;
+
+        // Display score here!!!
+        scoreTxt.text = "You hit " + GetScore().ToString() + "% of the notes";
+
+
+        while (hamster.time < hamster.clip.length)
             yield return null;
 
         //miniGame.Fade();
@@ -163,6 +176,10 @@ public class StarSpawnerScript : MonoBehaviour
         yield return null;
     }
 
+    public void HitNote()
+    {
+        hitNotes++;
+    }
 
     void Update()
     {
@@ -176,27 +193,29 @@ public class StarSpawnerScript : MonoBehaviour
                 spawnStarCoroutine = StartCoroutine(DelayedActions());
                 hasStarted = true;
             //}
-        } else
-        {
-            if (spawnedStars.Count > 0)
-            {
-                // This means the note was "hit"
-                if (spawnedStars.Peek() == null)
-                {
-                    spawnedStars.Dequeue();
-                    hitNotes++;
-                }
-                // This means the note was "missed"
-                else if (spawnedStars.Peek().transform.position.y < -20f)
-                {
-                    GameObject starToDestroy = spawnedStars.Dequeue();
-                    //runwayDelay = starToDestroy.GetComponent<StarMoverScript>().GetRunwayDelay();
-                    Destroy(starToDestroy);
-                    missedNotes++;
-                }
+        } //else
+        //{
+        //    if (spawnedStars.Count > 0)
+        //    {
+        //        // This means the note was "hit"
+        //        if (spawnedStars.Peek() == null)
+        //        {
+        //            spawnedStars.Dequeue();
+        //            Debug.Log("HIT NOTE" + hitNotes);
+        //            hitNotes++;
+        //        }
+        //        // This means the note was "missed"
+        //        else if (spawnedStars.Peek().transform.localPosition.y < -20f)
+        //        {
+        //            GameObject starToDestroy = spawnedStars.Dequeue();
+        //            //runwayDelay = starToDestroy.GetComponent<StarMoverScript>().GetRunwayDelay();
+        //            Destroy(starToDestroy);
+        //            Debug.Log("MISS NOTE" + missedNotes);
+        //            missedNotes++;
+        //        }
                     
-            }
-        }
+        //    }
+        //}
 
         //if (Input.GetKeyDown(KeyCode.Backspace))
         //{
@@ -213,7 +232,7 @@ public class StarSpawnerScript : MonoBehaviour
 
     public float GetScore()
     {
-        return hitNotes / (hitNotes + missedNotes);
+        return ((float)hitNotes / (float)(totalNotes)) * 100f;
     }
 
     public IEnumerator Lerp(GameObject go, Vector3 targetLocalPosition, float duration)

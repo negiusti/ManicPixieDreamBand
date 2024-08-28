@@ -6,20 +6,26 @@ public class StarControllerScript : MonoBehaviour
     private bool canHit;
     private Animator animator;
     private bool keepitmoving;
+    private StarSpawnerScript starSpawner;
+    bool hit;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        starSpawner = GetComponentInParent<StarSpawnerScript>(true);
+        hit = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(keyCode) && canHit)
+        if (Input.GetKeyDown(keyCode) && canHit && !hit)
         {
             this.gameObject.GetComponent<StarMoverScript>().enabled = false;
             animator.Play("DeathStar");
+            starSpawner.HitNote();
+            hit = true;
         }
         if (keepitmoving)
         {
