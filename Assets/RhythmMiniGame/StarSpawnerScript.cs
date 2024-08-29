@@ -10,6 +10,7 @@ public class StarSpawnerScript : MonoBehaviour
 {
     //private int[] stringz = { 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 2, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 2, 2, 1, 1, 2, 2, 1, 1, 1 };
     //private int[] stringz = { 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 4, 4, 4, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 4, 4, 4, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 4, 4, 4, 3, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1, 3, 2, 1, 2, 1, 1 };
+    public ParticleSystem starParticles;
     public float lagCorrection;
     private bool hasStarted = false;
     public GameObject pinkStar;
@@ -160,11 +161,32 @@ public class StarSpawnerScript : MonoBehaviour
             }
         }
 
+        if (GetScore() > 75f && !starParticles.isPlaying)
+        {
+            Debug.Log("Score: " + GetScore() + "start playing");
+            starParticles.Play();
+        }
+        else if (GetScore() < 75f && starParticles.isPlaying)
+        {
+            Debug.Log("Score: " + GetScore() + "stop playing");
+            starParticles.Stop();
+        }
+
         // wait until last note passes
         while (hamster.time < (delay + lagCorrection + 0.5f))
             yield return null;
 
         // Display score here!!!
+        if (GetScore() > 80f && !starParticles.isPlaying)
+        {
+            Debug.Log("Score: " + GetScore() + "start playing" + i);
+            starParticles.Play();
+        }
+        else if (GetScore() < 80f && starParticles.isPlaying)
+        {
+            Debug.Log("Score: " + GetScore() + "stop playing");
+            starParticles.Stop();
+        }
 
         scoreTxt.text = "Score: " + GetScore().ToString() + "%";
         scoreTxt.text += "\n";
@@ -256,6 +278,13 @@ public class StarSpawnerScript : MonoBehaviour
         return ((float)hitNotes / (float)(totalNotes)) * 100f;
     }
 
+    public float GetScoreSoFar()
+    {
+        if (i == 0)
+            return 0f;
+        return ((float)hitNotes / (float)i) * 100f;
+    }
+
     public IEnumerator Lerp(GameObject go, Vector3 targetLocalPosition, float duration)
     {
         Vector3 startPosition = go.transform.localPosition;
@@ -276,6 +305,16 @@ public class StarSpawnerScript : MonoBehaviour
 
     private void SpawnStar()
     {
+        if (i >= 5 && GetScoreSoFar() > 70f && !starParticles.isPlaying)
+        {
+            Debug.Log("Score so far: " + GetScoreSoFar() + "start playing" + i);
+            starParticles.Play();
+        } else if ((i < 5 || GetScoreSoFar() < 70f) && starParticles.isPlaying)
+        {
+            Debug.Log("Score so far: " + GetScoreSoFar() + "stop playing" + i);
+            starParticles.Stop();
+        }
+
         if (i < notes.Length)
         {
             note = int.Parse(notes[i]);
