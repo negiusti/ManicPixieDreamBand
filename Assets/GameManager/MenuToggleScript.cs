@@ -15,7 +15,7 @@ public class MenuToggleScript : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.I))
         {
             if (!InteractionEnabled())
                 return;
