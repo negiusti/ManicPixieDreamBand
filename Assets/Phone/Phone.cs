@@ -227,7 +227,7 @@ public class Phone : MonoBehaviour
             DisableNotificationIndicator();
 
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
         {
             // Toggle phone visibility
             ToggleLock();

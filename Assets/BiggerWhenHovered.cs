@@ -7,16 +7,19 @@ public class BiggerWhenHovered : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public float scaleFactor;
     private RectTransform rect;
     private bool hovered;
+    private bool started;
 
     // Start is called before the first frame update
     void Start()
     {
         rect = this.GetComponent<RectTransform>();
         originalScale = rect == null ? this.gameObject.transform.localScale : rect.localScale;
+
         if (scaleFactor < 1f)
         {
             scaleFactor = 1.1f;
         }
+        started = true;
     }
 
     // Update is called once per frame
@@ -27,7 +30,8 @@ public class BiggerWhenHovered : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void OnDisable()
     {
-        OnMouseExit();
+        if (started)
+            OnMouseExit();
     }
 
     private void OnMouseExit()

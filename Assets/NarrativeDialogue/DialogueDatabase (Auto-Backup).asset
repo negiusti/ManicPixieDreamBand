@@ -3458,7 +3458,7 @@ MonoBehaviour:
         priority: 2
       conditionsString: 
       userScript: NPCFaceRight("Ricki");NPCFaceRight("Max");Emote("Ricki", "Side",
-        "Sad");Emote("Max", "Angry", "Disappoint");NPCFaceLeft("Cliff");
+        "Sad");Emote("Max", "Angry", "Frown");NPCFaceLeft("Cliff");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -3905,7 +3905,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCFaceRight("Ricki");NPCFaceRight("Max");
+      userScript: NPCFaceRight("Ricki");NPCFaceRight("Max");Emote("Max", "Angry",
+        "Frown");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -4566,7 +4567,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("MainCharacter", "Default", "Frown");
+      userScript: Emote("MainCharacter", "Default", "Default");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -4745,8 +4746,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 1405.7136}
-    canvasZoom: 0.7427677
+    canvasScrollPosition: {x: 0, y: 549.0791}
+    canvasZoom: 0.74176764
   - id: 7
     fields:
     - title: Title
@@ -7138,8 +7139,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Ugh the Cloudy "Kings" are so annoying. The guitarist's strings look
-          older and grosser than my grandma's sugar daddy.
+        value: Ugh the Cloudy "Kings" are so gross. JJ's strings look slimier than
+          the vegetables Ricki keeps putting in my fridge.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -10633,8 +10634,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 208.73547, y: 3040.4512}
-    canvasZoom: 0.83782405
+    canvasScrollPosition: {x: 0, y: 303.52863}
+    canvasZoom: 0.836824
   - id: 12
     fields:
     - title: Title
@@ -14360,7 +14361,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: StartMiniGame("BandName");
+      userScript: Emote("Ricki", "Default", "Default"); StartMiniGame("BandName");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -14821,8 +14822,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1133.7556
-        y: 1221.2336
+        x: 1152.6509
+        y: 1212.7308
         width: 160
         height: 30
     - id: 28
@@ -15216,14 +15217,15 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Max", "Cry", "Sad");SetFlag("LearnedAboutBrad", true);
+      userScript: Emote("Ricki", "Pathetic", "Frown");Emote("Max", "Cry", "Sad");SetFlag("LearnedAboutBrad",
+        true);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 465.63794
-        y: 1029.794
+        x: 422.17877
+        y: 1026.0149
         width: 160
         height: 30
     - id: 35
@@ -15420,8 +15422,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Our previous bassist Brad... left the band... unexpectedly... But
-          you're in good hands! Don't be scared!!
+        value: Our previous bassist Brad left the band... unexpectedly... But you're
+          in good hands! Don't be scared!!
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -15443,14 +15445,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Ricki", "Whoa", "Stress")
+      userScript: Emote("Ricki", "Whoa", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 392.12305
-        y: 1283.6069
+        x: 392.5686
+        y: 1266.6012
         width: 160
         height: 30
     - id: 39
@@ -16755,7 +16757,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Yup
+        value: "\n   Haha yup!   \n"
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -16777,7 +16779,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Ricki", "Default", "Default");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -16788,8 +16790,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 714.12286}
-    canvasZoom: 0.69253504
+    canvasScrollPosition: {x: 8.647555, y: 0}
+    canvasZoom: 0.8459535
   - id: 24
     fields:
     - title: Title
@@ -21895,8 +21897,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 981.8445
-        y: 286.67905
+        x: 997.9575
+        y: 250.42493
         width: 160
         height: 30
     - id: 12
@@ -21983,7 +21985,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: I'm still processing it in therapy.
+        value: I'm still processing what happened in therapy.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -22122,8 +22124,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 316.1272
-        y: 763.1464
+        x: 407.35803
+        y: 751.41675
         width: 160
         height: 30
     - id: 16
@@ -22232,8 +22234,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 519.0536
-        y: 685.4021
+        x: 535.99646
+        y: 678.8855
         width: 160
         height: 30
     - id: 18
@@ -22342,8 +22344,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 316.1272
-        y: 813.1464
+        x: 239.73544
+        y: 811.8941
         width: 160
         height: 30
     - id: 20
@@ -23238,7 +23240,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 583.6847
-        y: 1598.5017
+        y: 1597.1985
         width: 160
         height: 30
     - id: 38
@@ -23264,7 +23266,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: 'You and your "plans". Live a little, Ricki. '
+        value: You and your "plans". Live a little, Ricki. Your planner is a cage
+          for the mind.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -23286,7 +23289,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCFaceLeft("Max")
+      userScript: NPCFaceLeft("Max");Emote("Max", "Closed", "Frown");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -23347,7 +23350,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 584.7363
+        x: 582.2317
         y: 1698.5017
         width: 160
         height: 30
@@ -23397,8 +23400,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: SchedulePlotEvent("Load up @ music shop", "Plot/PackUpForFirstGig",
-        "MusicShop", false, 1);
+      userScript: Emote("Max", "Default", "Default");SchedulePlotEvent("Load up @
+        music shop", "Plot/PackUpForFirstGig", "MusicShop", false, 1);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -23486,7 +23489,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Ok, bye! See ya tomorrow!
+        value: 'Alright, let''s get outta here before the next band shows up. '
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -23508,7 +23511,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: CompleteCurrentEvent()
+      userScript: NPCFaceRight("Max");CompleteCurrentEvent()
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -24009,7 +24012,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Ricki", "Heart", "Excited")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -24070,8 +24073,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1063.2672
-        y: 827.00397
+        x: 1060.7626
+        y: 824.49927
         width: 160
         height: 30
     - id: 53
@@ -24286,7 +24289,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Ricki", "Default", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -24461,8 +24464,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1026.1663
-        y: 359.6636
+        x: 1010.05334
+        y: 350.26437
         width: 160
         height: 30
     - id: 60
@@ -24522,8 +24525,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1127.5328
-        y: 420.83298
+        x: 1165.1296
+        y: 412.77652
         width: 160
         height: 30
     - id: 61
@@ -24632,8 +24635,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1186.5059
-        y: 488.906
+        x: 1197.2478
+        y: 482.19232
         width: 160
         height: 30
     - id: 63
@@ -24799,8 +24802,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1520.9039
-        y: 344.77777
+        x: 1460.4803
+        y: 508.5926
         width: 160
         height: 30
     - id: 66
@@ -24826,7 +24829,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Don't forg
+        value: Byeee! Don't forget to wear something cute tomorrow!
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -24854,13 +24857,13 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 563.697
-        y: 1928.4385
+        x: 551.1738
+        y: 1928.4384
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 246.71005, y: 1331.0796}
-    canvasZoom: 0.79851496
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 0.7447433
   - id: 29
     fields:
     - title: Title
@@ -28462,7 +28465,7 @@ MonoBehaviour:
         height: 30
     entryGroups: []
     canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.43200958
+    canvasZoom: 0.7143823
   - id: 31
     fields:
     - title: Title
