@@ -30,7 +30,7 @@ public class DemoEndingMiniGame : MiniGame
     private IEnumerator ThanksForPlaying()
     {
         blackScreen.Unfade();
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(7f);
         blackScreen.Fade();
         yield return null;
     }
