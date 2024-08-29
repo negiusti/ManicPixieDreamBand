@@ -37,6 +37,8 @@ public class MenuToggleScript : MonoBehaviour
 
     public void DisableMenu()
     {
+        if (!menuToToggle.activeSelf)
+            return;
         if (Phone.Instance != null && SceneChanger.Instance.GetCurrentScene() != "Character_Editor")
             Phone.Instance.gameObject.SetActive(true);
         DialogueManager.Unpause();

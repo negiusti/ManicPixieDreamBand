@@ -47,7 +47,7 @@ public class SnapToGrid : MonoBehaviour
 
     private void Start()
     {
-        transform.position = GetSnappedPosition();
+        //transform.position = GetSnappedPosition();
 
         col = GetComponent<Collider2D>();
 
@@ -110,8 +110,11 @@ public class SnapToGrid : MonoBehaviour
             return;
         }
 
-        // Update the GameObject's position to the snapped position
-        transform.position = GetSnappedPosition();
+        if (Vector3.Distance(transform.position, startingPos) > 0.01f) // Approximately NOT equal
+        {
+            // Update the GameObject's position to the snapped position UNLESS its in the starting position
+            transform.position = GetSnappedPosition();
+        }
 
         // Rotate (Right Mouse Button) while NOT dragging
         if (selected && Input.GetMouseButtonDown(1) && !Input.GetMouseButton(0))

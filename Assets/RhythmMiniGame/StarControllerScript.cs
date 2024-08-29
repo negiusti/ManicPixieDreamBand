@@ -7,12 +7,14 @@ public class StarControllerScript : MonoBehaviour
     private Animator animator;
     private bool keepitmoving;
     private StarSpawnerScript starSpawner;
+    private SpriteRenderer spriteRen;
     bool hit;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        spriteRen = GetComponent<SpriteRenderer>();
         starSpawner = GetComponentInParent<StarSpawnerScript>(true);
         hit = false;
     }

@@ -35,7 +35,8 @@ public class StarSpawnerScript : MonoBehaviour
     private string[] notes;
     private string[] times;
     private bool ready;
-    public TextMeshPro scoreTxt;
+    public TextMeshPro scoreTxtTop;
+    public TextMeshPro scoreTxtBottom;
     private Coroutine spawnStarCoroutine;
 
     private void OnLoadCompleted1(AsyncOperationHandle<TextAsset> obj)
@@ -88,7 +89,8 @@ public class StarSpawnerScript : MonoBehaviour
         hasStarted = false;
         hitNotes = 0;
         totalNotes = 0;
-        scoreTxt.text = "";
+        scoreTxtTop.text = "";
+        scoreTxtBottom.text = "";
         hamster = this.GetComponent<AudioSource>();
         // Specify the addressable path (use the address you set in the Addressables Group)
         string addressablePath1 = "Assets/RhythmGameNotes/BodyHorror/BodyHorror_notes.txt";
@@ -188,20 +190,20 @@ public class StarSpawnerScript : MonoBehaviour
             starParticles.Stop();
         }
 
-        scoreTxt.text = "Score: " + GetScore().ToString() + "%";
-        scoreTxt.text += "\n";
+        scoreTxtTop.text = GetScore().ToString() + "%";
+        
         if (GetScore() > 90f)
         {
-            scoreTxt.text += "Well done, rock star!";
+            scoreTxtBottom.text += "Well done, rock star!";
         } else if (GetScore() > 70f)
         {
-            scoreTxt.text += "Not bad, punk!";
+            scoreTxtBottom.text += "Not bad, punk!";
         } else if (GetScore() > 50f)
         {
-            scoreTxt.text += "Keep practicing!!";
+            scoreTxtBottom.text += "Keep practicing!!";
         } else
         {
-            scoreTxt.text += "Be honest, did u even try? :)";
+            scoreTxtBottom.text += "Be honest, did u even try? :)";
         }
         while (hamster.time < hamster.clip.length - 1f && hamster.isPlaying)
             yield return null;

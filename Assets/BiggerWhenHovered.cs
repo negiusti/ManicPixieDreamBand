@@ -25,6 +25,11 @@ public class BiggerWhenHovered : MonoBehaviour, IPointerEnterHandler, IPointerEx
         
     }
 
+    private void OnDisable()
+    {
+        OnMouseExit();
+    }
+
     private void OnMouseExit()
     {
         if (rect == null)

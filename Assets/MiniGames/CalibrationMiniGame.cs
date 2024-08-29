@@ -32,7 +32,7 @@ public class CalibrationMiniGame : MiniGame
         mainCamera.SetActive(false);
 
         EnableAllChildren();
-
+        GameManager.Instance.PauseBGMusic(); // Need to be able to hear the metronome
         isActive = true;
     }
 
@@ -41,7 +41,7 @@ public class CalibrationMiniGame : MiniGame
         mainCamera.SetActive(true);
 
         DisableAllChildren();
-
+        GameManager.Instance.UnpauseBGMusic();
         isActive = false;
         //MiniGameManager.CleanUpMiniGame();
     }
