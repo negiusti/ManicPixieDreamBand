@@ -48,12 +48,12 @@ public class ButtonNavigation : MonoBehaviour
         //float verticalInput = Input.GetAxis("Vertical");
 
         //if (verticalInput > 0)
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             // Move selection up
             SelectNext(-1);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             // Move selection down
             SelectNext(1);
