@@ -4,22 +4,23 @@ using UnityEngine.Video;
 
 public class PlayTrailerWhenInactive : MonoBehaviour
 {
-    public VideoPlayer videoPlayer;
+    private VideoPlayer videoPlayer;
     private float countdownTimer;
-    public float timeLimitSeconds = 120f;
-    public GameObject square;
+    public float timeLimitSeconds;
+    private SpriteRenderer square;
 
     void Start()
     {
-        // Get the VideoPlayer component if not assigned in the Inspector
-        if (videoPlayer == null)
-            videoPlayer = GetComponent<VideoPlayer>();
-
+        if (timeLimitSeconds <= 5)
+            timeLimitSeconds = 5;
+        videoPlayer = GetComponent<VideoPlayer>();
+        square = GetComponent<SpriteRenderer>();
         // Attach a callback for when the video completes
         videoPlayer.loopPointReached += OnVideoEnd;
-        square.SetActive(false);
+        square.enabled = false;
         countdownTimer = timeLimitSeconds;
         videoPlayer.isLooping = true;
+        videoPlayer.Prepare();
     }
 
     void Update()
@@ -41,7 +42,7 @@ public class PlayTrailerWhenInactive : MonoBehaviour
         Debug.Log("Countdown: " + countdownTimer);
 
         // Check if the countdown timer has reached zero
-        if (countdownTimer <= 0f)
+        if (countdownTimer <= 0f && !videoPlayer.isPlaying)
         {
             Debug.Log("Countdown timer reached zero!");
             ResetTimer();
@@ -56,7 +57,8 @@ public class PlayTrailerWhenInactive : MonoBehaviour
     {
         ResetTimer();
         videoPlayer.Stop();
-        square.SetActive(false);
+        square.enabled = false;
+        GameManager.Instance.UnpauseBGMusic();
     }
 
     void ResetTimer()
@@ -75,11 +77,12 @@ public class PlayTrailerWhenInactive : MonoBehaviour
 
     private void PlayTrailer()
     {
+        GameManager.Instance.PauseBGMusic();
         Debug.Log("videoPlayer time: " + videoPlayer.time);
         ResetTimer();
 
         // Play the video
-        square.SetActive(true);
+        square.enabled = true;
         videoPlayer.Play();
         // Set the time to 0 (beginning of the clip)
         videoPlayer.time = 0;
@@ -87,9 +90,10 @@ public class PlayTrailerWhenInactive : MonoBehaviour
 
     void OnVideoEnd(VideoPlayer vp)
     {
+        GameManager.Instance.UnpauseBGMusic();
         videoPlayer.Stop();
         Debug.Log("Video has ended!");
-        square.SetActive(false);
+        square.enabled = false;
         ResetTimer();
     }
 }

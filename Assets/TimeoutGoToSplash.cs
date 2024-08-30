@@ -3,15 +3,13 @@ using UnityEngine;
 
 public class TimeoutGoToSplash : MonoBehaviour
 {
-    private GameManager gm;
     private SceneChanger sc;
     private float countdownTimer;
     public float timeLimitSeconds = 180f;
     // Start is called before the first frame update
     void Start()
     {
-        gm = GameManager.Instance;
-        sc = gm.GetComponent<SceneChanger>();
+        sc = GetComponent<SceneChanger>();
         countdownTimer = timeLimitSeconds;
     }
 
