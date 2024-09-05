@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
 public class Bed : MonoBehaviour
@@ -21,11 +22,20 @@ public class Bed : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (Calendar.DoneForTheDay())
+        if (Calendar.DoneForTheDay() && InteractionEnabled())
         {            
             animator.SetBool("DoneForTheDay", false);
             GetComponent<BiggerWhenHovered>().scaleFactor = 1f;
             sleepingScreen.OpenMiniGame();
         }
+    }
+
+    private bool InteractionEnabled()
+    {
+        return !SceneChanger.Instance.IsLoadingScreenOpen() &&
+            Phone.Instance.IsLocked() &&
+            !GameManager.Instance.GetComponent<MenuToggleScript>().IsMenuOpen() &&
+            !DialogueManager.IsConversationActive &&
+            !MiniGameManager.AnyActiveMiniGames();
     }
 }

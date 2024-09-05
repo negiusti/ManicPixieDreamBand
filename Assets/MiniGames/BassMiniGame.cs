@@ -11,6 +11,7 @@ public class BassMiniGame : MiniGame
     private BlackScreen blackScreen;
     private bool closingInProgress;
     private AudioSource audioSource;
+    private CameraShaker cameraShaker;
 
     // Use this for initialization
     void Start()
@@ -18,6 +19,7 @@ public class BassMiniGame : MiniGame
         mgCamera = GetComponentInChildren<Camera>(true);
         blackScreen = GetComponentInChildren<BlackScreen>(true);
         audioSource = GetComponent<AudioSource>();
+        cameraShaker = mgCamera.GetComponent<CameraShaker>();
         DisableAllChildren();
     }
 
@@ -60,9 +62,10 @@ public class BassMiniGame : MiniGame
 
     public void PlayBadSound()
     {
-        if (oopsAudioClips.Count == 0)
+        if (oopsAudioClips.Count == 0 || cameraShaker == null)
             return;
 
+        cameraShaker.CameraShake();
         int clipIndex = Random.Range(0, oopsAudioClips.Count);
 
         Debug.Log("Playing: " + oopsAudioClips[clipIndex].name);
