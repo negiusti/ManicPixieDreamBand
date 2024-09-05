@@ -28,6 +28,7 @@ public abstract class Movement : MonoBehaviour
         SkateIdle,
         Rollerskate,
         RollerskateIdle
+        //Drink
     };
 
     private static string WalkAnim = "BaseCharacter_Walk";
@@ -38,6 +39,7 @@ public abstract class Movement : MonoBehaviour
     private static string SkateIdleAnim = "BaseCharacter_SkateboardIdle";
     private static string RollerskateAnim = "BaseCharacter_Rollerskate";
     private static string RollerskateIdleAnim = "BaseCharacter_RollerskateIdle";
+    private static string DrinkAnim = "BaseCharacter_Drink";
 
     private Dictionary<MovementState, string> stateToAnimation = new Dictionary<MovementState, string> {
         {MovementState.Walk, WalkAnim },
@@ -48,6 +50,7 @@ public abstract class Movement : MonoBehaviour
         {MovementState.SkateIdle, SkateIdleAnim },
         {MovementState.Rollerskate, RollerskateAnim },
         {MovementState.RollerskateIdle, RollerskateIdleAnim }
+        //{MovementState.Drink, DrinkAnim }
             };
     protected MovementState currState;
     private string currAnim;
@@ -128,8 +131,21 @@ public abstract class Movement : MonoBehaviour
             {
                 currAnim = RollerskateIdleAnim;
             }
+            //else if (currState == MovementState.Drink)
+            //{
+            //    currAnim = DrinkAnim;
+            //}
             animator.CrossFade(currAnim, .05f, -1, Random.Range(0f, 1f));
         }
+    }
+
+    public void Drink(string itemName)
+    {
+        //stateToAnimation[currState] != currAnim
+        //lockAnim = true;
+        character.SetHoldingSprite(itemName);
+        currAnim = DrinkAnim;
+        animator.Play("BaseCharacter_Drink", 2, 0f);
     }
 
     public void PlayInstrument(string instLabel, Vector3 pos, string layer, int layerOrder)

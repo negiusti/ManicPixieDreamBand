@@ -143,10 +143,21 @@ public class Character : MonoBehaviour
         categoryToResolver["Instrument"].ResolveSpriteToSpriteRenderer();
     }
 
+    public void SetHoldingSprite(string s)
+    {
+        categoryToRenderer["R_Holding"].enabled = true;
+        categoryToResolver["R_Holding"].SetCategoryAndLabel("R_Holding", s);
+        categoryToResolver["R_Holding"].ResolveSpriteToSpriteRenderer();
+    }
+
     public void HideInstrumentSprite()
     {
         categoryToResolver["Instrument"].SetCategoryAndLabel("Instrument", "None");
         categoryToResolver["Instrument"].ResolveSpriteToSpriteRenderer();
+        categoryToResolver["R_Holding"].SetCategoryAndLabel("R_Holding", "None");
+        categoryToResolver["R_Holding"].ResolveSpriteToSpriteRenderer();
+        categoryToResolver["L_Holding"].SetCategoryAndLabel("R_Holding", "None");
+        categoryToResolver["L_Holding"].ResolveSpriteToSpriteRenderer();
     }
 
     private void updateSpriteResolverMap()
@@ -169,8 +180,9 @@ public class Character : MonoBehaviour
             categoryToEnabled[spriteRenderer.gameObject.name] = spriteRenderer.enabled
                 || spriteRenderer.gameObject.name == "Eyeshadow"
                 || spriteRenderer.gameObject.name == "Eyebrows"
-                || spriteRenderer.gameObject.name == "Sk8board"
                 || spriteRenderer.gameObject.name.Contains("Shoe");
+            if (spriteRenderer.gameObject.name == "Sk8board")
+                categoryToEnabled[spriteRenderer.gameObject.name] = false;
         }
     }
 
