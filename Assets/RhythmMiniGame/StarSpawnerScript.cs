@@ -167,6 +167,7 @@ public class StarSpawnerScript : MonoBehaviour
         {
             Debug.Log("Score: " + GetScore() + "start playing");
             starParticles.Play();
+            miniGame.PlayGoodSound();
         }
         else if (GetScore() < 75f && starParticles.isPlaying)
         {
@@ -311,6 +312,7 @@ public class StarSpawnerScript : MonoBehaviour
         {
             Debug.Log("Score so far: " + GetScoreSoFar() + "start playing" + i);
             starParticles.Play();
+            miniGame.PlayGoodSound();
         } else if ((i < 5 || GetScoreSoFar() < 70f) && starParticles.isPlaying)
         {
             Debug.Log("Score so far: " + GetScoreSoFar() + "stop playing" + i);

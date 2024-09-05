@@ -14,10 +14,12 @@ public class ButtonController : MonoBehaviour
     private Color pressedColor = new Color(254/255f, 89/255f, 136/255f);
     private Color unpressedColor = new Color(253/255f, 197/255f, 235/255f);
     private bool touchingStar;
+    private BassMiniGame mg;
 
     // Start is called before the first frame update
     void Start()
     {
+        mg = GetComponentInParent<BassMiniGame>(true);
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = defaultSprite;
         spriteRenderer.color = unpressedColor;
@@ -35,6 +37,7 @@ public class ButtonController : MonoBehaviour
             if (!touchingStar)
             {
                 starSpawner.WrongNote();
+                mg.PlayBadSound();
             }
         }
         if (Input.GetKeyUp(keyCode))

@@ -1,19 +1,23 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class BassMiniGame : MiniGame
 {
+    public List<AudioClip> oopsAudioClips;
+    public List<AudioClip> goodAudioClips;
     private bool isActive;
     private GameObject mainCamera;
     private Camera mgCamera;
     private BlackScreen blackScreen;
     private bool closingInProgress;
+    private AudioSource audioSource;
 
     // Use this for initialization
     void Start()
     {
         mgCamera = GetComponentInChildren<Camera>(true);
         blackScreen = GetComponentInChildren<BlackScreen>(true);
+        audioSource = GetComponent<AudioSource>();
         DisableAllChildren();
     }
 
@@ -52,6 +56,32 @@ public class BassMiniGame : MiniGame
         // TODO: repeat mini game if not gig
         OpenMiniGame();
         JamCoordinator.StartJam("LEMON BOY");
+    }
+
+    public void PlayBadSound()
+    {
+        if (oopsAudioClips.Count == 0)
+            return;
+
+        int clipIndex = Random.Range(0, oopsAudioClips.Count);
+
+        Debug.Log("Playing: " + oopsAudioClips[clipIndex].name);
+
+        audioSource.clip = oopsAudioClips[clipIndex];
+        audioSource.Play();
+    }
+
+    public void PlayGoodSound()
+    {
+        if (goodAudioClips.Count == 0)
+            return;
+
+        int clipIndex = Random.Range(0, goodAudioClips.Count);
+
+        Debug.Log("Playing: " + goodAudioClips[clipIndex].name);
+
+        audioSource.clip = goodAudioClips[clipIndex];
+        audioSource.Play();
     }
 
     public void Fade()
