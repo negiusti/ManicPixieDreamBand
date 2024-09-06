@@ -277,7 +277,6 @@ public class CharacterEditor : MonoBehaviour
     public void SetSkinColor(Color c)
     {
         Tutorial.changedSkin = true;
-        SetOutfitChangedFlag(true);
         foreach (SpriteRenderer sr in skinRenderers)
         {
             sr.color = c;
@@ -391,7 +390,7 @@ public class CharacterEditor : MonoBehaviour
 
     public void ChangeSocks(int idxDelta)
     {
-        SetOutfitChangedFlag(idxDelta != 0);
+        //SetOutfitChangedFlag(idxDelta != 0);
         int idx = categoryToLabelIdx.GetValueOrDefault(lSock) + idxDelta;
         string[] labels = GetUnlockedLabels(lSock);
         idx = GetWrapAroundIndex(idx, labels.Length -1);
@@ -400,7 +399,6 @@ public class CharacterEditor : MonoBehaviour
         string label = labels[idx];
         SetCategory(lSock, label);
         SetCategory(rSock, label);
-        //UpdateIcons(socksIcons, idx, labels);
     }
 
     public void ChangeShoes(int idxDelta)
@@ -414,7 +412,6 @@ public class CharacterEditor : MonoBehaviour
         categoryToLabelIdx[rShoe] = idx;
         SetCategory(lShoe, label);
         SetCategory(rShoe, label);
-        //UpdateIcons(shoesIcons, idx, labels);
     }
 
     public void ChangeBottom(int idxDelta)
@@ -429,8 +426,6 @@ public class CharacterEditor : MonoBehaviour
         categoryToLabelIdx[crotch] = idx;
         SetCategory(crotch, label);
         SetPantsIfPresent(label);
-        //if (idxDelta != 0)
-        //    UpdateIcons(bottomsIcons, idx, labels);
     }
 
     private void SetSleevesIfPresent(string label)
@@ -518,7 +513,7 @@ public class CharacterEditor : MonoBehaviour
 
     public void ChangeFace(string category, int idxDelta)
     {
-        SetOutfitChangedFlag(idxDelta != 0);
+        //SetOutfitChangedFlag(idxDelta != 0);
         int idx = categoryToLabelIdx.GetValueOrDefault(category, 0) + idxDelta;
         string[] labels = GetUnlockedLabels(category);
 
@@ -536,7 +531,6 @@ public class CharacterEditor : MonoBehaviour
         HideEarringsWithoutEars();
         SetCurrentFaceCategory(category);
         label = labels[categoryToLabelIdx[category]];
-        //UpdateIcons(category, labels);
 
         if (label.Equals("None"))
         {

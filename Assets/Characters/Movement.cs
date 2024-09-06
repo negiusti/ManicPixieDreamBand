@@ -146,6 +146,7 @@ public abstract class Movement : MonoBehaviour
         character.SetHoldingSprite(itemName);
         currAnim = DrinkAnim;
         animator.Play("BaseCharacter_Drink", 2, 0f);
+        MainCharacterState.SetFlag("Drank_" + itemName, true);
     }
 
     public void PlayInstrument(string instLabel, Vector3 pos, string layer, int layerOrder)

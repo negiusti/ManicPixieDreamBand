@@ -203,6 +203,7 @@ public class Calendar : ScriptableObject
         Phone.Instance.SendNotificationTo("Calendar");
         if (day == 2)
             MainCharacterState.UnlockPhoto("PizzaRat");
+        MainCharacterState.SetFlagPrefix("Drank", false);
     }
 
     public static int Date()

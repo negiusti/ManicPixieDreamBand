@@ -7,7 +7,6 @@ public class MainCharacterState : ScriptableObject
 {
     private static string characterName;
     private static double bankBalance;
-    private static bool hasChangedOutfitToday;
     private static List<string> unlockedPhotos;
     private static Dictionary<string, bool> flags;
 
@@ -15,7 +14,6 @@ public class MainCharacterState : ScriptableObject
     {
         ES3.Save("MC_Name", characterName);
         ES3.Save("MC_Money", bankBalance);
-        ES3.Save("MC_Flag_HasChangedOutfitToday", hasChangedOutfitToday);
         ES3.Save("Flags", flags);
         ES3.Save("Photos", unlockedPhotos);
     }
@@ -24,6 +22,15 @@ public class MainCharacterState : ScriptableObject
     {
         Debug.Log("Set flag: " + flag + val);
         flags[flag] = val;
+    }
+
+    public static void SetFlagPrefix(string flagPrefix, bool val)
+    {
+        foreach(string key in flags.Keys)
+        {
+            if (key.StartsWith(flagPrefix))
+                flags[key] = val;
+        }
     }
 
     public static bool CheckFlag(string flag)
@@ -52,7 +59,6 @@ public class MainCharacterState : ScriptableObject
     {
         characterName = ES3.Load<string>("MC_Name", defaultValue:"");
         bankBalance = ES3.Load<double>("MC_Money", 100d);
-        hasChangedOutfitToday = ES3.Load<bool>("MC_Flag_HasChangedOutfitToday", false);
         unlockedPhotos = ES3.Load("Photos", new List<string>() { "Party1", "Party2", "Boxes" });
         flags = ES3.Load("Flags", new Dictionary<string, bool>());
     }
@@ -64,14 +70,14 @@ public class MainCharacterState : ScriptableObject
 
     public static bool HasChangedOutfitToday()
     {
-        //Debug.Log("HasChangedOutfitToday: " + hasChangedOutfitToday);
-        return hasChangedOutfitToday;
+        Debug.Log("HasChangedOutfitToday: " + CheckFlag("ChangedOutfitToday"));
+        return CheckFlag("ChangedOutfitToday");
     }
 
     public static void SetOutfitChangedFlag(bool changed)
     {
         Debug.Log("SetOutfitChangedFlag: " + changed);
-        hasChangedOutfitToday = changed;
+        SetFlag("ChangedOutfitToday", changed);
     }
 
     public static void SetCharacterName(string name)

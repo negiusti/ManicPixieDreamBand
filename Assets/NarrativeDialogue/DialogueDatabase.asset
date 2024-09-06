@@ -14485,13 +14485,13 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Ricki", "Default", "Default");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 654.0042
+        x: 652.9769
         y: 876.95123
         width: 160
         height: 30
@@ -15422,8 +15422,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Our previous bassist Brad left the band... unexpectedly... But you're
-          in good hands! Don't be scared!!
+        value: 'Our previous bassist Brad left the band... unexpectedly... '
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -16555,7 +16554,7 @@ MonoBehaviour:
       - originConversationID: 23
         originDialogueID: 59
         destinationConversationID: 23
-        destinationDialogueID: 21
+        destinationDialogueID: 64
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -16610,7 +16609,7 @@ MonoBehaviour:
       - originConversationID: 23
         originDialogueID: 60
         destinationConversationID: 23
-        destinationDialogueID: 21
+        destinationDialogueID: 64
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -16775,7 +16774,7 @@ MonoBehaviour:
       - originConversationID: 23
         originDialogueID: 63
         destinationConversationID: 23
-        destinationDialogueID: 21
+        destinationDialogueID: 64
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -16789,9 +16788,174 @@ MonoBehaviour:
         y: 574.0038
         width: 160
         height: 30
+    - id: 64
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: Ew... isn't that what you wore yesterday?
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 23
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Passthrough
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 23
+        originDialogueID: 64
+        destinationConversationID: 23
+        destinationDialogueID: 65
+        isConnector: 0
+        priority: 2
+      conditionsString: HasChangedOutfitToday() == false
+      userScript: Emote("Ricki", "Default", "TeethSmile")
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 933.0651
+        y: 740.906
+        width: 160
+        height: 30
+    - id: 65
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 23
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Passthrough
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 23
+        originDialogueID: 65
+        destinationConversationID: 23
+        destinationDialogueID: 66
+        isConnector: 0
+        priority: 2
+      conditionsString: HasChangedOutfitToday() == false
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 933.0651
+        y: 790.906
+        width: 160
+        height: 30
+    - id: 66
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 23
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Passthrough
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 23
+        originDialogueID: 66
+        destinationConversationID: 23
+        destinationDialogueID: 21
+        isConnector: 0
+        priority: 2
+      conditionsString: HasChangedOutfitToday() == false
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 933.0651
+        y: 840.906
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 814.6167}
-    canvasZoom: 0.8449535
+    canvasScrollPosition: {x: 329.49966, y: 521.1459}
+    canvasZoom: 0.9734538
   - id: 24
     fields:
     - title: Title
