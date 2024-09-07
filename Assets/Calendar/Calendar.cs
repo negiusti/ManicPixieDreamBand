@@ -204,6 +204,7 @@ public class Calendar : ScriptableObject
         if (day == 2)
             MainCharacterState.UnlockPhoto("PizzaRat");
         MainCharacterState.SetFlagPrefix("Drank", false);
+        MainCharacterState.SetOutfitChangedFlag(false);
     }
 
     public static int Date()
