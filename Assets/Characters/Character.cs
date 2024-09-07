@@ -156,7 +156,7 @@ public class Character : MonoBehaviour
         categoryToResolver["Instrument"].ResolveSpriteToSpriteRenderer();
         categoryToResolver["R_Holding"].SetCategoryAndLabel("R_Holding", "None");
         categoryToResolver["R_Holding"].ResolveSpriteToSpriteRenderer();
-        categoryToResolver["L_Holding"].SetCategoryAndLabel("R_Holding", "None");
+        categoryToResolver["L_Holding"].SetCategoryAndLabel("L_Holding", "None");
         categoryToResolver["L_Holding"].ResolveSpriteToSpriteRenderer();
     }
 
