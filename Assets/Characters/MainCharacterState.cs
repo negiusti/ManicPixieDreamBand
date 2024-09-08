@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MainCharacterState", menuName = "Custom/MainCharacterState")]
@@ -26,7 +27,7 @@ public class MainCharacterState : ScriptableObject
 
     public static void SetFlagPrefix(string flagPrefix, bool val)
     {
-        foreach(string key in flags.Keys)
+        foreach(string key in flags.Keys.ToList())
         {
             if (key.StartsWith(flagPrefix))
                 flags[key] = val;

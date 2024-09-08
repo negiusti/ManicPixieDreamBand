@@ -166,7 +166,7 @@ public class CharacterEditor : MonoBehaviour
 
     private void SetOutfitChangedFlag(bool changed)
     {
-        if (character.isMainCharacter() && changed)
+        if (changed)
         {
             MainCharacterState.SetOutfitChangedFlag(true);
         }
@@ -277,6 +277,7 @@ public class CharacterEditor : MonoBehaviour
     public void SetSkinColor(Color c)
     {
         Tutorial.changedSkin = true;
+        MainCharacterState.SetFlag("ChangedSkinTone", true);
         foreach (SpriteRenderer sr in skinRenderers)
         {
             sr.color = c;
@@ -308,6 +309,7 @@ public class CharacterEditor : MonoBehaviour
 
     public void SelectTopAndBottom()
     {
+        SetOutfitChangedFlag(isFullBody);
         isFullBody = false;
         ChangeTop(0);
         ChangeBottom(0);
@@ -317,6 +319,7 @@ public class CharacterEditor : MonoBehaviour
 
     public void SelectFB()
     {
+        SetOutfitChangedFlag(!isFullBody);
         isFullBody = true;
         ChangeFB(0);
         DisableNonFBRenderers();

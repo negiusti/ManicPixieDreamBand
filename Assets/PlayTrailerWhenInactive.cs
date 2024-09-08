@@ -39,7 +39,7 @@ public class PlayTrailerWhenInactive : MonoBehaviour
     {
         // Update the countdown timer
         countdownTimer -= Time.deltaTime;
-        Debug.Log("Countdown: " + countdownTimer);
+        //Debug.Log("Countdown: " + countdownTimer);
 
         // Check if the countdown timer has reached zero
         if (countdownTimer <= 0f && !videoPlayer.isPlaying)
