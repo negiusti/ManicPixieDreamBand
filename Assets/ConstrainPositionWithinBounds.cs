@@ -18,7 +18,7 @@ public class ConstrainPositionWithinBounds : MonoBehaviour
         // Randomize the starting position within the bounds of the BoxCollider2D
         Bounds bounds = boundsCollider.bounds;
         startingPosition = new Vector3(
-            Random.Range(bounds.min.x, bounds.max.x),
+            Random.Range(bounds.min.x, bounds.max.x-5),
             Random.Range(bounds.min.y, bounds.max.y),
             transform.position.z // Keep the original z position
         );
@@ -45,7 +45,7 @@ public class ConstrainPositionWithinBounds : MonoBehaviour
             Vector3 position = transform.position;
 
             // Clamp the position within the bounds of the BoxCollider2D
-            position.x = Mathf.Clamp(position.x, bounds.min.x, bounds.max.x);
+            position.x = Mathf.Clamp(position.x, bounds.min.x, bounds.max.x-5);
             position.y = Mathf.Clamp(position.y, bounds.min.y, bounds.max.y);
 
             // Apply the clamped position back to the transform

@@ -16,10 +16,18 @@ public class NumPadButton : MonoBehaviour
         
     }
 
+    private void OnEnable()
+    {
+        textReadOut.text = "____";
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(keyCode))
+        {
+            OnMouseDown();
+        }
     }
 
     private void OnMouseDown()

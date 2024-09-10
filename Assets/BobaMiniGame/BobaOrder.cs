@@ -2,10 +2,12 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class BobaOrder : MonoBehaviour
 {
     public BobaOrderItem[] orderItems;
+    public TextMeshPro bathroomCode;
     private Animator animator;
     private Dictionary<BobaMiniGame.Step, BobaOrderItem> map;
     // Start is called before the first frame update
@@ -23,6 +25,7 @@ public class BobaOrder : MonoBehaviour
         {
             item.Randomize();
         }
+        bathroomCode.text = Random.Range(1000, 9999).ToString();
         animator.Play("NewOrderPop", -1, 0f);
     }
 
