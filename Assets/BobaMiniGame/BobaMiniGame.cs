@@ -40,6 +40,11 @@ public class BobaMiniGame : MiniGame
     public string[] midResponses; // 1 mistake
     public string[] badResponses; // 2 or more mistakes
 
+    public GameObject sweepUpMicroGame;
+    public GameObject cleanSpillMicroGame;
+    private Vector3 prevCamPos;
+    private int microgameIdx;
+
     // Use this for initialization
     void Start()
     {
@@ -53,6 +58,8 @@ public class BobaMiniGame : MiniGame
         StartCoroutine(speechBubble.GetComponent<LerpPosition>().Lerp(speechBubble.transform.localPosition + Vector3.right * 35f, 1f));
         speechBubble.SetActive(false);
         DisableAllChildren();
+
+        OpenMiniGame();
     }
 
     // Update is called once per frame
@@ -60,6 +67,45 @@ public class BobaMiniGame : MiniGame
     {
 
     }
+
+    private void InterruptWithMicroGame()
+    {
+        // Save the current camera position
+        prevCamPos = cam.transform.localPosition;
+        // Pick a micro game
+        microgameIdx++;
+        if (microgameIdx % 2 == 0)
+            StartCoroutine(CleanSpill());
+        else
+            StartCoroutine(SweepUp());
+    }
+
+    private IEnumerator CleanSpill()
+    {
+        cleanSpillMicroGame.gameObject.SetActive(true);
+        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cleanSpillMicroGame.transform.localPosition + Vector3.back * 10f, 0.5f));
+        yield return new WaitForSeconds(3.5f);
+        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
+        yield return new WaitForSeconds(0.5f);
+        cleanSpillMicroGame.gameObject.SetActive(false);
+        yield return null;
+    }
+
+    private IEnumerator SweepUp()
+    {
+        sweepUpMicroGame.gameObject.SetActive(true);
+        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(sweepUpMicroGame.transform.localPosition + Vector3.back * 10f, 0.5f));
+        yield return new WaitForSeconds(3.5f);
+        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
+        yield return new WaitForSeconds(0.5f);
+        sweepUpMicroGame.gameObject.SetActive(false);
+        yield return null;
+    }
+
+    //private void CloseMicroGame()
+    //{
+    //    StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
+    //}
 
     public void Next(string choice)
     {
@@ -78,9 +124,16 @@ public class BobaMiniGame : MiniGame
         yield return new WaitForSeconds(1.5f);
         currStepIdx++;
         step = steps[currStepIdx];
+        // INTERRUPT
+        if (step != Step.Done)
+        {
+            InterruptWithMicroGame();
+            yield return new WaitForSeconds(4f);
+        }
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cam.transform.localPosition + Vector3.right * 35f, 0.5f));
         StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 0.5f));
         yield return new WaitForSeconds(0.5f);
+
         if (step == Step.Done)
         {
             cup.GetComponent<Animator>().Play("LidAndStraw");
@@ -150,7 +203,8 @@ public class BobaMiniGame : MiniGame
         mainCamera.SetActive(false);
 
         EnableAllChildren();
-
+        cleanSpillMicroGame.gameObject.SetActive(false);
+        sweepUpMicroGame.gameObject.SetActive(false);
         MiniGameManager.PrepMiniGame();
         isActive = true;
 
