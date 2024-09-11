@@ -176,11 +176,11 @@ public abstract class Movement : MonoBehaviour
     public void StopPlayingInstrument()
     {
         currState = MovementState.Idle;
-        character.HideInstrumentSprite();
         Debug.Log("Prev pos:" + prevPos);
         transform.position = prevPos;
         transform.rotation = prevRotation;
         character.MoveToRenderLayer(prevLayer, prevLayerOrder);
+        character.HideInstrumentSprite();
     }
 
     protected void Ollie()

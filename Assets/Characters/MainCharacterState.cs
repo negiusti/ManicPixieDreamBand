@@ -22,6 +22,10 @@ public class MainCharacterState : ScriptableObject
     public static void SetFlag(string flag, bool val)
     {
         Debug.Log("Set flag: " + flag + val);
+        if (flags == null)
+            flags = ES3.Load("Flags", new Dictionary<string, bool>());
+        if (flags == null)
+            flags = new Dictionary<string, bool>();
         flags[flag] = val;
     }
 
@@ -53,6 +57,8 @@ public class MainCharacterState : ScriptableObject
     {
         if (unlockedPhotos == null)
             unlockedPhotos =  ES3.Load("Photos", new List<string>() { "Party1", "Party2", "Boxes" });
+        if (unlockedPhotos == null)
+            unlockedPhotos = new List<string>() { "Party1", "Party2", "Boxes" };
         return unlockedPhotos;
     }
 
@@ -61,7 +67,13 @@ public class MainCharacterState : ScriptableObject
         characterName = ES3.Load<string>("MC_Name", defaultValue:"");
         bankBalance = ES3.Load<double>("MC_Money", 100d);
         unlockedPhotos = ES3.Load("Photos", new List<string>() { "Party1", "Party2", "Boxes" });
+
+        if (unlockedPhotos == null)
+            unlockedPhotos = new List<string>() { "Party1", "Party2", "Boxes" };
+
         flags = ES3.Load("Flags", new Dictionary<string, bool>());
+        if (flags == null)
+            flags = new Dictionary<string, bool>();
     }
 
     public static string GetCharacterName()

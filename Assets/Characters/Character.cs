@@ -76,7 +76,7 @@ public class Character : MonoBehaviour
     void Start()
     {
         isMC = gameObject.name == "MainCharacter";
-        spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
+        spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
         spriteResolvers = this.GetComponentsInChildren<SpriteResolver>(includeInactive:true);
         categoryToEnabled = new Dictionary<string, bool>();
         categoryToLabelMap = new Dictionary<string, string>();
@@ -141,6 +141,17 @@ public class Character : MonoBehaviour
         categoryToRenderer["Instrument"].enabled = true;
         categoryToResolver["Instrument"].SetCategoryAndLabel("Instrument", s);
         categoryToResolver["Instrument"].ResolveSpriteToSpriteRenderer();
+
+        if (s.Contains("Drum"))
+        {
+            categoryToRenderer["R_Holding"].enabled = true;
+            categoryToResolver["R_Holding"].SetCategoryAndLabel("R_Holding", "Drumstick");
+            categoryToResolver["R_Holding"].ResolveSpriteToSpriteRenderer();
+
+            categoryToRenderer["L_Holding"].enabled = true;
+            categoryToResolver["L_Holding"].SetCategoryAndLabel("L_Holding", "Drumstick");
+            categoryToResolver["L_Holding"].ResolveSpriteToSpriteRenderer();
+        }
     }
 
     public void SetHoldingSprite(string s)
@@ -152,11 +163,19 @@ public class Character : MonoBehaviour
 
     public void HideInstrumentSprite()
     {
+        Debug.Log("Hide instrujment sprite " + gameObject.name);
         categoryToResolver["Instrument"].SetCategoryAndLabel("Instrument", "None");
         categoryToResolver["Instrument"].ResolveSpriteToSpriteRenderer();
+
+        // Stupid unity: https://discussions.unity.com/t/spriteresolver-set-label-issue/923876/3
+        categoryToResolver["R_Holding"].gameObject.SetActive(false);
         categoryToResolver["R_Holding"].SetCategoryAndLabel("R_Holding", "None");
+        categoryToResolver["R_Holding"].gameObject.SetActive(true);
         categoryToResolver["R_Holding"].ResolveSpriteToSpriteRenderer();
+        
+        categoryToResolver["L_Holding"].gameObject.SetActive(false);
         categoryToResolver["L_Holding"].SetCategoryAndLabel("L_Holding", "None");
+        categoryToResolver["L_Holding"].gameObject.SetActive(true);
         categoryToResolver["L_Holding"].ResolveSpriteToSpriteRenderer();
     }
 
