@@ -44,6 +44,7 @@ public class JobSystem : ScriptableObject
     {
         if (newJob != currentJob)
         {
+            currentJob = newJob;
             failStreak = 0;
             Calendar.ScheduleNext7Days();
         }

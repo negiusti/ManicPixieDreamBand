@@ -33,6 +33,7 @@ public class Calendar : ScriptableObject
             Debug.Log("Unscheduling job for day " + i);
             if (events.ContainsKey(i))
             {
+                Debug.Log("remove job events");
                 events[i].RemoveAll(e => e is JobEvent);
             }
         }
@@ -121,6 +122,7 @@ public class Calendar : ScriptableObject
             }
             if (isWorkScheduled(i) && JobSystem.CurrentJob() == JobSystem.PunkJob.Unemployed) {
                 events[i].RemoveAll(e => e is JobEvent);
+                Debug.Log("remove job events");
             }
             if (!isWorkScheduled(i) && JobSystem.CurrentJob() != JobSystem.PunkJob.Unemployed)
             {
