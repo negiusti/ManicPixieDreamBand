@@ -60,7 +60,7 @@ public class BobaMiniGame : MiniGame
         speechBubble.SetActive(false);
         DisableAllChildren();
 
-        OpenMiniGame();
+        //OpenMiniGame();
     }
 
     // Update is called once per frame
