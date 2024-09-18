@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class PhoneApp : MonoBehaviour
+public abstract class PhoneApp : MonoBehaviour
 {
     // Use this for initialization
     void Start()
@@ -14,4 +13,8 @@ public class PhoneApp : MonoBehaviour
     {
 
     }
+
+    public abstract void Save();
+
+    public abstract void Load();
 }

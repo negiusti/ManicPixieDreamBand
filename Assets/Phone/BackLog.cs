@@ -12,6 +12,7 @@ using System;
 /// </summary>
 public class BackLog : MonoBehaviour
 {
+    private string contactName; // used for saving the backlog
     public Transform logEntryContainer;
     public LogEntry logEntryTemplate;
     public Text speakerNameTemplate;
@@ -21,8 +22,9 @@ public class BackLog : MonoBehaviour
     private int currentEntryID;
     private static HashSet<string> groupChats = new HashSet<string> { "TXT/Band" };
 
-    private List<Subtitle> log = new List<Subtitle>();
-    private List<GameObject> instances = new List<GameObject>();
+    //private List<Subtitle> log = new List<Subtitle>();
+    private List<LogEntry> instances = new List<LogEntry>();
+    private List<LogEntryData> savedData = new List<LogEntryData>();
     private RectTransform rectTransform;
     private Scrollbar scrollbar;
     private static float longScrollViewHeight = 310.6017f;
@@ -44,6 +46,23 @@ public class BackLog : MonoBehaviour
         currentEntryID = 0;
     }
 
+    public void AssignContact(string name)
+    {
+        contactName = name;
+        // Load previous messages
+        savedData = ES3.Load("Msgs/"+contactName, new List<LogEntryData>());
+        foreach (LogEntryData l in savedData)
+        {
+            LoadBacklogEntry(l);
+        }
+    }
+
+    private void SaveContact()
+    {
+        Debug.Log("Saving contact: " + contactName);
+        ES3.Save("Msgs/" + contactName, savedData);
+    }
+
     private void OnDisable()
     {
         DialogueManager.Unpause();
@@ -54,6 +73,7 @@ public class BackLog : MonoBehaviour
             typingBubble = null;
         }
         StopAllCoroutines();
+        SaveContact();
     }
 
     private void Update()
@@ -105,6 +125,56 @@ public class BackLog : MonoBehaviour
         }
     }
 
+    private void LoadBacklogEntry(LogEntryData entry)
+    {
+        Debug.Log("Load entry: " + entry.text);
+        if (!string.IsNullOrEmpty(entry.text))
+        {
+            if (entry.isGroupChat && !entry.isPlayer)
+            {
+                // add a name header
+                Text speakerName = Instantiate(speakerNameTemplate, logEntryContainer);
+                speakerName.text = entry.speakerName;
+                speakerName.gameObject.SetActive(true);
+            }
+
+            LogEntry instance = Instantiate(logEntryTemplate, logEntryContainer);
+            instances.Add(instance);
+            instance.gameObject.SetActive(true);
+            instance.Assign(entry);
+
+            if (!entry.isPlayer)
+            {
+                instance.transform.rotation = new Quaternion(instance.transform.rotation.x, 180f, instance.transform.rotation.z, instance.transform.rotation.w);
+            }
+            else
+            {
+                instance.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.UpperRight;
+            }
+
+            RectTransform rectTransform = instance.GetComponent<RectTransform>();
+            Text[] texts = instance.GetComponentsInChildren<Text>();
+            float preferredHeight = 30f;
+            foreach (Text t in texts)
+            {
+                preferredHeight += t.preferredHeight;
+            }
+            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, preferredHeight);
+
+            Image image = instance.GetComponent<Image>();
+            if (entry.isPlayer)
+            {
+                image.color = new Color(0.6f, 0.94f, 1f);
+            }
+            else
+            {
+                image.color = new Color(0.98f, 0.89f, 1f);
+            }
+        }
+        DialogueManager.standardDialogueUI.OnContinue();
+        ScrollToBottomOfScrollView();
+    }
+
     private void AddToBacklogWitouthDelay(Subtitle subtitle)
     {
         bool isFirstTxt = subtitle.dialogueEntry.Title.Equals("FIRST");
@@ -120,11 +190,12 @@ public class BackLog : MonoBehaviour
                 speakerName.gameObject.SetActive(true);
             }
 
-            log.Add(subtitle);
+            //log.Add(subtitle);
             LogEntry instance = Instantiate(logEntryTemplate, logEntryContainer);
-            instances.Add(instance.gameObject);
+            instances.Add(instance);
             instance.gameObject.SetActive(true);
             instance.Assign(subtitle);
+            savedData.Add(new LogEntryData(instance));
 
             if (!subtitle.speakerInfo.IsPlayer)
             {
@@ -186,11 +257,12 @@ public class BackLog : MonoBehaviour
                 speakerName.gameObject.SetActive(true);
             }
 
-            log.Add(subtitle);
+            //log.Add(subtitle);
             LogEntry instance = Instantiate(logEntryTemplate, logEntryContainer);
-            instances.Add(instance.gameObject);
+            instances.Add(instance);
             instance.gameObject.SetActive(true);
             instance.Assign(subtitle);
+            savedData.Add(new LogEntryData(instance));
 
             if (!subtitle.speakerInfo.IsPlayer)
             {

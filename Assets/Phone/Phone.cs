@@ -54,11 +54,9 @@ public class Phone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //SceneManager.activeSceneChanged += ChangedActiveScene;
         backgroundResolver = background.GetComponent<SpriteResolver>();
         phoneStateStack = new Stack<PhoneState>();
         phoneStateStack.Push(PhoneState.Home);
-        //contactsList = SaveSystem.LoadContactsList();
         bankApp = this.GetComponentInChildren<BankApp>(true);
         mapsApp = this.GetComponentInChildren<MapsApp>(true);
         messagesApp = this.GetComponentInChildren<PhoneMessages>(true);
@@ -68,13 +66,16 @@ public class Phone : MonoBehaviour
         gearApp = this.GetComponentInChildren<GearApp>(true);
         settingsApp = this.GetComponentInChildren<SettingsApp>(true);
         photosApp = this.GetComponentInChildren<PhotosApp>(true);
-        //animator = this.GetComponent<Animator>();
         notifications = this.GetComponentInChildren<PhoneNotifications>();
         isLocked = true;
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
-        if (appNotifications == null) appNotifications = new HashSet<string>();
+        //if (appNotifications == null) appNotifications = new HashSet<string>();
+        
+        Load(); // appNotifications get set here
+
         if (messagesApp.HasPendingConvos())
             appNotifications.Add("Messages");
+
         Lock();
         //txtResponsePanel = this.GetComponentInChildren<PixelCrushers.DialogueSystem.Wrappers.StandardUIMenuPanel>();
     }
@@ -180,6 +181,28 @@ public class Phone : MonoBehaviour
     public void NotificationMessage(string txt)
     {
         notifications.Add(txt);
+    }
+
+    //private void OnApplicationQuit()
+    //{
+    //    Save();
+    //}
+
+    public void Save()
+    {
+        foreach (PhoneApp app in GetComponentsInChildren<PhoneApp>(true))
+        {
+            app.Save();
+        }
+        ES3.Save("AppNotif", appNotifications);
+        ES3.Save("PhoneColor", HUDIcon.GetComponent<SpriteRenderer>().color);
+    }
+
+    public void Load()
+    {
+        // Apps should load automatically in their start() method...
+        appNotifications = ES3.Load("AppNotif", new HashSet<string>());
+        ChangePhoneColor(ES3.Load("PhoneColor", Color.white));
     }
 
     // Update is called once per frame

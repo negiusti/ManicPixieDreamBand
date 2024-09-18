@@ -173,6 +173,7 @@ public class GameManager : MonoBehaviour
         QuestManager.Load();
         RomanceManager.Load();
         Tutorial.Load();
+        //Phone.Instance.Load();
     }
 
     private void SaveData()
@@ -184,6 +185,8 @@ public class GameManager : MonoBehaviour
         QuestManager.Save();
         RomanceManager.Save();
         Tutorial.Save();
+        if (Phone.Instance != null)
+            Phone.Instance.Save();
     }
 
     // Update is called once per frame
@@ -212,7 +215,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        SaveData();
+        //SaveData();
 
         //if (gms.Length == 1)
         //    Steamworks.SteamClient.Shutdown();

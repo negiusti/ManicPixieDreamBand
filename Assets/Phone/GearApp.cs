@@ -7,7 +7,7 @@ public class GearApp : PhoneApp
     // Start is called before the first frame update
     void Start()
     {
-        gearCategoryNotifications = new HashSet<string>();
+        Load();
     }
 
     public void Reset()
@@ -37,5 +37,15 @@ public class GearApp : PhoneApp
         if (gearCategoryNotifications == null)
             Start();
         return gearCategoryNotifications.Contains(category) || gearCategoryNotifications.Contains(InventoryManager.GetInventoryCategory(category));
+    }
+
+    public override void Save()
+    {
+        ES3.Save("GearCategoryNotif", gearCategoryNotifications == null ? new HashSet<string>() : gearCategoryNotifications);
+    }
+
+    public override void Load()
+    {
+        gearCategoryNotifications = ES3.Load("GearCategoryNotif", new HashSet<string>());
     }
 }

@@ -223,6 +223,7 @@ public class CustomDialogueScript : MonoBehaviour
     {
         BackLog instance = Instantiate(backLogTemplate, backLogTemplate.transform.parent);
         instance.gameObject.SetActive(true);
+        instance.AssignContact(contactName);
         backLogs.Add(contactName, instance);
         ConvoHeader instance2 = Instantiate(convoHeaderTemplate, convoHeaderTemplate.transform.parent);
         instance2.gameObject.SetActive(true);

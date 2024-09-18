@@ -19,15 +19,8 @@ public class PhoneMessages : PhoneApp
         contactTemplate.gameObject.SetActive(false);
         // wait until message app is opened before enabling the canvas
         contactsMap = new Dictionary<string, Contact>();
-
-        // load contacts
-        contactsList = new HashSet<string>();//new HashSet<string> { "Ricki", "Max", "Band", "Mom" };//SaveSystem.LoadContactsList();
-        unfinishedConversations = new Dictionary<string, string>();
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
-        foreach (string c in contactsList)
-        {
-            AddContact(c);
-        }
+        Load();
         customDialogue.CloseBacklogs();
     }
 
@@ -127,4 +120,22 @@ public class PhoneMessages : PhoneApp
         customDialogue.AddBackLog(contactName);
     }
 
+    public override void Save()
+    {
+        Debug.Log("Saving contacts");
+        ES3.Save("PhoneContacts", contactsList);
+        ES3.Save("UnfinishedConversations", unfinishedConversations);
+    }
+
+    public override void Load()
+    {
+        Debug.Log("loading contacts");
+        contactsList = ES3.Load("PhoneContacts",new HashSet<string>());
+        unfinishedConversations = ES3.Load("UnfinishedConversations", new Dictionary<string, string>());
+        foreach (string c in contactsList)
+        {
+            AddContact(c);
+            Debug.Log("loading contact: " + c);
+        }
+    }
 }

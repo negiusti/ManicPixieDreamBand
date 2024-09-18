@@ -22,9 +22,8 @@ public class DecoratorApp : PhoneApp
         SceneManager.activeSceneChanged += ChangedActiveScene;
         cam = GetComponentInChildren<Camera>();
         tmp = GetComponentInChildren<TextMeshPro>();
-        if (furnitureCategoryNotifications == null)
-            furnitureCategoryNotifications = new HashSet<string>();
         scrollView = GetComponentInChildren<ScrollRect>(includeInactive: true);
+        Load();
         Refresh();
     }
 
@@ -129,5 +128,15 @@ public class DecoratorApp : PhoneApp
     private void FindEditableItems()
     {
         furniture = new HashSet<Furniture>(FindObjectsOfType<Furniture>());
+    }
+
+    public override void Save()
+    {
+        ES3.Save("FurnitureCategoryNotif", furnitureCategoryNotifications == null ? new HashSet<string>() : furnitureCategoryNotifications);
+    }
+
+    public override void Load()
+    {
+        furnitureCategoryNotifications = ES3.Load("FurnitureCategoryNotif", new HashSet<string>());
     }
 }

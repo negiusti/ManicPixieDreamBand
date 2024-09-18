@@ -53,4 +53,14 @@ public class PocketsApp : PhoneApp
         }
         itemIcons.Clear();
     }
+
+    public override void Save()
+    {
+        // Nothing to do here
+    }
+
+    public override void Load()
+    {
+        // Nothing to do here
+    }
 }

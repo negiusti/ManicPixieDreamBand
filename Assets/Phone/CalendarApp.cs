@@ -23,10 +23,6 @@ public class CalendarApp : PhoneApp
 
     private void OnEnable()
     {
-        //if (Phone.Instance == null)
-        //    return;
-        //Phone.Instance.ClearNotificationFor("Calendar");
-        //phoneIcon.HideNotificationIndicator();
         if (spriteResolver == null)
             return;
         UpdateImage();
@@ -117,5 +113,15 @@ public class CalendarApp : PhoneApp
         Calendar.CompleteCurrentEvent();
         UpdateImage();
         ShowTodaysEvents();
+    }
+
+    public override void Save()
+    {
+        // Nothing to do here
+    }
+
+    public override void Load()
+    {
+        // Nothing to do here
     }
 }

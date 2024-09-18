@@ -177,4 +177,14 @@ public class MapsApp : PhoneApp
             p.gameObject.SetActive(false);
         }
     }
+
+    public override void Save()
+    {
+        // Nothing to do here
+    }
+
+    public override void Load()
+    {
+        // Nothing to do here
+    }
 }

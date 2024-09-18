@@ -50,4 +50,14 @@ public class BankApp : PhoneApp
         }
             
     }
+
+    public override void Save()
+    {
+        // Nothing to do here
+    }
+
+    public override void Load()
+    {
+        // Nothing to do here
+    }
 }
