@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     private GameManager[] gms;
     public static BGMusicController bgMusic;
+    public static ButtonSoundEffects buttonSounds;
 
     // Start is called before the first frame update
     void Start()
@@ -233,6 +234,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             bgMusic = GetComponent<BGMusicController>();
+            buttonSounds = GetComponentInChildren<ButtonSoundEffects>(true);
             DontDestroyOnLoad(gameObject); // Optional: Keeps the object alive across scene changes
         }
         else
