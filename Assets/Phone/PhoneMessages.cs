@@ -55,6 +55,8 @@ public class PhoneMessages : PhoneApp
     public void ReceiveMsg(string contactName, string conversation)
     {
         Phone.Instance.SendNotificationTo("Messages");
+        if (unfinishedConversations == null)
+            Start();
         if (unfinishedConversations.ContainsKey(contactName))
             return;
         unfinishedConversations.Add(contactName, conversation);
@@ -131,7 +133,11 @@ public class PhoneMessages : PhoneApp
     {
         Debug.Log("loading contacts");
         contactsList = ES3.Load("PhoneContacts",new HashSet<string>());
+        if (contactsList == null)
+            contactsList = new HashSet<string>();
         unfinishedConversations = ES3.Load("UnfinishedConversations", new Dictionary<string, string>());
+        if (unfinishedConversations == null)
+            unfinishedConversations = new Dictionary<string, string>();
         foreach (string c in contactsList)
         {
             AddContact(c);

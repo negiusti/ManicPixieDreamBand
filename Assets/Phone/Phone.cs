@@ -73,8 +73,8 @@ public class Phone : MonoBehaviour
         
         Load(); // appNotifications get set here
 
-        if (messagesApp.HasPendingConvos())
-            appNotifications.Add("Messages");
+        //if (messagesApp.HasPendingConvos())
+        //    appNotifications.Add("Messages");
 
         Lock();
         //txtResponsePanel = this.GetComponentInChildren<PixelCrushers.DialogueSystem.Wrappers.StandardUIMenuPanel>();
