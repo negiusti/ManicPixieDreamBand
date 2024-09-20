@@ -174,7 +174,8 @@ public class GameManager : MonoBehaviour
         QuestManager.Load();
         RomanceManager.Load();
         Tutorial.Load();
-        //Phone.Instance.Load();
+        if (Phone.Instance != null)
+            Phone.Instance.Load();
     }
 
     private void SaveData()

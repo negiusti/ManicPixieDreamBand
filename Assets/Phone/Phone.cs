@@ -190,6 +190,9 @@ public class Phone : MonoBehaviour
 
     public void Save()
     {
+        if (appNotifications == null)
+            return;
+
         foreach (PhoneApp app in GetComponentsInChildren<PhoneApp>(true))
         {
             app.Save();

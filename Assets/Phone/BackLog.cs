@@ -73,6 +73,10 @@ public class BackLog : MonoBehaviour
             typingBubble = null;
         }
         StopAllCoroutines();
+    }
+
+    private void OnDestroy()
+    {
         SaveContact();
     }
 
