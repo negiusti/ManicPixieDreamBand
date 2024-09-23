@@ -71,6 +71,7 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(DailyRandoms.DrinkSpecial), this, SymbolExtensions.GetMethodInfo(() => DailyRandoms.DrinkSpecial()));
         Lua.RegisterFunction(nameof(AudioController.PauseBGMusic), this, SymbolExtensions.GetMethodInfo(() => AudioController.PauseBGMusic()));
         Lua.RegisterFunction(nameof(AudioController.UnpauseBGMusic), this, SymbolExtensions.GetMethodInfo(() => AudioController.UnpauseBGMusic()));
+        Lua.RegisterFunction(nameof(RefreshGameState), this, SymbolExtensions.GetMethodInfo(() => RefreshGameState()));
     }
 
     void UnregisterSOLuaFuncs()
@@ -111,6 +112,7 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(DailyRandoms.DrinkSpecial));
         Lua.UnregisterFunction(nameof(AudioController.PauseBGMusic));
         Lua.UnregisterFunction(nameof(AudioController.UnpauseBGMusic));
+        Lua.UnregisterFunction(nameof(RefreshGameState));
         //}
     }
 
