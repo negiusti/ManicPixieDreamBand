@@ -45,6 +45,7 @@ public class BobaMiniGame : MiniGame
     public GameObject bathroomCodeMicroGame;
     private Vector3 prevCamPos;
     private int microgameIdx;
+    public bool TESTING_ONLY;
 
     // Use this for initialization
     void Start()
@@ -58,9 +59,11 @@ public class BobaMiniGame : MiniGame
         speechText = speechBubble.GetComponentInChildren<Text>(true);
         StartCoroutine(speechBubble.GetComponent<LerpPosition>().Lerp(speechBubble.transform.localPosition + Vector3.right * 35f, 1f));
         speechBubble.SetActive(false);
+
         DisableAllChildren();
 
-        //OpenMiniGame();
+        if(TESTING_ONLY)
+            OpenMiniGame();
     }
 
     // Update is called once per frame
@@ -212,15 +215,18 @@ public class BobaMiniGame : MiniGame
 
     public override void OpenMiniGame()
     {
-        mainCamera = Camera.main.transform.gameObject;
-
-        mainCamera.SetActive(false);
+        if (!TESTING_ONLY)
+        {
+            mainCamera = Camera.main.transform.gameObject;
+            mainCamera.SetActive(false);
+        }
 
         EnableAllChildren();
         cleanSpillMicroGame.gameObject.SetActive(false);
         sweepUpMicroGame.gameObject.SetActive(false);
         bathroomCodeMicroGame.gameObject.SetActive(false);
-        MiniGameManager.PrepMiniGame();
+        if (!TESTING_ONLY)
+            MiniGameManager.PrepMiniGame();
         isActive = true;
 
         blackScreen.Unfade();
@@ -232,8 +238,11 @@ public class BobaMiniGame : MiniGame
 
     public override void CloseMiniGame()
     {
+        if (TESTING_ONLY)
+        {
+            return;
+        }
         mainCamera.SetActive(true);
-
         DisableAllChildren();
 
         isActive = false;
