@@ -19,6 +19,13 @@ public class SplashScreen : MonoBehaviour
             // FOR EXHIBITION DEMOS ONLY:
             //SaveSystem.DeleteSaveData();
             //GameManager.Instance.RefreshGameState();
+
+            if (completedGame())
+            {
+                SaveSystem.DeleteSaveData();
+                GameManager.Instance.RefreshGameState();
+            }
+
             SceneChanger.Instance.ChangeScene("Bedroom");
         }
     }
@@ -35,5 +42,12 @@ public class SplashScreen : MonoBehaviour
     public void TrailerDone()
     {
         //sc.ChangeScene("Bedroom");
+    }
+
+    private bool completedGame()
+    {
+        int currentConvoIdx = ES3.Load("PlotConvoIdx", 0);
+        Debug.Log("CUrrent convo IDX is: " + currentConvoIdx);
+        return currentConvoIdx == 9;
     }
 }
