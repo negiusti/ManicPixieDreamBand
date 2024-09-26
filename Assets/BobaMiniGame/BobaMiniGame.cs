@@ -28,6 +28,7 @@ public class BobaMiniGame : MiniGame
     private Milk[] milks;
     private Topping[] toppings;
     private Flavor[] flavors;
+    private TipJar tipJar;
 
     private GameObject mainCamera;
     private BlackScreen blackScreen;
@@ -57,6 +58,7 @@ public class BobaMiniGame : MiniGame
         toppings = FindObjectsOfType<Topping>(true);
         flavors = FindObjectsOfType<Flavor>(true);
         speechText = speechBubble.GetComponentInChildren<Text>(true);
+        tipJar = GetComponentInChildren<TipJar>(true);
         StartCoroutine(speechBubble.GetComponent<LerpPosition>().Lerp(speechBubble.transform.localPosition + Vector3.right * 35f, 1f));
         speechBubble.SetActive(false);
 
@@ -128,7 +130,7 @@ public class BobaMiniGame : MiniGame
     {
         if(order.CheckOrderItem(step, choice))
         {
-            tipsIncome += 1f;
+            //tipsIncome += 1f;
         } else
         {
             currNumMistakes++;
@@ -160,13 +162,19 @@ public class BobaMiniGame : MiniGame
             {
                 JobSystem.GoodJob();
                 speechText.text = goodResponses[Random.Range(0, goodResponses.Length)];
-            } else if (currNumMistakes == 1)
+                tipJar.addTip(5f);
+                tipsIncome += 5f;
+            }
+            else if (currNumMistakes == 1)
             {
                 speechText.text = midResponses[Random.Range(0, midResponses.Length)];
+                tipJar.addTip(1f);
+                tipsIncome += 1f;
             } else
             {
                 JobSystem.BadJob();
                 speechText.text = badResponses[Random.Range(0, badResponses.Length)];
+                tipJar.addTip(0f);
             }
             yield return new WaitForSeconds(1.5f);
             StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 1f, true));

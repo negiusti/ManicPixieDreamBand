@@ -18,7 +18,6 @@ public class LerpPosition : MonoBehaviour
             factor = Mathf.SmoothStep(0, 1, factor);
 
             transform.localPosition = Vector3.Lerp(startPosition, targetLocalPosition, factor);
-
             yield return null;
         }
 
