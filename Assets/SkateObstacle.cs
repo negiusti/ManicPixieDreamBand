@@ -28,6 +28,17 @@ public class SkateObstacle : MonoBehaviour
             return;
 
         // Random transform x position
+        RandomizePosition();
+    }
+
+    private void RandomizePosition()
+    {
         transform.position = new Vector3(Random.Range(minX, maxX), transform.position.y, transform.position.z);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<SkateObstacle>(out SkateObstacle s))
+            RandomizePosition();
     }
 }
