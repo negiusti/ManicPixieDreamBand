@@ -57,7 +57,7 @@ public class BackLog : MonoBehaviour
         }
     }
 
-    private void SaveContact()
+    public void SaveContact()
     {
         Debug.Log("Saving contact: " + contactName);
         ES3.Save("Msgs/" + contactName, savedData);
@@ -77,7 +77,6 @@ public class BackLog : MonoBehaviour
 
     private void OnDestroy()
     {
-        SaveContact();
     }
 
     private void Update()

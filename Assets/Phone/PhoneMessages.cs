@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
@@ -127,6 +128,7 @@ public class PhoneMessages : PhoneApp
         Debug.Log("Saving contacts");
         ES3.Save("PhoneContacts", contactsList);
         ES3.Save("UnfinishedConversations", unfinishedConversations);
+        GetComponentsInChildren<BackLog>(true).ToList().ForEach(c => c.SaveContact());
     }
 
     public override void Load()
