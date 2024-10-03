@@ -38,7 +38,7 @@ public class SkateObstacle : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent<SkateObstacle>(out SkateObstacle s))
+        if (collision.gameObject.TryGetComponent(out SkateObstacle _))
             RandomizePosition();
     }
 }

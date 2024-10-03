@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using PixelCrushers.DialogueSystem;
+﻿using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
 public class BobaShopLocation: MonoBehaviour
 {
-    private string closedConvo = "BobaShop_Closed";
+    //private string closedConvo = "BobaShop_Closed";
     private string workConvo = "BobaShop_Work1";
     private bool convoDone;
     private bool hereForWork;
@@ -23,8 +21,8 @@ public class BobaShopLocation: MonoBehaviour
         {
             if (hereForWork)
                 DialogueManager.StartConversation(workConvo);
-            else
-                DialogueManager.StartConversation(closedConvo);
+            //else
+            //    DialogueManager.StartConversation(closedConvo);
             convoDone = true;
         }
     }
