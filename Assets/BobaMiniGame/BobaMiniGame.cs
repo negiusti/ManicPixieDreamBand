@@ -213,7 +213,8 @@ public class BobaMiniGame : MiniGame
         order.RandomizeOrder();
         cup = Instantiate(cupTemplate, transform).GetComponent<BobaCup>();
         cup.gameObject.SetActive(true);
-        for(int i = 0; i < 3; i++)
+        tipJar.HideTipText();
+        for (int i = 0; i < 3; i++)
         {
             milks[i].ResetPosition();
             flavors[i].ResetPosition();
