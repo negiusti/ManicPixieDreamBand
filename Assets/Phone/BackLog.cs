@@ -240,7 +240,7 @@ public class BackLog : MonoBehaviour
         if (!isFirstTxt && !subtitle.speakerInfo.IsPlayer && currentEntryID > 0 && !string.IsNullOrEmpty(subtitle.formattedText.text))
         {
             // add typing bubble here
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
             typingBubble = Instantiate(typingBubbleTemplate, logEntryContainer);
             typingBubble.SetActive(true);
             yield return new WaitForSeconds(2.5f);
