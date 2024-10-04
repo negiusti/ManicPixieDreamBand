@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.U2D.Animation;
@@ -14,7 +15,7 @@ public class PocketsAppItem : MonoBehaviour, IPointerDownHandler
     public Image itemImg;
     private string itemName;
 
-    private HashSet<string> drinkables = new HashSet<string> { "Coffee", "Boba" };
+    private HashSet<string> drinkables = new HashSet<string> { "Coffee", "Boba", "Root Beer" };
 
     // Start is called before the first frame update
     void Start()
@@ -34,12 +35,19 @@ public class PocketsAppItem : MonoBehaviour, IPointerDownHandler
 
     }
 
+    public static string AddSpaceBeforeCapitals(string input)
+    {
+        // Regex pattern: Look for a capital letter that is preceded by a non-space character (except at the start of the string)
+        return Regex.Replace(input, "(?<!^)([A-Z])", " $1");
+    }
+
     public void SetItemIcon(string itemName)
     {
         if (itemRen == null)
             Start();
-        this.itemName = itemName;
-        itemIcon.SetCategoryAndLabel("Item", itemName);
+        // add space before capital letters
+        this.itemName = AddSpaceBeforeCapitals(itemName);
+        itemIcon.SetCategoryAndLabel("Item", this.itemName);
         itemIcon.ResolveSpriteToSpriteRenderer();
         itemImg.sprite = itemRen.sprite;
     }

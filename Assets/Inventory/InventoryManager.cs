@@ -3,6 +3,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 [CreateAssetMenu(fileName = "InventoryManager", menuName = "Custom/InventoryManager")]
 public class InventoryManager : ScriptableObject
@@ -18,6 +19,12 @@ public class InventoryManager : ScriptableObject
     private static string MAIN_CHARACTER = "MainCharacter";
     private static string addressableDefaultsKey = "Assets/Defaults/default-purchaseables.json";
     public static DefaultPurchaseables defaultPurchaseables;
+    private static readonly Regex sWhitespace = new Regex(@"\s+");
+
+    public static string ReplaceWhitespace(string input, string replacement)
+    {
+        return sWhitespace.Replace(input, replacement);
+    }
 
     [System.Serializable]
     public class DefaultPurchaseables
@@ -37,7 +44,8 @@ public class InventoryManager : ScriptableObject
         Coffee,
         Croissant,
         Pizza,
-        Boba
+        Boba,
+        RootBeer
     }
 
     public enum Item
@@ -280,7 +288,7 @@ public class InventoryManager : ScriptableObject
     private static Item StringToItem(string input)
     {
         // Try parsing the input string into the enum value
-        if (System.Enum.TryParse(input, out Item result))
+        if (System.Enum.TryParse(ReplaceWhitespace(input, ""), out Item result))
         {
             // Parsing succeeded, 'result' contains the enum value
             Debug.LogError("Parsed enum value: " + result);
@@ -296,7 +304,7 @@ public class InventoryManager : ScriptableObject
     private static PerishableItem StringToPerishableItem(string input)
     {
         // Try parsing the input string into the enum value
-        if (System.Enum.TryParse(input, out PerishableItem result))
+        if (System.Enum.TryParse(ReplaceWhitespace(input, ""), out PerishableItem result))
         {
             // Parsing succeeded, 'result' contains the enum value
             Debug.Log("Parsed enum value: " + result);
