@@ -163,6 +163,8 @@ public class StarSpawnerScript : MonoBehaviour
             }
         }
 
+        AudioController.Clap(12);
+
         if (GetScore() > 75f && !starParticles.isPlaying)
         {
             Debug.Log("Score: " + GetScore() + "start playing");

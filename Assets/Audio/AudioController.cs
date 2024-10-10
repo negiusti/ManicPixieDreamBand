@@ -14,4 +14,11 @@ public class AudioController : ScriptableObject
     {
         GameManager.Instance.UnpauseBGMusic();
     }
+
+    public static void Clap(double numPpl)
+    {
+        CrowdSpawner crowd = FindFirstObjectByType<CrowdSpawner>();
+        if (crowd != null)
+            crowd.Clap((int)numPpl);
+    }
 }
