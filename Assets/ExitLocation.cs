@@ -6,6 +6,7 @@ public class ExitLocation : MonoBehaviour
     private bool inRange;
     private string locationName;
     private string neighborhoodName;
+    public bool isBusiness;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,11 @@ public class ExitLocation : MonoBehaviour
             }
             else
             {
+                if (isBusiness)
+                    GameManager.miscSoundEffects.Play("businessdoor");
+                else
+                    GameManager.miscSoundEffects.Play("door");
+
                 if (exitSpawnPos == null || exitSpawnPos == Vector3.zero)
                     SceneChanger.Instance.ChangeScene(neighborhoodName);
                 else

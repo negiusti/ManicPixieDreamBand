@@ -7,6 +7,7 @@ public class OutdoorLocation : MonoBehaviour
     private string location;
     private GameObject prompt;
     private Animator sign;
+    public bool isBusiness;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,10 @@ public class OutdoorLocation : MonoBehaviour
     {
         if ((Input.GetKeyDown(KeyCode.Return)  || Input.GetKeyDown(KeyCode.Space)) && inRange)
         {
+            if (isBusiness)
+                GameManager.miscSoundEffects.Play("businessdoor");
+            else
+                GameManager.miscSoundEffects.Play("Door");
             SceneChanger.Instance.ChangeScene(location);
         }
     }
