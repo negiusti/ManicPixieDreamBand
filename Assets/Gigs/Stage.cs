@@ -33,6 +33,29 @@ public class Stage : MonoBehaviour
 
     }
 
+    public void StartPerformance(Band band, int ticketSales)
+    {
+        if (crowdSpawner != null)
+        {
+            if (ticketSales >= 0)
+                crowdSpawner.SpawnCrowd(ticketSales);
+            else
+                crowdSpawner.SpawnCrowd(band);
+        }
+            
+        if (audioSource != null && band.Name.Equals("Cloudy Kings"))
+        {
+            if (CloudyKingsClips.Count == 0)
+                return;
+            GameManager.Instance.PauseBGMusic();
+            int clipIndex = Random.Range(0, CloudyKingsClips.Count);
+            Debug.Log("Playing: " + CloudyKingsClips[clipIndex].name);
+            audioSource.clip = CloudyKingsClips[clipIndex];
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+    }
+
     public void StartPerformance(Band band)
     {
         if (crowdSpawner != null)
@@ -53,7 +76,10 @@ public class Stage : MonoBehaviour
     public void StopPerformance()
     {
         if (crowdSpawner != null)
+        {
             crowdSpawner.DespawnCrowd();
+        }
+
         leftInst.Stop();
         rightInst.Stop();
         centerInst.Stop();

@@ -143,6 +143,7 @@ public abstract class Movement : MonoBehaviour
     {
         //stateToAnimation[currState] != currAnim
         //lockAnim = true;
+        GameManager.miscSoundEffects.Play("Drink");
         character.SetHoldingSprite(itemName);
         currAnim = DrinkAnim;
         animator.Play("BaseCharacter_Drink", 2, 0f);

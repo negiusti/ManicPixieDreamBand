@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private GameManager[] gms;
     public static BGMusicController bgMusic;
     public static ButtonSoundEffects buttonSounds;
+    public static MiscSoundEffects miscSoundEffects;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
     {
         Lua.RegisterFunction(nameof(Calendar.CompleteCurrentEvent), this, SymbolExtensions.GetMethodInfo(() => Calendar.CompleteCurrentEvent()));
         Lua.RegisterFunction(nameof(MiniGameManager.StartMiniGame), this, SymbolExtensions.GetMethodInfo(() => MiniGameManager.StartMiniGame(string.Empty)));
-        Lua.RegisterFunction(nameof(JamCoordinator.StartJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.StartJam(string.Empty)));
+        Lua.RegisterFunction(nameof(JamCoordinator.StartJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.StartJam(string.Empty, (double)0)));
         Lua.RegisterFunction(nameof(JamCoordinator.EndJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.EndJam()));
         Lua.RegisterFunction(nameof(Characters.Emote), this, SymbolExtensions.GetMethodInfo(() => Characters.Emote(string.Empty, string.Empty, string.Empty)));
         Lua.RegisterFunction(nameof(Characters.Drink), this, SymbolExtensions.GetMethodInfo(() => Characters.Drink(string.Empty, string.Empty)));
@@ -72,6 +73,7 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(DailyRandoms.DrinkSpecial), this, SymbolExtensions.GetMethodInfo(() => DailyRandoms.DrinkSpecial()));
         Lua.RegisterFunction(nameof(AudioController.PauseBGMusic), this, SymbolExtensions.GetMethodInfo(() => AudioController.PauseBGMusic()));
         Lua.RegisterFunction(nameof(AudioController.UnpauseBGMusic), this, SymbolExtensions.GetMethodInfo(() => AudioController.UnpauseBGMusic()));
+        Lua.RegisterFunction(nameof(AudioController.Clap), this, SymbolExtensions.GetMethodInfo(() => AudioController.Clap((double)0)));
         Lua.RegisterFunction(nameof(RefreshGameState), this, SymbolExtensions.GetMethodInfo(() => RefreshGameState()));
     }
 
@@ -114,6 +116,7 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(DailyRandoms.DrinkSpecial));
         Lua.UnregisterFunction(nameof(AudioController.PauseBGMusic));
         Lua.UnregisterFunction(nameof(AudioController.UnpauseBGMusic));
+        Lua.UnregisterFunction(nameof(AudioController.Clap));
         Lua.UnregisterFunction(nameof(RefreshGameState));
         //}
     }
@@ -240,6 +243,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
             bgMusic = GetComponent<BGMusicController>();
             buttonSounds = GetComponentInChildren<ButtonSoundEffects>(true);
+            miscSoundEffects = GetComponentInChildren<MiscSoundEffects>(true);
             DontDestroyOnLoad(gameObject); // Optional: Keeps the object alive across scene changes
         }
         else

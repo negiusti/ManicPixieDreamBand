@@ -6211,7 +6211,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: StartJam("Cloudy Kings");NPCFaceLeft("MainCharacter");NPCFaceRight("Ricki");NPCFaceRight("Dylan")
+      userScript: StartJam("Cloudy Kings",0);NPCFaceLeft("MainCharacter");NPCFaceRight("Ricki");NPCFaceRight("Dylan")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -6266,7 +6266,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: StartMiniGame("Gig");
+      userScript: StartMiniGame("Gig");Clap(12);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -6321,7 +6321,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: StartJam("Cloudy Kings"); NPCFaceRight("Ricki")
+      userScript: StartJam("Cloudy Kings",2); NPCFaceRight("Ricki")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -9625,7 +9625,7 @@ MonoBehaviour:
       - originConversationID: 11
         originDialogueID: 78
         destinationConversationID: 11
-        destinationDialogueID: 79
+        destinationDialogueID: 97
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -10633,9 +10633,64 @@ MonoBehaviour:
         y: 3451.4124
         width: 160
         height: 30
+    - id: 97
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()@3
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 11
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 11
+        originDialogueID: 97
+        destinationConversationID: 11
+        destinationDialogueID: 79
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: Clap(2)
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 481.48743
+        y: 3048.2864
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 3143.9146}
-    canvasZoom: 0.40704328
+    canvasScrollPosition: {x: 0, y: 2023.4275}
+    canvasZoom: 0.7142447
   - id: 12
     fields:
     - title: Title

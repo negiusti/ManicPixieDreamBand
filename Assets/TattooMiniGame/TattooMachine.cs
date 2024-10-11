@@ -3,10 +3,12 @@ using UnityEngine;
 public class TattooMachine : MonoBehaviour
 {
     private Animator animator; // Reference to the Animator component
+    private AudioSource audioSource;
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
         if (animator == null)
         {
             Debug.LogError("Animator component is missing.");
@@ -24,10 +26,12 @@ public class TattooMachine : MonoBehaviour
         if (Input.GetMouseButton(0)) // 0 is the left mouse button
         {
             animator.SetBool("Buzzing", true);
+            audioSource.UnPause();
         }
         else
         {
             animator.SetBool("Buzzing", false);
+            audioSource.Pause();
         }
     }
 }
