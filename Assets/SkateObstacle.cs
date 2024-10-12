@@ -36,7 +36,7 @@ public class SkateObstacle : MonoBehaviour
         transform.position = new Vector3(Random.Range(minX, maxX), transform.position.y, transform.position.z);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out SkateObstacle _))
             RandomizePosition();

@@ -31,6 +31,9 @@ public class Phone : MonoBehaviour
     private PhoneNotifications notifications;
     public GameObject TransitionScreen;
     public HashSet<string> appNotifications;
+    private AudioSource audioSource;
+    public AudioClip lockSound;
+    public AudioClip unlockSound;
 
     enum PhoneState
     {
@@ -67,6 +70,7 @@ public class Phone : MonoBehaviour
         settingsApp = this.GetComponentInChildren<SettingsApp>(true);
         photosApp = this.GetComponentInChildren<PhotosApp>(true);
         notifications = this.GetComponentInChildren<PhoneNotifications>();
+        audioSource = this.GetComponent<AudioSource>();
         isLocked = true;
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
         //if (appNotifications == null) appNotifications = new HashSet<string>();
@@ -611,6 +615,8 @@ public class Phone : MonoBehaviour
             return;
 
         isLocked = true;
+        audioSource.clip = lockSound;
+        audioSource.Play();
         // For text responses
         if (DialogueManager.isConversationActive && customDialogue.IsCurrentConvoTxt())
         {
@@ -646,6 +652,8 @@ public class Phone : MonoBehaviour
             isLocked = true;
             return;
         }
+        audioSource.clip = unlockSound;
+        audioSource.Play();
         GoHome();
         foreach (PhoneIcon i in icons.GetComponentsInChildren<PhoneIcon>())
             i.Refresh();
