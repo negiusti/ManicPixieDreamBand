@@ -31,9 +31,13 @@ public class Phone : MonoBehaviour
     private PhoneNotifications notifications;
     public GameObject TransitionScreen;
     public HashSet<string> appNotifications;
+
     private AudioSource audioSource;
     public AudioClip lockSound;
     public AudioClip unlockSound;
+    public AudioClip txtRingtone;
+    public AudioClip rcvTextSound;
+    public AudioClip sntTextSound;
 
     enum PhoneState
     {
@@ -89,6 +93,22 @@ public class Phone : MonoBehaviour
         if (backgroundResolver == null)
             return;
         Lock();
+    }
+
+    public void PlayTxtRcvSound()
+    {
+        if (phoneStateStack.Peek() != PhoneState.Convo)
+            return;
+        audioSource.clip = rcvTextSound;
+        audioSource.Play();
+    }
+
+    public void PlayTxtSntSound()
+    {
+        if (phoneStateStack.Peek() != PhoneState.Convo)
+            return;
+        audioSource.clip = sntTextSound;
+        audioSource.Play();
     }
 
     public bool IsLocked()
@@ -330,6 +350,8 @@ public class Phone : MonoBehaviour
 
     public void ReceiveMsg(string conversation, bool forceOpenPhone = false)
     {
+        audioSource.clip = txtRingtone;
+        audioSource.Play();
         if (forceOpenPhone)
         {
             gameObject.SetActive(true);

@@ -249,9 +249,14 @@ public class BackLog : MonoBehaviour
             typingBubble = null;
             LayoutRebuilder.ForceRebuildLayoutImmediate(scrollView.content);
         }
-
+        
         if (!string.IsNullOrEmpty(subtitle.formattedText.text))
         {
+            if (!subtitle.speakerInfo.IsPlayer)
+                Phone.Instance.PlayTxtRcvSound();
+            else
+                Phone.Instance.PlayTxtSntSound();
+
             if (isGroupChat && !subtitle.speakerInfo.IsPlayer)
             {
                 // add a name header
