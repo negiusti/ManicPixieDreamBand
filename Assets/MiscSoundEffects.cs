@@ -5,7 +5,10 @@ public class MiscSoundEffects : MonoBehaviour
     public AudioClip drinkClip;
     public AudioClip doorClip;
     public AudioClip businessDoorClip;
+    public AudioClip walkClip;
+    public AudioClip skateClip;
     private AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {

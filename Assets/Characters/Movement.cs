@@ -17,6 +17,7 @@ public abstract class Movement : MonoBehaviour
     protected bool isSkating;
     protected bool isRollerSkating;
     protected bool lockAnim;
+    protected AudioSource audioSource;
 
     public enum MovementState
     {
@@ -62,7 +63,9 @@ public abstract class Movement : MonoBehaviour
         isSkating = false;
         isRollerSkating = false;
         character = GetComponent<Character>();
+        audioSource = GetComponent<AudioSource>();
         animator = GetComponentInChildren<Animator>();
+        audioSource.Pause();
         currState = MovementState.Idle;
         animator.Play(IdleAnim, -1, Random.Range(0f, 1f));
         background = GameObject.FindGameObjectWithTag("Background");
@@ -101,34 +104,48 @@ public abstract class Movement : MonoBehaviour
         {
             if (currState == MovementState.Guitar)
             {
+                audioSource.Pause();
                 currAnim = GuitarAnim;
             }
             else if (currState == MovementState.Drum)
             {
+                audioSource.Pause();
                 currAnim = DrumAnim;
             }
             else if (currState == MovementState.Idle)
             {
+                audioSource.Pause();
                 currAnim = IdleAnim;
             }
             else if (currState == MovementState.Walk)
             {
+                audioSource.clip = GameManager.miscSoundEffects.walkClip;
+                audioSource.UnPause();
+                audioSource.Play();
                 currAnim = WalkAnim;
             }
             else if (currState == MovementState.Skate)
             {
+                audioSource.clip = GameManager.miscSoundEffects.skateClip;
+                audioSource.UnPause();
+                audioSource.Play();
                 currAnim = SkateAnim;
             }
             else if (currState == MovementState.SkateIdle)
             {
+                audioSource.Pause();
                 currAnim = SkateIdleAnim;
             }
             else if (currState == MovementState.Rollerskate)
             {
+                audioSource.clip = GameManager.miscSoundEffects.skateClip;
+                audioSource.UnPause();
+                audioSource.Play();
                 currAnim = RollerskateAnim;
             }
             else if (currState == MovementState.RollerskateIdle)
             {
+                audioSource.Pause();
                 currAnim = RollerskateIdleAnim;
             }
             //else if (currState == MovementState.Drink)
