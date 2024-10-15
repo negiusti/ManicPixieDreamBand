@@ -56,6 +56,12 @@ public class MiniGameManager : ScriptableObject
         }
     }
 
+    public static void StartGiftingMiniGame(string npcName)
+    {
+        GiftingMiniGame mg = (GiftingMiniGame)GetMiniGame("Gifting");
+        mg.OpenMiniGame(npcName);
+    }
+
     public static MiniGame GetMiniGame(string miniGameName)
     {
         switch (miniGameName)
@@ -82,6 +88,8 @@ public class MiniGameManager : ScriptableObject
                 return FindFirstObjectByType<CalibrationMiniGame>(FindObjectsInactive.Include);
             case "DemoEnding":
                 return FindFirstObjectByType<DemoEndingMiniGame>(FindObjectsInactive.Include);
+            case "Gifting":
+                return FindFirstObjectByType<GiftingMiniGame>(FindObjectsInactive.Include);
             default:
                 Debug.LogError("Minigame not found: " + miniGameName);
                 return null;

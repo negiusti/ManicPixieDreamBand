@@ -37,7 +37,7 @@ public class InventoryManager : ScriptableObject
     {
         public string category;
         public List<string> items;
-    }   
+    }
 
     public enum PerishableItem
     {
@@ -382,6 +382,11 @@ public class InventoryManager : ScriptableObject
     public static Dictionary<Item, int> GetPocketItems()
     {
         return pockets ?? new Dictionary<Item, int>();
+    }
+
+    public static Dictionary<PerishableItem, int> GetGiftablePocketItems()
+    {
+        return pocketsPerishable ?? new Dictionary<PerishableItem, int>();
     }
 
     private static AsyncOperationHandle<TextAsset> LoadFromJson()
