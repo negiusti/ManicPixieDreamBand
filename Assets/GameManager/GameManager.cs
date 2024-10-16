@@ -36,11 +36,11 @@ public class GameManager : MonoBehaviour
 
     }
 
-
     void RegisterSOLuaFuncs()
     {
         Lua.RegisterFunction(nameof(Calendar.CompleteCurrentEvent), this, SymbolExtensions.GetMethodInfo(() => Calendar.CompleteCurrentEvent()));
         Lua.RegisterFunction(nameof(MiniGameManager.StartMiniGame), this, SymbolExtensions.GetMethodInfo(() => MiniGameManager.StartMiniGame(string.Empty)));
+        Lua.RegisterFunction(nameof(MiniGameManager.StartGiftingMiniGame), this, SymbolExtensions.GetMethodInfo(() => MiniGameManager.StartGiftingMiniGame(string.Empty)));
         Lua.RegisterFunction(nameof(JamCoordinator.StartJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.StartJam(string.Empty, (double)0)));
         Lua.RegisterFunction(nameof(JamCoordinator.EndJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.EndJam()));
         Lua.RegisterFunction(nameof(Characters.Emote), this, SymbolExtensions.GetMethodInfo(() => Characters.Emote(string.Empty, string.Empty, string.Empty)));
@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
         // Remove the functions from Lua: (Replace these lines with your own.)
         Lua.UnregisterFunction(nameof(Calendar.CompleteCurrentEvent));
         Lua.UnregisterFunction(nameof(MiniGameManager.StartMiniGame));
+        Lua.UnregisterFunction(nameof(MiniGameManager.StartGiftingMiniGame));
         Lua.UnregisterFunction(nameof(JamCoordinator.StartJam));
         Lua.UnregisterFunction(nameof(JamCoordinator.EndJam));
         Lua.UnregisterFunction(nameof(Characters.Emote));
