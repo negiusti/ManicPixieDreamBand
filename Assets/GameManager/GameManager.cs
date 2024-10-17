@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(Characters.NPCSkateTo), this, SymbolExtensions.GetMethodInfo(() => Characters.NPCSkateTo(string.Empty, (double)0)));
         Lua.RegisterFunction(nameof(Characters.NPCFaceRight), this, SymbolExtensions.GetMethodInfo(() => Characters.NPCFaceRight(string.Empty)));
         Lua.RegisterFunction(nameof(Characters.NPCFaceLeft), this, SymbolExtensions.GetMethodInfo(() => Characters.NPCFaceLeft(string.Empty)));
+        Lua.RegisterFunction(nameof(Characters.GetMostRecentGiftReaction), this, SymbolExtensions.GetMethodInfo(() => Characters.GetMostRecentGiftReaction()));
+        Lua.RegisterFunction(nameof(Characters.RecordMostRecentGiftReaction), this, SymbolExtensions.GetMethodInfo(() => Characters.RecordMostRecentGiftReaction(string.Empty)));
         Lua.RegisterFunction(nameof(InventoryManager.AddToMCInventory), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.AddToMCInventory(string.Empty, string.Empty)));
         Lua.RegisterFunction(nameof(InventoryManager.AddItem), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.AddItem(string.Empty)));
         Lua.RegisterFunction(nameof(InventoryManager.AddPerishableItem), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.AddPerishableItem(string.Empty)));
@@ -97,6 +99,8 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(Characters.NPCSkateTo));
         Lua.UnregisterFunction(nameof(Characters.NPCFaceLeft));
         Lua.UnregisterFunction(nameof(Characters.NPCFaceRight));
+        Lua.UnregisterFunction(nameof(Characters.GetMostRecentGiftReaction));
+        Lua.UnregisterFunction(nameof(Characters.RecordMostRecentGiftReaction));
         Lua.UnregisterFunction(nameof(InventoryManager.AddToMCInventory));
         Lua.UnregisterFunction(nameof(InventoryManager.AddItem));
         Lua.UnregisterFunction(nameof(InventoryManager.AddPerishableItem));

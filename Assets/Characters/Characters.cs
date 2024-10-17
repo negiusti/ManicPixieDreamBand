@@ -9,6 +9,50 @@ public class Characters : ScriptableObject
 {
     private static Dictionary<string, Character> characters;
     private static Character mc;
+    private static CharacterGiftReaction mostRecentGiftReaction;
+
+    public enum CharacterGiftReaction
+    {
+        Good,
+        Mid,
+        Bad
+    };
+
+    public static void RecordMostRecentGiftReaction(string reaction)
+    {
+        switch (reaction.ToLower())
+        {
+            case "good":
+                mostRecentGiftReaction = CharacterGiftReaction.Good;
+                break;
+            case "mid":
+                mostRecentGiftReaction = CharacterGiftReaction.Mid;
+                break;
+            case "bad":
+                mostRecentGiftReaction = CharacterGiftReaction.Bad;
+                break;
+            default:
+                Debug.LogError("Invalid gift reaction: " + reaction);
+                mostRecentGiftReaction = CharacterGiftReaction.Good;
+                break;
+        }
+    }
+
+    public static string GetMostRecentGiftReaction()
+    {
+        switch (mostRecentGiftReaction)
+        {
+            case CharacterGiftReaction.Good:
+                return "good";
+            case CharacterGiftReaction.Mid:
+                return "mid";
+            case CharacterGiftReaction.Bad:
+                return "bad";
+            default: // should never happen
+                Debug.LogError("Gift reaction not found: " + mostRecentGiftReaction.ToString());
+                return "good";
+        }
+    }
 
     // keep a cache of currently loaded characters and refresh it on each scene change
     public static void RefreshCharactersCache(Scene scene, Scene mode)
@@ -172,5 +216,6 @@ public class Characters : ScriptableObject
             RefreshCharactersCache();
         }
         return mc;
+    }
     }
 }
