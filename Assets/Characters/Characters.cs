@@ -15,7 +15,8 @@ public class Characters : ScriptableObject
     {
         Good,
         Mid,
-        Bad
+        Bad,
+        Nvm
     };
 
     public static void RecordMostRecentGiftReaction(string reaction)
@@ -31,11 +32,19 @@ public class Characters : ScriptableObject
             case "bad":
                 mostRecentGiftReaction = CharacterGiftReaction.Bad;
                 break;
+            case "nvm":
+                mostRecentGiftReaction = CharacterGiftReaction.Nvm;
+                break;
             default:
                 Debug.LogError("Invalid gift reaction: " + reaction);
                 mostRecentGiftReaction = CharacterGiftReaction.Good;
                 break;
         }
+    }
+
+    public static void RecordMostRecentGiftReaction(CharacterGiftReaction reaction)
+    {
+        mostRecentGiftReaction = reaction;
     }
 
     public static string GetMostRecentGiftReaction()
@@ -48,9 +57,11 @@ public class Characters : ScriptableObject
                 return "mid";
             case CharacterGiftReaction.Bad:
                 return "bad";
+            case CharacterGiftReaction.Nvm:
+                return "nvm";
             default: // should never happen
                 Debug.LogError("Gift reaction not found: " + mostRecentGiftReaction.ToString());
-                return "good";
+                return "nvm";
         }
     }
 
@@ -217,5 +228,5 @@ public class Characters : ScriptableObject
         }
         return mc;
     }
-    }
+    
 }

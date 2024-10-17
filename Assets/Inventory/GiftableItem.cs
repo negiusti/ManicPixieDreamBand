@@ -9,14 +9,14 @@ public class GiftableItem : MonoBehaviour, IPointerDownHandler
 {
     public SpriteResolver itemIcon;
     public SpriteRenderer itemRen;
-    private Image slotImg;
     public Image itemImg;
     private string itemName;
+    private GiftingMiniGame mg;
 
     // Start is called before the first frame update
     void Start()
     {
-        slotImg = GetComponent<Image>();
+        mg = GetComponentInParent<GiftingMiniGame>(true);
     }
 
     // Update is called once per frame
@@ -45,8 +45,7 @@ public class GiftableItem : MonoBehaviour, IPointerDownHandler
     private void OnMouseDown()
     {
         InventoryManager.RemovePerishableItem(itemName);
-        // close window
-        // NPC reaction
+        mg.CloseMiniGame(itemName);
     }
 
     private void OnEnable()

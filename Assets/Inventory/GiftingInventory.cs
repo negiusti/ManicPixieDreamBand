@@ -6,7 +6,7 @@ public class GiftingInventory : PhoneApp
     public GiftableItem itemTemplate;
     private Dictionary<InventoryManager.PerishableItem, int> perishableItems;
     private List<GiftableItem> itemIcons;
-    public string recevingNPC;
+    private string recevingNPC;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +32,7 @@ public class GiftingInventory : PhoneApp
                 itemIcons.Add(item);
             }
         }
+        transform.position = new Vector3(Camera.main.transform.position.x, transform.position.y, 10f);
     }
 
     private void OnDisable()
