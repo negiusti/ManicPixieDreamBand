@@ -13,6 +13,7 @@ public class Milk : MonoBehaviour
     private LerpPosition lerp;
     private BobaMiniGame mg;
     private SpriteRenderer sr;
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -22,6 +23,7 @@ public class Milk : MonoBehaviour
         animator = GetComponent<Animator>();
         lerp = GetComponent<LerpPosition>();
         sr = GetComponent<SpriteRenderer>();
+        audioSource = GetComponentInParent<AudioSource>(true);
     }
 
     void Update()
@@ -44,6 +46,7 @@ public class Milk : MonoBehaviour
         sr.sortingOrder = 10;
         StartCoroutine(lerp.Lerp(targetPos, 0.5f));
         animator.Play("Pour");
+        audioSource.Play();
         StartCoroutine(mg.cup.liquid.GetComponent<LerpPosition>().Lerp(mg.cup.liquid.transform.localPosition + Vector3.up * 4f, animator.runtimeAnimatorController.animationClips.First(x => x.name == "Pour").length));
         mg.Next(gameObject.name);
     }

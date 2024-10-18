@@ -41,6 +41,9 @@ public class BobaMiniGame : MiniGame
     public string[] midResponses; // 1 mistake
     public string[] badResponses; // 2 or more mistakes
 
+    public AudioClip goodJob;
+    public AudioClip badJob;
+    private AudioSource audioSource;
     public GameObject sweepUpMicroGame;
     public GameObject cleanSpillMicroGame;
     public GameObject bathroomCodeMicroGame;
@@ -60,6 +63,7 @@ public class BobaMiniGame : MiniGame
         speechText = speechBubble.GetComponentInChildren<Text>(true);
         tipJar = GetComponentInChildren<TipJar>(true);
         StartCoroutine(speechBubble.GetComponent<LerpPosition>().Lerp(speechBubble.transform.localPosition + Vector3.right * 35f, 1f));
+        audioSource = GetComponent<AudioSource>();
         speechBubble.SetActive(false);
 
         DisableAllChildren();
@@ -160,6 +164,8 @@ public class BobaMiniGame : MiniGame
             StartCoroutine(speechBubble.GetComponent<LerpPosition>().Lerp(speechBubble.transform.localPosition + Vector3.left * 35f, 1f));
             if (currNumMistakes == 0)
             {
+                audioSource.clip = goodJob;
+                audioSource.Play();
                 JobSystem.GoodJob();
                 speechText.text = goodResponses[Random.Range(0, goodResponses.Length)];
                 tipJar.addTip(5f);
@@ -172,6 +178,8 @@ public class BobaMiniGame : MiniGame
                 tipsIncome += 1f;
             } else
             {
+                audioSource.clip = badJob;
+                audioSource.Play();
                 JobSystem.BadJob();
                 speechText.text = badResponses[Random.Range(0, badResponses.Length)];
                 tipJar.addTip(0f);

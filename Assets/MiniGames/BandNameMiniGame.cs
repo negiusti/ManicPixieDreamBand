@@ -19,11 +19,13 @@ public class BandNameMiniGame : MiniGame
     public GameObject clickHint;
     private Camera mgCamera;
     private bool pickedPunkJuice;
+    private AudioSource audioSource;
 
     private void Start()
     {
         mgCamera = GetComponentInChildren<Camera>(true);
         blackScreen = GetComponentInChildren<BlackScreen>(true);
+        audioSource = GetComponent<AudioSource>();
         DisableAllChildren();
     }
 
@@ -61,7 +63,7 @@ public class BandNameMiniGame : MiniGame
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             waitingForClick = false;
         }
@@ -96,6 +98,7 @@ public class BandNameMiniGame : MiniGame
         {
             rickiSpeechBubble.SetActive(false);
             StartCoroutine(maxBark("nah that's a dumb name"));
+            audioSource.Play();
             lbPatch.Explode();
         } else
         {

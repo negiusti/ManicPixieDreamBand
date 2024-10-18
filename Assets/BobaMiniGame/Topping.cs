@@ -10,6 +10,7 @@ public class Topping : MonoBehaviour
     private Vector3 targetPos;
     private LerpPosition lerp;
     private BobaMiniGame mg;
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -18,6 +19,7 @@ public class Topping : MonoBehaviour
         mg = (BobaMiniGame)MiniGameManager.GetMiniGame("Boba");
         animator = GetComponent<Animator>();
         lerp = GetComponent<LerpPosition>();
+        audioSource = GetComponentInParent<AudioSource>(true);
     }
 
     // Update is called once per frame
@@ -37,6 +39,7 @@ public class Topping : MonoBehaviour
     {
         if (mg.toppingsDone || mg.CurrentStep() != BobaMiniGame.Step.Toppings)
             return;
+        audioSource.Play();
         mg.toppingsDone = true;
         mg.cup.GetComponentInChildren<Toppings>().SetToppingType(gameObject.name);
         StartCoroutine(lerp.Lerp(targetPos, 0.5f));

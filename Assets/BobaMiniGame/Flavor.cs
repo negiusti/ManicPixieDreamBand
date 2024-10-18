@@ -14,6 +14,7 @@ public class Flavor : MonoBehaviour
     private SpriteRenderer sr;
     private SpriteResolver resolver;
     public Color color;
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -24,6 +25,7 @@ public class Flavor : MonoBehaviour
         lerp = GetComponent<LerpPosition>();
         sr = GetComponent<SpriteRenderer>();
         resolver = GetComponent<SpriteResolver>();
+        audioSource = GetComponentInParent<AudioSource>();
     }
 
     void Update()
@@ -46,6 +48,7 @@ public class Flavor : MonoBehaviour
     {
         if (mg.flavorDone || mg.CurrentStep() != BobaMiniGame.Step.Flavor)
             return;
+        audioSource.Play();
         mg.flavorDone = true;
         GetComponent<Renderer>().sortingOrder = 51;
         StartCoroutine(lerp.Lerp(targetPos, 0.5f));
