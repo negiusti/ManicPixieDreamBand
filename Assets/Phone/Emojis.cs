@@ -16,6 +16,7 @@ public class Emojis : MonoBehaviour
     {
         if (emojiTemplate == null)
             emojiTemplate = GetComponentInChildren<Emoji>(true);
+        emojiTemplate.gameObject.SetActive(false);
     }
 
     // Update is called once per frame

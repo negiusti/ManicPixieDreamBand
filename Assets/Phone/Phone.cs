@@ -116,6 +116,11 @@ public class Phone : MonoBehaviour
         messagesApp.UpdateRomanceEmoji(npc);
     }
 
+    public void UnlockEmoji(string contactName, string emojiName)
+    {
+        messagesApp.UnlockEmoji(contactName, emojiName);
+    }
+
     public bool IsLocked()
     {
         return isLocked;

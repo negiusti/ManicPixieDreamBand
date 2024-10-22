@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class Emoji : MonoBehaviour
 {
-    public SpriteResolver emojiIcon;
-    public SpriteRenderer emojiRen;
-    public Image emojiImg;
+    private SpriteResolver emojiIcon;
+    private SpriteRenderer emojiRen;
+    private Image emojiImg;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +26,10 @@ public class Emoji : MonoBehaviour
 
     public void SetEmoji(string emojiName)
     {
+        if (emojiIcon == null)
+        {
+            Start();
+        }
         emojiIcon.SetCategoryAndLabel("Emoji", emojiName);
         emojiIcon.ResolveSpriteToSpriteRenderer();
         emojiImg.sprite = emojiRen.sprite;

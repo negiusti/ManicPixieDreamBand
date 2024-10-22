@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(MiniGameManager.StartGiftingMiniGame), this, SymbolExtensions.GetMethodInfo(() => MiniGameManager.StartGiftingMiniGame(string.Empty)));
         Lua.RegisterFunction(nameof(JamCoordinator.StartJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.StartJam(string.Empty, (double)0)));
         Lua.RegisterFunction(nameof(JamCoordinator.EndJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.EndJam()));
+        Lua.RegisterFunction(nameof(Characters.UnlockEmoji), this, SymbolExtensions.GetMethodInfo(() => Characters.UnlockEmoji(string.Empty, string.Empty)));
         Lua.RegisterFunction(nameof(Characters.Emote), this, SymbolExtensions.GetMethodInfo(() => Characters.Emote(string.Empty, string.Empty, string.Empty)));
         Lua.RegisterFunction(nameof(Characters.Drink), this, SymbolExtensions.GetMethodInfo(() => Characters.Drink(string.Empty, string.Empty)));
         Lua.RegisterFunction(nameof(Characters.MoveYPos), this, SymbolExtensions.GetMethodInfo(() => Characters.MoveYPos(string.Empty, (double)0)));
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(MiniGameManager.StartGiftingMiniGame));
         Lua.UnregisterFunction(nameof(JamCoordinator.StartJam));
         Lua.UnregisterFunction(nameof(JamCoordinator.EndJam));
+        Lua.UnregisterFunction(nameof(Characters.UnlockEmoji));
         Lua.UnregisterFunction(nameof(Characters.Emote));
         Lua.UnregisterFunction(nameof(Characters.Drink));
         Lua.UnregisterFunction(nameof(Characters.MoveYPos));

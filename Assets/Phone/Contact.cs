@@ -46,6 +46,11 @@ public class Contact : MonoBehaviour
         emojis.UpdateRomanceEmoji();
     }
 
+    public void UnlockEmoji(string emojiName)
+    {
+        emojis.UnlockEmoji(emojiName);
+    }
+
     public void ShowNotificationIndicator()
     {
         notificationIndicator.SetActive(true);

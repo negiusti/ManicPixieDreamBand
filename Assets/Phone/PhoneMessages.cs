@@ -137,6 +137,13 @@ public class PhoneMessages : PhoneApp
         contactsMap[npc].UpdateRomanceEmoji();
     }
 
+    public void UnlockEmoji(string contactName, string emojiName)
+    {
+        if (contactsMap[contactName] == null)
+            return;// contact does not exist yet
+        contactsMap[contactName].UnlockEmoji(emojiName);
+    }
+
     public override void Load()
     {
         Debug.Log("loading contacts");

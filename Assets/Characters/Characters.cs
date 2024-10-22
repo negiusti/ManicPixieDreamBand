@@ -65,6 +65,11 @@ public class Characters : ScriptableObject
         }
     }
 
+    public static void UnlockEmoji(string contactName, string emojiName)
+    {
+        Phone.Instance.UnlockEmoji(contactName, emojiName);
+    }
+
     // keep a cache of currently loaded characters and refresh it on each scene change
     public static void RefreshCharactersCache(Scene scene, Scene mode)
     {
