@@ -33,7 +33,9 @@ public class Emoji : MonoBehaviour
 
     public void SetRomanceEmoji(int romanceLvl)
     {
-        emojiIcon.SetCategoryAndLabel("RomanceEmoji", romanceLvl.ToString());
+        if (romanceLvl < 1)
+            return;
+        emojiIcon.SetCategoryAndLabel("Romance", romanceLvl.ToString());
         emojiIcon.ResolveSpriteToSpriteRenderer();
         emojiImg.sprite = emojiRen.sprite;
     }
