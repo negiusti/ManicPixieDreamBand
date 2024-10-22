@@ -13,6 +13,7 @@ public class Contact : MonoBehaviour
     public Phone phone;
     private TextMeshProUGUI contactNameTM;
     public GameObject notificationIndicator;
+    private Emojis emojis;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,8 @@ public class Contact : MonoBehaviour
 
     public void SetContact(string name)
     {
+        emojis = GetComponentInChildren<Emojis>();
+        emojis.LoadEmojis(name);
         spriteResolver = GetComponentInChildren<SpriteResolver>();
         contactName = name;
         contactNameTM = GetComponentInChildren<TextMeshProUGUI>();
@@ -36,6 +39,11 @@ public class Contact : MonoBehaviour
         spriteResolver.SetCategoryAndLabel("Pic", contactName);
         spriteResolver.ResolveSpriteToSpriteRenderer();
         img.sprite = spriteRenderer.sprite;
+    }
+
+    public void UpdateRomanceEmoji()
+    {
+        emojis.UpdateRomanceEmoji();
     }
 
     public void ShowNotificationIndicator()

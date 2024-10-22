@@ -69,6 +69,9 @@ public class RomanceManager : ScriptableObject
             relationshipScores[npc] += (int)delta;
         else
             relationshipScores.Add(npc, (int)delta);
+
+        // Make sure this updates contact emojis
+        Phone.Instance.UpdateRomanceEmoji(npc);
     }
 
     public static void Save()

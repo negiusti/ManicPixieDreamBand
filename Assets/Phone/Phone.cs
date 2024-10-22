@@ -111,6 +111,11 @@ public class Phone : MonoBehaviour
         audioSource.Play();
     }
 
+    public void UpdateRomanceEmoji(string npc)
+    {
+        messagesApp.UpdateRomanceEmoji(npc);
+    }
+
     public bool IsLocked()
     {
         return isLocked;

@@ -129,6 +129,12 @@ public class PhoneMessages : PhoneApp
         ES3.Save("PhoneContacts", contactsList);
         ES3.Save("UnfinishedConversations", unfinishedConversations);
         GetComponentsInChildren<BackLog>(true).ToList().ForEach(c => c.SaveContact());
+        GetComponentsInChildren<Emojis>(true).ToList().ForEach(e => e.SaveEmojis());
+    }
+
+    public void UpdateRomanceEmoji(string npc)
+    {
+        contactsMap[npc].UpdateRomanceEmoji();
     }
 
     public override void Load()
