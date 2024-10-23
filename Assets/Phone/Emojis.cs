@@ -54,6 +54,7 @@ public class Emojis : MonoBehaviour
         Emoji newEmoji = Instantiate(emojiTemplate, emojiTemplate.transform.parent);
         newEmoji.gameObject.SetActive(true);
         newEmoji.SetEmoji(emojiName);
+        unlockedEmojis.Add(emojiName);
     }
 
     public void UpdateRomanceEmoji()
@@ -70,6 +71,6 @@ public class Emojis : MonoBehaviour
 
     public void SaveEmojis()
     {
-        ES3.Load("UnlockedEmojis/" + npcName, unlockedEmojis);
+        ES3.Save("UnlockedEmojis/" + npcName, unlockedEmojis);
     }
 }

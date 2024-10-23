@@ -28,7 +28,7 @@ public class Contact : MonoBehaviour
 
     public void SetContact(string name)
     {
-        emojis = GetComponentInChildren<Emojis>();
+        emojis = GetComponentInChildren<Emojis>(true);
         emojis.LoadEmojis(name);
         spriteResolver = GetComponentInChildren<SpriteResolver>();
         contactName = name;
