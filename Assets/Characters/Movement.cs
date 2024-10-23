@@ -211,6 +211,14 @@ public abstract class Movement : MonoBehaviour
         }
     }
 
+    protected void Grind()
+    {
+        if (!lockAnim && !DialogueManager.IsConversationActive)
+        {
+            animator.Play("BaseCharacter_SkateboardGrind");
+        }
+    }
+
     protected void Rollie()
     {
         if (!lockAnim && !DialogueManager.IsConversationActive)

@@ -36,8 +36,10 @@ public class FollowMouseWithinBounds : MonoBehaviour
         float clampedX = Mathf.Clamp(mousePos.x, minBounds.x, maxBounds.x);
         float clampedY = Mathf.Clamp(mousePos.y, minBounds.y, maxBounds.y);
 
+        transform.position = Vector3.Lerp(transform.position, new Vector3(clampedX, clampedY, transform.position.z), 2f * Time.deltaTime);
+
         // Set the GameObject's position to the clamped position
-        transform.position = new Vector3(clampedX, clampedY, transform.position.z);
+        //transform.position = new Vector3(clampedX, clampedY, transform.position.z);
     }
 
     //private void Follow()

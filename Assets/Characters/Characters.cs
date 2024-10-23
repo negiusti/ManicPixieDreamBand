@@ -159,6 +159,28 @@ public class Characters : ScriptableObject
         }
     }
 
+    public static void NPCSkateBetween(string npc, double minx, double maxx, double seconds)
+    {
+        if (characters == null || !characters.ContainsKey(npc))
+            RefreshCharactersCache();
+        if (characters.ContainsKey(npc))
+        {
+            characters[npc].gameObject.SetActive(true);
+            characters[npc].GetComponent<NPCMovement>().SkateBetween((float)minx, (float)maxx, (float)seconds);
+        }
+    }
+
+    public static void NPCStopSkating(string npc)
+    {
+        if (characters == null || !characters.ContainsKey(npc))
+            RefreshCharactersCache();
+        if (characters.ContainsKey(npc))
+        {
+            characters[npc].gameObject.SetActive(true);
+            characters[npc].GetComponent<NPCMovement>().StopSkating();
+        }
+    }
+
     public static void NPCSkateTo(string npc, double targetX)
     {
         if (characters == null || !characters.ContainsKey(npc))

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class NPCMovement : Movement
@@ -5,6 +6,7 @@ public class NPCMovement : Movement
     private float targetX;
     private bool walking;
     private bool skating;
+    private Coroutine skateRoutine;
 
     // Start is called before the first frame update
     new void Start()
@@ -52,6 +54,59 @@ public class NPCMovement : Movement
         skating = true;
         targetX = x;
         Debug.Log("Skating to: " + transform.position.x + " " + targetX);
+    }
+
+    public void StopSkating()
+    {
+        if (skateRoutine != null)
+        {
+            StopCoroutine(skateRoutine);
+            skateRoutine = null;
+        }
+
+        skating = false;
+        walking = false;
+        currState = MovementState.Idle;
+    }
+
+    public void SkateBetween(float minx, float maxx, float seconds)
+    {
+        skateRoutine = StartCoroutine(SkateBetweenFor(minx, maxx, seconds));
+    }
+
+    private IEnumerator SkateBetweenFor(float minx, float maxx, float seconds)
+    {
+        skating = true;
+        targetX = minx;
+        float timeElapsed = 0f;
+        float timeElapsedSinceTrick = 0f;
+        bool alternateTricks = false;
+
+        while (timeElapsed < seconds)
+        {
+            float currentX = transform.position.x;
+            if (Mathf.Abs(currentX - minx) < 0.5f)
+            {
+                SkateTo(maxx);
+            } else if (Mathf.Abs(currentX - maxx) < 0.5f)
+            {
+                SkateTo(minx);
+            }
+            if (timeElapsedSinceTrick > 2f)
+            {
+                timeElapsedSinceTrick = 0f;
+                if (alternateTricks)
+                    Ollie();
+                else
+                    Grind();
+                alternateTricks = !alternateTricks;
+            }
+            timeElapsedSinceTrick += 0.5f;
+            timeElapsed += 0.5f;
+            yield return new WaitForSeconds(0.5f);
+        }
+        StopSkating();
+        yield return null;
     }
 
     //public new void PlayInstrument(string instLabel, float xPos)

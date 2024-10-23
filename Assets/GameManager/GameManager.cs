@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(Characters.DisableDialogueTrigger), this, SymbolExtensions.GetMethodInfo(() => Characters.DisableDialogueTrigger(string.Empty)));
         Lua.RegisterFunction(nameof(Characters.NPCWalkTo), this, SymbolExtensions.GetMethodInfo(() => Characters.NPCWalkTo(string.Empty, (double)0)));
         Lua.RegisterFunction(nameof(Characters.NPCSkateTo), this, SymbolExtensions.GetMethodInfo(() => Characters.NPCSkateTo(string.Empty, (double)0)));
+        Lua.RegisterFunction(nameof(Characters.NPCStopSkating), this, SymbolExtensions.GetMethodInfo(() => Characters.NPCStopSkating(string.Empty)));
+        Lua.RegisterFunction(nameof(Characters.NPCSkateBetween), this, SymbolExtensions.GetMethodInfo(() => Characters.NPCSkateBetween(string.Empty, (double)0, (double)0, (double)0)));
         Lua.RegisterFunction(nameof(Characters.NPCFaceRight), this, SymbolExtensions.GetMethodInfo(() => Characters.NPCFaceRight(string.Empty)));
         Lua.RegisterFunction(nameof(Characters.NPCFaceLeft), this, SymbolExtensions.GetMethodInfo(() => Characters.NPCFaceLeft(string.Empty)));
         Lua.RegisterFunction(nameof(Characters.GetMostRecentGiftReaction), this, SymbolExtensions.GetMethodInfo(() => Characters.GetMostRecentGiftReaction()));
@@ -99,6 +101,8 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(Characters.DisableDialogueTrigger));
         Lua.UnregisterFunction(nameof(Characters.NPCWalkTo));
         Lua.UnregisterFunction(nameof(Characters.NPCSkateTo));
+        Lua.UnregisterFunction(nameof(Characters.NPCStopSkating));
+        Lua.UnregisterFunction(nameof(Characters.NPCSkateBetween));
         Lua.UnregisterFunction(nameof(Characters.NPCFaceLeft));
         Lua.UnregisterFunction(nameof(Characters.NPCFaceRight));
         Lua.UnregisterFunction(nameof(Characters.GetMostRecentGiftReaction));
