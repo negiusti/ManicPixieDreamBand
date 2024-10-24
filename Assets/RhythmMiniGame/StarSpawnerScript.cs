@@ -93,8 +93,10 @@ public class StarSpawnerScript : MonoBehaviour
         scoreTxtBottom.text = "";
         hamster = this.GetComponent<AudioSource>();
         // Specify the addressable path (use the address you set in the Addressables Group)
-        string addressablePath1 = "Assets/RhythmGameNotes/BodyHorror/BodyHorror_notes.txt";
-        string addressablePath2 = "Assets/RhythmGameNotes/BodyHorror/BodyHorror.txt";
+        //string addressablePath1 = "Assets/RhythmGameNotes/BodyHorror/BodyHorror_notes.txt";
+        //string addressablePath2 = "Assets/RhythmGameNotes/BodyHorror/BodyHorror.txt";
+        string addressablePath1 = "Assets/RhythmGameNotes/UISS/UISS_notes.txt";
+        string addressablePath2 = "Assets/RhythmGameNotes/UISS/UISS.txt";
 
         // Load the text file asynchronously
         AsyncOperationHandle<TextAsset> asyncOperation1 = Addressables.LoadAssetAsync<TextAsset>(addressablePath1);
