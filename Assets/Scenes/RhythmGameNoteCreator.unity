@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38dfe39503e724acaa80799190a91146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  songname: Metronome
+  songname: UISS
 --- !u!82 &1932872690
 AudioSource:
   m_ObjectHideFlags: 0
@@ -301,7 +301,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 046efa1e0770142cea1e75c36c9682bb, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 4184e7f98f14343d4b7706f18415924c, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -910,7 +910,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a69226cc63c3f48768d3f4e41de7ceed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasStarted: 0
 --- !u!1 &1564381724249947653
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,7 +1408,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a69226cc63c3f48768d3f4e41de7ceed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasStarted: 0
 --- !u!114 &4524779591434800255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1445,6 +1443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2a6a55c5dd94961a972c840e7401cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starSpawner: {fileID: 0}
   defaultSprite: {fileID: 21300000, guid: c94ba58348c41439f86f4a65ab560069, type: 3}
   pressedSprite: {fileID: 21300000, guid: c94ba58348c41439f86f4a65ab560069, type: 3}
   guitarString: {fileID: 749681985478759477}
@@ -1482,7 +1481,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a69226cc63c3f48768d3f4e41de7ceed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasStarted: 0
 --- !u!114 &4805000351833749290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1553,7 +1551,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a69226cc63c3f48768d3f4e41de7ceed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasStarted: 0
 --- !u!1 &5037469780619744348
 GameObject:
   m_ObjectHideFlags: 0
@@ -1585,6 +1582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2a6a55c5dd94961a972c840e7401cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starSpawner: {fileID: 0}
   defaultSprite: {fileID: 21300000, guid: c94ba58348c41439f86f4a65ab560069, type: 3}
   pressedSprite: {fileID: 21300000, guid: c94ba58348c41439f86f4a65ab560069, type: 3}
   guitarString: {fileID: 2393456037358247590}
@@ -1653,7 +1651,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a69226cc63c3f48768d3f4e41de7ceed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasStarted: 0
 --- !u!4 &6030505626867941111
 Transform:
   m_ObjectHideFlags: 0
@@ -1986,6 +1983,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f01d104209c84ccda76fe39e5c20213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oopsAudioClips: []
+  goodAudioClips: []
 --- !u!212 &6969996452831697243
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2050,18 +2049,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b254e091b829947ed99cbc71436c7a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starParticles: {fileID: 0}
   lagCorrection: 0
   pinkStar: {fileID: 4564277242340187755}
   blackStar: {fileID: 261435155812714508}
   purpleStar: {fileID: 8573004424617575842}
   redStar: {fileID: 1025831825968224333}
   buttons: {fileID: 0}
-  starter: {fileID: 4687263902893461525}
+  starter: {fileID: 0}
   pinkSpawnPosition: {x: 0, y: 0, z: 0}
   blackSpawnPosition: {x: 0, y: 0, z: 0}
   purpleSpawnPosition: {x: 0, y: 0, z: 0}
   redSpawnPosition: {x: 0, y: 0, z: 0}
   highwaySpeed: 5
+  scoreTxtTop: {fileID: 0}
+  scoreTxtBottom: {fileID: 0}
 --- !u!1 &7291910766006041077
 GameObject:
   m_ObjectHideFlags: 0
@@ -2600,6 +2602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2a6a55c5dd94961a972c840e7401cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starSpawner: {fileID: 0}
   defaultSprite: {fileID: 21300000, guid: c94ba58348c41439f86f4a65ab560069, type: 3}
   pressedSprite: {fileID: 21300000, guid: c94ba58348c41439f86f4a65ab560069, type: 3}
   guitarString: {fileID: 6865521511002244891}
@@ -2699,6 +2702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2a6a55c5dd94961a972c840e7401cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starSpawner: {fileID: 0}
   defaultSprite: {fileID: 21300000, guid: c94ba58348c41439f86f4a65ab560069, type: 3}
   pressedSprite: {fileID: 21300000, guid: c94ba58348c41439f86f4a65ab560069, type: 3}
   guitarString: {fileID: 4408715906498272955}
