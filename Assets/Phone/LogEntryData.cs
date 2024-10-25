@@ -14,6 +14,7 @@ public class LogEntryData
     public bool isPlayer;
     public string speakerName;
     public int entryID;
+    public string imgName;
 
     public LogEntryData (LogEntry entry)
     {
@@ -28,5 +29,6 @@ public class LogEntryData
         speakerName = entry.speakerName;
         entryID = entry.entryID;
         text = entry.text;
+        imgName = entry.imgName;
     }
 }

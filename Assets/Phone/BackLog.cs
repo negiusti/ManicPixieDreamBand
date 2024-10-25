@@ -15,6 +15,7 @@ public class BackLog : MonoBehaviour
     private string contactName; // used for saving the backlog
     public Transform logEntryContainer;
     public LogEntry logEntryTemplate;
+    public LogEntry photoEntryTemplate;
     public Text speakerNameTemplate;
     public ScrollRect scrollView;
     public GameObject typingBubbleTemplate;
@@ -34,6 +35,7 @@ public class BackLog : MonoBehaviour
     private void Start()
     {
         logEntryTemplate.gameObject.SetActive(false);
+        photoEntryTemplate.gameObject.SetActive(false);
         speakerNameTemplate.gameObject.SetActive(false);
         typingBubbleTemplate.SetActive(false);
         rectTransform = GetComponent<RectTransform>();
@@ -194,7 +196,15 @@ public class BackLog : MonoBehaviour
             }
 
             //log.Add(subtitle);
-            LogEntry instance = Instantiate(logEntryTemplate, logEntryContainer);
+            LogEntry instance;
+            if (subtitle.formattedText.text.StartsWith("_"))
+            {
+                instance = Instantiate(photoEntryTemplate, logEntryContainer);
+            }
+            else
+            {
+                instance = Instantiate(logEntryTemplate, logEntryContainer);
+            }
             instances.Add(instance);
             instance.gameObject.SetActive(true);
             instance.Assign(subtitle);
@@ -266,7 +276,14 @@ public class BackLog : MonoBehaviour
             }
 
             //log.Add(subtitle);
-            LogEntry instance = Instantiate(logEntryTemplate, logEntryContainer);
+            LogEntry instance;
+            if (subtitle.formattedText.text.StartsWith("_"))
+            {
+                instance = Instantiate(photoEntryTemplate, logEntryContainer);
+            } else
+            {
+                instance = Instantiate(logEntryTemplate, logEntryContainer);
+            }
             instances.Add(instance);
             instance.gameObject.SetActive(true);
             instance.Assign(subtitle);
