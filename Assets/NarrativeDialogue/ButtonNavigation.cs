@@ -78,8 +78,9 @@ public class ButtonNavigation : MonoBehaviour
         Select(currentIndex);
     }
 
-    private void Select(int idx)
+    public void Select(int idx)
     {
+        currentIndex = idx;
         ShowUpTo3Options(idx);
         EventSystem.current.SetSelectedGameObject(selectables[idx].gameObject);
         selectables[idx].OnSelect(null);
@@ -99,7 +100,7 @@ public class ButtonNavigation : MonoBehaviour
             LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
     }
 
-    private void Unselect(int idx)
+    public void Unselect(int idx)
     {
         responses[idx].Deselect();
         selectables[idx].OnDeselect(null);
