@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerMovement : Movement
 {
     private float moveInput;
+    private bool onRail;
     // Start is called before the first frame update
     new void Start()
     {
@@ -49,6 +50,18 @@ public class PlayerMovement : Movement
                 Ollie();
             if (isRollerSkating)
                 Rollie();
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            if (isSkating)
+                Flip();
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (isSkating)
+                Grind();
         }
 
         animator.SetBool("IsMoving", moveInput != 0f);
@@ -99,6 +112,11 @@ public class PlayerMovement : Movement
         {
             gameObject.transform.Translate(Vector3.down * .5f);
         }
+        if (other.CompareTag("Rail") && isSkating)
+        {
+            gameObject.transform.Translate(Vector3.up * .5f);
+            onRail = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -106,6 +124,11 @@ public class PlayerMovement : Movement
         if (other.CompareTag("Seat"))
         {
             gameObject.transform.Translate(Vector3.up * .5f);
+        }
+        if (other.CompareTag("Rail") && onRail)
+        {
+            gameObject.transform.Translate(Vector3.down * .5f);
+            onRail = false;
         }
     }
 }

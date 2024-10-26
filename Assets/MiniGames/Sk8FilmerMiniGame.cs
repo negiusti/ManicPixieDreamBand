@@ -8,6 +8,7 @@ public class Sk8FilmerMiniGame : MiniGame
     private BlackScreen blackScreen;
     private CameraShaker mgCam;
     private bool isActive;
+    public bool startNow;
 
     private void Start()
     {
@@ -73,7 +74,7 @@ public class Sk8FilmerMiniGame : MiniGame
 
     private void Update()
     {
-        if (!isActive)
+        if (startNow && !isActive)
         {
             OpenMiniGame();
         }
