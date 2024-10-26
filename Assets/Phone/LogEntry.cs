@@ -22,7 +22,6 @@ public class LogEntry : MonoBehaviour
     public bool isPlayer;
     public string speakerName;
     public int entryID;
-    public string imgName;
     private static HashSet<string> groupChats = new HashSet<string> { "TXT/Band" };
 
 
@@ -59,27 +58,20 @@ public class LogEntry : MonoBehaviour
         {
             if (resolver == null)
                 Start();
-            text = "";
             if (isPlayer)
                 image.transform.localRotation = new Quaternion(image.transform.localRotation.x, 180f, image.transform.localRotation.z, image.transform.localRotation.w);
-            imgName = subtitle.formattedText.text;
-            resolver.SetCategoryAndLabel("Pics", imgName);
+            resolver.SetCategoryAndLabel("Pics", subtitle.formattedText.text);
             resolver.ResolveSpriteToSpriteRenderer();
             image.sprite = sr.sprite;
-            //image.rectTransform.sizeDelta = new Vector2(image.rectTransform.sizeDelta.x, image.preferredHeight);
-            //image.rectTransform.parent.gameObject.AddComponent<ContentSizeFitter>();
-            //image.rectTransform.parent.gameObject.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-            //image.rectTransform.parent.gameObject.GetComponent<ContentSizeFitter>().horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
         }
         else
         {
-            imgName = "";
             if (!subtitle.speakerInfo.IsPlayer)
                 dialogueText.transform.localRotation = new Quaternion(dialogueText.transform.localRotation.x, 180f, dialogueText.transform.localRotation.z, dialogueText.transform.localRotation.w);
             dialogueText.text = subtitle.formattedText.text;
             dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x, dialogueText.preferredHeight);
-            text = dialogueText.text;
         }
+        text = subtitle.formattedText.text;
         isFirstTxt = subtitle.dialogueEntry.Title.Equals("FIRST");
         isGroupChat = groupChats.Any(gc => DialogueManager.LastConversationStarted.Contains(gc));
         isPlayer = subtitle.speakerInfo.IsPlayer;
@@ -110,26 +102,24 @@ public class LogEntry : MonoBehaviour
 
     public void Assign(LogEntryData entry)
     {
-        if (entry.imgName != null && entry.imgName.Length > 0)
+        if (entry.text.StartsWith("_"))
         {
             if (resolver == null)
                 Start();
             if (isPlayer)
                 image.transform.localRotation = new Quaternion(image.transform.localRotation.x, 180f, image.transform.localRotation.z, image.transform.localRotation.w);
 
-            resolver.SetCategoryAndLabel("Pics", imgName);
+            resolver.SetCategoryAndLabel("Pics", entry.text);
             resolver.ResolveSpriteToSpriteRenderer();
             image.sprite = sr.sprite;
-            imgName = entry.imgName;
-        } else if (entry.text != null && entry.text.Length > 0)
+        } else 
         {
             if (!entry.isPlayer)
                 dialogueText.transform.localRotation = new Quaternion(dialogueText.transform.localRotation.x, 180f, dialogueText.transform.localRotation.z, dialogueText.transform.localRotation.w);
             dialogueText.text = entry.text;
             dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x, dialogueText.preferredHeight);
-            text = entry.text;
         }
-
+        text = entry.text;
         isFirstTxt = entry.isFirstTxt;
         isGroupChat = entry.isGroupChat;
         isPlayer = entry.isPlayer;

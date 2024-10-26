@@ -143,7 +143,15 @@ public class BackLog : MonoBehaviour
                 speakerName.gameObject.SetActive(true);
             }
 
-            LogEntry instance = Instantiate(logEntryTemplate, logEntryContainer);
+            LogEntry instance;
+            if (entry.text.StartsWith("_"))
+            {
+                instance = Instantiate(photoEntryTemplate, logEntryContainer);
+            }
+            else
+            {
+                instance = Instantiate(logEntryTemplate, logEntryContainer);
+            }
             instances.Add(instance);
             instance.gameObject.SetActive(true);
             instance.Assign(entry);
