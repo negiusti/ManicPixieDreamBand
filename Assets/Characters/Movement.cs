@@ -18,6 +18,8 @@ public abstract class Movement : MonoBehaviour
     protected bool isRollerSkating;
     protected bool lockAnim;
     protected AudioSource audioSource;
+    protected bool onLRamp;
+    protected bool onRRamp;
 
     public enum MovementState
     {
@@ -253,5 +255,15 @@ public abstract class Movement : MonoBehaviour
     public void RollerskatesOnOff(bool isRollerskating)
     {
         character.RollerskatesOnOff(isRollerskating);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+
     }
 }

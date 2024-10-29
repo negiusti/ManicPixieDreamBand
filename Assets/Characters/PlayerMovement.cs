@@ -64,6 +64,15 @@ public class PlayerMovement : Movement
                 Grind();
         }
 
+        if (onLRamp && (isSkating || isRollerSkating))
+        {
+            moveInput = -.9f;
+        }
+        if (onRRamp && (isSkating || isRollerSkating))
+        {
+            moveInput = .9f;
+        }
+
         animator.SetBool("IsMoving", moveInput != 0f);
         if (moveInput == 0f)
         {
@@ -117,6 +126,16 @@ public class PlayerMovement : Movement
             gameObject.transform.Translate(Vector3.up * .5f);
             onRail = true;
         }
+        if (other.CompareTag("LRamp") && moveInput < 0 && isSkating)
+        {
+            onLRamp = true;
+            animator.Play("BaseCharacter_SkateboardRamp");
+        }
+        if (other.CompareTag("RRamp") && moveInput > 0 && isSkating)
+        {
+            onRRamp = true;
+            animator.Play("BaseCharacter_SkateboardRamp");
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -129,6 +148,15 @@ public class PlayerMovement : Movement
         {
             gameObject.transform.Translate(Vector3.down * .5f);
             onRail = false;
+        }
+
+        if (other.CompareTag("LRamp"))
+        {
+            onLRamp = false;
+        }
+        if (other.CompareTag("RRamp"))
+        {
+            onRRamp = false;
         }
     }
 }
