@@ -38,7 +38,7 @@ public class SkateObstacle : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out SkateObstacle _))
+        if (collision.gameObject.TryGetComponent(out SkateObstacle _) || collision.CompareTag("LRamp") || collision.CompareTag("RRamp"))
             RandomizePosition();
     }
 }
