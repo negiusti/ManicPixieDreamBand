@@ -134,7 +134,7 @@ public class PlayerMovement : Movement
         if (other.CompareTag("RRamp") && moveInput > 0 && isSkating)
         {
             onRRamp = true;
-            animator.Play("BaseCharacter_SkateboardRamp");
+            animator.Play("BaseCharacter_SkateboardRampRight");
         }
     }
 
