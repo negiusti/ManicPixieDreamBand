@@ -130,11 +130,20 @@ public class PlayerMovement : Movement
         {
             onLRamp = true;
             animator.Play("BaseCharacter_SkateboardRamp");
+        } else if (other.CompareTag("LRamp") && moveInput < 0 && isRollerSkating)
+        {
+            onLRamp = true;
+            animator.Play("BaseCharacter_RollerskateRamp");
         }
         if (other.CompareTag("RRamp") && moveInput > 0 && isSkating)
         {
             onRRamp = true;
             animator.Play("BaseCharacter_SkateboardRampRight");
+        }
+        else if (other.CompareTag("RRamp") && moveInput > 0 && isRollerSkating)
+        {
+            onRRamp = true;
+            animator.Play("BaseCharacter_RollerskateRampRight");
         }
     }
 
