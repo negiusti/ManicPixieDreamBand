@@ -27,7 +27,7 @@ public class StarSpawnerScript : MonoBehaviour
     private int i;
     private float delay;
     private int note;
-    private AudioSource hamster;
+    private AudioSource audioSource;
     private Queue<GameObject> spawnedStars;
     private int hitNotes;
     private int totalNotes;
@@ -38,6 +38,41 @@ public class StarSpawnerScript : MonoBehaviour
     public TextMeshPro scoreTxtTop;
     public TextMeshPro scoreTxtBottom;
     private Coroutine spawnStarCoroutine;
+    public AudioClip fine;
+    public AudioClip bh;
+    public AudioClip uiss;
+    public AudioClip gc;
+    public AudioClip sd;
+    public AudioClip pb;
+    public AudioClip bm;
+    public AudioClip ohno;
+    public AudioClip pp;
+    private Dictionary<string, AudioClip> audioClips;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        spawnedStars = new Queue<GameObject>();
+        pinkSpawnPosition = pinkStar.transform.position;
+        pinkSpawnPosition.y = pinkStar.transform.position.y;
+        blackSpawnPosition = blackStar.transform.position;
+        blackSpawnPosition.y = blackStar.transform.position.y;
+        purpleSpawnPosition = purpleStar.transform.position;
+        purpleSpawnPosition.y = purpleStar.transform.position.y;
+        redSpawnPosition = redStar.transform.position;
+        redSpawnPosition.y = redStar.transform.position.y;
+        audioClips = new Dictionary<string, AudioClip>() {
+            { "ImFine", fine },
+            { "BodyHorror", bh },
+            { "UISS", uiss },
+            { "GuitarCenter", gc },
+            { "SugarDaddy", sd },
+            { "PBaby", pb },
+            { "BiteMe", bm },
+            { "OhNo", ohno },
+            { "PuzzlePieces", pp }
+        };
+    }
 
     private void OnLoadCompleted1(AsyncOperationHandle<TextAsset> obj)
     {
@@ -91,12 +126,18 @@ public class StarSpawnerScript : MonoBehaviour
         totalNotes = 0;
         scoreTxtTop.text = "";
         scoreTxtBottom.text = "";
-        hamster = this.GetComponent<AudioSource>();
+        audioSource = this.GetComponent<AudioSource>();
         // Specify the addressable path (use the address you set in the Addressables Group)
         //string addressablePath1 = "Assets/RhythmGameNotes/BodyHorror/BodyHorror_notes.txt";
         //string addressablePath2 = "Assets/RhythmGameNotes/BodyHorror/BodyHorror.txt";
-        string addressablePath1 = "Assets/RhythmGameNotes/UISS/UISS_notes.txt";
-        string addressablePath2 = "Assets/RhythmGameNotes/UISS/UISS.txt";
+        miniGame = this.transform.parent.gameObject.GetComponent<BassMiniGame>();
+    }
+
+    public void StartSong(string song)
+    {
+        audioSource.clip = audioClips[song];
+        string addressablePath1 = $"Assets/RhythmGameNotes/{song}/{song}_notes.txt";
+        string addressablePath2 = $"Assets/RhythmGameNotes/{song}/{song}.txt";
 
         // Load the text file asynchronously
         AsyncOperationHandle<TextAsset> asyncOperation1 = Addressables.LoadAssetAsync<TextAsset>(addressablePath1);
@@ -105,13 +146,11 @@ public class StarSpawnerScript : MonoBehaviour
         // Register a callback for when the load operation completes
         asyncOperation1.Completed += OnLoadCompleted1;
         asyncOperation2.Completed += OnLoadCompleted2;
-
-        miniGame = this.transform.parent.gameObject.GetComponent<BassMiniGame>();
     }
 
     private void OnDisable()
     {
-        hamster.Stop();
+        audioSource.Stop();
         if (spawnedStars != null)
         {
             GameObject star;
@@ -124,28 +163,13 @@ public class StarSpawnerScript : MonoBehaviour
             StopCoroutine(spawnStarCoroutine);
     }
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        spawnedStars = new Queue<GameObject>();
-        pinkSpawnPosition = pinkStar.transform.position;
-        pinkSpawnPosition.y = pinkStar.transform.position.y;
-        blackSpawnPosition = blackStar.transform.position;
-        blackSpawnPosition.y = blackStar.transform.position.y;
-        purpleSpawnPosition = purpleStar.transform.position;
-        purpleSpawnPosition.y = purpleStar.transform.position.y;
-        redSpawnPosition = redStar.transform.position;
-        redSpawnPosition.y = redStar.transform.position.y;
-    }
-
     private IEnumerator DelayedActions()
     {
         lagCorrection = ES3.Load("LagCalibration", 0f);
         Debug.Log("LAG COORECTION" + lagCorrection);
         while (i < times.Length)
         {
-            while (hamster.time < (delay - highwaySpeed + lagCorrection)) 
+            while (audioSource.time < (delay - highwaySpeed + lagCorrection)) 
             {
                 // Wait until the desired delay time has passed
                 yield return null;
@@ -180,7 +204,7 @@ public class StarSpawnerScript : MonoBehaviour
         }
 
         // wait until last note passes
-        while (hamster.time < (delay + lagCorrection + 0.5f))
+        while (audioSource.time < (delay + lagCorrection + 0.5f))
             yield return null;
 
         // Display score here!!!
@@ -195,7 +219,7 @@ public class StarSpawnerScript : MonoBehaviour
             starParticles.Stop();
         }
 
-        scoreTxtTop.text = GetScore().ToString("F2") + "%";
+        scoreTxtTop.text = GetScore().ToString("F1") + "%";
         
         if (GetScore() > 90f)
         {
@@ -210,7 +234,7 @@ public class StarSpawnerScript : MonoBehaviour
         {
             scoreTxtBottom.text += "Be honest, did u even try? :)";
         }
-        while (hamster.time < hamster.clip.length - 1f && hamster.isPlaying)
+        while (audioSource.time < audioSource.clip.length - 1f && audioSource.isPlaying)
             yield return null;
 
         //miniGame.Fade();
@@ -237,7 +261,7 @@ public class StarSpawnerScript : MonoBehaviour
         {
             //if (starter.hasPassed())
             //{
-                hamster.Play();
+                audioSource.Play();
                 //runwayDelay = starter.GetRunwayDelay();
                 //Debug.Log("runway delay is " + runwayDelay);
                 spawnStarCoroutine = StartCoroutine(DelayedActions());

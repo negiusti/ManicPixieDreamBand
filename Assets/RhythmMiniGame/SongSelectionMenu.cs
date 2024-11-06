@@ -6,9 +6,11 @@ public class SongSelectionMenu : MonoBehaviour
     private List<SongSelection> songSelections;
     private HashSet<string> unlockedSongs;
     private int idx;
+    private BassMiniGame minigame;
 
     void Start()
     {
+        minigame = GetComponentInParent<BassMiniGame>();
         unlockedSongs = ES3.Load("UnlockedSongs", new HashSet<string> { "UISS", "BodyHorror" });
         songSelections = new List<SongSelection>();
         idx = 0;
@@ -55,6 +57,8 @@ public class SongSelectionMenu : MonoBehaviour
     {
         if (i < 0)
             return;
+        idx = i;
+        minigame.SelectSong(songSelections[idx].gameObject.name);
     }
 
     public void Highlight(int i)

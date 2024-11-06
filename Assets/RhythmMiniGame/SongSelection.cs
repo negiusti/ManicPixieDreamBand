@@ -13,7 +13,7 @@ public class SongSelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>(true);
         txt = GetComponent<TextMeshPro>();
         highlightedTxtColor = Color.white;
         unhilightedTxtColor = txt.color;

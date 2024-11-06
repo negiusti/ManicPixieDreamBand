@@ -12,7 +12,12 @@ public class BassMiniGame : MiniGame
     private bool closingInProgress;
     private AudioSource audioSource;
     private CameraShaker cameraShaker;
-    public string CurrentlySelectedSong;
+    private StarSpawnerScript starSpawner;
+    public GameObject fret;
+    public GameObject buttons;
+    public GameObject buttonHints;
+    public GameObject stars;
+    private SongSelectionMenu songMenu;
 
     // Use this for initialization
     void Start()
@@ -21,6 +26,8 @@ public class BassMiniGame : MiniGame
         blackScreen = GetComponentInChildren<BlackScreen>(true);
         audioSource = GetComponent<AudioSource>();
         cameraShaker = mgCamera.GetComponent<CameraShaker>();
+        starSpawner = GetComponentInChildren<StarSpawnerScript>(true);
+        songMenu = GetComponentInChildren<SongSelectionMenu>(true);
         DisableAllChildren();
     }
 
@@ -38,6 +45,16 @@ public class BassMiniGame : MiniGame
         }
     }
 
+    public void SelectSong(string song)
+    {
+        fret.SetActive(true);
+        stars.SetActive(true);
+        buttons.SetActive(true);
+        buttonHints.SetActive(true);
+        starSpawner.StartSong(song);
+        songMenu.gameObject.SetActive(false);
+    }
+
     public override void OpenMiniGame()
     {
         GameManager.bgMusic.PauseAudio();
@@ -52,6 +69,11 @@ public class BassMiniGame : MiniGame
         isActive = true;
         closingInProgress = false;
         EnableAllChildren();
+        fret.SetActive(false);
+        stars.SetActive(false);
+        buttons.SetActive(false);
+        buttonHints.SetActive(false);
+        songMenu.gameObject.SetActive(true);
     }
 
     public void StartBassMiniGameWithBand(bool repeat)
