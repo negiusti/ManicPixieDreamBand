@@ -12,6 +12,7 @@ public class BassMiniGame : MiniGame
     private bool closingInProgress;
     private AudioSource audioSource;
     private CameraShaker cameraShaker;
+    public string CurrentlySelectedSong;
 
     // Use this for initialization
     void Start()
@@ -55,7 +56,6 @@ public class BassMiniGame : MiniGame
 
     public void StartBassMiniGameWithBand(bool repeat)
     {
-        // TODO: repeat mini game if not gig
         OpenMiniGame();
         JamCoordinator.StartJam("LEMON BOY");
     }
