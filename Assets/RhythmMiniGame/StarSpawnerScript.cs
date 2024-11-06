@@ -219,7 +219,7 @@ public class StarSpawnerScript : MonoBehaviour
             starParticles.Stop();
         }
 
-        scoreTxtTop.text = GetScore().ToString("F1") + "%";
+        scoreTxtTop.text = GetScore().ToString("0") + "%";
         
         if (GetScore() > 90f)
         {

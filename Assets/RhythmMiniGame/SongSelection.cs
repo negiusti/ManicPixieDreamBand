@@ -16,7 +16,7 @@ public class SongSelection : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>(true);
         txt = GetComponent<TextMeshPro>();
         highlightedTxtColor = Color.white;
-        unhilightedTxtColor = txt.color;
+        unhilightedTxtColor = new Color(0.203f, 0.282f, 0.729f, 1f);
     }
 
     // Update is called once per frame
