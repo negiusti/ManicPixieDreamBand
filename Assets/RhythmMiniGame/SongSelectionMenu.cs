@@ -11,7 +11,7 @@ public class SongSelectionMenu : MonoBehaviour
     void Start()
     {
         minigame = GetComponentInParent<BassMiniGame>();
-        unlockedSongs = ES3.Load("UnlockedSongs", new HashSet<string> { "UISS", "BodyHorror" });
+        unlockedSongs = ES3.Load("UnlockedSongs", new HashSet<string> { "UISS", "BodyHorror", "OhNo" });
         songSelections = new List<SongSelection>();
         idx = 0;
         foreach (SongSelection songSelection in GetComponentsInChildren<SongSelection>())
@@ -25,7 +25,7 @@ public class SongSelectionMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             idx++;
             if (idx >= songSelections.Count)
@@ -36,7 +36,7 @@ public class SongSelectionMenu : MonoBehaviour
             Highlight(idx);
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             idx--;
             if (idx < 0)
