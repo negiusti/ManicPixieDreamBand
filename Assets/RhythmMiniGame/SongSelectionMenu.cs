@@ -11,7 +11,7 @@ public class SongSelectionMenu : MonoBehaviour
     void Start()
     {
         minigame = GetComponentInParent<BassMiniGame>();
-        unlockedSongs = ES3.Load("UnlockedSongs", new HashSet<string> { "UISS", "BodyHorror", "OhNo" });
+        unlockedSongs = ES3.Load("UnlockedSongs", new HashSet<string> { "UISS", "BodyHorror", "OhNo", "BiteMe", "GuitarCenter", "SugarDaddy", "PuzzlePieces", "PBaby", "ImFine" });
         songSelections = new List<SongSelection>();
         idx = 0;
         foreach (SongSelection songSelection in GetComponentsInChildren<SongSelection>())
