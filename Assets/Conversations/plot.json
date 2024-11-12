@@ -33,7 +33,7 @@
                 "trueFlags": [ "ChangedSkinTone" ]
             }
         },
-        {
+        { // AUDITION DAY 1
             "locations": [ "BandPracticeRoom" ],
             "participants": [
                 {
@@ -89,7 +89,7 @@
                 "dayNum": 1
             }
         },
-        {
+        { // BAND PRACTICE #1
             "locations": [ "BandPracticeRoom" ],
             "participants": [
                 {
@@ -123,9 +123,9 @@
                     "existAtStart": true
                 }
             ],
-            "conversation": "Pick A Band Name"
+            "conversation": "BandPractice/1_Pick A Band Name"
         },
-        {
+        { // BAND PRACTICE #2
             "locations": [ "BandPracticeRoom" ],
             "participants": [
                 {
@@ -163,9 +163,129 @@
                 "dayNum": 2
             },
             "trigger": "Start",
-            "conversation": "BandPractice/ScreenPrinting"
+            "conversation": "BandPractice/2_ScreenPrinting"
         },
-        {
+        { // BAND PRACTICE #3
+            "locations": [ "BandPracticeRoom" ],
+            "participants": [
+                {
+                    "name": "MainCharacter",
+                    "position": {
+                        "x": -0.37,
+                        "y": -2.35,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Ricki",
+                    "position": {
+                        "x": -8.7,
+                        "y": -1.5,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Max",
+                    "position": {
+                        "x": -5.77,
+                        "y": -1.98,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                }
+            ],
+            "requirements": {
+                "dayNum": 3
+            },
+            "trigger": "Start",
+            "conversation": "BandPractice/3"
+        },
+        { // BAND PRACTICE #4
+            "locations": [ "BandPracticeRoom" ],
+            "participants": [
+                {
+                    "name": "MainCharacter",
+                    "position": {
+                        "x": -0.37,
+                        "y": -2.35,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Ricki",
+                    "position": {
+                        "x": -8.7,
+                        "y": -1.5,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Max",
+                    "position": {
+                        "x": -5.77,
+                        "y": -1.98,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                }
+            ],
+            "requirements": {
+                "dayNum": 4
+            },
+            "trigger": "Start",
+            "conversation": "BandPractice/4"
+        },
+        { // BAND PRACTICE #5
+            "locations": [ "BandPracticeRoom" ],
+            "participants": [
+                {
+                    "name": "MainCharacter",
+                    "position": {
+                        "x": -0.37,
+                        "y": -2.35,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Ricki",
+                    "position": {
+                        "x": -8.7,
+                        "y": -1.5,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Max",
+                    "position": {
+                        "x": -5.77,
+                        "y": -1.98,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                }
+            ],
+            "requirements": {
+                "dayNum": 5
+            },
+            "trigger": "Start",
+            "conversation": "BandPractice/5_LastPractice"
+        },
+        { // PACK UP FOR FIRST GIG
             "locations": [ "MusicShop" ],
             "participants": [
                 {
@@ -210,12 +330,12 @@
                 }
             ],
             "requirements": {
-                "dayNum": 3
+                "dayNum": 6
             },
             "trigger": "Start",
             "conversation": "Plot/PackUpForFirstGig"
         },
-        {
+        { // FIRST GIG
             "locations": [ "SmallBar" ],
             "participants": [
                 {
@@ -290,7 +410,7 @@
                 }
             ],
             "requirements": {
-                "dayNum": 3
+                "dayNum": 6
             },
             "trigger": "Start",
             "conversation": "First Gig"
