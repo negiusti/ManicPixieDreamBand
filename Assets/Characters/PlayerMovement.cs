@@ -126,21 +126,21 @@ public class PlayerMovement : Movement
             gameObject.transform.Translate(Vector3.up * .5f);
             onRail = true;
         }
-        if (other.CompareTag("LRamp") && moveInput < 0 && isSkating)
+        if (other.CompareTag("LRamp") && moveInput < 0 && isSkating && !lockAnim)
         {
             onLRamp = true;
             animator.Play("BaseCharacter_SkateboardRamp");
-        } else if (other.CompareTag("LRamp") && moveInput < 0 && isRollerSkating)
+        } else if (other.CompareTag("LRamp") && moveInput < 0 && isRollerSkating && !lockAnim)
         {
             onLRamp = true;
             animator.Play("BaseCharacter_RollerskateRamp");
         }
-        if (other.CompareTag("RRamp") && moveInput > 0 && isSkating)
+        if (other.CompareTag("RRamp") && moveInput > 0 && isSkating && !lockAnim)
         {
             onRRamp = true;
             animator.Play("BaseCharacter_SkateboardRampRight");
         }
-        else if (other.CompareTag("RRamp") && moveInput > 0 && isRollerSkating)
+        else if (other.CompareTag("RRamp") && moveInput > 0 && isRollerSkating && !lockAnim)
         {
             onRRamp = true;
             animator.Play("BaseCharacter_RollerskateRampRight");
