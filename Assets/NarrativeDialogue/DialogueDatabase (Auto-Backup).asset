@@ -1786,7 +1786,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: UnlockEmoji("Band", "Music");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2058,7 +2058,7 @@ MonoBehaviour:
       - originConversationID: 5
         originDialogueID: 0
         destinationConversationID: 5
-        destinationDialogueID: 9
+        destinationDialogueID: 25
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -2124,14 +2124,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: UnlockEmoji("Ricki", "Music");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 427.68228
-        y: 111.15535
+        x: 448.55942
+        y: 155.3659
         width: 160
         height: 30
     - id: 10
@@ -2407,9 +2407,64 @@ MonoBehaviour:
         y: 364.02545
         width: 160
         height: 30
+    - id: 25
+      fields:
+      - title: Title
+        value: FIRST
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: -1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: _Party_1
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 5
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 5
+        originDialogueID: 25
+        destinationConversationID: 5
+        destinationDialogueID: 9
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 627.2748
+        y: 86.3939
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 17.188232, y: 191.71478}
-    canvasZoom: 0.75633204
+    canvasScrollPosition: {x: 47.800457, y: 0.42887443}
+    canvasZoom: 0.8142847
   - id: 6
     fields:
     - title: Title
@@ -2562,7 +2617,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: DisableCharacter("Cliff")
+      userScript: DisableCharacter("Cliff");UnlockEmoji("Ricki", "Drum");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -30856,7 +30911,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: UnlockEmoji("Pixie", "Zine");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -31578,7 +31633,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: UnlockEmoji("JJ", "Jacket");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -33861,25 +33916,7 @@ MonoBehaviour:
       - originConversationID: 42
         originDialogueID: 2
         destinationConversationID: 42
-        destinationDialogueID: 4
-        isConnector: 0
-        priority: 2
-      - originConversationID: 42
-        originDialogueID: 2
-        destinationConversationID: 42
-        destinationDialogueID: 5
-        isConnector: 0
-        priority: 2
-      - originConversationID: 42
-        originDialogueID: 2
-        destinationConversationID: 42
-        destinationDialogueID: 6
-        isConnector: 0
-        priority: 2
-      - originConversationID: 42
-        originDialogueID: 2
-        destinationConversationID: 42
-        destinationDialogueID: 7
+        destinationDialogueID: 10
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -33971,7 +34008,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: 
+        value: OMG, my favorite!! How did you know!! Thank you!!
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -33985,7 +34022,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 42
+        originDialogueID: 4
+        destinationConversationID: 42
+        destinationDialogueID: 8
+        isConnector: 0
+        priority: 2
       conditionsString: GetMostRecentGiftReaction() == "good"
       userScript: 
       onExecute:
@@ -34020,7 +34063,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: 
+        value: Oh did you forget something?
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -34034,7 +34077,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 42
+        originDialogueID: 5
+        destinationConversationID: 42
+        destinationDialogueID: 8
+        isConnector: 0
+        priority: 2
       conditionsString: GetMostRecentGiftReaction() == "nvm"
       userScript: 
       onExecute:
@@ -34043,7 +34092,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1112
-        y: 266
+        y: 265
         width: 160
         height: 30
     - id: 6
@@ -34069,7 +34118,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: 
+        value: Oh, cool, thanks!
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -34083,7 +34132,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 42
+        originDialogueID: 6
+        destinationConversationID: 42
+        destinationDialogueID: 8
+        isConnector: 0
+        priority: 2
       conditionsString: GetMostRecentGiftReaction() == "mid"
       userScript: 
       onExecute:
@@ -34118,7 +34173,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: 
+        value: I'm actually allergic to that, are you trying to kill me?
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -34132,7 +34187,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 42
+        originDialogueID: 7
+        destinationConversationID: 42
+        destinationDialogueID: 8
+        isConnector: 0
+        priority: 2
       conditionsString: GetMostRecentGiftReaction() == "bad"
       userScript: 
       onExecute:
@@ -34155,6 +34216,62 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
+        value: 14
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: Anyway! My cousin is playing a show with her folk band tomorrow, do
+          you want to go with me?
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 42
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 42
+        originDialogueID: 8
+        destinationConversationID: 42
+        destinationDialogueID: 9
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 370
+        y: 445
+        width: 160
+        height: 30
+    - id: 9
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
         value: 1
         type: 5
         typeString: CustomFieldType_Actor
@@ -34167,7 +34284,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: M
+        value: 
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -34189,8 +34306,81 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 233
-        y: 329
+        x: 235
+        y: 538
+        width: 160
+        height: 30
+    - id: 10
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 14
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 42
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 42
+        originDialogueID: 10
+        destinationConversationID: 42
+        destinationDialogueID: 4
+        isConnector: 0
+        priority: 2
+      - originConversationID: 42
+        originDialogueID: 10
+        destinationConversationID: 42
+        destinationDialogueID: 6
+        isConnector: 0
+        priority: 2
+      - originConversationID: 42
+        originDialogueID: 10
+        destinationConversationID: 42
+        destinationDialogueID: 7
+        isConnector: 0
+        priority: 2
+      - originConversationID: 42
+        originDialogueID: 10
+        destinationConversationID: 42
+        destinationDialogueID: 5
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 416
+        y: 162
         width: 160
         height: 30
     entryGroups: []
