@@ -2947,7 +2947,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Can we keep it moving? I have butts to kick and idiots to cyberbully.
+        value: Can we keep it moving? I have butts to kick and diapers to change.
         type: 0
         typeString: 
       - title: Sequence
@@ -3484,7 +3484,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 577.2946
+        x: 575.80133
         y: 356.07605
         width: 160
         height: 30
@@ -3539,8 +3539,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 577.2946
-        y: 407.3824
+        x: 587.7474
+        y: 405.88916
         width: 160
         height: 30
     - id: 32
@@ -4237,7 +4237,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Great, another butt to kick and idiot to cyberbully.
+        value: Great, another butt to kick and diaper to change.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -4760,8 +4760,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 577.2946
-        y: 458.18024
+        x: 602.67993
+        y: 483.5655
         width: 160
         height: 30
     - id: 56
@@ -4815,8 +4815,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 640.6459
-        y: 512.4763
+        x: 666.0312
+        y: 537.8616
         width: 160
         height: 30
     - id: 57
@@ -4933,8 +4933,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.66967887
+    canvasScrollPosition: {x: 55.34027, y: 1425.271}
+    canvasZoom: 0.5963113
   - id: 7
     fields:
     - title: Title
@@ -23949,6 +23949,12 @@ MonoBehaviour:
         destinationDialogueID: 34
         isConnector: 0
         priority: 2
+      - originConversationID: 28
+        originDialogueID: 33
+        destinationConversationID: 28
+        destinationDialogueID: 67
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: StartMiniGame("ScreenPrinting")
       onExecute:
@@ -24011,8 +24017,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 578.4263
-        y: 1543.1525
+        x: 454.64294
+        y: 1540.2285
         width: 160
         height: 30
     - id: 37
@@ -24038,7 +24044,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: So... what's the plan for tomorrow?
+        value: 'Let''s make '
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -24066,8 +24072,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 583.6847
-        y: 1597.1985
+        x: 491.09082
+        y: 1594.2744
         width: 160
         height: 30
     - id: 38
@@ -25684,13 +25690,124 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 551.1738
+        x: 550.1992
         y: 1928.4384
         width: 160
         height: 30
+    - id: 67
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: That was pretty terrible. You're gonna have to cover the cost of all
+          the shirts you ruined.
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 28
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 28
+        originDialogueID: 67
+        destinationConversationID: 28
+        destinationDialogueID: 68
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 698.9221
+        y: 1540.7424
+        width: 160
+        height: 30
+    - id: 68
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 'Let''s make '
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 28
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 28
+        originDialogueID: 68
+        destinationConversationID: 28
+        destinationDialogueID: 38
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 695.02356
+        y: 1597.2736
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.25213978
+    canvasScrollPosition: {x: 383.20532, y: 1495.9075}
+    canvasZoom: 1.0259862
   - id: 29
     fields:
     - title: Title
