@@ -168,7 +168,7 @@ public class Calendar : ScriptableObject
 
     private static bool isBandPracticeDay(int i)
     {
-        if (i == 0 || i == 3)
+        if (i == 0 || i == 6)
             return false;
         return true;
     }
