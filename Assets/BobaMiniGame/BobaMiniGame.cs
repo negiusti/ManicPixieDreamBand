@@ -86,7 +86,7 @@ public class BobaMiniGame : MiniGame
         // Pick a micro game
         microgameIdx++;
         timer.Reset();
-        timer.Restart();
+        timer.StartTimer();
         if (microgameIdx % 3 == 0)
             StartCoroutine(CleanSpill());
         else if (microgameIdx % 2 == 0)
@@ -99,7 +99,7 @@ public class BobaMiniGame : MiniGame
     {
         bathroomCodeMicroGame.gameObject.SetActive(true);
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(bathroomCodeMicroGame.transform.localPosition + Vector3.back * 10f, 0.5f));
-        yield return new WaitForSeconds(6.5f);
+        yield return new WaitForSeconds(7.5f);
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
         yield return new WaitForSeconds(0.5f);
         bathroomCodeMicroGame.gameObject.SetActive(false);
@@ -110,7 +110,7 @@ public class BobaMiniGame : MiniGame
     {
         cleanSpillMicroGame.gameObject.SetActive(true);
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cleanSpillMicroGame.transform.localPosition + Vector3.back * 10f, 0.5f));
-        yield return new WaitForSeconds(6.5f);
+        yield return new WaitForSeconds(7.5f);
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
         yield return new WaitForSeconds(0.5f);
         cleanSpillMicroGame.gameObject.SetActive(false);
@@ -121,7 +121,7 @@ public class BobaMiniGame : MiniGame
     {
         sweepUpMicroGame.gameObject.SetActive(true);
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(sweepUpMicroGame.transform.localPosition + Vector3.back * 10f, 0.5f));
-        yield return new WaitForSeconds(6.5f);
+        yield return new WaitForSeconds(7.5f);
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
         yield return new WaitForSeconds(0.5f);
         sweepUpMicroGame.gameObject.SetActive(false);
@@ -135,10 +135,7 @@ public class BobaMiniGame : MiniGame
 
     public void Next(string choice)
     {
-        if(order.CheckOrderItem(step, choice))
-        {
-            //tipsIncome += 1f;
-        } else
+        if(!order.CheckOrderItem(step, choice))
         {
             currNumMistakes++;
         }
@@ -154,7 +151,7 @@ public class BobaMiniGame : MiniGame
         if (step != Step.Done)
         {
             InterruptWithMicroGame();
-            yield return new WaitForSeconds(7f);
+            yield return new WaitForSeconds(8f);
         }
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cam.transform.localPosition + Vector3.right * 35f, 0.5f));
         StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 0.5f));
@@ -171,14 +168,14 @@ public class BobaMiniGame : MiniGame
                 audioSource.Play();
                 JobSystem.GoodJob();
                 speechText.text = goodResponses[Random.Range(0, goodResponses.Length)];
-                tipJar.addTip(5f);
-                tipsIncome += 5f;
+                tipJar.addTip(10f);
+                tipsIncome += 10f;
             }
             else if (currNumMistakes == 1)
             {
                 speechText.text = midResponses[Random.Range(0, midResponses.Length)];
-                tipJar.addTip(1f);
-                tipsIncome += 1f;
+                tipJar.addTip(5f);
+                tipsIncome += 5f;
             } else
             {
                 audioSource.clip = badJob;

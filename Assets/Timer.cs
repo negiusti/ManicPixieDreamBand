@@ -10,11 +10,16 @@ public class Timer : MonoBehaviour
     private Animator animator;
     private Coroutine coroutine;
 
+    public int TimeRemaining()
+    {
+        return timeRemaining;
+    }
+
     void Start()
     {
-        Reset();
         timerText = GetComponent<TextMeshPro>();
         animator = GetComponent<Animator>();
+        Reset();
     }
 
     private void Update()
@@ -44,6 +49,8 @@ public class Timer : MonoBehaviour
     {
         timeRemaining = timeInSeconds;
         timerText.text = timeRemaining.ToString();
+        animator.SetBool("TimerLow", false);
+        animator.SetBool("TimerDone", false);
     }
 
     public void Restart()
