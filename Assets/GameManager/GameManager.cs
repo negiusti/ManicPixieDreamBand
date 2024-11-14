@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(Calendar.CompleteCurrentEvent), this, SymbolExtensions.GetMethodInfo(() => Calendar.CompleteCurrentEvent()));
         Lua.RegisterFunction(nameof(MiniGameManager.StartMiniGame), this, SymbolExtensions.GetMethodInfo(() => MiniGameManager.StartMiniGame(string.Empty)));
         Lua.RegisterFunction(nameof(MiniGameManager.StartGiftingMiniGame), this, SymbolExtensions.GetMethodInfo(() => MiniGameManager.StartGiftingMiniGame(string.Empty)));
+        Lua.RegisterFunction(nameof(MiniGameManager.GetLastBassMiniGameScore), this, SymbolExtensions.GetMethodInfo(() => MiniGameManager.GetLastBassMiniGameScore()));
+        Lua.RegisterFunction(nameof(MiniGameManager.GetLastScreenPrintingScore), this, SymbolExtensions.GetMethodInfo(() => MiniGameManager.GetLastScreenPrintingScore()));
         Lua.RegisterFunction(nameof(JamCoordinator.StartJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.StartJam(string.Empty, (double)0)));
         Lua.RegisterFunction(nameof(JamCoordinator.EndJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.EndJam()));
         Lua.RegisterFunction(nameof(Characters.UnlockEmoji), this, SymbolExtensions.GetMethodInfo(() => Characters.UnlockEmoji(string.Empty, string.Empty)));
@@ -90,6 +92,8 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(Calendar.CompleteCurrentEvent));
         Lua.UnregisterFunction(nameof(MiniGameManager.StartMiniGame));
         Lua.UnregisterFunction(nameof(MiniGameManager.StartGiftingMiniGame));
+        Lua.UnregisterFunction(nameof(MiniGameManager.GetLastScreenPrintingScore));
+        Lua.UnregisterFunction(nameof(MiniGameManager.GetLastBassMiniGameScore));
         Lua.UnregisterFunction(nameof(JamCoordinator.StartJam));
         Lua.UnregisterFunction(nameof(JamCoordinator.EndJam));
         Lua.UnregisterFunction(nameof(Characters.UnlockEmoji));

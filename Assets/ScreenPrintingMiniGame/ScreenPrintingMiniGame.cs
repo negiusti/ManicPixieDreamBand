@@ -168,6 +168,8 @@ public class ScreenPrintingMiniGame : MiniGame
 
         // Add the player's score they got into their bank account
         MainCharacterState.ModifyBankBalance(score);
+
+        MiniGameManager.RecordScreenPrintingScore(score);
     }
 
     private void Update()

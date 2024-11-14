@@ -234,6 +234,8 @@ public class StarSpawnerScript : MonoBehaviour
         {
             scoreTxtBottom.text += "Be honest, did u even try? :)";
         }
+
+        MiniGameManager.RecordBassMiniGameScore((double)GetScore());
         while (audioSource.time < audioSource.clip.length - 1f && audioSource.isPlaying)
             yield return null;
 

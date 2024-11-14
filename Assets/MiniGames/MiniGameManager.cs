@@ -5,12 +5,35 @@ using PixelCrushers.DialogueSystem;
 [CreateAssetMenu(fileName = "MiniGameManager", menuName = "Custom/MiniGameManager")]
 public class MiniGameManager : ScriptableObject
 {
+    private static double lastScreenPrintingScore;
+    private static double lastBassMiniGameScore;
+
     public static bool AnyActiveMiniGames() {
         //foreach (MiniGame mg in FindObjectsOfType<MiniGame>().Where(mg => mg.IsMiniGameActive())) {
         //    Debug.Log("ACTIVE MG: " + mg.name + " " + mg.gameObject.name);
         //}
 
         return FindObjectsOfType<MiniGame>().Any(mg => mg.IsMiniGameActive());
+    }
+
+    public static void RecordScreenPrintingScore(double score)
+    {
+        lastScreenPrintingScore = score;
+    }
+
+    public static void RecordBassMiniGameScore(double score)
+    {
+        lastBassMiniGameScore = score;
+    }
+
+    public static double GetLastScreenPrintingScore()
+    {
+        return lastScreenPrintingScore;
+    }
+
+    public static double GetLastBassMiniGameScore()
+    {
+        return lastBassMiniGameScore;
     }
 
     public static void StartMiniGame(string miniGameName)
