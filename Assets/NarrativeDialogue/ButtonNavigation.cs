@@ -102,6 +102,10 @@ public class ButtonNavigation : MonoBehaviour
 
     public void Unselect(int idx)
     {
+        if (idx < 0 || idx >= selectables.Length)
+        {
+            return;
+        }
         responses[idx].Deselect();
         selectables[idx].OnDeselect(null);
     }

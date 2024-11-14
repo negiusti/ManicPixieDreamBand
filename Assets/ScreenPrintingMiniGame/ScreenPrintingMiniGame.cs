@@ -164,12 +164,12 @@ public class ScreenPrintingMiniGame : MiniGame
         DisableAllChildren();
 
         isActive = false;
+        MiniGameManager.RecordScreenPrintingScore(score);
         MiniGameManager.CleanUpMiniGame();
 
         // Add the player's score they got into their bank account
         MainCharacterState.ModifyBankBalance(score);
 
-        MiniGameManager.RecordScreenPrintingScore(score);
     }
 
     private void Update()
