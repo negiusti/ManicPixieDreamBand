@@ -37,6 +37,7 @@ public class BobaMiniGame : MiniGame
     public GameObject speechBubble;
     private Text speechText;
     private int currNumMistakes;
+    public List<GameObject> customers;
     public string[] goodResponses; // no mistakes
     public string[] midResponses; // 1 mistake
     public string[] badResponses; // 2 or more mistakes
@@ -65,7 +66,7 @@ public class BobaMiniGame : MiniGame
         StartCoroutine(speechBubble.GetComponent<LerpPosition>().Lerp(speechBubble.transform.localPosition + Vector3.right * 35f, 1f));
         audioSource = GetComponent<AudioSource>();
         speechBubble.SetActive(false);
-
+        customers.ForEach(c => c.SetActive(true));
         DisableAllChildren();
 
         if(TESTING_ONLY)
@@ -84,6 +85,8 @@ public class BobaMiniGame : MiniGame
         prevCamPos = cam.transform.localPosition;
         // Pick a micro game
         microgameIdx++;
+        timer.Reset();
+        timer.Restart();
         if (microgameIdx % 3 == 0)
             StartCoroutine(CleanSpill());
         else if (microgameIdx % 2 == 0)
@@ -96,7 +99,7 @@ public class BobaMiniGame : MiniGame
     {
         bathroomCodeMicroGame.gameObject.SetActive(true);
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(bathroomCodeMicroGame.transform.localPosition + Vector3.back * 10f, 0.5f));
-        yield return new WaitForSeconds(4.5f);
+        yield return new WaitForSeconds(6.5f);
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
         yield return new WaitForSeconds(0.5f);
         bathroomCodeMicroGame.gameObject.SetActive(false);
@@ -107,7 +110,7 @@ public class BobaMiniGame : MiniGame
     {
         cleanSpillMicroGame.gameObject.SetActive(true);
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cleanSpillMicroGame.transform.localPosition + Vector3.back * 10f, 0.5f));
-        yield return new WaitForSeconds(4.5f);
+        yield return new WaitForSeconds(6.5f);
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
         yield return new WaitForSeconds(0.5f);
         cleanSpillMicroGame.gameObject.SetActive(false);
@@ -118,7 +121,7 @@ public class BobaMiniGame : MiniGame
     {
         sweepUpMicroGame.gameObject.SetActive(true);
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(sweepUpMicroGame.transform.localPosition + Vector3.back * 10f, 0.5f));
-        yield return new WaitForSeconds(4.5f);
+        yield return new WaitForSeconds(6.5f);
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
         yield return new WaitForSeconds(0.5f);
         sweepUpMicroGame.gameObject.SetActive(false);
@@ -151,7 +154,7 @@ public class BobaMiniGame : MiniGame
         if (step != Step.Done)
         {
             InterruptWithMicroGame();
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(7f);
         }
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cam.transform.localPosition + Vector3.right * 35f, 0.5f));
         StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 0.5f));
@@ -188,7 +191,7 @@ public class BobaMiniGame : MiniGame
             StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 1f, true));
             yield return new WaitForSeconds(1.75f);
             
-            if (step == Step.Done && !timer.IsRunning())
+            if (step == Step.Done && customers.FindAll(c => c.activeSelf).Count <= 0)
             {
                 StartCoroutine(CloseMiniGameSequence());
                 yield return null;
@@ -211,6 +214,8 @@ public class BobaMiniGame : MiniGame
 
     private void NewOrder()
     {
+        if (customers.Exists(c => c.activeSelf))
+            customers.Find(c => c.activeSelf).SetActive(false);
         currNumMistakes = 0;
         currStepIdx = 0;
         step = steps[currStepIdx];
@@ -248,8 +253,6 @@ public class BobaMiniGame : MiniGame
 
         blackScreen.Unfade();
         tipsIncome = 0;
-        timer.Reset();
-        timer.StartTimer();
         NewOrder();
     }
 
