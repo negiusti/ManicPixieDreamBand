@@ -15,7 +15,6 @@ public class SpilledParticle : MonoBehaviour
         if (other.CompareTag("Activator"))
         {
             mg.IncreaseCount();
-            Debug.Log("INCREASE");
         }
     }
 
@@ -26,7 +25,6 @@ public class SpilledParticle : MonoBehaviour
         if (other.CompareTag("Activator"))
         {
             mg.DecreaseCount();
-            Debug.Log("DECREASE");
         }
     }
 }
