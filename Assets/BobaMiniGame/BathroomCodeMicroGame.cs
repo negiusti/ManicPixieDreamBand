@@ -9,6 +9,7 @@ public class BathroomCodeMicroGame : MonoBehaviour
     public Text speechBubble;
     public Timer timer;
     private bool done;
+    public GameObject nice;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +18,10 @@ public class BathroomCodeMicroGame : MonoBehaviour
 
     private void OnEnable()
     {
+        nice.SetActive(false);
         speechBubble.text = "What's the bathroom code??\nI'm burstin!!!!!";
+        speechBubble.gameObject.SetActive(false);
+        speechBubble.gameObject.SetActive(true);
         done = false;
     }
 
@@ -28,12 +32,16 @@ public class BathroomCodeMicroGame : MonoBehaviour
         {
             done = true;
             speechBubble.text = "THANK YOU!!";
+            speechBubble.gameObject.SetActive(false);
+            speechBubble.gameObject.SetActive(true);
             Debug.Log(bathroomCode.text + " vs " + userInput.text);
         }
-        else if (timer.TimeRemaining() <= 0 && !done)
+        else if (timer.TimeRemaining() <= 1 && !done)
         {
             done = true;
-            speechBubble.text = "Oh no!! These are new pants!! T_T";
+            speechBubble.text = "Oh no!! These are brand\nnew pants!! T_T";
+            speechBubble.gameObject.SetActive(false);
+            speechBubble.gameObject.SetActive(true);
             Debug.Log(bathroomCode.text + " vs " + userInput.text);
         }
     }

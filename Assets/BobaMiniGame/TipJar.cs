@@ -15,7 +15,7 @@ public class TipJar : MonoBehaviour
     void Start()
     {
         txt = GetComponentInChildren<TextMeshPro>(true);
-        dollarIncrements = (maxY - minY) / 50f;
+        dollarIncrements = (maxY - minY) / 40f;
         moneyLerp = moneyLevel.GetComponent<LerpPosition>();
     }
 

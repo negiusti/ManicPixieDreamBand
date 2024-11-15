@@ -11,6 +11,7 @@ public class Eraser : MonoBehaviour
     private Color[] transparentPixels;
     private Vector2Int textureSize;
     private Color[] originalPixels; // Store the original pixels
+    private int totalPixels;
 
     void Start()
     {
@@ -26,6 +27,26 @@ public class Eraser : MonoBehaviour
         {
             transparentPixels[i] = new Color(0, 0, 0, 0);
         }
+        totalPixels = textureSize.x * textureSize.y;
+    }
+
+    public float EraseCompletionPercentage()
+    {
+        if (texture == null)
+            Start();
+        // Count visible pixels
+        int visiblePixels = 0;
+        Color[] currentPixels = texture.GetPixels();
+        foreach (Color pixel in currentPixels)
+        {
+            if (pixel.a > 0.01f) // If pixel is not fully transparent
+            {
+                visiblePixels++;
+            }
+        }
+
+        float erasedPercentage = 1.0f - ((float)visiblePixels / totalPixels);
+        return erasedPercentage;
     }
 
     private void ResetTexture()
@@ -36,9 +57,6 @@ public class Eraser : MonoBehaviour
         // Apply the original pixels back to the texture
         texture.SetPixels(originalPixels);
         texture.Apply();
-
-        // Reset the erased visible pixels counter
-        //erasedVisiblePixels = 0;
 
         Debug.Log("Texture has been reset to its original state.");
     }
@@ -91,106 +109,4 @@ public class Eraser : MonoBehaviour
 
         texture.Apply();
     }
-
-    //SpriteMask Mask;
-    //Color[] Colors;
-    //int Width;
-    //int Height;
-
-    //void Start()
-    //{
-    //    //Get objects
-    //    //Mask = GameObject.Find("Mask").GetComponent<SpriteMask>();
-    //    Mask = GetComponent<SpriteMask>();
-
-    //    //Extract color data once
-    //    Colors = Mask.sprite.texture.GetPixels();
-
-    //    //Store mask dimensionns
-    //    Width = Mask.sprite.texture.width;
-    //    Height = Mask.sprite.texture.height;
-
-    //    ClearMask();
-    //}
-
-    //void ClearMask()
-    //{
-    //    //set all color data to transparent
-    //    for (int i = 0; i < Colors.Length; ++i)
-    //    {
-    //        Colors[i] = new Color(1, 1, 1, 0);
-    //    }
-
-    //    Mask.sprite.texture.SetPixels(Colors);
-    //    Mask.sprite.texture.Apply(false);
-    //}
-
-    ////This function will draw a circle onto the texture at position cx, cy with radius r
-    //public void DrawOnMask(int cx, int cy, int r)
-    //{
-    //    int px, nx, py, ny, d;
-
-    //    for (int x = 0; x <= r; x++)
-    //    {
-    //        d = (int)Mathf.Ceil(Mathf.Sqrt(r * r - x * x));
-
-    //        for (int y = 0; y <= d; y++)
-    //        {
-    //            px = cx + x;
-    //            nx = cx - x;
-    //            py = cy + y;
-    //            ny = cy - y;
-
-    //            Colors[py * Width + px] = new Color(1, 1, 1, 1);
-    //            Colors[py * Width + nx] = new Color(1, 1, 1, 1);
-    //            Colors[ny * Height + px] = new Color(1, 1, 1, 1);
-    //            Colors[ny * Height + nx] = new Color(1, 1, 1, 1);
-    //        }
-    //    }
-
-    //    Mask.sprite.texture.SetPixels(Colors);
-    //    Mask.sprite.texture.Apply(false);
-    //}
-
-
-    //void Update()
-    //{
-
-    //    ////Get mouse coordinates
-    //    //Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-    //    ////Check if mouse button is held down
-    //    //if (Input.GetMouseButton(0))
-    //    //{
-    //    //    //Check if we hit the collider
-    //    //    RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-    //    //    if (hit.collider != null)
-    //    //    {
-    //    //        //Normalize to the texture coodinates
-    //    //        int y = (int)((0.5 - (Mask.transform.position - mousePosition).y) * Height);
-    //    //        int x = (int)((0.5 - (Mask.transform.position - mousePosition).x) * Width);
-
-    //    //        //Draw onto the mask
-    //    //        DrawOnMask(x, y, 5);
-    //    //    }
-    //    //}
-    //}
-
-    //private void OnMouseDrag()
-    //{
-    //    //Get mouse coordinates
-    //    Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //    //Check if we hit the collider
-    //    RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-    //    if (hit.collider != null)
-    //    {
-    //        //Normalize to the texture coodinates
-    //        int y = (int)((0.5 - (Mask.transform.position - mousePosition).y) * Height);
-    //        int x = (int)((0.5 - (Mask.transform.position - mousePosition).x) * Width);
-
-    //        //Draw onto the mask
-    //        DrawOnMask(x, y, 5);
-    //    }
-    //}
-
 }

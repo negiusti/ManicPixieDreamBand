@@ -29,6 +29,7 @@ public class BobaMiniGame : MiniGame
     private Topping[] toppings;
     private Flavor[] flavors;
     private TipJar tipJar;
+    public GameObject cameraUI;
 
     private GameObject mainCamera;
     private BlackScreen blackScreen;
@@ -150,8 +151,10 @@ public class BobaMiniGame : MiniGame
         // INTERRUPT
         if (step != Step.Done)
         {
+            cameraUI.SetActive(false);
             InterruptWithMicroGame();
             yield return new WaitForSeconds(8f);
+            cameraUI.SetActive(true);
         }
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cam.transform.localPosition + Vector3.right * 35f, 0.5f));
         StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 0.5f));
