@@ -4,20 +4,18 @@ using UnityEngine;
 public class SongSelectionMenu : MonoBehaviour
 {
     private List<SongSelection> songSelections;
-    private HashSet<string> unlockedSongs;
     private int idx;
     private BassMiniGame minigame;
 
     void Start()
     {
         minigame = GetComponentInParent<BassMiniGame>();
-        unlockedSongs = ES3.Load("UnlockedSongs", new HashSet<string> { "UISS", "BodyHorror", "OhNo", "BiteMe", "GuitarCenter", "SugarDaddy", "PuzzlePieces", "PBaby", "ImFine" });
         songSelections = new List<SongSelection>();
         idx = 0;
         foreach (SongSelection songSelection in GetComponentsInChildren<SongSelection>())
         {
-            songSelection.gameObject.SetActive(unlockedSongs.Contains(songSelection.gameObject.name));
-            if (unlockedSongs.Contains(songSelection.gameObject.name))
+            songSelection.gameObject.SetActive(JamCoordinator.UnlockedSongs().Contains(songSelection.gameObject.name));
+            if (JamCoordinator.UnlockedSongs().Contains(songSelection.gameObject.name))
                 songSelections.Add(songSelection);
         }
         Highlight(0);

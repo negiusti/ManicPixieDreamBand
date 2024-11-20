@@ -8,6 +8,7 @@ public class JamCoordinator : ScriptableObject
 {
     private static Stage stage;
     private static Dictionary<string,Movement> musicians;
+    private static HashSet<string> unlockedSongs;
     //private static Camera mainCam;
     //private static Camera jamCamera;
     private static bool isJamInSession;
@@ -25,6 +26,38 @@ public class JamCoordinator : ScriptableObject
             orthographicSize = o;
             position = p;
         }
+    }
+
+    public static void Save()
+    {
+        ES3.Load("UnlockedSongs", unlockedSongs);
+    }
+
+    public static HashSet<string> UnlockedSongs()
+    {
+        if (unlockedSongs == null)
+            Load();
+        return unlockedSongs;
+    }
+
+    public static void UnlockSong(string songName)
+    {
+        unlockedSongs.Add(songName);
+        Save();
+    }
+
+    public static void Load()
+    {
+        unlockedSongs = ES3.Load("UnlockedSongs", new HashSet<string> {
+            "UISS",
+            "BodyHorror",
+            "OhNo",
+            "BiteMe",
+            "GuitarCenter",
+            "SugarDaddy",
+            "PuzzlePieces",
+            "PBaby",
+            "ImFine" });
     }
 
     public static void StartJam(string bandname, double ticketSales = -1)

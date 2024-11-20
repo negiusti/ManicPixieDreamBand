@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(MiniGameManager.GetLastScreenPrintingScore), this, SymbolExtensions.GetMethodInfo(() => MiniGameManager.GetLastScreenPrintingScore()));
         Lua.RegisterFunction(nameof(JamCoordinator.StartJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.StartJam(string.Empty, (double)0)));
         Lua.RegisterFunction(nameof(JamCoordinator.EndJam), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.EndJam()));
+        Lua.RegisterFunction(nameof(JamCoordinator.UnlockSong), this, SymbolExtensions.GetMethodInfo(() => JamCoordinator.UnlockSong(string.Empty)));
         Lua.RegisterFunction(nameof(Characters.UnlockEmoji), this, SymbolExtensions.GetMethodInfo(() => Characters.UnlockEmoji(string.Empty, string.Empty)));
         Lua.RegisterFunction(nameof(Characters.Emote), this, SymbolExtensions.GetMethodInfo(() => Characters.Emote(string.Empty, string.Empty, string.Empty)));
         Lua.RegisterFunction(nameof(Characters.Drink), this, SymbolExtensions.GetMethodInfo(() => Characters.Drink(string.Empty, string.Empty)));
@@ -94,6 +95,7 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(MiniGameManager.StartGiftingMiniGame));
         Lua.UnregisterFunction(nameof(MiniGameManager.GetLastScreenPrintingScore));
         Lua.UnregisterFunction(nameof(MiniGameManager.GetLastBassMiniGameScore));
+        Lua.UnregisterFunction(nameof(JamCoordinator.UnlockSong));
         Lua.UnregisterFunction(nameof(JamCoordinator.StartJam));
         Lua.UnregisterFunction(nameof(JamCoordinator.EndJam));
         Lua.UnregisterFunction(nameof(Characters.UnlockEmoji));
@@ -173,6 +175,7 @@ public class GameManager : MonoBehaviour
         QuestManager.Load();
         RomanceManager.Load();
         Tutorial.Load();
+        JamCoordinator.Load();
         if (Phone.Instance != null)
             Phone.Instance.Reset();
         if (DialogueManager.Instance != null)
@@ -196,12 +199,14 @@ public class GameManager : MonoBehaviour
         QuestManager.Load();
         RomanceManager.Load();
         Tutorial.Load();
+        JamCoordinator.Load();
         if (Phone.Instance != null)
             Phone.Instance.Load();
     }
 
     private void SaveData()
     {
+        JamCoordinator.Save();
         MainCharacterState.Save();
         Calendar.Save();
         InventoryManager.SaveInventories();
