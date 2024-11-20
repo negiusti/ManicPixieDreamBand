@@ -12656,6 +12656,12 @@ MonoBehaviour:
         destinationDialogueID: 1
         isConnector: 0
         priority: 2
+      - originConversationID: 16
+        originDialogueID: 0
+        destinationConversationID: 16
+        destinationDialogueID: 3
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -12690,11 +12696,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: 'No walk-ins today, we''re booked up. gtfo '
+        value: You're not scheduled to work right now. Get lost.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()@3
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 16
@@ -12711,15 +12717,15 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: CurrentJobString()=="Tattoo"
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 160
-        y: 80
+        x: 90
+        y: 96
         width: 160
         height: 30
     - id: 2
@@ -12749,7 +12755,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 16
@@ -12767,8 +12773,67 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 160
-        y: 130
+        x: 163
+        y: 181
+        width: 160
+        height: 30
+    - id: 3
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 11
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 'No walk-ins today, we''re booked up. Get lost. '
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()@3
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Response Menu Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 16
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 16
+        originDialogueID: 3
+        destinationConversationID: 16
+        destinationDialogueID: 2
+        isConnector: 0
+        priority: 2
+      conditionsString: CurrentJobString()~="Tattoo"
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 306
+        y: 95
         width: 160
         height: 30
     entryGroups: []
@@ -32952,7 +33017,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: What do you want.
+        value: You're not scheduled to work right now. What are you doing here?
         type: 0
         typeString: 
       - title: Sequence
@@ -32971,6 +33036,12 @@ MonoBehaviour:
         originDialogueID: 34
         destinationConversationID: 39
         destinationDialogueID: 35
+        isConnector: 0
+        priority: 2
+      - originConversationID: 39
+        originDialogueID: 34
+        destinationConversationID: 39
+        destinationDialogueID: 28
         isConnector: 0
         priority: 2
       conditionsString: CurrentJobString()=="Boba"
@@ -33007,7 +33078,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Can I please have a...
+        value: I'm here for a drink. Can I please have a...
         type: 0
         typeString: 
       - title: Sequence
@@ -33273,7 +33344,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 235.56932, y: 0}
+    canvasScrollPosition: {x: 685.8129, y: 0}
     canvasZoom: 0.82844055
   - id: 40
     fields:
@@ -35634,8 +35705,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.24949989
+    canvasScrollPosition: {x: 83.59845, y: 376.41403}
+    canvasZoom: 0.6949992
   - id: 44
     fields:
     - title: Title
