@@ -18,7 +18,7 @@ public class SkateObstacle : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Background GameObject not assigned.");
+            Debug.Log("Background GameObject not assigned. Not going to randomize position.");
         }
     }
 
@@ -33,6 +33,8 @@ public class SkateObstacle : MonoBehaviour
 
     private void RandomizePosition()
     {
+        if (backgroundBounds == null)
+            return;
         transform.position = new Vector3(Random.Range(minX, maxX), transform.position.y, transform.position.z);
     }
 

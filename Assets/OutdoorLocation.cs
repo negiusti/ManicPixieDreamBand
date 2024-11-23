@@ -14,8 +14,12 @@ public class OutdoorLocation : MonoBehaviour
     {
         inRange = false;
         location = gameObject.name;
-        prompt = GetComponentInChildren<Pulsate>().gameObject;
-        prompt.SetActive(false);
+        Pulsate p = GetComponentInChildren<Pulsate>();
+        if (p != null)
+            prompt = p.gameObject;
+
+        if(prompt != null)
+            prompt.SetActive(false);
         sign = GetComponentInChildren<Animator>();
     }
 

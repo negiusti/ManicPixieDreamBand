@@ -16,7 +16,8 @@ public class MapsApp : PhoneApp
         ShoppingDistrict,
         Job1Neighborhood,
         TattooShop,
-        BobaShop
+        BobaShop,
+        Park
     };
     private GameManager gm;
     private SceneChanger sc;
@@ -38,7 +39,8 @@ public class MapsApp : PhoneApp
         { Location.ShoppingDistrict, Location.ShoppingDistrict },
         { Location.Job1Neighborhood, Location.Job1Neighborhood },
         { Location.TattooShop, Location.Job1Neighborhood },
-        { Location.BobaShop, Location.Job1Neighborhood },};
+        { Location.BobaShop, Location.Job1Neighborhood },
+        { Location.Park, Location.Park },};
 
     private List<string> GetLocationsInNeighborhood(Location neighborhoodLoc)
     {
@@ -56,7 +58,8 @@ public class MapsApp : PhoneApp
         { Location.ShoppingDistrict, "ShoppingDistrict" },
         { Location.Job1Neighborhood, "Job1Neighborhood" },
         { Location.TattooShop, "TattooShop" },
-        { Location.BobaShop, "BobaShop" },};
+        { Location.BobaShop, "BobaShop" },
+        { Location.Park, "Park" },};
 
     public static Dictionary<string, Location> sceneNameToLocation = new Dictionary<string, Location> {
         { "Bedroom", Location.Bedroom },
@@ -69,7 +72,8 @@ public class MapsApp : PhoneApp
         { "ShoppingDistrict", Location.ShoppingDistrict },
         { "Job1Neighborhood", Location.Job1Neighborhood },
         { "TattooShop", Location.TattooShop },
-        { "BobaShop", Location.BobaShop },};
+        { "BobaShop", Location.BobaShop },
+        { "Park", Location.Park },};
 
     private Dictionary<Location, string> locationToNiceName = new Dictionary<Location, string> {
         { Location.Bedroom, "Home" },
@@ -82,6 +86,7 @@ public class MapsApp : PhoneApp
         { Location.ShoppingDistrict, "Shopping District" },
         { Location.Job1Neighborhood, "Capitol Valley" },
         { Location.TattooShop, "Tattoo Shop" },
+        { Location.Park, "Al Canderson Park" },
         { Location.BobaShop, "Cutie Boba Shop" }};
 
     // Start is called before the first frame update

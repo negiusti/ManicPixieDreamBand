@@ -10,22 +10,20 @@ public class PlayInstrument : MonoBehaviour, IPointerClickHandler
     private bool withinRange;
     public KeyCode keyToTrigger;
     private Movement musicianMovement;
-    public MiniGame minigame;
     private bool isPlayingInstrument;
     private string instLabel;
-    private float startTime;
+    public GameObject spawnPosObj;
     private Vector3 spawnPos;
     private string layer;
     private int layerOrder;
-    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         withinRange = false;
-        spriteRenderer = this.GetComponent<SpriteRenderer>();
-        spriteResolver = this.GetComponent<SpriteResolver>();
-        spawnPos = this.transform.GetChild(0).transform.position;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteResolver = GetComponent<SpriteResolver>();
+        spawnPos = spawnPosObj.transform.position;
         layer = spriteRenderer.sortingLayerName;
         layerOrder = spriteRenderer.sortingOrder;
     }
@@ -81,7 +79,6 @@ public class PlayInstrument : MonoBehaviour, IPointerClickHandler
         isPlayingInstrument = true;
         spriteRenderer.enabled = false;
         instLabel = spriteResolver.GetLabel();
-        startTime = Time.time;
         musicianMovement = movement;
         musicianMovement.PlayInstrument(instLabel, spawnPos, layer, layerOrder);
     }
