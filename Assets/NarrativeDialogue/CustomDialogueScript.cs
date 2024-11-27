@@ -270,6 +270,13 @@ public class CustomDialogueScript : MonoBehaviour
 
     private void PrepSpokenConvo()
     {
+        bool isOutside = FindObjectsOfType<OutdoorLocation>().Length > 0;
+        if (isOutside)
+        {
+            if (Camera.main.gameObject.GetComponent<CameraLerp>() == null)
+                Camera.main.gameObject.AddComponent<CameraLerp>();
+            StartCoroutine(Camera.main.gameObject.GetComponent<CameraLerp>().PanCameraTo(Camera.main.orthographicSize / 1.5f, 0.5f));
+        }
         DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = true;
         DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = true;
         DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = true;
@@ -325,6 +332,13 @@ public class CustomDialogueScript : MonoBehaviour
 
     private void ConversationComplete(string convoName)
     {
+        bool isOutside = FindObjectsOfType<OutdoorLocation>().Length > 0;
+        if (isOutside)
+        { 
+            if (Camera.main.gameObject.GetComponent<CameraLerp>() == null)
+                Camera.main.gameObject.AddComponent<CameraLerp>();
+            StartCoroutine(Camera.main.gameObject.GetComponent<CameraLerp>().PanCameraTo(Camera.main.orthographicSize * 1.5f, 0.5f));
+        }
         Debug.Log("convo complete: " + convoName);
         if (currentConvoIdx < plotData.Count() && plotData[currentConvoIdx].conversation.Equals(convoName))
             currentConvoIdx++;

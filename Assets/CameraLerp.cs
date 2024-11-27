@@ -37,4 +37,20 @@ public class CameraLerp : MonoBehaviour
 
         transform.localPosition = targetLocalPosition;
     }
+    public IEnumerator PanCameraTo(float targetOrthographicSize, float duration)
+    {
+        float startOrthographicSize = cam.orthographicSize;
+
+        for (float timePassed = 0f; timePassed < duration; timePassed += Time.deltaTime)
+        {
+            float factor = timePassed / duration;
+            factor = Mathf.SmoothStep(0, 1, factor);
+
+            cam.orthographicSize = Mathf.Lerp(startOrthographicSize, targetOrthographicSize, factor);
+
+            yield return null;
+        }
+
+
+    }
 }
