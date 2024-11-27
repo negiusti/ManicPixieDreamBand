@@ -7,10 +7,12 @@ public class CameraFollow : MonoBehaviour
     public GameObject whoToFollow;
     private Bounds backgroundBounds;
     private Camera cam;
+    private bool isOutside;
     private float minX, maxX, minY; // Minimum and maximum x positions for the camera
 
     void Start()
     {
+        isOutside = FindObjectsOfType<OutdoorLocation>().Length > 0;
         if (background != null)
         {
             // Calculate the camera bounds based on the background's collider
@@ -30,6 +32,7 @@ public class CameraFollow : MonoBehaviour
         minX = backgroundBounds.min.x + cameraHalfWidth;
         maxX = backgroundBounds.max.x - cameraHalfWidth;
         minY = backgroundBounds.min.y + cam.orthographicSize;
+
         // Get the current position of the GameObject
         Vector3 desiredPosition = new Vector3(whoToFollow.transform.position.x, cam.transform.position.y, cam.transform.position.z);
 
@@ -39,7 +42,7 @@ public class CameraFollow : MonoBehaviour
 
         // Clamp the camera position to stay within the defined bounds
         cam.transform.position = new Vector3(Mathf.Clamp(cam.transform.position.x, minX, maxX),
-                                                     minY,///cam.transform.position.y,
+                                                     isOutside ? minY : cam.transform.position.y,
                                                      cam.transform.position.z);
     }
 
