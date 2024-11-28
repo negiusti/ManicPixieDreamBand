@@ -34,21 +34,21 @@ public class PlayInstrument : MonoBehaviour, IPointerClickHandler
         // Only applies to MainCharacter, this is only for playing solo, not with the band
         if (!isPlayingInstrument && withinRange && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && InteractionEnabled())
         {
-            //Play();
-            //JamCoordinator.StartJam("LEMON BOY");
-            //JamCoordinator.StartJam("The Storm");
             Play(FindFirstObjectByType<PlayerMovement>());
             MiniGameManager.StartMiniGame("Solo");
-            //minigame.OpenMiniGame();
         }
-        //if (isPlayingInstrument && !minigame.IsMiniGameActive() && Time.time - startTime > 1f)
-        //{
-        //    Stop();
-        //    JamCoordinator.EndJam();
-        //}
     }
 
     private void OnMouseDown()
+    {
+        if (!isPlayingInstrument && withinRange && InteractionEnabled())
+        {
+            Play(FindFirstObjectByType<PlayerMovement>());
+            MiniGameManager.StartMiniGame("Solo");
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
     {
         if (!isPlayingInstrument && withinRange && InteractionEnabled())
         {
@@ -141,15 +141,6 @@ public class PlayInstrument : MonoBehaviour, IPointerClickHandler
         if (other.CompareTag("Player"))
         {
             withinRange = false;
-        }
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (!isPlayingInstrument && withinRange && InteractionEnabled())
-        {
-            Play(FindFirstObjectByType<PlayerMovement>());
-            MiniGameManager.StartMiniGame("Solo");
         }
     }
 }
