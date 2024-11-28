@@ -8,6 +8,16 @@ public class JamCoordinator : ScriptableObject
 {
     private static Stage stage;
     private static Dictionary<string,Movement> musicians;
+    private static List<string> songsToUnlock = new List<string> {
+            "UISS",
+            "BodyHorror",
+            "OhNo",
+            "BiteMe",
+            "GuitarCenter",
+            "SugarDaddy",
+            "PuzzlePieces",
+            "PBaby",
+            "ImFine" };
     private static HashSet<string> unlockedSongs;
     //private static Camera mainCam;
     //private static Camera jamCamera;
@@ -40,9 +50,15 @@ public class JamCoordinator : ScriptableObject
         return unlockedSongs;
     }
 
-    public static void UnlockSong(string songName)
+    //public static void UnlockSong(string songName)
+    //{
+    //    unlockedSongs.Add(songName);
+    //    Save();
+    //}
+
+    public static void UnlockSong(double numUnlockedSongs)
     {
-        unlockedSongs.Add(songName);
+        unlockedSongs = songsToUnlock.GetRange(0, (int)numUnlockedSongs).ToHashSet();
         Save();
     }
 
@@ -50,14 +66,7 @@ public class JamCoordinator : ScriptableObject
     {
         unlockedSongs = ES3.Load("UnlockedSongs", new HashSet<string> {
             "UISS",
-            "BodyHorror",
-            "OhNo",
-            "BiteMe",
-            "GuitarCenter",
-            "SugarDaddy",
-            "PuzzlePieces",
-            "PBaby",
-            "ImFine" });
+            "BodyHorror"});
     }
 
     public static void StartJam(string bandname, double ticketSales = -1)

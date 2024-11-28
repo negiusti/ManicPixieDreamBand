@@ -45,7 +45,7 @@ public class SongSelectionMenu : MonoBehaviour
             Highlight(idx);
         }
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
         {
             Select(idx);
         }
