@@ -8,7 +8,8 @@ public class JamCoordinator : ScriptableObject
 {
     private static Stage stage;
     private static Dictionary<string,Movement> musicians;
-    private static List<string> songsToUnlock = new List<string> {
+    private static readonly List<string> songsToUnlock = new()
+    {
             "UISS",
             "BodyHorror",
             "OhNo",
@@ -59,6 +60,7 @@ public class JamCoordinator : ScriptableObject
     public static void UnlockSong(double numUnlockedSongs)
     {
         unlockedSongs = songsToUnlock.GetRange(0, (int)numUnlockedSongs).ToHashSet();
+        Debug.Log(string.Join(", ", unlockedSongs));
         Save();
     }
 
