@@ -12,6 +12,7 @@
 //    public string[] pocketsItems;
 //    public string[] completedQuests;
 //    public string currentEventType;
+//    public string eventName;
 //    string location;
 //}
 using System.Linq;
@@ -44,6 +45,11 @@ public class ConvoRequirements : ScriptableObject
     public static string CurrentEventType()
     {
         return Calendar.GetCurrentEvent().GetType().ToString();
+    }
+
+    public static string CurrentEventName()
+    {
+        return Calendar.GetCurrentEvent().Name().ToString();
     }
 
     public static int CurrentDay()
@@ -118,6 +124,11 @@ public class ConvoRequirements : ScriptableObject
         if (requirements.currentEventType != null && requirements.currentEventType != CurrentEventType())
         {
             Debug.Log("event type req not met");
+            return false;
+        }
+        if (requirements.eventName != null && requirements.eventName != CurrentEventName())
+        {
+            Debug.Log("event name req not met");
             return false;
         }
         if (requirements.locations != null && !requirements.locations.Contains(CurrentLocation()))

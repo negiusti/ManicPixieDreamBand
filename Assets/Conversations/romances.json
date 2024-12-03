@@ -38,6 +38,30 @@
                     "participants": []
                 },
                 {
+                    "locations": [ "BobaShop" ],
+                    "trigger": "Start",
+                    "conversation": "Pixie/BobaDate",
+                    "requirements": {
+                        "locations": [ "BobaShop" ],
+                        "eventName": "Get boba with Pixie <3",
+                        "minDay": 2
+                    },
+                    "participants": [
+                        {
+                            "name": "Pixie",
+                            "position": {
+                                "x": 4.693306,
+                                "y": -0.848196,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "right"
+                        }
+                    ]
+                },
+                {
                     "locations": [ "CoffeeShop" ],
                     "trigger": "Pixie",
                     "conversation": "Pixie/Gift",

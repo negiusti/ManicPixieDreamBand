@@ -40,6 +40,7 @@ public class Requirements
     public string[] pocketsItems;
     public string[] completedQuests;
     public string currentEventType;
+    public string eventName;
     public string[] locations;
     public bool changedOutfitToday;
     public string[] trueFlags;

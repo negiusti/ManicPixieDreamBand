@@ -11,6 +11,12 @@ public class SongSelectionMenu : MonoBehaviour
     {
         minigame = GetComponentInParent<BassMiniGame>();
         songSelections = new List<SongSelection>();
+    }
+
+    private void OnEnable()
+    {
+        if (songSelections == null)
+            Start();
         idx = 0;
         foreach (SongSelection songSelection in GetComponentsInChildren<SongSelection>())
         {

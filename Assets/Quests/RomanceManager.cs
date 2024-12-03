@@ -37,7 +37,7 @@ public class RomanceManager : ScriptableObject
                     if (romanceConvo.trigger == null || romanceConvo.trigger == "Start")
                     {
                         DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().StartConversation(romanceConvo);
-                        completedRomanceConvos.Add(romanceConvo.conversation);
+                        //completedRomanceConvos.Add(romanceConvo.conversation);
                     } else if (HasSceneChanged()) // Only try to do this once per scene
                     {
                         SpawnCharacters.SpawnParticipants(romanceConvo.participants, romanceConvo.conversation);
