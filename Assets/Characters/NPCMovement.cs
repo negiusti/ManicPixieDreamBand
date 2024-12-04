@@ -17,7 +17,7 @@ public class NPCMovement : Movement
     new void Update()
     {
         base.Update();
-        float currentX = transform.position.x;
+        float currentX = transform.localPosition.x;
         //Debug.Log("LOOK HERE: "+ currState.ToString() + " " + currentX + " " + targetX);
         
         if (walking && Mathf.Abs(currentX - targetX) > 0.5f)
@@ -146,7 +146,7 @@ public class NPCMovement : Movement
     {
         currState = MovementState.Skate;
         Quaternion currentRotation = transform.rotation;
-        float currentX = transform.position.x;
+        float currentX = transform.localPosition.x;
         float moveDirection = currentX > targetX ? -1 : 1;
         Debug.Log("currentX: " + currentX + " targetX: " + targetX);
         if (moveDirection < 0f && currentRotation.eulerAngles.y > 0f)
@@ -159,11 +159,11 @@ public class NPCMovement : Movement
             currentRotation.eulerAngles = new Vector3(0f, 180f, 0f);
         }
 
-        Vector3 position = transform.position;
+        Vector3 position = transform.localPosition;
         float moveSpeed = skateMoveSpeed;
         position.x += moveDirection * moveSpeed * Time.deltaTime;
         //position.x = Mathf.Clamp(position.x, minX, maxX);
-        transform.position = position;
+        transform.localPosition = position;
         //transform.rotation = Quaternion.Euler(0f, currentRotation.y, 0f);
         transform.rotation = currentRotation;
         Debug.Log("transform.rotation.eulerAngles.y: " + transform.rotation.eulerAngles.y);

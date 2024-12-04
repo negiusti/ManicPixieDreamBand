@@ -104,6 +104,9 @@ public class PlayerMovement : Movement
 
         Vector3 position = transform.position;
         float moveSpeed = isSkating || isRollerSkating ? skateMoveSpeed : walkMoveSpeed;
+        if (SceneChanger.Instance.GetCurrentScene() == "HillBombMinigame" && moveInput > 0)
+            moveSpeed *= 1.5f;
+
         position.x += moveInput * moveSpeed * Time.deltaTime;
         currentRotation.z = 0f;
         position.x = Mathf.Clamp(position.x, minX, maxX);

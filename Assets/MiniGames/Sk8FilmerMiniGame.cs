@@ -2,24 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sk8FilmerMiniGame : MiniGame
+public class Sk8FilmerMiniGame : MonoBehaviour
 {
-    private GameObject mainCamera;
-    private BlackScreen blackScreen;
+    //private BlackScreen blackScreen;
     private CameraShaker mgCam;
     private bool isActive;
     public bool startNow;
+    public Character Rex;
+    public MainCharacter mc;
+    //public float maxX;
+    //public float maxY = 7f;
+    //public float minX;
+    //public float minY = -9.3f;
 
     private void Start()
     {
-        blackScreen = GetComponentInChildren<BlackScreen>(true);
+        //blackScreen = GetComponentInChildren<BlackScreen>(true);
         mgCam = GetComponentInChildren<CameraShaker>(true);
-        DisableAllChildren();
-    }
-
-    public override bool IsMiniGameActive()
-    {
-        return isActive;
     }
 
     private IEnumerator CloseMinigameAfterTime(float seconds)
@@ -36,39 +35,33 @@ public class Sk8FilmerMiniGame : MiniGame
         yield return null;
     }
 
-    public override void OpenMiniGame()
+    public void OpenMiniGame()
     {
         // TODO: this may be necessary for other mingames!!!
-        if (!MiniGameManager.InteractionEnabled())
-            return;
+        //if (!MiniGameManager.InteractionEnabled())
+        //    return;
 
         // Opening up the minigame
-        mainCamera = Camera.main.transform.gameObject;
-        EnableAllChildren();
-        mainCamera.SetActive(false);
-        blackScreen.Unfade();
-        MiniGameManager.PrepMiniGame();
+        //blackScreen.Unfade();
+        //MiniGameManager.PrepMiniGame();
         isActive = true;
-        Characters.NPCSkateBetween("JJ", -57.52, -2.24, 30);
+        Rex.GetComponent<NPCMovement>().SkateTo(480f);
         StartCoroutine(CloseMinigameAfterTime(30f));
         StartCoroutine(ShakeCameraEvery(2f));
     }
 
-    public override void CloseMiniGame()
+    public void CloseMiniGame()
     {
-        mainCamera.SetActive(true);
-
-        DisableAllChildren();
-
+        // CHANGE SCENE BACK!!!!!
         isActive = false;
         MiniGameManager.CleanUpMiniGame();
     }
 
     public void Fade()
     {
-        if (blackScreen != null)
-            blackScreen.Fade();
-        else
+        //if (blackScreen != null)
+        //    blackScreen.Fade();
+        //else
             CloseMiniGame();
     }
 
