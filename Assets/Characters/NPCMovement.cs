@@ -19,7 +19,7 @@ public class NPCMovement : Movement
         base.Update();
         float currentX = transform.localPosition.x;
         //Debug.Log("LOOK HERE: "+ currState.ToString() + " " + currentX + " " + targetX);
-        
+
         if (walking && Mathf.Abs(currentX - targetX) > 0.5f)
         {
             //Debug.Log("Walking: " + currentX + " " + targetX);
@@ -40,6 +40,7 @@ public class NPCMovement : Movement
             currState = MovementState.SkateIdle;
             skating = false;
         }
+        animator.SetBool("IsMoving", walking || skating);
     }
 
     public void WalkTo(float x)
@@ -53,6 +54,8 @@ public class NPCMovement : Movement
     {
         skating = true;
         targetX = x;
+        isSkating = true;
+        currState = MovementState.Skate;
         Debug.Log("Skating to: " + transform.position.x + " " + targetX);
     }
 
@@ -65,6 +68,7 @@ public class NPCMovement : Movement
         }
 
         skating = false;
+        isSkating = false;
         walking = false;
         currState = MovementState.Idle;
     }
@@ -109,11 +113,29 @@ public class NPCMovement : Movement
         yield return null;
     }
 
-    //public new void PlayInstrument(string instLabel, float xPos)
-    //{
-    //    WalkTo(xPos);
-    //    base.PlayInstrument(instLabel, xPos);        
-    //}
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("WHAT THE FUCK!!!!");
+        if (other.CompareTag("Obstacle") && skating)
+        {
+            Debug.Log("WHAT THE FUCK???");
+            switch (Random.Range(0, 2))
+            {
+                case 0:
+                    Ollie();
+                    break;
+                case 1:
+                    Flip();
+                    break;
+            }
+        }
+    }
+
+            //public new void PlayInstrument(string instLabel, float xPos)
+            //{
+            //    WalkTo(xPos);
+            //    base.PlayInstrument(instLabel, xPos);        
+            //}
 
     private void WalkToTargetX()
     {

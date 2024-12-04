@@ -28,12 +28,12 @@ public class Sk8FilmerMiniGame : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator ShakeCameraEvery(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        mgCam.CameraShake();
-        yield return null;
-    }
+    //private IEnumerator ShakeCameraEvery(float seconds)
+    //{
+    //    yield return new WaitForSeconds(seconds);
+    //    mgCam.CameraShake();
+    //    yield return null;
+    //}
 
     public void OpenMiniGame()
     {
@@ -47,7 +47,6 @@ public class Sk8FilmerMiniGame : MonoBehaviour
         isActive = true;
         Rex.GetComponent<NPCMovement>().SkateTo(480f);
         StartCoroutine(CloseMinigameAfterTime(30f));
-        StartCoroutine(ShakeCameraEvery(2f));
     }
 
     public void CloseMiniGame()
