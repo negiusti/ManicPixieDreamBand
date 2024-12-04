@@ -62,6 +62,76 @@
                     ]
                 },
                 {
+                    "locations": [ "ThriftStore" ],
+                    "trigger": "Start",
+                    "conversation": "Pixie/ThriftDate",
+                    "requirements": {
+                        "locations": [ "ThriftStore" ],
+                        "eventName": "Thrifting with Pixie <3",
+                        "minDay": 3
+                    },
+                    "participants": [
+                        {
+                            "name": "Pixie",
+                            "position": {
+                                "x": 1.55,
+                                "y": -0.9,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "right"
+                        },
+                        {
+                            "name": "MainCharacter",
+                            "position": {
+                                "x": 4.97,
+                                "y": -1.204609,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "left"
+                        }
+                    ]
+                },
+                {
+                    "locations": [ "Park" ],
+                    "trigger": "Pixie",
+                    "conversation": "Pixie/ShowDate",
+                    "requirements": {
+                        "locations": [ "Park" ]
+                    },
+                    "participants": [
+                        {
+                            "name": "Pixie",
+                            "position": {
+                                "x": 1.55,
+                                "y": -0.9,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": true,
+                            "faceLeftOrRight": "right"
+                        },
+                        {
+                            "name": "MainCharacter",
+                            "position": {
+                                "x": 4.97,
+                                "y": -1.204609,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "left"
+                        }
+                    ]
+                },
+                {
                     "locations": [ "CoffeeShop" ],
                     "trigger": "Pixie",
                     "conversation": "Pixie/Gift",

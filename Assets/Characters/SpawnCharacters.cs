@@ -59,6 +59,20 @@ public class SpawnCharacters : ScriptableObject
                 Vector3 newPos = new Vector3(p.position.x, p.position.y, 3f);
                 c.transform.position = newPos;
             }
+            if (p.faceLeftOrRight != null)
+            {
+                switch (p.faceLeftOrRight)
+                {
+                    case "left":
+                        Characters.NPCFaceLeft(p.name);
+                        break;
+                    case "right":
+                        Characters.NPCFaceRight(p.name);
+                        break;
+                    default:
+                        break;
+                }
+            }
             c.MoveToRenderLayer(p.layer, idx);
             //Debug.Log("Set to active: " + c.name + " " + p.existAtStart + " " + c.gameObject.name);
             //c.gameObject.SetActive(p.existAtStart);

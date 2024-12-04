@@ -67,6 +67,8 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(InventoryManager.RemoveItem), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.RemoveItem(string.Empty)));
         Lua.RegisterFunction(nameof(InventoryManager.RemovePerishableItem), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.RemovePerishableItem(string.Empty)));
         Lua.RegisterFunction(nameof(InventoryManager.GetNumInPockets), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.GetNumInPockets(string.Empty)));
+        Lua.RegisterFunction(nameof(InventoryManager.BuyPurchaseableTopOrOutfit), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.BuyPurchaseableTopOrOutfit()));
+        Lua.RegisterFunction(nameof(InventoryManager.FindPurchaseableTopOrOutfitName), this, SymbolExtensions.GetMethodInfo(() => InventoryManager.FindPurchaseableTopOrOutfitName()));
         Lua.RegisterFunction(nameof(MainCharacterState.HasChangedOutfitToday), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.HasChangedOutfitToday()));
         Lua.RegisterFunction(nameof(MainCharacterState.CurrentBankBalance), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.CurrentBankBalance()));
         Lua.RegisterFunction(nameof(MainCharacterState.ModifyBankBalance), this, SymbolExtensions.GetMethodInfo(() => MainCharacterState.ModifyBankBalance((double)0)));
@@ -119,6 +121,8 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(InventoryManager.RemoveItem));
         Lua.UnregisterFunction(nameof(InventoryManager.RemovePerishableItem));
         Lua.UnregisterFunction(nameof(InventoryManager.GetNumInPockets));
+        Lua.UnregisterFunction(nameof(InventoryManager.FindPurchaseableTopOrOutfitName));
+        Lua.UnregisterFunction(nameof(InventoryManager.BuyPurchaseableTopOrOutfit));
         Lua.UnregisterFunction(nameof(MainCharacterState.HasChangedOutfitToday));
         Lua.UnregisterFunction(nameof(MainCharacterState.CurrentBankBalance));
         Lua.UnregisterFunction(nameof(MainCharacterState.ModifyBankBalance));

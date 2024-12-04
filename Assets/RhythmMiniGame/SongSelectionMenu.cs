@@ -18,7 +18,7 @@ public class SongSelectionMenu : MonoBehaviour
         if (songSelections == null)
             Start();
         idx = 0;
-        foreach (SongSelection songSelection in GetComponentsInChildren<SongSelection>())
+        foreach (SongSelection songSelection in GetComponentsInChildren<SongSelection>(includeInactive:true))
         {
             songSelection.gameObject.SetActive(JamCoordinator.UnlockedSongs().Contains(songSelection.gameObject.name));
             if (JamCoordinator.UnlockedSongs().Contains(songSelection.gameObject.name))

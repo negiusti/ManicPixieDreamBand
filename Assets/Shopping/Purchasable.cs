@@ -148,6 +148,18 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         SetBought(true);
     }
 
+    public bool IsBought()
+    {
+        return sold;
+    }
+
+    public string GetCategory()
+    {
+        if (category == null)
+            Start();
+        return category;
+    }
+
     public void SetBought(bool bought)
     {
         sold = bought;

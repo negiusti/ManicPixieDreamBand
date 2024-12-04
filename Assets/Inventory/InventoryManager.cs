@@ -26,6 +26,24 @@ public class InventoryManager : ScriptableObject
         return sWhitespace.Replace(input, replacement);
     }
 
+    private static Purchasable FindPurchaseableTopOrOutfit()
+    {
+        return FindObjectsOfType<Purchasable>(includeInactive: false).First(p => !p.IsBought() && (p.GetCategory().Contains("Top") || p.GetCategory().Contains("FB")));
+    }
+
+    public static string FindPurchaseableTopOrOutfitName()
+    {
+        Purchasable p = FindPurchaseableTopOrOutfit();
+        return p != null ? p.itemName : "";
+    }
+
+    public static void BuyPurchaseableTopOrOutfit()
+    {
+        Purchasable p = FindPurchaseableTopOrOutfit();
+        if (p != null)
+            p.Buy();
+    }
+
     [System.Serializable]
     public class DefaultPurchaseables
     {
