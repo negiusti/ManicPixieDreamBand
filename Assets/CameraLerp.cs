@@ -39,6 +39,8 @@ public class CameraLerp : MonoBehaviour
     }
     public IEnumerator PanCameraTo(float targetOrthographicSize, float duration)
     {
+        if (cam == null)
+            Start();
         float startOrthographicSize = cam.orthographicSize;
 
         for (float timePassed = 0f; timePassed < duration; timePassed += Time.deltaTime)

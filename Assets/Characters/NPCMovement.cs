@@ -40,6 +40,7 @@ public class NPCMovement : Movement
             currState = MovementState.SkateIdle;
             skating = false;
         }
+
         animator.SetBool("IsMoving", walking || skating);
     }
 
@@ -85,8 +86,8 @@ public class NPCMovement : Movement
         float timeElapsed = 0f;
         float timeElapsedSinceTrick = 0f;
         bool alternateTricks = false;
-
-        while (timeElapsed < seconds)
+         
+        while (timeElapsed < seconds || seconds < 0)
         {
             float currentX = transform.position.x;
             if (Mathf.Abs(currentX - minx) < 0.5f)
@@ -96,11 +97,11 @@ public class NPCMovement : Movement
             {
                 SkateTo(minx);
             }
-            if (timeElapsedSinceTrick > 2f)
+            if (timeElapsedSinceTrick > 5f && !lockAnim)
             {
                 timeElapsedSinceTrick = 0f;
                 if (alternateTricks)
-                    Ollie();
+                    Flip();
                 else
                     Grind();
                 alternateTricks = !alternateTricks;
@@ -115,10 +116,14 @@ public class NPCMovement : Movement
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("WHAT THE FUCK!!!!");
-        if (other.CompareTag("Obstacle") && skating)
+        float currentX = transform.position.x;
+        float moveDirection = currentX > targetX ? -1 : 1;
+        if (other.CompareTag("Seat"))
         {
-            Debug.Log("WHAT THE FUCK???");
+            gameObject.transform.Translate(Vector3.down * .5f);
+        }
+        else if (other.CompareTag("Obstacle") && skating)
+        {
             switch (Random.Range(0, 2))
             {
                 case 0:
@@ -129,13 +134,44 @@ public class NPCMovement : Movement
                     break;
             }
         }
+        //else if (other.CompareTag("LRamp") && isSkating && !lockAnim && moveDirection < 0)
+        //{
+        //    onLRamp = true;
+        //    animator.Play("BaseCharacter_SkateboardRamp");
+        //}
+        //else if (other.CompareTag("LRamp") && isRollerSkating && !lockAnim && moveDirection < 0)
+        //{
+        //    onLRamp = true;
+        //    animator.Play("BaseCharacter_RollerskateRamp");
+        //}
+        else if (other.CompareTag("RRamp") && isSkating && !lockAnim && moveDirection > 0)
+        {
+            onRRamp = true;
+            animator.Play("BaseCharacter_SkateboardRampRight");
+        }
+        else if (other.CompareTag("RRamp") && isRollerSkating && !lockAnim && moveDirection > 0)
+        {
+            onRRamp = true;
+            animator.Play("BaseCharacter_RollerskateRampRight");
+        }
+
     }
 
-            //public new void PlayInstrument(string instLabel, float xPos)
-            //{
-            //    WalkTo(xPos);
-            //    base.PlayInstrument(instLabel, xPos);        
-            //}
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Seat"))
+        {
+            gameObject.transform.Translate(Vector3.up * .5f);
+        }
+        if (other.CompareTag("LRamp"))
+        {
+            onLRamp = false;
+        }
+        if (other.CompareTag("RRamp"))
+        {
+            onRRamp = false;
+        }
+    }
 
     private void WalkToTargetX()
     {
@@ -182,7 +218,7 @@ public class NPCMovement : Movement
         }
 
         Vector3 position = transform.localPosition;
-        float moveSpeed = skateMoveSpeed;
+        float moveSpeed = skateMoveSpeed * Random.Range(1f, 1.5f);
         position.x += moveDirection * moveSpeed * Time.deltaTime;
         //position.x = Mathf.Clamp(position.x, minX, maxX);
         transform.localPosition = position;
