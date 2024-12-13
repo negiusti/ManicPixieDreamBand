@@ -73,6 +73,9 @@ public class MiniGameManager : ScriptableObject
             case "Calibration":
                 StartCalibration();
                 break;
+            case "Improv":
+                StartImprovMiniGame();
+                break;
             default:
                 Debug.LogError("Minigame not found: " + miniGameName);
                 break;
@@ -113,6 +116,8 @@ public class MiniGameManager : ScriptableObject
                 return FindFirstObjectByType<DemoEndingMiniGame>(FindObjectsInactive.Include);
             case "Gifting":
                 return FindFirstObjectByType<GiftingMiniGame>(FindObjectsInactive.Include);
+            case "Improv":
+                return FindFirstObjectByType<ImprovMiniGame>(FindObjectsInactive.Include);
             default:
                 Debug.LogError("Minigame not found: " + miniGameName);
                 return null;
@@ -170,6 +175,12 @@ public class MiniGameManager : ScriptableObject
     private static void StartScreenPrintingMiniGame()
     {
         ScreenPrintingMiniGame mg = (ScreenPrintingMiniGame)GetMiniGame("ScreenPrinting");
+        mg.OpenMiniGame();
+    }
+
+    private static void StartImprovMiniGame()
+    {
+        ImprovMiniGame mg = (ImprovMiniGame)GetMiniGame("Improv");
         mg.OpenMiniGame();
     }
 
