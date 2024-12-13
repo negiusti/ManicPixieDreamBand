@@ -12,11 +12,14 @@ public class ImprovButtonController : MonoBehaviour
     private Color unpressedColor = new Color(253 / 255f, 197 / 255f, 235 / 255f);
     private ImprovMiniGame mg;
     public int idx;
+    private bool alternate;
+    private GameObject starTemplate;
 
     // Start is called before the first frame update
     void Start()
     {
         mg = GetComponentInParent<ImprovMiniGame>(true);
+        starTemplate = GetComponentInChildren<StarMoverScript>(true).gameObject;
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = defaultSprite;
         spriteRenderer.color = unpressedColor;
@@ -30,7 +33,12 @@ public class ImprovButtonController : MonoBehaviour
             spriteRenderer.sprite = pressedSprite;
             spriteRenderer.color = pressedColor;
             guitarString.SetCategoryAndLabel("String", "Wiggly");
-            mg.PlayPentatonicNote(idx);
+            int clipIndex = idx * 2;
+            clipIndex += alternate ? 1 : 0;
+            mg.PlayPentatonicNote(clipIndex);
+            GameObject star = Instantiate(starTemplate, transform);
+            star.SetActive(true);
+            alternate = !alternate;
         }
         if (Input.GetKeyUp(keyCode))
         {

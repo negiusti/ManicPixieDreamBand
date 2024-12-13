@@ -60,8 +60,6 @@ public class ImprovMiniGame : MiniGame
 
     public void PlayPentatonicNote(int clipIndex)
     {
-        clipIndex *= 2;
-        clipIndex += Random.Range(0,2);
         if (pentatonicAudioClips.Count < clipIndex)
             return;
 
