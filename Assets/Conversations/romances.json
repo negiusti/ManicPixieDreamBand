@@ -229,6 +229,78 @@
                         "locations": [ "Bedroom" ]
                     },
                     "participants": []
+                },
+                {
+                    "locations": [ "BandPracticeRoom" ],
+                    "participants": [
+                        {
+                            "name": "MainCharacter",
+                            "position": {
+                                "x": -0.37,
+                                "y": -2.35,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        },
+                        {
+                            "name": "JJ",
+                            "position": {
+                                "x": -8.7,
+                                "y": -1.5,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        }
+                    ],
+                    "requirements": {
+                        "locations": [ "BandPracticeRoom" ],
+                        "eventName": "Try JJ's pedal at Warehouse"
+                    },
+                    "trigger": "Start",
+                    "conversation": "JJ/PedalDate"
+                },
+                {
+                    "locations": [ "BandPracticeRoom" ],
+                    "participants": [
+                        {
+                            "name": "MainCharacter",
+                            "position": {
+                                "x": -0.37,
+                                "y": -2.35,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        },
+                        {
+                            "name": "JJ",
+                            "position": {
+                                "x": -8.7,
+                                "y": -1.5,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        },
+                        {
+                            "name": "Ethan",
+                            "position": {
+                                "x": -5.77,
+                                "y": -1.98,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        }
+                    ],
+                    "requirements": {
+                        "locations": [ "BandPracticeRoom" ],
+                        "eventName": "Jam w/ JJ's band at Warehouse"
+                    },
+                    "trigger": "Start",
+                    "conversation": "JJ/PracticeDate"
                 }
             ]
         }
