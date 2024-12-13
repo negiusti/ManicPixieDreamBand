@@ -10,9 +10,6 @@ public class ImprovMiniGame : MiniGame
     private BlackScreen blackScreen;
     private bool closingInProgress;
     private AudioSource audioSource;
-    public GameObject fret;
-    public GameObject buttons;
-    public GameObject buttonHints;
     public bool TEST_START_ON_ENTER;
 
     // Use this for initialization
@@ -53,9 +50,6 @@ public class ImprovMiniGame : MiniGame
         isActive = true;
         closingInProgress = false;
         EnableAllChildren();
-        fret.SetActive(true);
-        buttons.SetActive(true);
-        buttonHints.SetActive(true);
     }
 
     public void StartBassMiniGameWithJJ()

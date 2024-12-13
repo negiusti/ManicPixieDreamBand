@@ -82,6 +82,13 @@ public class BassMiniGame : MiniGame
         JamCoordinator.StartJam("LEMON BOY");
     }
 
+    public void StartJJBandMiniGame()
+    {
+        OpenMiniGame();
+        SelectSong("JJ_JAZZ");
+        JamCoordinator.StartJam("JJ BAND");
+    }
+
     public void PlayBadSound()
     {
         if (oopsAudioClips.Count == 0 || cameraShaker == null)

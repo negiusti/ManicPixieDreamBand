@@ -49,6 +49,9 @@ public class MiniGameManager : ScriptableObject
             case "Solo":
                 StartBassMiniGame();
                 break;
+            case "JJBand":
+                StartJJBandMiniGame();
+                break;
             case "CarPacking":
                 StartCarPackingMiniGame();
                 break;
@@ -97,6 +100,8 @@ public class MiniGameManager : ScriptableObject
             case "Gig":
                 return FindFirstObjectByType<BassMiniGame>(FindObjectsInactive.Include);
             case "Solo":
+                return FindFirstObjectByType<BassMiniGame>(FindObjectsInactive.Include);
+            case "JJBand":
                 return FindFirstObjectByType<BassMiniGame>(FindObjectsInactive.Include);
             case "CarPacking":
                 return FindFirstObjectByType<CarPackingMiniGame>(FindObjectsInactive.Include);
@@ -164,6 +169,12 @@ public class MiniGameManager : ScriptableObject
     {
         BassMiniGame mg = (BassMiniGame)GetMiniGame("BandPractice");
         mg.StartBassMiniGameWithBand(true);
+    }
+
+    private static void StartJJBandMiniGame()
+    {
+        BassMiniGame mg = (BassMiniGame)GetMiniGame("JJBand");
+        mg.StartJJBandMiniGame();
     }
 
     private static void StartCarPackingMiniGame()
