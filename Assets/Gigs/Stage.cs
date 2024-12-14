@@ -19,7 +19,7 @@ public class Stage : MonoBehaviour
     public CrowdSpawner crowdSpawner;
     private AudioSource audioSource;
     public List<AudioClip> CloudyKingsClips;
-
+    public List<AudioClip> DaisyDukesClips;
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +51,17 @@ public class Stage : MonoBehaviour
             int clipIndex = Random.Range(0, CloudyKingsClips.Count);
             Debug.Log("Playing: " + CloudyKingsClips[clipIndex].name);
             audioSource.clip = CloudyKingsClips[clipIndex];
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+        else if (audioSource != null && band.Name.Equals("The Daisy Dukes"))
+        {
+            if (DaisyDukesClips.Count == 0)
+                return;
+            GameManager.Instance.PauseBGMusic();
+            int clipIndex = Random.Range(0, DaisyDukesClips.Count);
+            Debug.Log("Playing: " + DaisyDukesClips[clipIndex].name);
+            audioSource.clip = DaisyDukesClips[clipIndex];
             audioSource.loop = true;
             audioSource.Play();
         }

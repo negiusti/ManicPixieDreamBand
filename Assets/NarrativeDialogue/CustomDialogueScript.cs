@@ -23,6 +23,8 @@ public class CustomDialogueScript : MonoBehaviour
     private Canvas phoneResponsePanelCanvas;
     public int currentConvoIdx;
     private string currentLocation;
+    private readonly float orthoCamSizeOutside = 12f;
+    private readonly float orthoCamSizeOutsideConvo = 8f;
 
     // Start is called before the first frame update
     void Start()
@@ -275,7 +277,7 @@ public class CustomDialogueScript : MonoBehaviour
         {
             if (Camera.main.gameObject.GetComponent<CameraLerp>() == null)
                 Camera.main.gameObject.AddComponent<CameraLerp>();
-            StartCoroutine(Camera.main.gameObject.GetComponent<CameraLerp>().PanCameraTo(Camera.main.orthographicSize / 1.5f, 0.5f));
+            StartCoroutine(Camera.main.gameObject.GetComponent<CameraLerp>().PanCameraTo(orthoCamSizeOutsideConvo, 0.5f));
         }
         DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = true;
         DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = true;
@@ -337,7 +339,7 @@ public class CustomDialogueScript : MonoBehaviour
         { 
             if (Camera.main.gameObject.GetComponent<CameraLerp>() == null)
                 Camera.main.gameObject.AddComponent<CameraLerp>();
-            StartCoroutine(Camera.main.gameObject.GetComponent<CameraLerp>().PanCameraTo(Camera.main.orthographicSize * 1.5f, 0.5f));
+            StartCoroutine(Camera.main.gameObject.GetComponent<CameraLerp>().PanCameraTo(orthoCamSizeOutside, 0.5f));
         }
         Debug.Log("convo complete: " + convoName);
         if (currentConvoIdx < plotData.Count() && plotData[currentConvoIdx].conversation.Equals(convoName))

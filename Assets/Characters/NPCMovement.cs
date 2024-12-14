@@ -122,7 +122,7 @@ public class NPCMovement : Movement
         {
             gameObject.transform.Translate(Vector3.down * .5f);
         }
-        else if (other.CompareTag("Obstacle") && skating)
+        else if (other.CompareTag("Obstacle") && skating && !lockAnim)
         {
             switch (Random.Range(0, 2))
             {
