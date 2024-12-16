@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using PixelCrushers.DialogueSystem;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,11 +11,6 @@ public class QuestManager : ScriptableObject
     private static int currQuestConvoIdx;
     private static HashSet<string> completedQuests;
     private static HashSet<string> availableQuests;
-
-    private static void StartNewQuest()
-    {
-        
-    }
 
     public static bool CheckForQuestConvo()
     {

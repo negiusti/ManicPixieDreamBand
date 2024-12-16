@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "Characters", menuName = "Custom/Characters")]
@@ -145,6 +146,34 @@ public class Characters : ScriptableObject
         if (characters.ContainsKey(character))
         {
             characters[character].gameObject.transform.position = new Vector3(characters[character].gameObject.transform.position.x, (float)y, characters[character].gameObject.transform.position.z);
+        }
+    }
+
+    public static void SetLayer(string npc, string layer, double layerNum)
+    {
+        if (characters == null || !characters.ContainsKey(npc))
+            RefreshCharactersCache();
+        if (characters.ContainsKey(npc))
+        {
+            characters[npc].gameObject.SetActive(true);
+            characters[npc].MoveToRenderLayer(layer, (int)layerNum);
+        }
+    }
+
+    public static void SortCharacterLayers()
+    {
+        Character[] characters = CharactersInScene().Values.ToArray();
+
+        // Sort characters by their y position
+        System.Array.Sort(characters, (a, b) => b.transform.position.y.CompareTo(a.transform.position.y));
+        Dictionary<string, int> layerToIdx = new Dictionary<string, int>();
+        foreach (Character c in characters)
+        {
+            Debug.Log("SpawnParticipant: " + c.name);
+            SortingGroup sortingGroup = c.GetComponent<SortingGroup>();
+            int idx = layerToIdx.GetValueOrDefault(sortingGroup.sortingLayerName, -1) + 1;
+            layerToIdx[sortingGroup.sortingLayerName] = idx;
+            c.MoveToRenderLayer(sortingGroup.sortingLayerName, idx);
         }
     }
 

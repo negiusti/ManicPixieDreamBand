@@ -71,7 +71,7 @@ public class InventoryManager : ScriptableObject
         Keys,
         Book,
         Zine,
-        Poster
+        Flyer
     }
 
     public static void SaveInventories()

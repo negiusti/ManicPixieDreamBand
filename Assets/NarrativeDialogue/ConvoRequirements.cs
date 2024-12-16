@@ -49,7 +49,7 @@ public class ConvoRequirements : ScriptableObject
 
     public static string CurrentEventName()
     {
-        return Calendar.GetCurrentEvent().Name().ToString();
+        return Calendar.GetCurrentEvent() == null? "" : Calendar.GetCurrentEvent().Name().ToString();
     }
 
     public static int CurrentDay()
