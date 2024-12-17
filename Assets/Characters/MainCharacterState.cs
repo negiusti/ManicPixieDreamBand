@@ -43,12 +43,12 @@ public class MainCharacterState : ScriptableObject
 
     public static string GetRollerSkateLabel()
     {
-        return ES3.Load(RollerskateCategory, defaultValue: InventoryManager.defaultPurchaseables.data.First(p => p.category == RollerskateCategory).items.First());
+        return ES3.Load(RollerskateCategory, defaultValue: InventoryManager.defaultPurchaseables.data.First(p => p.category == "Rollerskate_Icons").items.First());
     }
 
     public static string GetSkateboardLabel()
     {
-        return ES3.Load(SkateboardCategory, defaultValue: InventoryManager.defaultPurchaseables.data.First(p => p.category == SkateboardCategory).items.First());
+        return ES3.Load(SkateboardCategory, defaultValue: InventoryManager.defaultPurchaseables.data.First(p => p.category == "Skateboard").items.First());
     }
 
     public static void SetFlagPrefix(string flagPrefix, bool val)
