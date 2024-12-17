@@ -21,6 +21,7 @@ public class Phone : MonoBehaviour
     private CalendarApp calendarApp;
     private PocketsApp pocketsApp;
     private GearApp gearApp;
+    private SkateApp skateApp;
     private DecoratorApp decoratorApp;
     private SettingsApp settingsApp;
     private PhotosApp photosApp;
@@ -52,7 +53,8 @@ public class Phone : MonoBehaviour
         Calendar,
         Pockets,
         Decorator,
-        Gear
+        Gear,
+        Skate
     };
 
     // State stack
@@ -71,6 +73,7 @@ public class Phone : MonoBehaviour
         pocketsApp = this.GetComponentInChildren<PocketsApp>(true);
         decoratorApp = this.GetComponentInChildren<DecoratorApp>(true);
         gearApp = this.GetComponentInChildren<GearApp>(true);
+        skateApp = this.GetComponentInChildren<SkateApp>(true);
         settingsApp = this.GetComponentInChildren<SettingsApp>(true);
         photosApp = this.GetComponentInChildren<PhotosApp>(true);
         notifications = this.GetComponentInChildren<PhoneNotifications>();
@@ -132,6 +135,7 @@ public class Phone : MonoBehaviour
         appNotifications.Clear();
         decoratorApp.Reset();
         gearApp.Reset();
+        skateApp.Reset();
     }
 
     public void SendNotificationTo(string app, string arg)
@@ -147,6 +151,9 @@ public class Phone : MonoBehaviour
                 break;
             case "Gear":
                 gearApp.AddNotification(arg);
+                break;
+            case "Skate":
+                skateApp.AddNotification(arg);
                 break;
             default:
                 break;
@@ -447,6 +454,17 @@ public class Phone : MonoBehaviour
         HideIcons();
     }
 
+    public void OpenSkate()
+    {
+        backgroundResolver.SetCategoryAndLabel("Background", "Skate");
+        ClearNotificationFor("Skate");
+        skateApp.gameObject.SetActive(true);
+        SetAppHeader("Skate");
+        if (phoneStateStack.Peek() != PhoneState.Skate)
+            phoneStateStack.Push(PhoneState.Skate);
+        HideIcons();
+    }
+
     public void OpenDecorator()
     {
         backgroundResolver.SetCategoryAndLabel("Background", "Decorator");
@@ -566,6 +584,10 @@ public class Phone : MonoBehaviour
                 OpenGear();
                 break;
 
+            case PhoneState.Skate:
+                OpenSkate();
+                break;
+
             default:
                 Debug.Log("State not found: " + state.ToString());
                 break;
@@ -605,6 +627,7 @@ public class Phone : MonoBehaviour
         pocketsApp.gameObject.SetActive(false);
         decoratorApp.gameObject.SetActive(false);
         gearApp.gameObject.SetActive(false);
+        skateApp.gameObject.SetActive(false);
         settingsApp.gameObject.SetActive(false);
         photosApp.gameObject.SetActive(false);
         backButton.SetActive(false);

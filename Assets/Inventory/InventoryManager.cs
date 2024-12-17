@@ -299,6 +299,8 @@ public class InventoryManager : ScriptableObject
             return "Earrings_Icons";
         else if (category.Contains("WindowTrinkets"))
             return "WindowTrinkets_Icons";
+        else if (category.Contains("Roller"))
+            return "Rollerskate_Icons";
         else
             return category;
     }

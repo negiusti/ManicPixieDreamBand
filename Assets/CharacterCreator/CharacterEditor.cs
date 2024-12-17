@@ -139,6 +139,7 @@ public class CharacterEditor : MonoBehaviour
             {
                 labels = spriteLib.GetCategoryLabelNames(category)
                     .Where(l => l.StartsWith("E_"))
+                    .Where(l => l.ToLower().Contains("skate"))
                     .Where(l => !l.StartsWith("X_") || l.Equals("X_" + character.gameObject.name))
                     .ToArray();
             }
@@ -149,6 +150,7 @@ public class CharacterEditor : MonoBehaviour
                 if (labels.Length == 0)
                     labels = spriteLib.GetCategoryLabelNames(category)
                         .Where(l => !l.StartsWith("E_"))
+                        .Where(l => l.ToLower().Contains("skate"))
                         .Where(l => !l.StartsWith("X_") || l.Equals("X_" + character.gameObject.name))
                         .ToArray();
             }

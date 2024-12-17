@@ -27,7 +27,7 @@ public class Character : MonoBehaviour
     private Animator animator;
     private SpriteLibraryAsset libraryAsset;
     private string characterName;
-
+    private bool isRollerskating;
     public SortingGroup GetCurrentLayer()
     {
         return sortingGroup;
@@ -336,6 +336,12 @@ public class Character : MonoBehaviour
         categoryToResolver["L_Shoe"].ResolveSpriteToSpriteRenderer();
     }
 
+    private void SetSkateboard(string label)
+    {
+        categoryToResolver["Skateboard"].SetCategoryAndLabel("Skateboard", label);
+        categoryToResolver["Skateboard"].ResolveSpriteToSpriteRenderer();
+    }
+
     public bool EmoteEyes(string emotion)
     {
         string label = (emotion.ToLower() == "default") ? categoryToLabelMap["Eyes"] : "E_" + emotion;
@@ -351,10 +357,22 @@ public class Character : MonoBehaviour
         return hasChanged;
     }
 
-    public void RollerskatesOnOff(bool isRollerskating)
+    public void RollerskatesOnOff(bool rollerskating)
     {
-        string label = isRollerskating ? "E_YellowSkate" : categoryToLabelMap["L_Shoe"];
+        isRollerskating = rollerskating;
+        //string label = isRollerskating ? "E_YellowSkate" : categoryToLabelMap["L_Shoe"];
+        string label = isRollerskating ? MainCharacterState.GetRollerSkateLabel() : categoryToLabelMap["L_Shoe"];
         SetShoes(label);
+    }
+
+    public void UpdateSkates()
+    {
+        if (isRollerskating)
+        {
+            string label = MainCharacterState.GetRollerSkateLabel();
+            SetShoes(label);
+        }
+        SetSkateboard(MainCharacterState.GetSkateboardLabel());
     }
 }
 

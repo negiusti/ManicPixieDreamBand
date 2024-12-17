@@ -10,6 +10,8 @@ public class MainCharacterState : ScriptableObject
     private static double bankBalance;
     private static List<string> unlockedPhotos;
     private static Dictionary<string, bool> flags;
+    public static readonly string RollerskateCategory = "Rollerskates";
+    public static readonly string SkateboardCategory = "Skateboard";
 
     public static void Save()
     {
@@ -27,6 +29,26 @@ public class MainCharacterState : ScriptableObject
         if (flags == null)
             flags = new Dictionary<string, bool>();
         flags[flag] = val;
+    }
+
+    public static void SetRollerskates(string label)
+    {
+        ES3.Save(RollerskateCategory, label);
+    }
+
+    public static void SetSkateboard(string label)
+    {
+        ES3.Save(SkateboardCategory, label);
+    }
+
+    public static string GetRollerSkateLabel()
+    {
+        return ES3.Load(RollerskateCategory, defaultValue: InventoryManager.defaultPurchaseables.data.First(p => p.category == RollerskateCategory).items.First());
+    }
+
+    public static string GetSkateboardLabel()
+    {
+        return ES3.Load(SkateboardCategory, defaultValue: InventoryManager.defaultPurchaseables.data.First(p => p.category == SkateboardCategory).items.First());
     }
 
     public static void SetFlagPrefix(string flagPrefix, bool val)
