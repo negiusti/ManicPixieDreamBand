@@ -448,7 +448,7 @@ public class Phone : MonoBehaviour
         backgroundResolver.SetCategoryAndLabel("Background", "Gear");
         ClearNotificationFor("Gear");
         gearApp.gameObject.SetActive(true);
-        SetAppHeader("Gear");
+        SetAppHeader("Music Gear");
         if (phoneStateStack.Peek() != PhoneState.Gear)
             phoneStateStack.Push(PhoneState.Gear);
         HideIcons();
@@ -459,7 +459,7 @@ public class Phone : MonoBehaviour
         backgroundResolver.SetCategoryAndLabel("Background", "Skate");
         ClearNotificationFor("Skate");
         skateApp.gameObject.SetActive(true);
-        SetAppHeader("Skate");
+        SetAppHeader("Skate Gear");
         if (phoneStateStack.Peek() != PhoneState.Skate)
             phoneStateStack.Push(PhoneState.Skate);
         HideIcons();
