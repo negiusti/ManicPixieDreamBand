@@ -47,7 +47,7 @@ public class BandNameMiniGame : MiniGame
         clickHint.SetActive(false);
         rickiSpeechBubble.SetActive(false);
         maxSpeechBubble.SetActive(false);
-        StartCoroutine(rickiBark("go ahead. pick one."));
+        StartCoroutine(rickiBark("Go ahead. Pick one."));
     }
 
     public override void CloseMiniGame()
@@ -97,15 +97,15 @@ public class BandNameMiniGame : MiniGame
         if (bandName == "LEMON BOY")
         {
             rickiSpeechBubble.SetActive(false);
-            StartCoroutine(maxBark("nah that's a dumb name"));
+            StartCoroutine(maxBark("Nah, that's a dumb name."));
             audioSource.Play();
             lbPatch.Explode();
         } else
         {
             pickedPunkJuice = true;
             maxSpeechBubble.SetActive(false);
-            StartCoroutine(rickiBark("ok punk juice it is"));
-            StartCoroutine(maxBark("huh. that'd be a cool name for a video game", true));
+            StartCoroutine(rickiBark("Ok, Punk Juice it is."));
+            StartCoroutine(maxBark("Huh. That'd be a cool name for a video game.", true));
         }
     }
 
