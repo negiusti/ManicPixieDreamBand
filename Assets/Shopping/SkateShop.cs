@@ -1,7 +1,7 @@
 
-public class ThriftStore : Shop
+public class SkateShop : Shop
 {
-    private static string purchaseConvo = "ThriftStore_Purchase";
+    private static string purchaseConvo = "SkateShop_Purchase";
 
     // Start is called before the first frame update
     new void Start()
@@ -23,7 +23,7 @@ public class ThriftStore : Shop
 
     public override string ShopName()
     {
-        return "ThriftStore";
+        return "SkateShop";
     }
 
     new void OnEnable()
