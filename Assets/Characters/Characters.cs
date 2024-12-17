@@ -89,6 +89,7 @@ public class Characters : ScriptableObject
     {
         characters = FindObjectsOfType<Character>(true)
             .Where(c => c.gameObject.layer != LayerMask.NameToLayer("LoadingScreen"))
+            .Where(c => c.gameObject.layer != LayerMask.NameToLayer("MiniGame"))
             .ToDictionary(c => c.name, c => c);
         mc = characters.FirstOrDefault(c => c.Value.isMainCharacter()).Value;
     }
