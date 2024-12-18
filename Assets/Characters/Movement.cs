@@ -206,16 +206,17 @@ public abstract class Movement : MonoBehaviour
 
     protected void Ollie()
     {
-        if (!lockAnim && !DialogueManager.IsConversationActive)
+        if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter()))
         {
             animator.Play("BaseCharacter_SkateJump");
-            Tutorial.hasOllied = true;
+            if (character.isMainCharacter())
+                Tutorial.hasOllied = true;
         }
     }
 
     protected void Grind()
     {
-        if (!lockAnim && !DialogueManager.IsConversationActive)
+        if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter()))
         {
             animator.Play("BaseCharacter_SkateboardGrind");
         }
@@ -223,7 +224,7 @@ public abstract class Movement : MonoBehaviour
 
     protected void Flip()
     {
-        if (!lockAnim && !DialogueManager.IsConversationActive)
+        if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter()))
         {
             animator.Play("BaseCharacter_SkateboardFlip");
         }

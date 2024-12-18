@@ -17,7 +17,8 @@ public class MapsApp : PhoneApp
         Job1Neighborhood,
         TattooShop,
         BobaShop,
-        Park
+        Park,
+        SkateShop
     };
     private GameManager gm;
     private SceneChanger sc;
@@ -40,6 +41,7 @@ public class MapsApp : PhoneApp
         { Location.Job1Neighborhood, Location.Job1Neighborhood },
         { Location.TattooShop, Location.Job1Neighborhood },
         { Location.BobaShop, Location.Job1Neighborhood },
+        { Location.SkateShop, Location.Job1Neighborhood },
         { Location.Park, Location.Park },};
 
     private List<string> GetLocationsInNeighborhood(Location neighborhoodLoc)
@@ -59,6 +61,7 @@ public class MapsApp : PhoneApp
         { Location.Job1Neighborhood, "Job1Neighborhood" },
         { Location.TattooShop, "TattooShop" },
         { Location.BobaShop, "BobaShop" },
+        { Location.SkateShop, "SkateShop" },
         { Location.Park, "Park" },};
 
     public static Dictionary<string, Location> sceneNameToLocation = new Dictionary<string, Location> {
@@ -73,6 +76,7 @@ public class MapsApp : PhoneApp
         { "Job1Neighborhood", Location.Job1Neighborhood },
         { "TattooShop", Location.TattooShop },
         { "BobaShop", Location.BobaShop },
+        { "SkateShop", Location.SkateShop },
         { "Park", Location.Park },};
 
     private Dictionary<Location, string> locationToNiceName = new Dictionary<Location, string> {
@@ -87,6 +91,7 @@ public class MapsApp : PhoneApp
         { Location.Job1Neighborhood, "Capitol Valley" },
         { Location.TattooShop, "Tattoo Shop" },
         { Location.Park, "Al Canderson Park" },
+        { Location.SkateShop, "Big Top Skate Shop" },
         { Location.BobaShop, "Cutie Boba Shop" }};
 
     // Start is called before the first frame update

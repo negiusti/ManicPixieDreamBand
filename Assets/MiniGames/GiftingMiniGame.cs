@@ -35,7 +35,6 @@ public class GiftingMiniGame : MiniGame
     {
         // TO DO: record different reactions
         Characters.RecordMostRecentGiftReaction(Characters.CharacterGiftReaction.Good);
-        // Increase relationship score
     }
 
     public void RegisterNVMReaction()
