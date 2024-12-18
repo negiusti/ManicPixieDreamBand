@@ -31,7 +31,7 @@ public class NPCMovement : Movement
             walking = false;
         } else if (skating && Mathf.Abs(currentX - targetX) > 0.5f)
         {
-            Debug.Log("Skating: " + currentX + " " + targetX);
+            //Debug.Log("Skating: " + currentX + " " + targetX);
             SkateToTargetX();
             //Debug.Log("transform.rotation.eulerAngles.y: " + transform.rotation.eulerAngles.y);
         }
@@ -48,7 +48,7 @@ public class NPCMovement : Movement
     {
         walking = true;
         targetX = x;
-        Debug.Log("Walking to: " + transform.position.x + " " + targetX);
+        //Debug.Log("Walking to: " + transform.position.x + " " + targetX);
     }
 
     public void SkateTo(float x)
@@ -57,7 +57,7 @@ public class NPCMovement : Movement
         targetX = x;
         isSkating = true;
         currState = MovementState.Skate;
-        Debug.Log("Skating to: " + transform.position.x + " " + targetX);
+        //Debug.Log("Skating to: " + transform.position.x + " " + targetX);
     }
 
     public void StopSkating()
@@ -179,7 +179,7 @@ public class NPCMovement : Movement
         Quaternion currentRotation = transform.rotation;
         float currentX = transform.position.x;
         float moveDirection = currentX > targetX ? -1 : 1;
-        Debug.Log("currentX: " + currentX + " targetX: " + targetX);
+        //Debug.Log("currentX: " + currentX + " targetX: " + targetX);
         if (moveDirection < 0f && currentRotation.eulerAngles.y > 0f)
         {
             currentRotation.eulerAngles = new Vector3(0f, 0f, 0f);
@@ -197,7 +197,7 @@ public class NPCMovement : Movement
         transform.position = position;
         //transform.rotation = Quaternion.Euler(0f, currentRotation.y, 0f);
         transform.rotation = currentRotation;
-        Debug.Log("transform.rotation.eulerAngles.y: " + transform.rotation.eulerAngles.y);
+        //Debug.Log("transform.rotation.eulerAngles.y: " + transform.rotation.eulerAngles.y);
     }
 
     private void SkateToTargetX()
@@ -206,7 +206,7 @@ public class NPCMovement : Movement
         Quaternion currentRotation = transform.rotation;
         float currentX = transform.localPosition.x;
         float moveDirection = currentX > targetX ? -1 : 1;
-        Debug.Log("currentX: " + currentX + " targetX: " + targetX);
+        //Debug.Log("currentX: " + currentX + " targetX: " + targetX);
         if (moveDirection < 0f && currentRotation.eulerAngles.y > 0f)
         {
             currentRotation.eulerAngles = new Vector3(0f, 0f, 0f);
@@ -224,6 +224,6 @@ public class NPCMovement : Movement
         transform.localPosition = position;
         //transform.rotation = Quaternion.Euler(0f, currentRotation.y, 0f);
         transform.rotation = currentRotation;
-        Debug.Log("transform.rotation.eulerAngles.y: " + transform.rotation.eulerAngles.y);
+        //Debug.Log("transform.rotation.eulerAngles.y: " + transform.rotation.eulerAngles.y);
     }
 }

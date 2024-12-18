@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class GiftingMiniGame : MiniGame
@@ -17,7 +16,6 @@ public class GiftingMiniGame : MiniGame
         return isActive;
     }
 
-
     public override void OpenMiniGame()
     {
         EnableAllChildren();
@@ -28,13 +26,76 @@ public class GiftingMiniGame : MiniGame
     public void OpenMiniGame(string npc)
     {
         npcName = npc;
+        transform.position = Camera.main.transform.position;
         OpenMiniGame();
     }
 
     public void RegisterNPCReaction(string gift)
     {
-        // TO DO: record different reactions
-        Characters.RecordMostRecentGiftReaction(Characters.CharacterGiftReaction.Good);
+        Debug.Log("RegisterNPCReaction: " + npcName + gift);
+        switch (npcName)
+        {
+            case "JJ":
+                switch (gift)
+                {
+                    case "Boba":
+                        Debug.Log("BITCH");
+                        Characters.RecordMostRecentGiftReaction(Characters.CharacterGiftReaction.Bad);
+                        return;
+                    case "Coffee":
+                        Debug.Log("BITCH");
+                        Characters.RecordMostRecentGiftReaction(Characters.CharacterGiftReaction.Good);
+                        return;
+                    case "RootBeer":
+                        Debug.Log("BITCH");
+                        Characters.RecordMostRecentGiftReaction(Characters.CharacterGiftReaction.Good);
+                        return;
+                    default:
+                        Debug.Log("BITCH");
+                        Characters.RecordMostRecentGiftReaction(Characters.CharacterGiftReaction.Mid);
+                        return;
+                }
+            case "Pixie":
+                switch (gift)
+                {
+                    case "Boba":
+                        Debug.Log("BITCH");
+                        Characters.RecordMostRecentGiftReaction(Characters.CharacterGiftReaction.Good);
+                        return;
+                    case "Coffee":
+                        Debug.Log("BITCH");
+                        Characters.RecordMostRecentGiftReaction(Characters.CharacterGiftReaction.Mid);
+                        return;
+                    case "RootBeer":
+                        Debug.Log("BITCH");
+                        Characters.RecordMostRecentGiftReaction(Characters.CharacterGiftReaction.Bad);
+                        return;
+                    default:
+                        Debug.Log("BITCH");
+                        Characters.RecordMostRecentGiftReaction(Characters.CharacterGiftReaction.Mid);
+                        return;
+                }
+            case "Rex":
+                switch (gift)
+                {
+                    case "Boba":
+                        Characters.RecordMostRecentGiftReaction(Characters.CharacterGiftReaction.Bad);
+                        return;
+                    case "Coffee":
+                        Characters.RecordMostRecentGiftReaction(Characters.CharacterGiftReaction.Good);
+                        return;
+                    case "RootBeer":
+                        Characters.RecordMostRecentGiftReaction(Characters.CharacterGiftReaction.Good);
+                        return;
+                    default:
+                        Characters.RecordMostRecentGiftReaction(Characters.CharacterGiftReaction.Mid);
+                        return;
+                }
+            default:
+                Debug.Log("BITCH");
+                Characters.RecordMostRecentGiftReaction(Characters.CharacterGiftReaction.Good);
+                return;
+        }
     }
 
     public void RegisterNVMReaction()
@@ -52,8 +113,8 @@ public class GiftingMiniGame : MiniGame
 
     public void CloseMiniGame(string gift)
     {
+        RegisterNPCReaction(gift);
         CloseMiniGame();
         Characters.Drink(npcName, gift);
-        RegisterNPCReaction(gift);
     }
 }

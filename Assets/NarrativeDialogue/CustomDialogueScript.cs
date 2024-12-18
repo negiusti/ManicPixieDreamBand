@@ -272,13 +272,6 @@ public class CustomDialogueScript : MonoBehaviour
 
     private void PrepSpokenConvo()
     {
-        bool isOutside = FindObjectsOfType<OutdoorLocation>().Length > 0;
-        if (isOutside)
-        {
-            if (Camera.main.gameObject.GetComponent<CameraLerp>() == null)
-                Camera.main.gameObject.AddComponent<CameraLerp>();
-            StartCoroutine(Camera.main.gameObject.GetComponent<CameraLerp>().PanCameraTo(orthoCamSizeOutsideConvo, 0.5f));
-        }
         DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = true;
         DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = true;
         DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = true;
@@ -286,6 +279,13 @@ public class CustomDialogueScript : MonoBehaviour
         responsePanel = GameObject.FindObjectOfType<MainCharacter>().gameObject.GetComponentInChildren<StandardUIMenuPanel>();
         DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(responsePanel);
         DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Always;
+        bool isOutside = FindObjectsOfType<OutdoorLocation>().Length > 0;
+        if (isOutside)
+        {
+            if (Camera.main.gameObject.GetComponent<CameraLerp>() == null)
+                Camera.main.gameObject.AddComponent<CameraLerp>();
+            StartCoroutine(Camera.main.gameObject.GetComponent<CameraLerp>().PanCameraTo(orthoCamSizeOutsideConvo, 0.5f));
+        }
     }
 
     //void OnConversationEnd(Transform actor)
