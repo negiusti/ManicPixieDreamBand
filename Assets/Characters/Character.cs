@@ -134,6 +134,7 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(gameObject.name + " Sorting group is: " + sortingGroup.sortingLayerName);
     }
 
     public void SetInstrumentSprite(string s)
@@ -302,7 +303,7 @@ public class Character : MonoBehaviour
 
     public void MoveToRenderLayer(string layer, int idx)
     {
-        Debug.Log("Move " + gameObject.name + " " + layer + idx);
+        Debug.Log("Move " + gameObject.name + " " + layer + idx, gameObject);
         if (sortingGroup == null)
         {
             sortingGroup = this.GetComponent<SortingGroup>();

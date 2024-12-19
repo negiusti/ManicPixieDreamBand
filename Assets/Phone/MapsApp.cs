@@ -82,7 +82,7 @@ public class MapsApp : PhoneApp
     private Dictionary<Location, string> locationToNiceName = new Dictionary<Location, string> {
         { Location.Bedroom, "Home" },
         { Location.CoffeeShop, "Coffee Zone" },
-        { Location.Basement, "Practice Space" },
+        { Location.Basement, "Basement" },
         { Location.ThriftStore, "Thrift Store" },
         { Location.Bar, "Dumpster Dive Bar" },
         { Location.MusicShop, "Music Shop" },
