@@ -33,7 +33,7 @@ public class ImprovMiniGame : MiniGame
         {
             CloseMiniGame();
         }
-        if (Input.GetKeyDown(KeyCode.Return) && !IsMiniGameActive())
+        if (Input.GetKeyDown(KeyCode.G) && !IsMiniGameActive())
             StartBassMiniGameWithJJ();
     }
 

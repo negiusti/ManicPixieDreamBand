@@ -420,6 +420,7 @@ GameObject:
   - component: {fileID: 7750884243701262362}
   - component: {fileID: 100724026847812933}
   - component: {fileID: 7963271123754557847}
+  - component: {fileID: 7720566400282598175}
   m_Layer: 2
   m_Name: Ollie
   m_TagString: Untagged
@@ -858,6 +859,33 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!50 &7720566400282598175
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858317458480315129}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!1 &1510709450504004539
 GameObject:
   m_ObjectHideFlags: 0
@@ -5709,14 +5737,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1039532035784313733, guid: 23f2280c455774ad3bb9c8b24cdfb2fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3845062926570232022}
   m_SourcePrefab: {fileID: 100100000, guid: 23f2280c455774ad3bb9c8b24cdfb2fb, type: 3}
+--- !u!1 &105102108426588271 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1039532035784313733, guid: 23f2280c455774ad3bb9c8b24cdfb2fb, type: 3}
+  m_PrefabInstance: {fileID: 1087704176155778026}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3845062926570232022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105102108426588271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df4cba831ee4d4011a40303d316210bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 5
 --- !u!114 &2033267435114213434 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1382553248889793488, guid: 23f2280c455774ad3bb9c8b24cdfb2fb, type: 3}
   m_PrefabInstance: {fileID: 1087704176155778026}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 105102108426588271}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9a9540f98bb79346b296ec5feb51073, type: 3}
