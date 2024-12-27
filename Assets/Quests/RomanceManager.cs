@@ -41,7 +41,6 @@ public class RomanceManager : ScriptableObject
                     } else if (HasSceneChanged()) // Only try to do this once per scene
                     {
                         SpawnCharacters.SpawnParticipants(romanceConvo.participants, romanceConvo.conversation);
-                        // TODO mark when convo is complete
                     }
                     prevScene = SceneChanger.Instance.GetCurrentScene();
                     return requirementsMet;
