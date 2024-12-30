@@ -43,6 +43,7 @@ public abstract class Movement : MonoBehaviour
     private static string RollerskateAnim = "BaseCharacter_Rollerskate";
     private static string RollerskateIdleAnim = "BaseCharacter_RollerskateIdle";
     private static string DrinkAnim = "BaseCharacter_Drink";
+    private static string ShootAnim = "BaseCharacter_Shoot";
 
     private Dictionary<MovementState, string> stateToAnimation = new Dictionary<MovementState, string> {
         {MovementState.Walk, WalkAnim },
@@ -168,6 +169,15 @@ public abstract class Movement : MonoBehaviour
         animator.Play("BaseCharacter_Drink", 2, 0f);
         if (gameObject.GetComponent<Character>().isMainCharacter())
             MainCharacterState.SetFlag("Drank_" + itemName, true);
+    }
+
+    public void Shoot()
+    {
+        //stateToAnimation[currState] != currAnim
+        //lockAnim = true;
+        GameManager.miscSoundEffects.Play("Shoot");
+        currAnim = ShootAnim;
+        animator.Play("BaseCharacter_Shoot");        
     }
 
     public void PlayInstrument(string instLabel, Vector3 pos, string layer, int layerOrder)

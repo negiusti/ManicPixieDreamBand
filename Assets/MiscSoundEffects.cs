@@ -7,6 +7,7 @@ public class MiscSoundEffects : MonoBehaviour
     public AudioClip businessDoorClip;
     public AudioClip walkClip;
     public AudioClip skateClip;
+    public AudioClip shootClip;
     private AudioSource audioSource;
 
     // Start is called before the first frame update
@@ -35,6 +36,9 @@ public class MiscSoundEffects : MonoBehaviour
                 break;
             case "businessdoor":
                 audioSource.clip = businessDoorClip;
+                break;
+            case "shoot":
+                audioSource.clip = shootClip;
                 break;
             default:
                 return;

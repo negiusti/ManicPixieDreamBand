@@ -140,6 +140,18 @@ public class Characters : ScriptableObject
         characters[character].GetComponent<Movement>().Drink(itemName);
     }
 
+    public static void Shoot(string character)
+    {
+        if (characters == null || !characters.ContainsKey(character))
+            RefreshCharactersCache();
+        if (!characters.ContainsKey(character))
+        {
+            Debug.LogError("Couldn't find character: " + character);
+            return;
+        }
+        characters[character].GetComponent<Movement>().Shoot();
+    }
+
     public static void MoveYPos(string character, double y)
     {
         if (characters == null || !characters.ContainsKey(character))
