@@ -174,7 +174,7 @@ public abstract class Movement : MonoBehaviour
     public void Shoot()
     {
         //stateToAnimation[currState] != currAnim
-        //lockAnim = true;
+        lockAnim = true;
         GameManager.miscSoundEffects.Play("Shoot");
         currAnim = ShootAnim;
         animator.Play("BaseCharacter_Shoot");        
