@@ -23,7 +23,7 @@ public class RomanceManager : ScriptableObject
         return prevScene != SceneChanger.Instance.GetCurrentScene();
     }
 
-    public static bool CheckForRomanceConvo()
+    public static void CheckForRomanceConvo()
     {
         foreach (string single in hornySingles.Keys)
         {
@@ -34,21 +34,20 @@ public class RomanceManager : ScriptableObject
                     (!SceneChanger.Instance.IsLoadingScreenOpen() || !DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().IsTxtConvo(romanceConvo.conversation));
                 if (requirementsMet)
                 {
-                    if (romanceConvo.trigger == null || romanceConvo.trigger == "Start")
+                    if ((romanceConvo.trigger == null || romanceConvo.trigger == "Start") && !DialogueManager.IsConversationActive)
                     {
                         DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().StartConversation(romanceConvo);
                         //completedRomanceConvos.Add(romanceConvo.conversation);
-                    } else if (HasSceneChanged()) // Only try to do this once per scene
+                    } else // if (HasSceneChanged()) // Only try to do this once per scene?? 
                     {
+                        // this is for spawning participants with triggers for optional dialogues
                         SpawnCharacters.SpawnParticipants(romanceConvo.participants, romanceConvo.conversation);
                     }
-                    prevScene = SceneChanger.Instance.GetCurrentScene();
-                    return requirementsMet;
+                    //prevScene = SceneChanger.Instance.GetCurrentScene();
                 }
             }
         }
-        prevScene = SceneChanger.Instance.GetCurrentScene();
-        return false;
+        //prevScene = SceneChanger.Instance.GetCurrentScene();
     }
 
     public static int GetRelationshipScore(string npc)
