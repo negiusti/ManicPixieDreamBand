@@ -11,7 +11,7 @@ public class CustomDialogueScript : MonoBehaviour
     public Action<string> ConvoCompleted;
     public KeyCode keyCode;
     private bool isCoolDown;
-    private float coolDown = 0.5f;
+    private float coolDown = 0.75f;
     public BackLog backLogTemplate;
     public ConvoHeader convoHeaderTemplate;
     private Dictionary<string, BackLog> backLogs;
@@ -172,7 +172,7 @@ public class CustomDialogueScript : MonoBehaviour
     {
         // the reason I do this is so that the space button selects the dialogue option without also continuing
         if ((Input.GetKeyDown(keyCode) || Input.GetKeyDown(KeyCode.Return)) && DialogueManager.IsConversationActive && !isCoolDown &&
-            !IsPCResponseMenuOpen() && !IsTxtConvoActive() && !DialogueTime.IsPaused)
+            !IsPCResponseMenuOpen() && !IsTxtConvoActive() && !DialogueTime.IsPaused && SceneChanger.Instance != null && !SceneChanger.Instance.IsLoadingScreenOpen())
         {
             StartCoroutine(CoolDown());
             Debug.Log("continuing");
