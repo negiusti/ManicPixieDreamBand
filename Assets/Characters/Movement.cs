@@ -218,6 +218,7 @@ public abstract class Movement : MonoBehaviour
     {
         if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter()))
         {
+            GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_SkateJump");
             if (character.isMainCharacter())
                 Tutorial.hasOllied = true;
@@ -244,6 +245,7 @@ public abstract class Movement : MonoBehaviour
     {
         if (!lockAnim && !DialogueManager.IsConversationActive)
         {
+            GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_RollerskateJump");
             Tutorial.hasOllied = true;
         }
@@ -251,10 +253,17 @@ public abstract class Movement : MonoBehaviour
 
     protected void EatShit()
     {
-        if (isRollerSkating)
-           animator.Play("BaseCharacter_RollerskateFall");
+        if (isRollerSkating) {
+            lockAnim = true;
+            animator.Play("BaseCharacter_RollerskateFall", -1, 0f);
+            GameManager.miscSoundEffects.Play("Crash");
+        }
         if (isSkating)
-           animator.Play("BaseCharacter_SkateboardFall");
+        {
+            lockAnim = true;
+            animator.Play("BaseCharacter_SkateboardFall", -1, 0f);
+            GameManager.miscSoundEffects.Play("Crash");
+        }
     }
 
     private bool HasStateChanged()

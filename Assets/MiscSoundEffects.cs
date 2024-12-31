@@ -8,6 +8,8 @@ public class MiscSoundEffects : MonoBehaviour
     public AudioClip walkClip;
     public AudioClip skateClip;
     public AudioClip shootClip;
+    public AudioClip crashClip;
+    public AudioClip ollieClip;
     private AudioSource audioSource;
 
     // Start is called before the first frame update
@@ -39,6 +41,12 @@ public class MiscSoundEffects : MonoBehaviour
                 break;
             case "shoot":
                 audioSource.clip = shootClip;
+                break;
+            case "crash":
+                audioSource.clip = crashClip;
+                break;
+            case "ollie":
+                audioSource.clip = ollieClip;
                 break;
             default:
                 return;
