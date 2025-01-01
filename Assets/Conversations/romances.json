@@ -305,38 +305,223 @@
             ]
         },
         {
-            "npcName": "Hang Show Flyers",
+            "npcName": "Daisy Dukes Show",
             "conversationsData": [
                 {
-                    "locations": [ "SmallBar" ],
+                    "locations": [ "Park" ],
                     "trigger": "Start",
-                    "conversation": "Quests/Flyers/Bar",
+                    "conversation": "DaisyDukesShow/Start_Ricki",
                     "requirements": {
-                        "locations": [ "SmallBar" ],
-                        "falseFlags": [ "BarFlyer" ],
-                        "pocketsItems": [ "Flyer" ]
-                    }
+                        "locations": [ "Park" ]
+                    },
+                    "participants": [
+                        {
+                            "name": "MainCharacter",
+                            "position": {
+                                "x": -0.37,
+                                "y": -2.35,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        },
+                        {
+                            "name": "Ricki",
+                            "position": {
+                                "x": -8.7,
+                                "y": -1.5,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        },
+                        {
+                            "name": "Trixie",
+                            "position": {
+                                "x": -0.37,
+                                "y": -2.35,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        },
+                        {
+                            "name": "Daisy",
+                            "position": {
+                                "x": -0.37,
+                                "y": -2.35,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        }
+                    ]
                 },
                 {
-                    "locations": [ "BobaShop" ],
-                    "trigger": "Start",
-                    "conversation": "Quests/Flyers/BobaShop",
+                    "locations": [ "Park" ],
+                    "trigger": "JJ",
+                    "conversation": "DaisyDukesShow/Opt/JJ",
                     "requirements": {
-                        "locations": [ "BobaShop" ],
-                        "falseFlags": [ "BobaFlyer" ],
-                        "pocketsItems": [ "Flyer" ]
-                    }
+                        "locations": [ "Park" ]
+                    },
+                    "participants": [
+                        {
+                            "name": "Kara",
+                            "position": {
+                                "x": -0.37,
+                                "y": -2.35,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        },
+                        {
+                            "name": "JJ",
+                            "position": {
+                                "x": -8.7,
+                                "y": -1.5,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        },
+                        {
+                            "name": "Ethan",
+                            "position": {
+                                "x": -5.77,
+                                "y": -1.98,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        }
+                    ]
                 },
                 {
-                    "locations": [ "ThriftStore" ],
-                    "trigger": "Start",
-                    "conversation": "Quests/Flyers/ThriftStore",
+                    "locations": [ "Park" ],
+                    "trigger": "Pixie",
+                    "conversation": "DaisyDukesShow/Opt/Pixie",
                     "requirements": {
-                        "locations": [ "ThriftStore" ],
-                        "falseFlags": [ "ThriftFlyer" ],
-                        "pocketsItems": [ "Flyer" ]
-                    }
+                        "locations": [ "Park" ]
+                    },
+                    "participants": [
+                        {
+                            "name": "Pixie",
+                            "position": {
+                                "x": -0.37,
+                                "y": -2.35,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        }
+                    ]
                 },
+                {
+                    "locations": [ "Park" ],
+                    "trigger": "Rex",
+                    "conversation": "DaisyDukesShow/Opt/Rex",
+                    "requirements": {
+                        "locations": [ "Park" ]
+                    },
+                    "participants": [
+                        {
+                            "name": "Rex",
+                            "position": {
+                                "x": -0.37,
+                                "y": -2.35,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        }
+                    ]
+                },
+                {
+                    "locations": [ "Park" ],
+                    "trigger": "Max",
+                    "conversation": "DaisyDukesShow/Opt/Max",
+                    "requirements": {
+                        "locations": [ "Park" ]
+                    },
+                    "participants": [
+                        {
+                            "name": "Max",
+                            "position": {
+                                "x": -0.37,
+                                "y": -2.35,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        },
+                        {
+                            "name": "Ollie",
+                            "position": {
+                                "x": -0.37,
+                                "y": -2.35,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        }
+                    ]
+                },
+                {
+                    "locations": [ "Park" ],
+                    "trigger": "Cliff",
+                    "conversation": "DaisyDukesShow/Opt/Cliff",
+                    "requirements": {
+                        "locations": [ "Park" ]
+                    },
+                    "participants": [
+                        {
+                            "name": "Cliff",
+                            "position": {
+                                "x": -0.37,
+                                "y": -2.35,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        },
+                        {
+                            "name": "Dale",
+                            "position": {
+                                "x": -0.37,
+                                "y": -2.35,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        }
+                    ]
+                },
+                {
+                    "locations": [ "Park" ],
+                    "trigger": "Emerita",
+                    "conversation": "DaisyDukesShow/Opt/Emerita",
+                    "requirements": {
+                        "locations": [ "Park" ]
+                    },
+                    "participants": [
+                        {
+                            "name": "Emerita",
+                            "position": {
+                                "x": -0.37,
+                                "y": -2.35,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "npcName": "Hang Show Flyers",
+            "conversationsData": [
                 {
                     "locations": [ "SkateShop" ],
                     "trigger": "Start",
