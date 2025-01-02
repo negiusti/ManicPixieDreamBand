@@ -63,7 +63,11 @@ public class InventoryManager : ScriptableObject
         Croissant,
         Pizza,
         Boba,
-        RootBeer
+        RootBeer,
+        Bastani,
+        Balal,
+        PanDeUbe,
+        Turon
     }
 
     public enum Item

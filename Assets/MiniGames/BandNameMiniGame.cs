@@ -104,7 +104,7 @@ public class BandNameMiniGame : MiniGame
         {
             pickedPunkJuice = true;
             maxSpeechBubble.SetActive(false);
-            StartCoroutine(rickiBark("Ok, Punk Juice it is."));
+            StartCoroutine(rickiBark("Okay, Punk Juice it is."));
             StartCoroutine(maxBark("Huh. That'd be a cool name for a video game.", true));
         }
     }
@@ -124,7 +124,7 @@ public class BandNameMiniGame : MiniGame
         {
             yield return new WaitForSeconds(.5f);
             rickiSpeechBubble.SetActive(false);
-            StartCoroutine(mgCamera.GetComponent<CameraLerp>().PanCameraTo(new Vector3(8.04f, 3.37f, 0f), 6.3f, .5f));
+            StartCoroutine(mgCamera.GetComponent<CameraLerp>().PanCameraTo(new Vector3(8.04f, 3.37f, 0f), 6.3f, .2f));
             yield return new WaitForSeconds(.5f);
             maxCloseup.EmoteEyes("MaxStare");
             maxCloseup.FacePop();

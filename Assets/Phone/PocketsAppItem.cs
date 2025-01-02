@@ -15,7 +15,7 @@ public class PocketsAppItem : MonoBehaviour, IPointerDownHandler
     public Image itemImg;
     private string itemName;
 
-    private HashSet<string> drinkables = new HashSet<string> { "Coffee", "Boba", "Root Beer" };
+    private HashSet<string> edibles = new HashSet<string> { "Coffee", "Boba", "Root Beer", "Bastani", "Balal", "Pan De Ube", "Turon", "Croissant", "Pizza" };
 
     // Start is called before the first frame update
     void Start()
@@ -52,15 +52,15 @@ public class PocketsAppItem : MonoBehaviour, IPointerDownHandler
         itemImg.sprite = itemRen.sprite;
     }
 
-    private bool isDrinkable()
+    private bool isEdible()
     {
-        return drinkables.Contains(itemName);
+        return edibles.Contains(itemName);
     }
 
     private void OnMouseDown()
     {
         Debug.Log("Drinking... " + itemName);
-        if(isDrinkable())
+        if(isEdible())
         {
             Characters.MainCharacter().GetComponent<Movement>().Drink(itemName);
             InventoryManager.RemovePerishableItem(itemName);
