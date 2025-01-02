@@ -32,6 +32,9 @@ public class NPCCharacterController : MonoBehaviour
         } else if (shouldHint())
         {
             hint.gameObject.SetActive(true);
+        } else
+        {
+            hint.gameObject.SetActive(false);
         }
     }
 

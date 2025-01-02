@@ -237,6 +237,7 @@ public abstract class Movement : MonoBehaviour
     {
         if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter()))
         {
+            GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_SkateboardFlip");
         }
     }

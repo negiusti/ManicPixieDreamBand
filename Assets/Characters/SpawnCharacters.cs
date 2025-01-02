@@ -56,9 +56,13 @@ public class SpawnCharacters : ScriptableObject
             }
             else
             {
-                Vector3 newPos = new Vector3(p.position.x, p.position.y, 3f);
-                c.transform.position = newPos;
+                if (p.position != null)
+                {
+                    Vector3 newPos = new Vector3(p.position.x, p.position.y, 3f);
+                    c.transform.position = newPos;
+                }
             }
+
             if (p.faceLeftOrRight != null)
             {
                 switch (p.faceLeftOrRight)
@@ -72,6 +76,30 @@ public class SpawnCharacters : ScriptableObject
                     default:
                         break;
                 }
+            }
+            if (p.isTrigger)
+            {
+                if (convo == null)
+                {
+                    Debug.LogError("why tf is the convo null here");
+                    return;
+                }
+                if (c.gameObject.GetComponent<Usable>() == null)
+                    c.gameObject.AddComponent<Usable>();
+                if (c.gameObject.GetComponent<DialogueSystemTrigger>() == null)
+                    c.gameObject.AddComponent<DialogueSystemTrigger>();
+
+                DialogueSystemTrigger trigger = c.gameObject.GetComponent<DialogueSystemTrigger>();
+                trigger.trigger = DialogueSystemTriggerEvent.OnUse;
+                trigger.conversation = convo;
+                trigger.enabled = true;
+            }
+            else
+            {
+                if (c.gameObject.GetComponent<DialogueSystemTrigger>() != null)
+                    c.gameObject.GetComponent<DialogueSystemTrigger>().enabled = false;
+                if (c.gameObject.GetComponent<Usable>() != null)
+                    c.gameObject.GetComponent<Usable>().enabled = false;
             }
             c.MoveToRenderLayer(p.layer, idx);
             //Debug.Log("Set to active: " + c.name + " " + p.existAtStart + " " + c.gameObject.name);
@@ -124,31 +152,6 @@ public class SpawnCharacters : ScriptableObject
                     default:
                         break;
                 }
-            }
-
-            if (p.isTrigger)
-            {
-                if (convo == null)
-                {
-                    Debug.LogError("why tf is the convo null here");
-                    return;
-                }
-                if (spawnedCharacter.gameObject.GetComponent<Usable>() == null)
-                    spawnedCharacter.gameObject.AddComponent<Usable>();
-                if (spawnedCharacter.gameObject.GetComponent<DialogueSystemTrigger>() == null)
-                    spawnedCharacter.gameObject.AddComponent<DialogueSystemTrigger>();
-
-                DialogueSystemTrigger trigger = spawnedCharacter.gameObject.GetComponent<DialogueSystemTrigger>();
-                trigger.trigger = DialogueSystemTriggerEvent.OnUse;
-                trigger.conversation = convo;
-                trigger.enabled = true;
-            }
-            else
-            {
-                if (spawnedCharacter.gameObject.GetComponent<DialogueSystemTrigger>() != null)
-                    spawnedCharacter.gameObject.GetComponent<DialogueSystemTrigger>().enabled = false;
-                if (spawnedCharacter.gameObject.GetComponent<Usable>() != null)
-                    spawnedCharacter.gameObject.GetComponent<Usable>().enabled = false;
             }
         }
         else
