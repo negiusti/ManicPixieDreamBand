@@ -4,11 +4,12 @@ using UnityEngine;
 public class ShopDisplay : MonoBehaviour
 {
     private Purchasable[] childPurchasables;
-
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        childPurchasables = this.GetComponentsInChildren<Purchasable>(true);
+        childPurchasables = GetComponentsInChildren<Purchasable>(true);
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -46,5 +47,7 @@ public class ShopDisplay : MonoBehaviour
             }
 
         }
+        if(animator != null)
+           animator.Play("Pop");
     }
 }

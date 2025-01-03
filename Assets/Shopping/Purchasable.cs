@@ -15,6 +15,7 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private SpriteLibraryAsset spriteLib;
     private string purchaseableName;
     private PriceTag priceTag;
+    private ShopDisplay shopDisplay;
     private HashSet<string> questExclusives = new HashSet<string> { "Vintage Poster" };
 
     private class PurchasableData
@@ -33,14 +34,15 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // Start is called before the first frame update
     void Start()
     {
-        spriteResolver = this.GetComponent<SpriteResolver>();
+        shopDisplay = GetComponentInParent<ShopDisplay>();
+        spriteResolver = GetComponent<SpriteResolver>();
         category = spriteResolver.GetCategory();
         itemName = spriteResolver.GetLabel();
-        SpriteLibrary sl = this.GetComponent<SpriteLibrary>();
+        SpriteLibrary sl = GetComponent<SpriteLibrary>();
         spriteLib = sl.spriteLibraryAsset;
         purchaseableName = SceneChanger.Instance.GetCurrentScene() + "_" + this.gameObject.name;
         shop = FindObjectOfType<Shop>();
-        priceTag = this.GetComponentInChildren<PriceTag>();
+        priceTag = GetComponentInChildren<PriceTag>();
         if (priceTag == null)
         {
             Debug.LogError("Purchasable is missing price tag: " + gameObject.name);
@@ -145,7 +147,8 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         MainCharacterState.ModifyBankBalance(price * -1.0);
         InventoryManager.AddToMCInventory(category, itemName);
         InventoryManager.RecordPurchase(category, itemName);
-        SetBought(true);
+        shopDisplay.Randomize();
+        //SetBought(true);
     }
 
     public bool IsBought()
