@@ -30,11 +30,11 @@ public class QuestEvent : ICalendarEvent
         return isNight;
     }
 
-    public void OnConversationComplete(string convoName)
-    {
-        if (SceneChanger.Instance.GetCurrentScene() == location)
-        {
-            Calendar.CompleteCurrentEvent();
-        }
-    }
+    //public void OnConversationComplete(string convoName)
+    //{
+    //    if (SceneChanger.Instance.GetCurrentScene() == location)
+    //    {
+    //        Calendar.CompleteCurrentEvent();
+    //    }
+    //}
 }

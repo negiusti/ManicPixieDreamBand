@@ -35,6 +35,8 @@ public class ImprovMiniGame : MiniGame
         }
         if (Input.GetKeyDown(KeyCode.G) && !IsMiniGameActive())
             StartBassMiniGameWithJJ();
+        if (isActive && audioSource.time >= audioSource.clip.length - 1)
+            CloseMiniGame();
     }
 
     public override void OpenMiniGame()

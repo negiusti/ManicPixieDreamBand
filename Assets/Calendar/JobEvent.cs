@@ -17,7 +17,7 @@ public class JobEvent : ICalendarEvent
 
     public string Name()
     {
-        return "work at " + Location();
+        return "Work @ " + Location();
     }
 
     public GameObject Minigame()
@@ -35,11 +35,11 @@ public class JobEvent : ICalendarEvent
         return isNight;
     }
 
-    public void OnConversationComplete(string convoName)
-    {
-        if (SceneChanger.Instance.GetCurrentScene() == location)
-        {
-            Calendar.CompleteCurrentEvent();
-        }
-    }
+    //public void OnConversationComplete(string convoName)
+    //{
+    //    if (SceneChanger.Instance.GetCurrentScene() == location)
+    //    {
+    //        Calendar.CompleteCurrentEvent();
+    //    }
+    //}
 }
