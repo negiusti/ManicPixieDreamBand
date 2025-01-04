@@ -46,6 +46,7 @@ public class Furniture : MonoBehaviour
     {
         
     }
+
     private void OnDestroy()
     {
         Debug.Log("Saving " + saveKey + " " + spriteResolver.GetLabel());

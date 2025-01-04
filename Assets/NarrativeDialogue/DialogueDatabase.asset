@@ -19072,7 +19072,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Cool! Well if you're interested, I got this new ADD pedal in, and
+        value: Cool! Well if you're interested, I got this new A.D.D. pedal in, and
           the tone on it is insaaaane. See, they rewired the-
         type: 0
         typeString: CustomFieldType_Text
@@ -20790,7 +20790,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("JJ", "Default", "Default");NPCFaceRight("JJ")
+      userScript: Emote("JJ", "Default", "Default");NPCFaceRight("JJ");SetFlag("Flirted_With_JJ",
+        true)
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -22043,7 +22044,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: SetFlag("Flirted_With_JJ", true)
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -22905,8 +22906,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.38249442
+    canvasScrollPosition: {x: 1106.3081, y: 1428.2927}
+    canvasZoom: 0.7891421
   - id: 26
     fields:
     - title: Title
@@ -23712,7 +23713,7 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: Yeah... At least we were cooler than marching band. We all know the
-          high social band hierarchy.
+          high school band social hierarchy.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -23816,11 +23817,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 1
+        value: 9
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 9
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -23884,7 +23885,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Which we all know was drum line, then flutes, then...
+        value: Which we all know was drumline, then flutes, then...
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -23945,8 +23946,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Sounds like there's a lot to unpack here... You might want to save
-          it for your therapist.
+        value: There's a lot to unpack here... You might want to save it for your
+          therapist.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -24089,8 +24090,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 98.27521, y: 0}
-    canvasZoom: 0.73505086
+    canvasScrollPosition: {x: 213.92361, y: 80.91071}
+    canvasZoom: 0.87360036
   - id: 28
     fields:
     - title: Title
@@ -60998,7 +60999,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "\uFF65\uFF9F*\u2218\u2727 Jazz \u2727\u2218* \uFF65\uFF9F"
+        value: "\uFF9F*\u2218\u2727Jazz\u2727\u2218* \uFF9F"
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -62212,7 +62213,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: DisableCharacter("JJ");
+      userScript: CompleteCurrentEvent();DisableCharacter("JJ");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -63025,8 +63026,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 134.99718, y: 518.31995}
-    canvasZoom: 0.81700855
+    canvasScrollPosition: {x: 428.53073, y: 1409.7212}
+    canvasZoom: 0.710252
   - id: 53
     fields:
     - title: Title
