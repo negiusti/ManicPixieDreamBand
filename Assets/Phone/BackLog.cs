@@ -261,10 +261,12 @@ public class BackLog : MonoBehaviour
             yield return new WaitForSeconds(1f);
             typingBubble = Instantiate(typingBubbleTemplate, logEntryContainer);
             typingBubble.SetActive(true);
+            ScrollToBottomOfScrollView();
             yield return new WaitForSeconds(2.5f);
             typingBubble.SetActive(false);
             Destroy(typingBubble);
             typingBubble = null;
+            ScrollToBottomOfScrollView();
             LayoutRebuilder.ForceRebuildLayoutImmediate(scrollView.content);
         }
         

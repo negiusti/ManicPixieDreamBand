@@ -14,6 +14,8 @@ public class QuestManager : ScriptableObject
 
     public static bool CheckForQuestConvo()
     {
+        if (DialogueManager.IsConversationActive)
+            return false;
         if (currentQuest != null)
         {
             //Debug.Log("current quest is: " + currentQuest.questName);

@@ -205,10 +205,8 @@ public class CustomDialogueScript : MonoBehaviour
         {
             if (!CheckForPlotConvo())
             {
-                if (!QuestManager.CheckForQuestConvo())
-                {
-                    RomanceManager.CheckForRomanceConvo();
-                }
+                RomanceManager.CheckForRomanceConvo();
+                QuestManager.CheckForQuestConvo();
             }
         }
     }
