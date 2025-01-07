@@ -4480,8 +4480,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 639.5984
-        y: 2279.7603
+        x: 637.12604
+        y: 2278.5242
         width: 160
         height: 30
     - id: 47
@@ -4507,8 +4507,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: No, you're in the band now, unless you want to get on my butt-kicking
-          list. See you at rehearsal starts tomorrow.
+        value: You're in the band now, unless you want to get on my butt-kicking
+          list. See you at rehearsal tomorrow.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -5397,7 +5397,7 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: Yeah, sure... At least until we find someone better. See you at rehearsal
-          starts tomorrow.
+          tomorrow.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -5485,8 +5485,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 282.5691, y: 1375.5105}
-    canvasZoom: 0.8154513
+    canvasScrollPosition: {x: 499.75836, y: 2052.1948}
+    canvasZoom: 0.8089511
   - id: 7
     fields:
     - title: Title
@@ -15310,7 +15310,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Whatever. What brought you to our beautiful stinky city?
+        value: Whatever. So what brought you to our beautiful stinky city, new kid?
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -15350,7 +15350,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1278.977
+        x: 1282.2397
         y: 1602.2668
         width: 160
         height: 30
@@ -17676,7 +17676,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: ModifyBankBalance(25)
+      userScript: ModifyBankBalance(25);Emote("Max", "Default", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -18831,8 +18831,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 895.04944, y: 610.1997}
-    canvasZoom: 0.97199965
+    canvasScrollPosition: {x: 812.84753, y: 842.03876}
+    canvasZoom: 0.61299974
   - id: 24
     fields:
     - title: Title
@@ -38820,13 +38820,16 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCWalkTo("Max", 30);
+      userScript: NPCWalkTo("Max", 30);CompleteCurrentEvent();SchedulePlotEvent("Hang
+        flyer @ Smith's Music Shop", "", "MusicShop", true, 0);SchedulePlotEvent("Hang
+        flyer @ Big Top Skate Shop", "", "SkateShop", true, 0);SchedulePlotEvent("Hang
+        flyer @ Coffee Zone", "", "CoffeeShop", true, 0);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2765.748
+        x: 2764.066
         y: 3515.4934
         width: 160
         height: 30
@@ -38876,7 +38879,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 2765.748
-        y: 3567.8687
+        y: 3566.4214
         width: 160
         height: 30
     - id: 131
@@ -38981,7 +38984,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCFaceRight("Max");CompleteCurrentEvent()
+      userScript: NPCFaceRight("Max");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -39207,7 +39210,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceLeft("Max");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -39379,7 +39382,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2887.2
+        x: 2882.1538
         y: 770.2031
         width: 160
         height: 30
@@ -39483,7 +39486,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: AddItem("Flyer");AddItem("Flyer");AddItem("Flyer");AddItem("Flyer");AddItem("Flyer");AddItem("Flyer");
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -39539,14 +39542,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: AddItem("Flyer");AddItem("Flyer");AddItem("Flyer");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2812.2756
-        y: 1122.5657
+        x: 2810.5574
+        y: 1124.2839
         width: 160
         height: 30
     - id: 171
@@ -39663,7 +39666,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceRight("Max");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -40774,7 +40777,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Don't dishonor Brad's memory!! RICKI HOLD ME BACK!!
+        value: Don't you DARE dishonor Brad's memory!! RICKI, HOLD ME BACK!!
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -40796,7 +40799,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Ricki", "Default", "Default");Emote("Max", "Angry", "OpenMouthDown");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -40829,8 +40832,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: It's okay Max, they don't understand. Dozens of people spontaneously
-          combust every year. It's just not widely reported...
+        value: It's okay, Max. They're just ignorant. Dozens of people spontaneously
+          combust every year. It's just not widely reported.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -41278,8 +41281,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: 'They thought it was part of the show. The venue charged us for damages
-          and made us clean it up. '
+        value: The venue charged us for damages and made us clean it up. Can you
+          believe that?
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -41314,7 +41317,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 2765.929
-        y: 2650.0906
+        y: 2648.8445
         width: 160
         height: 30
     - id: 202
@@ -41533,7 +41536,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2768.8655
+        x: 2767.1833
         y: 3057.4143
         width: 160
         height: 30
@@ -41818,7 +41821,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 2766.3418
-        y: 3411.8293
+        y: 3410.1472
         width: 160
         height: 30
     - id: 211
@@ -42440,8 +42443,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 2430.1565, y: 1490.4248}
-    canvasZoom: 0.83799833
+    canvasScrollPosition: {x: 2551.995, y: 2304.4543}
+    canvasZoom: 0.8024979
   - id: 44
     fields:
     - title: Title
@@ -56786,7 +56789,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1229.4026
+        x: 1230.6663
         y: 2362.9377
         width: 160
         height: 30

@@ -19,7 +19,6 @@ public class JamCoordinator : ScriptableObject
             "PuzzlePieces",
             "PBaby",
             "ImFine" };
-    private static HashSet<string> unlockedSongs;
     //private static Camera mainCam;
     //private static Camera jamCamera;
     private static bool isJamInSession;
@@ -41,14 +40,11 @@ public class JamCoordinator : ScriptableObject
 
     public static void Save()
     {
-        ES3.Load("UnlockedSongs", unlockedSongs);
     }
 
     public static HashSet<string> UnlockedSongs()
     {
-        if (unlockedSongs == null)
-            Load();
-        return unlockedSongs;
+        return songsToUnlock.GetRange(0, Calendar.Date() + 2).ToHashSet();
     }
 
     //public static void UnlockSong(string songName)
@@ -59,16 +55,10 @@ public class JamCoordinator : ScriptableObject
 
     public static void UnlockSong(double numUnlockedSongs)
     {
-        unlockedSongs = songsToUnlock.GetRange(0, (int)numUnlockedSongs).ToHashSet();
-        Debug.Log(string.Join(", ", unlockedSongs));
-        Save();
     }
 
     public static void Load()
     {
-        unlockedSongs = ES3.Load("UnlockedSongs", new HashSet<string> {
-            "UISS",
-            "BodyHorror"});
     }
 
     public static void StartJam(string bandname, double ticketSales = -1)
