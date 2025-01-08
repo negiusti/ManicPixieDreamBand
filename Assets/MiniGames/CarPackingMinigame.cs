@@ -84,6 +84,8 @@ public class CarPackingMiniGame : MiniGame
 
     public override void CloseMiniGame()
     {
+        if (!isActive)
+            return;
         if (cr != null)
             StopCoroutine(cr);
         DisableAllChildren();

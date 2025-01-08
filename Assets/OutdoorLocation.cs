@@ -1,4 +1,4 @@
-using TMPro;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
 public class OutdoorLocation : MonoBehaviour
@@ -26,6 +26,14 @@ public class OutdoorLocation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (inRange && DialogueManager.IsConversationActive)
+        {
+            prompt.SetActive(false);
+            if (sign != null)
+                sign.SetBool("Show", false);
+            inRange = false;
+            return;
+        }
         if ((Input.GetKeyDown(KeyCode.Return)  || Input.GetKeyDown(KeyCode.Space)) && inRange)
         {
             if (isBusiness)
@@ -38,7 +46,7 @@ public class OutdoorLocation : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && !DialogueManager.IsConversationActive)
         {
             prompt.SetActive(true);
             if (sign != null)
