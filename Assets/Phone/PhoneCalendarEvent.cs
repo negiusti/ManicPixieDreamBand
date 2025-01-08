@@ -1,16 +1,17 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PhoneCalendarEvent : MonoBehaviour
 {
     private TMP_Text tmp;
-    private SpriteRenderer sr;
+    private Image img;
     private ICalendarEvent e;
     // Start is called before the first frame update
     void Start()
     {
         tmp = this.GetComponentInChildren<TMP_Text>();
-        sr = this.GetComponent<SpriteRenderer>();
+        img = this.GetComponent<Image>();
     }
 
     // Update is called once per frame
@@ -30,11 +31,11 @@ public class PhoneCalendarEvent : MonoBehaviour
 
     public void Complete()
     {
-        sr.color = new Color(1f, 1f, 1f, 0.5f);
+        img.color = new Color(1f, 1f, 1f, 0.5f);
     }
 
     public void NotComplete()
     {
-        sr.color = Color.white;
+        img.color = Color.white;
     }
 }
