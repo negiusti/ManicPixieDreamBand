@@ -22,6 +22,10 @@ public class FoodTruck : MonoBehaviour
                 SelectTruck("Persian");
                 break;
         }
+        if (Calendar.Date() == 3 || Calendar.Date() == 7)
+        {
+            SelectTruck("Filipino");
+        }
     }
 
     // Update is called once per frame
