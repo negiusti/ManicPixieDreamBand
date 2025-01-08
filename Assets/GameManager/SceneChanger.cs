@@ -163,7 +163,7 @@ public class SceneChanger : MonoBehaviour
     }
 
     private void ResetMCPosition(SceneInfo sceneInfo) {
-        if (Characters.MainCharacter() == null)
+        if (Characters.MainCharacter() == null || DialogueManager.IsConversationActive)
             return;
         Characters.MainCharacter().transform.position = sceneInfo.position;
     }
