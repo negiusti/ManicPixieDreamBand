@@ -11197,8 +11197,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 160
-        y: 30
+        x: 935.3955
+        y: 51.94516
         width: 160
         height: 30
     - id: 8
@@ -11259,8 +11259,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 168.77925
-        y: 112.92172
+        x: 944.17474
+        y: 134.86688
         width: 160
         height: 30
     - id: 9
@@ -11313,6 +11313,12 @@ MonoBehaviour:
         destinationDialogueID: 12
         isConnector: 0
         priority: 2
+      - originConversationID: 12
+        originDialogueID: 9
+        destinationConversationID: 12
+        destinationDialogueID: 18
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -11320,8 +11326,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 40.77925
-        y: 221.92172
+        x: 753.26526
+        y: 245.3299
         width: 160
         height: 30
     - id: 10
@@ -11375,8 +11381,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 429.33188
-        y: 225.92172
+        x: 1141.8179
+        y: 249.32991
         width: 160
         height: 30
     - id: 11
@@ -11402,11 +11408,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Enjoy your new [lua( CurrentPurchasableName() )]!
+        value: Do you want to buy the protection plan?
         type: 0
         typeString: 
       - title: Sequence
-        value: Continue()@2
+        value: 
         type: 0
         typeString: 
       conversationID: 12
@@ -11420,18 +11426,25 @@ MonoBehaviour:
       - originConversationID: 12
         originDialogueID: 11
         destinationConversationID: 12
-        destinationDialogueID: 13
+        destinationDialogueID: 15
         isConnector: 0
         priority: 2
-      conditionsString: CurrentBankBalance() >= CurrentPurchasablePrice()
+      - originConversationID: 12
+        originDialogueID: 11
+        destinationConversationID: 12
+        destinationDialogueID: 16
+        isConnector: 0
+        priority: 2
+      conditionsString: CheckFlag("ProtectionPlan") == false and CurrentBankBalance()
+        >= CurrentPurchasablePrice()
       userScript: MakeAPurchase()
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 293.33188
-        y: 332.47427
+        x: 907.88617
+        y: 350.0304
         width: 160
         height: 30
     - id: 12
@@ -11457,7 +11470,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: I'm so sorry.,.. Your card was declined...
+        value: I'm so sorry... Your card was declined...
         type: 0
         typeString: 
       - title: Sequence
@@ -11485,8 +11498,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 73.77925
-        y: 340.9217
+        x: 518.53436
+        y: 365.79285
         width: 160
         height: 30
     - id: 13
@@ -11534,8 +11547,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 413.2929
-        y: 489.64807
+        x: 836.83167
+        y: 925.6531
         width: 160
         height: 30
     - id: 14
@@ -11589,13 +11602,289 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 500.0722
-        y: 295.1697
+        x: 1254.9854
+        y: 349.3011
+        width: 160
+        height: 30
+    - id: 15
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 9
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: Do I look like a fool to you?
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 12
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 12
+        originDialogueID: 15
+        destinationConversationID: 12
+        destinationDialogueID: 17
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 850.76904
+        y: 442.77066
+        width: 160
+        height: 30
+    - id: 16
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 9
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: Sign me up!
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 12
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 12
+        originDialogueID: 16
+        destinationConversationID: 12
+        destinationDialogueID: 19
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1035.9454
+        y: 438.05072
+        width: 160
+        height: 30
+    - id: 17
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 9
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: No worries!
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()@2
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 12
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 12
+        originDialogueID: 17
+        destinationConversationID: 12
+        destinationDialogueID: 13
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: SetFlag("ProtectionPlan", true)
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 855.40936
+        y: 526.29944
+        width: 160
+        height: 30
+    - id: 18
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 9
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: Here ya go! Have fun!
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 12
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 12
+        originDialogueID: 18
+        destinationConversationID: 12
+        destinationDialogueID: 13
+        isConnector: 0
+        priority: 2
+      conditionsString: CheckFlag("ProtectionPlan") and CurrentBankBalance() >= CurrentPurchasablePrice()
+      userScript: MakeAPurchase()
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 724.8878
+        y: 355.52435
+        width: 160
+        height: 30
+    - id: 19
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 9
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 'Cool, you won''t regret it! It covers everything except spontaneous
+          combustion! '
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()@4
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 12
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 12
+        originDialogueID: 19
+        destinationConversationID: 12
+        destinationDialogueID: 13
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: SetFlag("ProtectionPlan", true)
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1028.2611
+        y: 525.37524
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 22.614601, y: 18.225552}
-    canvasZoom: 0.7283302
+    canvasScrollPosition: {x: 7.4353714, y: 0}
+    canvasZoom: 0.68846476
   - id: 13
     fields:
     - title: Title
@@ -78387,7 +78676,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Here's your [lua( CurrentPurchasableName() )]! Skate safely!
+        value: Here ya go! Skate safely!
         type: 0
         typeString: 
       - title: Sequence
@@ -112579,9 +112868,13 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: Continue()@3
+        value: Continue()@5
         type: 0
         typeString: CustomFieldType_Text
+      - title: Response Menu Sequence
+        value: 
+        type: 0
+        typeString: 
       conversationID: 84
       isRoot: 0
       isGroup: 0
@@ -112597,8 +112890,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCWalkTo("Ricki", 36);NPCWalkTo("Max", 40);NPCWalkTo("MainCharacter",
-        38);
+      userScript: NPCWalkTo("Ricki", 40);NPCWalkTo("Max", 44);NPCWalkTo("MainCharacter",
+        42);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -112619,11 +112912,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 3
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 2
+        value: 3
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -112714,7 +113007,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceLeft("MainCharacter")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -112769,7 +113062,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceLeft("MainCharacter")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -112790,12 +113083,12 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 3
-        type: 5
+        value: 2
+        type: 0
         typeString: CustomFieldType_Actor
       - title: Conversant
         value: 1
-        type: 5
+        type: 0
         typeString: CustomFieldType_Actor
       - title: Menu Text
         value: 
@@ -112824,7 +113117,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Ricki", "Whoa", "Default");
+      userScript: Emote("Ricki", "Whoa", "Default");NPCFaceLeft("MainCharacter")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -112845,12 +113138,12 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 3
-        type: 5
+        value: 2
+        type: 0
         typeString: CustomFieldType_Actor
       - title: Conversant
         value: 1
-        type: 5
+        type: 0
         typeString: CustomFieldType_Actor
       - title: Menu Text
         value: 
@@ -112900,12 +113193,12 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 3
-        type: 5
+        value: 2
+        type: 0
         typeString: CustomFieldType_Actor
       - title: Conversant
         value: 1
-        type: 5
+        type: 0
         typeString: CustomFieldType_Actor
       - title: Menu Text
         value: 
@@ -112989,7 +113282,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Ricki", "Angry", "Frown");Emote("Max", "Pathetic", "OpenMouth");
+      userScript: NPCFaceLeft("Max");Emote("Ricki", "Angry", "Frown");Emote("Max",
+        "Pathetic", "OpenMouth");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -113504,8 +113798,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 965.7584
-        y: 1286.4486
+        x: 964.54407
+        y: 1264.5886
         width: 160
         height: 30
     - id: 22
@@ -113560,8 +113854,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 965.7584
-        y: 1336.4486
+        x: 964.54407
+        y: 1314.5886
         width: 160
         height: 30
     - id: 23
@@ -113616,8 +113910,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 965.7584
-        y: 1386.4486
+        x: 964.54407
+        y: 1364.5886
         width: 160
         height: 30
     - id: 24
@@ -113665,14 +113959,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCWalkTo("MainCharacter",52.5);NPCFaceLeft("Ricki");NPCFaceLeft("Max");Emote("Max",
+      userScript: NPCWalkTo("MainCharacter",54);NPCFaceLeft("Ricki");NPCFaceLeft("Max");Emote("Max",
         "Side", "Default");Emote("Ricki", "Side", "Default");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 965.7584
+        x: 964.5397
         y: 1436.4486
         width: 160
         height: 30
@@ -114356,8 +114650,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1182.2323
-        y: 1970.6539
+        x: 1179.8035
+        y: 1979.1549
         width: 160
         height: 30
     - id: 37
@@ -115147,8 +115441,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1108.8315
-        y: 2715.1572
+        x: 1101.1659
+        y: 2714.199
         width: 160
         height: 30
     - id: 51
@@ -115208,8 +115502,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1108.8315
-        y: 2765.1572
+        x: 1101.1659
+        y: 2764.199
         width: 160
         height: 30
     - id: 52
@@ -115423,7 +115717,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCWalkTo("MainCharacter", 38);
+      userScript: NPCWalkTo("MainCharacter", 42);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -115908,11 +116202,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Bye!
+        value: "\n  Bye!  \n"
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()@2
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 84
@@ -115937,7 +116231,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1156.1953
-        y: 3342.2944
+        y: 3341.0928
         width: 160
         height: 30
     - id: 65
@@ -116489,7 +116783,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1154.9921
+        x: 1153.7904
         y: 3495.9038
         width: 160
         height: 30
@@ -116550,8 +116844,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 727.9241, y: 2766.3066}
-    canvasZoom: 0.8321607
+    canvasScrollPosition: {x: 1121.9103, y: 1506.5886}
+    canvasZoom: 0.9803878
   - id: 85
     fields:
     - title: Title
