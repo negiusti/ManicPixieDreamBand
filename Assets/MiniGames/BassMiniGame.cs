@@ -126,6 +126,8 @@ public class BassMiniGame : MiniGame
 
     public override void CloseMiniGame()
     {
+        if (!isActive)
+            return;
         GameManager.bgMusic.UnpauseAudio();
         if (mgCamera != null)
         {

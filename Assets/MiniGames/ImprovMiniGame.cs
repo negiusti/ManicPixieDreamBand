@@ -10,6 +10,7 @@ public class ImprovMiniGame : MiniGame
     private BlackScreen blackScreen;
     private bool closingInProgress;
     private AudioSource audioSource;
+    public AudioSource jjRiff;
     public bool TEST_START_ON_ENTER;
 
     // Use this for initialization
@@ -35,6 +36,10 @@ public class ImprovMiniGame : MiniGame
         }
         if (Input.GetKeyDown(KeyCode.G) && !IsMiniGameActive())
             StartBassMiniGameWithJJ();
+        if (jjRiff.time >= jjRiff.clip.length - 1)
+        {
+            CloseMiniGame();
+        }
     }
 
     public override void OpenMiniGame()

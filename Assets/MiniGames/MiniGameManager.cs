@@ -192,7 +192,7 @@ public class MiniGameManager : ScriptableObject
     private static void StartImprovMiniGame()
     {
         ImprovMiniGame mg = (ImprovMiniGame)GetMiniGame("Improv");
-        mg.OpenMiniGame();
+        mg.StartBassMiniGameWithJJ();
     }
 
     private static void StartTattooMiniGame()
