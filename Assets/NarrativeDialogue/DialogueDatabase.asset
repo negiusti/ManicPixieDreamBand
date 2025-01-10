@@ -87004,7 +87004,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()@2
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 67
@@ -87034,7 +87034,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCWalkTo("MainCharacter",-56);NPCSkateBetween("Josh",-61, 6,-1);NPCSkateBetween("Rex",-70,
+        -18, -1);NPCSkateBetween("Ollie",-71, -20, -1);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -87236,7 +87237,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()@2
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 67
@@ -87250,11 +87251,12 @@ MonoBehaviour:
       - originConversationID: 67
         originDialogueID: 5
         destinationConversationID: 67
-        destinationDialogueID: 10
+        destinationDialogueID: 45
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCStopSkating("Ollie");NPCStopSkating("Rex");NPCSkateTo("Rex",
+        -65);NPCSkateTo("Ollie", -70);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -87291,7 +87293,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()@2
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 67
@@ -87305,11 +87307,12 @@ MonoBehaviour:
       - originConversationID: 67
         originDialogueID: 6
         destinationConversationID: 67
-        destinationDialogueID: 9
+        destinationDialogueID: 44
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCStopSkating("Ollie");NPCStopSkating("Rex");NPCSkateTo("Rex",
+        -65);NPCSkateTo("Ollie", -70);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -87346,7 +87349,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()@2
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 67
@@ -87360,11 +87363,12 @@ MonoBehaviour:
       - originConversationID: 67
         originDialogueID: 7
         destinationConversationID: 67
-        destinationDialogueID: 8
+        destinationDialogueID: 43
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCStopSkating("Ollie");NPCStopSkating("Rex");NPCSkateTo("Rex",
+        -65);NPCSkateTo("Ollie", -70);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -87419,14 +87423,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceRight("Rex");NPCFaceRight("Ollie");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 365
-        y: 327
+        x: 364.19913
+        y: 388.66666
         width: 160
         height: 30
     - id: 9
@@ -87474,14 +87478,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceRight("Rex");NPCFaceRight("Ollie");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 560
-        y: 326
+        x: 559.19916
+        y: 387.66666
         width: 160
         height: 30
     - id: 10
@@ -87529,14 +87533,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceRight("Rex");NPCFaceRight("Ollie");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 760
-        y: 325
+        x: 759.19916
+        y: 386.66666
         width: 160
         height: 30
     - id: 11
@@ -87590,8 +87594,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 366
-        y: 385
+        x: 365.19913
+        y: 446.66666
         width: 160
         height: 30
     - id: 12
@@ -87701,8 +87705,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 561
-        y: 384
+        x: 560.19916
+        y: 445.66666
         width: 160
         height: 30
     - id: 14
@@ -87756,8 +87760,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 760
-        y: 375
+        x: 759.19916
+        y: 436.66666
         width: 160
         height: 30
     - id: 15
@@ -87811,8 +87815,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 760
-        y: 425
+        x: 759.19916
+        y: 486.66666
         width: 160
         height: 30
     - id: 16
@@ -87842,7 +87846,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()@2
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 67
@@ -87866,7 +87870,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCWalkTo("Ollie", 100);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -88560,7 +88564,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: DisableCharacter("Ollie")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -89041,7 +89045,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()@1
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 67
@@ -89055,11 +89059,11 @@ MonoBehaviour:
       - originConversationID: 67
         originDialogueID: 38
         destinationConversationID: 67
-        destinationDialogueID: 41
+        destinationDialogueID: 42
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCWalkTo("MainCharacter", 100)
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -89218,7 +89222,62 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: ChangeScene("SkateShop")
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 696.0054
+        y: 1532.3934
+        width: 160
+        height: 30
+    - id: 42
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 18
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()@2
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 67
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 67
+        originDialogueID: 42
+        destinationConversationID: 67
+        destinationDialogueID: 41
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: NPCWalkTo("Rex", 100)
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -89228,9 +89287,174 @@ MonoBehaviour:
         y: 1484.6998
         width: 160
         height: 30
+    - id: 43
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 18
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 67
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 67
+        originDialogueID: 43
+        destinationConversationID: 67
+        destinationDialogueID: 8
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: NPCStopSkating("Ollie");NPCStopSkating("Rex");
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 366
+        y: 324
+        width: 160
+        height: 30
+    - id: 44
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 18
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 67
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 67
+        originDialogueID: 44
+        destinationConversationID: 67
+        destinationDialogueID: 9
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: NPCStopSkating("Ollie");NPCStopSkating("Rex");
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 561
+        y: 326
+        width: 160
+        height: 30
+    - id: 45
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 18
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 67
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 67
+        originDialogueID: 45
+        destinationConversationID: 67
+        destinationDialogueID: 10
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: NPCStopSkating("Ollie");NPCStopSkating("Rex");
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 761
+        y: 325
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 244.14655, y: 374.52545}
-    canvasZoom: 1.1993592
+    canvasScrollPosition: {x: 269.27457, y: 65.45436}
+    canvasZoom: 1.2486472
   - id: 68
     fields:
     - title: Title
