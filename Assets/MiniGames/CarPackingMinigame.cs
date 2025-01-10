@@ -22,10 +22,23 @@ public class CarPackingMiniGame : MiniGame
         new MaxRickiDialogue(MaxOrRicki.Ricki, "Hey! Be careful with my breakables!"),
         new MaxRickiDialogue(MaxOrRicki.Max, "And don't forget my pickles!", eyesEmote:"Angry"),
         new MaxRickiDialogue(MaxOrRicki.Ricki, "Yeah, Max needs her pickles!!"),
-        new MaxRickiDialogue(MaxOrRicki.Max, "Lift with your knees, not your back."),
-        new MaxRickiDialogue(MaxOrRicki.Ricki, "I would totally help but I just got a manicure.",eyesEmote:"Pathetic")
+        new MaxRickiDialogue(MaxOrRicki.Max, "Lift with your knees, not your back.", eyesEmote:"Default"),
+        new MaxRickiDialogue(MaxOrRicki.Ricki, "I would totally help but I just got a manicure.")
     };
-
+    private List<MaxRickiDialogue> maxRickiDialogueCouch = new List<MaxRickiDialogue> {
+        new MaxRickiDialogue(MaxOrRicki.Ricki, "Oh my God, that couch is rancid!"),
+        new MaxRickiDialogue(MaxOrRicki.Max, "It's gonna look perfect in the basement!"),
+        new MaxRickiDialogue(MaxOrRicki.Ricki, "I'm glad the couch fit in your car, but I don't think we'll be able to fit the rest of your junk."),
+        new MaxRickiDialogue(MaxOrRicki.Max, "These are my precious belongings! We can't leave anything behind!"),
+        new MaxRickiDialogue(MaxOrRicki.Ricki, "I think I broke a nail when we lifted that stupid couch.", eyesEmote:"Pathetic"),
+        new MaxRickiDialogue(MaxOrRicki.Max, "Don't you lift a finger, Ricki! The new kid can do it!"),
+        new MaxRickiDialogue(MaxOrRicki.Ricki, "Geez, why do you have so much junk in your car, Max??", eyesEmote:"Default"),
+        new MaxRickiDialogue(MaxOrRicki.Max, "I live in my landlord's closet, so I have to store a few things in here okay?"),
+        new MaxRickiDialogue(MaxOrRicki.Ricki, "I think those pickles should be refrigerated."),
+        new MaxRickiDialogue(MaxOrRicki.Max, "Hey, make sure you life with your knees, not your back, new kid!"),
+        new MaxRickiDialogue(MaxOrRicki.Ricki, "How much longer is this gonna take?"),
+        new MaxRickiDialogue(MaxOrRicki.Max, "Yeah, I'm starving! Let's get this junk back in my trunk.")
+    };
     private enum MaxOrRicki
     {
         Max,
@@ -103,9 +116,10 @@ public class CarPackingMiniGame : MiniGame
 
     private IEnumerator maxAndRickiConvo()
     {
+        List<MaxRickiDialogue> maxRickiConvo = SceneChanger.Instance.GetCurrentScene() == "DowntownNeighborhood" ? maxRickiDialogueCouch : maxRickiDialogue;
         while (true)
         {
-            foreach (MaxRickiDialogue d in maxRickiDialogue)
+            foreach (MaxRickiDialogue d in maxRickiConvo)
             {
                 switch (d.speaker)
                 {

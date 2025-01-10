@@ -173,22 +173,22 @@ public class Characters : ScriptableObject
         }
     }
 
-    public static void SortCharacterLayers()
-    {
-        Character[] characters = CharactersInScene().Values.ToArray();
+    //public static void SortCharacterLayers()
+    //{
+    //    Character[] characters = CharactersInScene().Values.ToArray();
 
-        // Sort characters by their y position
-        System.Array.Sort(characters, (a, b) => b.transform.position.y.CompareTo(a.transform.position.y));
-        Dictionary<string, int> layerToIdx = new Dictionary<string, int>();
-        foreach (Character c in characters)
-        {
-            Debug.Log("SpawnParticipant: " + c.name);
-            SortingGroup sortingGroup = c.GetComponent<SortingGroup>();
-            int idx = layerToIdx.GetValueOrDefault(sortingGroup.sortingLayerName, -1) + 1;
-            layerToIdx[sortingGroup.sortingLayerName] = idx;
-            c.MoveToRenderLayer(sortingGroup.sortingLayerName, idx);
-        }
-    }
+    //    // Sort characters by their y position
+    //    System.Array.Sort(characters, (a, b) => b.transform.position.y.CompareTo(a.transform.position.y));
+    //    Dictionary<string, int> layerToIdx = new Dictionary<string, int>();
+    //    foreach (Character c in characters)
+    //    {
+    //        Debug.Log("SpawnParticipant: " + c.name);
+    //        SortingGroup sortingGroup = c.GetComponent<SortingGroup>();
+    //        int idx = layerToIdx.GetValueOrDefault(sortingGroup.sortingLayerName, -1) + 1;
+    //        layerToIdx[sortingGroup.sortingLayerName] = idx;
+    //        c.MoveToRenderLayer(sortingGroup.sortingLayerName, idx);
+    //    }
+    //}
 
     public static void NPCWalkTo(string npc, double targetX)
     {

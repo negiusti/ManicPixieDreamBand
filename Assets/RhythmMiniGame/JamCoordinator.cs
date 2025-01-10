@@ -53,10 +53,6 @@ public class JamCoordinator : ScriptableObject
     //    Save();
     //}
 
-    public static void UnlockSong(double numUnlockedSongs)
-    {
-    }
-
     public static void Load()
     {
     }

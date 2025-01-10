@@ -9,7 +9,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "SpawnCharacters", menuName = "Custom/SpawnCharacters")]
 public class SpawnCharacters : ScriptableObject
 {
-    private static AsyncOperationHandle<GameObject> SpawnParticipant(Participant p, string convo = null)
+    private static AsyncOperationHandle<GameObject> SpawnParticipant(Participant p, string layer, int idx)
     {
         // character already exists in scene, don't spawn another plz
         if (FindObjectsOfType<Character>().Any(x => x.name == p.name))
@@ -19,7 +19,7 @@ public class SpawnCharacters : ScriptableObject
         }
         string characterPrefabPath = "Assets/Prefabs/Characters/" + p.name + ".prefab";
         AsyncOperationHandle<GameObject> operation = Addressables.LoadAssetAsync<GameObject>(characterPrefabPath);
-        operation.Completed += (operation) => OnPrefabLoaded(operation, p, convo);
+        operation.Completed += (operation) => OnPrefabLoaded(operation, p, layer, idx);
         return operation;
     }
 
@@ -41,7 +41,7 @@ public class SpawnCharacters : ScriptableObject
             layerToIdx[p.layer] = idx;
             if (c == null)
             {
-                c = SpawnParticipant(p, convo).WaitForCompletion().GetComponent<Character>();
+                c = SpawnParticipant(p, p.layer, idx).WaitForCompletion().GetComponent<Character>();
                 Debug.Log("Spawned Participant: " + c.name + " " + c.gameObject.name);
                 if (c.gameObject.name.Contains("Clone"))
                 {
@@ -131,14 +131,14 @@ public class SpawnCharacters : ScriptableObject
         }
     }
 
-    private static void OnPrefabLoaded(AsyncOperationHandle<GameObject> handle, Participant p, string convo = null)
+    private static void OnPrefabLoaded(AsyncOperationHandle<GameObject> handle, Participant p, string layer, int idx)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             // Instantiate the prefab and spawn it in the current scene
             GameObject spawnedCharacter = Instantiate(handle.Result, p.position, Quaternion.identity);
             spawnedCharacter.name = handle.Result.name;
-
+            Characters.SetLayer(p.name, layer, idx);
             if (p.faceLeftOrRight != null)
             {
                 switch (p.faceLeftOrRight)

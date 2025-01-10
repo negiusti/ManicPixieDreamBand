@@ -84,6 +84,8 @@ public class ImprovMiniGame : MiniGame
 
     public override void CloseMiniGame()
     {
+        if (!isActive)
+            return;
         GameManager.bgMusic.UnpauseAudio();
         if (mgCamera != null)
         {
