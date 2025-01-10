@@ -25,6 +25,7 @@ public class CustomDialogueScript : MonoBehaviour
     private string currentLocation;
     private readonly float orthoCamSizeOutside = 12f;
     private readonly float orthoCamSizeOutsideConvo = 8f;
+    private bool waitForK;
 
     // Start is called before the first frame update
     void Start()
@@ -170,6 +171,15 @@ public class CustomDialogueScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (waitForK)
+        {
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                waitForK = false;
+                DialogueManager.standardDialogueUI.OnContinueConversation();
+            }
+            return;
+        }
         // the reason I do this is so that the space button selects the dialogue option without also continuing
         if ((Input.GetKeyDown(keyCode) || Input.GetKeyDown(KeyCode.Return)) && DialogueManager.IsConversationActive && !isCoolDown &&
             !IsPCResponseMenuOpen() && !IsTxtConvoActive() && !DialogueTime.IsPaused && SceneChanger.Instance != null && !SceneChanger.Instance.IsLoadingScreenOpen())
@@ -401,11 +411,16 @@ public class CustomDialogueScript : MonoBehaviour
         StartConversation(convoName);
     }
 
+    public void WaitForK()
+    {
+        waitForK = true;
+    }
+
     void OnEnable()
     {
         // Make the functions available to Lua: (Replace these lines with your own.)
         Lua.RegisterFunction(nameof(DebugLog), this, SymbolExtensions.GetMethodInfo(() => DebugLog(string.Empty)));
-        //Lua.RegisterFunction(nameof(StopCurrentConvo), this, SymbolExtensions.GetMethodInfo(() => StopCurrentConvo()));
+        Lua.RegisterFunction(nameof(WaitForK), this, SymbolExtensions.GetMethodInfo(() => WaitForK()));
     }
 
     void OnDisable()
@@ -414,7 +429,7 @@ public class CustomDialogueScript : MonoBehaviour
         //{
         // Remove the functions from Lua: (Replace these lines with your own.)
         Lua.UnregisterFunction(nameof(DebugLog));
-        //Lua.UnregisterFunction(nameof(StopCurrentConvo));
+        Lua.UnregisterFunction(nameof(WaitForK));
         //}
     }
 

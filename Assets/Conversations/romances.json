@@ -1,6 +1,239 @@
 {
     "romances": [
         {
+            "npcName": "Rex",
+            "conversationsData": [
+                {
+                    "locations": [ "SkateShop" ],
+                    "trigger": "Rex",
+                    "conversation": "Rex/MeetCute",
+                    "requirements": {
+                        "locations": [ "SkateShop" ],
+                        "maxDay": 3
+                    },
+                    "participants": [
+                        {
+                            "name": "Rex",
+                            "position": {
+                                "x": -11.0,
+                                "y": -2,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": true,
+                            "faceLeftOrRight": "right"
+                        }
+                    ]
+                },
+                {
+                    "locations": [ "Bedroom" ],
+                    "trigger": "Start",
+                    "conversation": "TXT/Rex/KickflipInvite",
+                    "requirements": {
+                        "locations": [ "Bedroom" ],
+                        "trueFlags": [ "Gave_Rex_Number" ]
+                    },
+                    "participants": []
+                },
+                {
+                    "locations": [ "Park" ],
+                    "trigger": "Start",
+                    "conversation": "Rex/SkateparkDate",
+                    "requirements": {
+                        "locations": [ "Park" ],
+                        "trueFlags": [ "Gave_Rex_Number" ],
+                        "eventName": "Skate with Rex & Ollie @ Al Canderson Park"
+                    },
+                    "participants": [
+                        {
+                            "name": "Rex",
+                            "position": {
+                                "x": 4.693306,
+                                "y": -0.848196,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "right"
+                        },
+                        {
+                            "name": "Ollie",
+                            "position": {
+                                "x": 4.693306,
+                                "y": -0.848196,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "right"
+                        },
+                        {
+                            "name": "Josh",
+                            "position": {
+                                "x": 4.693306,
+                                "y": -0.848196,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "right"
+                        }
+                    ]
+                },
+                {
+                    "locations": [ "SkateShop" ],
+                    "trigger": "Start",
+                    "conversation": "Rex/SkateShopDate",
+                    "requirements": {
+                        "locations": [ "SkateShop" ]
+                    },
+                    "participants": [
+                        {
+                            "name": "Rex",
+                            "position": {
+                                "x": 1.55,
+                                "y": -0.9,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "right"
+                        },
+                        {
+                            "name": "MainCharacter",
+                            "position": {
+                                "x": 4.97,
+                                "y": -1.204609,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "left"
+                        }
+                    ]
+                },
+                {
+                    "locations": [ "Park" ],
+                    "trigger": "Start",
+                    "conversation": "Rex/SkateKickflipDate",
+                    "requirements": {
+                        "locations": [ "Park" ],
+                        "trueFlags": [ "KickflipDate" ]
+                    },
+                    "participants": [
+                        {
+                            "name": "Rex",
+                            "position": {
+                                "x": 1.55,
+                                "y": -0.9,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "right"
+                        },
+                        {
+                            "name": "MainCharacter",
+                            "position": {
+                                "x": 4.97,
+                                "y": -1.204609,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "left"
+                        }
+                    ]
+                },
+                {
+                    "locations": [ "Park" ],
+                    "trigger": "Start",
+                    "conversation": "Rex/HillDate",
+                    "requirements": {
+                        "locations": [ "Park" ]
+                    },
+                    "participants": [
+                        {
+                            "name": "Rex",
+                            "position": {
+                                "x": 1.55,
+                                "y": -0.9,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "right"
+                        },
+                        {
+                            "name": "MainCharacter",
+                            "position": {
+                                "x": 4.97,
+                                "y": -1.204609,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "left"
+                        }
+                    ]
+                },
+                {
+                    "locations": [ "HillBombMinigame" ],
+                    "trigger": "Start",
+                    "conversation": "Rex/SkateHillDate2",
+                    "requirements": {
+                        "locations": [ "HillBombMinigame" ]
+                    },
+                    "participants": [
+                    ]
+                },
+                {
+                    "locations": [ "Park" ],
+                    "trigger": "Start",
+                    "conversation": "Rex/HillDate3",
+                    "requirements": {
+                        "locations": [ "Park" ]
+                    },
+                    "participants": [
+                        {
+                            "name": "Rex",
+                            "position": {
+                                "x": 1.55,
+                                "y": -0.9,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "right"
+                        },
+                        {
+                            "name": "MainCharacter",
+                            "position": {
+                                "x": 4.97,
+                                "y": -1.204609,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "left"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "npcName": "Pixie",
             "conversationsData": [
                 {
@@ -196,7 +429,7 @@
                     "conversation": "DaisyDukesShow/Start_Ricki",
                     "requirements": {
                         "locations": [ "Park" ],
-                        "eventName":  "Daisy Dukes Show @ Al Canderson Park"
+                        "eventName": "Daisy Dukes Show @ Al Canderson Park"
                     },
                     "participants": [
                         {
