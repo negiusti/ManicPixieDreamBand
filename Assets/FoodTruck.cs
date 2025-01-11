@@ -22,7 +22,9 @@ public class FoodTruck : MonoBehaviour
                 SelectTruck("Persian");
                 break;
         }
-        if (Calendar.Date() == 3 || Calendar.Date() == 7)
+        if (Calendar.GetCurrentEvent().Name().EndsWith("_Sk8")) {
+            SelectTruck("Persian");
+        } else if (Calendar.Date() == 3 || Calendar.Date() == 7)
         {
             SelectTruck("Filipino");
         }

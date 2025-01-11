@@ -90,6 +90,11 @@ public abstract class Movement : MonoBehaviour
         return isSkating || isRollerSkating;
     }
 
+    public bool IsSkateboarding()
+    {
+        return isSkating;
+    }
+
     public void LockAnim()
     {
         lockAnim = true;
@@ -216,7 +221,7 @@ public abstract class Movement : MonoBehaviour
 
     protected void Ollie()
     {
-        if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter()))
+        if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter() || DialogueManager.LastConversationStarted.EndsWith("_Sk8")))
         {
             GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_SkateJump");
@@ -227,7 +232,7 @@ public abstract class Movement : MonoBehaviour
 
     protected void Grind()
     {
-        if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter()))
+        if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter() || DialogueManager.LastConversationStarted.EndsWith("_Sk8")))
         {
             animator.Play("BaseCharacter_SkateboardGrind");
         }
@@ -235,7 +240,7 @@ public abstract class Movement : MonoBehaviour
 
     protected void Flip()
     {
-        if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter()))
+        if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter() || DialogueManager.LastConversationStarted.EndsWith("_Sk8")))
         {
             GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_SkateboardFlip");
@@ -244,7 +249,7 @@ public abstract class Movement : MonoBehaviour
 
     protected void Rollie()
     {
-        if (!lockAnim && !DialogueManager.IsConversationActive)
+        if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter() || DialogueManager.LastConversationStarted.EndsWith("_Sk8")))
         {
             GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_RollerskateJump");

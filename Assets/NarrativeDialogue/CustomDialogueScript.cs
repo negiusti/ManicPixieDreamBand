@@ -173,7 +173,7 @@ public class CustomDialogueScript : MonoBehaviour
     {
         if (waitForK)
         {
-            if (Input.GetKeyDown(KeyCode.K))
+            if (Input.GetKeyDown(KeyCode.K) && Characters.MainCharacter() != null && Characters.MainCharacter().GetComponent<Movement>().IsSkateboarding())
             {
                 waitForK = false;
                 DialogueManager.standardDialogueUI.OnContinueConversation();
