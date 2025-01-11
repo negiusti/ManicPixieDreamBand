@@ -86043,8 +86043,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Sweet, I'll text you next time we're out! I'll send you a Cal Pal
-          reminder.
+        value: Sweet, we're going tomorrow! I'll send you a Cal Pal reminder.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -86066,7 +86065,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: SetFlag("Gave_Rex_Number", true)
+      userScript: SetFlag("Gave_Rex_Number", true); SchedulePlotEvent("Skate with
+        Rex & Ollie @ Al Canderson Park", "", "Park", true,1)
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -86874,8 +86874,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 43.957775, y: 1092.0382}
-    canvasZoom: 1.0882744
+    canvasScrollPosition: {x: 68.16881, y: 939.4931}
+    canvasZoom: 1.2594583
   - id: 67
     fields:
     - title: Title
@@ -90091,7 +90091,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 68
@@ -91176,7 +91176,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: CompleteCurrentEvent();
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -91236,8 +91236,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 300.8039, y: 561.1103}
-    canvasZoom: 1.0135317
+    canvasScrollPosition: {x: 373.4434, y: 1189.4318}
+    canvasZoom: 0.94671404
   - id: 69
     fields:
     - title: Title
@@ -91557,7 +91557,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: SetFlag("KickflipDate", true)
+      userScript: SchedulePlotEvent("Learn How 2 Kickflip w/ Rex @ Al Canderson Park",
+        "", "Park", true, 1)
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -92818,7 +92819,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 70
@@ -92836,7 +92837,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: WaitForK()
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -95307,7 +95308,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 70
@@ -96078,7 +96079,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 70
@@ -97700,13 +97701,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: CompleteCurrentEvent();SchedulePlotEvent("Bomb Hill w/ Rex @ Al
+        Canderson Park", "", "Park", true, 1)
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1207.8524
+        x: 1205.7856
         y: 4386.5186
         width: 160
         height: 30
@@ -97755,7 +97757,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1207.8524
+        x: 1208.7238
         y: 4436.5186
         width: 160
         height: 30
@@ -97925,8 +97927,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 924.8048, y: 949.5344}
-    canvasZoom: 1.386107
+    canvasScrollPosition: {x: 830.3091, y: 3979.8943}
+    canvasZoom: 0.9676424
   - id: 71
     fields:
     - title: Title
@@ -100691,7 +100693,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: CompleteCurrentEvent();
       onExecute:
         m_PersistentCalls:
           m_Calls: []
