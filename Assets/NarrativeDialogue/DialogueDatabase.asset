@@ -26543,8 +26543,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1785.4243
-        y: 1418.3345
+        x: 1970.4796
+        y: 1443.7051
         width: 160
         height: 30
     - id: 7
@@ -26595,6 +26595,12 @@ MonoBehaviour:
         originDialogueID: 7
         destinationConversationID: 28
         destinationDialogueID: 73
+        isConnector: 0
+        priority: 2
+      - originConversationID: 28
+        originDialogueID: 7
+        destinationConversationID: 28
+        destinationDialogueID: 121
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -26731,6 +26737,12 @@ MonoBehaviour:
         destinationDialogueID: 46
         isConnector: 0
         priority: 2
+      - originConversationID: 28
+        originDialogueID: 9
+        destinationConversationID: 28
+        destinationDialogueID: 122
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -26738,8 +26750,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1787.9408
-        y: 1479.3691
+        x: 2007.3202
+        y: 1507.7245
         width: 160
         height: 30
     - id: 15
@@ -26930,7 +26942,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Thanks for being honest, I guess?
+        value: Thanks for being honest?
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -26958,8 +26970,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 973.9241
-        y: 1688.9915
+        x: 909.0112
+        y: 1695.4828
         width: 160
         height: 30
     - id: 19
@@ -27400,14 +27412,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCFaceRight("Max")
+      userScript: NPCFaceRight("Max");Emote("Max", "Closed", "OpenMouth")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 2178.935
-        y: 3023.62
+        y: 3022.4395
         width: 160
         height: 30
     - id: 27
@@ -27455,7 +27467,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Closed", "Happy");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -27517,7 +27529,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Default", "Default");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -27648,7 +27660,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 3
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
@@ -27935,7 +27947,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: 'Alright, let''s get outta here before the next band shows up. '
+        value: 'Whatever! Let''s get outta here before the next band shows up. '
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -27957,7 +27969,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCFaceRight("Max");CompleteCurrentEvent()
+      userScript: Emote("Ricki", "Default", "Default");NPCFaceRight("Max");CompleteCurrentEvent()
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -28122,8 +28134,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2211.584
-        y: 1595.3079
+        x: 2193.675
+        y: 1599.7848
         width: 160
         height: 30
     - id: 46
@@ -28149,7 +28161,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Well, I met this person, JJ...
+        value: Well, I met this guy, JJ...
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -28204,7 +28216,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Barf. I thought you said *cool* people.
+        value: Barf. I thought you said <i>cool</i> people.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -28238,8 +28250,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2012.9075
-        y: 1793.2869
+        x: 2024.9019
+        y: 1828.2706
         width: 160
         height: 30
     - id: 48
@@ -28465,8 +28477,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2395.2441
-        y: 1886.8605
+        x: 2388.365
+        y: 1930.6116
         width: 160
         height: 30
     - id: 52
@@ -28520,8 +28532,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2499.8955
-        y: 2092.0767
+        x: 2491.7502
+        y: 2010.4948
         width: 160
         height: 30
     - id: 53
@@ -28575,8 +28587,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2298.353
-        y: 2093.5112
+        x: 2290.2078
+        y: 2011.9293
         width: 160
         height: 30
     - id: 54
@@ -28725,7 +28737,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Ok, let's not get Ricki started on fashion. We have a show to practice
+        value: Ok, let's not get Ricki started on fashion. We have a show to rehearse
           for!
         type: 0
         typeString: CustomFieldType_Text
@@ -28748,14 +28760,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Ricki", "Default", "Default")
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2400.9985
-        y: 2290.435
+        x: 2415.6414
+        y: 2084.7856
         width: 160
         height: 30
     - id: 66
@@ -29002,8 +29014,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Wow rude! I just met this girl Pixie who actually likes my style and
-          interviewed me for her blog.
+        value: Rude! I'll have you know I met someone named Pixie who actually likes
+          my style!
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -29031,8 +29043,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1182.898
-        y: 1687.905
+        x: 1185.0616
+        y: 1674.9224
         width: 160
         height: 30
     - id: 74
@@ -29147,8 +29159,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2563.3486
-        y: 1418.7212
+        x: 3057.3264
+        y: 1632.131
         width: 160
         height: 30
     - id: 76
@@ -29202,14 +29214,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Whoa", "Tongue")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2565.981
-        y: 1487.1475
+        x: 3065.9277
+        y: 1699.065
         width: 160
         height: 30
     - id: 77
@@ -29263,8 +29275,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2493.5923
-        y: 1558.2058
+        x: 2993.539
+        y: 1770.1233
         width: 160
         height: 30
     - id: 78
@@ -29318,8 +29330,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2687.0767
-        y: 1558.2078
+        x: 3187.0234
+        y: 1770.1252
         width: 160
         height: 30
     - id: 79
@@ -29367,14 +29379,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Angry", "Frown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2493.5923
-        y: 1608.2058
+        x: 2993.539
+        y: 1820.1233
         width: 160
         height: 30
     - id: 80
@@ -29400,7 +29412,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Ricki shut up, no I don't!! That'd be stupid and dumb!!
+        value: Ricki, shut up, no I don't!! That'd be stupid and dumb!!
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -29422,14 +29434,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Angry", "OpenMouthDown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2591.1162
-        y: 1767.5906
+        x: 3091.063
+        y: 1979.508
         width: 160
         height: 30
     - id: 81
@@ -29477,14 +29489,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Side", "Frown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2591.1162
-        y: 1817.5906
+        x: 3091.063
+        y: 2029.508
         width: 160
         height: 30
     - id: 82
@@ -29498,7 +29510,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 3
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
@@ -29510,7 +29522,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: That's for nerds, right? Didn't know you were one.
+        value: Oh are you one of those nerds?
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -29532,14 +29544,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Ricki", "Happy", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2687.0767
-        y: 1608.2078
+        x: 3187.0234
+        y: 1820.1252
         width: 160
         height: 30
     - id: 83
@@ -29565,7 +29577,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Ollie's not a nerd!!
+        value: Ollie's not a nerd!! Daggers & Demons is cool!!
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -29587,14 +29599,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Angry", "OpenMouth")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2687.0767
-        y: 1658.2079
+        x: 3187.0234
+        y: 1870.1254
         width: 160
         height: 30
     - id: 84
@@ -29620,8 +29632,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Yeah, but you only think that because you have a big fat crush on
-          him.
+        value: You only think that because you have a big fat crush on him.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -29643,14 +29654,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Angry", "Frown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2683.123
-        y: 1705.5715
+        x: 3183.0698
+        y: 1917.489
         width: 160
         height: 30
     - id: 85
@@ -29676,8 +29687,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Last time I was there, I met this girl Pixie interviewed me for her
-          blog.
+        value: I met this girl Pixie there who interviewed me for her blog.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -29732,7 +29742,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Oooh I like bad boys. Sounds kinda cool and edgy if you ask me.
+        value: 'Oooh I like bad boys. '
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -30317,7 +30327,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Ricki", "Happy", "Tongue")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -31331,9 +31341,523 @@ MonoBehaviour:
         y: 403.55164
         width: 160
         height: 30
+    - id: 121
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: You both could use some new clothes too.
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 28
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 28
+        originDialogueID: 121
+        destinationConversationID: 28
+        destinationDialogueID: 15
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1074.4443
+        y: 1743.8722
+        width: 160
+        height: 30
+    - id: 122
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: Um, do you know Rex?
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 28
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 28
+        originDialogueID: 122
+        destinationConversationID: 28
+        destinationDialogueID: 123
+        isConnector: 0
+        priority: 2
+      conditionsString: CheckFlag("Met_Rex")
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 2594.517
+        y: 1601.3844
+        width: 160
+        height: 30
+    - id: 123
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: I've been playing Daggers & Demons with Rex for YEARS. They're a major
+          dork!
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 28
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 28
+        originDialogueID: 123
+        destinationConversationID: 28
+        destinationDialogueID: 124
+        isConnector: 0
+        priority: 2
+      - originConversationID: 28
+        originDialogueID: 123
+        destinationConversationID: 28
+        destinationDialogueID: 126
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: Emote("Max", "Happy", "Default")
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 2594.517
+        y: 1651.3844
+        width: 160
+        height: 30
+    - id: 124
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: Totally. What a dork.
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 28
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 28
+        originDialogueID: 124
+        destinationConversationID: 28
+        destinationDialogueID: 125
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 2595.4795
+        y: 1699.4598
+        width: 160
+        height: 30
+    - id: 125
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: HEY! Back off! Only I can call them a dork. They're MY dork.
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 28
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 28
+        originDialogueID: 125
+        destinationConversationID: 28
+        destinationDialogueID: 128
+        isConnector: 0
+        priority: 2
+      - originConversationID: 28
+        originDialogueID: 125
+        destinationConversationID: 28
+        destinationDialogueID: 129
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: Emote("Max", "Angry", "OpenMouth")
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 2595.4795
+        y: 1749.4598
+        width: 160
+        height: 30
+    - id: 126
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: I have a tiny crush on them...
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 28
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 28
+        originDialogueID: 126
+        destinationConversationID: 28
+        destinationDialogueID: 127
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 2772.5403
+        y: 1699.4598
+        width: 160
+        height: 30
+    - id: 127
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: If you break that dork's heart, I will crush you like a little bug.
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 28
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 28
+        originDialogueID: 127
+        destinationConversationID: 28
+        destinationDialogueID: 129
+        isConnector: 0
+        priority: 2
+      - originConversationID: 28
+        originDialogueID: 127
+        destinationConversationID: 28
+        destinationDialogueID: 128
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: Emote("Max", "Side", "Frown")
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 2772.5403
+        y: 1749.4598
+        width: 160
+        height: 30
+    - id: 128
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: Yes, sir.
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 28
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 28
+        originDialogueID: 128
+        destinationConversationID: 28
+        destinationDialogueID: 15
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 2596.9697
+        y: 1803.9299
+        width: 160
+        height: 30
+    - id: 129
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: Yes, ma'am.
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 28
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 28
+        originDialogueID: 129
+        destinationConversationID: 28
+        destinationDialogueID: 15
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 2772.5403
+        y: 1804.9246
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1340.3076, y: 894.47546}
-    canvasZoom: 0.46181783
+    canvasScrollPosition: {x: 1689.0065, y: 3652.3313}
+    canvasZoom: 1.1365227
   - id: 29
     fields:
     - title: Title
