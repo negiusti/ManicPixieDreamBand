@@ -143350,8 +143350,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.38434267
+    canvasScrollPosition: {x: 560.3012, y: 968.2167}
+    canvasZoom: 0.9068112
   - id: 89
     fields:
     - title: Title
@@ -143498,14 +143498,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCWalkTo("Max", 30);NPCWalkTo("Ricki", 30);
+      userScript: NPCWalkTo("Max", 30);NPCWalkTo("MainCharacter", 30);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1005.4685
-        y: 1065.3314
+        x: 1006.88635
+        y: 1010.0329
         width: 160
         height: 30
     - id: 108
@@ -143547,14 +143547,14 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: DisableCharacter("Ricki");DisableCharacter("Max")
+      userScript: ChangeScene("SkateShop")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1005.4685
-        y: 1116.3441
+        x: 1006.88635
+        y: 1061.0457
         width: 160
         height: 30
     - id: 135
@@ -143608,8 +143608,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1008.3146
-        y: 352.45917
+        x: 1009.7324
+        y: 297.16064
         width: 160
         height: 30
     - id: 155
@@ -143653,61 +143653,6 @@ MonoBehaviour:
       - originConversationID: 89
         originDialogueID: 155
         destinationConversationID: 89
-        destinationDialogueID: 156
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: UnlockSong(9)
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 1013.8877
-        y: 135.68596
-        width: 160
-        height: 30
-    - id: 156
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: It was fine.
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 89
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 89
-        originDialogueID: 156
-        destinationConversationID: 89
         destinationDialogueID: 157
         isConnector: 0
         priority: 2
@@ -143718,8 +143663,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1011.4675
-        y: 189.3159
+        x: 1013.8877
+        y: 135.68596
         width: 160
         height: 30
     - id: 157
@@ -143745,7 +143690,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Did you finally confess your love to Ollie??
+        value: Did you finally confess your love to Ollie?
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -143773,8 +143718,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1011.4675
-        y: 242.94585
+        x: 1012.8854
+        y: 187.64732
         width: 160
         height: 30
     - id: 158
@@ -143828,8 +143773,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1011.4675
-        y: 292.94586
+        x: 1012.8854
+        y: 237.64734
         width: 160
         height: 30
     - id: 160
@@ -143855,7 +143800,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: We should get going. Can't be late to Daggers & Demons.
+        value: We should get going. I don't wanna be late to Daggers & Demons.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -143883,8 +143828,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1010.73486
-        y: 408.50916
+        x: 1012.1527
+        y: 353.21063
         width: 160
         height: 30
     - id: 161
@@ -143938,8 +143883,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1010.73486
-        y: 458.50916
+        x: 1012.1527
+        y: 403.21063
         width: 160
         height: 30
     - id: 162
@@ -143965,7 +143910,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: '*gasp*'
+        value: <i>*gasp*</i>
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -143987,14 +143932,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Whoa", "OpenMouth")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1010.73486
-        y: 508.50916
+        x: 1012.1527
+        y: 453.21063
         width: 160
         height: 30
     - id: 163
@@ -144048,8 +143993,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1009.5233
-        y: 557.2977
+        x: 1010.94116
+        y: 501.99924
         width: 160
         height: 30
     - id: 164
@@ -144103,8 +144048,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1010.73486
-        y: 608.50916
+        x: 1012.1527
+        y: 552.26685
         width: 160
         height: 30
     - id: 165
@@ -144152,14 +144097,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Default", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1010.73486
-        y: 657.2977
+        x: 1012.1527
+        y: 601.9992
         width: 160
         height: 30
     - id: 166
@@ -144219,8 +144164,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1008.64075
-        y: 709.3919
+        x: 1010.0586
+        y: 654.0933
         width: 160
         height: 30
     - id: 167
@@ -144274,8 +144219,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 899.74414
-        y: 765.6744
+        x: 901.162
+        y: 710.3758
         width: 160
         height: 30
     - id: 168
@@ -144329,8 +144274,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1120.6783
-        y: 768.8156
+        x: 1122.0962
+        y: 713.517
         width: 160
         height: 30
     - id: 169
@@ -144385,8 +144330,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1009.68774
-        y: 828.2393
+        x: 1011.1056
+        y: 772.94073
         width: 160
         height: 30
     - id: 170
@@ -144440,8 +144385,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1009.68774
-        y: 878.2393
+        x: 1011.1056
+        y: 822.94073
         width: 160
         height: 30
     - id: 171
@@ -144467,7 +144412,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Alright, let's go slay these demons with daggers.
+        value: Alright, let's go slay some demons with daggers.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -144489,14 +144434,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: DisableCharacter("Ricki")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1007.5978
-        y: 991.978
+        x: 1009.0156
+        y: 936.6795
         width: 160
         height: 30
     - id: 172
@@ -144526,7 +144471,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()@2
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 89
@@ -144544,19 +144489,19 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCWalkTo("Ricki", 30)
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1009.68774
-        y: 928.2393
+        x: 1011.1056
+        y: 877.6643
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 449.80072, y: 215.10545}
-    canvasZoom: 0.8910421
+    canvasScrollPosition: {x: 224.17847, y: 0}
+    canvasZoom: 0.8382857
   - id: 90
     fields:
     - title: Title
