@@ -41844,7 +41844,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: "UnlockSong(4)\x03;"
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -43515,7 +43515,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 3
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
@@ -43556,7 +43556,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 2768.2815
-        y: 2250.0906
+        y: 2248.8394
         width: 160
         height: 30
     - id: 190
@@ -43570,11 +43570,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 2
+        value: 3
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 3
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -43625,7 +43625,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 3
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
@@ -43656,7 +43656,7 @@ MonoBehaviour:
       - originConversationID: 43
         originDialogueID: 191
         destinationConversationID: 43
-        destinationDialogueID: 194
+        destinationDialogueID: 195
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -43748,8 +43748,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: It's okay, Max. They're just ignorant. Dozens of people spontaneously
-          combust every year. It's just not widely reported.
+        value: They're just ignorant, Max. Dozens of people spontaneously combust
+          every year. It's just not widely reported.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -43785,62 +43785,6 @@ MonoBehaviour:
         serializedVersion: 2
         x: 2783.8403
         y: 2842.7092
-        width: 160
-        height: 30
-    - id: 194
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 3
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: The bass stopped. And you know the drummer can't continue without
-          the heartbeat of the band.
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 43
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 43
-        originDialogueID: 194
-        destinationConversationID: 43
-        destinationDialogueID: 195
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 2768.2815
-        y: 2400.0906
         width: 160
         height: 30
     - id: 195
@@ -45359,8 +45303,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 2538.108, y: 3143.4358}
-    canvasZoom: 1.3541383
+    canvasScrollPosition: {x: 2529.116, y: 2256.7495}
+    canvasZoom: 0.7991389
   - id: 44
     fields:
     - title: Title
@@ -47018,15 +46962,15 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCWalkTo("Max", 5);NPCWalkTo("Ricki", 4);NPCWalkTo("MainCharacter",
-        3);
+      userScript: NPCWalkTo("Max", 10);NPCWalkTo("Ricki", 14);NPCWalkTo("MainCharacter",
+        12);StartJam("Cloudy Kings")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 746.8628
-        y: 77.030556
+        y: 75.97605
         width: 160
         height: 30
     - id: 169
@@ -47074,13 +47018,13 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Cliff", "Side", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 744.06177
+        x: 743.00726
         y: 131.23196
         width: 160
         height: 30
@@ -47107,7 +47051,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Sorry man, I can't help it...
+        value: Sorry, I'm just trying to jazz things up, man.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -47129,13 +47073,13 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("JJ", "Side", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 745.4623
+        x: 744.55054
         y: 189.63486
         width: 160
         height: 30
@@ -47184,14 +47128,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("JJ", "Default", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 741.8112
-        y: 239.63486
+        y: 238.52167
         width: 160
         height: 30
     - id: 172
@@ -47630,7 +47574,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Ricki", "Side", "Frown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -47692,7 +47636,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Angry", "OpenMouthDown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -47857,7 +47801,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Default", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -47912,7 +47856,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Default", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -48055,7 +47999,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Why don't you try practicing at home for once?
+        value: We wouldn't need to rehearse so much if you practiced at home for
+          once.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -48138,64 +48083,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 787.76044
-        y: 1033.0375
-        width: 160
-        height: 30
-    - id: 189
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 7
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: Continue()@2
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 44
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 44
-        originDialogueID: 189
-        destinationConversationID: 44
-        destinationDialogueID: 190
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: NPCWalkTo("Max", 30);NPCWalkTo("MainCharacter", 30);NPCWalkTo("Ricki",
-        30);
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 788.5973
-        y: 1143.3042
+        x: 779.03296
+        y: 1035.6561
         width: 160
         height: 30
     - id: 190
@@ -48243,8 +48132,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 788.5973
-        y: 1194.9761
+        x: 779.65485
+        y: 1143.557
         width: 160
         height: 30
     - id: 191
@@ -48275,7 +48164,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()@2
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 44
@@ -48289,23 +48178,24 @@ MonoBehaviour:
       - originConversationID: 44
         originDialogueID: 191
         destinationConversationID: 44
-        destinationDialogueID: 189
+        destinationDialogueID: 190
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Cliff", "Angry", "OpenMouthDown");
+      userScript: Emote("Cliff", "Angry", "OpenMouthDown");NPCWalkTo("Max", 30);NPCWalkTo("MainCharacter",
+        30);NPCWalkTo("Ricki", 30);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 787.76044
-        y: 1083.0375
+        x: 781.651
+        y: 1087.4014
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 340.7887, y: 631.59216}
-    canvasZoom: 1.1938084
+    canvasScrollPosition: {x: 498.09097, y: 80.687805}
+    canvasZoom: 0.7348058
   - id: 45
     fields:
     - title: Title
@@ -138515,8 +138405,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 3689.5325, y: 3739.5803}
-    canvasZoom: 0.6374997
+    canvasScrollPosition: {x: 1998.3529, y: 5852.5264}
+    canvasZoom: 0.80800086
   - id: 87
     fields:
     - title: Title
