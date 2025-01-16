@@ -113,48 +113,48 @@ public class Calendar : ScriptableObject
             Debug.Log("Scheduling day " + i);
             if (!events.ContainsKey(i))
             {
-                events.Add(i, new List<ICalendarEvent>());
+                events.Add(i, new List<ICalendarEvent>());                
             }
-
-            if (isBandPracticeDay(i) && !isBandPracticeScheduled(i))
+            if (isWorkScheduled(i) && JobSystem.CurrentJob() == JobSystem.PunkJob.Unemployed)
             {
-                events[i].Add(new BandPracticeEvent(null, false));
-            }
-            if (isWorkScheduled(i) && JobSystem.CurrentJob() == JobSystem.PunkJob.Unemployed) {
                 events[i].RemoveAll(e => e is JobEvent);
                 Debug.Log("remove job events");
             }
             if (!isWorkScheduled(i) && JobSystem.CurrentJob() != JobSystem.PunkJob.Unemployed)
             {
-                if (i != 6) // GIG DAY
+                if (i != 8) // GIG DAY
                     events[i].Add(new JobEvent("Work", null, false, JobSystem.CurrentJobInfo().Location()));
             }
-            
-
-            //// Already booked
-            //if (events[i].Count >= 2)
-            //{
-            //    continue;
-            //}
-            //else if (events[i].Count == 1)
-            //{
-            //    // schedule one more event
-            //    if (events[i][0].IsNight())
-            //    {
-            //        // schedule a day event
-            //    }
-            //    else
-            //    {
-            //        // schedule a night event
-            //    }
-            //}
-            //else
-            //{
-            //    // schedule two events: one evening, one day
-            //}
+            if (isBandPracticeDay(i) && !isBandPracticeScheduled(i))
+            {
+                events[i].Add(new BandPracticeEvent(null, false));
+            }
+            if (i == 0)
+            {
+                ScheduleEvent("Bassist Audition!!! @ Basement", 0, "BandPracticeSpace", false);
+            }
+            else if (i == 6)
+            {
+                ScheduleEvent("Play Daggers & Demons @ Big Top Sk8 Shop", 6, "SkateShop", true);
+            } else if (i == 7) {
+                ScheduleEvent("Daisy Dukes Show @ Al Canderson Park", 7, "Park", false);
+            } else if (i == 8)
+            {
+                ScheduleEvent("First gig!!! @ Dumpster Dive", 8, "SmallBar", true);
+            }
         }
     }
 
+    private static void ScheduleEvent(string eventName, int dayNum, string location, bool night)
+    {
+        if (!events[dayNum].Any(e => e.Name().Equals(eventName)))  // Don't schedule duplicate events!
+        {
+            if (night)
+                events[dayNum].Add(new QuestEvent(eventName, "", night, location));
+            else
+                events[dayNum].Insert(0, new QuestEvent(eventName, "", night, location));
+        }
+    }
 
     private static bool isBandPracticeScheduled(int i)
     {
@@ -168,7 +168,7 @@ public class Calendar : ScriptableObject
 
     private static bool isBandPracticeDay(int i)
     {
-        if (i == 0 || i == 6)
+        if (i == 0 || i == 7)
             return false;
         return true;
     }
