@@ -404,6 +404,7 @@
                         "z": 3.0
                     },
                     "layer": "fg_char",
+                    "faceLeftOrRight": "left",
                     "existAtStart": true
                 },
                 {
@@ -414,6 +415,7 @@
                         "z": 3.0
                     },
                     "layer": "fg_char",
+                    "faceLeftOrRight": "right",
                     "existAtStart": true
                 },
                 {
@@ -424,6 +426,7 @@
                         "z": 3.0
                     },
                     "layer": "fg_char",
+                    "faceLeftOrRight": "left",
                     "existAtStart": true
                 }
             ],
@@ -433,6 +436,39 @@
             },
             "trigger": "Start",
             "conversation": "BandPractice/5"
+        },
+        {
+            "locations": [ "SkateShop" ],
+            "participants": [
+                {
+                    "name": "MainCharacter",
+                    "position": {
+                        "x": -9,
+                        "y": 0,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "faceLeftOrRight": "left",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Max",
+                    "position": {
+                        "x": -5.7,
+                        "y": -0.81,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "faceLeftOrRight": "right",
+                    "existAtStart": true
+                }
+            ],
+            "requirements": {
+                "dayNum": 5,
+                "trueFlags": [ "InviteToDND" ]
+            },
+            "trigger": "Start",
+            "conversation": "BandPractice/5_SkateShop"
         },
         {
             "locations": [ "BandPracticeRoom" ],

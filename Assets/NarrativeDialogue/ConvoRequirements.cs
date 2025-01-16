@@ -44,7 +44,7 @@ public class ConvoRequirements : ScriptableObject
 
     public static string CurrentEventType()
     {
-        return Calendar.GetCurrentEvent().GetType().ToString();
+        return Calendar.GetCurrentEvent() == null ? "" : Calendar.GetCurrentEvent().GetType().ToString();
     }
 
     public static string CurrentEventName()
