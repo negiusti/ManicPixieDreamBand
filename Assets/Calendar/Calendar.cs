@@ -147,6 +147,10 @@ public class Calendar : ScriptableObject
 
     private static void ScheduleEvent(string eventName, int dayNum, string location, bool night)
     {
+        if (!events.ContainsKey(dayNum))
+        {
+            events.Add(dayNum, new List<ICalendarEvent>());
+        }
         if (!events[dayNum].Any(e => e.Name().Equals(eventName)))  // Don't schedule duplicate events!
         {
             if (night)
