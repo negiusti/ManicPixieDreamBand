@@ -7,7 +7,7 @@ public class EventOnly : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!Calendar.GetCurrentEvent().Name().Equals(EventName))
+        if (Calendar.GetCurrentEvent() != null || !Calendar.GetCurrentEvent().Name().Equals(EventName))
         {
             gameObject.SetActive(false);
         }

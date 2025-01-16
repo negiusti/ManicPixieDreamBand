@@ -120566,7 +120566,9 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Max", "Default", "Default");Emote("Ollie", "Default", "Default")
+      userScript: Emote("Max", "Default", "Default");Emote("Ollie", "Default", "Default");Drink("Max",
+        "Pizza");Drink("Rex", "Pizza");Drink("MainCharacter", "Pizza");Drink("Ollie",
+        "Pizza");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -120918,7 +120920,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 16
+        value: 18
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
@@ -121102,7 +121104,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: '*whispering* You''re embarrassing me.'
+        value: <i>*whispering* You're embarrassing me.</i>
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -122811,12 +122813,6 @@ MonoBehaviour:
       - originConversationID: 85
         originDialogueID: 56
         destinationConversationID: 85
-        destinationDialogueID: 57
-        isConnector: 0
-        priority: 2
-      - originConversationID: 85
-        originDialogueID: 56
-        destinationConversationID: 85
         destinationDialogueID: 58
         isConnector: 0
         priority: 2
@@ -122824,6 +122820,18 @@ MonoBehaviour:
         originDialogueID: 56
         destinationConversationID: 85
         destinationDialogueID: 59
+        isConnector: 0
+        priority: 2
+      - originConversationID: 85
+        originDialogueID: 56
+        destinationConversationID: 85
+        destinationDialogueID: 376
+        isConnector: 0
+        priority: 2
+      - originConversationID: 85
+        originDialogueID: 56
+        destinationConversationID: 85
+        destinationDialogueID: 377
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -122835,61 +122843,6 @@ MonoBehaviour:
         serializedVersion: 2
         x: 2589.3628
         y: 3185.859
-        width: 160
-        height: 30
-    - id: 57
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 16
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: Let's get those cookies.
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 85
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 85
-        originDialogueID: 57
-        destinationConversationID: 85
-        destinationDialogueID: 60
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 2425.9258
-        y: 3289.6216
         width: 160
         height: 30
     - id: 58
@@ -122943,8 +122896,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2607.642
-        y: 3286.3955
+        x: 2425.8237
+        y: 3278.691
         width: 160
         height: 30
     - id: 59
@@ -122999,8 +122952,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2799.0356
-        y: 3277.8557
+        x: 2628.003
+        y: 3257.8247
         width: 160
         height: 30
     - id: 60
@@ -123247,7 +123200,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Tell me more about the surrounding marsh.
+        value: Tell me more about the marsh.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -124556,14 +124509,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: SetFlag("PRINCESS", true)
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 1684.6237
-        y: 3488.6565
+        y: 3486.8928
         width: 160
         height: 30
     - id: 91
@@ -129544,10 +129497,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: 'Hey Max, maybe Melissa could jump and
-
-          grab one of those
-          vines so that we can swing across the moat!'
+        value: Hey Max, maybe Melissa could grab one of those vines and swing across
+          the moat!
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -131430,7 +131381,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emnote("Ollie", "Side", "Disappoint")
+      userScript: Emote("Ollie", "Side", "Disappoint")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -131485,7 +131436,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: CheckFlag("WARRIOR")
-      userScript: Emnote("Ollie", "Default", "Default")
+      userScript: Emote("Ollie", "Default", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -133887,6 +133838,12 @@ MonoBehaviour:
         destinationDialogueID: 282
         isConnector: 0
         priority: 2
+      - originConversationID: 85
+        originDialogueID: 278
+        destinationConversationID: 85
+        destinationDialogueID: 379
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -134114,14 +134071,14 @@ MonoBehaviour:
         destinationDialogueID: 284
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: CheckFlag("PRINCESS")
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2488.392
+        x: 2489.639
         y: 7797.571
         width: 160
         height: 30
@@ -134452,7 +134409,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: CheckFlag("WIZARD")
-      userScript: Emnote("Ollie", "Default", "Default")
+      userScript: Emote("Ollie", "Default", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -134507,7 +134464,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: CheckFlag("BARD")
-      userScript: 
+      userScript: Emote("Ollie", "Default", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -135129,7 +135086,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emnote("Ollie", "Default", "Default")
+      userScript: Emote("Ollie", "Default", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -136538,9 +136495,15 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 85
+        originDialogueID: 326
+        destinationConversationID: 85
+        destinationDialogueID: 367
+        isConnector: 0
+        priority: 2
       conditionsString: 
-      userScript: ChangeScene("Job1Neighborhood")
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -136919,9 +136882,15 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 85
+        originDialogueID: 335
+        destinationConversationID: 85
+        destinationDialogueID: 367
+        isConnector: 0
+        priority: 2
       conditionsString: 
-      userScript: ChangeScene("Job1Neighborhood")
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -137300,9 +137269,15 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 85
+        originDialogueID: 343
+        destinationConversationID: 85
+        destinationDialogueID: 367
+        isConnector: 0
+        priority: 2
       conditionsString: 
-      userScript: ChangeScene("Job1Neighborhood")
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -137626,15 +137601,21 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 85
+        originDialogueID: 349
+        destinationConversationID: 85
+        destinationDialogueID: 367
+        isConnector: 0
+        priority: 2
       conditionsString: 
-      userScript: ChangeScene("Job1Neighborhood")
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 4402.5703
+        x: 4397.0605
         y: 4491.0073
         width: 160
         height: 30
@@ -137952,9 +137933,15 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 85
+        originDialogueID: 361
+        destinationConversationID: 85
+        destinationDialogueID: 367
+        isConnector: 0
+        priority: 2
       conditionsString: 
-      userScript: ChangeScene("Job1Neighborhood")
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -138113,14 +138100,14 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: ChangeScene("Job1Neighborhood")
+      userScript: CompleteCurrentEvent();ChangeScene("Job1Neighborhood")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2367.7349
-        y: 8639.271
+        x: 3523.4631
+        y: 8918.567
         width: 160
         height: 30
     - id: 368
@@ -138404,9 +138391,183 @@ MonoBehaviour:
         y: 8573.598
         width: 160
         height: 30
+    - id: 376
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 16
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: With my mighty lute, I will slay Galgathar and bring peace to all
+          the bowels of Avalon!
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 85
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 85
+        originDialogueID: 376
+        destinationConversationID: 85
+        destinationDialogueID: 60
+        isConnector: 0
+        priority: 2
+      conditionsString: CheckFlag("BARD")
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 2825.0713
+        y: 3266.4695
+        width: 160
+        height: 30
+    - id: 377
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 16
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: With my wizard's staff, I will slay Galgathar and bring peace to all
+          the bowels of Avalon!
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 85
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 85
+        originDialogueID: 377
+        destinationConversationID: 85
+        destinationDialogueID: 60
+        isConnector: 0
+        priority: 2
+      conditionsString: CheckFlag("WIZARD")
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 3012.9756
+        y: 3266.3838
+        width: 160
+        height: 30
+    - id: 379
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 16
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: What princess? There's no- ugh FINE, what do you want to do with the
+          princess?
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 85
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 85
+        originDialogueID: 379
+        destinationConversationID: 85
+        destinationDialogueID: 283
+        isConnector: 0
+        priority: 2
+      - originConversationID: 85
+        originDialogueID: 379
+        destinationConversationID: 85
+        destinationDialogueID: 284
+        isConnector: 0
+        priority: 2
+      conditionsString: CheckFlag("PRINCESS") == false
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 2688.1934
+        y: 7796.941
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1998.3529, y: 5852.5264}
-    canvasZoom: 0.80800086
+    canvasScrollPosition: {x: 805.95703, y: 5751.882}
+    canvasZoom: 0.30250004
   - id: 87
     fields:
     - title: Title
@@ -140109,8 +140270,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 903.9654, y: 1099.5068}
-    canvasZoom: 0.78784907
+    canvasScrollPosition: {x: 524.0708, y: 366.2428}
+    canvasZoom: 0.5178493
   - id: 88
     fields:
     - title: Title

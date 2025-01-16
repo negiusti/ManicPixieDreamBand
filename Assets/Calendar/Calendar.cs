@@ -122,12 +122,18 @@ public class Calendar : ScriptableObject
             }
             if (!isWorkScheduled(i) && JobSystem.CurrentJob() != JobSystem.PunkJob.Unemployed)
             {
-                if (i != 8) // GIG DAY
+                if (i != 8)// GIG DAY
+                {
                     events[i].Add(new JobEvent("Work", null, false, JobSystem.CurrentJobInfo().Location()));
+                    if (day == i)
+                        Phone.Instance.SendNotificationTo("Calendar");
+                }
             }
             if (isBandPracticeDay(i) && !isBandPracticeScheduled(i))
             {
                 events[i].Add(new BandPracticeEvent(null, false));
+                if (day == i)
+                    Phone.Instance.SendNotificationTo("Calendar");
             }
             if (i == 0)
             {
@@ -153,6 +159,8 @@ public class Calendar : ScriptableObject
         }
         if (!events[dayNum].Any(e => e.Name().Equals(eventName)))  // Don't schedule duplicate events!
         {
+            if (day == dayNum)
+                Phone.Instance.SendNotificationTo("Calendar");
             if (night)
                 events[dayNum].Add(new QuestEvent(eventName, "", night, location));
             else
