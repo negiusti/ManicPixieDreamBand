@@ -26320,11 +26320,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 2
+        value: 3
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 3
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -26332,7 +26332,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: So, how are you liking the city so far?
+        value: So, how are you liking the city so far, new kid?
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -26372,7 +26372,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Max", "Default", "Default");Emote("Ricki", "Default", "Default");
+      userScript: Emote("Max", "Default", "Default");Emote("Ricki", "Default", "Default");NPCFaceRight("Max")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -26777,7 +26777,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Ugh, enough chit chat, let's practice!
+        value: Okay, that's enough chit chat, let's shred!
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -27969,14 +27969,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Ricki", "Default", "Default");NPCFaceRight("Max");CompleteCurrentEvent()
+      userScript: Emote("Ricki", "Default", "Default");Emote("Max", "Side","Frown");NPCFaceRight("Max");CompleteCurrentEvent()
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2102.856
-        y: 4035.3638
+        x: 2101.5
+        y: 4033.9595
         width: 160
         height: 30
     - id: 43
@@ -28815,13 +28815,13 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Ricki", "Default", "Default")
+      userScript: Emote("Max", "Default", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2104.79
+        x: 2106.1946
         y: 4094.4966
         width: 160
         height: 30
@@ -29840,11 +29840,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 3
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 2
+        value: 3
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -30768,7 +30768,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceRight("Max")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -30824,7 +30824,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceRight("Max")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -30900,7 +30900,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 3
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
@@ -31001,13 +31001,13 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCFaceRight("Ricki");Emote("Dylan", "Default", "Default");
+      userScript: NPCFaceRight("Ricki");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1559.7742
+        x: 1557.1578
         y: 171.15161
         width: 160
         height: 30
@@ -31276,7 +31276,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: EnableCharacter("Max");NPCWalkTo("Max", 3.06);
+      userScript: EnableCharacter("Max");NPCWalkTo("Max", -5);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -31856,8 +31856,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1975.125, y: 1528.6157}
-    canvasZoom: 0.6902158
+    canvasScrollPosition: {x: 1769.2711, y: 3833.4585}
+    canvasZoom: 0.71199965
   - id: 29
     fields:
     - title: Title
@@ -47128,7 +47128,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("JJ", "Default", "Default")
+      userScript: Emote("JJ", "Default", "Default");NPCFaceRight("Max")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -47464,7 +47464,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceRight("MainCharacter");NPCFaceRight("Ricki")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -47574,7 +47574,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Ricki", "Side", "Frown")
+      userScript: Emote("Ricki", "Side", "Frown");NPCFaceLeft("Max");NPCFaceLeft("Ricki");NPCFaceLeft("MainCharacter")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -48077,7 +48077,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceRight("MainCharacter");NPCFaceRight("Max")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -48126,14 +48126,14 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: ChangeScene("DowntownNeighborhood")
+      userScript: CompleteEvent();ChangeScene("DowntownNeighborhood")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 779.65485
-        y: 1143.557
+        x: 790.0282
+        y: 1167.2675
         width: 160
         height: 30
     - id: 191
@@ -48194,8 +48194,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 499.2499, y: 0}
-    canvasZoom: 1.1473055
+    canvasScrollPosition: {x: 381.70444, y: 604.1934}
+    canvasZoom: 0.674806
   - id: 45
     fields:
     - title: Title

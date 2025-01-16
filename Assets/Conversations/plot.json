@@ -199,8 +199,8 @@
                 {
                     "name": "Dale",
                     "position": {
-                        "x": -5.15,
-                        "y": -1.23,
+                        "x": -8.91,
+                        "y": -1.44,
                         "z": 3.0
                     },
                     "layer": "mg",
@@ -282,14 +282,14 @@
                         "z": 3.0
                     },
                     "layer": "fg_char",
-                    "faceLeftOrRight":  "right",
+                    "faceLeftOrRight": "right",
                     "existAtStart": true
                 },
                 {
                     "name": "Max",
                     "position": {
                         "x": 47.68,
-                        "y": -1,
+                        "y": -2.4,
                         "z": 3.0
                     },
                     "layer": "fg_char",
@@ -360,6 +360,7 @@
                         "y": -2.35,
                         "z": 3.0
                     },
+                    "faceLeftOrRight": "left",
                     "layer": "fg_char",
                     "existAtStart": true
                 },
@@ -370,59 +371,19 @@
                         "y": -1.5,
                         "z": 3.0
                     },
+                    "faceLeftOrRight": "right",
                     "layer": "fg_char",
                     "existAtStart": true
                 },
                 {
                     "name": "Max",
                     "position": {
-                        "x": -5.77,
+                        "x": 20,
                         "y": -1.98,
                         "z": 3.0
                     },
                     "layer": "fg_char",
                     "existAtStart": true
-                }
-            ],
-            "requirements": {
-                "dayNum": 3,
-                "currentEventType": "BandPracticeEvent"
-            },
-            "trigger": "Start",
-            "conversation": "BandPractice/3_ScreenPrinting"
-        },
-        {
-            "locations": [ "BandPracticeRoom" ],
-            "participants": [
-                {
-                    "name": "MainCharacter",
-                    "position": {
-                        "x": -0.37,
-                        "y": -2.35,
-                        "z": 3.0
-                    },
-                    "layer": "fg_char",
-                    "existAtStart": true
-                },
-                {
-                    "name": "Ricki",
-                    "position": {
-                        "x": -8.7,
-                        "y": -1.5,
-                        "z": 3.0
-                    },
-                    "layer": "fg_char",
-                    "existAtStart": true
-                },
-                {
-                    "name": "Max",
-                    "position": {
-                        "x": -5.77,
-                        "y": -1.98,
-                        "z": 3.0
-                    },
-                    "layer": "fg_char",
-                    "existAtStart": false
                 }
             ],
             "requirements": {
@@ -430,7 +391,7 @@
                 "currentEventType": "BandPracticeEvent"
             },
             "trigger": "Start",
-            "conversation": "BandPractice/4"
+            "conversation": "BandPractice/4_ScreenPrinting"
         },
         {
             "locations": [ "BandPracticeRoom" ],
@@ -471,16 +432,16 @@
                 "currentEventType": "BandPracticeEvent"
             },
             "trigger": "Start",
-            "conversation": "BandPractice/5_LastPractice"
+            "conversation": "BandPractice/5"
         },
         {
-            "locations": [ "MusicShop" ],
+            "locations": [ "BandPracticeRoom" ],
             "participants": [
                 {
                     "name": "MainCharacter",
                     "position": {
-                        "x": -0.91,
-                        "y": -1.2,
+                        "x": -0.37,
+                        "y": -2.35,
                         "z": 3.0
                     },
                     "layer": "fg_char",
@@ -489,8 +450,8 @@
                 {
                     "name": "Ricki",
                     "position": {
-                        "x": -4.63,
-                        "y": -0.8,
+                        "x": -8.7,
+                        "y": -1.5,
                         "z": 3.0
                     },
                     "layer": "fg_char",
@@ -499,29 +460,112 @@
                 {
                     "name": "Max",
                     "position": {
-                        "x": 25.66,
-                        "y": -1,
+                        "x": -5.77,
+                        "y": -1.98,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                }
+            ],
+            "requirements": {
+                "dayNum": 6,
+                "currentEventType": "BandPracticeEvent"
+            },
+            "trigger": "Start",
+            "conversation": "BandPractice/6"
+        },
+        {
+            "locations": [ "BandPracticeRoom" ],
+            "participants": [
+                {
+                    "name": "MainCharacter",
+                    "position": {
+                        "x": -0.37,
+                        "y": -2.35,
                         "z": 3.0
                     },
                     "layer": "fg_char",
                     "existAtStart": true
                 },
                 {
-                    "name": "Dylan",
+                    "name": "Rex",
                     "position": {
-                        "x": -8.59,
-                        "y": -0.1,
+                        "x": -8.7,
+                        "y": -1.5,
                         "z": 3.0
                     },
-                    "layer": "bg_char",
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Ollie",
+                    "position": {
+                        "x": 3,
+                        "y": 0,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Max",
+                    "position": {
+                        "x": -5.77,
+                        "y": -1.98,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
                     "existAtStart": true
                 }
             ],
             "requirements": {
-                "dayNum": 6
+                "dayNum": 6,
+                "eventName": "Play Daggers & Demons @ Big Top Sk8 Shop"
             },
             "trigger": "Start",
-            "conversation": "Plot/PackUpForFirstGig"
+            "conversation": "BandPractice/6_DnD"
+        },
+        {
+            "locations": [ "BandPracticeRoom" ],
+            "participants": [
+                {
+                    "name": "MainCharacter",
+                    "position": {
+                        "x": -0.37,
+                        "y": -2.35,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Ricki",
+                    "position": {
+                        "x": -8.7,
+                        "y": -1.5,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Max",
+                    "position": {
+                        "x": -5.77,
+                        "y": -1.98,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                }
+            ],
+            "requirements": {
+                "dayNum": 8,
+                "currentEventType": "BandPracticeEvent"
+            },
+            "trigger": "Start",
+            "conversation": "BandPractice/8_GigDay"
         },
         {
             "locations": [ "SmallBar" ],
@@ -598,10 +642,90 @@
                 }
             ],
             "requirements": {
-                "dayNum": 6
+                "dayNum": 8
             },
             "trigger": "Start",
-            "conversation": "First Gig"
+            "conversation": "First Gig 1"
+        },
+        {
+            "locations": [ "SmallBar" ],
+            "participants": [
+                {
+                    "name": "MainCharacter",
+                    "position": {
+                        "x": -1.96,
+                        "y": -2.07,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Ricki",
+                    "position": {
+                        "x": -4.59,
+                        "y": -2.45,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Max",
+                    "position": {
+                        "x": 0.8,
+                        "y": -2.45,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Dylan",
+                    "position": {
+                        "x": -19.27514,
+                        "y": 3.989504,
+                        "z": 3.0
+                    },
+                    "layer": "stage_bg",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Cliff",
+                    "position": {
+                        "x": -8.35,
+                        "y": -2.45,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "Dale",
+                    "position": {
+                        "x": -13.52,
+                        "y": -2.45,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                },
+                {
+                    "name": "JJ",
+                    "position": {
+                        "x": -10.88,
+                        "y": -2,
+                        "z": 3.0
+                    },
+                    "layer": "fg_char",
+                    "existAtStart": true
+                }
+            ],
+            "requirements": {
+                "dayNum": 8
+            },
+            "trigger": "Start",
+            "conversation": "First Gig 2"
         }
     ]
 }
