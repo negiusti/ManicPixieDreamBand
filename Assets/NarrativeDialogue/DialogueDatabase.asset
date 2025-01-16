@@ -28825,7 +28825,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 2263.5874
+        x: 2262.4465
         y: 3702.644
         width: 160
         height: 30
@@ -31804,8 +31804,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1189.0098, y: 569.0277}
-    canvasZoom: 0.84399986
+    canvasScrollPosition: {x: 1580.1589, y: 3153.7173}
+    canvasZoom: 0.8765
   - id: 29
     fields:
     - title: Title
@@ -48562,13 +48562,7 @@ MonoBehaviour:
       - originConversationID: 45
         originDialogueID: 155
         destinationConversationID: 45
-        destinationDialogueID: 156
-        isConnector: 0
-        priority: 2
-      - originConversationID: 45
-        originDialogueID: 155
-        destinationConversationID: 45
-        destinationDialogueID: 159
+        destinationDialogueID: 200
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -50652,9 +50646,70 @@ MonoBehaviour:
         y: 604.1801
         width: 160
         height: 30
+    - id: 200
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 45
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 45
+        originDialogueID: 200
+        destinationConversationID: 45
+        destinationDialogueID: 156
+        isConnector: 0
+        priority: 2
+      - originConversationID: 45
+        originDialogueID: 200
+        destinationConversationID: 45
+        destinationDialogueID: 159
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1172.9935
+        y: 815.82776
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 823.41516, y: 1113.5686}
-    canvasZoom: 0.7397821
+    canvasScrollPosition: {x: 644.38306, y: 506.98077}
+    canvasZoom: 0.99078166
   - id: 46
     fields:
     - title: Title
@@ -140459,7 +140514,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: '*whispering* Max, say something.'
+        value: <i>*whispering* Max, say something.</i>
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -140487,8 +140542,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 850.003
-        y: 368.0179
+        x: 847.7426
+        y: 366.88773
         width: 160
         height: 30
     - id: 7
@@ -141266,7 +141321,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Max", "Default", "Default")
+      userScript: Emote("Max", "Default", "Default");NPCFaceRight("Max")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -141321,14 +141376,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Happy", "Happy")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 771.8064
-        y: 1656.8539
+        y: 1655.7313
         width: 160
         height: 30
     - id: 34
@@ -141604,13 +141659,13 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceLeft("Max")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 777.6174
+        x: 776.50665
         y: 1195.1416
         width: 160
         height: 30
@@ -142056,8 +142111,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 560.3012, y: 968.2167}
-    canvasZoom: 0.9068112
+    canvasScrollPosition: {x: 0, y: 1398.2018}
+    canvasZoom: 0.8908114
   - id: 89
     fields:
     - title: Title
