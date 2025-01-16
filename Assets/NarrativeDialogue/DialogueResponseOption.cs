@@ -12,11 +12,13 @@ public class DialogueResponseOption : MonoBehaviour
     public Sprite bottom;
     public Text text;
     private Button button;
+    private RectTransform rect;
     // Start is called before the first frame update
     void Start()
     {
         //text = this.GetComponentInChildren<Text>();
-        button = this.GetComponent<Button>();
+        button = GetComponent<Button>();
+        rect = GetComponent<RectTransform>();
         Deselect();
     }
 
@@ -32,6 +34,10 @@ public class DialogueResponseOption : MonoBehaviour
             button.image.color = new Color(0.6276432f, 0.5379584f, 0.7264151f, 1);
         if (text != null)
             text.color = Color.white;
+        if (rect == null)
+            rect = GetComponent<RectTransform>();
+        if (rect != null)
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
     }
 
     public void SetTop()
@@ -60,6 +66,10 @@ public class DialogueResponseOption : MonoBehaviour
             button.image.color = new Color(0, 0, 0, 0);
         if (text != null)
             text.color = Color.black;
+        if (rect == null)
+            rect = GetComponent<RectTransform>();
+        if (rect != null)
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
     }
 
     public void ShowDownArrow()
