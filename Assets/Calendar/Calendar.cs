@@ -162,9 +162,16 @@ public class Calendar : ScriptableObject
             if (day == dayNum)
                 Phone.Instance.SendNotificationTo("Calendar");
             if (night)
+            {
                 events[dayNum].Add(new QuestEvent(eventName, "", night, location));
+            }
             else
-                events[dayNum].Insert(0, new QuestEvent(eventName, "", night, location));
+            {
+                if (day == dayNum)
+                    events[dayNum].Insert(currentEventIdx, new QuestEvent(eventName, "", night, location));
+                else
+                    events[dayNum].Insert(0, new QuestEvent(eventName, "", night, location));
+            }
         }
     }
 

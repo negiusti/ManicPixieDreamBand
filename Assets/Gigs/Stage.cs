@@ -43,7 +43,7 @@ public class Stage : MonoBehaviour
                 crowdSpawner.SpawnCrowd(band);
         }
             
-        if (audioSource != null && band.Name.Equals("Cloudy Kings"))
+        if (audioSource != null && band.Name.Contains("Cloudy Kings"))
         {
             if (CloudyKingsClips.Count == 0)
                 return;

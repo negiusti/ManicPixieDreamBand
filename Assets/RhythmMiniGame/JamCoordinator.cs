@@ -44,7 +44,7 @@ public class JamCoordinator : ScriptableObject
 
     public static HashSet<string> UnlockedSongs()
     {
-        return songsToUnlock.GetRange(0, Calendar.Date() + 2).ToHashSet();
+        return songsToUnlock.GetRange(0, System.Math.Min(Calendar.Date() + 2, songsToUnlock.Count)).ToHashSet();
     }
 
     //public static void UnlockSong(string songName)

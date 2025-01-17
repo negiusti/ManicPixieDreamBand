@@ -6984,12 +6984,6 @@ MonoBehaviour:
       - originConversationID: 11
         originDialogueID: 0
         destinationConversationID: 11
-        destinationDialogueID: 1
-        isConnector: 0
-        priority: 2
-      - originConversationID: 11
-        originDialogueID: 0
-        destinationConversationID: 11
         destinationDialogueID: 160
         isConnector: 0
         priority: 2
@@ -7061,8 +7055,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1346.9044
-        y: 107.75873
+        x: 1342.3983
+        y: 145.30861
         width: 160
         height: 30
     - id: 3
@@ -7116,8 +7110,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1347.394
-        y: 2293.7766
+        x: 1346.6079
+        y: 2325.2217
         width: 160
         height: 30
     - id: 4
@@ -7198,7 +7192,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Is it just me or did everyone leave?
+        value: Is it just me... or did everyone leave?
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -7287,8 +7281,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1226.9275
-        y: 184.11171
+        x: 1227.6785
+        y: 201.38466
         width: 160
         height: 30
     - id: 15
@@ -7342,8 +7336,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1450.5016
-        y: 183.2296
+        x: 1451.2526
+        y: 200.50255
         width: 160
         height: 30
     - id: 16
@@ -7397,8 +7391,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1453.489
-        y: 237.35863
+        x: 1454.24
+        y: 254.63158
         width: 160
         height: 30
     - id: 19
@@ -7458,8 +7452,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1325.5785
-        y: 297.75018
+        x: 1326.3295
+        y: 315.02313
         width: 160
         height: 30
     - id: 20
@@ -7783,14 +7777,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: EndJam();NPCFaceRight("Cliff");NPCFaceRight("JJ");NPCFaceRight("Dale")
+      userScript: EndJam();NPCFaceRight("Cliff");NPCFaceRight("Josh");NPCFaceRight("Dale")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 1352.0929
-        y: 1102.7275
+        y: 1101.5184
         width: 160
         height: 30
     - id: 26
@@ -8092,7 +8086,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Hope your new bassist doesn't blow up this time.
+        value: Hope your new bassist doesn't blow up this time like Brad.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -8335,7 +8329,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCWalkTo("Cliff", 23);NPCWalkTo("JJ", 23);NPCWalkTo("Dale", 23);
+      userScript: NPCWalkTo("Cliff", 23);NPCWalkTo("Josh", 23);NPCWalkTo("Dale",
+        23);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -8390,7 +8385,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: DisableCharacter("Cliff");DisableCharacter("Dale");DisableCharacter("Josh");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -8555,7 +8550,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: EnableCharacter("Emerita_FB");EnableCharacter("Daisy");EnableCharacter("Ollie");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -8600,17 +8595,17 @@ MonoBehaviour:
       isGroup: 0
       nodeColor: 
       delaySimStatus: 0
-      falseConditionAction: Block
+      falseConditionAction: Passthrough
       conditionPriority: 2
       outgoingLinks:
       - originConversationID: 11
         originDialogueID: 69
         destinationConversationID: 11
-        destinationDialogueID: 70
+        destinationDialogueID: 187
         isConnector: 0
         priority: 2
-      conditionsString: 
-      userScript: 
+      conditionsString: CheckFlag("Love_JJ")
+      userScript: EnableCharacter("JJ");EnableCharacter("Ethan");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -8618,61 +8613,6 @@ MonoBehaviour:
         serializedVersion: 2
         x: 1348.9628
         y: 2177.8381
-        width: 160
-        height: 30
-    - id: 70
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 3
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: Continue()
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 11
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 11
-        originDialogueID: 70
-        destinationConversationID: 11
-        destinationDialogueID: 3
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 1348.9628
-        y: 2229.0461
         width: 160
         height: 30
     - id: 71
@@ -9197,7 +9137,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Idk, all indie rock guitarists look the same to me.
+        value: Idk, all... guitarists look the same to me.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -9222,12 +9162,6 @@ MonoBehaviour:
         originDialogueID: 99
         destinationConversationID: 11
         destinationDialogueID: 101
-        isConnector: 0
-        priority: 2
-      - originConversationID: 11
-        originDialogueID: 99
-        destinationConversationID: 11
-        destinationDialogueID: 102
         isConnector: 0
         priority: 2
       - originConversationID: 11
@@ -9298,8 +9232,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1073.0627
-        y: 679.19025
+        x: 1218.4199
+        y: 686.0191
         width: 160
         height: 30
     - id: 101
@@ -9325,8 +9259,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: What a shame. I didn't think they could sound worse, but JJ was really
-          carrying Cloudy Kings.
+        value: ' I didn''t think they could sound worse, but JJ was really carrying
+          Cloudy Kings.'
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -9354,64 +9288,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1259.5613
-        y: 679.19025
-        width: 160
-        height: 30
-    - id: 102
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: Oh yeah, JJ's starting a jazz band instead with some weirdo named
-          Eith.
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 11
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 11
-        originDialogueID: 102
-        destinationConversationID: 11
-        destinationDialogueID: 105
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 1448.1322
-        y: 677.1181
+        x: 1404.9185
+        y: 686.0191
         width: 160
         height: 30
     - id: 103
@@ -9437,7 +9315,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: JJ's starting a jazz band so he quit. I'm playing bass!
+        value: JJ's starting a jazz band with me and Eith!
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -9458,7 +9336,7 @@ MonoBehaviour:
         destinationDialogueID: 107
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: CheckFlag("Love_JJ")
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -9520,119 +9398,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1170.4565
-        y: 812.07855
-        width: 160
-        height: 30
-    - id: 105
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 3
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: Man, Cliff is really cycling through guitarists.
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 11
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 11
-        originDialogueID: 105
-        destinationConversationID: 11
-        destinationDialogueID: 106
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 1450.2045
-        y: 747.8402
-        width: 160
-        height: 30
-    - id: 106
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: Yeah, I think this is like, the fifth one since the inception of Cloudy
-          Kings?
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 11
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 11
-        originDialogueID: 106
-        destinationConversationID: 11
-        destinationDialogueID: 25
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 1450.2045
-        y: 797.8402
+        x: 1315.8137
+        y: 818.9074
         width: 160
         height: 30
     - id: 107
@@ -9676,7 +9443,7 @@ MonoBehaviour:
       - originConversationID: 11
         originDialogueID: 107
         destinationConversationID: 11
-        destinationDialogueID: 108
+        destinationDialogueID: 109
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -9690,61 +9457,6 @@ MonoBehaviour:
         y: 735.81036
         width: 160
         height: 30
-    - id: 108
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: Our multi-talented bassist, woohoo!
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 11
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 11
-        originDialogueID: 108
-        destinationConversationID: 11
-        destinationDialogueID: 109
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 1635.6669
-        y: 792.0981
-        width: 160
-        height: 30
     - id: 109
       fields:
       - title: Title
@@ -9756,7 +9468,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 2
+        value: 3
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
@@ -9768,7 +9480,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: But Punk Juice comes first RIGHT.
+        value: But Punk Juice comes first, RIGHT?
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -9829,7 +9541,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Yeah, sure...
+        value: Uh, sure...
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -9858,7 +9570,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1563.1395
-        y: 903.78986
+        y: 902.8143
         width: 160
         height: 30
     - id: 111
@@ -9884,7 +9596,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Punk Juice is always number 1 in my heart!
+        value: Punk Juice will always number 1 in my heart!
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -9939,7 +9651,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: DON'T TALK ABOUT BRAD LIKE THAT!!
+        value: YOU KEEP BRAD'S NAME OUT OF YOUR MOUTH!!
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -10037,7 +9749,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 6
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
@@ -11829,7 +11541,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
@@ -11839,15 +11551,21 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 11
+        originDialogueID: 160
+        destinationConversationID: 11
+        destinationDialogueID: 1
+        isConnector: 0
+        priority: 2
       conditionsString: 
-      userScript: 
+      userScript: DisableCharacter("JJ");DisableCharacter("Rex");DisableCharacter("Pixie");DisableCharacter("Trixie");DisableCharacter("Emerita_FB");DisableCharacter("Daisy");DisableCharacter("Ethan");DisableCharacter("Ollie");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1349.1967
+        x: 1347.6946
         y: 98.01922
         width: 160
         height: 30
@@ -13198,9 +12916,119 @@ MonoBehaviour:
         y: 5171.1245
         width: 160
         height: 30
+    - id: 187
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 11
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Passthrough
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 11
+        originDialogueID: 187
+        destinationConversationID: 11
+        destinationDialogueID: 188
+        isConnector: 0
+        priority: 2
+      conditionsString: CheckFlag("Love_Rex")
+      userScript: EnableCharacter("Rex")
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1353.7507
+        y: 2223.7935
+        width: 160
+        height: 30
+    - id: 188
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 11
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Passthrough
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 11
+        originDialogueID: 188
+        destinationConversationID: 11
+        destinationDialogueID: 3
+        isConnector: 0
+        priority: 2
+      conditionsString: CheckFlag("Love_Pixie")
+      userScript: EnableCharacter("Pixie");EnableCharacter("Trixie");
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1351.3923
+        y: 2267.8164
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 190.64178, y: 4861.831}
-    canvasZoom: 0.79206145
+    canvasScrollPosition: {x: 1020.5408, y: 1473.8726}
+    canvasZoom: 0.9830619
   - id: 12
     fields:
     - title: Title
@@ -111337,7 +111165,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCKickFlip("Rex")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -111509,7 +111337,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCKickFlip("Rex")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -111968,8 +111796,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 265.57, y: 242.41669}
-    canvasZoom: 0.99785423
+    canvasScrollPosition: {x: 51.01311, y: 125.90393}
+    canvasZoom: 0.6168548
   - id: 79
     fields:
     - title: Title
@@ -112459,7 +112287,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 644.51556
-        y: 415.9141
+        y: 414.9151
         width: 160
         height: 30
     - id: 8
@@ -112489,7 +112317,62 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
+        value: Continue()@3
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 79
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 79
+        originDialogueID: 8
+        destinationConversationID: 79
+        destinationDialogueID: 9
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: NPCSkateTo("Dale", 80);NPCSkateTo("Cliff", 80);
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 644.51556
+        y: 465.9141
+        width: 160
+        height: 30
+    - id: 9
+      fields:
+      - title: Title
         value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 8
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 6
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 79
@@ -112501,18 +112384,18 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: DisableCharacter("Dale");DisableCharacter("Cliff")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 644.51556
-        y: 465.9141
+        y: 515.91406
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0.26374307, y: 0.16584587}
+    canvasScrollPosition: {x: 336.92712, y: 0}
     canvasZoom: 1.001
   - id: 80
     fields:

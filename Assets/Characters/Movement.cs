@@ -238,7 +238,7 @@ public abstract class Movement : MonoBehaviour
         }
     }
 
-    protected void Flip()
+    public void Flip()
     {
         if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter() || DialogueManager.LastConversationStarted.EndsWith("_Sk8")))
         {

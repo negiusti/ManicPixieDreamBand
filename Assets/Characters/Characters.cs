@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "Characters", menuName = "Custom/Characters")]
@@ -236,6 +235,17 @@ public class Characters : ScriptableObject
         {
             characters[npc].gameObject.SetActive(true);
             characters[npc].GetComponent<NPCMovement>().SkateTo((float)targetX);
+        }
+    }
+
+    public static void NPCKickFlip(string npc)
+    {
+        if (characters == null || !characters.ContainsKey(npc))
+            RefreshCharactersCache();
+        if (characters.ContainsKey(npc))
+        {
+            characters[npc].gameObject.SetActive(true);
+            characters[npc].GetComponent<NPCMovement>().Flip();
         }
     }
 
