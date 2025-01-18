@@ -47,6 +47,7 @@ public class StarSpawnerScript : MonoBehaviour
     public AudioClip bm;
     public AudioClip ohno;
     public AudioClip pp;
+    public AudioClip jjj;
     private Dictionary<string, AudioClip> audioClips;
 
     // Start is called before the first frame update
@@ -135,7 +136,10 @@ public class StarSpawnerScript : MonoBehaviour
 
     public void StartSong(string song)
     {
-        audioSource.clip = audioClips[song];
+        if (audioClips.ContainsKey(song))
+            audioSource.clip = audioClips[song];
+        else
+            audioSource.clip = jjj;
         string addressablePath1 = $"Assets/RhythmGameNotes/{song}/{song}_notes.txt";
         string addressablePath2 = $"Assets/RhythmGameNotes/{song}/{song}.txt";
 
