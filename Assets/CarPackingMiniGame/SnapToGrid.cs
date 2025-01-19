@@ -32,6 +32,7 @@ public class SnapToGrid : MonoBehaviour
     private float resetStartTime;
     private float resetDuration = 0.5f;
     private bool resetInProgress;
+    private Animator anim;
 
     private Vector3 resetFromPosition;
 
@@ -61,6 +62,20 @@ public class SnapToGrid : MonoBehaviour
         ignoredCells = PopulateArray();
 
         grid = GetComponentInParent<TrunkGrid>();
+        anim = GetComponent<Animator>();
+        if (anim != null)
+        {
+            anim.SetBool("InRange", true);
+        }
+    }
+
+    private void OnEnable()
+    {
+        anim = GetComponent<Animator>();
+        if (anim != null)
+        {
+            anim.SetBool("InRange", true);
+        }
     }
 
     private void OnMouseDown()

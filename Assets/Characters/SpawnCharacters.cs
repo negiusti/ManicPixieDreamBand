@@ -89,6 +89,7 @@ public class SpawnCharacters : ScriptableObject
                 if (c.gameObject.GetComponent<DialogueSystemTrigger>() == null)
                     c.gameObject.AddComponent<DialogueSystemTrigger>();
 
+                c.gameObject.GetComponent<Usable>().enabled = true;
                 DialogueSystemTrigger trigger = c.gameObject.GetComponent<DialogueSystemTrigger>();
                 trigger.trigger = DialogueSystemTriggerEvent.OnUse;
                 trigger.conversation = convo;
