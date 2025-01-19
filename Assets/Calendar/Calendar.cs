@@ -57,15 +57,11 @@ public class Calendar : ScriptableObject
         if (!events[day + (int)daysFromNow].Any(e => e.Name().Equals(eventName)))  // Don't schedule duplicate events!
         {
 
-            // TODO: trigger calendar app notif
             if (daysFromNow == 0)// New event was added today!
             {
                 Phone.Instance.SendNotificationTo("Calendar");
-                events[day + (int)daysFromNow].Insert(currentEventIdx, new QuestEvent(eventName, conversation, isNight, location));
-            } else
-            {
-                events[day + (int)daysFromNow].Insert(0, new QuestEvent(eventName, conversation, isNight, location));
             }
+            ScheduleEvent(eventName, day + (int)daysFromNow, location, isNight);
         }
     }
 
@@ -108,7 +104,7 @@ public class Calendar : ScriptableObject
 
     public static void ScheduleNext7Days()
     {
-        for (int i = day; i < day + 7; i++)
+        for (int i = day; i < day + 9; i++)
         {
             Debug.Log("Scheduling day " + i);
             if (!events.ContainsKey(i))
