@@ -66,6 +66,7 @@ public class CharacterEditor : MonoBehaviour
     private GameObject characterGameObject;
     private GameObject goToPreviousSceneButton;
     private Coroutine cr;
+    [SerializeField] private bool isPixiecore;
 
     public void UnlockAllOutfits(bool value)
     {
@@ -81,6 +82,8 @@ public class CharacterEditor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!isPixiecore)
+            isPixiecore = Calendar.GetCurrentEvent() != null && Calendar.GetCurrentEvent().Name().Equals("Model Pixie's fashion line @ Home");
         if (Phone.Instance != null)
             Phone.Instance.gameObject.SetActive(false);
         skinRenderers = new List<SpriteRenderer>();
@@ -139,9 +142,12 @@ public class CharacterEditor : MonoBehaviour
             {
                 labels = spriteLib.GetCategoryLabelNames(category)
                     .Where(l => l.StartsWith("E_"))
-                    .Where(l => !l.ToLower().Contains("skate"))
+                    .Where(l => !l.ToLower().Contains("roller"))
                     .Where(l => !l.StartsWith("X_") || l.Equals("X_" + character.gameObject.name))
                     .ToArray();
+            }
+            else if (isPixiecore && spriteLib.GetCategoryLabelNames(category).Any(l => l.ToLower().Contains("pixiecore"))) {
+                labels = spriteLib.GetCategoryLabelNames(category).Where(i => i.ToLower().Contains("pixiecore")).ToArray();
             }
             else
             {
@@ -150,7 +156,7 @@ public class CharacterEditor : MonoBehaviour
                 if (labels.Length == 0)
                     labels = spriteLib.GetCategoryLabelNames(category)
                         .Where(l => !l.StartsWith("E_"))
-                        .Where(l => !l.ToLower().Contains("skate"))
+                        .Where(l => !l.ToLower().Contains("roller"))
                         .Where(l => !l.StartsWith("X_") || l.Equals("X_" + character.gameObject.name))
                         .ToArray();
             }

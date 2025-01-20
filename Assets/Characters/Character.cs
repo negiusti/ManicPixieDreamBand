@@ -189,7 +189,7 @@ public class Character : MonoBehaviour
                 Debug.LogError(gameObject.name + "'s targetresolver for " + targetResolver.gameObject.name + " is null");
                 continue;
             }
-            if (targetResolver.GetLabel().StartsWith("E_") || targetResolver.GetLabel().ToLower().Contains("skate") || targetResolver.GetCategory() == "Instrument" || targetResolver.GetCategory().Contains("Holding")) // don't save emotes
+            if (targetResolver.GetLabel().StartsWith("E_") || targetResolver.GetLabel().ToLower().Contains("roller") || targetResolver.GetCategory() == "Instrument" || targetResolver.GetCategory().Contains("Holding")) // don't save emotes
                 continue;
             categoryToLabelMap[GetSRCategory(targetResolver)] = targetResolver.GetLabel();
         }
