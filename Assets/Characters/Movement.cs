@@ -44,6 +44,7 @@ public abstract class Movement : MonoBehaviour
     private static string RollerskateIdleAnim = "BaseCharacter_RollerskateIdle";
     private static string DrinkAnim = "BaseCharacter_Drink";
     private static string ShootAnim = "BaseCharacter_Shoot";
+    private static string KissAnim = "BaseCharacter_Kiss";
 
     private Dictionary<MovementState, string> stateToAnimation = new Dictionary<MovementState, string> {
         {MovementState.Walk, WalkAnim },
@@ -183,6 +184,14 @@ public abstract class Movement : MonoBehaviour
         GameManager.miscSoundEffects.Play("Shoot");
         currAnim = ShootAnim;
         animator.Play("BaseCharacter_Shoot");        
+    }
+
+    public void Kiss()
+    {
+        lockAnim = true;
+        //GameManager.miscSoundEffects.Play("Smooch");
+        currAnim = KissAnim;
+        animator.Play("BaseCharacter_Kiss");
     }
 
     public void PlayInstrument(string instLabel, Vector3 pos, string layer, int layerOrder)
