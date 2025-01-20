@@ -110,6 +110,17 @@ public class InventoryManager : ScriptableObject
             Phone.Instance.NotificationMessage("Added " + item + " to gear");
             Phone.Instance.SendNotificationTo("Gear");
             Phone.Instance.SendNotificationTo("Gear", category);
+        } else if (item.Contains("Roller"))
+        {
+            Phone.Instance.NotificationMessage("Added " + item + " to skate gear");
+            Phone.Instance.SendNotificationTo("Skate");
+            Phone.Instance.SendNotificationTo("Skate", MainCharacterState.RollerskateCategory);
+        }
+        else if (category.Contains("board"))
+        {
+            Phone.Instance.NotificationMessage("Added " + item + " to skate gear");
+            Phone.Instance.SendNotificationTo("Skate");
+            Phone.Instance.SendNotificationTo("Skate", MainCharacterState.SkateboardCategory);
         }
         else
         {

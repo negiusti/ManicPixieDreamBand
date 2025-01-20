@@ -10,7 +10,7 @@ public class MainCharacterState : ScriptableObject
     private static double bankBalance;
     private static List<string> unlockedPhotos;
     private static Dictionary<string, bool> flags;
-    public static readonly string RollerskateCategory = "Rollerskates";
+    public static readonly string RollerskateCategory = "Rollerskate_Icons";
     public static readonly string SkateboardCategory = "Skateboard";
 
     public static void Save()
