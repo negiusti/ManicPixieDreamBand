@@ -89,12 +89,12 @@ public class CharacterEditor : MonoBehaviour
         skinRenderers = new List<SpriteRenderer>();
         character = GameObject.FindFirstObjectByType<Character>();
         characterGameObject = character.gameObject;
-        SpriteResolver[] resolvers = characterGameObject.GetComponentsInChildren<SpriteResolver>(includeInactive: true);
+        SpriteResolver[] resolvers = characterGameObject.GetComponentsInChildren<SpriteResolver>(includeInactive: true).Where(r => !r.gameObject.name.Equals("Sk8board")).ToArray();
         foreach (SpriteResolver resolver in resolvers)
         {
             categoryToResolver[resolver.gameObject.name] = resolver;
         }
-        SpriteRenderer[] renderers = characterGameObject.GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
+        SpriteRenderer[] renderers = characterGameObject.GetComponentsInChildren<SpriteRenderer>(includeInactive: true).Where(r => !r.gameObject.name.Equals("Sk8board")).ToArray();
         foreach (SpriteRenderer renderer in renderers)
         {
             categoryToRenderer[renderer.gameObject.name] = renderer;
