@@ -1,5 +1,6 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public class OutdoorLocation : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class OutdoorLocation : MonoBehaviour
     private GameObject prompt;
     private Animator sign;
     public bool isBusiness;
+    public bool isOpen;
+    private SpriteResolver openCloseSign;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,7 @@ public class OutdoorLocation : MonoBehaviour
         if(prompt != null)
             prompt.SetActive(false);
         sign = GetComponentInChildren<Animator>();
+        openCloseSign = GetComponentInChildren<SpriteResolver>();
     }
 
     // Update is called once per frame
@@ -48,17 +52,73 @@ public class OutdoorLocation : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && !DialogueManager.IsConversationActive)
         {
-            prompt.SetActive(true);
+            CheckOpenClose();
             if (sign != null)
                 sign.SetBool("Show", true);
-            inRange = true;
+            if (isOpen)
+            {
+                prompt.SetActive(true);
+                inRange = true;
+            }
         }
+    }
+
+    private void CheckOpenClose()
+    {
+        switch(location)
+        {
+            case "TattooShop":
+                if (JobSystem.CurrentJob() == JobSystem.PunkJob.Tattoo && ConvoRequirements.CurrentEventType() == "JobEvent")
+                    OpenSign();
+                else
+                    CloseSign();
+                break;
+            case "SkateShop":
+                if (Calendar.WasDNDCompletedToday())
+                    CloseSign();
+                else
+                    OpenSign();
+                break;
+            case "SmallBar":
+                if (Calendar.IsNight())
+                    OpenSign();
+                else
+                {
+                    if (Calendar.GetCurrentEvent().Name().ToLower().Contains("gig") ||
+                        Calendar.GetCurrentEvent().Name().ToLower().Contains("keys"))
+                    {
+                        OpenSign();
+                    } else
+                    {
+                        CloseSign();
+                    }
+                }
+                break;
+            default:
+                OpenSign();
+                break;
+        }
+    }
+
+    private void OpenSign()
+    {
+        isOpen = true;
+        if (openCloseSign!= null)
+            openCloseSign.SetCategoryAndLabel("Sign", "Open");
+    }
+
+    private void CloseSign()
+    {
+        isOpen = false;
+        if (openCloseSign != null)
+            openCloseSign.SetCategoryAndLabel("Sign", "Closed");
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            CheckOpenClose();
             prompt.SetActive(false);
             if (sign != null)
                 sign.SetBool("Show", false);

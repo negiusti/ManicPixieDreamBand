@@ -147,6 +147,16 @@ public class Calendar : ScriptableObject
         }
     }
 
+    public static bool WasDNDCompletedToday()
+    {
+        for (int i = 0; i < currentEventIdx; i++)
+        {
+            if (events[day].Any(e => e.Name().ToLower().Contains("daggers")))
+                return true;
+        }
+        return false;
+    }
+
     private static void ScheduleEvent(string eventName, int dayNum, string location, bool night)
     {
         if (!events.ContainsKey(dayNum))
