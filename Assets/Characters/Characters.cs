@@ -163,6 +163,30 @@ public class Characters : ScriptableObject
         characters[character].GetComponent<Movement>().Kiss();
     }
 
+    public static void SetTop(string character, string label)
+    {
+        if (characters == null || !characters.ContainsKey(character))
+            RefreshCharactersCache();
+        if (!characters.ContainsKey(character))
+        {
+            Debug.LogError("Couldn't find character: " + character);
+            return;
+        }
+        characters[character].SetTop(label);
+    }
+
+    public static void SetFaceDetail(string character, string label)
+    {
+        if (characters == null || !characters.ContainsKey(character))
+            RefreshCharactersCache();
+        if (!characters.ContainsKey(character))
+        {
+            Debug.LogError("Couldn't find character: " + character);
+            return;
+        }
+        characters[character].SetFaceDetail(label);
+    }
+
     public static void MoveYPos(string character, double y)
     {
         if (characters == null || !characters.ContainsKey(character))

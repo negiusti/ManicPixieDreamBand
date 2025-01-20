@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(Characters.UnlockEmoji), this, SymbolExtensions.GetMethodInfo(() => Characters.UnlockEmoji(string.Empty, string.Empty)));
         Lua.RegisterFunction(nameof(Characters.Emote), this, SymbolExtensions.GetMethodInfo(() => Characters.Emote(string.Empty, string.Empty, string.Empty)));
         Lua.RegisterFunction(nameof(Characters.Drink), this, SymbolExtensions.GetMethodInfo(() => Characters.Drink(string.Empty, string.Empty)));
+        Lua.RegisterFunction(nameof(Characters.SetFaceDetail), this, SymbolExtensions.GetMethodInfo(() => Characters.SetFaceDetail(string.Empty, string.Empty)));
+        Lua.RegisterFunction(nameof(Characters.SetTop), this, SymbolExtensions.GetMethodInfo(() => Characters.SetTop(string.Empty, string.Empty)));
         Lua.RegisterFunction(nameof(Characters.Shoot), this, SymbolExtensions.GetMethodInfo(() => Characters.Shoot(string.Empty)));
         Lua.RegisterFunction(nameof(Characters.Kiss), this, SymbolExtensions.GetMethodInfo(() => Characters.Kiss(string.Empty)));
         Lua.RegisterFunction(nameof(Characters.MoveYPos), this, SymbolExtensions.GetMethodInfo(() => Characters.MoveYPos(string.Empty, (double)0)));
@@ -107,6 +109,8 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(Characters.Shoot));
         Lua.UnregisterFunction(nameof(Characters.Kiss));
         Lua.UnregisterFunction(nameof(Characters.Drink));
+        Lua.UnregisterFunction(nameof(Characters.SetTop));
+        Lua.UnregisterFunction(nameof(Characters.SetFaceDetail));
         Lua.UnregisterFunction(nameof(Characters.MoveYPos));
         Lua.UnregisterFunction(nameof(Characters.SetLayer));
         Lua.UnregisterFunction(nameof(Characters.EnableCharacter));

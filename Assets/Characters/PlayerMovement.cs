@@ -44,7 +44,12 @@ public class PlayerMovement : Movement
 
         moveInput = Input.GetAxis("Horizontal");
 
-        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && !DialogueManager.IsConversationActive && !lockAnim)
+        if ((Input.GetKeyDown(KeyCode.UpArrow) ||
+            Input.GetKeyDown(KeyCode.W)) &&
+            !lockAnim &&
+            (!DialogueManager.IsConversationActive
+            || !character.isMainCharacter()
+            || DialogueManager.LastConversationStarted.EndsWith("_Sk8")))
         {
             if (isSkating)
                 Ollie();

@@ -77,7 +77,7 @@ public class Character : MonoBehaviour
     {
         isMC = gameObject.name == "MainCharacter";
         spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
-        spriteResolvers = this.GetComponentsInChildren<SpriteResolver>(includeInactive:true);
+        spriteResolvers = this.GetComponentsInChildren<SpriteResolver>(includeInactive: true);
         categoryToEnabled = new Dictionary<string, bool>();
         categoryToLabelMap = new Dictionary<string, string>();
         categoryToColorMap = new Dictionary<string, Color>();
@@ -173,7 +173,7 @@ public class Character : MonoBehaviour
         categoryToResolver["R_Holding"].SetCategoryAndLabel("R_Holding", "None");
         categoryToResolver["R_Holding"].gameObject.SetActive(true);
         categoryToResolver["R_Holding"].ResolveSpriteToSpriteRenderer();
-        
+
         categoryToResolver["L_Holding"].gameObject.SetActive(false);
         categoryToResolver["L_Holding"].SetCategoryAndLabel("L_Holding", "None");
         categoryToResolver["L_Holding"].gameObject.SetActive(true);
@@ -340,6 +340,22 @@ public class Character : MonoBehaviour
         categoryToResolver["R_Shoe"].ResolveSpriteToSpriteRenderer();
         categoryToResolver["L_Shoe"].SetCategoryAndLabel("L_Shoe", label);
         categoryToResolver["L_Shoe"].ResolveSpriteToSpriteRenderer();
+    }
+
+    public void SetTop(string label)
+    {
+        categoryToResolver["R_Sleeve"].SetCategoryAndLabel("R_Sleeve", label);
+        categoryToResolver["R_Sleeve"].ResolveSpriteToSpriteRenderer();
+        categoryToResolver["Top"].SetCategoryAndLabel("Top", label);
+        categoryToResolver["Top"].ResolveSpriteToSpriteRenderer();
+        categoryToResolver["L_Sleeve"].SetCategoryAndLabel("L_Sleeve", label);
+        categoryToResolver["L_Sleeve"].ResolveSpriteToSpriteRenderer();
+    }
+
+    public void SetFaceDetail(string label)
+    {
+        categoryToResolver["Face_Detail"].SetCategoryAndLabel("Face_Detail", label);
+        categoryToResolver["Face_Detail"].ResolveSpriteToSpriteRenderer();
     }
 
     private void SetSkateboard(string label)
