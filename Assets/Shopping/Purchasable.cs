@@ -9,6 +9,7 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] public string itemName;
     [SerializeField] public double price;
     [SerializeField] private bool sold;
+    [SerializeField] private bool pixiecore;
     private string category;
     private Shop shop;
     private SpriteResolver spriteResolver;
@@ -92,7 +93,7 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             Start();
         HashSet<string> purchasedItems = InventoryManager.GetPurchasedItems(category);
         // Don't sell already purchased items or quest exclusives or items exclusive to NPCs.
-        return spriteLib.GetCategoryLabelNames(category).Where(i => !i.Equals("None") && !purchasedItems.Contains(i) && !questExclusives.Contains(i) && !i.StartsWith("X_")).ToArray();
+        return spriteLib.GetCategoryLabelNames(category).Where(i => !i.Equals("None") && !purchasedItems.Contains(i) && !questExclusives.Contains(i) && !i.StartsWith("X_") && (pixiecore || !i.ToLower().Contains("pixiecore"))).ToArray();
     }
 
     public void Randomize()
