@@ -25,7 +25,14 @@ public class ShopDisplay : MonoBehaviour
 
         // All of this displays purchaseables have been purchased
         if (childPurchasables.All(p => p.GetAvailableStock().Length == 0))
+        {
+            for (int i = 0; i < childPurchasables.Length; i++)
+            {
+                    childPurchasables[i].SetBought(true);
+            }
             return;
+        }
+            
 
         // Find a purchaseable that still has some items left to be purchased
         int randomIdx;
