@@ -17,7 +17,7 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private string purchaseableName;
     private PriceTag priceTag;
     private ShopDisplay shopDisplay;
-    private HashSet<string> questExclusives = new HashSet<string> { "Vintage Poster" };
+    private HashSet<string> questExclusives = new HashSet<string> { "Vintage Poster", "Punk Juice Shirt", "Daisy Dukes Shirt" };
 
     private class PurchasableData
     {
