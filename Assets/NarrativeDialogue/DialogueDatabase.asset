@@ -585,6 +585,28 @@ MonoBehaviour:
     spritePortrait: {fileID: 0}
     alternatePortraits: []
     spritePortraits: []
+  - id: 26
+    fields:
+    - title: Name
+      value: TJ
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: IsPlayer
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    portrait: {fileID: 0}
+    spritePortrait: {fileID: 0}
+    alternatePortraits: []
+    spritePortraits: []
   items: []
   locations: []
   variables:
@@ -79341,7 +79363,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("JJ", "Pathetic", "OpenMouth")
+      userScript: Emote("JJ", "Pathetic", "OpenMouth");StartJam("The Daisy Dukes",
+        6);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -80136,7 +80159,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("JJ", "Whoa", "Sad");
+      userScript: EndJam();Emote("JJ", "Whoa", "Sad");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -81711,8 +81734,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 993.86957, y: 2103.29}
-    canvasZoom: 0.5361601
+    canvasScrollPosition: {x: 1608.6748, y: 1368.7633}
+    canvasZoom: 1.0867196
   - id: 62
     fields:
     - title: Title
@@ -83209,8 +83232,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.6492333
+    canvasScrollPosition: {x: 150.3878, y: 404.73358}
+    canvasZoom: 0.7885353
   - id: 65
     fields:
     - title: Title
