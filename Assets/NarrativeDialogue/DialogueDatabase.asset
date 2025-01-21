@@ -92735,7 +92735,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: ChangeScene("SkateShop")
+      userScript: SetFlag("OMW_SkateShop", true);ChangeScene("SkateShop")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -92966,8 +92966,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 317.0127, y: 27.551819}
-    canvasZoom: 1.2476472
+    canvasScrollPosition: {x: 207.10527, y: 781.532}
+    canvasZoom: 0.6412569
   - id: 68
     fields:
     - title: Title
@@ -93765,7 +93765,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Of course! You're really cool and I want to learn to kickflip.
+        value: Of course! You rock that helmet.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -93783,7 +93783,7 @@ MonoBehaviour:
       - originConversationID: 68
         originDialogueID: 13
         destinationConversationID: 68
-        destinationDialogueID: 25
+        destinationDialogueID: 28
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -93838,7 +93838,7 @@ MonoBehaviour:
       - originConversationID: 68
         originDialogueID: 14
         destinationConversationID: 68
-        destinationDialogueID: 25
+        destinationDialogueID: 28
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -93948,73 +93948,18 @@ MonoBehaviour:
       - originConversationID: 68
         originDialogueID: 16
         destinationConversationID: 68
-        destinationDialogueID: 17
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 626.4656
-        y: 922.4589
-        width: 160
-        height: 30
-    - id: 17
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 18
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: (change facial expression to shock)
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 68
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 68
-        originDialogueID: 17
-        destinationConversationID: 68
         destinationDialogueID: 18
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Whoa", "OpenMouth")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 628.46356
-        y: 972.459
+        x: 625.647
+        y: 922.4589
         width: 160
         height: 30
     - id: 18
@@ -94040,7 +93985,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Nah, I'm just kiddin'. You can have it. It's discontinued overstock.
+        value: Nah, I'm just kiddin'. You can have it for free. The manufacturer
+          is recalling them.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -94062,7 +94008,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Worry", "Disappoint");Emote("Ollie", "Happy", "Happy")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -94118,7 +94064,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Worry", "Happy")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -94139,11 +94085,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 16
+        value: 18
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 18
+        value: 16
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -94179,7 +94125,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Blush", "Happy")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -94416,178 +94362,6 @@ MonoBehaviour:
         y: 457.09753
         width: 160
         height: 30
-    - id: 25
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 18
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: Now that I feel better with this helmet, I'm happy to show you how
-          to kickflip next time! You in?
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 68
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 68
-        originDialogueID: 25
-        destinationConversationID: 68
-        destinationDialogueID: 26
-        isConnector: 0
-        priority: 2
-      - originConversationID: 68
-        originDialogueID: 25
-        destinationConversationID: 68
-        destinationDialogueID: 27
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 637.995
-        y: 1301.2661
-        width: 160
-        height: 30
-    - id: 26
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 18
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: Absolutely! Text me and we'll get together!
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 68
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 68
-        originDialogueID: 26
-        destinationConversationID: 68
-        destinationDialogueID: 28
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 530.88666
-        y: 1367.0887
-        width: 160
-        height: 30
-    - id: 27
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 18
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: Nah, changed my mind.
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 68
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 68
-        originDialogueID: 27
-        destinationConversationID: 68
-        destinationDialogueID: 28
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 756.0577
-        y: 1364.6547
-        width: 160
-        height: 30
     - id: 28
       fields:
       - title: Title
@@ -94634,14 +94408,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: SetFlag("Rex_Kickflip", true);Emote("Ollie", "Default", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 646.51807
-        y: 1463.3387
+        x: 626.8704
+        y: 1293.0597
         width: 160
         height: 30
     - id: 29
@@ -94689,14 +94463,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCSkateTo("Rex", 20)
+      userScript: NPCSkateTo("Rex", 20);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 644.0868
-        y: 1520.6329
+        x: 624.43915
+        y: 1351.1725
         width: 160
         height: 30
     - id: 30
@@ -94744,13 +94518,13 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 643.17584
-        y: 1580.0664
+        x: 623.5282
+        y: 1410.606
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 266.43262, y: 746.67926}
-    canvasZoom: 0.7558831
+    canvasScrollPosition: {x: 481.6984, y: 765.1574}
+    canvasZoom: 1.2215241
   - id: 69
     fields:
     - title: Title
@@ -102868,7 +102642,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: Emote("Rex", "Happy", "Happy");ChangeScene("Park")
+      userScript: SetFlag("HillDate3", true);Emote("Rex", "Happy", "Happy");ChangeScene("Park")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
