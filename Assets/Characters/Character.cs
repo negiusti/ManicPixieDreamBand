@@ -375,7 +375,7 @@ public class Character : MonoBehaviour
         categoryToRenderer["Eyes"].color = color;
         categoryToRenderer["Eyeshadow"].enabled = (emotion.ToLower() == "default");
         categoryToRenderer["Eyebrows"].enabled = (emotion.ToLower() == "default");
-        categoryToRenderer["Face_Detail"].enabled = (emotion.ToLower() == "default");
+        categoryToRenderer["Face_Detail"].enabled = (emotion.ToLower() == "default" || categoryToLabelMap["Face_Detail"] == "X_Rex");
         return hasChanged;
     }
 

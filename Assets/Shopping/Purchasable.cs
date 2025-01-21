@@ -91,9 +91,21 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (category == null)
             Start();
+
+        if (pixiecore)
+        {
+            return spriteLib.GetCategoryLabelNames(category).Where(i => !i.Equals("None") &&
+                !InventoryManager.GetMCInventory(category).Contains(i) &&
+                i.ToLower().Contains("pixiecore")).ToArray();
+        }
+
         HashSet<string> purchasedItems = InventoryManager.GetPurchasedItems(category);
         // Don't sell already purchased items or quest exclusives or items exclusive to NPCs.
-        return spriteLib.GetCategoryLabelNames(category).Where(i => !i.Equals("None") && !purchasedItems.Contains(i) && !questExclusives.Contains(i) && !i.StartsWith("X_") && (pixiecore || !i.ToLower().Contains("pixiecore"))).ToArray();
+        return spriteLib.GetCategoryLabelNames(category).Where(i => !i.Equals("None") &&
+            !purchasedItems.Contains(i) &&
+            !questExclusives.Contains(i) &&
+            !i.StartsWith("X_") &&
+            !i.ToLower().Contains("pixiecore")).ToArray();
     }
 
     public void Randomize()
