@@ -96301,8 +96301,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Daggers?? Demons?? Neither of those sound cool to you?? Sounds like
-          you're a poser after all...
+        value: Daggers?? Demons?? Neither of those sound cool to you?? Maybe you're
+          a poser after all...
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -96324,7 +96324,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Side", "OpenDownSmall")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -96380,7 +96380,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Star", "OpenSmall")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -99027,7 +99027,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Default", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -99145,7 +99145,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Happy", "Happy")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -99318,14 +99318,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Worry", "OpenMouthDown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1203.672
-        y: 3298.1985
+        x: 1200.095
+        y: 3283.8906
         width: 160
         height: 30
     - id: 210
@@ -99483,7 +99483,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Side", "Disappoint")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -99538,7 +99538,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Side", "Disappoint")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -99600,7 +99600,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Worry", "Sad")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -99950,7 +99950,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1210.8003
-        y: 3798.3699
+        y: 3788.4812
         width: 160
         height: 30
     - id: 221
@@ -100115,14 +100115,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Pathetic", "Sad")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1203.9388
-        y: 3922.8755
+        x: 1203.0687
+        y: 3922.0054
         width: 160
         height: 30
     - id: 224
@@ -100148,8 +100148,8 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Maybe it's a good change. It led to you getting a helmet that protects
-          you! Who knows what cool new tricks that will empower you to do.
+        value: Now you have a helmet that protects you! Who knows what cool new tricks
+          that will empower you to do.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -100287,7 +100287,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Pathetic", "Happy")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -100320,7 +100320,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: I guess you're right. Now that I'm armored up it's probably way less
+        value: I guess you're right. Now that I'm armored up, it's probably way less
           scary.
         type: 0
         typeString: CustomFieldType_Text
@@ -100349,7 +100349,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Pathetic", "Happy")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -100520,7 +100520,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Rex", "Whoa", "Sad")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -100541,11 +100541,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 1
+        value: 18
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 18
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -100571,19 +100571,19 @@ MonoBehaviour:
       - originConversationID: 70
         originDialogueID: 231
         destinationConversationID: 70
-        destinationDialogueID: 232
+        destinationDialogueID: 236
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: CompleteCurrentEvent();SchedulePlotEvent("Bomb Hill w/ Rex @ Al
-        Canderson Park", "", "Park", true, 1)
+      userScript: Emote("Rex", "Whoa", "OpenMouthDown");CompleteCurrentEvent();SchedulePlotEvent("Bomb
+        Hill w/ Rex @ Al Canderson Park", "", "Park", true, 1);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 1205.7856
-        y: 4386.5186
+        y: 4385.629
         width: 160
         height: 30
     - id: 232
@@ -100613,7 +100613,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 70
@@ -100625,14 +100625,14 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: DisableCharacter("Rex");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1208.7238
-        y: 4436.5186
+        x: 1209.6136
+        y: 4484.569
         width: 160
         height: 30
     - id: 233
@@ -100800,9 +100800,64 @@ MonoBehaviour:
         y: 4297.327
         width: 160
         height: 30
+    - id: 236
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 18
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()@3
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 70
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 70
+        originDialogueID: 236
+        destinationConversationID: 70
+        destinationDialogueID: 232
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: Emote("Rex", "Whoa", "Sad");NPCSkateTo("Rex",80);
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1221.8025
+        y: 4432.96
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 738.4548, y: 674.5071}
-    canvasZoom: 0.5774929
+    canvasScrollPosition: {x: 927.36993, y: 3584.6013}
+    canvasZoom: 0.82129806
   - id: 71
     fields:
     - title: Title
