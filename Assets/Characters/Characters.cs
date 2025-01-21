@@ -259,6 +259,10 @@ public class Characters : ScriptableObject
         if (characters.ContainsKey(npc))
         {
             characters[npc].gameObject.SetActive(true);
+            if (npc == "MainCharacter" && characters[npc].GetComponent<NPCMovement>() == null)
+            {
+                MainCharacter().gameObject.AddComponent<NPCMovement>();
+            }
             characters[npc].GetComponent<NPCMovement>().StopSkating();
         }
     }
@@ -270,6 +274,10 @@ public class Characters : ScriptableObject
         if (characters.ContainsKey(npc))
         {
             characters[npc].gameObject.SetActive(true);
+            if (npc == "MainCharacter" && characters[npc].GetComponent<NPCMovement>() == null)
+            {
+                MainCharacter().gameObject.AddComponent<NPCMovement>();
+            }
             characters[npc].GetComponent<NPCMovement>().SkateTo((float)targetX);
         }
     }
