@@ -288,7 +288,7 @@ public class CustomDialogueScript : MonoBehaviour
         DialogueManager.standardDialogueUI.ForceOverrideMenuPanel(responsePanel);
         DialogueManager.displaySettings.subtitleSettings.continueButton = DisplaySettings.SubtitleSettings.ContinueButtonMode.Always;
         bool isOutside = FindObjectsOfType<OutdoorLocation>().Length > 0;
-        if (isOutside)
+        if (isOutside && !SceneChanger.Instance.GetCurrentScene().Equals("HillBombMinigame"))
         {
             if (Camera.main.gameObject.GetComponent<CameraLerp>() == null)
                 Camera.main.gameObject.AddComponent<CameraLerp>();
