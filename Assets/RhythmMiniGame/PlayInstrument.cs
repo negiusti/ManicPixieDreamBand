@@ -90,7 +90,8 @@ public class PlayInstrument : MonoBehaviour, IPointerClickHandler
             return;
         isPlayingInstrument = false;
         spriteRenderer.enabled = true;
-        musicianMovement.StopPlayingInstrument();
+        if (musicianMovement != null)
+            musicianMovement.StopPlayingInstrument();
         //minigame.CloseMiniGame();
     }
 
