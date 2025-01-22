@@ -410,6 +410,43 @@
                     ]
                 },
                 {
+                    "locations": [ "Bedroom" ],
+                    "trigger": "Start",
+                    "conversation": "Pixie/ModelDate2",
+                    "requirements": {
+                        "locations": [ "Bedroom" ],
+                        "trueFlags":  [ "ModelDate2"],
+                        "eventName": "Model Pixie's fashion line @ Home",
+                        "minDay": 3
+                    },
+                    "participants": [
+                        {
+                            "name": "Pixie",
+                            "position": {
+                                "x": 1.55,
+                                "y": -0.9,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "right"
+                        },
+                        {
+                            "name": "MainCharacter",
+                            "position": {
+                                "x": 4.97,
+                                "y": -1.204609,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": false,
+                            "faceLeftOrRight": "left"
+                        }
+                    ]
+                },
+                {
                     "locations": [ "ShoppingDistrict" ],
                     "trigger": "Start",
                     "conversation": "FirstGig_Pixie",
