@@ -60,7 +60,7 @@ public class JamCoordinator : ScriptableObject
     public static void StartJam(string bandname, double ticketSales = -1)
     {
         if (isJamInSession)
-            return;
+            EndJam();
 
         isJamInSession = true;
         GameManager gm = GameManager.Instance;
