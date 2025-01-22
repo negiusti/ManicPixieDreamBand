@@ -74,8 +74,10 @@ public class RomanceManager : ScriptableObject
 
     public static void Save()
     {
-        ES3.Save("CompletedRomanceConvos", completedRomanceConvos);
-        ES3.Save("RelationshipScores", relationshipScores);
+        if (completedRomanceConvos != null)
+            ES3.Save("CompletedRomanceConvos", completedRomanceConvos);
+        if (relationshipScores != null)
+            ES3.Save("RelationshipScores", relationshipScores);
     }
 
     public static void Load()
@@ -83,5 +85,7 @@ public class RomanceManager : ScriptableObject
         hornySingles = ConversationJson.GetRomancesData().romances.ToDictionary(r => r.npcName, r => r);
         completedRomanceConvos = ES3.Load("CompletedRomanceConvos", new HashSet<string>());
         relationshipScores = ES3.Load("RelationshipScores", new Dictionary<string, int>());
+        if (relationshipScores == null)
+            relationshipScores = new Dictionary<string, int>();
     }
 }

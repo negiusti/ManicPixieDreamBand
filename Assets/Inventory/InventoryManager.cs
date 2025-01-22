@@ -140,6 +140,7 @@ public class InventoryManager : ScriptableObject
     {
         if (category.Contains("Top") ||
             category.Contains("Bottom") ||
+            category.Contains("Crotch") ||
             category.Contains("Sock") ||
             category.Contains("Shoe") ||
             category.Contains("FB") ||

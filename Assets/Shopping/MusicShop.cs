@@ -1,4 +1,5 @@
 ﻿using PixelCrushers.DialogueSystem;
+using UnityEngine;
 
 public class MusicShop : Shop
 {
@@ -18,6 +19,12 @@ public class MusicShop : Shop
 
     public override void AskToBuy(Purchasable p)
     {
+        if (DialogueManager.IsConversationActive)
+        {
+            Debug.Log("Conversation already active");
+            return;
+        }
+            
         currentSelectedPurchasable = p;
         customDialogue.StartShopkeeperConvo(purchaseConvo);
     }
