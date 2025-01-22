@@ -38,6 +38,11 @@ public class SceneChanger : MonoBehaviour
 
     public void ChangeScene(string sceneName)
     {
+        if (sceneName == GetCurrentScene())
+        {
+            Debug.Log("Not changing scene. Already here.");
+            return;
+        }
         ChangeScene(sceneName, LoadingScreenType.Generic);
     }
 
