@@ -354,6 +354,7 @@ public class Character : MonoBehaviour
 
     public void SetFaceDetail(string label)
     {
+        categoryToRenderer["Face_Detail"].enabled = true;
         categoryToResolver["Face_Detail"].SetCategoryAndLabel("Face_Detail", label);
         categoryToResolver["Face_Detail"].ResolveSpriteToSpriteRenderer();
     }
@@ -375,7 +376,7 @@ public class Character : MonoBehaviour
         categoryToRenderer["Eyes"].color = color;
         categoryToRenderer["Eyeshadow"].enabled = (emotion.ToLower() == "default");
         categoryToRenderer["Eyebrows"].enabled = (emotion.ToLower() == "default");
-        categoryToRenderer["Face_Detail"].enabled = (emotion.ToLower() == "default" || categoryToLabelMap["Face_Detail"] == "X_Rex");
+        categoryToRenderer["Face_Detail"].enabled = (emotion.ToLower() == "default" || characterName == "Rex");
         return hasChanged;
     }
 
