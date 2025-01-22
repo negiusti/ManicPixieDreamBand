@@ -1,4 +1,7 @@
 
+using PixelCrushers.DialogueSystem;
+using UnityEngine;
+
 public class SkateShop : Shop
 {
     private static string purchaseConvo = "SkateShop_Purchase";
@@ -17,6 +20,11 @@ public class SkateShop : Shop
 
     public override void AskToBuy(Purchasable p)
     {
+        if (DialogueManager.IsConversationActive)
+        {
+            Debug.Log("Conversation already active");
+            return;
+        }
         currentSelectedPurchasable = p;
         customDialogue.StartShopkeeperConvo(purchaseConvo);
     }

@@ -1,4 +1,5 @@
 using PixelCrushers.DialogueSystem;
+using UnityEngine;
 
 public class BobaShop : Shop
 {
@@ -18,6 +19,11 @@ public class BobaShop : Shop
 
     public override void AskToBuy(Purchasable p)
     {
+        if (DialogueManager.IsConversationActive)
+        {
+            Debug.Log("Conversation already active");
+            return;
+        }
         currentSelectedPurchasable = p;
         customDialogue.StartShopkeeperConvo(purchaseConvo);
     }

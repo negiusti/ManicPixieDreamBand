@@ -1,4 +1,7 @@
 
+using PixelCrushers.DialogueSystem;
+using UnityEngine;
+
 public class ThriftStore : Shop
 {
     private static string purchaseConvo = "ThriftStore_Purchase";
@@ -17,6 +20,11 @@ public class ThriftStore : Shop
 
     public override void AskToBuy(Purchasable p)
     {
+        if (DialogueManager.IsConversationActive)
+        {
+            Debug.Log("Conversation already active");
+            return;
+        }
         currentSelectedPurchasable = p;
         customDialogue.StartShopkeeperConvo(purchaseConvo);
     }
