@@ -79,6 +79,22 @@ public class CharacterEditor : MonoBehaviour
         return categoryToRenderer[category].color;
     }
 
+    private void OnDisable()
+    {
+        if (isPixiecore)
+        {
+            // add whatever you're currently wearing to your closet
+            if (isFullBody)
+            {
+                InventoryManager.AddToMCInventory("FB_", character.CategoryToLabelMap().GetValueOrDefault("FB_Top"));
+            } else
+            {
+                InventoryManager.AddToMCInventory("Top", character.CategoryToLabelMap().GetValueOrDefault("Top"));
+                InventoryManager.AddToMCInventory("Crotch", character.CategoryToLabelMap().GetValueOrDefault("Crotch"));
+            }
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
