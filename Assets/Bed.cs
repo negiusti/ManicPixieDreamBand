@@ -20,6 +20,12 @@ public class Bed : MonoBehaviour
         
     }
 
+    public void SleepyTime()
+    {
+        animator.SetBool("DoneForTheDay", Calendar.DoneForTheDay());
+        GetComponent<BiggerWhenHovered>().scaleFactor = Calendar.DoneForTheDay() ? 1.1f : 1f;
+    }
+
     private void OnMouseDown()
     {
         if (Calendar.DoneForTheDay() && InteractionEnabled())

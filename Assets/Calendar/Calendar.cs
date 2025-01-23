@@ -47,6 +47,12 @@ public class Calendar : ScriptableObject
         }
         currentEventIdx++;
         Weather.RandomizeWeather();
+        if (DoneForTheDay())
+        {
+            Bed b = FindFirstObjectByType<Bed>();
+            if (b != null)
+                b.SleepyTime();
+        }
     }
 
     public static void SchedulePlotEvent(string eventName, string conversation, string location, bool isNight, double daysFromNow)
