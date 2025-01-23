@@ -1,6 +1,5 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class SplashScreen : MonoBehaviour
 {
@@ -17,14 +16,14 @@ public class SplashScreen : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && InteractionEnabled())
         {
             // FOR EXHIBITION DEMOS ONLY:
-            //SaveSystem.DeleteSaveData();
-            //GameManager.Instance.RefreshGameState();
+            SaveSystem.DeleteSaveData();
+            GameManager.Instance.RefreshGameState();
 
-            if (completedGame())
-            {
-                SaveSystem.DeleteSaveData();
-                GameManager.Instance.RefreshGameState();
-            }
+            //if (completedGame())
+            //{
+            //    SaveSystem.DeleteSaveData();
+            //    GameManager.Instance.RefreshGameState();
+            //}
 
             SceneChanger.Instance.ChangeScene("Bedroom");
         }
@@ -46,6 +45,7 @@ public class SplashScreen : MonoBehaviour
 
     private bool completedGame()
     {
+        // TODO: update this for addtional plot convos
         int currentConvoIdx = ES3.Load("PlotConvoIdx", 0);
         Debug.Log("CUrrent convo IDX is: " + currentConvoIdx);
         return currentConvoIdx == 9;

@@ -28,6 +28,7 @@ public class Character : MonoBehaviour
     private SpriteLibraryAsset libraryAsset;
     private string characterName;
     private bool isRollerskating;
+    private static HashSet<string> shirtsToFlip = new HashSet<string> { "Daisy Dukes Shirt", "Punk Juice Shirt"};
     public SortingGroup GetCurrentLayer()
     {
         return sortingGroup;
@@ -63,6 +64,16 @@ public class Character : MonoBehaviour
         Quaternion currentRotation = transform.rotation;
         currentRotation.eulerAngles = new Vector3(0f, 180f, 0f);
         transform.rotation = currentRotation;
+    }
+
+    private bool isFacingRight()
+    {
+        return transform.rotation.eulerAngles.y > 1;
+    }
+
+    private bool isFacingLeft()
+    {
+        return transform.rotation.eulerAngles.y < 179;
     }
 
     public void FaceLeft()
@@ -134,7 +145,18 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(gameObject.name + " Sorting group is: " + sortingGroup.sortingLayerName);
+        //// if top is one of the band shirts, then flip it if necessary
+        //if (shirtsToFlip.Contains(categoryToResolver["Top"].GetLabel()))
+        //{
+        //    if (isFacingLeft() && categoryToRenderer["Top"].flipX)
+        //    {
+        //        // swap sprite in resolver
+        //    }
+        //    else if (isFacingRight() && !categoryToRenderer["Top"].flipX)
+        //    {
+        //        // swap sprite in resolver
+        //    }
+        //}
     }
 
     public void SetInstrumentSprite(string s)
