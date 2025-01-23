@@ -98,6 +98,7 @@ public class CharacterEditor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Tutorial.changedSkin = true;
         if (!isPixiecore)
             isPixiecore = Calendar.GetCurrentEvent() != null && Calendar.GetCurrentEvent().Name().Equals("Model Pixie's fashion line @ Home");
         if (Phone.Instance != null)
