@@ -25,13 +25,13 @@ public class MakeupSelector : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        Vector3 newScale = originalScale * 1.1f;
-        transform.localScale = newScale;
+        //Vector3 newScale = originalScale * 1.1f;
+        //transform.localScale = newScale;
     }
 
     private void OnMouseExit()
     {
-        transform.localScale = originalScale;
+        //transform.localScale = originalScale;
     }
 
     public void Select()
