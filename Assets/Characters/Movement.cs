@@ -232,7 +232,7 @@ public abstract class Movement : MonoBehaviour
     {
         if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter() || DialogueManager.LastConversationStarted.EndsWith("_Sk8")))
         {
-            GameManager.miscSoundEffects.Play("Ollie");
+            //GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_SkateJump");
             if (character.isMainCharacter())
                 Tutorial.hasOllied = true;
@@ -251,7 +251,7 @@ public abstract class Movement : MonoBehaviour
     {
         if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter() || DialogueManager.LastConversationStarted.EndsWith("_Sk8")))
         {
-            GameManager.miscSoundEffects.Play("Ollie");
+            //GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_SkateboardFlip");
         }
     }
@@ -260,7 +260,7 @@ public abstract class Movement : MonoBehaviour
     {
         if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter() || DialogueManager.LastConversationStarted.EndsWith("_Sk8")))
         {
-            GameManager.miscSoundEffects.Play("Ollie");
+            //GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_RollerskateJump");
             Tutorial.hasOllied = true;
         }
