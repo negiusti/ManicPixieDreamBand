@@ -20086,7 +20086,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Ricki", "Side", "Frown");
+      userScript: Emote("Ricki", "Whatever", "Frown");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -21022,8 +21022,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.7890002
+    canvasScrollPosition: {x: 1091.801, y: 946.22754}
+    canvasZoom: 0.9444975
   - id: 24
     fields:
     - title: Title
@@ -69975,7 +69975,7 @@ MonoBehaviour:
       - originConversationID: 53
         originDialogueID: 0
         destinationConversationID: 53
-        destinationDialogueID: 101
+        destinationDialogueID: 156
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -70040,7 +70040,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: SetFlag("Met_Eith", true)
+      userScript: SetFlag("Met_Eith", true);NPCFaceRight("JJ");NPCFaceRight("Ethan");NPCFaceLeft("MainCharacter")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -72538,7 +72538,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("JJ", "Side", "Default")
+      userScript: Emote("JJ", "Whatever", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -72813,7 +72813,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: SetFlag("Met_Eith", true);NPCFaceRight("JJ");NPCFaceRight("Ethan");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -73098,9 +73098,64 @@ MonoBehaviour:
         y: 2890.5452
         width: 160
         height: 30
+    - id: 156
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 7
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()@3
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 53
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 53
+        originDialogueID: 156
+        destinationConversationID: 53
+        destinationDialogueID: 101
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: NPCWalkTo("JJ", -8.7);NPCWalkTo("Ethan", -5.77);
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 2144.3933
+        y: 430.99707
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1791.063, y: 2507.076}
-    canvasZoom: 1.1443923
+    canvasScrollPosition: {x: 1986.5107, y: 267.60342}
+    canvasZoom: 0.92749894
   - id: 54
     fields:
     - title: Title
