@@ -9,7 +9,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "SpawnCharacters", menuName = "Custom/SpawnCharacters")]
 public class SpawnCharacters : ScriptableObject
 {
-    private static AsyncOperationHandle<GameObject> SpawnParticipant(Participant p, string layer, int idx)
+    private static AsyncOperationHandle<GameObject> SpawnParticipant(Participant p, string layer, int idx, string convo = null)
     {
         // character already exists in scene, don't spawn another plz
         if (FindObjectsOfType<Character>().Any(x => x.name == p.name))
@@ -19,7 +19,7 @@ public class SpawnCharacters : ScriptableObject
         }
         string characterPrefabPath = "Assets/Prefabs/Characters/" + p.name + ".prefab";
         AsyncOperationHandle<GameObject> operation = Addressables.LoadAssetAsync<GameObject>(characterPrefabPath);
-        operation.Completed += (operation) => OnPrefabLoaded(operation, p, layer, idx);
+        operation.Completed += (operation) => OnPrefabLoaded(operation, p, layer, idx, convo);
         return operation;
     }
 
@@ -28,6 +28,7 @@ public class SpawnCharacters : ScriptableObject
         Debug.Log("SpawnParticipants");
         if (participants == null)
             return;
+        Characters.RefreshCharactersCache();
         Dictionary<string, Character> characters = Characters.CharactersInScene();
 
         // Sort characters by their y position
@@ -41,18 +42,7 @@ public class SpawnCharacters : ScriptableObject
             layerToIdx[p.layer] = idx;
             if (c == null)
             {
-                c = SpawnParticipant(p, p.layer, idx).WaitForCompletion().GetComponent<Character>();
-                Debug.Log("Spawned Participant: " + c.name + " " + c.gameObject.name);
-                if (c.gameObject.name.Contains("Clone"))
-                {
-                    Debug.Log("Removing clone from name: " + c.gameObject.name);
-                    // Remove "(Clone)" from the end of the name
-                    Debug.Log("Setting name from/to: " + c.gameObject.name + " " + p.name);
-                    c.gameObject.name = p.name;
-                    c.SetCharacterName(p.name);
-                    Debug.Log("Name is: " + c.gameObject.name);
-                }
-                c.gameObject.name = p.name;
+                c = SpawnParticipant(p, p.layer, idx, convo).WaitForCompletion().GetComponent<Character>();
             }
             else
             {
@@ -61,48 +51,48 @@ public class SpawnCharacters : ScriptableObject
                     Vector3 newPos = new Vector3(p.position.x, p.position.y, 3f);
                     c.transform.position = newPos;
                 }
+                if (p.faceLeftOrRight != null)
+                {
+                    switch (p.faceLeftOrRight)
+                    {
+                        case "left":
+                            Characters.NPCFaceLeft(p.name);
+                            break;
+                        case "right":
+                            Characters.NPCFaceRight(p.name);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                if (p.isTrigger)
+                {
+                    if (convo == null)
+                    {
+                        Debug.LogError("why tf is the convo null here");
+                        return;
+                    }
+                    if (c.gameObject.GetComponent<Usable>() == null)
+                        c.gameObject.AddComponent<Usable>();
+                    if (c.gameObject.GetComponent<DialogueSystemTrigger>() == null)
+                        c.gameObject.AddComponent<DialogueSystemTrigger>();
+
+                    c.gameObject.GetComponent<Usable>().enabled = true;
+                    DialogueSystemTrigger trigger = c.gameObject.GetComponent<DialogueSystemTrigger>();
+                    trigger.trigger = DialogueSystemTriggerEvent.OnUse;
+                    trigger.conversation = convo;
+                    trigger.enabled = true;
+                }
+                else
+                {
+                    if (c.gameObject.GetComponent<DialogueSystemTrigger>() != null)
+                        c.gameObject.GetComponent<DialogueSystemTrigger>().enabled = false;
+                    if (c.gameObject.GetComponent<Usable>() != null)
+                        c.gameObject.GetComponent<Usable>().enabled = false;
+                }
+                c.MoveToRenderLayer(p.layer, idx);
             }
 
-            if (p.faceLeftOrRight != null)
-            {
-                switch (p.faceLeftOrRight)
-                {
-                    case "left":
-                        Characters.NPCFaceLeft(p.name);
-                        break;
-                    case "right":
-                        Characters.NPCFaceRight(p.name);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            if (p.isTrigger)
-            {
-                if (convo == null)
-                {
-                    Debug.LogError("why tf is the convo null here");
-                    return;
-                }
-                if (c.gameObject.GetComponent<Usable>() == null)
-                    c.gameObject.AddComponent<Usable>();
-                if (c.gameObject.GetComponent<DialogueSystemTrigger>() == null)
-                    c.gameObject.AddComponent<DialogueSystemTrigger>();
-
-                c.gameObject.GetComponent<Usable>().enabled = true;
-                DialogueSystemTrigger trigger = c.gameObject.GetComponent<DialogueSystemTrigger>();
-                trigger.trigger = DialogueSystemTriggerEvent.OnUse;
-                trigger.conversation = convo;
-                trigger.enabled = true;
-            }
-            else
-            {
-                if (c.gameObject.GetComponent<DialogueSystemTrigger>() != null)
-                    c.gameObject.GetComponent<DialogueSystemTrigger>().enabled = false;
-                if (c.gameObject.GetComponent<Usable>() != null)
-                    c.gameObject.GetComponent<Usable>().enabled = false;
-            }
-            c.MoveToRenderLayer(p.layer, idx);
             //Debug.Log("Set to active: " + c.name + " " + p.existAtStart + " " + c.gameObject.name);
             //c.gameObject.SetActive(p.existAtStart);
         }
@@ -132,28 +122,60 @@ public class SpawnCharacters : ScriptableObject
         }
     }
 
-    private static void OnPrefabLoaded(AsyncOperationHandle<GameObject> handle, Participant p, string layer, int idx)
+    private static void OnPrefabLoaded(AsyncOperationHandle<GameObject> handle, Participant p, string layer, int idx, string convo = null)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             // Instantiate the prefab and spawn it in the current scene
             GameObject spawnedCharacter = Instantiate(handle.Result, p.position, Quaternion.identity);
-            spawnedCharacter.name = handle.Result.name;
-            Characters.SetLayer(p.name, layer, idx);
+            spawnedCharacter.name = p.name;
+
+            // START
+            Character c = spawnedCharacter.GetComponent<Character>();
+            
+            if (p.isTrigger)
+            {
+                if (convo == null)
+                {
+                    Debug.LogError("why tf is the convo null here");
+                    return;
+                }
+                if (spawnedCharacter.GetComponent<Usable>() == null)
+                    spawnedCharacter.AddComponent<Usable>();
+                if (spawnedCharacter.GetComponent<DialogueSystemTrigger>() == null)
+                    spawnedCharacter.AddComponent<DialogueSystemTrigger>();
+
+                spawnedCharacter.GetComponent<Usable>().enabled = true;
+                DialogueSystemTrigger trigger = c.gameObject.GetComponent<DialogueSystemTrigger>();
+                trigger.trigger = DialogueSystemTriggerEvent.OnUse;
+                trigger.conversation = convo;
+                trigger.enabled = true;
+            }
+            else
+            {
+                if (spawnedCharacter.GetComponent<DialogueSystemTrigger>() != null)
+                    spawnedCharacter.GetComponent<DialogueSystemTrigger>().enabled = false;
+                if (spawnedCharacter.GetComponent<Usable>() != null)
+                    spawnedCharacter.GetComponent<Usable>().enabled = false;
+            }
+            // END
+
+            c.MoveToRenderLayer(layer, idx);
             if (p.faceLeftOrRight != null)
             {
                 switch (p.faceLeftOrRight)
                 {
                     case "left":
-                        Characters.NPCFaceLeft(p.name);
+                        c.FaceLeft();
                         break;
                     case "right":
-                        Characters.NPCFaceRight(p.name);
+                        c.FaceRight();
                         break;
                     default:
                         break;
                 }
             }
+            Characters.RefreshCharactersCache();
         }
         else
         {
