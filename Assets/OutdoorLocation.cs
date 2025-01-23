@@ -38,7 +38,7 @@ public class OutdoorLocation : MonoBehaviour
             inRange = false;
             return;
         }
-        if ((Input.GetKeyDown(KeyCode.Return)  || Input.GetKeyDown(KeyCode.Space)) && inRange)
+        if ((Input.GetKeyDown(KeyCode.Return)  || Input.GetKeyDown(KeyCode.Space)) && inRange && InteractionEnabled())
         {
             if (isBusiness)
                 GameManager.miscSoundEffects.Play("businessdoor");
@@ -46,6 +46,15 @@ public class OutdoorLocation : MonoBehaviour
                 GameManager.miscSoundEffects.Play("Door");
             SceneChanger.Instance.ChangeScene(location);
         }
+    }
+
+    private bool InteractionEnabled()
+    {
+        return !SceneChanger.Instance.IsLoadingScreenOpen() &&
+            Phone.Instance.IsLocked() &&
+            !GameManager.Instance.GetComponent<MenuToggleScript>().IsMenuOpen() &&
+            !DialogueManager.IsConversationActive &&
+            !MiniGameManager.AnyActiveMiniGames();
     }
 
     void OnTriggerEnter2D(Collider2D other)
