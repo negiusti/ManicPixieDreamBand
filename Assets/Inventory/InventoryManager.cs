@@ -367,6 +367,7 @@ public class InventoryManager : ScriptableObject
     public static void SpoilPerishables()
     {
         pocketsPerishable.Clear();
+        pockets.Remove(Item.Flyer);
         if (pocketsPerishable.Count == 0 && pockets.Count == 0)
             Phone.Instance.ClearNotificationFor("Pockets");
     }
