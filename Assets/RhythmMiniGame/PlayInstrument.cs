@@ -122,6 +122,8 @@ public class PlayInstrument : MonoBehaviour, IPointerClickHandler
 
     public void SetInstrument(string category, string label)
     {
+        if (spriteResolver == null)
+            Start();
         spriteResolver.SetCategoryAndLabel(category, label);
     }
 
