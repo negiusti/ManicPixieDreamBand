@@ -95,6 +95,7 @@ public class BackLog : MonoBehaviour
             sizeDelta = r.sizeDelta;
             sizeDelta.y = shortScrollViewHeight;
             r.sizeDelta = sizeDelta;
+            ScrollToBottomOfScrollView();
         } else if (rView && (!responseMenu.gameObject.activeSelf || !responseMenu.isOpen))
         {
             Debug.Log("extend view");
@@ -105,6 +106,7 @@ public class BackLog : MonoBehaviour
             sizeDelta = r.sizeDelta;
             sizeDelta.y = longScrollViewHeight;
             r.sizeDelta = sizeDelta;
+            ScrollToBottomOfScrollView();
         }
     }
 
