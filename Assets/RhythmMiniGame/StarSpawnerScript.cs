@@ -169,7 +169,9 @@ public class StarSpawnerScript : MonoBehaviour
 
     private IEnumerator DelayedActions()
     {
-        lagCorrection = ES3.Load("LagCalibration", 0f);
+        //lagCorrection = ES3.Load("LagCalibration", 0f);
+        lagCorrection = GameManager.Instance == null? ES3.Load("LagCalibration", 0f) : GameManager.Instance.audioLag;
+
         Debug.Log("LAG COORECTION" + lagCorrection);
         while (i < times.Length)
         {

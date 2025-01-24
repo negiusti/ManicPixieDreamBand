@@ -116,6 +116,8 @@ public class Calibrator : MonoBehaviour
             lagVals.Sort();
             int medianIdx = lagVals.Count / 2;
             Debug.Log("med lag Time: " + lagVals[medianIdx]);
+            if (GameManager.Instance != null)
+                GameManager.Instance.audioLag = lagVals[medianIdx];
             ES3.Save("LagCalibration", lagVals[medianIdx]);
             isPlaying = false;
             audioSource.Stop();

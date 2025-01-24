@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static BGMusicController bgMusic;
     public static ButtonSoundEffects buttonSounds;
     public static MiscSoundEffects miscSoundEffects;
+    public float audioLag;
 
     // Start is called before the first frame update
     void Start()
