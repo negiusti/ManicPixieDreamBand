@@ -99,6 +99,7 @@ public class CharacterEditor : MonoBehaviour
     void Start()
     {
         Tutorial.changedSkin = true;
+        MainCharacterState.SetFlag("EnteredCloset", true);
         if (!isPixiecore)
             isPixiecore = Calendar.GetCurrentEvent() != null && Calendar.GetCurrentEvent().Name().Equals("Model Pixie's fashion line @ Home");
         if (Phone.Instance != null)
