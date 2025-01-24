@@ -1876,8 +1876,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.26899993
+    canvasScrollPosition: {x: 479.8134, y: 262.1227}
+    canvasZoom: 0.5884998
   - id: 4
     fields:
     - title: Title
@@ -3373,6 +3373,18 @@ MonoBehaviour:
         destinationDialogueID: 24
         isConnector: 0
         priority: 2
+      - originConversationID: 6
+        originDialogueID: 23
+        destinationConversationID: 6
+        destinationDialogueID: 68
+        isConnector: 0
+        priority: 2
+      - originConversationID: 6
+        originDialogueID: 23
+        destinationConversationID: 6
+        destinationDialogueID: 69
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 'RemovePerishableItem("Coffee");RemovePerishableItem("Coffee");Emote("Ricki",
         "Heart", "Happy"); Emote("Max", "Default", "Default"); '
@@ -3711,14 +3723,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Ricki", "Whatever","Frown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 903.59406
-        y: 296.2354
+        x: 998.01495
+        y: 280.90982
         width: 160
         height: 30
     - id: 31
@@ -3765,15 +3777,15 @@ MonoBehaviour:
         destinationDialogueID: 55
         isConnector: 0
         priority: 2
-      conditionsString: Checkflag("ChangedSkinTone") == false
+      conditionsString: CheckFlag("ChangedSkinTone") == false
       userScript: Emote("Max", "Side", "Happy")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 911.9827
-        y: 357.90628
+        x: 1006.4036
+        y: 327.70715
         width: 160
         height: 30
     - id: 32
@@ -4271,7 +4283,7 @@ MonoBehaviour:
         priority: 2
       conditionsString: 
       userScript: NPCFaceRight("Ricki");NPCFaceRight("Max");Emote("Max", "Angry",
-        "Frown");Emote("Cliff", "Whatever", "Default")
+        "Frown");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -5255,7 +5267,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: I heard so much fun music coming from upstairs, I had to check it
+        value: I heard so much fun music coming from next door, I had to check it
           out!
         type: 0
         typeString: CustomFieldType_Text
@@ -5284,8 +5296,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 441.31018
-        y: 773.54944
+        x: 440.19598
+        y: 780.2347
         width: 160
         height: 30
     - id: 62
@@ -5619,9 +5631,119 @@ MonoBehaviour:
         y: 387.22766
         width: 160
         height: 30
+    - id: 68
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: It's a coffee <i>experience</i>.
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 6
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 6
+        originDialogueID: 68
+        destinationConversationID: 6
+        destinationDialogueID: 55
+        isConnector: 0
+        priority: 2
+      conditionsString: CheckFlag("ThoughtThisWasACoffeShop")
+      userScript: Drink("Ricki", "Coffee");Drink("Max", "Coffee");
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 803.34576
+        y: 387.27625
+        width: 160
+        height: 30
+    - id: 69
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: It's whatever the barista recommended.
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 6
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 6
+        originDialogueID: 69
+        destinationConversationID: 6
+        destinationDialogueID: 55
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: Drink("Ricki", "Coffee");Drink("Max", "Coffee");
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 981.7791
+        y: 388.011
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 303.6391, y: 145.23082}
-    canvasZoom: 0.9135033
+    canvasScrollPosition: {x: 348.28723, y: 317.33548}
+    canvasZoom: 0.7309996
   - id: 7
     fields:
     - title: Title
@@ -5879,7 +6001,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("MainCharacter", "Whoa", "Frown");
+      userScript: Emote("MainCharacter", "Worry", "Frown");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
