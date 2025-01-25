@@ -1876,8 +1876,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.26899993
+    canvasScrollPosition: {x: 479.8134, y: 262.1227}
+    canvasZoom: 0.5884998
   - id: 4
     fields:
     - title: Title
@@ -3037,8 +3037,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 672.0246
-        y: 239.92831
+        x: 758.343
+        y: 212.24127
         width: 160
         height: 30
     - id: 12
@@ -3264,8 +3264,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 440.84192
-        y: 241.75302
+        x: 527.1604
+        y: 214.06598
         width: 160
         height: 30
     - id: 22
@@ -3318,15 +3318,15 @@ MonoBehaviour:
         destinationDialogueID: 67
         isConnector: 0
         priority: 2
-      conditionsString: GetNumInPockets("Coffee") < 3
+      conditionsString: GetNumInPockets("Coffee") < 2
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 311.98395
-        y: 357.27863
+        x: 398.3024
+        y: 329.59158
         width: 160
         height: 30
     - id: 23
@@ -3373,7 +3373,19 @@ MonoBehaviour:
         destinationDialogueID: 24
         isConnector: 0
         priority: 2
-      conditionsString: 
+      - originConversationID: 6
+        originDialogueID: 23
+        destinationConversationID: 6
+        destinationDialogueID: 68
+        isConnector: 0
+        priority: 2
+      - originConversationID: 6
+        originDialogueID: 23
+        destinationConversationID: 6
+        destinationDialogueID: 69
+        isConnector: 0
+        priority: 2
+      conditionsString: GetNumInPockets("Coffee") > 1
       userScript: 'RemovePerishableItem("Coffee");RemovePerishableItem("Coffee");Emote("Ricki",
         "Heart", "Happy"); Emote("Max", "Default", "Default"); '
       onExecute:
@@ -3381,8 +3393,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 539.688
-        y: 352.92175
+        x: 626.00635
+        y: 325.2347
         width: 160
         height: 30
     - id: 24
@@ -3436,8 +3448,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 538.7421
-        y: 416.28955
+        x: 625.06055
+        y: 388.6025
         width: 160
         height: 30
     - id: 25
@@ -3491,8 +3503,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 314.35553
-        y: 419.13638
+        x: 447.90488
+        y: 386.56335
         width: 160
         height: 30
     - id: 27
@@ -3711,14 +3723,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Ricki", "Whatever","Frown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 755.9731
-        y: 356.7631
+        x: 998.01495
+        y: 280.90982
         width: 160
         height: 30
     - id: 31
@@ -3765,15 +3777,15 @@ MonoBehaviour:
         destinationDialogueID: 55
         isConnector: 0
         priority: 2
-      conditionsString: Checkflag("ChangedSkinTone") == false
+      conditionsString: CheckFlag("ChangedSkinTone") == false
       userScript: Emote("Max", "Side", "Happy")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 764.3618
-        y: 418.43396
+        x: 1006.4036
+        y: 327.70715
         width: 160
         height: 30
     - id: 32
@@ -4271,7 +4283,7 @@ MonoBehaviour:
         priority: 2
       conditionsString: 
       userScript: NPCFaceRight("Ricki");NPCFaceRight("Max");Emote("Max", "Angry",
-        "Frown");Emote("Cliff", "Whatever", "Default")
+        "Frown");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -4883,7 +4895,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: DisableCharacter("Max");DisableCharacter("Ricki");CompleteCurrentEvent();
+      userScript: SetFlag("ChangedOutfitToday", false);DisableCharacter("Max");DisableCharacter("Ricki");CompleteCurrentEvent();
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -5255,7 +5267,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: I heard so much fun music coming from upstairs, I had to check it
+        value: I heard so much fun music coming from next door, I had to check it
           out!
         type: 0
         typeString: CustomFieldType_Text
@@ -5284,8 +5296,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 441.31018
-        y: 773.54944
+        x: 440.19598
+        y: 780.2347
         width: 160
         height: 30
     - id: 62
@@ -5560,8 +5572,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 859.0397
-        y: 246.28459
+        x: 945.35803
+        y: 218.59755
         width: 160
         height: 30
     - id: 67
@@ -5601,7 +5613,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 6
+        originDialogueID: 67
+        destinationConversationID: 6
+        destinationDialogueID: 55
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -5609,13 +5627,123 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 311.98395
-        y: 407.27863
+        x: 270.22644
+        y: 387.22766
+        width: 160
+        height: 30
+    - id: 68
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: It's a coffee <i>experience</i>.
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 6
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 6
+        originDialogueID: 68
+        destinationConversationID: 6
+        destinationDialogueID: 55
+        isConnector: 0
+        priority: 2
+      conditionsString: CheckFlag("ThoughtThisWasACoffeShop")
+      userScript: Drink("Ricki", "Coffee");Drink("Max", "Coffee");
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 803.34576
+        y: 387.27625
+        width: 160
+        height: 30
+    - id: 69
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: It's whatever the barista recommended.
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 6
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 6
+        originDialogueID: 69
+        destinationConversationID: 6
+        destinationDialogueID: 55
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: Drink("Ricki", "Coffee");Drink("Max", "Coffee");
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 981.7791
+        y: 388.011
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 252.57985, y: 0}
-    canvasZoom: 0.6530046
+    canvasScrollPosition: {x: 526.14716, y: 2113.5068}
+    canvasZoom: 0.924
   - id: 7
     fields:
     - title: Title
@@ -5873,7 +6001,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("MainCharacter", "Whoa", "Frown");
+      userScript: Emote("MainCharacter", "Worry", "Frown");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -19405,7 +19533,7 @@ MonoBehaviour:
         destinationDialogueID: 67
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: GetNumInPockets("Coffee") > 1
       userScript: 'RemovePerishableItem("Coffee");RemovePerishableItem("Coffee")Drink("Ricki",
         "Coffee");Drink("Max", "Coffee");Emote("Ricki", "Happy", "Happy"); '
       onExecute:
@@ -21084,8 +21212,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 624.95215, y: 262.66382}
-    canvasZoom: 0.7750015
+    canvasScrollPosition: {x: 589.42236, y: 240.39519}
+    canvasZoom: 0.7065018
   - id: 24
     fields:
     - title: Title
@@ -25215,8 +25343,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 477.5869, y: 94.30116}
-    canvasZoom: 0.96972215
+    canvasScrollPosition: {x: 585.5296, y: 137.15822}
+    canvasZoom: 0.45899913
   - id: 26
     fields:
     - title: Title
@@ -88512,7 +88640,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: I prefer skateboarding. Wheels strapped to my feet freak me out.
+        value: Skateboarding. Wheels strapped to my feet freak me out.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -88567,7 +88695,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: I love to roller skate. The more wheels, the better.
+        value: Roller skating. The more wheels, the better.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -88622,7 +88750,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Inline skating is my favorite. I got a need for speed!
+        value: Inline skating. I got a need for speed!
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -90512,8 +90640,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 295.36597, y: 0}
-    canvasZoom: 0.80800146
+    canvasScrollPosition: {x: 120.33762, y: 0}
+    canvasZoom: 0.618002
   - id: 67
     fields:
     - title: Title
@@ -93094,8 +93222,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 24.575525, y: 779.98346}
-    canvasZoom: 1.0672563
+    canvasScrollPosition: {x: 334.57935, y: 846.47107}
+    canvasZoom: 0.9357539
   - id: 68
     fields:
     - title: Title
@@ -101296,8 +101424,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 406.33328, y: 2096.5376}
-    canvasZoom: 0.72795403
+    canvasScrollPosition: {x: 861.67834, y: 626.67535}
+    canvasZoom: 0.77150047
   - id: 71
     fields:
     - title: Title
@@ -104287,8 +104415,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 18.328342, y: 0}
-    canvasZoom: 0.67689025
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 0.12689021
   - id: 74
     fields:
     - title: Title
