@@ -11,14 +11,15 @@ public class JamCoordinator : ScriptableObject
     private static readonly List<string> songsToUnlock = new()
     {
             "UISS",
-            "BodyHorror",
             "OhNo",
             "BiteMe",
-            "GuitarCenter",
-            "SugarDaddy",
             "PuzzlePieces",
-            "PBaby",
-            "ImFine" };
+            "SugarDaddy",
+            "ImFine",
+            "GuitarCenter",
+            "BodyHorror",
+            "PBaby"
+    };
     //private static Camera mainCam;
     //private static Camera jamCamera;
     private static bool isJamInSession;

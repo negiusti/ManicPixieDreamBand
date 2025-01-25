@@ -17,6 +17,19 @@ public class JobFlyer : MonoBehaviour
     private void OnEnable()
     {
         taken = JobSystem.CurrentJob().Equals(job);
+        if (taken)
+        {
+            if (GetComponent<BiggerWhenHovered>() != null)
+            {
+                Destroy(gameObject.GetComponent<BiggerWhenHovered>());
+            }
+        } else if (!taken)
+        {
+            if (GetComponent<BiggerWhenHovered>() == null)
+            {
+                gameObject.AddComponent<BiggerWhenHovered>();
+            }
+        }
         if (spriteResolver == null)
             Start();
 
