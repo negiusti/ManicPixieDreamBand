@@ -231,13 +231,11 @@ public class Calendar : ScriptableObject
         SetIsNight(false);
         currentEventIdx = 0;
         ScheduleNext7Days();
-        MainCharacterState.SetOutfitChangedFlag(false);
         InventoryManager.SpoilPerishables();
         Phone.Instance.SendNotificationTo("Calendar");
         if (day == 2)
             MainCharacterState.UnlockPhoto("PizzaRat");
         MainCharacterState.SetFlagPrefix("Drank", false);
-        MainCharacterState.SetOutfitChangedFlag(false);
     }
 
     public static int Date()

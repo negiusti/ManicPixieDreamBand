@@ -3318,7 +3318,7 @@ MonoBehaviour:
         destinationDialogueID: 67
         isConnector: 0
         priority: 2
-      conditionsString: GetNumInPockets("Coffee") < 3
+      conditionsString: GetNumInPockets("Coffee") < 2
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -3385,7 +3385,7 @@ MonoBehaviour:
         destinationDialogueID: 69
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: GetNumInPockets("Coffee") > 1
       userScript: 'RemovePerishableItem("Coffee");RemovePerishableItem("Coffee");Emote("Ricki",
         "Heart", "Happy"); Emote("Max", "Default", "Default"); '
       onExecute:
@@ -4895,7 +4895,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: DisableCharacter("Max");DisableCharacter("Ricki");CompleteCurrentEvent();
+      userScript: SetFlag("ChangedOutfitToday", false);DisableCharacter("Max");DisableCharacter("Ricki");CompleteCurrentEvent();
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -5742,8 +5742,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 348.28723, y: 317.33548}
-    canvasZoom: 0.7309996
+    canvasScrollPosition: {x: 526.14716, y: 2113.5068}
+    canvasZoom: 0.924
   - id: 7
     fields:
     - title: Title
@@ -19533,7 +19533,7 @@ MonoBehaviour:
         destinationDialogueID: 67
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: GetNumInPockets("Coffee") > 1
       userScript: 'RemovePerishableItem("Coffee");RemovePerishableItem("Coffee")Drink("Ricki",
         "Coffee");Drink("Max", "Coffee");Emote("Ricki", "Happy", "Happy"); '
       onExecute:
@@ -21212,8 +21212,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 624.95215, y: 262.66382}
-    canvasZoom: 0.7750015
+    canvasScrollPosition: {x: 589.42236, y: 240.39519}
+    canvasZoom: 0.7065018
   - id: 24
     fields:
     - title: Title
