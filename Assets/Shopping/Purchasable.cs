@@ -18,6 +18,7 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private PriceTag priceTag;
     private ShopDisplay shopDisplay;
     private HashSet<string> questExclusives = new HashSet<string> { "Vintage Poster", "Punk Juice Shirt", "Daisy Dukes Shirt" };
+    private Animator animator;
 
     private class PurchasableData
     {
@@ -35,6 +36,7 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         shopDisplay = GetComponentInParent<ShopDisplay>();
         spriteResolver = GetComponent<SpriteResolver>();
         category = spriteResolver.GetCategory();
@@ -47,6 +49,10 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (priceTag == null)
         {
             Debug.LogError("Purchasable is missing price tag: " + gameObject.name);
+        }
+        if (animator == null)
+        {
+            Debug.LogError("Purchasable is missing animator: " + gameObject.name);
         }
         Load();
     }
