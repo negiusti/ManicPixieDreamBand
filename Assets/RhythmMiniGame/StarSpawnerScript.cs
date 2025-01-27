@@ -62,10 +62,10 @@ public class StarSpawnerScript : MonoBehaviour
         redSpawnPosition.y = redStar.transform.position.y;
         audioClips = new Dictionary<string, AudioClip>() {
             { "UISS", uiss },
-            { "OhNo", ohno },
             { "BiteMe", bm },
             { "PuzzlePieces", pp },
             { "SugarDaddy", sd },
+            { "OhNo", ohno },
             { "ImFine", fine },
             { "GuitarCenter", gc },
             { "BodyHorror", bh },

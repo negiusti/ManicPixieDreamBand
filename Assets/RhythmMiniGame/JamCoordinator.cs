@@ -11,10 +11,10 @@ public class JamCoordinator : ScriptableObject
     private static readonly List<string> songsToUnlock = new()
     {
             "UISS",
-            "OhNo",
             "BiteMe",
             "PuzzlePieces",
             "SugarDaddy",
+            "OhNo",
             "ImFine",
             "GuitarCenter",
             "BodyHorror",
