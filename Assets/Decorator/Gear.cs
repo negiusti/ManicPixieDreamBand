@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -8,13 +8,16 @@ public class Gear : MonoBehaviour
     public bool shared;
     private string category;
     private SpriteResolver spriteResolver;
+    private SpriteRenderer spriteRenderer;
     private string label;
     private string saveKey;
+    static private HashSet<string> whenToShowInstInBar = new HashSet<string> { "open mic", "gig" };
     
     // Start is called before the first frame update
     void Start()
     {
         spriteResolver = GetComponent<SpriteResolver>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         category = spriteResolver.GetCategory();
         saveKey = "gear_" + category;
         if (category == null)
@@ -23,6 +26,10 @@ public class Gear : MonoBehaviour
         }
         label = GetGearLabel(category);
         spriteResolver.SetCategoryAndLabel(category, label);
+        if (SceneChanger.Instance.GetCurrentScene() == "SmallBar")
+        {
+            spriteRenderer.enabled = whenToShowInstInBar.Any(w => Calendar.GetCurrentEvent().Name().ToLower().Contains(w));
+        }
     }
 
     public static string GetGearLabel(string c)
@@ -49,23 +56,23 @@ public class Gear : MonoBehaviour
     //    spriteResolver.SetCategoryAndLabel(category, label);
     //}
 
-    private void OnDestroy()
-    {
-        if (shared)
-            return;
-        saveKey = "gear_" + spriteResolver.GetCategory();
-        Debug.Log("Save gear: " + saveKey + spriteResolver.GetLabel());
-        ES3.Save(saveKey, spriteResolver.GetLabel());
-    }
+    //private void OnDestroy()
+    //{
+    //    if (shared)
+    //        return;
+    //    saveKey = "gear_" + spriteResolver.GetCategory();
+    //    Debug.Log("Save gear: " + saveKey + spriteResolver.GetLabel());
+    //    ES3.Save(saveKey, spriteResolver.GetLabel());
+    //}
 
-    private void OnDisable()
-    {
-        if (shared)
-            return;
-        saveKey = "gear_" + spriteResolver.GetCategory();
-        Debug.Log("Save gear: " + saveKey + spriteResolver.GetLabel());
-        ES3.Save(saveKey, spriteResolver.GetLabel());
-    }
+    //private void OnDisable()
+    //{
+    //    if (shared)
+    //        return;
+    //    saveKey = "gear_" + spriteResolver.GetCategory();
+    //    Debug.Log("Save gear: " + saveKey + spriteResolver.GetLabel());
+    //    ES3.Save(saveKey, spriteResolver.GetLabel());
+    //}
 
     // Update is called once per frame
     void Update()

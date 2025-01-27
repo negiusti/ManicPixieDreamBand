@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.U2D.Animation;
@@ -53,6 +54,10 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (animator == null)
         {
             Debug.LogError("Purchasable is missing animator: " + gameObject.name);
+        }
+        if (GetComponent<BiggerWhenHovered>() == null)
+        {
+            gameObject.AddComponent<BiggerWhenHovered>();
         }
         Load();
     }
@@ -138,12 +143,14 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private void OnMouseEnter()
     {
-        priceTag.ShowPrice();
+        if (!DialogueManager.IsConversationActive)
+            priceTag.ShowPrice();
     }
 
     private void OnMouseExit()
     {
-        priceTag.HidePrice();
+        if (!DialogueManager.IsConversationActive)
+            priceTag.HidePrice();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

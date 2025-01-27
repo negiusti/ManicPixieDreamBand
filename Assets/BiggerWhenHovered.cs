@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -36,6 +37,8 @@ public class BiggerWhenHovered : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void OnMouseExit()
     {
+        if (DialogueManager.IsConversationActive)
+            return;
         if (rect == null)
             this.gameObject.transform.localScale = originalScale;
         else
@@ -46,6 +49,8 @@ public class BiggerWhenHovered : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void OnMouseDown()
     {
+        if (DialogueManager.IsConversationActive)
+            return;
         if (rect == null)
             this.gameObject.transform.localScale = originalScale;
         else
@@ -54,6 +59,8 @@ public class BiggerWhenHovered : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void OnMouseDrag()
     {
+        if (DialogueManager.IsConversationActive)
+            return;
         if (rect == null)
             this.gameObject.transform.localScale = originalScale;
         else
@@ -62,6 +69,8 @@ public class BiggerWhenHovered : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void OnMouseUp()
     {
+        if (DialogueManager.IsConversationActive)
+            return;
         if (hovered)
         {
             Vector3 newScale = originalScale * scaleFactor;
@@ -74,6 +83,8 @@ public class BiggerWhenHovered : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void OnMouseEnter()
     {
+        if (DialogueManager.IsConversationActive)
+            return;
         Vector3 newScale = originalScale * scaleFactor;
         if (rect == null)
             this.gameObject.transform.localScale = newScale;

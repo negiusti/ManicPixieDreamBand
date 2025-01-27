@@ -377,6 +377,8 @@ public class Character : MonoBehaviour
     public void SetFaceDetail(string label)
     {
         categoryToRenderer["Face_Detail"].enabled = true;
+        if (categoryToResolver["Face_Detail"].GetLabel() != label)
+            FacePop();
         categoryToResolver["Face_Detail"].SetCategoryAndLabel("Face_Detail", label);
         categoryToResolver["Face_Detail"].ResolveSpriteToSpriteRenderer();
     }
