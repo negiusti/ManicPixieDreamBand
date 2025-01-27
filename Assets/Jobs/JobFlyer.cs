@@ -6,17 +6,25 @@ public class JobFlyer : MonoBehaviour
     public CorkboardMiniGame corkboard;
     public JobSystem.PunkJob job;
     private SpriteResolver spriteResolver;
+    private Animator animator;
     private bool taken;
 
     // Start is called before the first frame update
     void Start()
     {
         spriteResolver = GetComponent<SpriteResolver>();
+        animator = GetComponent<Animator>();
     }
 
     private void OnEnable()
     {
+        if (animator == null)
+            Start();
         taken = JobSystem.CurrentJob().Equals(job);
+        if (animator != null)
+        {
+            animator.SetBool("InRange", !taken);
+        }
         if (taken)
         {
             if (GetComponent<BiggerWhenHovered>() != null)
