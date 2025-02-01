@@ -10940,7 +10940,7 @@ MonoBehaviour:
       - originConversationID: 11
         originDialogueID: 132
         destinationConversationID: 11
-        destinationDialogueID: 133
+        destinationDialogueID: 136
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -10952,61 +10952,6 @@ MonoBehaviour:
         serializedVersion: 2
         x: 1456.969
         y: 3832.1663
-        width: 160
-        height: 30
-    - id: 133
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 3
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 25
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: Yeah, you're not bad yourself!
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 11
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 11
-        originDialogueID: 133
-        destinationConversationID: 11
-        destinationDialogueID: 136
-        isConnector: 1
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 1456.969
-        y: 3882.1663
         width: 160
         height: 30
     - id: 134
@@ -11054,14 +10999,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceLeft("Brad")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1360.2275
-        y: 4332.015
+        x: 1358.4265
+        y: 4306.801
         width: 160
         height: 30
     - id: 135
@@ -11091,7 +11036,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()@4
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
@@ -11105,18 +11050,18 @@ MonoBehaviour:
       - originConversationID: 11
         originDialogueID: 135
         destinationConversationID: 11
-        destinationDialogueID: 143
+        destinationDialogueID: 144
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCWalkTo("Brad", 30)
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1360.2277
-        y: 4393.9385
+        x: 1358.4266
+        y: 4368.7236
         width: 160
         height: 30
     - id: 136
@@ -11170,8 +11115,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1357.362
-        y: 3969.1638
+        x: 1355.561
+        y: 3943.949
         width: 160
         height: 30
     - id: 137
@@ -11226,8 +11171,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1357.362
-        y: 4019.1638
+        x: 1355.561
+        y: 3993.949
         width: 160
         height: 30
     - id: 138
@@ -11281,8 +11226,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1357.362
-        y: 4069.1638
+        x: 1355.561
+        y: 4043.949
         width: 160
         height: 30
     - id: 139
@@ -11336,8 +11281,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1357.362
-        y: 4119.164
+        x: 1355.561
+        y: 4093.9492
         width: 160
         height: 30
     - id: 140
@@ -11385,14 +11330,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Brad", "Side", "Frown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1357.362
-        y: 4169.164
+        x: 1355.561
+        y: 4143.949
         width: 160
         height: 30
     - id: 141
@@ -11446,8 +11391,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1357.362
-        y: 4219.164
+        x: 1355.561
+        y: 4193.949
         width: 160
         height: 30
     - id: 142
@@ -11477,7 +11422,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()@2
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
@@ -11495,69 +11440,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCWalkTo("Brad", 3)
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1357.362
-        y: 4269.164
-        width: 160
-        height: 30
-    - id: 143
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 25
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 11
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 11
-        originDialogueID: 143
-        destinationConversationID: 11
-        destinationDialogueID: 144
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 1360.5017
-        y: 4460.6836
+        x: 1355.561
+        y: 4243.949
         width: 160
         height: 30
     - id: 144
@@ -11583,7 +11473,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: What a jerk.
+        value: What's his problem?
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -11605,14 +11495,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: DisableCharacter("Brad")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1360.5017
-        y: 4510.6836
+        x: 1358.7007
+        y: 4485.4688
         width: 160
         height: 30
     - id: 145
@@ -11667,8 +11557,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1360.1201
-        y: 4560.6836
+        x: 1358.3191
+        y: 4535.4688
         width: 160
         height: 30
     - id: 160
@@ -11783,8 +11673,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1363.4939
-        y: 4652.9263
+        x: 1359.8918
+        y: 4598.895
         width: 160
         height: 30
     - id: 162
@@ -11810,7 +11700,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Wife? You're married to Daisy?
+        value: Wait, you're married? To Daisy?
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -11920,7 +11810,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Who else??
+        value: Who else would I be married to??
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -12004,7 +11894,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1484.6143
-        y: 4770.076
+        y: 4769.088
         width: 160
         height: 30
     - id: 166
@@ -13521,8 +13411,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 940.60406, y: 3164.4058}
-    canvasZoom: 0.80585784
+    canvasScrollPosition: {x: 1029.6378, y: 4238.7744}
+    canvasZoom: 0.9897355
   - id: 12
     fields:
     - title: Title
