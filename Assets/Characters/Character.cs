@@ -128,6 +128,12 @@ public class Character : MonoBehaviour
         LoadCharacter();
     }
 
+    public void Teleport(float x, float y, string layer, int idx)
+    {
+        gameObject.transform.position = new Vector3(x, y, 3);
+        MoveToRenderLayer(layer, idx);
+    }
+
     private void OnDisable()
     {
         if (gameObject.layer == LayerMask.NameToLayer("LoadingScreen") || gameObject.layer == LayerMask.NameToLayer("MiniGame"))

@@ -112,6 +112,18 @@ public class Characters : ScriptableObject
         }
     }
 
+    public static void Teleport(string character, double x, double y, string layer, double idx)
+    {
+        if (characters == null || !characters.ContainsKey(character))
+            RefreshCharactersCache();
+        if (!characters.ContainsKey(character))
+        {
+            Debug.LogError("Couldn't find character: " + character);
+            return;
+        }
+        characters[character].Teleport((float)x, (float)y, layer, (int)idx);
+    }
+
     public static void Emote(string character, string eyesEmotion, string mouthEmotion)
     {
         if (characters == null || !characters.ContainsKey(character))

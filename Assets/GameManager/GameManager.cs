@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(Characters.SetTop), this, SymbolExtensions.GetMethodInfo(() => Characters.SetTop(string.Empty, string.Empty)));
         Lua.RegisterFunction(nameof(Characters.Shoot), this, SymbolExtensions.GetMethodInfo(() => Characters.Shoot(string.Empty)));
         Lua.RegisterFunction(nameof(Characters.Kiss), this, SymbolExtensions.GetMethodInfo(() => Characters.Kiss(string.Empty)));
+        Lua.RegisterFunction(nameof(Characters.Teleport), this, SymbolExtensions.GetMethodInfo(() => Characters.Teleport(string.Empty, (double)0, (double)0, string.Empty, (double)0)));
         Lua.RegisterFunction(nameof(Characters.MoveYPos), this, SymbolExtensions.GetMethodInfo(() => Characters.MoveYPos(string.Empty, (double)0)));
         Lua.RegisterFunction(nameof(Characters.SetLayer), this, SymbolExtensions.GetMethodInfo(() => Characters.SetLayer(string.Empty, string.Empty, (double)0)));
         Lua.RegisterFunction(nameof(Characters.EnableCharacter), this, SymbolExtensions.GetMethodInfo(() => Characters.EnableCharacter(string.Empty)));
@@ -113,6 +114,7 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(Characters.SetTop));
         Lua.UnregisterFunction(nameof(Characters.SetFaceDetail));
         Lua.UnregisterFunction(nameof(Characters.MoveYPos));
+        Lua.UnregisterFunction(nameof(Characters.Teleport));
         Lua.UnregisterFunction(nameof(Characters.SetLayer));
         Lua.UnregisterFunction(nameof(Characters.EnableCharacter));
         Lua.UnregisterFunction(nameof(Characters.DisableCharacter));
