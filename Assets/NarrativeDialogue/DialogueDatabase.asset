@@ -9583,7 +9583,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: I wouldn't wanna be in a band with Cliff anyways.
+        value: Good for him. I wouldn't wanna be in a band with Cliff either.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -10106,7 +10106,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Brad", "Frustrate", "Sad");Emote("Max", "Whoa", "OpenMouthDown")
+      userScript: Emote("Brad", "Frustrate", "Sad");Emote("Max", "Whoa", "OpenMouthDown");NPCWalkTo("Brad",
+        2);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -10273,8 +10274,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCWalkTo("Brad", 2);Emote("Max", "Whoa", "OpenMouth");Emote("Brad",
-        "Whoa", "Sad");
+      userScript: Emote("Max", "Whoa", "OpenMouth");Emote("Brad", "Whoa", "Sad");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -10834,7 +10834,7 @@ MonoBehaviour:
       - originConversationID: 11
         originDialogueID: 130
         destinationConversationID: 11
-        destinationDialogueID: 136
+        destinationDialogueID: 202
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -10844,8 +10844,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1244.9496
-        y: 3760.509
+        x: 1246.217
+        y: 3759.2415
         width: 160
         height: 30
     - id: 131
@@ -11042,7 +11042,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: Continue()@4
+        value: Continue()@2
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
@@ -11123,7 +11123,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1354.2817
-        y: 3943.949
+        y: 3942.8074
         width: 160
         height: 30
     - id: 137
@@ -11228,7 +11228,7 @@ MonoBehaviour:
         priority: 2
       conditionsString: 
       userScript: Emote("Max", "Side", "Frown");Emote("Ricki", "Default", "Default");Emote("Brad",
-        "Think", "Disappoint")
+        "Think", "Frown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -11504,7 +11504,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: DisableCharacter("Brad");
+      userScript: DisableCharacter("Brad");NPCFaceLeft("Ricki");NPCFaceLeft("Max");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -11840,6 +11840,12 @@ MonoBehaviour:
         destinationDialogueID: 166
         isConnector: 0
         priority: 2
+      - originConversationID: 11
+        originDialogueID: 164
+        destinationConversationID: 11
+        destinationDialogueID: 167
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: Emote("Ricki", "Whatever", "Tongue");
       onExecute:
@@ -11893,6 +11899,12 @@ MonoBehaviour:
         originDialogueID: 165
         destinationConversationID: 11
         destinationDialogueID: 167
+        isConnector: 0
+        priority: 2
+      - originConversationID: 11
+        originDialogueID: 165
+        destinationConversationID: 11
+        destinationDialogueID: 166
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -13419,9 +13431,64 @@ MonoBehaviour:
         y: 5556.483
         width: 160
         height: 30
+    - id: 202
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: UGH! Being mean is our love language!
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 11
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 11
+        originDialogueID: 202
+        destinationConversationID: 11
+        destinationDialogueID: 136
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1244.7668
+        y: 3833.6228
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1195.3788, y: 2097.2456}
-    canvasZoom: 0.73399985
+    canvasScrollPosition: {x: 1149.0524, y: 3909.061}
+    canvasZoom: 0.8634998
   - id: 12
     fields:
     - title: Title
