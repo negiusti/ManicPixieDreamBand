@@ -116,8 +116,7 @@ public class SpawnCharacters : ScriptableObject
             Character c = characters.FirstOrDefault(c => c.name.Equals(m.name));
             if (c == null)
             {
-                c = SpawnBandMember(m, stage).WaitForCompletion().GetComponent<Character>();
-                c.MoveToRenderLayer("stage_char", 0);
+                SpawnBandMember(m, stage).WaitForCompletion();
             }
         }
     }
@@ -190,6 +189,7 @@ public class SpawnCharacters : ScriptableObject
 
             // Instantiate the prefab and spawn it in the current scene
             GameObject spawnedCharacter = Instantiate(handle.Result, s.GetInstrument(m.position).SpawnPos(), Quaternion.identity);
+            spawnedCharacter.GetComponent<Character>().MoveToRenderLayer("stage_char", 0);
             //string originalName = spawnedCharacter.name;
 
             // Check if the name ends with "(Clone)"

@@ -63,6 +63,8 @@ public abstract class Movement : MonoBehaviour
     // Use this for initialization
     protected virtual void Start()
     {
+        if (character != null)
+            return;
         lockAnim = false;
         isSkating = false;
         isRollerSkating = false;
@@ -196,6 +198,8 @@ public abstract class Movement : MonoBehaviour
 
     public void PlayInstrument(string instLabel, Vector3 pos, string layer, int layerOrder)
     {
+        if (character == null)
+            Start();
         Quaternion currentRotation = transform.localRotation;
         prevRotation = transform.localRotation;
 
