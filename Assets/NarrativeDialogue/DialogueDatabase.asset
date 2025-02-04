@@ -7261,7 +7261,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: StartJam("Cloudy Kings 2",0);NPCFaceLeft("MainCharacter");NPCFaceRight("Ricki");NPCFaceRight("Dylan")
+      userScript: StartJam("Cloudy Kings 2",0);NPCFaceRight("Dylan")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -7323,7 +7323,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1348.7839
-        y: 2325.2217
+        y: 2324.045
         width: 160
         height: 30
     - id: 4
@@ -7989,7 +7989,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: EndJam();NPCFaceRight("Cliff");NPCFaceRight("TJ");NPCFaceRight("Dale")
+      userScript: EndJam();NPCFaceLeft("Cliff");NPCFaceLeft("TJ");NPCFaceLeft("Dale")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -8155,7 +8155,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Max", "Side", "Frown"); NPCFaceLeft("Ricki");NPCFaceLeft("MainCharacter")
+      userScript: Emote("Max", "Side", "Frown"); NPCFaceRight("Ricki");NPCFaceRight("Max")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -8431,7 +8431,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceRight("Ricki")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -8493,7 +8493,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1350.2941
-        y: 1782.6893
+        y: 1781.6655
         width: 160
         height: 30
     - id: 64
@@ -8541,7 +8541,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCWalkTo("Cliff", 23);NPCWalkTo("TJ", 23);NPCWalkTo("Dale", 23);
+      userScript: NPCWalkTo("Cliff", 15);NPCWalkTo("TJ", 15);NPCWalkTo("Dale", 15);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -8596,7 +8596,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: DisableCharacter("Cliff");DisableCharacter("Dale");DisableCharacter("TJ");
+      userScript: NPCFaceLeft("Ricki");NPCFaceLeft("Max")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -8761,7 +8761,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: EnableCharacter("Emerita_FB");EnableCharacter("Daisy");EnableCharacter("Ollie");
+      userScript: EnableCharacter("Emerita_FB");EnableCharacter("Daisy");EnableCharacter("Ollie");DisableCharacter("Cliff");DisableCharacter("Dale");DisableCharacter("TJ");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -8823,7 +8823,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1349.7847
-        y: 2177.0164
+        y: 2175.8396
         width: 160
         height: 30
     - id: 71
@@ -9206,13 +9206,13 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Ricki", "Default","Disappoint")
+      userScript: Emote("Ricki", "Whatever","Disappoint")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1355.2891
+        x: 1353.7812
         y: 2869.6694
         width: 160
         height: 30
@@ -9316,7 +9316,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Ricki", "Default", "Default");Emote("MainCharacter", "Default",
+        "Default");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -9610,8 +9611,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1315.8137
-        y: 818.9074
+        x: 1318.8977
+        y: 817.87933
         width: 160
         height: 30
     - id: 107
@@ -9995,13 +9996,13 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Ricki", "Angry", "OpenDownSmall");Emote("Max", "Side", "Frown")
+      userScript: Emote("Ricki", "Angry", "OpenDownSmall");Emote("Max", "Side", "Frown");NPCFaceLeft("Ricki")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1352.4188
+        x: 1351.4338
         y: 1611.4297
         width: 160
         height: 30
@@ -10050,7 +10051,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCFaceRight("Brad");Emote("Brad", "Whoa", "Stress")
+      userScript: NPCFaceRight("Brad");Emote("Brad", "Whoa", "Kiss")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -10105,13 +10106,13 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Brad", "Frustrate", "Stress")
+      userScript: Emote("Brad", "Frustrate", "Sad");Emote("Max", "Whoa", "OpenMouthDown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1354.6456
+        x: 1355.9248
         y: 3170.7803
         width: 160
         height: 30
@@ -10160,13 +10161,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Brad", "Whoa", "OpenMouth")
+      userScript: Emote("Ricki", "Whoa", "OpenMouth");Emote("Max", "Whoa", "OpenMouth");Emote("Brad",
+        "Whoa", "Sad");NPCFaceRight("Ricki");NPCFaceRight("Max");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1353.6195
+        x: 1352.3346
         y: 3055.1165
         width: 160
         height: 30
@@ -10215,7 +10217,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCWalkTo("Brad", 0)
+      userScript: NPCWalkTo("Brad", 0);Emote("Ricki", "Default", "Default");Emote("Max
+        "Default", "Default");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -10252,7 +10255,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: Continue()@2
+        value: Continue()@1
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
@@ -10270,7 +10273,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCWalkTo("Brad", 2)
+      userScript: NPCWalkTo("Brad", 2);Emote("Max", "Whoa", "OpenMouth");Emote("Brad",
+        "Whoa", "Sad");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -10380,7 +10384,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Angry", "OpenMouth");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -10435,7 +10439,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Ricki", "Angry", "OpenMouth");Emote("Max", "Angry", "Sad");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -10496,7 +10500,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Angry", "OpenMouth");Emote("Ricki", "Angry", "Sad");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -10662,7 +10666,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Angry", "Frown");Emote("Ricki", "Angry", "Sad");Emote("Brad",
+        "Worry", "OpenMouthDown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -10724,7 +10729,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1354.6456
-        y: 3320.7803
+        y: 3319.501
         width: 160
         height: 30
     - id: 129
@@ -10778,7 +10783,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Brad", "Side", "Frown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -10977,7 +10982,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Good luck with those psychos.
+        value: Good luck with those sickos.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -10999,7 +11004,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCFaceLeft("Brad")
+      userScript: NPCFaceLeft("Brad");Emote("Max", "Side", "Frown");Emote("Ricki",
+        "Whatever", "Frown");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -11060,7 +11066,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1358.4266
+        x: 1357.1475
         y: 4368.7236
         width: 160
         height: 30
@@ -11109,13 +11115,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Happy", "Happy");Emote("Ricki", "Happy", "Happy");Emote("Brad",
+        "Default", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1355.561
+        x: 1354.2817
         y: 3943.949
         width: 160
         height: 30
@@ -11220,7 +11227,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Side", "Frown");Emote("Ricki", "Default", "Default");Emote("Brad",
+        "Think", "Disappoint")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -11275,7 +11283,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Brad", "Default", "Default")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -11330,13 +11338,13 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Brad", "Side", "Frown")
+      userScript: Emote("Ricki", "Happy", "Excited");Emote("Brad", "Side", "Frown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1355.561
+        x: 1354.2819
         y: 4143.949
         width: 160
         height: 30
@@ -11385,14 +11393,15 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Default", "Default");Emote("Ricki", "Default", "Default");Emote("Brad",
+        "Whatever", "Frown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 1355.561
-        y: 4193.949
+        y: 4192.67
         width: 160
         height: 30
     - id: 142
@@ -11440,7 +11449,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: NPCWalkTo("Brad", 3)
+      userScript: NPCWalkTo("Brad", 3);Emote("Brad", "Side", "Frown")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -11495,13 +11504,13 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: DisableCharacter("Brad")
+      userScript: DisableCharacter("Brad");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1358.7007
+        x: 1357.4215
         y: 4485.4688
         width: 160
         height: 30
@@ -11667,7 +11676,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Default", "Default");Emote("Ricki", "Default", "Default");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -11832,7 +11841,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Ricki", "Whatever", "Tongue");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -12053,7 +12062,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Ricki", "Default", "Default");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -12141,7 +12150,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Alright, I'm off to see my hot wife. Later.
+        value: Whatever, I'm off to see my hot wife. Later.
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -12169,8 +12178,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1368.8533
-        y: 5019.3823
+        x: 1365.3883
+        y: 5044.9956
         width: 160
         height: 30
     - id: 171
@@ -12237,14 +12246,14 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Emote("Max", "Happy", "Tongue");Emote("Ricki", "Default", "Default");
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1368.8533
-        y: 5069.3823
+        x: 1368.2166
+        y: 5094.9956
         width: 160
         height: 30
     - id: 172
@@ -12274,7 +12283,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
@@ -12304,7 +12313,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 514.6063
+        x: 513.32135
         y: 5234.5107
         width: 160
         height: 30
@@ -12335,7 +12344,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
@@ -12396,7 +12405,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
@@ -13411,8 +13420,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 828.93866, y: 0}
-    canvasZoom: 0.64223623
+    canvasScrollPosition: {x: 1148.023, y: 4674.1387}
+    canvasZoom: 0.94599986
   - id: 12
     fields:
     - title: Title
@@ -138150,7 +138159,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceRight("Max")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -138260,13 +138269,13 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: NPCFaceRight("Max")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 889.5085
+        x: 890.499
         y: 823.76294
         width: 160
         height: 30
@@ -139352,8 +139361,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 845.95074, y: 0}
-    canvasZoom: 0.77104104
+    canvasScrollPosition: {x: 977.40533, y: 1190.0244}
+    canvasZoom: 1.1225382
   - id: 88
     fields:
     - title: Title
