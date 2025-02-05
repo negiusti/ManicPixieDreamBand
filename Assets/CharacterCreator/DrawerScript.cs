@@ -12,17 +12,19 @@ public class DrawerScript : MonoBehaviour
     public Canvas canvas;
     private Icons icons;
     private Collider2D coll;
+    private ClothesColorPalette palette;
 
     // Start is called before the first frame update
     void Start()
     {
-        SpriteLibrary fuck = this.GetComponentInParent<SpriteLibrary>();
+        SpriteLibrary fuck = GetComponentInParent<SpriteLibrary>();
         LibraryAsset = fuck.spriteLibraryAsset;
         targetResolver = GetComponent<SpriteResolver>();
         //canvas = this.GetComponentInChildren<Canvas>();
         canvas.enabled = false;
-        icons = this.GetComponentInChildren<Icons>();
-        coll = this.GetComponent<Collider2D>();
+        icons = GetComponentInChildren<Icons>();
+        coll = GetComponent<Collider2D>();
+        palette = GetComponentInChildren<ClothesColorPalette>();
         HideIcons();
     }
 
@@ -92,6 +94,7 @@ public class DrawerScript : MonoBehaviour
         canvas.enabled = true;
         targetResolver.SetCategoryAndLabel("Drawer", "Open");
         ShowIcons();
+        palette.gameObject.SetActive(true);
         foreach (DrawerScript drawer in otherDrawers)
         {
             drawer.UnselectDrawer();
@@ -106,6 +109,7 @@ public class DrawerScript : MonoBehaviour
         canvas.enabled = false;
         targetResolver.SetCategoryAndLabel("Drawer", "Closed");
         HideIcons();
+        palette.gameObject.SetActive(false);
         coll.enabled = true;
         icons.DisableIconColliders();
     }
