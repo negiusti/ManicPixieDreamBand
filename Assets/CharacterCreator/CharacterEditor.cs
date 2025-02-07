@@ -18,7 +18,20 @@ public class CharacterEditor : MonoBehaviour
     private static string lSock = "L_Sock";
     private static string rShoe = "R_Shoe";
     private static string lShoe = "L_Shoe";
-
+    public enum ClothesCategory
+    {
+        Top,
+        Bottom,
+        Socks,
+        FB,
+        Shoes
+    }
+    public static ClothesCategory currCategory; // this is the selected category which the color bucket will currently effect
+    [SerializeField] private Material TopMat;
+    [SerializeField] private Material BottomMat;
+    [SerializeField] private Material SocksMat;
+    [SerializeField] private Material ShoesMat;
+    [SerializeField] private Material FBMat;
     private List<SpriteRenderer> skinRenderers;
 
     private SpriteLibraryAsset spriteLib;
@@ -67,6 +80,33 @@ public class CharacterEditor : MonoBehaviour
     private GameObject goToPreviousSceneButton;
     private Coroutine cr;
     [SerializeField] private bool isPixiecore;
+
+    public void SetColorOfSelectedClothes(float val)
+    {
+        Material mat;
+        switch (currCategory)
+        {
+            case ClothesCategory.Top:
+                mat = TopMat;
+                break;
+            case ClothesCategory.Bottom:
+                mat = BottomMat;
+                break;
+            case ClothesCategory.Socks:
+                mat = SocksMat;
+                break;
+            case ClothesCategory.Shoes:
+                mat = ShoesMat;
+                break;
+            case ClothesCategory.FB:
+                mat = FBMat;
+                break;
+            default:
+                mat = TopMat;
+                break;
+        };
+        mat.SetFloat("_HsvShift", val);
+    }
 
     public void UnlockAllOutfits(bool value)
     {

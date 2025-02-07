@@ -13,6 +13,7 @@ public class DrawerScript : MonoBehaviour
     private Icons icons;
     private Collider2D coll;
     private ClothesColorPalette palette;
+    public CharacterEditor.ClothesCategory category;
 
     // Start is called before the first frame update
     void Start()
@@ -101,6 +102,7 @@ public class DrawerScript : MonoBehaviour
         }
         coll.enabled = false;
         icons.EnableIconColliders();
+        CharacterEditor.currCategory = category;
     }
 
     public void UnselectDrawer()
