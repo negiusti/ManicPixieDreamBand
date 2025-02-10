@@ -175,6 +175,7 @@ public class CustomDialogueScript : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.K) && Characters.MainCharacter() != null && Characters.MainCharacter().GetComponent<Movement>().IsSkateboarding())
             {
+                MainCharacterState.SetFlag("Kickflipped", true);
                 waitForK = false;
                 DialogueManager.standardDialogueUI.OnContinueConversation();
             }

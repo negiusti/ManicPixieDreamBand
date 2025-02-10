@@ -124,6 +124,12 @@ public class NPCMovement : Movement
         }
         else if (other.CompareTag("Obstacle") && skating && !lockAnim)
         {
+            // Rex is too afraid to kickflip due to their injuries, remember?
+            if (character.CharacterName() == "Rex")
+            {
+                Ollie();
+                return;
+            }
             switch (Random.Range(0, 2))
             {
                 case 0:
