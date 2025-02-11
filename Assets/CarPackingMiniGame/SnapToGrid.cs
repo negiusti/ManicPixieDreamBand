@@ -141,7 +141,7 @@ public class SnapToGrid : MonoBehaviour
             // Call this here so that objects with odd widths or heights won't twitch after rotating because of how we adjust their positions
             transform.position = GetSnappedPosition();
 
-            if (!CheckPosition(0, 0))
+            if (inTrunk && !CheckPosition(0, 0))
             {
                 if (!ShiftIfNeeded(1))
                 {
