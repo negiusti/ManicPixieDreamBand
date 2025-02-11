@@ -16,14 +16,14 @@ public class SplashScreen : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && InteractionEnabled())
         {
             // FOR EXHIBITION DEMOS ONLY:
-            SaveSystem.DeleteSaveData();
-            GameManager.Instance.RefreshGameState();
+            //SaveSystem.DeleteSaveData();
+            //GameManager.Instance.RefreshGameState();
 
-            //if (completedGame())
-            //{
-            //    SaveSystem.DeleteSaveData();
-            //    GameManager.Instance.RefreshGameState();
-            //}
+            if (completedGame())
+            {
+                SaveSystem.DeleteSaveData();
+                GameManager.Instance.RefreshGameState();
+            }
 
             SceneChanger.Instance.ChangeScene("Bedroom");
         }
@@ -48,6 +48,6 @@ public class SplashScreen : MonoBehaviour
         // TODO: update this for addtional plot convos
         int currentConvoIdx = ES3.Load("PlotConvoIdx", 0);
         Debug.Log("CUrrent convo IDX is: " + currentConvoIdx);
-        return currentConvoIdx == 9;
+        return currentConvoIdx == 18;
     }
 }

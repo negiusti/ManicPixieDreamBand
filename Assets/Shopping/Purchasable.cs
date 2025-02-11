@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.U2D.Animation;
@@ -46,7 +45,8 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         spriteLib = sl.spriteLibraryAsset;
         purchaseableName = SceneChanger.Instance.GetCurrentScene() + "_" + this.gameObject.name;
         shop = FindObjectOfType<Shop>();
-        priceTag = GetComponentInChildren<PriceTag>();
+        priceTag = GetComponentInChildren<PriceTag>(includeInactive:true);
+        priceTag.gameObject.SetActive(true);
         if (priceTag == null)
         {
             Debug.LogError("Purchasable is missing price tag: " + gameObject.name);
@@ -143,13 +143,13 @@ public class Purchasable : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private void OnMouseEnter()
     {
-        if (!DialogueManager.IsConversationActive)
+        //if (!DialogueManager.IsConversationActive)
             priceTag.ShowPrice();
     }
 
     private void OnMouseExit()
     {
-        if (!DialogueManager.IsConversationActive)
+        //if (!DialogueManager.IsConversationActive)
             priceTag.HidePrice();
     }
 
