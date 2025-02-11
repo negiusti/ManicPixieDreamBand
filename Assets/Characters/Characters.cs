@@ -332,7 +332,10 @@ public class Characters : ScriptableObject
         if (characters == null || !characters.ContainsKey(name))
             RefreshCharactersCache();
         if (characters.ContainsKey(name))
+        {
+            characters[name].gameObject.transform.localScale = new Vector3(0.91f, 0.91f, 0.91f);
             characters[name].gameObject.SetActive(true);
+        }
     }
 
     public static void DisableCharacter(string name)
@@ -340,7 +343,8 @@ public class Characters : ScriptableObject
         if (characters == null || !characters.ContainsKey(name))
             RefreshCharactersCache();
         if (characters.ContainsKey(name))
-            characters[name].gameObject.SetActive(false);
+            characters[name].gameObject.transform.localScale = Vector3.zero;
+        //characters[name].gameObject.SetActive(false);
     }
 
     public static void SetConvoTrigger(string name, string convo)
