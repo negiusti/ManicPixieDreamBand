@@ -6,6 +6,7 @@ public class CharacterData
 {
     [SerializeField] private Dictionary<string, string> categoryToLabelMap;
     [SerializeField] private Dictionary<string, float[]> categoryToColorMap;
+    [SerializeField] private Dictionary<string, float> hueShifts;
     [SerializeField] private Dictionary<string, bool> categoryToEnabled;
     [SerializeField] private bool isWearingFullFit;
     [SerializeField] private string name;
@@ -17,12 +18,18 @@ public class CharacterData
         this.categoryToColorMap = character.CategoryToColorMap();
         this.isWearingFullFit = character.IsWearingFullFit();
         this.categoryToEnabled = character.CategoryToEnabled();
+        this.hueShifts = character.HueShifts();
         this.name = character.CharacterName();
     }
 
     public Dictionary<string, string> CategoryToLabelMap()
     {
         return categoryToLabelMap;
+    }
+
+    public Dictionary<string, float> HueShifts()
+    {
+        return hueShifts;
     }
 
     public Dictionary<string, float[]> CategoryToColorMap()

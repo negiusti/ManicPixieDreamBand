@@ -232,9 +232,15 @@ public abstract class Movement : MonoBehaviour
         character.HideInstrumentSprite();
     }
 
+    protected bool AllowedToMoveDuringConvo()
+    {
+        //return !character.isMainCharacter() || !DialogueManager.IsConversationActive || DialogueManager.LastConversationStarted.EndsWith("_Sk8");
+        return true;
+    }
+
     protected void Ollie()
     {
-        if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter() || DialogueManager.LastConversationStarted.EndsWith("_Sk8")))
+        if (!lockAnim && AllowedToMoveDuringConvo())
         {
             //GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_SkateJump");
@@ -245,7 +251,7 @@ public abstract class Movement : MonoBehaviour
 
     protected void Grind()
     {
-        if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter() || DialogueManager.LastConversationStarted.EndsWith("_Sk8")))
+        if (!lockAnim && AllowedToMoveDuringConvo())
         {
             animator.Play("BaseCharacter_SkateboardGrind");
         }
@@ -253,7 +259,7 @@ public abstract class Movement : MonoBehaviour
 
     public void Flip()
     {
-        if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter() || DialogueManager.LastConversationStarted.EndsWith("_Sk8")))
+        if (!lockAnim && AllowedToMoveDuringConvo())
         {
             //GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_SkateboardFlip");
@@ -262,7 +268,7 @@ public abstract class Movement : MonoBehaviour
 
     protected void Rollie()
     {
-        if (!lockAnim && (!DialogueManager.IsConversationActive || !character.isMainCharacter() || DialogueManager.LastConversationStarted.EndsWith("_Sk8")))
+        if (!lockAnim && AllowedToMoveDuringConvo())
         {
             //GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_RollerskateJump");

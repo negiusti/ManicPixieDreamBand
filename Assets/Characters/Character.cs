@@ -11,6 +11,7 @@ public class Character : MonoBehaviour
     private Dictionary<string, SpriteRenderer> categoryToRenderer = new Dictionary<string, SpriteRenderer>();
     private SpriteResolver[] spriteResolvers;
     private SpriteRenderer[] spriteRenderers;
+    private Dictionary<string, float> hueShifts;
     private Dictionary<string, Color> categoryToColorMap;
     private Dictionary<string, bool> categoryToEnabled;
     //private SpriteResolver instResolver;
@@ -92,6 +93,7 @@ public class Character : MonoBehaviour
         categoryToEnabled = new Dictionary<string, bool>();
         categoryToLabelMap = new Dictionary<string, string>();
         categoryToColorMap = new Dictionary<string, Color>();
+        hueShifts = new Dictionary<string, float>();
         sortingGroup = this.GetComponent<SortingGroup>();
         animator = this.GetComponent<Animator>();
 
@@ -248,7 +250,11 @@ public class Character : MonoBehaviour
                 continue;
             if (spriteRenderer.gameObject.name == "Eyes" && categoryToResolver["Eyes"] != null && categoryToResolver["Eyes"].GetLabel().StartsWith("E_"))
                 continue;
-
+            if (spriteRenderer.sharedMaterial.HasFloat("_HsvShift"))
+            {
+                hueShifts[spriteRenderer.gameObject.name] = spriteRenderer.sharedMaterial.GetFloat("_HsvShift");
+            }
+            
             categoryToColorMap[spriteRenderer.gameObject.name] = spriteRenderer.color;
         }
     }
@@ -283,6 +289,7 @@ public class Character : MonoBehaviour
         isWearingFullFit = characterData.IsWearingFullFit();
         categoryToLabelMap = characterData.CategoryToLabelMap();
         categoryToColorMap = characterData.CategoryToColorMap().ToDictionary(pair => pair.Key, pair => new Color(pair.Value[0], pair.Value[1], pair.Value[2], pair.Value[3]));
+        hueShifts = characterData.HueShifts();
         characterName = characterData.GetName();
         categoryToEnabled = characterData.CategoryToEnabled();
         UpdateAppearance();
@@ -311,6 +318,8 @@ public class Character : MonoBehaviour
                 continue;
             spriteRenderer.color = categoryToColorMap.TryGetValue(spriteRenderer.gameObject.name, out Color value) ? value : Color.white;
             spriteRenderer.enabled = categoryToEnabled.GetValueOrDefault(spriteRenderer.gameObject.name);
+            if (spriteRenderer.sharedMaterial.HasFloat("_HsvShift"))
+                spriteRenderer.sharedMaterial.SetFloat("_HsvShift", hueShifts.TryGetValue(spriteRenderer.gameObject.name, out float value2) ? value2 : 0f);
         }
     }
 
@@ -322,6 +331,11 @@ public class Character : MonoBehaviour
     public Dictionary<string, float[]> CategoryToColorMap()
     {
         return categoryToColorMap.ToDictionary(pair => pair.Key, pair => new float[] { pair.Value.r, pair.Value.g, pair.Value.b, pair.Value.a });
+    }
+
+    public Dictionary<string, float> HueShifts()
+    {
+        return hueShifts;
     }
 
     public Dictionary<string, bool> CategoryToEnabled()
