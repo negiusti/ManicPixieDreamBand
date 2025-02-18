@@ -90981,7 +90981,7 @@ MonoBehaviour:
   - id: 67
     fields:
     - title: Title
-      value: Rex/SkateparkDate_Sk8
+      value: Rex/SkateparkDate
       type: 0
       typeString: CustomFieldType_Text
     - title: Description
@@ -91137,7 +91137,7 @@ MonoBehaviour:
         priority: 2
       conditionsString: 
       userScript: NPCSkateBetween("Josh",-61, 6,-1);NPCSkateBetween("Rex",-70, -18,
-        -1);NPCSkateBetween("Ollie",-71, -20, -1);
+        -1);NPCSkateBetween("Ollie",-71, -20, -1);NPCSkateTo("MainCharacter", -54.42);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -91339,7 +91339,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: Continue()@2
+        value: Continue()@4
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 67
@@ -91395,7 +91395,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: Continue()@2
+        value: Continue()@4
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 67
@@ -91451,7 +91451,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: Continue()@2
+        value: Continue()@4
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 67
@@ -93337,7 +93337,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Rex", "Default", "Default");NPCSkateTo("Rex", 100)
+      userScript: Emote("Rex", "Default", "Default");NPCSkateTo("Rex", 100);NPCSkateTo("MainCharacter",
+        100)
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -93623,8 +93624,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 334.79224, y: 381.77902}
-    canvasZoom: 0.88875467
+    canvasScrollPosition: {x: 28.775757, y: 0}
+    canvasZoom: 0.7645322
   - id: 68
     fields:
     - title: Title
@@ -96020,7 +96021,7 @@ MonoBehaviour:
   - id: 70
     fields:
     - title: Title
-      value: Rex/KickflipDate_Sk8
+      value: Rex/KickflipDate
       type: 0
       typeString: CustomFieldType_Text
     - title: Description
@@ -96506,14 +96507,8 @@ MonoBehaviour:
         destinationDialogueID: 142
         isConnector: 0
         priority: 2
-      - originConversationID: 70
-        originDialogueID: 140
-        destinationConversationID: 70
-        destinationDialogueID: 146
-        isConnector: 0
-        priority: 2
       conditionsString: 
-      userScript: WaitForK();NPCKickFlip("Rex")
+      userScript: NPCKickFlip("Rex")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -96630,7 +96625,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1226.986
-        y: 1155.7112
+        y: 1154.5857
         width: 160
         height: 30
     - id: 143
@@ -96741,8 +96736,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1129.7906
-        y: 1292.0681
+        x: 1129.7908
+        y: 1255.587
         width: 160
         height: 30
     - id: 145
@@ -96800,8 +96795,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1129.7906
-        y: 1341.6515
+        x: 1126.6456
+        y: 1320.8948
         width: 160
         height: 30
     - id: 146
@@ -96854,9 +96849,9 @@ MonoBehaviour:
         destinationDialogueID: 148
         isConnector: 0
         priority: 2
-      conditionsString: CheckFlag("Kickflipped")
-      userScript: Emote("MainCharacter", "Default", "Default");Emote("Rex", "Star",
-        "Excited")
+      conditionsString: 
+      userScript: NPCKickFlip("MainCharacter");Emote("MainCharacter", "Default",
+        "Default");Emote("Rex", "Star", "Excited")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -97363,56 +97358,6 @@ MonoBehaviour:
         serializedVersion: 2
         x: 1197.0775
         y: 3017.8499
-        width: 160
-        height: 30
-    - id: 157
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 18
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: Continue()@4
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 70
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks: []
-      conditionsString: 
-      userScript: Emote("Rex", "Default", "Default");NPCSkateTo("MainCharacter",
-        54);NPCSkateTo("Rex", 51);
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 1459.5282
-        y: 1667.9149
         width: 160
         height: 30
     - id: 158
@@ -101870,19 +101815,20 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Emote("Rex", "Default", "Default");NPCSkateTo("Rex", 51);
+      userScript: Emote("Rex", "Default", "Default");NPCSkateTo("MainCharacter",
+        54);NPCSkateTo("Rex", 51);
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1125.5582
+        x: 1126.6837
         y: 1668.0043
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 871.5764, y: 4050.0261}
-    canvasZoom: 0.8885
+    canvasScrollPosition: {x: 645.8936, y: 481.75958}
+    canvasZoom: 1.0734425
   - id: 71
     fields:
     - title: Title

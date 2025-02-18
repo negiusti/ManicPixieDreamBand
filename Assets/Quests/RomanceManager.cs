@@ -23,6 +23,28 @@ public class RomanceManager : ScriptableObject
         return prevScene != SceneChanger.Instance.GetCurrentScene();
     }
 
+    // THIS IS FOR DEBUGGING AND TESTING ONLY <3
+    public static void StartDateConvo(string convoName)
+    {
+        foreach (string single in hornySingles.Keys)
+        {
+            ConversationData romanceConvo = hornySingles[single].conversationsData.FirstOrDefault(c => convoName == c.conversation);
+            if (romanceConvo != null)
+            {
+                if ((romanceConvo.trigger == null || romanceConvo.trigger == "Start") && !DialogueManager.IsConversationActive)
+                {
+                    DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>().StartConversation(romanceConvo);
+                }
+                else // if (HasSceneChanged()) // Only try to do this once per scene?? 
+                {
+                    // this is for spawning participants with triggers for optional dialogues
+                    SpawnCharacters.SpawnParticipants(romanceConvo.participants, romanceConvo.conversation);
+                }
+            }
+        }
+        Debug.Log("Couldn't find date convo with name: " + convoName);
+    }
+
     public static void CheckForRomanceConvo()
     {
         foreach (string single in hornySingles.Keys)

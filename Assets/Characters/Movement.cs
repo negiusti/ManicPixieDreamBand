@@ -234,8 +234,8 @@ public abstract class Movement : MonoBehaviour
 
     protected bool AllowedToMoveDuringConvo()
     {
-        //return !character.isMainCharacter() || !DialogueManager.IsConversationActive || DialogueManager.LastConversationStarted.EndsWith("_Sk8");
-        return true;
+        return !character.isMainCharacter() || !DialogueManager.IsConversationActive || DialogueManager.LastConversationStarted.EndsWith("_Sk8");
+        //return true;
     }
 
     protected void Ollie()

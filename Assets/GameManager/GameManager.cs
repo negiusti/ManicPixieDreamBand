@@ -37,6 +37,11 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void StartDateConvo(string convoName)
+    {
+        RomanceManager.StartDateConvo(convoName);
+    }
+
     void RegisterSOLuaFuncs()
     {
         Lua.RegisterFunction(nameof(Calendar.CompleteCurrentEvent), this, SymbolExtensions.GetMethodInfo(() => Calendar.CompleteCurrentEvent()));
