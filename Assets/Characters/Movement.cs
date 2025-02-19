@@ -234,7 +234,9 @@ public abstract class Movement : MonoBehaviour
 
     protected bool AllowedToMoveDuringConvo()
     {
-        return !character.isMainCharacter() || !DialogueManager.IsConversationActive || DialogueManager.LastConversationStarted.EndsWith("_Sk8");
+        return !character.isMainCharacter() ||
+            !DialogueManager.IsConversationActive ||
+            DialogueManager.LastConversationStarted.EndsWith("_Sk8");
         //return true;
     }
 
@@ -259,7 +261,7 @@ public abstract class Movement : MonoBehaviour
 
     public void Flip()
     {
-        if (!lockAnim && AllowedToMoveDuringConvo())
+        if (!lockAnim && (AllowedToMoveDuringConvo() || DialogueManager.LastConversationStarted.Equals("Rex/KickflipDate")))
         {
             //GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_SkateboardFlip");
