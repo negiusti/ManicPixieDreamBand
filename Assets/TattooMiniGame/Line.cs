@@ -16,13 +16,27 @@ public class Line : MonoBehaviour
     public GameObject guidelineCheck;
 
     private TattooMiniGame tattooMiniGame;
+    private TattooArcadeGame tattooArcadeGame;
 
     private void Start()
     {
-        tattooMiniGame = (TattooMiniGame)MiniGameManager.GetMiniGame("Tattoo");
-
-        lineRenderer.startColor = tattooMiniGame.currentLineAppearance;
-        lineRenderer.endColor = tattooMiniGame.currentLineAppearance;
+        //tattooMiniGame = (TattooMiniGame)MiniGameManager.GetMiniGame("Tattoo");
+        tattooMiniGame = GetComponentInParent<TattooMiniGame>();
+        if (tattooMiniGame != null)
+        {
+            lineRenderer.startColor = tattooMiniGame.currentLineAppearance;
+            lineRenderer.endColor = tattooMiniGame.currentLineAppearance;
+        } else
+        {
+            tattooArcadeGame = GetComponentInParent<TattooArcadeGame>();
+            if (tattooArcadeGame == null)
+            {
+                Debug.LogError("Huh?");
+                return;
+            }
+            lineRenderer.startColor = tattooArcadeGame.currentLineAppearance;
+            lineRenderer.endColor = tattooArcadeGame.currentLineAppearance;
+        }
     }
 
     public void UpdateLine(Vector2 position)

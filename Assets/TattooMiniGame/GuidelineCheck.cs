@@ -8,10 +8,13 @@ public class GuidelineCheck : MonoBehaviour
     private bool onArm;
 
     public TattooMiniGame tattooMiniGame;
+    public TattooArcadeGame tattooArcadeGame;
 
     private void Start()
     {
-        tattooMiniGame = FindFirstObjectByType<TattooMiniGame>(FindObjectsInactive.Include);
+        //tattooMiniGame = FindFirstObjectByType<TattooMiniGame>(FindObjectsInactive.Include);
+        tattooMiniGame = GetComponentInParent<TattooMiniGame>();
+        tattooArcadeGame = GetComponentInParent<TattooArcadeGame>();
 
         StartCoroutine(DestroySelf());
     }
@@ -19,7 +22,7 @@ public class GuidelineCheck : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Check if this object is within the guideline
-        if (collision.gameObject == tattooMiniGame.guideline)
+        if ((tattooMiniGame != null && collision.gameObject == tattooMiniGame.guideline) || (tattooArcadeGame != null && collision.gameObject == tattooArcadeGame.guideline))
         {
             inGuideline = true;
         }
@@ -41,7 +44,10 @@ public class GuidelineCheck : MonoBehaviour
             Destroy(collision.gameObject);
 
             // Add to the total number of checks that were spawned
-            tattooMiniGame.checksSpawned++;
+            if (tattooMiniGame != null)
+                tattooMiniGame.checksSpawned++;
+            if (tattooArcadeGame != null)
+                tattooArcadeGame.checksSpawned++;
         }
     }
 
@@ -52,9 +58,18 @@ public class GuidelineCheck : MonoBehaviour
         if (!inGuideline && onArm)
         {
             // Add to the total number of checks that were spawned
-            tattooMiniGame.checksSpawned++;
             // And add to the total number of checks that were not in the guideline
-            tattooMiniGame.checksOutOfGuideline++;
+            if (tattooMiniGame != null)
+            {
+                tattooMiniGame.checksSpawned++;
+                tattooMiniGame.checksOutOfGuideline++;
+            }           
+                
+            if (tattooArcadeGame != null)
+            {
+                tattooArcadeGame.checksSpawned++;
+                tattooArcadeGame.checksOutOfGuideline++;
+            }
         }
 
         // Destroy itself after waiting a moment

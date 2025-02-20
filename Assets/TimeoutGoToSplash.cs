@@ -6,6 +6,7 @@ public class TimeoutGoToSplash : MonoBehaviour
     private SceneChanger sc;
     private float countdownTimer;
     public float timeLimitSeconds = 180f;
+    public bool arcadeMode;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +42,10 @@ public class TimeoutGoToSplash : MonoBehaviour
         {
             // Do something when the timer reaches zero
             Debug.Log("Countdown timer reached zero!");
-            sc.ChangeScene("Splash");
+            if (arcadeMode)
+                sc.ChangeScene("SplashArcade");
+            else
+                sc.ChangeScene("Splash");
 
             // Reset the timer for the next interval
             ResetTimer();
