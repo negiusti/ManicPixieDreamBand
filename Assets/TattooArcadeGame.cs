@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEngine.UI;
 
 public class TattooArcadeGame : MiniGame
 {
@@ -27,7 +26,6 @@ public class TattooArcadeGame : MiniGame
     [Header("Guideline Information")]
 
     public GameObject[] guidelinePrefabs;
-    private int prevGuidelineIdx;
 
     public Sprite[] designPrefabs;
 
@@ -67,7 +65,7 @@ public class TattooArcadeGame : MiniGame
     [Header("Speech")]
 
     public GameObject speechBubble;
-    private Text speechText;
+    private TextMeshProUGUI speechText;
 
     public float speechBubbleActiveDuration;
 
@@ -107,7 +105,7 @@ public class TattooArcadeGame : MiniGame
         Cursor.visible = false;
 
         blackScreen.Unfade();
-        speechText = speechBubble.GetComponentInChildren<Text>();
+        speechText = speechBubble.GetComponentInChildren<TextMeshProUGUI>();
         speechBubble.SetActive(false);
 
         LoadColors();
@@ -172,13 +170,13 @@ public class TattooArcadeGame : MiniGame
         arm = Instantiate(armPrefab, new Vector2(armLerpPosition.position.x + 50, armLerpPosition.position.y + 25), Quaternion.identity, transform);
 
         armLerpScript = arm.GetComponent<LerpPosition>();
-
+        checksOutOfGuideline = 0f;
+        checksSpawned = 0f;
         // Choose a random guideline from the array of guidelines
         do
         {
             guidelineIndex = Random.Range(0, guidelinePrefabs.Length);
         } while (completedTattoos.Contains(guidelineIndex));
-        prevGuidelineIdx = guidelineIndex;
 
         completedTattoos.Add(guidelineIndex);
 
@@ -225,7 +223,7 @@ public class TattooArcadeGame : MiniGame
     {
         // Your successPercentage is the percentage of total guideline checks spawned that were within the guideline
         float successPercentage = Mathf.Round(100 - ((checksOutOfGuideline / checksSpawned) * 100));
-
+        Debug.Log("successPercentage: " + successPercentage);
         if (successPercentage >= successThreshold)
         {
             income += successIncome;
@@ -288,7 +286,6 @@ public class TattooArcadeGame : MiniGame
         if (option == "Success")
         {
             stringToDisplay = successOptions[Random.Range(0, successOptions.Length)];
-            JobSystem.GoodJob();
         }
         else if (option == "Pass")
         {
@@ -296,16 +293,16 @@ public class TattooArcadeGame : MiniGame
         }
         else // Failure
         {
-            JobSystem.BadJob();
             stringToDisplay = failureOptions[Random.Range(0, failureOptions.Length)];
         }
 
-        speechBubble.SetActive(true);
         speechText.text = stringToDisplay;
+        speechBubble.SetActive(true);
 
         yield return new WaitForSeconds(speechBubbleActiveDuration);
 
         speechBubble.SetActive(false);
+        speechText.text = "";
     }
 
     private void LoadColors()

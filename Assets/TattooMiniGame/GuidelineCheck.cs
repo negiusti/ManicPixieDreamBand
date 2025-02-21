@@ -37,23 +37,29 @@ public class GuidelineCheck : MonoBehaviour
     // This code is called in OnTriggerStay2D() because it needs to run after the OnTriggerEnter2D() code
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (collision == null)
+            return;
         // The completion checks are spawned on the guideline's collider and check whether or not the player has finished drawing the design
         if (collision.gameObject.tag == "TattooCompletionCheck" && inGuideline)
         {
             // If this object is in the guidelines and overlapping with a completion check, destroy that completion check
             Destroy(collision.gameObject);
-
-            // Add to the total number of checks that were spawned
-            if (tattooMiniGame != null)
-                tattooMiniGame.checksSpawned++;
-            if (tattooArcadeGame != null)
-                tattooArcadeGame.checksSpawned++;
         }
     }
 
     private IEnumerator DestroySelf()
     {
-        yield return new WaitForSecondsRealtime(0.125f);
+        yield return new WaitForSecondsRealtime(0.05f);
+
+        if (tattooMiniGame != null && onArm)
+        {
+            tattooMiniGame.checksSpawned++;
+        }
+
+        if (tattooArcadeGame != null && onArm)
+        {
+            tattooArcadeGame.checksSpawned++;
+        }
 
         if (!inGuideline && onArm)
         {
@@ -61,13 +67,11 @@ public class GuidelineCheck : MonoBehaviour
             // And add to the total number of checks that were not in the guideline
             if (tattooMiniGame != null)
             {
-                tattooMiniGame.checksSpawned++;
                 tattooMiniGame.checksOutOfGuideline++;
             }           
                 
             if (tattooArcadeGame != null)
             {
-                tattooArcadeGame.checksSpawned++;
                 tattooArcadeGame.checksOutOfGuideline++;
             }
         }
