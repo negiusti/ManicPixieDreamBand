@@ -80,6 +80,7 @@ public class TattooArcadeGame : MiniGame
     private bool isActive;
     private Timer timer;
     private HashSet<int> completedTattoos;
+    private bool tattooDone;
 
     private void Start()
     {
@@ -107,7 +108,8 @@ public class TattooArcadeGame : MiniGame
         blackScreen.Unfade();
         speechText = speechBubble.GetComponentInChildren<TextMeshProUGUI>();
         speechBubble.SetActive(false);
-
+        checksOutOfGuideline = 0f;
+        checksSpawned = 0f;
         LoadColors();
         SpawnNewArm();
 
@@ -156,8 +158,9 @@ public class TattooArcadeGame : MiniGame
             line = null;
 
             // If all of the guideline's checks have been destroyed
-            if (guideline != null && guideline.transform.childCount <= (completionThreshold * guidelineColliderPoints.Count))
+            if (!tattooDone && guideline != null && guideline.transform.childCount <= (completionThreshold * guidelineColliderPoints.Count))
             {
+                tattooDone = true;
                 Score();
             }
         }
@@ -170,8 +173,7 @@ public class TattooArcadeGame : MiniGame
         arm = Instantiate(armPrefab, new Vector2(armLerpPosition.position.x + 50, armLerpPosition.position.y + 25), Quaternion.identity, transform);
 
         armLerpScript = arm.GetComponent<LerpPosition>();
-        checksOutOfGuideline = 0f;
-        checksSpawned = 0f;
+
         // Choose a random guideline from the array of guidelines
         do
         {
@@ -184,6 +186,9 @@ public class TattooArcadeGame : MiniGame
         guideline = Instantiate(guidelinePrefabs[guidelineIndex], new Vector2(arm.transform.position.x, arm.transform.position.y - 4.075f), guidelinePrefabs[guidelineIndex].transform.rotation, arm.transform);
 
         SpawnCompletionChecks();
+        checksOutOfGuideline = 0f;
+        checksSpawned = 0f;
+        tattooDone = false;
 
         // Lerp the arm to be centered on the screen
         StartCoroutine(armLerpScript.Lerp(armLerpPosition.localPosition, armLerpDuration, false));
@@ -244,6 +249,8 @@ public class TattooArcadeGame : MiniGame
     private IEnumerator FinishTattooSequence(string result)
     {
         line = null;
+        checksOutOfGuideline = 0f;
+        checksSpawned = 0f;
 
         // If the design was finished and the timer didn't run out, display the design
         if (result != "Timer done")

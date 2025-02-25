@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Linq;
 using System;
+using Febucci.UI.Core;
 
 public class CustomDialogueScript : MonoBehaviour
 {
@@ -187,25 +188,15 @@ public class CustomDialogueScript : MonoBehaviour
         {
             StartCoroutine(CoolDown());
             Debug.Log("continuing");
-            UnityUITypewriterEffect[] fucks = FindObjectsOfType<UnityUITypewriterEffect>().Where(t => t.IsPlaying).ToArray();
-            foreach (UnityUITypewriterEffect t in fucks)
+            TypewriterCore[] fucks = FindObjectsOfType<TypewriterCore>().Where(t => t.isShowingText).ToArray();
+            foreach (TypewriterCore t in fucks)
             {
-                t.Stop();
+                t.SkipTypewriter();
             }
             if (fucks.Length == 0 && DialogueManager.currentConversationState.subtitle.dialogueEntry.currentDialogueText.Length > 0)
                 DialogueManager.standardDialogueUI.OnContinueConversation();
             //DialogueManager.standardDialogueUI.OnContinue();
         }
-        //} else if ((Input.GetKeyDown(keyCode) || Input.GetKeyDown(KeyCode.Return)) && DialogueManager.IsConversationActive && isCoolDown && SceneChanger.Instance != null && !SceneChanger.Instance.IsLoadingScreenOpen())
-        //{
-        //    //FindObjectsOfType<UnityUITypewriterEffect>().Select(t => t.enabled = false);
-        //    //Debug.Log("cooling down");
-        //    UnityUITypewriterEffect[] fucks = FindObjectsOfType<UnityUITypewriterEffect>().Where(t => t.IsPlaying).ToArray();
-        //    foreach (UnityUITypewriterEffect t in fucks)
-        //    {
-        //        t.Stop();
-        //    }
-        //}
     }
 
     private void CheckForConvo()

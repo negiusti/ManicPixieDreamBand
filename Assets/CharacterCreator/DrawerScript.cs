@@ -95,7 +95,8 @@ public class DrawerScript : MonoBehaviour
         canvas.enabled = true;
         targetResolver.SetCategoryAndLabel("Drawer", "Open");
         ShowIcons();
-        palette.gameObject.SetActive(true);
+        if (palette != null)
+            palette.gameObject.SetActive(true);
         foreach (DrawerScript drawer in otherDrawers)
         {
             drawer.UnselectDrawer();
@@ -111,7 +112,8 @@ public class DrawerScript : MonoBehaviour
         canvas.enabled = false;
         targetResolver.SetCategoryAndLabel("Drawer", "Closed");
         HideIcons();
-        palette.gameObject.SetActive(false);
+        if (palette != null)
+            palette.gameObject.SetActive(false);
         coll.enabled = true;
         icons.DisableIconColliders();
     }
