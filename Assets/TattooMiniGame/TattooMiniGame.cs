@@ -81,6 +81,7 @@ public class TattooMiniGame : MiniGame
     private BlackScreen blackScreen;
     private bool isActive;
     private Timer timer;
+    private bool tattooDone;
 
     private void Start()
     {
@@ -117,6 +118,8 @@ public class TattooMiniGame : MiniGame
         speechText = speechBubble.GetComponentInChildren<Text>();
         speechBubble.SetActive(false);
 
+        checksOutOfGuideline = 0f;
+        checksSpawned = 0f;
         LoadColors();
         SpawnNewArm();
 
@@ -170,8 +173,9 @@ public class TattooMiniGame : MiniGame
             line = null;
 
             // If all of the guideline's checks have been destroyed
-            if (guideline != null && guideline.transform.childCount <= (completionThreshold * guidelineColliderPoints.Count))
+            if (!tattooDone && guideline != null && guideline.transform.childCount <= (completionThreshold * guidelineColliderPoints.Count))
             {
+                tattooDone = true;
                 Score();
             }
         }
@@ -195,6 +199,9 @@ public class TattooMiniGame : MiniGame
         guideline = Instantiate(guidelinePrefabs[guidelineIndex], new Vector2(arm.transform.position.x, arm.transform.position.y - 4.075f), guidelinePrefabs[guidelineIndex].transform.rotation, arm.transform);
 
         SpawnCompletionChecks();
+        checksOutOfGuideline = 0f;
+        checksSpawned = 0f;
+        tattooDone = false;
 
         // Lerp the arm to be centered on the screen
         StartCoroutine(armLerpScript.Lerp(armLerpPosition.localPosition, armLerpDuration, false));
@@ -255,7 +262,8 @@ public class TattooMiniGame : MiniGame
     private IEnumerator FinishTattooSequence(string result)
     {
         line = null;
-
+        checksOutOfGuideline = 0f;
+        checksSpawned = 0f;
         // If the design was finished and the timer didn't run out, display the design
         if (result != "Timer done")
         {

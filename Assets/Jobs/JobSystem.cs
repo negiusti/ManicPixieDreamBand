@@ -61,7 +61,7 @@ public class JobSystem : ScriptableObject
     public static void BadJob()
     {
         failStreak = Math.Min(failStreak + 1, 5);
-        if (failStreak > 2)
+        if (failStreak > 1)
         {
             // send fired streak
             Phone.Instance.ReceiveMsg("TXT/" + currentJob.ToString() + " Boss/Fire");
