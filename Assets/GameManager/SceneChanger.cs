@@ -46,6 +46,21 @@ public class SceneChanger : MonoBehaviour
         ChangeScene(sceneName, LoadingScreenType.Generic);
     }
 
+    //Change to splash screen and clear all saved date
+    public void ResetToSplash()
+    {
+        if (menuToggle != null)
+            menuToggle.DisableMenu();
+
+        // Show loading screen    
+        genericLoadingScreen.gameObject.SetActive(true);
+
+        // Start loading the scene asynchronously
+        StartCoroutine(LoadSceneAsync("Splash", () => {
+            GameManager.Instance.RefreshGameState();
+        }));
+    }
+
     public void ChangeScene(SceneInfo sceneInfo)
     {
         ChangeScene(sceneInfo, LoadingScreenType.Generic);
@@ -117,7 +132,8 @@ public class SceneChanger : MonoBehaviour
         }
     }
 
-    IEnumerator LoadSceneAsync(string sceneName)
+    // done is an optional callback action
+    IEnumerator LoadSceneAsync(string sceneName, System.Action done = null)
     {
         // Begin loading the scene asynchronously
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
@@ -130,6 +146,7 @@ public class SceneChanger : MonoBehaviour
         }
         yield return new WaitForSeconds(1);
         DisableLoadingScreens();
+        done?.Invoke();
         yield return null;
     }
 

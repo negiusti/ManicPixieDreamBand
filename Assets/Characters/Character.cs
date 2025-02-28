@@ -280,6 +280,13 @@ public class Character : MonoBehaviour
         if (!ES3.KeyExists(characterName))
         {
             // Character does not exist yet...
+            foreach (var spriteRenderer in spriteRenderers)
+            {
+                if (spriteRenderer.sharedMaterial.HasFloat("_HsvShift"))
+                {
+                    spriteRenderer.sharedMaterial.SetFloat("_HsvShift", 0);
+                }
+            }
             updateSpriteResolverMap();
             updateSpriteColorMap();
             SetIsWearingFullFit(false);
