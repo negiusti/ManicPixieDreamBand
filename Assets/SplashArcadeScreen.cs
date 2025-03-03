@@ -8,6 +8,7 @@ public class SplashArcadeScreen : MonoBehaviour
     void Start()
     {
         DialogueManager.StopAllConversations();
+        Cursor.visible = true;
     }
 
     // Update is called once per frame
