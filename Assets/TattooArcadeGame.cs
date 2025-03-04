@@ -144,7 +144,7 @@ public class TattooArcadeGame : MiniGame
     private void Draw()
     {
         // If the arm has arrived at the screen's center, the timer has not finished, and the game is active
-        if (isActive && Input.GetMouseButtonDown(0) && armLerpScript.finishedLerp && timer.IsRunning())
+        if (isActive && Input.GetMouseButtonDown(0) && armLerpScript.finishedLerp)// && timer.IsRunning())
         {
             // Spawn a new line as a child of the arm and get its Line component
             GameObject newLine = Instantiate(linePrefab);
@@ -235,9 +235,9 @@ public class TattooArcadeGame : MiniGame
         // Your successPercentage is the percentage of total guideline checks spawned that were within the guideline
         float successPercentage = Mathf.Round(100 - ((checksOutOfGuideline / checksSpawned) * 100));
         Debug.Log("successPercentage: " + successPercentage);
-        score += (uint)successPercentage;
+        score += (uint)(successPercentage*111);
         scoreTxt.text = ""+score;
-        scoreModTxt.text = "+" + successPercentage;
+        scoreModTxt.text = "+" + (successPercentage * 111);
         if (successPercentage >= successThreshold)
         {
             income += successIncome;
@@ -282,7 +282,7 @@ public class TattooArcadeGame : MiniGame
 
         // Wait a moment before fading to black
         yield return new WaitForSeconds(0.25f);
-
+        scoreModTxt.text = "";
         if (completedTattoos.Count < guidelinePrefabs.Length && timer.IsRunning())
         {
             SpawnNewArm();
