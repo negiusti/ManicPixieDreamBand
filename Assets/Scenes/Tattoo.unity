@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8ace8ced0e81c847968cdca0aeda757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typewriterStartsAutomatically: 1
+  typewriterStartsAutomatically: 0
   animationLoop: 0
   timeScale: 0
   _text: 34667
@@ -299,13 +299,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331455824}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57a6945b90dcd0c4b81619c0d8b5c283, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   useTypeWriter: 1
-  startTypewriterMode: 3
+  startTypewriterMode: 0
   hideAppearancesOnSkip: 0
   hideDisappearancesOnSkip: 0
   triggerEventsOnSkip: 0
@@ -328,12 +328,12 @@ MonoBehaviour:
   onMessage:
     m_PersistentCalls:
       m_Calls: []
-  waitForNormalChars: 0.5
-  waitLong: 0.6
-  waitMiddle: 0.2
+  waitForNormalChars: 0.33333334
+  waitLong: 0.33333334
+  waitMiddle: 0.33333334
   avoidMultiplePunctuationWait: 0
-  waitForNewLines: 1
-  waitForLastCharacter: 1
+  waitForNewLines: 0
+  waitForLastCharacter: 0
   useTypewriterWaitForDisappearances: 1
   disappearanceWaitTime: 0.015
   disappearanceSpeedMultiplier: 1
@@ -1166,6 +1166,7 @@ GameObject:
   - component: {fileID: 5559822541686018303}
   - component: {fileID: 4626848766679615914}
   - component: {fileID: 845354150092533554}
+  - component: {fileID: 8178563149823529566}
   m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1721,6 +1722,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 108342444770599652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8178563149823529566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2766372642620151409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be5ac0d42974b4b779571bf70609e843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeDuration: 0.25
+  shakeMagnitude: 0.2
 --- !u!95 &8266079883167073447
 Animator:
   serializedVersion: 5

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Febucci.UI.Core;
 
 public class TattooArcadeGame : MiniGame
 {
@@ -56,6 +57,7 @@ public class TattooArcadeGame : MiniGame
     private uint score;
     public TextMeshProUGUI scoreTxt;
     public TextMeshProUGUI scoreModTxt;
+    private TypewriterCore scoreTypewriter;
 
     [Header("Incomes")]
 
@@ -78,7 +80,6 @@ public class TattooArcadeGame : MiniGame
 
     [Header("Miscellaneous")]
 
-    private GameObject mainCamera;
     private BlackScreen blackScreen;
     private bool isActive;
     private Timer timer;
@@ -90,6 +91,7 @@ public class TattooArcadeGame : MiniGame
         blackScreen = GetComponentInChildren<BlackScreen>(true);
         timer = GetComponentInChildren<Timer>(true);
         completedTattoos = new HashSet<int>();
+        scoreTypewriter = scoreTxt.gameObject.GetComponent<TypewriterCore>();
         OpenMiniGame();
     }
 
@@ -174,7 +176,6 @@ public class TattooArcadeGame : MiniGame
 
     private void SpawnNewArm()
     {
-
         // Spawn a new arm offscreen as a child of this object
         arm = Instantiate(armPrefab, new Vector2(armLerpPosition.position.x + 50, armLerpPosition.position.y + 25), Quaternion.identity, transform);
 
@@ -236,8 +237,8 @@ public class TattooArcadeGame : MiniGame
         float successPercentage = Mathf.Round(100 - ((checksOutOfGuideline / checksSpawned) * 100));
         Debug.Log("successPercentage: " + successPercentage);
         score += (uint)(successPercentage*111);
-        scoreTxt.text = ""+score;
-        scoreModTxt.text = "+" + (successPercentage * 111);
+        scoreTxt.text = "<rainb><wiggle>" + score;
+        scoreModTxt.text = "<rainb><wiggle>+" + (successPercentage * 111);
         if (successPercentage >= successThreshold)
         {
             income += successIncome;
@@ -282,7 +283,6 @@ public class TattooArcadeGame : MiniGame
 
         // Wait a moment before fading to black
         yield return new WaitForSeconds(0.25f);
-        scoreModTxt.text = "";
         if (completedTattoos.Count < guidelinePrefabs.Length && timer.IsRunning())
         {
             SpawnNewArm();
@@ -291,6 +291,9 @@ public class TattooArcadeGame : MiniGame
         {
             blackScreen.Fade();
         }
+        yield return new WaitForSeconds(0.5f);
+        scoreTxt.text = "" + score;
+        scoreModTxt.text = "";
     }
 
     private IEnumerator UpdateSpeechBubbles(string option)
@@ -314,6 +317,8 @@ public class TattooArcadeGame : MiniGame
 
         speechText.text = stringToDisplay;
         speechBubble.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        Camera.main.gameObject.GetComponent<CameraShaker>().CameraShake();
 
         yield return new WaitForSeconds(speechBubbleActiveDuration);
 
