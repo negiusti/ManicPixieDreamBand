@@ -334,5 +334,8 @@ public class TattooMiniGame : MiniGame
         lineAppearances.Add("Mech", new Color(0.6745098f, 0.09803922f, 0.2117647f));
         lineAppearances.Add("CoolS", new Color(0.3254902f, 0.5254902f, 0.5607843f));
         lineAppearances.Add("Mom", new Color(0.9960785f, 0.6431373f, 0.6470588f));
+        lineAppearances.Add("Star", new Color(0.9882354f, 0.7058824f, 0f));
+        lineAppearances.Add("Cherry", new Color(0.8078432f, 0.172549f, 0.007843138f));
+        lineAppearances.Add("Cat", new Color(0.854902f, 0.3254902f, 0.007843138f));
     }
 }
