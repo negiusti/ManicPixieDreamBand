@@ -57,6 +57,7 @@ public class TattooArcadeGame : MiniGame
     private uint score;
     public TextMeshProUGUI scoreTxt;
     public TextMeshProUGUI scoreModTxt;
+    private Animator scoreModAnimator;
     private TypewriterCore scoreTypewriter;
 
     [Header("Incomes")]
@@ -106,7 +107,7 @@ public class TattooArcadeGame : MiniGame
         score = 0;
         scoreTxt.text = "0";
         scoreModTxt.text = "";
-
+        scoreModAnimator = scoreModTxt.gameObject.GetComponent<Animator>();
         // Getting and setting components of the minigame
 
         // Set the cursor to the tattoo gun followed by an offset that makes the tip of the gun align with where lines are spawned
@@ -237,8 +238,9 @@ public class TattooArcadeGame : MiniGame
         float successPercentage = Mathf.Round(100 - ((checksOutOfGuideline / checksSpawned) * 100));
         Debug.Log("successPercentage: " + successPercentage);
         score += (uint)(successPercentage*111);
-        scoreTxt.text = "<rainb><wiggle>" + score;
+        //scoreTxt.text = "<rainb><wiggle>" + score;
         scoreModTxt.text = "<rainb><wiggle>+" + (successPercentage * 111);
+        scoreModAnimator.Play("TattooScoreMod", -1, 0f);
         if (successPercentage >= successThreshold)
         {
             income += successIncome;
@@ -292,7 +294,7 @@ public class TattooArcadeGame : MiniGame
             blackScreen.Fade();
         }
         yield return new WaitForSeconds(0.5f);
-        scoreTxt.text = "" + score;
+        scoreTxt.text = "<wiggle>" + score;
         scoreModTxt.text = "";
     }
 
@@ -317,8 +319,11 @@ public class TattooArcadeGame : MiniGame
 
         speechText.text = stringToDisplay;
         speechBubble.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        Camera.main.gameObject.GetComponent<CameraShaker>().CameraShake();
+        if (option != "Success" && option != "Pass")
+        {
+            yield return new WaitForSeconds(0.1f);
+            Camera.main.gameObject.GetComponent<CameraShaker>().CameraShake();
+        }
 
         yield return new WaitForSeconds(speechBubbleActiveDuration);
 
