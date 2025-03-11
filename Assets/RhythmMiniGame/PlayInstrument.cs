@@ -2,6 +2,7 @@ using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.U2D.Animation;
+using Rewired;
 
 public class PlayInstrument : MonoBehaviour, IPointerClickHandler
 {
@@ -16,6 +17,7 @@ public class PlayInstrument : MonoBehaviour, IPointerClickHandler
     private Vector3 spawnPos;
     private string layer;
     private int layerOrder;
+    private Player player;
 
     // Start is called before the first frame update
     void Start()
@@ -26,13 +28,14 @@ public class PlayInstrument : MonoBehaviour, IPointerClickHandler
         spawnPos = spawnPosObj.transform.position;
         layer = spriteRenderer.sortingLayerName;
         layerOrder = spriteRenderer.sortingOrder;
+        player = ReInput.players.GetPlayer(0);
     }
     
     // Update is called once per frame
     void Update()
     {
         // Only applies to MainCharacter, this is only for playing solo, not with the band
-        if (!isPlayingInstrument && withinRange && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && InteractionEnabled())
+        if (!isPlayingInstrument && withinRange && player.GetButtonDown("Interact") && InteractionEnabled())
         {
             Play(FindFirstObjectByType<PlayerMovement>());
             MiniGameManager.StartMiniGame("Solo");

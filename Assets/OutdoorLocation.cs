@@ -1,6 +1,7 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
+using Rewired;
 
 public class OutdoorLocation : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class OutdoorLocation : MonoBehaviour
     public bool isBusiness;
     public bool isOpen;
     private SpriteResolver openCloseSign;
+    private Player player;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,7 @@ public class OutdoorLocation : MonoBehaviour
             prompt.SetActive(false);
         sign = GetComponentInChildren<Animator>();
         openCloseSign = GetComponentInChildren<SpriteResolver>();
+        player = ReInput.players.GetPlayer(0);
     }
 
     // Update is called once per frame
@@ -38,7 +41,7 @@ public class OutdoorLocation : MonoBehaviour
             inRange = false;
             return;
         }
-        if ((Input.GetKeyDown(KeyCode.Return)  || Input.GetKeyDown(KeyCode.Space)) && inRange && InteractionEnabled())
+        if (player.GetButtonDown("Interact") && inRange && InteractionEnabled())
         {
             if (isBusiness)
                 GameManager.miscSoundEffects.Play("businessdoor");
