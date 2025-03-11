@@ -1,6 +1,7 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Rewired;
 
 public class InteractHintScript : MonoBehaviour, IPointerClickHandler
 {
@@ -12,6 +13,7 @@ public class InteractHintScript : MonoBehaviour, IPointerClickHandler
     public GameObject objToEnable;
     private GameManager gm;
     private Animator animator;
+    private Player player;
 
     //private Vector3 originalScale;
     //private bool isInsideTrigger = false;
@@ -28,12 +30,14 @@ public class InteractHintScript : MonoBehaviour, IPointerClickHandler
         gm = GameManager.Instance;
         sc = gm.gameObject.GetComponent<SceneChanger>();
         animator = GetComponent<Animator>();
+        player = ReInput.players.GetPlayer(0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (inRange && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && InteractionEnabled())
+        //if (inRange && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && InteractionEnabled())
+        if (inRange && player.GetButtonDown("Interact") && InteractionEnabled())
         {
             if (mgToTrigger != null)
                 mgToTrigger.OpenMiniGame();

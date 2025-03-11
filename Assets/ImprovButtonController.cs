@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.U2D.Animation;
+using Rewired;
 
 public class ImprovButtonController : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class ImprovButtonController : MonoBehaviour
     public int idx;
     private bool alternate;
     private GameObject starTemplate;
+    private Player player;
+    private string inputName;
 
     // Start is called before the first frame update
     void Start()
@@ -23,12 +26,31 @@ public class ImprovButtonController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = defaultSprite;
         spriteRenderer.color = unpressedColor;
+        player = ReInput.players.GetPlayer(0);
+        switch (keyCode)
+        {
+            case KeyCode.Alpha1:
+                inputName = "E string";
+                break;
+            case KeyCode.Alpha2:
+                inputName = "A string";
+                break;
+            case KeyCode.Alpha3:
+                inputName = "D string";
+                break;
+            case KeyCode.Alpha4:
+                inputName = "G string";
+                break;
+            default:
+                break;
+        }
     }
 
-    // Update is called once per frame
+        // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(keyCode))
+        if (player.GetButtonDown(inputName))
+        //if (Input.GetKeyDown(keyCode))
         {
             spriteRenderer.sprite = pressedSprite;
             spriteRenderer.color = pressedColor;
@@ -40,7 +62,8 @@ public class ImprovButtonController : MonoBehaviour
             star.SetActive(true);
             alternate = !alternate;
         }
-        if (Input.GetKeyUp(keyCode))
+        if (player.GetButtonUp(inputName))
+        //if (Input.GetKeyUp(keyCode))
         {
             spriteRenderer.sprite = defaultSprite;
             spriteRenderer.color = unpressedColor;

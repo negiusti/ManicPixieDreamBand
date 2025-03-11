@@ -1,4 +1,5 @@
 using UnityEngine;
+using Rewired;
 
 public class StarControllerScript : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class StarControllerScript : MonoBehaviour
     private StarSpawnerScript starSpawner;
     private SpriteRenderer spriteRen;
     bool hit;
+    private Player player;
+    private string inputName;
 
     // Start is called before the first frame update
     void Start()
@@ -17,12 +20,31 @@ public class StarControllerScript : MonoBehaviour
         spriteRen = GetComponent<SpriteRenderer>();
         starSpawner = GetComponentInParent<StarSpawnerScript>(true);
         hit = false;
+        player = ReInput.players.GetPlayer(0);
+        switch (keyCode)
+        {
+            case KeyCode.Alpha1:
+                inputName = "E string";
+                break;
+            case KeyCode.Alpha2:
+                inputName = "A string";
+                break;
+            case KeyCode.Alpha3:
+                inputName = "D string";
+                break;
+            case KeyCode.Alpha4:
+                inputName = "G string";
+                break;
+            default:
+                break;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(keyCode) && canHit && !hit)
+        //if (Input.GetKeyDown(keyCode) && canHit && !hit)
+        if (player.GetButtonDown(inputName) && canHit && !hit)
         {
             this.gameObject.GetComponent<StarMoverScript>().enabled = false;
             animator.Play("DeathStar");

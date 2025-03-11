@@ -1,14 +1,18 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using Rewired;
 
 public class PlayerMovement : Movement
 {
     private float moveInput;
     private bool onRail;
+    private Player player;
+
     // Start is called before the first frame update
     new void Start()
     {
         base.Start();
+        player = ReInput.players.GetPlayer(0);
     }
 
     new void Update()
@@ -27,14 +31,14 @@ public class PlayerMovement : Movement
         }
 
         // No skating outside and make sure you put on some shoes
-        if (!isRollerSkating && Input.GetKeyDown(KeyCode.S) && Tutorial.changedSkin && FindObjectsOfType<OutdoorLocation>().Length > 0)
+        if (!isRollerSkating && player.GetButtonDown("Toggle Skateboard") && Tutorial.changedSkin && FindObjectsOfType<OutdoorLocation>().Length > 0)
         {
             if (!Tutorial.hasSkated) Tutorial.hasWalked = false;
             Tutorial.hasSkated = true;
             isSkating = !isSkating;
         }
         // No skating outside and make sure you put on some shoes
-        if (!isSkating && Input.GetKeyDown(KeyCode.R) && Tutorial.changedSkin && FindObjectsOfType<OutdoorLocation>().Length > 0)
+        if (!isSkating && player.GetButtonDown("Toggle Skates") && Tutorial.changedSkin && FindObjectsOfType<OutdoorLocation>().Length > 0)
         {
             if (!Tutorial.hasSkated) Tutorial.hasWalked = false;
             Tutorial.hasSkated = true;
@@ -42,10 +46,10 @@ public class PlayerMovement : Movement
             RollerskatesOnOff(isRollerSkating);
         }
 
-        moveInput = Input.GetAxis("Horizontal");
+        moveInput = player.GetAxis("Move Horizontal");
+        //moveInput = Input.GetAxis("Horizontal");
 
-        if ((Input.GetKeyDown(KeyCode.UpArrow) ||
-            Input.GetKeyDown(KeyCode.W)) &&
+        if (player.GetButtonDown("Ollie") &&
             !lockAnim &&
              AllowedToMoveDuringConvo())
         {
@@ -55,13 +59,13 @@ public class PlayerMovement : Movement
                 Rollie();
         }
 
-        if (Input.GetKeyDown(KeyCode.K))
+        if (player.GetButtonDown("Kickflip"))
         {
             if (isSkating)
                 Flip();
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
+        if (player.GetButtonDown("Manual"))
         {
             if (isSkating)
                 Grind();

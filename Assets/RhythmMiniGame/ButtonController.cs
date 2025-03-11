@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Rewired;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -15,6 +14,8 @@ public class ButtonController : MonoBehaviour
     private Color unpressedColor = new Color(253/255f, 197/255f, 235/255f);
     private bool touchingStar;
     private BassMiniGame mg;
+    private string inputName;
+    private Player player;
 
     // Start is called before the first frame update
     void Start()
@@ -24,12 +25,31 @@ public class ButtonController : MonoBehaviour
         spriteRenderer.sprite = defaultSprite;
         spriteRenderer.color = unpressedColor;
         touchingStar = false;
+        player = ReInput.players.GetPlayer(0);
+        switch (keyCode)
+        {
+            case KeyCode.Alpha1:
+                inputName = "E string";
+                break;
+            case KeyCode.Alpha2:
+                inputName = "A string";
+                break;
+            case KeyCode.Alpha3:
+                inputName = "D string";
+                break;
+            case KeyCode.Alpha4:
+                inputName = "G string";
+                break;
+            default:
+                break;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(keyCode))
+        //if (Input.GetKeyDown(keyCode))
+        if (player.GetButtonDown(inputName))
         {
             spriteRenderer.sprite = pressedSprite;
             spriteRenderer.color = pressedColor;
@@ -40,7 +60,8 @@ public class ButtonController : MonoBehaviour
                 mg.PlayBadSound();
             }
         }
-        if (Input.GetKeyUp(keyCode))
+        //if (Input.GetKeyUp(keyCode))
+        if (player.GetButtonUp(inputName))
         {
             spriteRenderer.sprite = defaultSprite;
             spriteRenderer.color = unpressedColor;

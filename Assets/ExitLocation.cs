@@ -1,5 +1,7 @@
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
+using Rewired;
+
 public class ExitLocation : MonoBehaviour
 {
     public Vector3 exitSpawnPos;
@@ -7,6 +9,7 @@ public class ExitLocation : MonoBehaviour
     private string locationName;
     private string neighborhoodName;
     public bool isBusiness;
+    private Player player;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +20,7 @@ public class ExitLocation : MonoBehaviour
         {
             transform.GetChild(i).gameObject.SetActive(false);
         }
+        player = ReInput.players.GetPlayer(0);
     }
 
     // Boba shop: -33.51, -2.4, 0
@@ -32,7 +36,8 @@ public class ExitLocation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (inRange && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) && InteractionEnabled())
+        //if (inRange && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) && InteractionEnabled())
+        if (inRange && player.GetButtonDown("Interact") && InteractionEnabled())
         {
             if (!Tutorial.changedSkin && locationName.Equals("Bedroom"))
             {
