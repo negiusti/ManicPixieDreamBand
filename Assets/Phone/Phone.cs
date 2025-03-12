@@ -4,6 +4,7 @@ using PixelCrushers.DialogueSystem;
 using UnityEngine.U2D.Animation;
 using System.Collections;
 using System.Linq;
+using Rewired;
 
 public class Phone : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class Phone : MonoBehaviour
     private PhoneNotifications notifications;
     public GameObject TransitionScreen;
     public HashSet<string> appNotifications;
+    private Player player;
 
     private AudioSource audioSource;
     public AudioClip lockSound;
@@ -80,8 +82,9 @@ public class Phone : MonoBehaviour
         audioSource = this.GetComponent<AudioSource>();
         isLocked = true;
         customDialogue = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
+        player = ReInput.players.GetPlayer(0);
         //if (appNotifications == null) appNotifications = new HashSet<string>();
-        
+
         Load(); // appNotifications get set here
 
         //if (messagesApp.HasPendingConvos())
@@ -294,7 +297,7 @@ public class Phone : MonoBehaviour
             DisableNotificationIndicator();
 
 
-        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
+        if (player.GetButtonDown("Toggle Phone"))
         {
             // Toggle phone visibility
             ToggleLock();
