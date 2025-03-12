@@ -1,3 +1,4 @@
+using Rewired;
 using System.Collections;
 using System.Collections.Generic;
 using PixelCrushers.DialogueSystem;
@@ -11,7 +12,7 @@ public class CustomDialogueScript : MonoBehaviour
 {
     public Action<string> ConvoCompleted;
     public KeyCode keyCode;
-    private bool isCoolDown;
+    public bool isCoolDown;
     private float coolDown = 0.75f;
     public BackLog backLogTemplate;
     public ConvoHeader convoHeaderTemplate;
@@ -27,6 +28,7 @@ public class CustomDialogueScript : MonoBehaviour
     private readonly float orthoCamSizeOutside = 12f;
     private readonly float orthoCamSizeOutsideConvo = 8f;
     private bool waitForK;
+    private Player player;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +41,7 @@ public class CustomDialogueScript : MonoBehaviour
         backLogs = new Dictionary<string, BackLog>();
         convoHeaders = new Dictionary<string, ConvoHeader>();
         currentLocation = SceneManager.GetActiveScene().name;
+        player = ReInput.players.GetPlayer(0);
         GetAllConversations();
         phoneResponsePanelCanvas = phoneResponsePanel.gameObject.GetComponent<Canvas>();
         StartCoroutine(CheckForConvos());
@@ -183,7 +186,7 @@ public class CustomDialogueScript : MonoBehaviour
             return;
         }
         // the reason I do this is so that the space button selects the dialogue option without also continuing
-        if ((Input.GetKeyDown(keyCode) || Input.GetKeyDown(KeyCode.Return)) && DialogueManager.IsConversationActive && !isCoolDown &&
+        if (player.GetButtonDown("Advance Conversation") && DialogueManager.IsConversationActive && !isCoolDown &&
             !IsPCResponseMenuOpen() && !IsTxtConvoActive() && !DialogueTime.IsPaused && SceneChanger.Instance != null && !SceneChanger.Instance.IsLoadingScreenOpen())
         {
             StartCoroutine(CoolDown());
@@ -235,7 +238,7 @@ public class CustomDialogueScript : MonoBehaviour
         convoHeaders.Add(contactName, instance2);
     }
 
-    IEnumerator CoolDown()
+    public IEnumerator CoolDown()
     {
         isCoolDown = true;
         yield return new WaitForSeconds(coolDown);

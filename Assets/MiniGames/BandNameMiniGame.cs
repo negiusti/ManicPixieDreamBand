@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Rewired;
 
 public class BandNameMiniGame : MiniGame
 {
@@ -20,12 +21,14 @@ public class BandNameMiniGame : MiniGame
     private Camera mgCamera;
     private bool pickedPunkJuice;
     private AudioSource audioSource;
+    private Player player;
 
     private void Start()
     {
         mgCamera = GetComponentInChildren<Camera>(true);
         blackScreen = GetComponentInChildren<BlackScreen>(true);
         audioSource = GetComponent<AudioSource>();
+        player = ReInput.players.GetPlayer(0);
         DisableAllChildren();
     }
 
@@ -63,7 +66,7 @@ public class BandNameMiniGame : MiniGame
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+        if (player.GetButtonDown("Advance Conversation"))
         {
             waitingForClick = false;
         }

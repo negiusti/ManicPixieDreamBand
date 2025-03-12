@@ -2,6 +2,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Rewired;
+using PixelCrushers.DialogueSystem;
 
 public class ButtonNavigation : MonoBehaviour
 {
@@ -9,6 +11,8 @@ public class ButtonNavigation : MonoBehaviour
     private DialogueResponseOption[] responses;
     private int currentIndex = 0;
     private RectTransform rect;
+    private Player player;
+    private CustomDialogueScript customDialogueScript;
 
     //private int topIdx;
     //private int bottomIdx;
@@ -19,7 +23,8 @@ public class ButtonNavigation : MonoBehaviour
         selectables = GetComponentsInChildren<Button>().Where(b => b.enabled).ToArray();
         responses = selectables.Select(b => b.gameObject.GetComponent<DialogueResponseOption>()).ToArray();
         rect = GetComponent<RectTransform>();
-
+        player = ReInput.players.GetPlayer(0);
+        customDialogueScript = DialogueManager.Instance.gameObject.GetComponent<CustomDialogueScript>();
         UnselectAll();
         // Ensure there is at least one selectable
         if (selectables.Length > 0)
@@ -48,18 +53,18 @@ public class ButtonNavigation : MonoBehaviour
         //float verticalInput = Input.GetAxis("Vertical");
 
         //if (verticalInput > 0)
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        if (player.GetAxis("Navigate Dialogue Responses") > 0)
         {
             // Move selection up
             SelectNext(-1);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        else if (player.GetAxis("Navigate Dialogue Responses") < 0)
         {
             // Move selection down
             SelectNext(1);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (player.GetButtonDown("Submit Dialogue Response") && !customDialogueScript.isCoolDown)
         {
             selectables[currentIndex].OnSubmit(null);
         }

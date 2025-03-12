@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
 public class BassMiniGame : MiniGame
 {
@@ -18,8 +19,8 @@ public class BassMiniGame : MiniGame
     public GameObject buttonHints;
     public GameObject stars;
     private SongSelectionMenu songMenu;
+    private Player player;
 
-    // Use this for initialization
     void Start()
     {
         mgCamera = GetComponentInChildren<Camera>(true);
@@ -28,6 +29,7 @@ public class BassMiniGame : MiniGame
         cameraShaker = mgCamera.GetComponent<CameraShaker>();
         starSpawner = GetComponentInChildren<StarSpawnerScript>(true);
         songMenu = GetComponentInChildren<SongSelectionMenu>(true);
+        player = ReInput.players.GetPlayer(0);
         DisableAllChildren();
     }
 
@@ -39,7 +41,7 @@ public class BassMiniGame : MiniGame
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace) && !GameManager.Instance.GetComponent<MenuToggleScript>().IsMenuOpen())
+        if (player.GetButtonDown("Back") && !GameManager.Instance.GetComponent<MenuToggleScript>().IsMenuOpen())
         {
             CloseMiniGame();
         }

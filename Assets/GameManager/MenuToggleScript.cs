@@ -1,21 +1,24 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using Rewired;
 
 public class MenuToggleScript : MonoBehaviour
 {
     public GameObject menuToToggle;
     private Camera prevCamera;
+    private Player player;
     //private SpriteRenderer menuBackground;
 
     private void Start()
     {
         //menuBackground = this.GetComponentInChildren<SpriteRenderer>();
         prevCamera = Camera.main;
+        player = ReInput.players.GetPlayer(0);
         DisableMenu();
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (player.GetButtonDown("Toggle Settings Menu"))
         {
             if (!InteractionEnabled())
                 return;

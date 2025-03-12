@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
 public class ImprovMiniGame : MiniGame
 {
@@ -12,6 +13,7 @@ public class ImprovMiniGame : MiniGame
     private AudioSource audioSource;
     public AudioSource jjRiff;
     public bool TEST_START_ON_ENTER;
+    private Player player;
 
     // Use this for initialization
     void Start()
@@ -19,6 +21,7 @@ public class ImprovMiniGame : MiniGame
         mgCamera = GetComponentInChildren<Camera>(true);
         blackScreen = GetComponentInChildren<BlackScreen>(true);
         audioSource = GetComponent<AudioSource>();
+        player = ReInput.players.GetPlayer(0);
         DisableAllChildren();
     }
 
@@ -30,12 +33,12 @@ public class ImprovMiniGame : MiniGame
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace) && !GameManager.Instance.GetComponent<MenuToggleScript>().IsMenuOpen())
+        if (player.GetButtonDown("Back") && !GameManager.Instance.GetComponent<MenuToggleScript>().IsMenuOpen())
         {
             CloseMiniGame();
         }
-        if (Input.GetKeyDown(KeyCode.G) && !IsMiniGameActive())
-            StartBassMiniGameWithJJ();
+        //if (Input.GetKeyDown(KeyCode.G) && !IsMiniGameActive())
+        //    StartBassMiniGameWithJJ();
         if (jjRiff.time >= jjRiff.clip.length - 1)
         {
             CloseMiniGame();

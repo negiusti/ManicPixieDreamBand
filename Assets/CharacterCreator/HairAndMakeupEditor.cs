@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.U2D.Animation;
+using Rewired;
 
 public class HairAndMakeupEditor : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class HairAndMakeupEditor : MonoBehaviour
     private float closeupSize = 2.9f;
     private float startTime;
     private float defaultSize;
+    private Player player;
     // size 2.7
     // position x 2.44 y 2.56
 
@@ -42,6 +44,7 @@ public class HairAndMakeupEditor : MonoBehaviour
         defaultSize = mainCamera.orthographicSize;
         defaultPosition = mainCamera.transform.position;
         closeupPosition = new Vector3(4f, 2.56f, mainCamera.transform.position.z);
+        player = ReInput.players.GetPlayer(0);
     }
 
     // Update is called once per frame
@@ -55,7 +58,7 @@ public class HairAndMakeupEditor : MonoBehaviour
         {
             PanCameraToDefault();
         }
-        if (Input.GetKeyDown(KeyCode.B))
+        if (player.GetButtonDown("Back"))
         {
             ExitMakeupView();
         }
