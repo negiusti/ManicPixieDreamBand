@@ -673,14 +673,14 @@ public class Phone : MonoBehaviour
             return;
 
         isLocked = true;
-        audioSource.clip = lockSound;
-        audioSource.Play();
         // For text responses
         if (DialogueManager.isConversationActive && customDialogue.IsCurrentConvoTxt())
         {
             isLocked = false;
             return;
         }
+        audioSource.clip = lockSound;
+        audioSource.Play();
         HUDIcon.GetComponent<Animator>().SetBool("Locked", true);
         HUDIcon.GetComponent<SpriteResolver>().SetCategoryAndLabel("PhoneHUDIcon", "Locked");
         GoHome();

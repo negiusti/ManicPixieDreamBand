@@ -168,6 +168,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &435981442158677222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5296295989770614248}
+  m_Layer: 0
+  m_Name: InteractPrompt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5296295989770614248
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435981442158677222}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6214126513286769147}
+  - {fileID: 6365233132697192751}
+  - {fileID: 6027972936431664205}
+  m_Father: {fileID: 9008551953766152821}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &820999428055782886
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,12 +312,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1433586430601418677}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9008551953766152821}
+  m_Father: {fileID: 5296295989770614248}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -925,12 +959,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2927129247792505205}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.22, y: 0.98, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.21999979, y: 0.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1.5384616}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9008551953766152821}
+  m_Father: {fileID: 5296295989770614248}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!212 &1783157085359558144
 SpriteRenderer:
@@ -1706,7 +1740,6 @@ GameObject:
   - component: {fileID: 574195873703287967}
   - component: {fileID: 1217449688840686497}
   - component: {fileID: 1417839998360943545}
-  - component: {fileID: 5835262103348135178}
   m_Layer: 0
   m_Name: Bed
   m_TagString: Untagged
@@ -1727,11 +1760,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6214126513286769147}
-  - {fileID: 6365233132697192751}
   - {fileID: 233918568916923931}
-  - {fileID: 6027972936431664205}
   - {fileID: 5573520575492543882}
+  - {fileID: 5296295989770614248}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1776025118340470888
@@ -1850,7 +1881,7 @@ Animator:
   m_GameObject: {fileID: 5152930255573236584}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 976f0092e406141acbc667f0f2ad2020, type: 2}
+  m_Controller: {fileID: 9100000, guid: b62b4560fe010694d99945a7e57863e8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1906,19 +1937,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 8.98, y: 5.31}
   m_EdgeRadius: 0
---- !u!114 &5835262103348135178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5152930255573236584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bbbba966955c48f1a29f8aba1111f01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scaleFactor: 1.1
 --- !u!1 &5299942196422341404
 GameObject:
   m_ObjectHideFlags: 0
@@ -2304,12 +2322,12 @@ Transform:
   m_GameObject: {fileID: 7491192931679175922}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.95, y: -0.13000011, z: 0}
+  m_LocalPosition: {x: 1.9499998, y: -0.13000011, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8705173577158395919}
-  m_Father: {fileID: 9008551953766152821}
+  m_Father: {fileID: 5296295989770614248}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6957584927063197271
 SpriteRenderer:

@@ -1182,6 +1182,25 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbfe5ccd04b5846cd9b802841121847c, type: 3}
+--- !u!1 &151392607 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 435981442158677222, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
+  m_PrefabInstance: {fileID: 2123595580}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &151392609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151392607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41494279aeba4b7c9a2f056710f7abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pulseSpeed: 0.2
+  pulseMagnitude: 0.1
 --- !u!21 &173856502
 Material:
   serializedVersion: 8
@@ -8357,7 +8376,7 @@ PrefabInstance:
       objectReference: {fileID: 5849687924197012420, guid: 8278d1a0eefdc468eb237d8625d263c4, type: 3}
     - target: {fileID: 5548922897983167878, guid: e394a066ea554416f874f1453b9f77e5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00022793503
+      value: 0.0004706365
       objectReference: {fileID: 0}
     - target: {fileID: 5725072002104384730, guid: e394a066ea554416f874f1453b9f77e5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -16624,7 +16643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 346176713585588272, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
       propertyPath: m_text
-      value: sleepy time?
+      value: Sleep?
       objectReference: {fileID: 0}
     - target: {fileID: 346176713585588272, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
       propertyPath: m_renderer
@@ -16664,7 +16683,7 @@ PrefabInstance:
       objectReference: {fileID: -1873462297648724078, guid: ee54460f57c55498588b8ff1ba00d8bc, type: 2}
     - target: {fileID: 346176713585588272, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
       propertyPath: m_characterSpacing
-      value: 3.39
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 346176713585588272, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
       propertyPath: m_fontColor32.rgba
@@ -16691,12 +16710,20 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1417839998360943545, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
+      propertyPath: m_Size.x
+      value: 7.790277
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417839998360943545, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.59486127
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417839998360943545, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 9.06
+      value: 8.98
       objectReference: {fileID: 0}
     - target: {fileID: 1417839998360943545, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 4.94
+      value: 5.31
       objectReference: {fileID: 0}
     - target: {fileID: 1723202954981923207, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -16706,6 +16733,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 70e2a86214e13884a853f898994627c0, type: 3}
+    - target: {fileID: 1776025118340470888, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ebec9b0ac28f746be9757d24b65e5f9b, type: 2}
     - target: {fileID: 2472919172642627745, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
       propertyPath: m_RenderPostProcessing
       value: 1
@@ -16718,9 +16749,13 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2927129247792505205, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2987934463926875033, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
       propertyPath: m_labelHash
-      value: 6.4526838e-18
+      value: 2.5154991e-29
       objectReference: {fileID: 0}
     - target: {fileID: 2987934463926875033, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
       propertyPath: m_SpriteHash
@@ -16854,6 +16889,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 435981442158677222, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 151392609}
     - targetCorrespondingSourceObject: {fileID: 1433586430601418677, guid: 696ee8cf830074d25b665e1d609e83cb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
