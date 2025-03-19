@@ -427,7 +427,7 @@
                     "conversation": "Pixie/ModelDate2",
                     "requirements": {
                         "locations": [ "Bedroom" ],
-                        "trueFlags":  [ "ModelDate2"],
+                        "trueFlags": [ "ModelDate2" ],
                         "eventName": "Model Pixie's fashion line @ Home",
                         "minDay": 3
                     },
@@ -1092,6 +1092,38 @@
                     "requirements": {
                         "locations": [ "CoffeeShop" ],
                         "pocketsItems": [ "Flyer" ]
+                    }
+                }
+            ]
+        },
+        {
+            "npcName": "Mom",
+            "conversationsData": [
+                {
+                    "locations": [ "Bedroom" ],
+                    "trigger": "Start",
+                    "conversation": "TXT/Mom/ButtText",
+                    "requirements": {
+                        "locations": [ "Bedroom" ],
+                        "minDay": 3
+                    }
+                },
+                {
+                    "locations": [ "CoffeeShop" ],
+                    "trigger": "Start",
+                    "conversation": "TXT/Mom/Money",
+                    "requirements": {
+                        "locations": [ "CoffeeShop" ],
+                        "minDay": 1
+                    }
+                },
+                {
+                    "locations": [ "Bedroom" ],
+                    "trigger": "Start",
+                    "conversation": "TXT/Mom/BoomerMeme",
+                    "requirements": {
+                        "locations": [ "Bedroom" ],
+                        "minDay": 5
                     }
                 }
             ]
