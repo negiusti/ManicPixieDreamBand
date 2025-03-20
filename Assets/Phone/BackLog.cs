@@ -21,7 +21,7 @@ public class BackLog : MonoBehaviour
     public GameObject typingBubbleTemplate;
     public StandardUIMenuPanel responseMenu;
     private int currentEntryID;
-    private static HashSet<string> groupChats = new HashSet<string> { "TXT/Band" };
+    private static HashSet<string> groupChats = new HashSet<string> { "TXT/Band", "TXT/BasementBuddies" };
 
     //private List<Subtitle> log = new List<Subtitle>();
     private List<LogEntry> instances = new List<LogEntry>();

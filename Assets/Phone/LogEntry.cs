@@ -22,7 +22,7 @@ public class LogEntry : MonoBehaviour
     public bool isPlayer;
     public string speakerName;
     public int entryID;
-    private static HashSet<string> groupChats = new HashSet<string> { "TXT/Band" };
+    private static HashSet<string> groupChats = new HashSet<string> { "TXT/Band", "TXT/BasementBuddies" };
 
 
     private void Start()

@@ -5,6 +5,7 @@ using UnityEngine.U2D.Animation;
 using System.Collections;
 using System.Linq;
 using Rewired;
+using System.Text.RegularExpressions;
 
 public class Phone : MonoBehaviour
 {
@@ -325,7 +326,13 @@ public class Phone : MonoBehaviour
         {
             Debug.LogError("conversation is not a txt convo: " + convoName);
         }
-        return convoName.Split('/')[1];
+        return AddSpaceBeforeCapitals(convoName.Split('/')[1]);
+    }
+
+    public static string AddSpaceBeforeCapitals(string input)
+    {
+        // Regex pattern: Look for a capital letter that is preceded by a non-space character (except at the start of the string)
+        return Regex.Replace(input, "(?<!^)([A-Z])", " $1");
     }
 
     public void GoHome()
