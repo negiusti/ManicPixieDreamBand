@@ -13,9 +13,7 @@ public class ButtonNavigation : MonoBehaviour
     private RectTransform rect;
     private Player player;
     private CustomDialogueScript customDialogueScript;
-
-    //private int topIdx;
-    //private int bottomIdx;
+    private float previousAxisValue = 0f;
 
     void Start()
     {
@@ -49,18 +47,14 @@ public class ButtonNavigation : MonoBehaviour
 
     void Update()
     {
-        // Check for up and down arrow key presses
-        //float verticalInput = Input.GetAxis("Vertical");
+        float axisValue = player.GetAxis("Navigate Dialogue Responses");
 
-        //if (verticalInput > 0)
-        if (player.GetAxis("Navigate Dialogue Responses") > 0)
+        if (axisValue > 0 && previousAxisValue == 0)
         {
-            // Move selection up
             SelectNext(-1);
         }
-        else if (player.GetAxis("Navigate Dialogue Responses") < 0)
+        else if (axisValue < 0 && previousAxisValue == 0)
         {
-            // Move selection down
             SelectNext(1);
         }
 
@@ -68,6 +62,8 @@ public class ButtonNavigation : MonoBehaviour
         {
             selectables[currentIndex].OnSubmit(null);
         }
+
+        previousAxisValue = axisValue;
     }
 
     void SelectNext(int direction)
