@@ -49,11 +49,11 @@ public class ButtonNavigation : MonoBehaviour
     {
         float axisValue = player.GetAxis("Navigate Dialogue Responses");
 
-        if (axisValue > 0 && previousAxisValue == 0)
+        if (axisValue > 0 && Mathf.Approximately(previousAxisValue, 0f))
         {
             SelectNext(-1);
         }
-        else if (axisValue < 0 && previousAxisValue == 0)
+        else if (axisValue < 0 && Mathf.Approximately(previousAxisValue, 0f))
         {
             SelectNext(1);
         }
