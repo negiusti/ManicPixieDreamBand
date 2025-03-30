@@ -22,6 +22,12 @@ public class ES3ScriptingDefineSymbols
 
         if (Type.GetType("Ludiq.IncludeInSettingsAttribute, Ludiq.Core.Runtime") != null)
             SetDefineSymbol("BOLT_VISUAL_SCRIPTING");
+
+        if (Type.GetType("TMPro.TextMeshProUGUI, Unity.TextMeshPro") != null)
+            SetDefineSymbol("ES3_TMPRO");
+
+        if (Type.GetType("UnityEngine.EventSystems.EventSystem, UnityEngine.UI") != null)
+            SetDefineSymbol("ES3_UGUI");
     }
 
     internal static bool HasDefineSymbol(string symbol)

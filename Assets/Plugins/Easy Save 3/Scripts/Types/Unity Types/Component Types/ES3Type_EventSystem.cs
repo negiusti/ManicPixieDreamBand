@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if ES3_UGUI
+
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -25,3 +27,5 @@ namespace ES3Types
 		}
 	}
 }
+
+#endif

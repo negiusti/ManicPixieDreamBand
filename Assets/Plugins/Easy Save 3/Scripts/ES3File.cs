@@ -13,13 +13,11 @@ public class ES3File
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public static Dictionary<string, ES3File> cachedFiles = new Dictionary<string, ES3File>();
 
-
-
-
     public ES3Settings settings;
     private Dictionary<string, ES3Data> cache = new Dictionary<string, ES3Data>();
     private bool syncWithFile = false;
     private DateTime timestamp = DateTime.UtcNow;
+    private bool dirty = false;
 
     /// <summary>Creates a new ES3File and loads the default file into the ES3File if there is data to load.</summary>
     public ES3File() : this(new ES3Settings(), true) { }
@@ -118,6 +116,9 @@ public class ES3File
             return;
         }
 
+        if (!dirty)
+            return;
+
         using (var baseWriter = ES3Writer.Create(settings, true, !syncWithFile, false))
         {
             foreach (var kvp in cache)
@@ -129,16 +130,20 @@ public class ES3File
                     type = typeof(System.Object);
                 else
                     type = kvp.Value.type.type;
+
                 baseWriter.Write(kvp.Key, type, kvp.Value.bytes);
             }
             baseWriter.Save(!syncWithFile);
         }
+
+        dirty = false;
     }
 
     /// <summary>Removes the data stored in this ES3File. The ES3File will be empty after calling this method.</summary>
     public void Clear()
     {
         cache.Clear();
+        dirty = true;
     }
 
     /// <summary>Returns an array of all of the key names in this ES3File.</summary>
@@ -168,9 +173,11 @@ public class ES3File
         else
             type = value.GetType();
 
-        ES3Type es3Type = ES3TypeMgr.GetOrCreateES3Type(type);
+        ES3Type es3Type = ES3TypeMgr.GetOrCreateES3Type(typeof(T));
 
         cache[key] = new ES3Data(es3Type, ES3.Serialize(value, es3Type, unencryptedSettings));
+
+        dirty = true;
     }
 
     /// <summary>Merges the data specified by the bytes parameter into this ES3File.</summary>
@@ -192,6 +199,8 @@ public class ES3File
             foreach (KeyValuePair<string, ES3Data> kvp in reader.RawEnumerator)
                 cache[kvp.Key] = kvp.Value;
         }
+
+        dirty = true;
     }
 
     /// <summary>Merges the data specified by the bytes parameter into this ES3File.</summary>
@@ -203,6 +212,8 @@ public class ES3File
             settings = new ES3Settings();
         // AppendRaw just does the same thing as SaveRaw in ES3File.
         SaveRaw(bytes, settings);
+
+        dirty = true;
     }
 
     #endregion
@@ -351,6 +362,7 @@ public class ES3File
     public void DeleteKey(string key)
     {
         cache.Remove(key);
+        dirty = true;
     }
 
     /// <summary>Checks whether a key exists in this ES3File.</summary>
@@ -382,22 +394,35 @@ public class ES3File
     #endregion
 
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-    internal static ES3File GetOrCreateCachedFile(ES3Settings settings)
+    internal static ES3File GetCachedFile(ES3Settings settings)
     {
         ES3File cachedFile;
-        if (!cachedFiles.TryGetValue(settings.path, out cachedFile))
+        cachedFiles.TryGetValue(settings.path, out cachedFile);
+
+        // Settings might refer to the same file, but might have changed.
+        // To account for this, we update the settings of the ES3File each time we access it.
+        if (cachedFile != null)
+            cachedFile.settings = settings;
+
+        return cachedFile;
+    }
+
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    internal static ES3File GetOrCreateCachedFile(ES3Settings settings)
+    {
+        ES3File cachedFile = GetCachedFile(settings);
+
+        if (cachedFile == null)
         {
             cachedFile = new ES3File(settings, false);
             cachedFiles.Add(settings.path, cachedFile);
             cachedFile.syncWithFile = true; // This ensures that the file won't be merged, which would prevent deleted keys from being deleted.
         }
-        // Settings might refer to the same file, but might have changed.
-        // To account for this, we update the settings of the ES3File each time we access it.
-        cachedFile.settings = settings;
+
         return cachedFile;
     }
 
-    internal static void CacheFile(ES3Settings settings)
+    internal static ES3File CacheFile(ES3Settings settings)
     {
         // If we're still using cached settings, set it to the default location.
         if (settings.location == ES3.Location.Cache)
@@ -408,14 +433,18 @@ public class ES3File
         }
 
         if (!ES3.FileExists(settings))
-            return;
+            return null;
 
         // Disable compression and encryption when loading the raw bytes, and the ES3File constructor will expect encrypted/compressed bytes.
         var loadSettings = (ES3Settings)settings.Clone();
         loadSettings.compressionType = ES3.CompressionType.None;
         loadSettings.encryptionType = ES3.EncryptionType.None;
 
-        cachedFiles[settings.path] = new ES3File(ES3.LoadRawBytes(loadSettings), settings);
+        var es3File = new ES3File(ES3.LoadRawBytes(loadSettings), settings);
+        es3File.dirty = false; // Mark the ES3File as not dirty as a newly cached file will never be dirty.
+        cachedFiles[settings.path] = es3File;
+
+        return es3File;
     }
 
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
@@ -435,6 +464,14 @@ public class ES3File
         if (!cachedFiles.TryGetValue(settings.path, out cachedFile))
             throw new FileNotFoundException("The file '" + settings.path + "' could not be stored because it could not be found in the cache.");
         cachedFile.Sync(settings);
+    }
+
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    internal static void StoreAll()
+    {
+        foreach (var kvp in cachedFiles)
+            if (kvp.Key != null && kvp.Value != null)
+                Store(kvp.Value.settings);
     }
 
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]

@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEditor;
 using ES3Internal;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 namespace ES3Editor
 {
-	public class AddES3Prefab : Editor 
+	public class AddES3Prefab : UnityEditor.Editor 
 	{
         [MenuItem("GameObject/Easy Save 3/Enable Easy Save for Prefab(s)", false, 1001)]
         [MenuItem("Assets/Easy Save 3/Enable Easy Save for Prefab(s)", false, 1001)]
@@ -43,10 +44,11 @@ namespace ES3Editor
                 var es3Prefab = Undo.AddComponent<ES3Prefab>(go);
                 es3Prefab.GeneratePrefabReferences();
 
-                if (ES3ReferenceMgr.Current != null)
+                var mgr = ES3ReferenceMgr.GetManagerFromScene(SceneManager.GetActiveScene());
+                if (mgr != null)
                 {
-                    ES3ReferenceMgr.Current.AddPrefab(es3Prefab);
-                    EditorUtility.SetDirty(ES3ReferenceMgr.Current);
+                    mgr.AddPrefab(es3Prefab);
+                    EditorUtility.SetDirty(mgr);
                 }
             }
 		}
@@ -59,7 +61,7 @@ namespace ES3Editor
 		}
 	}
 
-    public class RemoveES3Prefab : Editor
+    public class RemoveES3Prefab : UnityEditor.Editor 
     {
         [MenuItem("GameObject/Easy Save 3/Disable Easy Save for Prefab(s)", false, 1001)]
         [MenuItem("Assets/Easy Save 3/Disable Easy Save for Prefab(s)", false, 1001)]

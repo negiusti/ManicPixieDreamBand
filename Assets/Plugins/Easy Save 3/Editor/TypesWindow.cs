@@ -469,7 +469,7 @@ namespace ES3Editor
 						continue;
 
 					var typeName = type.Name;
-					if(typeName [0] == '$' || typeName [0] == '_' || typeName [0] == '<')
+					if(typeName.Length >= 3 && typeName [0] == '$' || typeName [0] == '_' || typeName [0] == '<')
 						continue;
 
 					var typeNamespace = type.Namespace;

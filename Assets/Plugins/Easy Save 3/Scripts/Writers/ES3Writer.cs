@@ -125,10 +125,10 @@ public abstract class ES3Writer : IDisposable
     {
         if (typeof(T) == typeof(object))
         {
-            if (value == null)
-                Write(typeof(System.Object), key, null);
-            else
-                Write(value.GetType(), key, value);
+			if (value == null)
+				Write(typeof(System.Object), key, null);
+			else
+				Write(value.GetType(), key, value);
         }
         else
             Write(typeof(T), key, value);
@@ -140,7 +140,7 @@ public abstract class ES3Writer : IDisposable
     /// <param name="type">The type we want to use for the header, and to retrieve an ES3Type.</param>
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 	public virtual void Write(Type type, string key, object value)
-	{ 
+	{
 		StartWriteProperty(key);
 		StartWriteObject(key);
 		WriteType(type);
@@ -188,6 +188,8 @@ public abstract class ES3Writer : IDisposable
 
             if (!type.isCollection && !type.isDictionary)
             {
+				TryOnBeforeSerialize(value);
+
                 StartWriteObject(null);
                 WriteType(valueType);
 
@@ -224,6 +226,8 @@ public abstract class ES3Writer : IDisposable
         }
         else
         {
+			TryOnBeforeSerialize(value);
+
             if (type.type == typeof(GameObject))
                 ((ES3Type_GameObject)type).saveChildren = settings.saveChildren;
 
@@ -236,6 +240,12 @@ public abstract class ES3Writer : IDisposable
             EndWriteObject(null);
         }
 	}
+
+	internal static void TryOnBeforeSerialize(object obj)
+	{
+        if (obj is ISerializationCallbackReceiver scr)
+            scr.OnBeforeSerialize();
+    }
 
     internal virtual void WriteRef(UnityEngine.Object obj)
     {

@@ -109,7 +109,10 @@ namespace ES3Internal
         // In this case the Directory containing the file will be searched.
         public static string[] GetFiles(string path, bool getFullPaths = true)
         {
-            var paths = Directory.GetFiles(GetDirectoryPath(path));
+            // If this is pointing to a filename, get the path to it's directory.
+            var directoryPath = path.EndsWith("/") || path.EndsWith("\\") ? path : GetDirectoryPath(path);
+
+            var paths = Directory.GetFiles(directoryPath);
             if (!getFullPaths)
             {
                 for (int i = 0; i < paths.Length; i++)

@@ -9,6 +9,7 @@ public class ES3AutoSave : MonoBehaviour, ISerializationCallbackReceiver
     public bool saveHideFlags = true;
     public bool saveActive = true;
     public bool saveChildren = false;
+    public bool saveDestroyed = true;
 
     private bool isQuitting = false;
 
@@ -24,6 +25,7 @@ public class ES3AutoSave : MonoBehaviour, ISerializationCallbackReceiver
         saveHideFlags = false;
         saveActive = false;
         saveChildren = false;
+        saveDestroyed = false;
     }
 
     public void Awake()
@@ -44,7 +46,7 @@ public class ES3AutoSave : MonoBehaviour, ISerializationCallbackReceiver
         // If this is being destroyed, but not because the application is quitting,
         // remove the AutoSave from the manager.
         if (!isQuitting)
-            ES3AutoSaveMgr.RemoveAutoSave(this);
+            ES3AutoSaveMgr.DestroyAutoSave(this);
     }
     public void OnBeforeSerialize() { }
     public void OnAfterDeserialize()

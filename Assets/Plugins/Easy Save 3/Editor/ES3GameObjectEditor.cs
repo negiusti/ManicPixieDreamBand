@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ES3Internal
 {
     [CustomEditor(typeof(ES3GameObject))]
-    public class ES3GameObjectEditor : Editor
+    public class ES3GameObjectEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

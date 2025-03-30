@@ -135,11 +135,11 @@ namespace ES3Editor
                     {
                         EditorGUILayout.PrefixLabel("Use Global References");
 
-                        bool useGlobalReferences = ES3ScriptingDefineSymbols.HasDefineSymbol(disableGlobalDefineName);
+                        bool useGlobalReferences = !ES3ScriptingDefineSymbols.HasDefineSymbol(disableGlobalDefineName);
                         if(EditorGUILayout.Toggle(useGlobalReferences) != useGlobalReferences)
                         {
                             // If global references is currently enabled, we want to disable it.
-                            if (useGlobalReferences)
+                            if (!useGlobalReferences)
                             {
                                 ES3ScriptingDefineSymbols.RemoveDefineSymbol(disableGlobalDefineName);
                                 EditorUtility.DisplayDialog("Global references disabled for build platform", "This will only disable Global References for this build platform. To disable it for other build platforms, open that platform in the Build Settings and uncheck this box again.", "Ok");

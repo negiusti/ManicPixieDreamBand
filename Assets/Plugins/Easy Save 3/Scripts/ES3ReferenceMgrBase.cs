@@ -18,14 +18,14 @@ namespace ES3Internal
         private static HashSet<ES3ReferenceMgrBase> mgrs = new HashSet<ES3ReferenceMgrBase>();
 #if UNITY_EDITOR
         protected static bool isEnteringPlayMode = false;
-        static readonly HideFlags[] invalidHideFlags = new HideFlags[] { HideFlags.DontSave, HideFlags.DontSaveInBuild, HideFlags.DontSaveInEditor, HideFlags.HideAndDontSave };
+        static readonly HideFlags[] invalidHideFlags = new HideFlags[] { HideFlags.HideInHierarchy, HideFlags.DontSave, HideFlags.DontSaveInBuild, HideFlags.DontSaveInEditor, HideFlags.HideAndDontSave };
 #endif
 
 #if !UNITY_EDITOR
         [NonSerialized]
 #endif
         public List<UnityEngine.Object> excludeObjects = new List<UnityEngine.Object>();
-        
+
         private static System.Random rng;
 
         [HideInInspector]
@@ -41,70 +41,76 @@ namespace ES3Internal
                 if (_current == null /*|| (_current.gameObject.scene.buildIndex != -1 && _current.gameObject.scene != SceneManager.GetActiveScene())*/)
                 {
                     ES3ReferenceMgrBase mgr = GetManagerFromScene(SceneManager.GetActiveScene());
-                    if(mgr != null)
+                    if (mgr != null)
                         mgrs.Add(_current = mgr);
                 }
                 return _current;
             }
         }
 
-        public static ES3ReferenceMgrBase GetManagerFromScene(Scene scene)
+        public static ES3ReferenceMgrBase GetManagerFromScene(Scene scene, bool getAnyManagerIfNotInScene = true)
         {
             // This has been removed as isLoaded is false during the initial Awake().
             /*if (!scene.isLoaded)
                 return null;*/
 
-            // If we're in DontDestroyOnLoad, there won't be an Easy Save 3 Manager in this scene, so find any manager.
-            if (scene.buildIndex == -1)
+            // If this is a valid scene, search it for the manager.
+            if (scene.IsValid())
+            {
+                // Check whether the mgr is already in the mgr list.
+                foreach (var addedMgr in mgrs)
+                    if (addedMgr != null && addedMgr.gameObject.scene == scene)
+                        return addedMgr;
+
+                GameObject[] roots;
+                try
+                {
+                    roots = scene.GetRootGameObjects();
+                }
+                catch
+                {
+                    return null;
+                }
+
+                // First, look for Easy Save 3 Manager in the top-level.
+                foreach (var root in roots)
+                {
+                    if (root.name == "Easy Save 3 Manager")
+                    {
+                        var mgr = root.GetComponent<ES3ReferenceMgr>();
+                        if(mgr != null)
+                            return mgr;
+                    }
+                }
+
+                // If the user has moved or renamed the Easy Save 3 Manager, we need to perform a deep search.
+                foreach (var root in roots)
+                {
+                    var mgr = root.GetComponentInChildren<ES3ReferenceMgr>();
+                    if(mgr != null)
+                        return mgr;
+                }
+            }
+
+            // If we can't find a manager in this scene (for example we're in DontDestroyOnLoad), find a manager in any scene.
+            if (getAnyManagerIfNotInScene)
             {
                 for (int i = 0; i < SceneManager.sceneCount; i++)
                 {
                     var loadedScene = SceneManager.GetSceneAt(i);
-                    // Ensure that the scene exists and it's not DontDestroyOnLoad (to avoid an infinte loop)
-                    if (loadedScene != null && loadedScene.buildIndex != -1)
+
+                    if (loadedScene != null && loadedScene != scene && loadedScene.IsValid())
                     {
-                        var manager = GetManagerFromScene(loadedScene);
-                        if (manager != null)
-                            return manager;
+                        var mgr = GetManagerFromScene(loadedScene, false);
+                        if (mgr != null)
+                        {
+                            ES3Debug.LogWarning($"The reference you're trying to save does not exist in any scene, or the scene it belongs to does not contain an Easy Save 3 Manager. Using the reference manager from scene {loadedScene.name} instead. This may cause unexpected behaviour or leak memory in some situations. See <a href=\"https://docs.moodkie.com/easy-save-3/es3-guides/saving-and-loading-references/\">the Saving and Loading References guide</a> for more information.");
+                            return mgr;
+                        }
                     }
                 }
-                return null;
             }
-
-            // Check whether the mgr is already in the mgr list.
-            foreach (var addedMgr in mgrs)
-                if (addedMgr.gameObject.scene == scene)
-                    return addedMgr;
-
-            GameObject[] roots;
-            try
-            {
-                roots = scene.GetRootGameObjects();
-            }
-            catch
-            {
-                return null;
-            }
-
-            ES3ReferenceMgr mgr = null;
-
-            // First, look for Easy Save 3 Manager in the top-level.
-            foreach (var root in roots)
-            {
-                if (root.name == "Easy Save 3 Manager")
-                {
-                    mgr = root.GetComponent<ES3ReferenceMgr>();
-                    break;
-                }
-            }
-
-            // If the user has moved or renamed the Easy Save 3 Manager, we need to perform a deep search.
-            if (mgr == null)
-                foreach (var root in roots)
-                    if ((mgr = root.GetComponentInChildren<ES3ReferenceMgr>()) != null)
-                        break;
-
-            return mgr;
+            return null;
         }
 
         public bool IsInitialised { get { return idRef.Count > 0; } }
@@ -209,7 +215,7 @@ namespace ES3Internal
             return -1;
         }
 
-        internal UnityEngine.Object Get(long id, Type type, bool suppressWarnings=false)
+        internal UnityEngine.Object Get(long id, Type type, bool suppressWarnings = false)
         {
             if (!mgrs.Contains(this))
                 mgrs.Add(this);
@@ -238,11 +244,14 @@ namespace ES3Internal
                     return globalRef;
             }
 
-            if(type != null)
-                ES3Debug.LogWarning("Reference for " + type + " with ID " + id + " could not be found in Easy Save's reference manager. See <a href=\"https://docs.moodkie.com/easy-save-3/es3-guides/saving-and-loading-references/#reference-could-not-be-found-warning\">the Saving and Loading References guide</a> for more information.", this);
-            else
-                ES3Debug.LogWarning("Reference with ID " + id + " could not be found in Easy Save's reference manager. See <a href=\"https://docs.moodkie.com/easy-save-3/es3-guides/saving-and-loading-references/#reference-could-not-be-found-warning\">the Saving and Loading References guide</a> for more information.", this);
-            
+            if (!suppressWarnings)
+            {
+                if (type != null)
+                    ES3Debug.LogWarning("Reference for " + type + " with ID " + id + " could not be found in Easy Save's reference manager. See <a href=\"https://docs.moodkie.com/easy-save-3/es3-guides/saving-and-loading-references/#reference-could-not-be-found-warning\">the Saving and Loading References guide</a> for more information.", this);
+                else
+                    ES3Debug.LogWarning("Reference with ID " + id + " could not be found in Easy Save's reference manager. See <a href=\"https://docs.moodkie.com/easy-save-3/es3-guides/saving-and-loading-references/#reference-could-not-be-found-warning\">the Saving and Loading References guide</a> for more information.", this);
+            }
+
             return null;
         }
 
@@ -335,7 +344,7 @@ namespace ES3Internal
             lock (_lock)
             {
                 idRef[id] = obj;
-                if(obj != null)
+                if (obj != null)
                     refId[obj] = id;
             }
             return id;
@@ -447,249 +456,249 @@ namespace ES3Internal
             return (System.Math.Abs(longRand % (long.MaxValue - 0)) + 0);
         }
 
-/*#if UNITY_EDITOR
-        public static HashSet<UnityEngine.Object> CollectDependenciesLegacy(UnityEngine.Object obj, HashSet<UnityEngine.Object> dependencies = null, int depth = int.MinValue)
-        {
-            return CollectDependenciesLegacy(new UnityEngine.Object[] { obj }, dependencies, depth);
-        }
-
-
-         //Collects all top-level dependencies of an object.
-         //For GameObjects, it will traverse all children.
-         //For Components or ScriptableObjects, it will get all serialisable UnityEngine.Object fields/properties as dependencies.
-        public static HashSet<UnityEngine.Object> CollectDependenciesLegacy(UnityEngine.Object[] objs, HashSet<UnityEngine.Object> dependencies = null, int depth = int.MinValue)
-        {
-            if (depth == int.MinValue)
-                depth = ES3Settings.defaultSettingsScriptableObject.collectDependenciesDepth;
-
-            if (depth < 0)
-                return dependencies;
-
-            if (dependencies == null)
-                dependencies = new HashSet<UnityEngine.Object>();
-
-            foreach (var obj in objs)
-            {
-                if (obj == null)
-                    continue;
-
-                var type = obj.GetType();
-
-                // Skip types which don't need processing
-                if (type == typeof(ES3ReferenceMgr) || type == typeof(ES3AutoSaveMgr) || type == typeof(ES3AutoSave) || type == typeof(ES3InspectorInfo))
-                    continue;
-
-                // Add the prefab to the manager but don't process it. We'll use this to work out what prefabs to add to the prefabs list later.
-                if (type == typeof(ES3Prefab))
+        /*#if UNITY_EDITOR
+                public static HashSet<UnityEngine.Object> CollectDependenciesLegacy(UnityEngine.Object obj, HashSet<UnityEngine.Object> dependencies = null, int depth = int.MinValue)
                 {
-                    dependencies.Add(obj);
-                    continue;
+                    return CollectDependenciesLegacy(new UnityEngine.Object[] { obj }, dependencies, depth);
                 }
 
-                // If it's a GameObject, get the GameObject's Components and collect their dependencies.
-                if (type == typeof(GameObject))
+
+                 //Collects all top-level dependencies of an object.
+                 //For GameObjects, it will traverse all children.
+                 //For Components or ScriptableObjects, it will get all serialisable UnityEngine.Object fields/properties as dependencies.
+                public static HashSet<UnityEngine.Object> CollectDependenciesLegacy(UnityEngine.Object[] objs, HashSet<UnityEngine.Object> dependencies = null, int depth = int.MinValue)
                 {
-                    var go = (GameObject)obj;
-                    // If we've not already processed this GameObject ...
-                    if (dependencies.Add(go))
+                    if (depth == int.MinValue)
+                        depth = ES3Settings.defaultSettingsScriptableObject.collectDependenciesDepth;
+
+                    if (depth < 0)
+                        return dependencies;
+
+                    if (dependencies == null)
+                        dependencies = new HashSet<UnityEngine.Object>();
+
+                    foreach (var obj in objs)
                     {
-                        // Get the dependencies of each Component in the GameObject.
-                        CollectDependenciesLegacy(go.GetComponents<Component>(), dependencies, depth - 1);
-                        // Get the dependencies of each child in the GameObject.
-                        foreach (Transform child in go.transform)
-                            CollectDependenciesLegacy(child.gameObject, dependencies, depth); // Don't decrement child, as we consider this a top-level object.
-                    }
-                }
-                // Else if it's a Component or ScriptableObject, add the values of any UnityEngine.Object fields as dependencies.
-                else
-                    CollectDependenciesFromFieldsLegacy(obj, dependencies, depth - 1);
-            }
-
-            return dependencies;
-        }
-
-        private static void CollectDependenciesFromFieldsLegacy(UnityEngine.Object obj, HashSet<UnityEngine.Object> dependencies, int depth)
-        {
-            // If we've already collected dependencies for this, do nothing.
-            if (!dependencies.Add(obj))
-                return;
-
-            if (depth == int.MinValue)
-                depth = ES3Settings.defaultSettingsScriptableObject.collectDependenciesDepth;
-
-            if (depth < 0)
-                return;
-
-            var type = obj.GetType();
-
-            if (isEnteringPlayMode && type == typeof(UnityEngine.UI.Text))
-                return;
-
-            try
-            {
-                // SerializedObject is expensive, so for known classes we manually gather references.
-
-                if (type == typeof(Animator) || obj is Transform || type == typeof(CanvasRenderer) || type == typeof(Mesh) || type == typeof(AudioClip) || type == typeof(Rigidbody) || obj is HorizontalOrVerticalLayoutGroup)
-                    return;
-
-                if(obj is Texture)
-                {
-                    // This ensures that Sprites which are children of the Texture are also added. In the Editor you would otherwise need to expand the Texture to add the Sprite.
-                    foreach(var dependency in UnityEditor.AssetDatabase.LoadAllAssetsAtPath(UnityEditor.AssetDatabase.GetAssetPath(obj)))
-                        if (dependency != obj)
-                            dependencies.Add(dependency);
-                }
-
-                if (obj is Graphic)
-                {
-                    var m = (Graphic)obj;
-                    dependencies.Add(m.material);
-                    dependencies.Add(m.defaultMaterial);
-                    dependencies.Add(m.mainTexture);
-
-                    if (type == typeof(Text))
-                    {
-                        var text = (Text)obj;
-                        dependencies.Add(text.font);
-                    }
-                    else if (type == typeof(Image))
-                    {
-                        var img = (Image)obj;
-                        dependencies.Add(img.sprite);
-                    }
-                    return;
-                }
-
-                if (type == typeof(Mesh))
-                {
-                    if (UnityEditor.AssetDatabase.Contains(obj))
-                        dependencies.Add(obj);
-                    return;
-                }
-
-                if (type == typeof(Material))
-                {
-                    var material = (Material)obj;
-                    var shader = material.shader;
-                    if (shader != null)
-                    {
-                        dependencies.Add(material.shader);
-
-#if UNITY_2019_3_OR_NEWER
-                        for (int i = 0; i < shader.GetPropertyCount(); i++)
-                            if (shader.GetPropertyType(i) == UnityEngine.Rendering.ShaderPropertyType.Texture)
-                                dependencies.Add(material.GetTexture(shader.GetPropertyName(i)));
-                    }
-#endif
-
-                    return;
-                }
-
-                if (type == typeof(MeshFilter))
-                {
-                    dependencies.Add(((MeshFilter)obj).sharedMesh);
-                    return;
-                }
-
-                if (type == typeof(MeshCollider))
-                {
-                    var mc = (MeshCollider)obj;
-                    dependencies.Add(mc.sharedMesh);
-                    dependencies.Add(mc.sharedMaterial);
-                    dependencies.Add(mc.attachedRigidbody);
-                    return;
-                }
-
-                if (type == typeof(Camera))
-                {
-                    var c = (Camera)obj;
-                    dependencies.Add(c.targetTexture);
-                    return;
-                }
-
-                if (type == typeof(SkinnedMeshRenderer))
-                    dependencies.Add(((SkinnedMeshRenderer)obj).sharedMesh); // Don't return. Let this fall through to the if(obj is renderer) call.
-                else if (type == typeof(SpriteRenderer))
-                    dependencies.Add(((SpriteRenderer)obj).sprite); // Don't return. Let this fall through to the if(obj is renderer) call.
-                else if (type == typeof(ParticleSystemRenderer))
-                    dependencies.Add(((ParticleSystemRenderer)obj).mesh); // Don't return. Let this fall through to the if(obj is renderer) call.
-
-                if (obj is Renderer)
-                {
-                    var renderer = (Renderer)obj;
-                    foreach (var material in renderer.sharedMaterials)
-                        CollectDependenciesFromFieldsLegacy(material, dependencies, depth - 1);
-                    return;
-                }
-            }
-            catch { }
-
-            var so = new UnityEditor.SerializedObject(obj);
-            if (so == null)
-                return;
-
-            var property = so.GetIterator();
-            if (property == null)
-                return;
-
-            // Iterate through each of this object's properties.
-            while (property.NextVisible(true))
-            {
-                try
-                {
-                    // If it's an array which contains UnityEngine.Objects, add them as dependencies.
-                    if (property.isArray && property.propertyType != UnityEditor.SerializedPropertyType.String)
-                    {
-                        for (int i = 0; i < property.arraySize; i++)
-                        {
-                            var element = property.GetArrayElementAtIndex(i);
-
-                            // If the array contains UnityEngine.Object types, add them to the dependencies.
-                            if (element.propertyType == UnityEditor.SerializedPropertyType.ObjectReference)
-                            {
-                                var elementValue = element.objectReferenceValue;
-                                var elementType = elementValue.GetType();
-
-                                // If it's a GameObject, use CollectDependencies so that Components are also added.
-                                if (elementType == typeof(GameObject))
-                                    CollectDependenciesLegacy(elementValue, dependencies, depth - 1);
-                                else
-                                    CollectDependenciesFromFieldsLegacy(elementValue, dependencies, depth - 1);
-                            }
-                            // Otherwise this array does not contain UnityEngine.Object types, so we should stop.
-                            else
-                                break;
-                        }
-                    }
-                    // Else if it's a normal UnityEngine.Object field, add it.
-                    else if (property.propertyType == UnityEditor.SerializedPropertyType.ObjectReference)
-                    {
-                        var propertyValue = property.objectReferenceValue;
-                        if (propertyValue == null)
+                        if (obj == null)
                             continue;
 
-                        // If it's a GameObject, use CollectDependencies so that Components are also added.
-                        if (propertyValue.GetType() == typeof(GameObject))
-                            CollectDependenciesLegacy(propertyValue, dependencies, depth - 1);
+                        var type = obj.GetType();
+
+                        // Skip types which don't need processing
+                        if (type == typeof(ES3ReferenceMgr) || type == typeof(ES3AutoSaveMgr) || type == typeof(ES3AutoSave) || type == typeof(ES3InspectorInfo))
+                            continue;
+
+                        // Add the prefab to the manager but don't process it. We'll use this to work out what prefabs to add to the prefabs list later.
+                        if (type == typeof(ES3Prefab))
+                        {
+                            dependencies.Add(obj);
+                            continue;
+                        }
+
+                        // If it's a GameObject, get the GameObject's Components and collect their dependencies.
+                        if (type == typeof(GameObject))
+                        {
+                            var go = (GameObject)obj;
+                            // If we've not already processed this GameObject ...
+                            if (dependencies.Add(go))
+                            {
+                                // Get the dependencies of each Component in the GameObject.
+                                CollectDependenciesLegacy(go.GetComponents<Component>(), dependencies, depth - 1);
+                                // Get the dependencies of each child in the GameObject.
+                                foreach (Transform child in go.transform)
+                                    CollectDependenciesLegacy(child.gameObject, dependencies, depth); // Don't decrement child, as we consider this a top-level object.
+                            }
+                        }
+                        // Else if it's a Component or ScriptableObject, add the values of any UnityEngine.Object fields as dependencies.
                         else
-                            CollectDependenciesFromFieldsLegacy(propertyValue, dependencies, depth - 1);
+                            CollectDependenciesFromFieldsLegacy(obj, dependencies, depth - 1);
+                    }
+
+                    return dependencies;
+                }
+
+                private static void CollectDependenciesFromFieldsLegacy(UnityEngine.Object obj, HashSet<UnityEngine.Object> dependencies, int depth)
+                {
+                    // If we've already collected dependencies for this, do nothing.
+                    if (!dependencies.Add(obj))
+                        return;
+
+                    if (depth == int.MinValue)
+                        depth = ES3Settings.defaultSettingsScriptableObject.collectDependenciesDepth;
+
+                    if (depth < 0)
+                        return;
+
+                    var type = obj.GetType();
+
+                    if (isEnteringPlayMode && type == typeof(UnityEngine.UI.Text))
+                        return;
+
+                    try
+                    {
+                        // SerializedObject is expensive, so for known classes we manually gather references.
+
+                        if (type == typeof(Animator) || obj is Transform || type == typeof(CanvasRenderer) || type == typeof(Mesh) || type == typeof(AudioClip) || type == typeof(Rigidbody) || obj is HorizontalOrVerticalLayoutGroup)
+                            return;
+
+                        if(obj is Texture)
+                        {
+                            // This ensures that Sprites which are children of the Texture are also added. In the Editor you would otherwise need to expand the Texture to add the Sprite.
+                            foreach(var dependency in UnityEditor.AssetDatabase.LoadAllAssetsAtPath(UnityEditor.AssetDatabase.GetAssetPath(obj)))
+                                if (dependency != obj)
+                                    dependencies.Add(dependency);
+                        }
+
+                        if (obj is Graphic)
+                        {
+                            var m = (Graphic)obj;
+                            dependencies.Add(m.material);
+                            dependencies.Add(m.defaultMaterial);
+                            dependencies.Add(m.mainTexture);
+
+                            if (type == typeof(Text))
+                            {
+                                var text = (Text)obj;
+                                dependencies.Add(text.font);
+                            }
+                            else if (type == typeof(Image))
+                            {
+                                var img = (Image)obj;
+                                dependencies.Add(img.sprite);
+                            }
+                            return;
+                        }
+
+                        if (type == typeof(Mesh))
+                        {
+                            if (UnityEditor.AssetDatabase.Contains(obj))
+                                dependencies.Add(obj);
+                            return;
+                        }
+
+                        if (type == typeof(Material))
+                        {
+                            var material = (Material)obj;
+                            var shader = material.shader;
+                            if (shader != null)
+                            {
+                                dependencies.Add(material.shader);
+
+        #if UNITY_2019_3_OR_NEWER
+                                for (int i = 0; i < shader.GetPropertyCount(); i++)
+                                    if (shader.GetPropertyType(i) == UnityEngine.Rendering.ShaderPropertyType.Texture)
+                                        dependencies.Add(material.GetTexture(shader.GetPropertyName(i)));
+                            }
+        #endif
+
+                            return;
+                        }
+
+                        if (type == typeof(MeshFilter))
+                        {
+                            dependencies.Add(((MeshFilter)obj).sharedMesh);
+                            return;
+                        }
+
+                        if (type == typeof(MeshCollider))
+                        {
+                            var mc = (MeshCollider)obj;
+                            dependencies.Add(mc.sharedMesh);
+                            dependencies.Add(mc.sharedMaterial);
+                            dependencies.Add(mc.attachedRigidbody);
+                            return;
+                        }
+
+                        if (type == typeof(Camera))
+                        {
+                            var c = (Camera)obj;
+                            dependencies.Add(c.targetTexture);
+                            return;
+                        }
+
+                        if (type == typeof(SkinnedMeshRenderer))
+                            dependencies.Add(((SkinnedMeshRenderer)obj).sharedMesh); // Don't return. Let this fall through to the if(obj is renderer) call.
+                        else if (type == typeof(SpriteRenderer))
+                            dependencies.Add(((SpriteRenderer)obj).sprite); // Don't return. Let this fall through to the if(obj is renderer) call.
+                        else if (type == typeof(ParticleSystemRenderer))
+                            dependencies.Add(((ParticleSystemRenderer)obj).mesh); // Don't return. Let this fall through to the if(obj is renderer) call.
+
+                        if (obj is Renderer)
+                        {
+                            var renderer = (Renderer)obj;
+                            foreach (var material in renderer.sharedMaterials)
+                                CollectDependenciesFromFieldsLegacy(material, dependencies, depth - 1);
+                            return;
+                        }
+                    }
+                    catch { }
+
+                    var so = new UnityEditor.SerializedObject(obj);
+                    if (so == null)
+                        return;
+
+                    var property = so.GetIterator();
+                    if (property == null)
+                        return;
+
+                    // Iterate through each of this object's properties.
+                    while (property.NextVisible(true))
+                    {
+                        try
+                        {
+                            // If it's an array which contains UnityEngine.Objects, add them as dependencies.
+                            if (property.isArray && property.propertyType != UnityEditor.SerializedPropertyType.String)
+                            {
+                                for (int i = 0; i < property.arraySize; i++)
+                                {
+                                    var element = property.GetArrayElementAtIndex(i);
+
+                                    // If the array contains UnityEngine.Object types, add them to the dependencies.
+                                    if (element.propertyType == UnityEditor.SerializedPropertyType.ObjectReference)
+                                    {
+                                        var elementValue = element.objectReferenceValue;
+                                        var elementType = elementValue.GetType();
+
+                                        // If it's a GameObject, use CollectDependencies so that Components are also added.
+                                        if (elementType == typeof(GameObject))
+                                            CollectDependenciesLegacy(elementValue, dependencies, depth - 1);
+                                        else
+                                            CollectDependenciesFromFieldsLegacy(elementValue, dependencies, depth - 1);
+                                    }
+                                    // Otherwise this array does not contain UnityEngine.Object types, so we should stop.
+                                    else
+                                        break;
+                                }
+                            }
+                            // Else if it's a normal UnityEngine.Object field, add it.
+                            else if (property.propertyType == UnityEditor.SerializedPropertyType.ObjectReference)
+                            {
+                                var propertyValue = property.objectReferenceValue;
+                                if (propertyValue == null)
+                                    continue;
+
+                                // If it's a GameObject, use CollectDependencies so that Components are also added.
+                                if (propertyValue.GetType() == typeof(GameObject))
+                                    CollectDependenciesLegacy(propertyValue, dependencies, depth - 1);
+                                else
+                                    CollectDependenciesFromFieldsLegacy(propertyValue, dependencies, depth - 1);
+                            }
+                        }
+                        catch { }
                     }
                 }
-                catch { }
-            }
-        }
 
-        // Called in the Editor when this Component is added.
-        private void Reset()
-        {
-            // Ensure that Component can only be added by going to Assets > Easy Save 3 > Add Manager to Scene.
-            if (gameObject.name != "Easy Save 3 Manager")
-            {
-                UnityEditor.EditorUtility.DisplayDialog("Cannot add ES3ReferenceMgr directly", "Please go to 'Tools > Easy Save 3 > Add Manager to Scene' to add an Easy Save 3 Manager to your scene.", "Ok");
-                DestroyImmediate(this);
-            }
-        }
-#endif*/
+                // Called in the Editor when this Component is added.
+                private void Reset()
+                {
+                    // Ensure that Component can only be added by going to Assets > Easy Save 3 > Add Manager to Scene.
+                    if (gameObject.name != "Easy Save 3 Manager")
+                    {
+                        UnityEditor.EditorUtility.DisplayDialog("Cannot add ES3ReferenceMgr directly", "Please go to 'Tools > Easy Save 3 > Add Manager to Scene' to add an Easy Save 3 Manager to your scene.", "Ok");
+                        DestroyImmediate(this);
+                    }
+                }
+        #endif*/
 
         internal static bool CanBeSaved(UnityEngine.Object obj)
         {
@@ -698,9 +707,12 @@ namespace ES3Internal
                 return true;
 
             foreach (var flag in invalidHideFlags)
-                if ((obj.hideFlags & flag) != 0 && obj.hideFlags != HideFlags.HideInHierarchy && obj.hideFlags != HideFlags.HideInInspector && obj.hideFlags != HideFlags.NotEditable)
+                if ((obj.hideFlags & flag) != 0 && /*obj.hideFlags != HideFlags.HideInHierarchy &&*/ obj.hideFlags != HideFlags.HideInInspector && obj.hideFlags != HideFlags.NotEditable)
                     if (!(obj is Mesh || obj is Material))
                         return false;
+
+            if (obj is UnityEngine.U2D.SpriteAtlas)
+                return false;
 
             // Exclude the Easy Save 3 Manager, and all components attached to it.
             if (obj.name == "Easy Save 3 Manager")
@@ -708,6 +720,17 @@ namespace ES3Internal
 #endif
             return true;
         }
+
+#if UNITY_EDITOR
+        public void ExcludeObject(UnityEngine.Object obj)
+        {
+            if (excludeObjects == null)
+                excludeObjects = new List<UnityEngine.Object>();
+
+            if (!excludeObjects.Contains(obj))
+                excludeObjects.Add(obj);
+        }
+#endif
     }
 
     [System.Serializable]

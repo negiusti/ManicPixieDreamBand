@@ -46,7 +46,7 @@ namespace ES3Types
 			var instance = (Texture2D)obj;
 
             if (!IsReadable(instance))
-                ES3Internal.ES3Debug.LogWarning("Easy Save cannot load the properties or pixels for this Texture because it is not read/write enabled, so it will be loaded by reference. To load the properties and pixels for this Texture, check the 'Read/Write Enabled' checkbox in its Import Settings.", instance);
+                ES3Internal.ES3Debug.LogWarning($"Easy Save cannot load the properties or pixels for this Texture {instance.name} because it is not read/write enabled, so it will be loaded by reference. To load the properties and pixels for this Texture, check the 'Read/Write Enabled' checkbox in its Import Settings.", instance);
 
             foreach (string propertyName in reader.Properties)
 			{

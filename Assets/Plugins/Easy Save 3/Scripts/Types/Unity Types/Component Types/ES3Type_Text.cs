@@ -1,3 +1,5 @@
+#if ES3_UGUI
+
 using System;
 
 namespace ES3Types
@@ -142,3 +144,5 @@ namespace ES3Types
 		}
 	}
 }
+
+#endif

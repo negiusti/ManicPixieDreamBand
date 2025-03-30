@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ES3Internal;
@@ -6,7 +5,6 @@ using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using System.Reflection;
 using System;
 using System.Linq;
 #endif
@@ -63,7 +61,7 @@ public class ES3ReferenceMgr : ES3ReferenceMgrBase
             var sceneWasOpen = loadedScenePaths.Contains(buildSettingsScene.path);
             var scene = EditorSceneManager.OpenScene(buildSettingsScene.path, OpenSceneMode.Additive);
 
-            var mgr = ES3ReferenceMgr.GetManagerFromScene(scene);
+            var mgr = ES3ReferenceMgr.GetManagerFromScene(scene, false);
 
             if (mgr != null)
             {
@@ -141,6 +139,8 @@ public class ES3ReferenceMgr : ES3ReferenceMgrBase
             if (obj == null || obj.name == "Easy Save 3 Manager")
                 continue;
 
+            var excludeTextures = new List<Texture2D>();
+
             foreach (var dependency in EditorUtility.CollectDependencies(new UnityEngine.Object[] { obj }))
             {
                 if (EditorApplication.timeSinceStartup - timeStarted > timeout)
@@ -148,6 +148,12 @@ public class ES3ReferenceMgr : ES3ReferenceMgrBase
                     ES3Debug.LogWarning($"Easy Save cancelled gathering of references for object {obj.name} because it took longer than {timeout} seconds. You can increase the timeout length in Tools > Easy Save 3 > Settings > Reference Gathering Timeout, or adjust the settings so that fewer objects are referenced in your scene.");
                     return;
                 }
+
+                // Exclude all Texture2Ds which are packed into a SpriteAtlas from this manager.
+                /*if (dependency is SpriteAtlas)
+                    foreach (var atlasDependency in EditorUtility.CollectDependencies(new UnityEngine.Object[] { dependency }))
+                        if (atlasDependency is Texture2D)
+                            ExcludeObject(atlasDependency);*/
 
                 Add(dependency);
 

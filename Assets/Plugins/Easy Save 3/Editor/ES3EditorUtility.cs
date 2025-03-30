@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using ES3Internal;
 
-public class ES3EditorUtility : Editor 
+public class ES3EditorUtility : UnityEditor.Editor 
 {
 	public static void DisplayLink(string label, string url)
 	{

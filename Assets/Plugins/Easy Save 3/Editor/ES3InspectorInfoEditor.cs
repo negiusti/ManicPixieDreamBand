@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 
 [CustomEditor(typeof(ES3InspectorInfo))]
-public class ES3InspectorInfoEditor : Editor
+public class ES3InspectorInfoEditor : UnityEditor.Editor
 {
 	public override void OnInspectorGUI() 
 	{

@@ -89,7 +89,9 @@ namespace ES3Internal
                 if (obj == null)
                     continue;
 
-                if ((((obj.hideFlags & HideFlags.DontSave) == HideFlags.DontSave) ||
+                if ((
+                 ((obj.hideFlags & HideFlags.HideInInspector) == HideFlags.HideInInspector) ||
+                 ((obj.hideFlags & HideFlags.DontSave) == HideFlags.DontSave) ||
                  ((obj.hideFlags & HideFlags.DontSaveInBuild) == HideFlags.DontSaveInBuild) ||
                  ((obj.hideFlags & HideFlags.DontSaveInEditor) == HideFlags.DontSaveInEditor) ||
                  ((obj.hideFlags & HideFlags.HideAndDontSave) == HideFlags.HideAndDontSave)))

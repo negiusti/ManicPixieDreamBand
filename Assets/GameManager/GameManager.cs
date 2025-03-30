@@ -174,7 +174,7 @@ public class GameManager : MonoBehaviour
 
     private void ChangedActiveScene(Scene current, Scene next)
     {
-        SaveData();
+        //SaveData();
     }
 
     public void PauseBGMusic()

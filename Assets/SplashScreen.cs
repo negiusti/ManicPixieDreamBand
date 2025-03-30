@@ -25,7 +25,8 @@ public class SplashScreen : MonoBehaviour
                 GameManager.Instance.RefreshGameState();
             }
 
-            SceneChanger.Instance.ChangeScene("Bedroom");
+            //SceneChanger.Instance.ChangeScene("Bedroom");
+            SceneChanger.Instance.ChangeScene("LoadUserData");
         }
     }
 

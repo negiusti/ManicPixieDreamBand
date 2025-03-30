@@ -1,7 +1,7 @@
 using UnityEditor;
 using System.IO;
 
-public class EnableES3AssemblyDefinitions : Editor
+public class EnableES3AssemblyDefinitions : UnityEditor.Editor
 {
     [MenuItem("Tools/Easy Save 3/Enable Assembly Definition Files", false, 150)]
     public static void EnableAsmDef()

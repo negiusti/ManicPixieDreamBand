@@ -7,7 +7,7 @@ using ES3Internal;
 
 [CustomEditor(typeof(ES3Prefab))]
 [System.Serializable]
-public class ES3PrefabEditor : Editor
+public class ES3PrefabEditor : UnityEditor.Editor
 {
 	bool showAdvanced = false;
     bool openLocalRefs = false;

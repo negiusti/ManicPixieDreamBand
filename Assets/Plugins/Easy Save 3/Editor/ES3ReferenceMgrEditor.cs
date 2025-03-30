@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 [CustomEditor(typeof(ES3ReferenceMgr))]
 [System.Serializable]
-public class ES3ReferenceMgrEditor : Editor
+public class ES3ReferenceMgrEditor : UnityEditor.Editor
 {
     private bool isDraggingOver = false;
     private bool openReferences = false;
@@ -135,7 +135,7 @@ public class ES3ReferenceMgrEditor : Editor
     [MenuItem("Assets/Easy Save 3/Add Dependencies to Manager", false, 33)]
     public static void AddDependenciesToManager()
     {
-        var mgr = ES3ReferenceMgr.Current;
+        var mgr = ES3ReferenceMgr.GetManagerFromScene(SceneManager.GetActiveScene());
         if (mgr == null)
         {
             EditorUtility.DisplayDialog("Could not add reference to manager", "This object could not be added to the reference manager because no reference manager exists in this scene. To create one, go to Tools > Easy Save 3 > Add Manager to Scene", "Ok");
@@ -221,19 +221,58 @@ public class ES3ReferenceMgrEditor : Editor
             return;
         }
 
-        var selected = Selection.GetFiltered<UnityEngine.Object>(SelectionMode.DeepAssets);
+        var selected = Selection.GetFiltered<UnityEngine.Object>(SelectionMode.TopLevel);
 
         if (selected == null || selected.Length == 0)
             return;
 
+        Undo.RecordObject(mgr, "Exclude from Easy Save 3 Reference Manager");
+
+        foreach (var obj in selected)
+        {
+            if (obj == null)
+                continue;
+
+            mgr.ExcludeObject(obj);
+        }
+
+        mgr.RemoveNullOrInvalidValues();
+    }
+
+    [MenuItem("GameObject/Easy Save 3/Exclude Dependencies from Manager", false, 33)]
+    [MenuItem("Assets/Easy Save 3/Exclude Dependencies from Manager", false, 33)]
+    public static void ExcludeDependenciesFromManager()
+    {
+        var mgr = (ES3ReferenceMgr)ES3ReferenceMgr.Current;
+        if (mgr == null)
+        {
+            EditorUtility.DisplayDialog("Could not exclude reference from manager", "This object could not be excluded from the reference manager because no reference manager exists in this scene. To create one, go to Tools > Easy Save 3 > Add Manager to Scene", "Ok");
+            return;
+        }
+
+        var selected = Selection.GetFiltered<UnityEngine.Object>(SelectionMode.TopLevel);
+
+        if (selected == null || selected.Length == 0)
+            return;
 
         Undo.RecordObject(mgr, "Exclude from Easy Save 3 Reference Manager");
 
-        if (mgr.excludeObjects == null)
-            mgr.excludeObjects = new List<UnityEngine.Object>();
+        var dependencies = EditorUtility.CollectDependencies(selected);
 
-        mgr.excludeObjects.AddRange(EditorUtility.CollectDependencies(selected));
+        foreach (var dependency in dependencies)
+            mgr.ExcludeObject(dependency);
+
         mgr.RemoveNullOrInvalidValues();
+    }
+
+    [MenuItem("GameObject/Easy Save 3/Exclude Dependencies from Manager", true, 33)]
+    [MenuItem("Assets/Easy Save 3/Exclude Dependencies from Manager", true, 33)]
+    [MenuItem("GameObject/Easy Save 3/Exclude Reference(s) from Manager", true, 33)]
+    [MenuItem("Assets/Easy Save 3/Exclude Reference(s) from Manager", true, 33)]
+    private static bool CanExcludeReferencesFromManager()
+    {
+        var selected = Selection.GetFiltered<UnityEngine.Object>(SelectionMode.Deep);
+        return selected != null && selected.Length > 0 && ES3ReferenceMgr.Current != null;
     }
 
     [MenuItem("GameObject/Easy Save 3/Add Manager to Scene", false, 33)]
@@ -251,6 +290,7 @@ public class ES3ReferenceMgrEditor : Editor
     [MenuItem("Tools/Easy Save 3/Add Manager to Scene", true, 150)]
     private static bool CanEnableForScene()
     {
-        return ES3ReferenceMgr.GetManagerFromScene(SceneManager.GetActiveScene()) == null;
+        return ES3ReferenceMgr.GetManagerFromScene(SceneManager.GetActiveScene(), false) == null;
     }
 }
+

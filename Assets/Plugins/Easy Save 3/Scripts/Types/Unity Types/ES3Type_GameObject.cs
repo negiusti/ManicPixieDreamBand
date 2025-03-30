@@ -61,10 +61,16 @@ namespace ES3Types
 
             // If there's an ES3AutoSave attached and Components are marked to be saved, save these.
             if (es3AutoSave != null)
+            {
+                es3AutoSave.componentsToSave.RemoveAll(c => c == null);
                 components = es3AutoSave.componentsToSave;
+            }
             // If there's an ES3GameObject attached, save these.
             else if (es3GameObject != null)
+            {
+                es3GameObject.components.RemoveAll(c => c == null);
                 components = es3GameObject.components;
+            }
             // Otherwise, only save explicitly-supported Components, /*or those explicitly marked as Serializable*/.
             else
             {

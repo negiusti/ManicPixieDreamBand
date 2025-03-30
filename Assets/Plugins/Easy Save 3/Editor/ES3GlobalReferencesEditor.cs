@@ -10,7 +10,7 @@ namespace ES3Internal
 {
     [CustomEditor(typeof(ES3Internal.ES3GlobalReferences))]
     [System.Serializable]
-    public class ES3GlobalReferencesEditor : Editor
+    public class ES3GlobalReferencesEditor : UnityEditor.Editor
     {
         private bool isDraggingOver = false;
         private bool openReferences = false;
