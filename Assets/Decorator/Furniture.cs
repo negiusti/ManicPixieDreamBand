@@ -49,6 +49,8 @@ public class Furniture : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (spriteResolver == null)
+            return;
         Debug.Log("Saving " + saveKey + " " + spriteResolver.GetLabel());
         ES3.Save(saveKey, spriteResolver.GetLabel());
     }

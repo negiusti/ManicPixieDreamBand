@@ -60,9 +60,13 @@ public class CustomDialogueScript : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    public void Save()
     {
         ES3.Save("PlotConvoIdx", currentConvoIdx);
+    }
+
+    private void OnDestroy()
+    {
         UnsubscribeFromEvents();
         StopAllCoroutines();
     }
@@ -92,7 +96,6 @@ public class CustomDialogueScript : MonoBehaviour
     private void EndingActiveScene(Scene current)
     {
         StopCurrentConvo();
-        ES3.Save("PlotConvoIdx", currentConvoIdx);
     }
 
     private bool CheckForPlotConvo()

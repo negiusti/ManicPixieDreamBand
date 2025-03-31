@@ -10,15 +10,15 @@ public class GameManager : MonoBehaviour
     public static ButtonSoundEffects buttonSounds;
     public static MiscSoundEffects miscSoundEffects;
     public float audioLag;
+    private ES3SlotManager saveSlotManager;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        saveSlotManager = GetComponentInChildren<ES3SlotManager>();
+        saveSlotManager.gameObject.SetActive(false);
         RegisterSOLuaFuncs();
         SubscribeToEvents();
-        LoadData();
-
 
         //try
         //{
@@ -35,6 +35,12 @@ public class GameManager : MonoBehaviour
         //    //
         //}
 
+    }
+
+    public void OpenSaveSlots()
+    {
+        saveSlotManager.gameObject.transform.parent.gameObject.SetActive(true);
+        saveSlotManager.gameObject.SetActive(true);
     }
 
     public void StartDateConvo(string convoName)
@@ -174,7 +180,8 @@ public class GameManager : MonoBehaviour
 
     private void ChangedActiveScene(Scene current, Scene next)
     {
-        //SaveData();
+        //if (current != null && current.name != "Splash")
+        //    SaveData();
     }
 
     public void PauseBGMusic()
@@ -189,7 +196,7 @@ public class GameManager : MonoBehaviour
 
     public void RefreshGameState()
     {
-        SaveSystem.DeleteSaveData();
+        //SaveSystem.DeleteSaveData();
         MainCharacterState.Load();
         Calendar.Load();
         InventoryManager.ResetInventories();
@@ -207,7 +214,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void LoadData()
+    public void LoadData()
     {
         MainCharacterState.Load();
         Calendar.Load();
@@ -226,8 +233,9 @@ public class GameManager : MonoBehaviour
             Phone.Instance.Load();
     }
 
-    private void SaveData()
+    public void SaveData()
     {
+        DialogueManager.Instance.GetComponent<CustomDialogueScript>().Save();
         JamCoordinator.Save();
         MainCharacterState.Save();
         Calendar.Save();

@@ -85,6 +85,8 @@ public class DecoratorApp : PhoneApp
 
     private void Refresh()
     {
+        if (container == null)
+            return;
         for (int i = 1; i < container.childCount; i++)
         {
             Destroy(container.GetChild(i).gameObject);

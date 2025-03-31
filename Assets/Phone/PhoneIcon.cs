@@ -21,7 +21,7 @@ public class PhoneIcon : MonoBehaviour
 
     public void Refresh()
     {
-        if (Phone.Instance == null)
+        if (Phone.Instance == null || Phone.Instance.appNotifications == null)
             return;
         if (Phone.Instance.appNotifications.Contains(appName))
         {

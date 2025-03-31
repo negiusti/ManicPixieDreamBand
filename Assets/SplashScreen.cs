@@ -8,6 +8,14 @@ public class SplashScreen : MonoBehaviour
     void Start()
     {
         DialogueManager.StopAllConversations();
+        if (Phone.Instance != null)
+        {
+            Destroy(Phone.Instance.gameObject);
+        }
+        if (DialogueManager.Instance != null)
+        {
+            Destroy(DialogueManager.Instance.gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -25,8 +33,9 @@ public class SplashScreen : MonoBehaviour
                 GameManager.Instance.RefreshGameState();
             }
 
+            GameManager.Instance.OpenSaveSlots();
             //SceneChanger.Instance.ChangeScene("Bedroom");
-            SceneChanger.Instance.ChangeScene("LoadUserData");
+            //SceneChanger.Instance.ChangeScene("LoadUserData");
         }
     }
 
