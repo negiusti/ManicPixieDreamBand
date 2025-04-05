@@ -236,6 +236,17 @@ public class Character : MonoBehaviour
                 || spriteRenderer.gameObject.name == "Eyeshadow"
                 || spriteRenderer.gameObject.name == "Eyebrows"
                 || spriteRenderer.gameObject.name.Contains("Shoe");
+
+            if (spriteRenderer.gameObject.name.Contains("Shoe") && isMC && !MainCharacterState.CheckFlag("EnteredCloset"))
+            {
+                categoryToEnabled[spriteRenderer.gameObject.name] = false;
+                spriteRenderer.enabled = false;
+            } else if (spriteRenderer.gameObject.name.Contains("Shoe"))
+            {
+                categoryToEnabled[spriteRenderer.gameObject.name] = true;
+                spriteRenderer.enabled = true;
+            }
+
             if (spriteRenderer.gameObject.name == "Sk8board")
                 categoryToEnabled[spriteRenderer.gameObject.name] = false;
         }
