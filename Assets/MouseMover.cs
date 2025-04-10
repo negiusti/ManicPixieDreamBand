@@ -26,6 +26,9 @@ public class MouseMover : MonoBehaviour
         float horizontal = player.GetAxis("Move Cursor Horizontal"); //Input.GetAxis("Horizontal"); // Arrow keys / A/D
         float vertical = player.GetAxis("Move Cursor Vertical");     // Arrow keys / W/S
 
+        if (Mathf.Abs(horizontal) < 0.001f && Mathf.Abs(vertical) < 0.001f)
+            return;
+
         // Get current mouse position
         Vector2 currentMousePos = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
 
