@@ -25,7 +25,7 @@ public class MouseMover : MonoBehaviour
         // Get axis input (you can map this in Input Actions or use Keyboard directly)
         float horizontal = player.GetAxis("Move Cursor Horizontal"); //Input.GetAxis("Horizontal"); // Arrow keys / A/D
         float vertical = player.GetAxis("Move Cursor Vertical");     // Arrow keys / W/S
-
+        Debug.Log("horizontal: " + horizontal + " vert: " + vertical);
         if (Mathf.Abs(horizontal) < 0.001f && Mathf.Abs(vertical) < 0.001f)
             return;
 
