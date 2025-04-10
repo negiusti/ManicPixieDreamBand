@@ -34,7 +34,7 @@ public class MouseMover : MonoBehaviour
         Debug.Log("currentMousePos: " + currentMousePos.x + ", " + currentMousePos.y);
 
         // Calculate new position
-        Vector2 delta = new Vector2(horizontal, vertical) * speed * Time.deltaTime;
+        Vector2 delta = new Vector2(horizontal, vertical) * speed * Mathf.Min(0.01f,Time.deltaTime);
         Debug.Log("delta: " + delta.x + ", " + delta.y);
         Vector2 newMousePos = currentMousePos + delta;
         Debug.Log("newMousePos: " + newMousePos.x + ", " + newMousePos.y);
