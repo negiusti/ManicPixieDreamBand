@@ -58,7 +58,7 @@ public class ButtonNavigation : MonoBehaviour
             SelectNext(1);
         }
 
-        if (player.GetButtonDown("Submit Dialogue Response") && !customDialogueScript.isCoolDown)
+        if (player.GetButtonDown("Advance Conversation") && !customDialogueScript.isCoolDown)
         {
             selectables[currentIndex].OnSubmit(null);
         }

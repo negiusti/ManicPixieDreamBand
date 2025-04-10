@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using Rewired;
 
@@ -15,7 +14,7 @@ public class MouseMover : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (player.GetButtonDown("Select Object Under Cursor"))
         {
             SimulateLeftClick();
         }
