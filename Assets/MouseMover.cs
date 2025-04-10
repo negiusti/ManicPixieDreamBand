@@ -94,9 +94,13 @@ public class MouseMover : MonoBehaviour
 
         // Raycast into 3D scene (optional)
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        RaycastHit[] hits = Physics.RaycastAll(ray);
+
+        foreach (RaycastHit hit in hits)
         {
             Debug.Log($"Simulated click hit {hit.collider.name}");
+
+            // Optional: trigger a method on the hit object
             // hit.collider.gameObject.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
         }
 
