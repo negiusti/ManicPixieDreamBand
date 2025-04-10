@@ -28,21 +28,21 @@ public class MouseMover : MonoBehaviour
         if (Mathf.Abs(horizontal) < 0.001f && Mathf.Abs(vertical) < 0.001f)
             return;
 
-        //Debug.Log("horizontal: " + horizontal + " vert: " + vertical);
+        Debug.Log("horizontal: " + horizontal + " vert: " + vertical);
         // Get current mouse position
         Vector2 currentMousePos = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
-        //Debug.Log("currentMousePos: " + currentMousePos.x + ", " + currentMousePos.y);
+        Debug.Log("currentMousePos: " + currentMousePos.x + ", " + currentMousePos.y);
 
         // Calculate new position
         Vector2 delta = new Vector2(horizontal, vertical) * speed * Time.deltaTime;
-        //Debug.Log("delta: " + delta.x + ", " + delta.y);
+        Debug.Log("delta: " + delta.x + ", " + delta.y);
         Vector2 newMousePos = currentMousePos + delta;
-        //Debug.Log("newMousePos: " + newMousePos.x + ", " + newMousePos.y);
+        Debug.Log("newMousePos: " + newMousePos.x + ", " + newMousePos.y);
 
         // Clamp position to screen bounds
         newMousePos.x = Mathf.Clamp(newMousePos.x, 0, Screen.width);
         newMousePos.y = Mathf.Clamp(newMousePos.y, 0, Screen.height);
-        //Debug.Log("clamped newMousePos: " + newMousePos.x + ", " + newMousePos.y);
+        Debug.Log("clamped newMousePos: " + newMousePos.x + ", " + newMousePos.y);
 
         // Warp the cursor
         UnityEngine.InputSystem.Mouse.current.WarpCursorPosition(newMousePos);
