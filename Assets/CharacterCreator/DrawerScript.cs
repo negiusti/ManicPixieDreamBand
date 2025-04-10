@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.U2D.Animation;
 
-public class DrawerScript : MonoBehaviour
+public class DrawerScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     private SpriteResolver targetResolver;
     private SpriteLibraryAsset LibraryAsset;
@@ -116,5 +116,19 @@ public class DrawerScript : MonoBehaviour
             palette.gameObject.SetActive(false);
         coll.enabled = true;
         icons.DisableIconColliders();
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnMouseEnter();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnMouseExit();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
     }
 }

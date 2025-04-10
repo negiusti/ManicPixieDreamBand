@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ColorPalette : MonoBehaviour
+public class ColorPalette : MonoBehaviour, IPointerDownHandler
 {
     private CharacterEditor characterEditor;
     public string category;
@@ -87,6 +87,11 @@ public class ColorPalette : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         coroutineDone = true;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
     }
 
     //public void OnPointerDown(PointerEventData eventData)

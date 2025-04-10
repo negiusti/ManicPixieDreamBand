@@ -2,8 +2,9 @@ using UnityEngine;
 using UnityEngine.U2D.Animation;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class Contact : MonoBehaviour
+public class Contact : MonoBehaviour, IPointerDownHandler
 {
     private string contactName;
     private Image img;
@@ -70,6 +71,9 @@ public class Contact : MonoBehaviour
     {
         StartConvo();
     }
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
+    }
 
-    
 }

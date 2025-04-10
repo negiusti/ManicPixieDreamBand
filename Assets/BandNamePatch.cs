@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class BandNamePatch : MonoBehaviour
+public class BandNamePatch : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     private Animator animator;
     public string bandName;
@@ -44,5 +43,19 @@ public class BandNamePatch : MonoBehaviour
     public void Explode()
     {
         animator.Play("PatchDestroy", -1, 0f);
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnMouseEnter();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnMouseExit();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
     }
 }

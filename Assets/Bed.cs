@@ -1,8 +1,9 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Rewired;
 
-public class Bed : MonoBehaviour
+public class Bed : MonoBehaviour, IPointerDownHandler
 {
     private Animator animator;
     private SleepingScreenMiniGame sleepingScreen;
@@ -77,4 +78,10 @@ public class Bed : MonoBehaviour
             animator.SetBool("InRange", false);
         }
     }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
+    }
+
 }

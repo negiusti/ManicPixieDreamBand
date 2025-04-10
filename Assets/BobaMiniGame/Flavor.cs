@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.U2D.Animation;
 
-public class Flavor : MonoBehaviour
+public class Flavor : MonoBehaviour, IPointerDownHandler
 {
     private Animator animator;
     private Vector3 origialPos;
@@ -55,5 +54,10 @@ public class Flavor : MonoBehaviour
         animator.Play("FlavorPour", -1, 0f);
         StartCoroutine(mg.cup.liquid.GetComponent<LerpPosition>().LerpColor(new Vector3(color.r, color.g, color.b), animator.runtimeAnimatorController.animationClips.First(x => x.name == "FlavorPour").length));
         mg.Next(gameObject.name);
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
     }
 }

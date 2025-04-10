@@ -92,20 +92,37 @@ public class MouseMover : MonoBehaviour
 
         Vector2 mousePosition = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
 
-        // Raycast into 3D scene (optional)
+        //int mxIntersections = int.MaxValue;
+        //if (Camera.main != null && Camera.main.GetComponent<Physics2DRaycaster>() != null && Camera.main.GetComponent<Physics2DRaycaster>().maxRayIntersections > 0)
+        //    mxIntersections = Camera.main.GetComponent<Physics2DRaycaster>().maxRayIntersections;
+
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
-        RaycastHit[] hits = Physics.RaycastAll(ray);
 
-        foreach (RaycastHit hit in hits)
-        {
-            Debug.Log($"Simulated click hit {hit.collider.name}");
+        //if (mxIntersections > 1)
+        //{
+            RaycastHit[] hits = Physics.RaycastAll(ray);
+            foreach (RaycastHit hit in hits)
+            {
+                Debug.Log($"Simulated click hit {hit.collider.name}");
 
-            // Optional: trigger a method on the hit object
-            // hit.collider.gameObject.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
-        }
+                // Optional: trigger a method on the hit object
+                
+                hit.collider.gameObject.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
+                hit.collider.gameObject.SendMessage("OnMouseDown", SendMessageOptions.DontRequireReceiver);
+            }
+        //}
+        //else
+        //{
+        //    if (Physics.Raycast(ray, out RaycastHit hit))
+        //    {
+        //        Debug.Log($"Simulated click hit {hit.collider.name}");
+        //        hit.collider.gameObject.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
+        //        hit.collider.gameObject.SendMessage("OnMouseDown", SendMessageOptions.DontRequireReceiver);
+        //    }
+        //}
 
-        // Trigger UI click if over UI
-        if (EventSystem.current != null)
+            // Trigger UI click if over UI
+            if (EventSystem.current != null)
         {
             PointerEventData pointerData = new PointerEventData(EventSystem.current)
             {

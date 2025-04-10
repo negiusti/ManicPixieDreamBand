@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class GoToPreviousSceneButton : MonoBehaviour
+public class GoToPreviousSceneButton : MonoBehaviour, IPointerDownHandler
 {
     private GameManager gm;
     private SceneChanger sc;
@@ -22,5 +23,10 @@ public class GoToPreviousSceneButton : MonoBehaviour
     private void OnMouseDown()
     {
         sc.GoToPreviousScene();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
     }
 }
