@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Rewired;
+using System.Collections;
 
 public class MouseMover : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class MouseMover : MonoBehaviour
     {
         if (player.GetButtonDown("Select Object Under Cursor"))
         {
-            SimulateLeftClick();
+            StartCoroutine(SimulateLeftClick());
         }
 
         if (UnityEngine.InputSystem.Mouse.current == null)
@@ -109,7 +110,7 @@ public class MouseMover : MonoBehaviour
     //    }
     //}
 
-    void SimulateLeftClick()
+    IEnumerator SimulateLeftClick()
     {
         //if (UnityEngine.InputSystem.Mouse.current == null)
         //    return;
@@ -146,6 +147,7 @@ public class MouseMover : MonoBehaviour
                 Debug.Log($"Simulated click hit {hit.collider.name}");
                 hit.collider.gameObject.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
                 hit.collider.gameObject.SendMessage("OnMouseDown", SendMessageOptions.DontRequireReceiver);
+                hit.collider.gameObject.SendMessage("OnPointerDown", SendMessageOptions.DontRequireReceiver);
             }
         }
 
@@ -177,6 +179,9 @@ public class MouseMover : MonoBehaviour
                             entry.callback.Invoke(pointerData);
                         if (entry.eventID == EventTriggerType.PointerClick)
                             entry.callback.Invoke(pointerData);
+
+                        yield return null;
+
                         if (entry.eventID == EventTriggerType.PointerUp)
                             entry.callback.Invoke(pointerData);
                     }
@@ -190,6 +195,8 @@ public class MouseMover : MonoBehaviour
                     // Simulate click
                     ExecuteEvents.Execute(target, pointerData, ExecuteEvents.pointerClickHandler);
 
+                    yield return null;
+
                     // (Optional) Simulate pointer up
                     ExecuteEvents.Execute(target, pointerData, ExecuteEvents.pointerUpHandler);
                 }
@@ -200,6 +207,5 @@ public class MouseMover : MonoBehaviour
                 }
             }
         }
-
     }
 }
