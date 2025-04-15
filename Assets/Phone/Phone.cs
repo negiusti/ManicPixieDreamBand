@@ -332,7 +332,8 @@ public class Phone : MonoBehaviour
     public static string AddSpaceBeforeCapitals(string input)
     {
         // Regex pattern: Look for a capital letter that is preceded by a non-space character (except at the start of the string)
-        return Regex.Replace(input, "(?<!^)([A-Z])", " $1");
+        return Regex.Replace(input, "(?<!^|\\s)([A-Z])", " $1");
+        //return Regex.Replace(input, "(?<!^)([A-Z])", " $1");
     }
 
     public void GoHome()
