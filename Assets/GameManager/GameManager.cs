@@ -235,7 +235,8 @@ public class GameManager : MonoBehaviour
 
     public void SaveData()
     {
-        DialogueManager.Instance.GetComponent<CustomDialogueScript>().Save();
+        if (DialogueManager.Instance != null)
+            DialogueManager.Instance.GetComponent<CustomDialogueScript>().Save();
         JamCoordinator.Save();
         MainCharacterState.Save();
         Calendar.Save();

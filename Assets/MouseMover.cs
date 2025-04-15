@@ -116,17 +116,17 @@ public class MouseMover : MonoBehaviour
 
         Vector2 mousePosition = virtualMousePos;
 
-        //int mxIntersections = int.MaxValue;
-        //if (Camera.main != null && Camera.main.GetComponent<Physics2DRaycaster>() != null && Camera.main.GetComponent<Physics2DRaycaster>().maxRayIntersections > 0)
-        //    mxIntersections = Camera.main.GetComponent<Physics2DRaycaster>().maxRayIntersections;
-
         if (cam == null || !cam.isActiveAndEnabled)
             cam = GetFirstActiveCamera();
 
         Ray ray = cam.ScreenPointToRay(mousePosition);
 
-        //if (mxIntersections > 1)
-        //{
+        int mxIntersections = int.MaxValue;
+        if (cam != null && cam.GetComponent<Physics2DRaycaster>() != null && cam.GetComponent<Physics2DRaycaster>().maxRayIntersections > 0)
+            mxIntersections = cam.GetComponent<Physics2DRaycaster>().maxRayIntersections;
+
+        if (mxIntersections > 1)
+        {
             RaycastHit[] hits = Physics.RaycastAll(ray);
             foreach (RaycastHit hit in hits)
             {
@@ -138,16 +138,16 @@ public class MouseMover : MonoBehaviour
                 hit.collider.gameObject.SendMessage("OnMouseDown", SendMessageOptions.DontRequireReceiver);
                 hit.collider.gameObject.SendMessage("OnPointerDown", SendMessageOptions.DontRequireReceiver);
         }
-        //}
-        //else
-        //{
-        //    if (Physics.Raycast(ray, out RaycastHit hit))
-        //    {
-        //        Debug.Log($"Simulated click hit {hit.collider.name}");
-        //        hit.collider.gameObject.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
-        //        hit.collider.gameObject.SendMessage("OnMouseDown", SendMessageOptions.DontRequireReceiver);
-        //    }
-        //}
+    }
+        else
+        {
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                Debug.Log($"Simulated click hit {hit.collider.name}");
+                hit.collider.gameObject.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
+                hit.collider.gameObject.SendMessage("OnMouseDown", SendMessageOptions.DontRequireReceiver);
+            }
+        }
 
         // Trigger UI click if over UI
         if (EventSystem.current != null)
@@ -180,7 +180,8 @@ public class MouseMover : MonoBehaviour
                         if (entry.eventID == EventTriggerType.PointerUp)
                             entry.callback.Invoke(pointerData);
                     }
-                } else
+                }
+                else
                 {
 
                     // Simulate pointer down
@@ -191,6 +192,11 @@ public class MouseMover : MonoBehaviour
 
                     // (Optional) Simulate pointer up
                     ExecuteEvents.Execute(target, pointerData, ExecuteEvents.pointerUpHandler);
+                }
+
+                if (mxIntersections == 1)
+                {
+                    break;
                 }
             }
         }
