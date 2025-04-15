@@ -91,6 +91,8 @@ public class DrawerScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void SelectDrawer()
     {
+        if (selected == true)
+            return;
         selected = true;
         canvas.enabled = true;
         targetResolver.SetCategoryAndLabel("Drawer", "Open");
@@ -108,6 +110,8 @@ public class DrawerScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void UnselectDrawer()
     {
+        if (!selected == true)
+            return;
         selected = false;
         canvas.enabled = false;
         targetResolver.SetCategoryAndLabel("Drawer", "Closed");
