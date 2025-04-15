@@ -68,7 +68,8 @@ public class DrawerScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         Debug.Log("Mouse entered the collider of " + gameObject.name);
         targetResolver.SetCategoryAndLabel("Drawer", "Open");
         ShowIcons();
-        icons.DisableIconColliders();
+        if (!selected)
+            icons.DisableIconColliders();
     }
 
     public void OnMouseExit()
