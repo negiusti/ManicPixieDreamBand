@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Milk : MonoBehaviour
+public class Milk : MonoBehaviour, IPointerDownHandler
 {
     private Animator animator;
     public float rotationAngle = 25f;
@@ -50,4 +49,10 @@ public class Milk : MonoBehaviour
         StartCoroutine(mg.cup.liquid.GetComponent<LerpPosition>().Lerp(mg.cup.liquid.transform.localPosition + Vector3.up * 4f, animator.runtimeAnimatorController.animationClips.First(x => x.name == "Pour").length));
         mg.Next(gameObject.name);
     }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
+    }
+
 }

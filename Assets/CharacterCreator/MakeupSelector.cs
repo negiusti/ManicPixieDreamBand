@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class MakeupSelector : MonoBehaviour
+public class MakeupSelector : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     public string categoryName;
     private CharacterEditor characterEditor;
@@ -37,5 +38,20 @@ public class MakeupSelector : MonoBehaviour
     public void Select()
     {
         characterEditor.SetCurrentFaceCategory(categoryName);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnMouseEnter();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnMouseExit();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
     }
 }

@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 using Rewired;
+using UnityEngine.EventSystems;
 
-public class HairAndMakeupEditor : MonoBehaviour
+public class HairAndMakeupEditor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     private SpriteResolver targetResolver;
     private SpriteRenderer spriteRenderer;
@@ -146,5 +147,20 @@ public class HairAndMakeupEditor : MonoBehaviour
             Debug.Log("Pan complete!");
             panToDefault = false;
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnMouseEnter();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnMouseExit();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
     }
 }

@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class PlaySoundOnClick : MonoBehaviour
+public class PlaySoundOnClick : MonoBehaviour, IPointerDownHandler
 {
     //public AudioClip audioClip;
     public AudioSource audioSource;
@@ -21,5 +20,10 @@ public class PlaySoundOnClick : MonoBehaviour
     private void OnMouseDown()
     {
         audioSource.Play();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
     }
 }

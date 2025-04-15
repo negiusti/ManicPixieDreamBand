@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class SnapToGrid : MonoBehaviour
+public class SnapToGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IPointerDownHandler
 {
     public string blockTag = "Obstacle"; // The tag to avoid collisions with
 
@@ -428,5 +429,25 @@ public class SnapToGrid : MonoBehaviour
         }
 
         return rotatedArray;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnMouseEnter();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnMouseExit();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        OnMouseUp();
     }
 }

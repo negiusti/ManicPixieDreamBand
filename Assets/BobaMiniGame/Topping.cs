@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Topping : MonoBehaviour
+public class Topping : MonoBehaviour, IPointerDownHandler
 {
     private Animator animator;
     private Vector3 origialPos;
@@ -46,5 +44,10 @@ public class Topping : MonoBehaviour
         animator.Play("ToppingsPour");
         mg.cup.GetComponentInChildren<Toppings>().AppearInCup();
         mg.Next(gameObject.name);
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
     }
 }

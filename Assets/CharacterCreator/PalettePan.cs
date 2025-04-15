@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PalettePan : MonoBehaviour
+public class PalettePan : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     private ColorPalette palette;
     private Image image;
@@ -78,5 +79,19 @@ public class PalettePan : MonoBehaviour
     {
         if (!isSelected)
             this.gameObject.transform.localScale = startingScale;
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnMouseEnter();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnMouseExit();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
     }
 }

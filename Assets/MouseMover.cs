@@ -4,12 +4,41 @@ using Rewired;
 
 public class MouseMover : MonoBehaviour
 {
-    public float speed = 500f; // Speed to move the cursor
+    private Vector2 virtualMousePos;
+    private Camera cam;
+    public float speed = 1000f; // Speed to move the cursor
     private Player player;
 
     private void Start()
     {
         player = ReInput.players.GetPlayer(0);
+        cam = GetFirstActiveCamera();
+        // Initialize virtual cursor to current position at start
+        if (UnityEngine.InputSystem.Mouse.current != null)
+        {
+            virtualMousePos = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
+        }
+    }
+
+    public Camera GetFirstActiveCamera()
+    {
+        if (cam != null && cam.isActiveAndEnabled)
+            return cam;
+        
+        if (Camera.main != null && Camera.main.isActiveAndEnabled)
+        {
+            return Camera.main;
+        }
+
+        foreach (Camera cam in Camera.allCameras)
+        {
+            if (cam != null && cam.isActiveAndEnabled)
+            {
+                return cam;
+            }
+        }
+
+        return null;
     }
 
     void Update()
@@ -18,35 +47,30 @@ public class MouseMover : MonoBehaviour
         {
             SimulateLeftClick();
         }
+
         if (UnityEngine.InputSystem.Mouse.current == null)
             return;
 
-        // Get axis input (you can map this in Input Actions or use Keyboard directly)
-        float horizontal = player.GetAxis("Move Cursor Horizontal"); //Input.GetAxis("Horizontal"); // Arrow keys / A/D
-        float vertical = player.GetAxis("Move Cursor Vertical");     // Arrow keys / W/S
+        //if (player.GetAxis)
+
+        float horizontal = player.GetAxis("Move Cursor Horizontal");
+        float vertical = player.GetAxis("Move Cursor Vertical");
 
         if (Mathf.Abs(horizontal) < 0.001f && Mathf.Abs(vertical) < 0.001f)
+        {
             return;
+        }
 
-        Debug.Log("horizontal: " + horizontal + " vert: " + vertical);
-        // Get current mouse position
-        Vector2 currentMousePos = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
-        Debug.Log("currentMousePos: " + currentMousePos.x + ", " + currentMousePos.y);
+        Vector2 delta = new Vector2(horizontal, vertical) * speed * Mathf.Max(0.01f, Time.deltaTime);
+        virtualMousePos += delta;
 
-        // Calculate new position
-        Vector2 delta = new Vector2(horizontal, vertical) * speed * Mathf.Max(0.01f,Time.deltaTime);
-        Debug.Log("delta: " + delta.x + ", " + delta.y);
-        Vector2 newMousePos = currentMousePos + delta;
-        Debug.Log("newMousePos: " + newMousePos.x + ", " + newMousePos.y);
+        // Clamp to screen bounds
+        virtualMousePos.x = Mathf.Clamp(virtualMousePos.x, 0, Screen.width);
+        virtualMousePos.y = Mathf.Clamp(virtualMousePos.y, 0, Screen.height);
 
-        // Clamp position to screen bounds
-        newMousePos.x = Mathf.Clamp(newMousePos.x, 0, Screen.width);
-        newMousePos.y = Mathf.Clamp(newMousePos.y, 0, Screen.height);
-        Debug.Log("clamped newMousePos: " + newMousePos.x + ", " + newMousePos.y);
-
-        // Warp the cursor
-        UnityEngine.InputSystem.Mouse.current.WarpCursorPosition(newMousePos);
+        UnityEngine.InputSystem.Mouse.current.WarpCursorPosition(virtualMousePos);
     }
+
 
     //void SimulateLeftClick()
     //{
@@ -87,16 +111,19 @@ public class MouseMover : MonoBehaviour
 
     void SimulateLeftClick()
     {
-        if (UnityEngine.InputSystem.Mouse.current == null)
-            return;
+        //if (UnityEngine.InputSystem.Mouse.current == null)
+        //    return;
 
-        Vector2 mousePosition = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
+        Vector2 mousePosition = virtualMousePos;
 
         //int mxIntersections = int.MaxValue;
         //if (Camera.main != null && Camera.main.GetComponent<Physics2DRaycaster>() != null && Camera.main.GetComponent<Physics2DRaycaster>().maxRayIntersections > 0)
         //    mxIntersections = Camera.main.GetComponent<Physics2DRaycaster>().maxRayIntersections;
 
-        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+        if (cam == null || !cam.isActiveAndEnabled)
+            cam = GetFirstActiveCamera();
+
+        Ray ray = cam.ScreenPointToRay(mousePosition);
 
         //if (mxIntersections > 1)
         //{
@@ -109,7 +136,8 @@ public class MouseMover : MonoBehaviour
                 
                 hit.collider.gameObject.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
                 hit.collider.gameObject.SendMessage("OnMouseDown", SendMessageOptions.DontRequireReceiver);
-            }
+                hit.collider.gameObject.SendMessage("OnPointerDown", SendMessageOptions.DontRequireReceiver);
+        }
         //}
         //else
         //{
@@ -121,8 +149,8 @@ public class MouseMover : MonoBehaviour
         //    }
         //}
 
-            // Trigger UI click if over UI
-            if (EventSystem.current != null)
+        // Trigger UI click if over UI
+        if (EventSystem.current != null)
         {
             PointerEventData pointerData = new PointerEventData(EventSystem.current)
             {
@@ -140,15 +168,32 @@ public class MouseMover : MonoBehaviour
 
                 Debug.Log($"Simulated pointer down + click on {target.name}");
 
-                // Simulate pointer down
-                ExecuteEvents.Execute(target, pointerData, ExecuteEvents.pointerDownHandler);
+                var eventTrigger = target.GetComponent<EventTrigger>();
+                if (eventTrigger != null)
+                {
+                    foreach (var entry in eventTrigger.triggers)
+                    {
+                        if (entry.eventID == EventTriggerType.PointerDown)
+                            entry.callback.Invoke(pointerData);
+                        if (entry.eventID == EventTriggerType.PointerClick)
+                            entry.callback.Invoke(pointerData);
+                        if (entry.eventID == EventTriggerType.PointerUp)
+                            entry.callback.Invoke(pointerData);
+                    }
+                } else
+                {
 
-                // Simulate click
-                ExecuteEvents.Execute(target, pointerData, ExecuteEvents.pointerClickHandler);
+                    // Simulate pointer down
+                    ExecuteEvents.Execute(target, pointerData, ExecuteEvents.pointerDownHandler);
 
-                // (Optional) Simulate pointer up
-                ExecuteEvents.Execute(target, pointerData, ExecuteEvents.pointerUpHandler);
+                    // Simulate click
+                    ExecuteEvents.Execute(target, pointerData, ExecuteEvents.pointerClickHandler);
+
+                    // (Optional) Simulate pointer up
+                    ExecuteEvents.Execute(target, pointerData, ExecuteEvents.pointerUpHandler);
+                }
             }
         }
+
     }
 }

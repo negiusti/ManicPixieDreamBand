@@ -1,7 +1,8 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.U2D.Animation;
 
-public class JobFlyer : MonoBehaviour
+public class JobFlyer : MonoBehaviour, IPointerDownHandler
 {
     public CorkboardMiniGame corkboard;
     public JobSystem.PunkJob job;
@@ -65,9 +66,11 @@ public class JobFlyer : MonoBehaviour
         if (taken)
             return;
         corkboard.CloseMiniGame();
-        //Phone.Instance.Unlock();
-        //Phone.Instance.GoHome();
         Phone.Instance.ReceiveMsg("TXT/" + job.ToString() + " Boss/Hire", true);
-        //Phone.Instance.OpenTxtConvoWith(job.ToString() + " Boss");
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDown();
     }
 }
