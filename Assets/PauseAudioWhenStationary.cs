@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using Rewired;
 public class PauseAudioWhenStationary : MonoBehaviour
 {
     public AudioClip audioClip;
@@ -9,12 +9,14 @@ public class PauseAudioWhenStationary : MonoBehaviour
     public float stationaryThreshold = 0.5f; // Time in seconds before pausing the audio
     public float movementThreshold = 0.01f;  // Minimum movement threshold to detect movement
     public bool onlyWhenMouseDown;
+    private Player player;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = audioClip;
         lastPosition = transform.position;
+        player = ReInput.players.GetPlayer(0);
     }
 
     void Update()
@@ -25,7 +27,7 @@ public class PauseAudioWhenStationary : MonoBehaviour
             // Object is moving
             stationaryTime = 0f; // Reset the stationary timer
 
-            if (!audioSource.isPlaying && (!onlyWhenMouseDown || Input.GetMouseButton(0)))
+            if (!audioSource.isPlaying && (!onlyWhenMouseDown || Input.GetMouseButton(0) || player.GetButton("Select Object Under Cursor")))
             {
                 audioSource.UnPause(); // Unpause the audio if it was paused
                 if (!audioSource.isPlaying)

@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using Rewired;
 using UnityEngine.UI;
 
 public class TattooMiniGame : MiniGame
 {
+    private Player player;
     [Header("Drawing")]
 
     public GameObject linePrefab;
@@ -85,6 +86,7 @@ public class TattooMiniGame : MiniGame
 
     private void Start()
     {
+        player = ReInput.players.GetPlayer(0);
         blackScreen = GetComponentInChildren<BlackScreen>(true);
         timer = GetComponentInChildren<Timer>(true);
         DisableAllChildren();
@@ -153,7 +155,7 @@ public class TattooMiniGame : MiniGame
     private void Draw()
     {
         // If the arm has arrived at the screen's center, the timer has not finished, and the game is active
-        if (isActive && Input.GetMouseButtonDown(0) && armLerpScript.finishedLerp)// && timer.IsRunning())
+        if (isActive && (Input.GetMouseButtonDown(0) || player.GetButtonDown("Select Object Under Cursor")) && armLerpScript.finishedLerp)// && timer.IsRunning())
         {
             // Spawn a new line as a child of the arm and get its Line component
             GameObject newLine = Instantiate(linePrefab);
@@ -168,7 +170,7 @@ public class TattooMiniGame : MiniGame
             line.UpdateLine(mousePosition);
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) || player.GetButtonUp("Select Object Under Cursor"))
         {
             line = null;
 

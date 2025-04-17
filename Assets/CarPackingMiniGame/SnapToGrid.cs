@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Rewired;
 
 public class SnapToGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IPointerDownHandler
 {
     public string blockTag = "Obstacle"; // The tag to avoid collisions with
-
+    private Player player;
     public float snapIncrement = 0.3f;
     private Vector3 mousePositionOffset;
     private bool selected;
@@ -50,7 +51,7 @@ public class SnapToGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private void Start()
     {
         //transform.position = GetSnappedPosition();
-
+        player = ReInput.players.GetPlayer(0);
         col = GetComponent<Collider2D>();
 
         startingPos = transform.position;
@@ -133,7 +134,7 @@ public class SnapToGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
 
         // Rotate (Right Mouse Button) while NOT dragging
-        if (selected && Input.GetMouseButtonDown(1) && !Input.GetMouseButton(0))
+        if (selected && Input.GetMouseButtonDown(1) && !(Input.GetMouseButton(0) || player.GetButton("Select Object Under Cursor")))
         {
             ClearPosition();
 
