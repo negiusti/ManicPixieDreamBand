@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
 public class Eraser : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Eraser : MonoBehaviour
     private Vector2Int textureSize;
     private Color[] originalPixels; // Store the original pixels
     private int totalPixels;
+    private Player player;
 
     void Start()
     {
@@ -20,6 +22,7 @@ public class Eraser : MonoBehaviour
         textureSize = new Vector2Int(texture.width, texture.height);
         spriteRenderer.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         originalPixels = (Color[])texture.GetPixels().Clone(); // Save the original state of the pixels
+        player = ReInput.players.GetPlayer(0);
 
         // Create an array of transparent pixels
         transparentPixels = new Color[eraseRadius * eraseRadius * 4];
@@ -70,7 +73,7 @@ public class Eraser : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButton(0)) // Check if the left mouse button is pressed
+        if (Input.GetMouseButton(0) || player.GetButton("Select Object Under Cursor")) // Check if the left mouse button is pressed
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 localPoint = transform.InverseTransformPoint(mousePosition);

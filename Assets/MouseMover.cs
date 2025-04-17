@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Rewired;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MouseMover : MonoBehaviour
 {
@@ -46,7 +47,12 @@ public class MouseMover : MonoBehaviour
     {
         if (player.GetButtonDown("Select Object Under Cursor"))
         {
-            StartCoroutine(SimulateLeftClick());
+            SimulateMouseDown();
+        }
+
+        if (player.GetButtonUp("Select Object Under Cursor"))
+        {
+            SimulateMouseUp();
         }
 
         if (UnityEngine.InputSystem.Mouse.current == null)
@@ -72,97 +78,206 @@ public class MouseMover : MonoBehaviour
         UnityEngine.InputSystem.Mouse.current.WarpCursorPosition(virtualMousePos);
     }
 
-    IEnumerator SimulateLeftClick()
-    {
-        //if (UnityEngine.InputSystem.Mouse.current == null)
-        //    return;
+    //public void SimulateLeftClick()
+    //{
+    //    var pointerData = new PointerEventData(EventSystem.current)
+    //    {
+    //        pointerId = -1,
+    //        position = virtualMousePos,
+    //        button = PointerEventData.InputButton.Left,
+    //        clickCount = 1
+    //    };
 
-        Vector2 mousePosition = virtualMousePos;
+    //    // --- UI Raycast ---
+    //    List<RaycastResult> uiHits = new List<RaycastResult>();
+    //    HashSet<GameObject> uiHitObjects = new HashSet<GameObject>();
+
+    //    EventSystem.current.RaycastAll(pointerData, uiHits);
+
+    //    if (uiHits.Count > 0)
+    //    {
+    //        RaycastResult firstUIHit = uiHits[0];
+    //        GameObject target = firstUIHit.gameObject;
+    //        uiHitObjects.Add(target);
+    //        pointerData.pointerCurrentRaycast = firstUIHit;
+    //        Debug.Log($"Simulated click hit {target.name}");
+    //        // Set internal click state
+    //        pointerData.pointerEnter = target;
+    //        pointerData.pointerPressRaycast = firstUIHit;
+    //        pointerData.pointerPress = ExecuteEvents.GetEventHandler<IPointerClickHandler>(target);
+    //        pointerData.rawPointerPress = target;
+    //        pointerData.eligibleForClick = true;
+
+    //        // Handle EventTrigger UI components
+    //        var et = target.GetComponent<EventTrigger>();
+    //        if (et != null)
+    //        {
+    //            foreach (var entry in et.triggers)
+    //            {
+    //                if (entry.eventID == EventTriggerType.PointerDown)
+    //                    entry.callback.Invoke(pointerData);
+    //                if (entry.eventID == EventTriggerType.PointerClick)
+    //                    entry.callback.Invoke(pointerData);
+    //                if (entry.eventID == EventTriggerType.PointerUp)
+    //                    entry.callback.Invoke(pointerData);
+    //            }
+    //        } else
+    //        {
+    //            // Execute UI events
+    //            ExecuteEvents.ExecuteHierarchy(target, pointerData, ExecuteEvents.pointerEnterHandler);
+    //            ExecuteEvents.ExecuteHierarchy(target, pointerData, ExecuteEvents.pointerDownHandler);
+    //            ExecuteEvents.ExecuteHierarchy(target, pointerData, ExecuteEvents.pointerClickHandler);
+    //            ExecuteEvents.ExecuteHierarchy(target, pointerData, ExecuteEvents.pointerUpHandler);
+    //        }
+    //    }
+    //    if (cam == null || !cam.isActiveAndEnabled)
+    //        cam = GetFirstActiveCamera();
+
+    //    int max2DHits = 1;
+    //    var raycaster2D = cam.GetComponent<UnityEngine.EventSystems.Physics2DRaycaster>();
+    //    if (raycaster2D != null) max2DHits = raycaster2D.maxRayIntersections;
+    //    int eventMask = raycaster2D != null ? raycaster2D.eventMask : ~0;
+
+    //    Vector2 worldPoint = cam.ScreenToWorldPoint(virtualMousePos);
+    //    RaycastHit2D[] hits2D = Physics2D.RaycastAll(worldPoint, Vector2.zero);
+
+    //    if (max2DHits > 0 && hits2D.Length > max2DHits)
+    //    {
+    //        System.Array.Sort(hits2D, (a, b) => a.distance.CompareTo(b.distance));
+    //        System.Array.Resize(ref hits2D, max2DHits);
+    //    }
+
+    //    if (hits2D.Length > 0)
+    //    {
+    //        GameObject target = hits2D[0].collider.gameObject;
+    //        Debug.Log($"Simulated click hit {target.name}");
+    //        target.SendMessage("OnMouseDown", SendMessageOptions.DontRequireReceiver);
+    //        target.SendMessage("OnMouseUp", SendMessageOptions.DontRequireReceiver);
+    //        target.SendMessage("OnMouseUpAsButton", SendMessageOptions.DontRequireReceiver);
+    //    }
+
+    //    foreach (var hit in hits2D)
+    //    {
+    //        if (hit.collider == null) continue;
+
+    //        GameObject target = hit.collider.gameObject;
+
+    //        if (((1 << target.layer) & eventMask) == 0) continue; 
+    //        if (uiHitObjects.Contains(target)) continue;
+
+    //        Debug.Log($"Simulated 2D click on {target.name}");
+
+    //        target.SendMessage("OnMouseDown", SendMessageOptions.DontRequireReceiver);
+    //        target.SendMessage("OnMouseUp", SendMessageOptions.DontRequireReceiver);
+    //        target.SendMessage("OnMouseUpAsButton", SendMessageOptions.DontRequireReceiver);
+    //    }
+    //}
+
+    private void SimulateMouse(PointerEventData.InputButton button, bool isDown)
+    {
+        var pointerData = new PointerEventData(EventSystem.current)
+        {
+            pointerId = -1,
+            position = virtualMousePos,
+            button = button,
+            clickCount = 1
+        };
+
+        List<RaycastResult> uiHits = new List<RaycastResult>();
+        HashSet<GameObject> uiHitObjects = new HashSet<GameObject>();
+
+        EventSystem.current.RaycastAll(pointerData, uiHits);
+
+        if (uiHits.Count > 0)
+        {
+            RaycastResult firstUIHit = uiHits[0];
+            GameObject target = firstUIHit.gameObject;
+            uiHitObjects.Add(target);
+            pointerData.pointerCurrentRaycast = firstUIHit;
+            pointerData.pointerEnter = target;
+            pointerData.pointerPressRaycast = firstUIHit;
+            pointerData.pointerPress = ExecuteEvents.GetEventHandler<IPointerClickHandler>(target);
+            pointerData.rawPointerPress = target;
+            pointerData.eligibleForClick = true;
+
+            var et = target.GetComponent<EventTrigger>();
+            if (et != null)
+            {
+                foreach (var entry in et.triggers)
+                {
+                    if (isDown && entry.eventID == EventTriggerType.PointerDown)
+                        entry.callback.Invoke(pointerData);
+                    if (!isDown && entry.eventID == EventTriggerType.PointerUp)
+                        entry.callback.Invoke(pointerData);
+                    if (!isDown && entry.eventID == EventTriggerType.PointerClick)
+                        entry.callback.Invoke(pointerData);
+                }
+            }
+            else
+            {
+                ExecuteEvents.ExecuteHierarchy(target, pointerData, ExecuteEvents.pointerEnterHandler);
+                if (isDown)
+                    ExecuteEvents.ExecuteHierarchy(target, pointerData, ExecuteEvents.pointerDownHandler);
+                else
+                {
+                    ExecuteEvents.ExecuteHierarchy(target, pointerData, ExecuteEvents.pointerClickHandler);
+                    ExecuteEvents.ExecuteHierarchy(target, pointerData, ExecuteEvents.pointerUpHandler);
+                }
+            }
+        }
 
         if (cam == null || !cam.isActiveAndEnabled)
             cam = GetFirstActiveCamera();
 
-        Ray ray = cam.ScreenPointToRay(mousePosition);
+        int max2DHits = 1;
+        var raycaster2D = cam.GetComponent<UnityEngine.EventSystems.Physics2DRaycaster>();
+        if (raycaster2D != null) max2DHits = raycaster2D.maxRayIntersections;
+        int eventMask = raycaster2D != null ? raycaster2D.eventMask : ~0;
 
-        int mxIntersections = int.MaxValue;
-        if (cam != null && cam.GetComponent<Physics2DRaycaster>() != null && cam.GetComponent<Physics2DRaycaster>().maxRayIntersections > 0)
-            mxIntersections = cam.GetComponent<Physics2DRaycaster>().maxRayIntersections;
+        Vector2 worldPoint = cam.ScreenToWorldPoint(virtualMousePos);
+        RaycastHit2D[] hits2D = Physics2D.RaycastAll(worldPoint, Vector2.zero);
 
-        if (mxIntersections > 1)
+        if (max2DHits > 0 && hits2D.Length > max2DHits)
         {
-            RaycastHit[] hits = Physics.RaycastAll(ray);
-            foreach (RaycastHit hit in hits)
-            {
-                Debug.Log($"Simulated click hit {hit.collider.name}");
-                //hit.collider.gameObject.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
-                hit.collider.gameObject.SendMessage("OnMouseDown", SendMessageOptions.DontRequireReceiver);
-            }
-        }
-        else
-        {
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                Debug.Log($"Simulated click hit {hit.collider.name}");
-                //hit.collider.gameObject.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
-                hit.collider.gameObject.SendMessage("OnMouseDown", SendMessageOptions.DontRequireReceiver);
-            }
+            System.Array.Sort(hits2D, (a, b) => a.distance.CompareTo(b.distance));
+            System.Array.Resize(ref hits2D, max2DHits);
         }
 
-        // Trigger UI click if over UI
-        if (EventSystem.current != null)
+        foreach (var hit in hits2D)
         {
-            PointerEventData pointerData = new PointerEventData(EventSystem.current)
+            if (hit.collider == null) continue;
+
+            GameObject target = hit.collider.gameObject;
+
+            if (((1 << target.layer) & eventMask) == 0) continue;
+            if (uiHitObjects.Contains(target)) continue;
+
+            Debug.Log($"Simulated 2D {(isDown ? "mouse down" : "mouse up")} on {target.name}");
+
+            if (isDown)
+                target.SendMessage("OnMouseDown", SendMessageOptions.DontRequireReceiver);
+            else
             {
-                position = mousePosition,
-                button = PointerEventData.InputButton.Left,
-                clickCount = 1
-            };
-
-            var results = new System.Collections.Generic.List<RaycastResult>();
-            EventSystem.current.RaycastAll(pointerData, results);
-
-            foreach (var result in results)
-            {
-                GameObject target = result.gameObject;
-
-                Debug.Log($"Simulated pointer down + click on {target.name}");
-
-                var eventTrigger = target.GetComponent<EventTrigger>();
-                if (eventTrigger != null)
-                {
-                    foreach (var entry in eventTrigger.triggers)
-                    {
-                        if (entry.eventID == EventTriggerType.PointerDown)
-                            entry.callback.Invoke(pointerData);
-                        if (entry.eventID == EventTriggerType.PointerClick)
-                            entry.callback.Invoke(pointerData);
-
-                        yield return null;
-
-                        if (entry.eventID == EventTriggerType.PointerUp)
-                            entry.callback.Invoke(pointerData);
-                    }
-                }
-                else
-                {
-
-                    // Simulate pointer down
-                    ExecuteEvents.Execute(target, pointerData, ExecuteEvents.pointerDownHandler);
-
-                    // Simulate click
-                    ExecuteEvents.Execute(target, pointerData, ExecuteEvents.pointerClickHandler);
-
-                    yield return null;
-
-                    // Simulate pointer up
-                    ExecuteEvents.Execute(target, pointerData, ExecuteEvents.pointerUpHandler);
-                }
-
-                if (mxIntersections == 1)
-                {
-                    break;
-                }
+                target.SendMessage("OnMouseUp", SendMessageOptions.DontRequireReceiver);
+                target.SendMessage("OnMouseUpAsButton", SendMessageOptions.DontRequireReceiver);
             }
         }
     }
+
+    public void SimulateMouseDown()
+    {
+        SimulateMouse(PointerEventData.InputButton.Left, true);
+    }
+
+    public void SimulateMouseUp()
+    {
+        SimulateMouse(PointerEventData.InputButton.Left, false);
+    }
+
+    public void SimulateRightClick()
+    {
+        SimulateMouse(PointerEventData.InputButton.Right, false);
+        SimulateMouse(PointerEventData.InputButton.Right, true);
+    }
+
 }
