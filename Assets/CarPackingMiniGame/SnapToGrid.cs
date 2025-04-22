@@ -27,6 +27,7 @@ public class SnapToGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private TrunkGrid grid;
 
     public bool inTrunk;
+    private bool clicked;
 
     // Width is cols, height is rows. This is the array in which the shape in the inspector will be stored into
     public bool[,] ignoredCells; // height, width -> rows, cols
@@ -69,6 +70,7 @@ public class SnapToGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             anim.SetBool("InRange", true);
         }
+        clicked = false;
     }
 
     private void OnEnable()
@@ -80,7 +82,7 @@ public class SnapToGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
     }
 
-    private void OnMouseDown()
+    private void OnMouseDown2()
     {
         mousePositionOffset = gameObject.transform.position - GetMouseWorldPosition();
 
@@ -98,7 +100,7 @@ public class SnapToGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
 
     // Places the dragged object wherever the mouse is released, shifts the object if needed, and resets the position if the object is overlapping too much with another object.
-    private void OnMouseUp()
+    private void OnMouseUp2()
     {
         PlaceObject();
     }
@@ -109,12 +111,12 @@ public class SnapToGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    private void OnMouseEnter()
+    private void OnMouseEnter2()
     {
         selected = true;
     }
 
-    private void OnMouseExit()
+    private void OnMouseExit2()
     {
         selected = false;
     }
@@ -132,6 +134,24 @@ public class SnapToGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             // Update the GameObject's position to the snapped position UNLESS its in the starting position
             transform.position = GetSnappedPosition();
         }
+
+        //// Click
+        //if (selected && player.GetButtonDown("Select Object Under Cursor"))
+        //{
+        //    OnMouseDown();
+        //}
+
+        //// And Drag
+        if (clicked && player.GetButton("Select Object Under Cursor"))
+        {
+            OnMouseDrag();
+        }
+
+        //// And Release
+        //if (selected && player.GetButtonUp("Select Object Under Cursor"))
+        //{
+        //    OnMouseUp();
+        //}
 
         // Rotate (Right Mouse Button) while NOT dragging
         if (selected && Input.GetMouseButtonDown(1) && !(Input.GetMouseButton(0) || player.GetButton("Select Object Under Cursor")))
@@ -434,21 +454,24 @@ public class SnapToGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        OnMouseEnter();
+        OnMouseEnter2();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        OnMouseExit();
+        OnMouseExit2();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        OnMouseDown();
+        clicked = true;
+        OnMouseDown2();
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        OnMouseUp();
+        clicked = false;
+        OnMouseUp2();
     }
+
 }
