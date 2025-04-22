@@ -459,6 +459,7 @@ public class SnapToGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        clicked = false;
         OnMouseExit2();
     }
 
