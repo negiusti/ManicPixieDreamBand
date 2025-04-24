@@ -101,7 +101,7 @@ namespace PixelCrushers.DialogueSystem
         // Records time when last conversation ended in case a new conversation starts on the same
         // frame and needs to know.
         private static int _frameLastConversationEnded = -1;
-        public static int frameLastConversationEnded { get { return _frameLastConversationEnded; } }
+        public static int frameLastConversationEnded { get { return _frameLastConversationEnded; } set { _frameLastConversationEnded = value; } }
 
         public ConversationController()
         {
@@ -163,6 +163,7 @@ namespace PixelCrushers.DialogueSystem
             this.m_view = view;
             this.m_endConversationHandler = endConversationHandler;
             this.randomizeNextEntry = false;
+            this.reevaluateLinksAfterSubtitle = reevaluateLinksAfterSubtitle;
             DialogueManager.instance.currentConversationState = model.firstState;
             model.InformParticipants(DialogueSystemMessages.OnConversationStart);
             view.FinishedSubtitleHandler += OnFinishedSubtitle;
@@ -300,15 +301,22 @@ namespace PixelCrushers.DialogueSystem
         /// </param>
         public void OnFinishedSubtitle(object sender, EventArgs e)
         {
-            if (reevaluateLinksAfterSubtitle) m_model.UpdateResponses(m_state);
+            if (reevaluateLinksAfterSubtitle && !DialogueManager.useLinearGroupMode)
+            {
+                m_model.UpdateResponses(m_state);
+            }
             DialogueManager.instance.activeConversation = activeConversationRecord;
             var randomize = randomizeNextEntry;
             randomizeNextEntry = false;
-            if (m_state.hasNPCResponse)
+            if (DialogueManager.useLinearGroupMode) // In linear group mode, check responses once subtitle & its sequence are finished.
+            {
+                m_model.UpdateResponses(m_state);
+            }
+            if (m_state.HasValidNPCResponse())
             {
                 GotoState(m_model.GetState(randomize ? m_state.GetRandomNPCEntry(randomizeNextEntryNoDuplicate) : m_state.firstNPCResponse.destinationEntry));
             }
-            else if (m_state.hasPCResponses)
+            else if (m_state.HasValidPCResponses())
             {
                 bool isPCResponseMenuNext, isPCAutoResponseNext;
                 AnalyzePCResponses(m_state, out isPCResponseMenuNext, out isPCAutoResponseNext);

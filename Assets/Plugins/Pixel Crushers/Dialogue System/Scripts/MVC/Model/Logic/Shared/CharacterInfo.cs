@@ -231,6 +231,23 @@ namespace PixelCrushers.DialogueSystem
                 if (DialogueDebug.logInfo) Debug.Log("Dialogue System: Registering transform " + actorTransform.name + " as actor '" + actorName + "'.", actorTransform);
                 registeredActorTransforms.Add(actorName, actorTransform);
             }
+
+            if (!DialogueManager.hasInstance)
+            {
+                if (DialogueDebug.logWarnings) Debug.LogWarning($"Dialogue System: CharacterInfo.RegisterActorTransform({actorName}) can't update active conversations' caches because there no Dialogue Manager is present.");
+            }
+            else
+            {
+                // Also update active conversations' caches:
+                var actor = DialogueManager.hasInstance ? DialogueManager.masterDatabase.GetActor(actorName) : null;
+                if (actor != null)
+                {
+                    foreach (var activeConversations in DialogueManager.instance.activeConversations)
+                    {
+                        activeConversations.conversationModel.OverrideCharacterInfo(actor.id, actorTransform);
+                    }
+                }
+            }
         }
 
         /// <summary>

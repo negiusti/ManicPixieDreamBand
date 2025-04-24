@@ -37,7 +37,7 @@ namespace Febucci.UI.Effects
             for (byte i = 0; i < TextUtilities.verticesPerChar; i++)
             {
                 //shifts hue
-                temp = Color.HSVToRGB(0.5f + Mathf.PingPong(animator.time.timeSinceStart * frequency + character.index * waveSize, 0.5f), 1, 1);
+                temp = Color.HSVToRGB(Mathf.PingPong(animator.time.timeSinceStart * frequency + character.index * waveSize, 1), 1, 1);
                 temp.a = character.current.colors[i].a; //preserves original alpha
                 character.current.colors[i] = temp;
             }

@@ -1,6 +1,6 @@
 ﻿using Febucci.UI.Core;
-using Febucci.UI.Effects;
 using UnityEngine;
+using Tween = Febucci.Numbers.Tween;
 
 namespace Febucci.UI.Effects
 {

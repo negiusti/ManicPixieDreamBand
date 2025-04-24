@@ -7,12 +7,14 @@ namespace PixelCrushers
 {
 
     [CustomEditor(typeof(TimedEvent), true)]
+    [CanEditMultipleObjects]
     public class TimedEventEditor : Editor
     {
         private SerializedProperty modeProperty;
         private SerializedProperty durationProperty;
         private SerializedProperty framesProperty;
         private SerializedProperty activateOnStartProperty;
+        private SerializedProperty activateOnEnableProperty;
         private SerializedProperty onTimeReachedProperty;
 
         private void OnEnable()
@@ -21,6 +23,7 @@ namespace PixelCrushers
             durationProperty = serializedObject.FindProperty("m_duration");
             framesProperty = serializedObject.FindProperty("m_frames");
             activateOnStartProperty = serializedObject.FindProperty("m_activateOnStart");
+            activateOnEnableProperty = serializedObject.FindProperty("m_activateOnEnable");
             onTimeReachedProperty = serializedObject.FindProperty("m_onTimeReached");
         }
 
@@ -37,6 +40,7 @@ namespace PixelCrushers
                 EditorGUILayout.PropertyField(durationProperty);
             }
             EditorGUILayout.PropertyField(activateOnStartProperty);
+            EditorGUILayout.PropertyField(activateOnEnableProperty);
             EditorGUILayout.PropertyField(onTimeReachedProperty);
             serializedObject.ApplyModifiedProperties();
         }

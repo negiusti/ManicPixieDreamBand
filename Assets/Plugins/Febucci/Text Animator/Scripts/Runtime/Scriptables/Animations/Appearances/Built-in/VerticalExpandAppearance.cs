@@ -1,6 +1,6 @@
 ﻿using Febucci.UI.Core;
-using Febucci.UI.Effects;
 using UnityEngine;
+using Tween = Febucci.Numbers.Tween;
 
 namespace Febucci.UI.Effects
 {
@@ -24,7 +24,7 @@ namespace Febucci.UI.Effects
 
         void SetOrientation(bool fromBottom)
         {
-            if (fromBottom) //From bottom to top 
+            if (fromBottom) //From bottom to top
             {
 
                 //top left copies bottom left
@@ -61,7 +61,7 @@ namespace Febucci.UI.Effects
             switch (modifier.name)
             {
                 case "bot": SetOrientation((int)modifier.value == 1); break;
-                default: base.SetModifier(modifier); break; 
+                default: base.SetModifier(modifier); break;
             }
         }
     }

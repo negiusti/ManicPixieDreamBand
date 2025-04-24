@@ -22,8 +22,6 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         #region Database Tab > Localization Foldout Variables
 
-        private enum EntrySortMethod { No, DepthFirst, BreadthFirst }
-
         [Serializable]
         private class LocalizationLanguages
         {
@@ -60,7 +58,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         private string localizationKeyField = "Articy Id";
 
         [SerializeField]
-        private EntrySortMethod localizationEntrySortMethod = EntrySortMethod.No;
+        private DialogueEntrySortMethod localizationEntrySortMethod = DialogueEntrySortMethod.No;
 
         private GUIContent exportLocalizationConversationTitleLabel = new GUIContent("Export Conversation Title Instead Of ID", "Export conversation title instead of ID. Titles should be unique.");
         private GUIContent exportLocalizationKeyFieldLabel = new GUIContent("Use Key Field", "Tie each dialogue entry row to a key field (e.g., 'Articy Id' or 'Celtx ID') instead of conversation & entry IDs.");
@@ -150,7 +148,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(exportLocalizationSortModeLabel, GUILayout.Width(80));
-            localizationEntrySortMethod = (EntrySortMethod)EditorGUILayout.EnumPopup(GUIContent.none, localizationEntrySortMethod, GUILayout.Width(100));
+            localizationEntrySortMethod = (DialogueEntrySortMethod)EditorGUILayout.EnumPopup(GUIContent.none, localizationEntrySortMethod, GUILayout.Width(100));
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
@@ -267,6 +265,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             try
             {
                 database.conversations.ForEach(conversation => conversation.dialogueEntries.ForEach(entry => FindLanguagesInFields(entry.fields, false)));
+                if (template != null) FindLanguagesInFields(template.dialogueEntryFields, false);
             }
             finally
             {
@@ -395,13 +394,13 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                             switch (localizationEntrySortMethod)
                             {
                                 default:
-                                case EntrySortMethod.No:
+                                case DialogueEntrySortMethod.No:
                                     sortedEntries.AddRange(c.dialogueEntries);
                                     break;
-                                case EntrySortMethod.DepthFirst:
+                                case DialogueEntrySortMethod.DepthFirst:
                                     sortedEntries = DepthFirstSortEntries(c.dialogueEntries);
                                     break;
-                                case EntrySortMethod.BreadthFirst:
+                                case DialogueEntrySortMethod.BreadthFirst:
                                     sortedEntries = BreadthFirstSortEntries(c.dialogueEntries);
                                     break;
                             }

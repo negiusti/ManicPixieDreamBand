@@ -409,21 +409,10 @@ namespace PixelCrushers.DialogueSystem
             {
                 actorNames.Add(string.Empty);
             }
-            foreach (var kvp in m_actorPanelCache)
-            {
-                if (kvp.Key == null) continue;
-                var panelNumber = GetSubtitlePanelNumberFromPanel(kvp.Value, false);
-                if (panelNumber == SubtitlePanelNumber.Custom) continue;
-                actorGOs.Add(kvp.Key.name);
-                actorGOPanels.Add(panelNumber);
-                if (panelNumber >= SubtitlePanelNumber.Panel0)
-                {
-                    actorNames[(int)panelNumber - (int)SubtitlePanelNumber.Panel0] = kvp.Key.name;
-                }
-            }
             foreach (var kvp in m_actorIdOverridePanel)
             {
                 actorIDs.Add(kvp.Key);
+                var panel = kvp.Value;
                 var panelNumber = GetSubtitlePanelNumberFromPanel(kvp.Value, false);
                 actorIDPanels.Add(panelNumber);
                 if (panelNumber >= SubtitlePanelNumber.Panel0)
@@ -431,7 +420,39 @@ namespace PixelCrushers.DialogueSystem
                     var actor = DialogueManager.masterDatabase.GetActor(kvp.Key);
                     if (actor != null)
                     {
-                        actorNames[(int)panelNumber - (int)SubtitlePanelNumber.Panel0] = actor.Name;
+                        var index = (int)panelNumber - (int)SubtitlePanelNumber.Panel0;
+                        if (0 <= index && index < m_builtinPanels.Count)
+                        {
+                            if (actor.Name == panel.portraitActorName)
+                            {
+                                actorNames[index] = actor.Name;
+                            }
+                        }
+                    }
+                }
+            }
+            foreach (var kvp in m_actorPanelCache)
+            {
+                if (kvp.Key == null) continue;
+                var panel = kvp.Value;
+                var panelNumber = GetSubtitlePanelNumberFromPanel(kvp.Value, false);
+                if (panelNumber == SubtitlePanelNumber.Custom) continue;
+                actorGOs.Add(kvp.Key.name);
+                actorGOPanels.Add(panelNumber);
+                if (panelNumber >= SubtitlePanelNumber.Panel0)
+                {
+                    var index = (int)panelNumber - (int)SubtitlePanelNumber.Panel0;
+                    if (actorNames[index] == string.Empty)
+                    {
+                        actorNames[index] = kvp.Key.name;
+                    }
+                    else
+                    {
+                        var dialogueActor = DialogueActor.GetDialogueActorComponent(kvp.Key);
+                        if (dialogueActor != null && dialogueActor.actor == panel.portraitActorName)
+                        {
+                            actorNames[index] = kvp.Key.name;
+                        }
                     }
                 }
             }
@@ -668,6 +689,10 @@ namespace PixelCrushers.DialogueSystem
                         panel.Unfocus();
                     }
                 }
+                else
+                {
+                    panel.StopShowSubtitleCoroutines();
+                }
             }
         }
 
@@ -687,12 +712,20 @@ namespace PixelCrushers.DialogueSystem
         {
             for (int i = 0; i < m_builtinPanels.Count; i++)
             {
-                var panel = m_builtinPanels[i];
-                if (panel != null && panel.isOpen &&
+                CloseSubtitlePanelOnResponseMenu(m_builtinPanels[i]);
+            }
+            foreach (var panel in m_customPanels)
+            {
+                CloseSubtitlePanelOnResponseMenu(panel);
+            }
+        }
+
+        protected virtual void CloseSubtitlePanelOnResponseMenu(StandardUISubtitlePanel panel)
+        {
+            if (panel != null && panel.isOpen &&
                     panel.visibility == UIVisibility.UntilSupercededOrActorChangeOrMenu)
-                {
-                    panel.Close();
-                }
+            {
+                panel.Close();
             }
         }
 
@@ -825,7 +858,24 @@ namespace PixelCrushers.DialogueSystem
         public void OpenSubtitlePanelLikeStart(SubtitlePanelNumber subtitlePanelNumber)
         {
             var panel = GetPanelFromNumber(subtitlePanelNumber, null);
-            if (panel == null || panel.isOpen) return;
+            if (panel == null) return;
+
+            // If panel was already opened and is still marked open, then
+            // only the portrait image & name are hidden. Show them:
+            if (panel.isOpen)
+            {
+                if (panel.portraitImage != null && panel.portraitImage.sprite != null)
+                {
+                    panel.portraitImage.gameObject.SetActive(true);
+                }
+                if (panel.portraitName != null && !string.IsNullOrEmpty(panel.portraitName.text))
+                {
+                    panel.portraitName.gameObject.SetActive(true);
+                }
+                return;
+            }
+
+            // Otherwise open like start:
             var conversation = DialogueManager.MasterDatabase.GetConversation(DialogueManager.lastConversationStarted);
             if (conversation == null) return;
 

@@ -1,6 +1,6 @@
 ﻿using Febucci.UI.Core;
-using Febucci.UI.Effects;
 using UnityEngine;
+using Tween = Febucci.Numbers.Tween;
 
 namespace Febucci.UI.Effects
 {
@@ -13,7 +13,7 @@ namespace Febucci.UI.Effects
 
         int targetA;
         int targetB;
-        
+
         //--Temp variables--
         Vector3 middlePos;
         float pct;

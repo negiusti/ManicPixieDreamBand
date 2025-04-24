@@ -2,11 +2,11 @@ using System.Text;
 
 namespace Febucci.UI.Core.Parsing
 {
-    public class EventParser : TagParserBase
+    public class EventParser : Febucci.TextUtils.Parsing.TagParserBase
     {
         const char eventSymbol = '?';
 
-        public EventParser(char openingBracket, char closingBracket, char closingTagSymbol) 
+        public EventParser(char openingBracket, char closingBracket, char closingTagSymbol)
             : base(openingBracket, closingBracket, closingTagSymbol){ }
 
         EventMarker[] _results;
@@ -24,7 +24,7 @@ namespace Febucci.UI.Core.Parsing
             //If the first character is not the event symbol, skips
             if (textInsideBrackets[0] != eventSymbol)
                 return false;
-            
+
             //Creates a new event
             EventMarker textEvent;
 
@@ -36,7 +36,7 @@ namespace Febucci.UI.Core.Parsing
                 string parameters = textInsideBrackets.Substring(indexOfEquals + 1);
 
                 //TODO fast strip
-                textEvent = new EventMarker(eventName, realTextIndex, internalOrder, parameters.Replace(" ", "").Split(',')); 
+                textEvent = new EventMarker(eventName, realTextIndex, internalOrder, parameters.Replace(" ", "").Split(','));
             }
             else
             {

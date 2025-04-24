@@ -322,6 +322,7 @@ namespace PixelCrushers.DialogueSystem
                 var questTitle = selectionPanelContentManager.Instantiate<StandardUIQuestTitleButtonTemplate>(completedQuestHeadingTemplate);
                 var dummyText = noQuestsMessage;
                 questTitle.Assign(dummyText, dummyText, null);
+                Destroy(questTitle.GetComponent<UnityEngine.UI.Button>());
                 selectionPanelContentManager.Add(questTitle, questSelectionContentContainer);
             }
 
@@ -433,7 +434,7 @@ namespace PixelCrushers.DialogueSystem
                 }
 
                 // Abandon button:
-                if (currentQuestStateMask == QuestState.Active && QuestLog.IsQuestAbandonable(quest.Title))
+                if (isShowingActiveQuests && QuestLog.IsQuestAbandonable(quest.Title))
                 {
                     var abandonButtonInstance = detailsPanelContentManager.Instantiate<StandardUIButtonTemplate>(abandonButtonTemplate);
                     detailsPanelContentManager.Add(abandonButtonInstance, questDetailsContentContainer);

@@ -1,5 +1,6 @@
 ﻿using Febucci.UI.Core;
 using UnityEngine;
+using Tween = Febucci.Numbers.Tween;
 
 namespace Febucci.UI.Effects
 {
@@ -27,7 +28,7 @@ namespace Febucci.UI.Effects
         {
             switch (modifier.name)
             {
-                case "f": 
+                case "f":
                     SetTimeToShow(baseSpeed * modifier.value);
                     break;
                 case "d": delay = baseDelay * modifier.value; break;
@@ -40,9 +41,9 @@ namespace Febucci.UI.Effects
                 return;
 
             float charPct = (character.passedTime - delay) / timeToShow;
-            
+
             if (charPct > 1) charPct = 1;
-            
+
             //Lerps
             if (charPct < 1 && charPct >= 0)
             {
@@ -50,7 +51,7 @@ namespace Febucci.UI.Effects
                 {
                     temp = character.current.colors[i];
                     temp.a = 0;
-                    
+
                     character.current.colors[i] = Color32.LerpUnclamped(character.current.colors[i], temp, Tween.EaseInOut(charPct));
                 }
             }

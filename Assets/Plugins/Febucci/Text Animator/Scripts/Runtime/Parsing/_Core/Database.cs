@@ -11,6 +11,7 @@ namespace Febucci.UI.Core
     public class Database<T> : UnityEngine.ScriptableObject where T : UnityEngine.ScriptableObject, ITagProvider
     {
         bool built;
+        public virtual bool IsCaseSensitive => true;
 
         void OnEnable()
         {
@@ -67,6 +68,7 @@ namespace Febucci.UI.Core
                     continue;
                 
                 tagId = source.TagID;
+                if (!IsCaseSensitive) tagId = tagId.ToLowerInvariant();
 
                 if (string.IsNullOrEmpty(tagId))
                 {

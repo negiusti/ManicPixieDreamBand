@@ -9,6 +9,6 @@ namespace Febucci.UI.Effects
     [UnityEngine.CreateAssetMenu(fileName = "Animations Database", menuName = "Text Animator/Animations/Create Animations Database", order = 100)]
     public class AnimationsDatabase : Database<AnimationScriptableBase>
     {
-        
+        public override bool IsCaseSensitive => false;
     }
 }

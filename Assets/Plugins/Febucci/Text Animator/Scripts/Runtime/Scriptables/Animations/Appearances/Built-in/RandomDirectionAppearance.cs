@@ -1,5 +1,6 @@
 ﻿using Febucci.UI.Core;
 using Febucci.UI.Effects;
+using Tween = Febucci.Numbers.Tween;
 using UnityEngine;
 
 namespace Febucci.UI.Effects
@@ -22,7 +23,7 @@ namespace Febucci.UI.Effects
         protected override void OnInitialize()
         {
             base.OnInitialize();
-            
+
             directions = new Vector3[20];
 
             //Calculates a random direction for each character (which won't change)
@@ -32,16 +33,16 @@ namespace Febucci.UI.Effects
             }
         }
 
-        
+
         public override void ApplyEffectTo(ref Core.CharacterData character, TAnimCore animator)
         {
             int index = character.index % directions.Length;
-            
+
             //Moves all towards a direction
             character.current.positions.MoveChar(
-                directions[index] 
-                * amount 
-                * character.uniformIntensity 
+                directions[index]
+                * amount
+                * character.uniformIntensity
                 * Tween.EaseIn(1 - character.passedTime / duration));
         }
 
