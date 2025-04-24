@@ -62,6 +62,10 @@ public class MainCharacterState : ScriptableObject
 
     public static bool CheckFlag(string flag)
     {
+        if (flags == null)
+            flags = ES3.Load("Flags", new Dictionary<string, bool>());
+        if (flags == null)
+            flags = new Dictionary<string, bool>();
         Debug.Log("Check flag: " + flag + (flags.ContainsKey(flag) ? flags[flag] : "DNE!!"));
         return flags.GetValueOrDefault(flag, false);
     }
