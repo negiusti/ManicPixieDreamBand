@@ -1,12 +1,16 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using Rewired;
 
 public class SplashScreen : MonoBehaviour
 {
+    private Player player;
 
     // Start is called before the first frame update
     void Start()
     {
+        player = ReInput.players.GetPlayer(0);
+
         DialogueManager.StopAllConversations();
         if (Phone.Instance != null)
         {
@@ -21,7 +25,7 @@ public class SplashScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && InteractionEnabled())
+        if (player.GetButtonDown("Interact") && InteractionEnabled())
         {
             // FOR EXHIBITION DEMOS ONLY:
             //SaveSystem.DeleteSaveData();
