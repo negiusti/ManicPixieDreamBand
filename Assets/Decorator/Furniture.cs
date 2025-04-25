@@ -69,11 +69,13 @@ public class Furniture : MonoBehaviour
         return label;
     }
 
-    public void Change(int delta)
+    // returns whether there is more than one item in the category
+    public bool Change(int delta)
     {
         index = GetWrapAroundIndex(index + delta, labels.Length-1);
         label = labels[index];
         spriteResolver.SetCategoryAndLabel(category, label);
+        return labels.Length > 1;
     }
 
     private int GetWrapAroundIndex(int idx, int maxIdx)
