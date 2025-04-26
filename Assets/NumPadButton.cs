@@ -1,8 +1,7 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class NumPadButton : MonoBehaviour, IPointerDownHandler
+public class NumPadButton : MonoBehaviour//, IPointerDownHandler
 {
     public KeyCode keyCode;
     public string keyCodeString;
@@ -43,9 +42,9 @@ public class NumPadButton : MonoBehaviour, IPointerDownHandler
         textReadOut.text = tmp;
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        OnMouseDown();
-    }
+    // public void OnPointerDown(PointerEventData eventData)
+    // {
+    //     OnMouseDown();
+    // }
 
 }
