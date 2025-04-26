@@ -23,6 +23,6 @@ public class Ending : MonoBehaviour
 
     public void Done()
     {
-        SceneChanger.Instance.ChangeScene("Splash");
+        SceneChanger.Instance.ChangeScene("Credits");
     }
 }

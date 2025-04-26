@@ -183,6 +183,8 @@ public abstract class Movement : MonoBehaviour
     {
         //stateToAnimation[currState] != currAnim
         lockAnim = true;
+        character.SetLeftHoldingSprite("Camera");
+        character.SetHoldingSprite("Flash");
         GameManager.miscSoundEffects.Play("Shoot");
         currAnim = ShootAnim;
         animator.Play("BaseCharacter_Shoot");        
@@ -191,7 +193,7 @@ public abstract class Movement : MonoBehaviour
     public void Kiss()
     {
         lockAnim = true;
-        //GameManager.miscSoundEffects.Play("Smooch");
+        character.SetLeftHoldingSprite("Heart");
         currAnim = KissAnim;
         animator.Play("BaseCharacter_Kiss");
     }

@@ -87,6 +87,25 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+
+    public void Teleport(float x, float y, string layer, int idx)
+    {
+        gameObject.transform.position = new Vector3(x, y, 3);
+        MoveToRenderLayer(layer, idx);
+    }
+
+    private void OnDisable()
+    {
+        if (gameObject.layer == LayerMask.NameToLayer("LoadingScreen") || gameObject.layer == LayerMask.NameToLayer("MiniGame"))
+            return;
+        if (isMC)
+            SaveCharacter();
+    }
+
+    private void OnEnable()
+    {
         isMC = gameObject.name == "MainCharacter";
         spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
         spriteResolvers = this.GetComponentsInChildren<SpriteResolver>(includeInactive: true);
@@ -121,32 +140,13 @@ public class Character : MonoBehaviour
 
         foreach (SpriteResolver resolver in spriteResolvers)
         {
-            categoryToResolver[resolver.gameObject.name] = resolver;
+            categoryToResolver[GetSRCategory(resolver)] = resolver;
         }
         foreach (SpriteRenderer renderer in spriteRenderers)
         {
             categoryToRenderer[renderer.gameObject.name] = renderer;
         }
-        LoadCharacter();
-    }
-
-    public void Teleport(float x, float y, string layer, int idx)
-    {
-        gameObject.transform.position = new Vector3(x, y, 3);
-        MoveToRenderLayer(layer, idx);
-    }
-
-    private void OnDisable()
-    {
-        if (gameObject.layer == LayerMask.NameToLayer("LoadingScreen") || gameObject.layer == LayerMask.NameToLayer("MiniGame"))
-            return;
-        SaveCharacter();
-    }
-
-    private void OnEnable()
-    {
-        if (categoryToColorMap == null)
-            Start();
+        
         LoadCharacter();
     }
 
@@ -175,13 +175,8 @@ public class Character : MonoBehaviour
 
         if (s.Contains("Drum"))
         {
-            categoryToRenderer["R_Holding"].enabled = true;
-            categoryToResolver["R_Holding"].SetCategoryAndLabel("R_Holding", "Drumstick");
-            categoryToResolver["R_Holding"].ResolveSpriteToSpriteRenderer();
-
-            categoryToRenderer["L_Holding"].enabled = true;
-            categoryToResolver["L_Holding"].SetCategoryAndLabel("L_Holding", "Drumstick");
-            categoryToResolver["L_Holding"].ResolveSpriteToSpriteRenderer();
+            SetHoldingSprite("Drumstick");
+            SetLeftHoldingSprite("Drumstick");
         }
     }
 
@@ -190,6 +185,18 @@ public class Character : MonoBehaviour
         categoryToRenderer["R_Holding"].enabled = true;
         categoryToResolver["R_Holding"].SetCategoryAndLabel("R_Holding", s);
         categoryToResolver["R_Holding"].ResolveSpriteToSpriteRenderer();
+    }
+
+    public void SetLeftHoldingSprite(string s)
+    {
+        categoryToRenderer["L_Holding"].enabled = true;
+        categoryToResolver["L_Holding"].SetCategoryAndLabel("L_Holding", s);
+        categoryToResolver["L_Holding"].ResolveSpriteToSpriteRenderer();
+    }
+
+    public void ClearHands() {
+        SetHoldingSprite("None");
+        SetLeftHoldingSprite("None");
     }
 
     public void HideInstrumentSprite()

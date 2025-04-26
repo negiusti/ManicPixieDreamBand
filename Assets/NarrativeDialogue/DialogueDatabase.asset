@@ -145795,7 +145795,7 @@ MonoBehaviour:
       - originConversationID: 93
         originDialogueID: 0
         destinationConversationID: 93
-        destinationDialogueID: 160
+        destinationDialogueID: 161
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -145805,8 +145805,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1349.1967
-        y: 48.01922
+        x: 1347.5468
+        y: 38.12069
         width: 160
         height: 30
     - id: 78
@@ -146517,7 +146517,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: ChangeScene("Splash")
+      userScript: ChangeScene("Ending")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -147488,12 +147488,67 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1349.1967
-        y: 98.01922
+        y: 127.71479
+        width: 160
+        height: 30
+    - id: 161
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()@1
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 93
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 93
+        originDialogueID: 161
+        destinationConversationID: 93
+        destinationDialogueID: 160
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 1535.2402
+        y: 85.439354
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1207.7, y: 814.47955}
-    canvasZoom: 0.7904777
+    canvasScrollPosition: {x: 1200.2832, y: 0}
+    canvasZoom: 1.1188455
   - id: 94
     fields:
     - title: Title
