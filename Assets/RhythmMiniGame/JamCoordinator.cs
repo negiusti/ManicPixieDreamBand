@@ -72,7 +72,7 @@ public class JamCoordinator : ScriptableObject
 
         SpawnCharacters.SpawnBandMembers(band.members);
 
-        musicians = FindObjectsOfType<Character>()
+        musicians = FindObjectsOfType<Character>(false)
             .Where(x => band.members.Any(m => m.name == x.CharacterName()))
             .ToDictionary(c => c.CharacterName(), c => c.gameObject.GetComponent<Movement>());
 

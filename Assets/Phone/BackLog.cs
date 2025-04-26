@@ -121,7 +121,8 @@ public class BackLog : MonoBehaviour
         {
             Debug.Log("oncontinuing");
             DialogueManager.standardDialogueUI.OnContinueConversation();
-        } else if (subtitle.activeConversationRecord.conversationTitle.Contains("Opt"))
+        } else if (DialogueManager.lastConversationStarted.Contains("Opt"))
+        // } else if (subtitle.activeConversationRecord.conversationTitle.Contains("Opt"))
         {
             AddToBacklogWitouthDelay(subtitle);
         }

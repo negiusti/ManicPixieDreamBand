@@ -175,13 +175,8 @@ public class Character : MonoBehaviour
 
         if (s.Contains("Drum"))
         {
-            categoryToRenderer["R_Holding"].enabled = true;
-            categoryToResolver["R_Holding"].SetCategoryAndLabel("R_Holding", "Drumstick");
-            categoryToResolver["R_Holding"].ResolveSpriteToSpriteRenderer();
-
-            categoryToRenderer["L_Holding"].enabled = true;
-            categoryToResolver["L_Holding"].SetCategoryAndLabel("L_Holding", "Drumstick");
-            categoryToResolver["L_Holding"].ResolveSpriteToSpriteRenderer();
+            SetHoldingSprite("Drumstick");
+            SetLeftHoldingSprite("Drumstick");
         }
     }
 
@@ -190,6 +185,18 @@ public class Character : MonoBehaviour
         categoryToRenderer["R_Holding"].enabled = true;
         categoryToResolver["R_Holding"].SetCategoryAndLabel("R_Holding", s);
         categoryToResolver["R_Holding"].ResolveSpriteToSpriteRenderer();
+    }
+
+    public void SetLeftHoldingSprite(string s)
+    {
+        categoryToRenderer["L_Holding"].enabled = true;
+        categoryToResolver["L_Holding"].SetCategoryAndLabel("L_Holding", s);
+        categoryToResolver["L_Holding"].ResolveSpriteToSpriteRenderer();
+    }
+
+    public void ClearHands() {
+        SetHoldingSprite("None");
+        SetLeftHoldingSprite("None");
     }
 
     public void HideInstrumentSprite()
@@ -429,6 +436,7 @@ public class Character : MonoBehaviour
 
     public bool EmoteEyes(string emotion)
     {
+        Debug.Log("gameobject: " + gameObject.name);
         string label = (emotion.ToLower() == "default") ? categoryToLabelMap["Eyes"] : "E_" + emotion;
         bool hasChanged = label != categoryToResolver["Eyes"].GetLabel();
         categoryToResolver["Eyes"].SetCategoryAndLabel("Eyes", label);

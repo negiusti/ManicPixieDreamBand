@@ -86,7 +86,7 @@ public class Characters : ScriptableObject
     //}
     public static void RefreshCharactersCache()
     {
-        characters = FindObjectsOfType<Character>(true)
+        characters = FindObjectsOfType<Character>(false)
             .Where(c => c.gameObject.layer != LayerMask.NameToLayer("LoadingScreen"))
             .Where(c => c.gameObject.layer != LayerMask.NameToLayer("MiniGame"))
             .ToDictionary(c => c.name, c => c);
@@ -126,9 +126,9 @@ public class Characters : ScriptableObject
 
     public static void Emote(string character, string eyesEmotion, string mouthEmotion)
     {
-        if (characters == null || !characters.ContainsKey(character))
+        if (characters == null || !characters.ContainsKey(character) || characters[character] == null)
             RefreshCharactersCache();
-        if (!characters.ContainsKey(character))
+        if (!characters.ContainsKey(character) || characters[character] == null)
         {
             Debug.LogError("Couldn't find character: " + character);
             return;
