@@ -12,11 +12,11 @@ public class Photo : MonoBehaviour
     private Image image;
     private TextMeshProUGUI tmp;
     private static Dictionary<string, string> photoToCaption = new() {
-        { "PizzaRat", "This city STINKS" },
-        { "Boxes", "A fresh start :')" },
-        { "Band", "I think I'm in the band??" },
-        { "Party1", "Zombie party at Ricki's!!" },
-        { "Party2", "They want me to join their band??" } };
+        { "_PizzaRat", "This city STINKS" },
+        { "_Boxes", "A fresh start :')" },
+        { "_Band", "I think I'm in the band??" },
+        { "_Party1", "Zombie party at Ricki's!!" },
+        { "_Party2", "They want me to join their band??" } };
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +44,7 @@ public class Photo : MonoBehaviour
     {
         if (resolver == null)
             Start();
-        resolver.SetCategoryAndLabel("Photos", label);
+        resolver.SetCategoryAndLabel("Pics", label);
         resolver.ResolveSpriteToSpriteRenderer();
         image.sprite = spriteRenderer.sprite;
     }

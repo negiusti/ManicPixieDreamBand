@@ -355,6 +355,7 @@ public class Phone : MonoBehaviour
         messagesApp.OpenContacts();
         HideIcons();
         backgroundResolver.SetCategoryAndLabel("Background", "Contacts");
+        ClearNotificationFor("Messages");
     }
 
     public void OpenConvo()

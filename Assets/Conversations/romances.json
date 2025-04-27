@@ -249,6 +249,17 @@
                     ]
                 },
                 {
+                    "locations": ["BobaShop", "MusicShop", "SkateShop", "DowntownNeighborhood", "Job1Neighborhood", "ThriftStore", "CoffeeShop" ],
+                    "participants": [],
+                    "trigger": "Start",
+                    "conversation": "TXT/Rex/Rat",
+                    "requirements": {
+                        "locations": ["BobaShop", "SkateShop", "MusicShop", "DowntownNeighborhood", "Job1Neighborhood", "ThriftStore", "CoffeeShop" ],
+                        "trueFlags": [ "HillDate3" ],
+                        "dayNum": 7
+                    }
+                },
+                {
                     "locations": [ "ShoppingDistrict" ],
                     "trigger": "Start",
                     "conversation": "FirstGig_Rex",
@@ -384,6 +395,17 @@
                             "faceLeftOrRight": "left"
                         }
                     ]
+                },
+                {
+                    "locations": [ "Bedroom", "BobaShop", "MusicShop", "Park", "DowntownNeighborhood", "Job1Neighborhood" ],
+                    "participants": [],
+                    "trigger": "Start",
+                    "conversation": "TXT/Pixie/WIP",
+                    "requirements": {
+                        "locations": [ "Bedroom", "BobaShop", "MusicShop", "Park", "DowntownNeighborhood", "Job1Neighborhood" ],
+                        "trueFlags": [ "Model_Pixie" ],
+                        "minDay": 2
+                    }
                 },
                 {
                     "locations": [ "Bedroom" ],
@@ -586,6 +608,17 @@
                     },
                     "trigger": "Start",
                     "conversation": "JJ/PracticeDate"
+                },
+                {
+                    "locations": [ "BobaShop", "MusicShop", "Park", "Bedroom", "Job1Neighborhood", "ShoppingDistrict" ],
+                    "participants": [],
+                    "trigger": "Start",
+                    "conversation": "TXT/JazzNerds/Gear",
+                    "requirements": {
+                        "locations": [ "BobaShop", "MusicShop", "Park", "Bedroom", "Job1Neighborhood", "ShoppingDistrict" ],
+                        "trueFlags": [ "Met_Eith" ],
+                        "minDay": 5
+                    }
                 },
                 {
                     "locations": [ "SmallBar" ],
@@ -1118,7 +1151,7 @@
                     }
                 },
                 {
-                    "locations": [ "Bedroom" ],
+                    "locations": [ "ShoppingDistrict" ],
                     "trigger": "Start",
                     "conversation": "TXT/Mom/BoomerMeme",
                     "requirements": {
@@ -1136,11 +1169,11 @@
                     }
                 },
                 {
-                    "locations": [ "Bedroom" ],
+                    "locations": [ "Job1Neighborhood", "BobaShop", "MusicShop", "Park", "ThriftStore", "DowntownNeighborhood", "ShoppingDistrict" ],
                     "trigger": "Start",
                     "conversation": "TXT/BasementBuddies/0",
                     "requirements": {
-                        "locations": [ "Bedroom" ],
+                        "locations": [ "Job1Neighborhood", "BobaShop", "MusicShop", "Park", "ThriftStore", "DowntownNeighborhood", "ShoppingDistrict" ],
                         "minDay": 1
                     }
                 }
