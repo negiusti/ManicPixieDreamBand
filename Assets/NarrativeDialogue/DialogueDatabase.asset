@@ -2300,7 +2300,7 @@ MonoBehaviour:
       - originConversationID: 5
         originDialogueID: 0
         destinationConversationID: 5
-        destinationDialogueID: 26
+        destinationDialogueID: 28
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -2814,8 +2814,63 @@ MonoBehaviour:
         y: 241.13095
         width: 160
         height: 30
+    - id: 28
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 5
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 5
+        originDialogueID: 28
+        destinationConversationID: 5
+        destinationDialogueID: 26
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 660.9247
+        y: 68.73497
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 30.119755, y: 18.628778}
+    canvasScrollPosition: {x: 215.49927, y: 0}
     canvasZoom: 0.71205294
   - id: 6
     fields:
@@ -2904,7 +2959,7 @@ MonoBehaviour:
       - originConversationID: 6
         originDialogueID: 0
         destinationConversationID: 6
-        destinationDialogueID: 1
+        destinationDialogueID: 70
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -4510,7 +4565,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: UnlockPhoto("Band"); Emote("Ricki", "Happy", "Happy")
+      userScript: UnlockPhoto("_Band"); Emote("Ricki", "Happy", "Happy")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -5741,9 +5796,64 @@ MonoBehaviour:
         y: 388.011
         width: 160
         height: 30
+    - id: 70
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: Continue()@1
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 6
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 6
+        originDialogueID: 70
+        destinationConversationID: 6
+        destinationDialogueID: 1
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 551.8913
+        y: 66.51552
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 50.309063, y: 1739.1204}
-    canvasZoom: 0.37499967
+    canvasScrollPosition: {x: 391.20166, y: 1978.3889}
+    canvasZoom: 0.6536786
   - id: 7
     fields:
     - title: Title
@@ -70257,7 +70367,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 2059.9695
-        y: 622.1213
+        y: 623.61615
         width: 160
         height: 30
     - id: 102
@@ -73364,8 +73474,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1611.3342, y: 2498.3738}
-    canvasZoom: 0.8379988
+    canvasScrollPosition: {x: 1846.0964, y: 154.73282}
+    canvasZoom: 0.6689715
   - id: 54
     fields:
     - title: Title
@@ -156771,8 +156881,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 7.6036987}
-    canvasZoom: 0.65757424
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 0.5878938
   - id: 104
     fields:
     - title: Title
