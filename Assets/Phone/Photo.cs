@@ -16,7 +16,8 @@ public class Photo : MonoBehaviour
         { "_Boxes", "A fresh start :')" },
         { "_Band", "I think I'm in the band??" },
         { "_Party1", "Zombie party at Ricki's!!" },
-        { "_Party2", "They want me to join their band??" } };
+        { "_Party2", "They want me to join their band??" },
+        { "_RexHospital", "Glad they're better now :)" } };
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +37,12 @@ public class Photo : MonoBehaviour
     {
         if (resolver == null)
             Start();
+
+        if (!photoToCaption.ContainsKey(photoName)) {
+            Debug.Log("oops");
+            return;
+        }
+
         UpdateImg(photoName);
         tmp.text = photoToCaption[photoName] ?? "";
     }
