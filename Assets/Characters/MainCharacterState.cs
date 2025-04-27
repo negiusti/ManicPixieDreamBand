@@ -72,19 +72,21 @@ public class MainCharacterState : ScriptableObject
 
     public static void UnlockPhoto(string photoName)
     {
+        if (unlockedPhotos.Contains(photoName))
+            return;
         unlockedPhotos.Insert(0, photoName);
         Phone.Instance.SendNotificationTo("Photos");
 
-        if (photoName == "Band")
+        if (photoName == "_Band")
             Tutorial.joinedTheBand = true;
     }
 
     public static List<string> UnlockedPhotos()
     {
         if (unlockedPhotos == null)
-            unlockedPhotos =  ES3.Load("Photos", new List<string>() { "Party1", "Party2", "Boxes" });
+            unlockedPhotos =  ES3.Load("Photos", new List<string>() { "_Party1", "_Party2", "_Boxes" });
         if (unlockedPhotos == null)
-            unlockedPhotos = new List<string>() { "Party1", "Party2", "Boxes" };
+            unlockedPhotos = new List<string>() { "_Party1", "_Party2", "_Boxes" };
         return unlockedPhotos;
     }
 
@@ -92,10 +94,10 @@ public class MainCharacterState : ScriptableObject
     {
         characterName = ES3.Load<string>("MC_Name", defaultValue:"");
         bankBalance = ES3.Load<double>("MC_Money", 100d);
-        unlockedPhotos = ES3.Load("Photos", new List<string>() { "Party1", "Party2", "Boxes" });
+        unlockedPhotos = ES3.Load("Photos", new List<string>() { "_Party1", "_Party2", "_Boxes" });
 
         if (unlockedPhotos == null)
-            unlockedPhotos = new List<string>() { "Party1", "Party2", "Boxes" };
+            unlockedPhotos = new List<string>() { "_Party1", "_Party2", "_Boxes" };
 
         flags = ES3.Load("Flags", new Dictionary<string, bool>());
         if (flags == null)

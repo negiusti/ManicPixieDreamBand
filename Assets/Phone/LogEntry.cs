@@ -63,6 +63,7 @@ public class LogEntry : MonoBehaviour
             resolver.SetCategoryAndLabel("Pics", subtitle.formattedText.text);
             resolver.ResolveSpriteToSpriteRenderer();
             image.sprite = sr.sprite;
+            MainCharacterState.UnlockPhoto(subtitle.formattedText.text);
         }
         else
         {
