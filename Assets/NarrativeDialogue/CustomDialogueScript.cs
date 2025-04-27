@@ -250,10 +250,20 @@ public class CustomDialogueScript : MonoBehaviour
 
     void OnConversationResponseMenu(Response[] responses)
     {
-        
+        Debug.Log("IS THIS FRICKIN WORKING");
+        string convoName = DialogueManager.LastConversationStarted;
+        if (IsTxtConvo(convoName))
+        {
+            PrepTxtConvo();
+        }
+        else
+        {
+            PrepSpokenConvo();
+        }
     }
     private void PrepTxtConvo()
     {
+        Debug.Log("IS THIS FRICKIN WORKING");
         DialogueManager.displaySettings.subtitleSettings.skipPCSubtitleAfterResponseMenu = true;
         DialogueManager.displaySettings.subtitleSettings.showPCSubtitlesDuringLine = false;
         DialogueManager.displaySettings.subtitleSettings.showNPCSubtitlesDuringLine = false;
