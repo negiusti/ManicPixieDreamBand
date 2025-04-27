@@ -16,6 +16,7 @@ public class ButtonController : MonoBehaviour
     private BassMiniGame mg;
     private string inputName;
     private Player player;
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class ButtonController : MonoBehaviour
         spriteRenderer.color = unpressedColor;
         touchingStar = false;
         player = ReInput.players.GetPlayer(0);
+        animator = GetComponent<Animator>();
         switch (keyCode)
         {
             case KeyCode.Alpha1:
@@ -54,6 +56,7 @@ public class ButtonController : MonoBehaviour
             spriteRenderer.sprite = pressedSprite;
             spriteRenderer.color = pressedColor;
             guitarString.SetCategoryAndLabel("String", "Wiggly");
+            animator.Play("ButtonJiggle", -1, 0f);
             if (!touchingStar)
             {
                 starSpawner.WrongNote();
