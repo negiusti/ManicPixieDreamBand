@@ -430,8 +430,16 @@ public class Character : MonoBehaviour
 
     private void SetSkateboard(string label)
     {
-        categoryToResolver["Sk8board"].SetCategoryAndLabel("Skateboard", label);
-        categoryToResolver["Sk8board"].ResolveSpriteToSpriteRenderer();
+        if (categoryToResolver.ContainsKey("Skateboard"))
+        {
+            categoryToResolver["Skateboard"].SetCategoryAndLabel("Skateboard", label);
+            categoryToResolver["Skateboard"].ResolveSpriteToSpriteRenderer();
+        }
+        else
+        {
+            categoryToResolver["Sk8board"].SetCategoryAndLabel("Skateboard", label);
+            categoryToResolver["Sk8board"].ResolveSpriteToSpriteRenderer();
+        }
     }
 
     public bool EmoteEyes(string emotion)
