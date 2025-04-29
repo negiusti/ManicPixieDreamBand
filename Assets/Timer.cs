@@ -48,7 +48,8 @@ public class Timer : MonoBehaviour
     public void Reset()
     {
         timeRemaining = timeInSeconds;
-        timerText.text = timeRemaining.ToString();
+        if (timerText != null)
+            timerText.text = timeRemaining.ToString();
         animator.SetBool("TimerLow", false);
         animator.SetBool("TimerDone", false);
     }
@@ -77,9 +78,10 @@ public class Timer : MonoBehaviour
     {
         while (timeRemaining > 0)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSecondsRealtime(1f);
             timeRemaining -= 1;
-            timerText.text = timeRemaining.ToString(); // Update the text to show the remaining time
+            if (timerText != null)
+                timerText.text = timeRemaining.ToString(); // Update the text to show the remaining time
         }
 
         // Optionally, add any actions to be performed when the timer reaches zero

@@ -16,10 +16,19 @@ public class Calibrator : MonoBehaviour
     private bool assetsLoaded;
     private bool ready;
 
+    public Animator metronome;
+
     private void OnDisable()
     {
         ready = false;
         isPlaying = false;
+        metronome.SetBool("InRange", true);
+    }
+
+    void OnEnable()
+    {
+        metronome.SetBool("InRange", true);
+
     }
 
     private void OnLoadCompleted(AsyncOperationHandle<TextAsset> obj)
@@ -57,6 +66,7 @@ public class Calibrator : MonoBehaviour
         // Register a callback for when the load operation completes
         asyncOperation.Completed += OnLoadCompleted;
         mg = GetComponentInParent<CalibrationMiniGame>();
+        metronome.SetBool("InRange", true);
     }
 
     public void Begin()
@@ -85,6 +95,9 @@ public class Calibrator : MonoBehaviour
         audioSource.Play();
         isPlaying = true;
         currentBeatIndex = 0;
+        mg.timer.gameObject.SetActive(true);
+        mg.timer.StartTimer();
+        metronome.SetBool("InRange", false);
     }
 
     void DetectInput()
