@@ -54,7 +54,7 @@ public class SkateSwapPhoneUI : MonoBehaviour
         skateApp.ClearNotification(skateCategory);
         bool moreThanOne = skateLabels.Length > 1;
         if (!moreThanOne)
-            Phone.Instance.NotificationMessage("Go shopping at the skate shop to unlock more skates!");
+            Phone.Instance.NotificationMessage("Go shopping at the skate shop\nto unlock more skates!");
     }
 
     private void UpdateSkatesOnMainCharacter()

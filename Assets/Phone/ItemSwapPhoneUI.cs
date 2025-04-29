@@ -86,7 +86,7 @@ public class ItemSwapPhoneUI : MonoBehaviour
     {
         bool moreThanOne = furniture.Change(delta);
         if (!moreThanOne)
-            Phone.Instance.NotificationMessage("Go shopping at the thrift store to unlock more furniture!");
+            Phone.Instance.NotificationMessage("Go shopping at the thrift store\nto unlock more furniture!");
         icon.UpdateIcon(furniture.Label());
         notifIndicator.SetActive(false);
         decoratorApp.ClearNotification(furniture.Category());
@@ -104,7 +104,7 @@ public class ItemSwapPhoneUI : MonoBehaviour
         gearApp.ClearNotification(gearCategory);
         bool moreThanOne = gearLabels.Length > 1;
         if (!moreThanOne)
-            Phone.Instance.NotificationMessage("Go shopping at the music shop to unlock more gear!");
+            Phone.Instance.NotificationMessage("Go shopping at the music shop\nto unlock more gear!");
     }
 
     private int GetWrapAroundIndex(int idx, int maxIdx)
