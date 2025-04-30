@@ -45,6 +45,9 @@ public class MouseMover : MonoBehaviour
 
     void Update()
     {
+        if (!Cursor.visible && SceneChanger.Instance.GetCurrentScene() != "TattooShop")
+            Cursor.visible = true;
+
         if (player.GetButtonDown("Select Object Under Cursor"))
         {
             SimulateMouseDown();
