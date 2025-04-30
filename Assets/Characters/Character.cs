@@ -29,7 +29,7 @@ public class Character : MonoBehaviour
     private SpriteLibraryAsset libraryAsset;
     private string characterName;
     private bool isRollerskating;
-    private static HashSet<string> shirtsToFlip = new HashSet<string> { "Daisy Dukes Shirt", "Punk Juice Shirt"};
+    private static HashSet<string> shirtsToFlip = new HashSet<string> { "Daisy Dukes Shirt", "X_RickiDD_Flip", "X_RickiDD", "Punk Juice Shirt", "Daisy Dukes Shirt_Flip", "Punk Juice Shirt_Flip" };
     public SortingGroup GetCurrentLayer()
     {
         return sortingGroup;
@@ -153,18 +153,19 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //// if top is one of the band shirts, then flip it if necessary
-        //if (shirtsToFlip.Contains(categoryToResolver["Top"].GetLabel()))
-        //{
-        //    if (isFacingLeft() && categoryToRenderer["Top"].flipX)
-        //    {
-        //        // swap sprite in resolver
-        //    }
-        //    else if (isFacingRight() && !categoryToRenderer["Top"].flipX)
-        //    {
-        //        // swap sprite in resolver
-        //    }
-        //}
+        // if top is one of the band shirts, then flip it if necessary
+        string topLabel = categoryToResolver["Top"].GetLabel();
+        if (shirtsToFlip.Contains(topLabel))
+        {
+            if (isFacingLeft() && topLabel.EndsWith("_Flip"))
+            {
+                categoryToResolver["Top"].SetCategoryAndLabel("Top", topLabel.Substring(0, topLabel.Length - 5));
+            }
+            else if (isFacingRight() && !topLabel.EndsWith("_Flip"))
+            {
+                categoryToResolver["Top"].SetCategoryAndLabel("Top", topLabel + "_Flip");
+            }
+        }
     }
 
     public void SetInstrumentSprite(string s)
