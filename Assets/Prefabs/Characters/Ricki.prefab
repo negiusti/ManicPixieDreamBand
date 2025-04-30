@@ -1600,7 +1600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CategoryHash: 2.8702705e-35
-  m_labelHash: 2.064132e-31
+  m_labelHash: 6.29525e-15
   m_SpriteKey: 0
   m_SpriteHash: 465638021
 --- !u!1 &3472715413907938439
@@ -4642,6 +4642,7 @@ MonoBehaviour:
   persistentDataName: 
   portrait: {fileID: 0}
   spritePortrait: {fileID: 0}
+  audioSource: {fileID: 0}
   barkUISettings:
     barkUI: {fileID: 0}
     barkUIOffset: {x: 0, y: 2, z: 0}
@@ -4712,7 +4713,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger: 32
   condition:
-    luaConditions: []
+    luaConditions:
+    - PhoneIsLocked()
     questConditions: []
     acceptedTags: []
     acceptedGameObjects: []
@@ -5862,6 +5864,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 936648105519253348}
     m_Modifications:
+    - target: {fileID: 885805416965000383, guid: 23f2280c455774ad3bb9c8b24cdfb2fb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 885805416965000383, guid: 23f2280c455774ad3bb9c8b24cdfb2fb, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 885805416965000383, guid: 23f2280c455774ad3bb9c8b24cdfb2fb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 885805416965000383, guid: 23f2280c455774ad3bb9c8b24cdfb2fb, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 885805416965000383, guid: 23f2280c455774ad3bb9c8b24cdfb2fb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 885805416965000383, guid: 23f2280c455774ad3bb9c8b24cdfb2fb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1039532035784313733, guid: 23f2280c455774ad3bb9c8b24cdfb2fb, type: 3}
       propertyPath: m_Name
       value: Bubble Template Standard UI Subtitle Panel

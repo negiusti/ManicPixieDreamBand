@@ -5431,6 +5431,7 @@ MonoBehaviour:
   persistentDataName: 
   portrait: {fileID: 0}
   spritePortrait: {fileID: 0}
+  audioSource: {fileID: 0}
   barkUISettings:
     barkUI: {fileID: 0}
     barkUIOffset: {x: 0, y: 2, z: 0}
@@ -5501,7 +5502,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger: 32
   condition:
-    luaConditions: []
+    luaConditions:
+    - PhoneIsLocked()
     questConditions: []
     acceptedTags: []
     acceptedGameObjects: []
