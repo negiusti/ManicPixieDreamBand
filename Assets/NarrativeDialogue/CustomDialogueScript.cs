@@ -284,6 +284,7 @@ public class CustomDialogueScript : MonoBehaviour
         else
         {
             PrepSpokenConvo();
+            StartCoroutine(CoolDown());
         }
     }
 
