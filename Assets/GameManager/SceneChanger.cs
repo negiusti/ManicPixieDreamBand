@@ -145,8 +145,10 @@ public class SceneChanger : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         yield return new WaitForSeconds(1);
+        Cursor.visible = true;
         DisableLoadingScreens();
         done?.Invoke();
+        Cursor.lockState = CursorLockMode.None;
         yield return null;
     }
 

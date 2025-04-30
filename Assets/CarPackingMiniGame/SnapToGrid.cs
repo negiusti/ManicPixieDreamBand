@@ -240,6 +240,7 @@ public class SnapToGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     private void Reset()
     {
+        ClearPosition();
         resetInProgress = true;
         resetStartTime = Time.time;
         resetFromPosition = transform.position;
@@ -400,7 +401,7 @@ public class SnapToGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     private void ClearPosition()
     {
-        if (grid.CheckIfInGrid(gridPosition, width, height, ignoredCells) && inTrunk)
+        if (grid.CheckIfInGrid(gridPosition, width, height, ignoredCells))// && inTrunk)
         {
             grid.ClearPosition(gridPosition, width, height, ignoredCells);
         }

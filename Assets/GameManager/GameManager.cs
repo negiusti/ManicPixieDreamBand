@@ -103,6 +103,7 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(AudioController.UnpauseBGMusic), this, SymbolExtensions.GetMethodInfo(() => AudioController.UnpauseBGMusic()));
         Lua.RegisterFunction(nameof(AudioController.Clap), this, SymbolExtensions.GetMethodInfo(() => AudioController.Clap((double)0)));
         Lua.RegisterFunction(nameof(RefreshGameState), this, SymbolExtensions.GetMethodInfo(() => RefreshGameState()));
+        Lua.RegisterFunction(nameof(PhoneIsLocked), this, SymbolExtensions.GetMethodInfo(() => PhoneIsLocked()));
     }
 
     void UnregisterSOLuaFuncs()
@@ -163,7 +164,12 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(AudioController.UnpauseBGMusic));
         Lua.UnregisterFunction(nameof(AudioController.Clap));
         Lua.UnregisterFunction(nameof(RefreshGameState));
+        Lua.UnregisterFunction(nameof(PhoneIsLocked));
         //}
+    }
+
+    public bool PhoneIsLocked() {
+        return Phone.Instance != null && Phone.Instance.IsLocked();
     }
 
     void SubscribeToEvents()

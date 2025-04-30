@@ -5,9 +5,11 @@ public class CalibrationMiniGame : MiniGame
 {
     private bool isActive;
     private GameObject mainCamera;
+    public Timer timer;
 
     private void Start()
     {
+        timer = GetComponentInChildren<Timer>(true);
         DisableAllChildren();
     }
 
@@ -34,6 +36,7 @@ public class CalibrationMiniGame : MiniGame
         EnableAllChildren();
         GameManager.Instance.PauseBGMusic(); // Need to be able to hear the metronome
         isActive = true;
+        timer.gameObject.SetActive(false);
     }
 
     public override void CloseMiniGame()
