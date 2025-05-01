@@ -31,11 +31,11 @@ public class SplashScreen : MonoBehaviour
             //SaveSystem.DeleteSaveData();
             //GameManager.Instance.RefreshGameState();
 
-            if (completedGame())
-            {
-                SaveSystem.DeleteSaveData();
-                GameManager.Instance.RefreshGameState();
-            }
+            //if (completedGame())
+            //{
+            //    SaveSystem.DeleteSaveData();
+            //    GameManager.Instance.RefreshGameState();
+            //}
 
             GameManager.Instance.OpenSaveSlots();
             //SceneChanger.Instance.ChangeScene("Bedroom");
