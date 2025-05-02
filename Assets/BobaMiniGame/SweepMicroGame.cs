@@ -6,9 +6,11 @@ public class SweepMicroGame : MonoBehaviour
     private int sweptParticles;
     private Coroutine checkRoutine;
     public GameObject nice;
+    private BobaMiniGame mg;
 
     void Start()
     {
+        mg = GetComponentInParent<BobaMiniGame>();
     }
 
     private void OnDisable()
@@ -24,8 +26,12 @@ public class SweepMicroGame : MonoBehaviour
     {
         while (true)
         {
-            if (sweptParticles >= 9)
+            if (sweptParticles >= 9) {
+                if (!nice.activeSelf) {
+                    mg.addTip(3f);
+                }
                 nice.SetActive(true);
+            }
             yield return new WaitForSeconds(.3f);
         }
     }
@@ -35,6 +41,7 @@ public class SweepMicroGame : MonoBehaviour
         sweptParticles = 0;
         checkRoutine = StartCoroutine(EraseCompletionChecker());
         nice.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // Update is called once per frame

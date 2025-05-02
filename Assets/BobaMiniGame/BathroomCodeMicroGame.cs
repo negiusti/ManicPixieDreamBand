@@ -6,14 +6,16 @@ public class BathroomCodeMicroGame : MonoBehaviour
 {
     public TextMeshPro bathroomCode;
     public TextMeshPro userInput;
-    public Text speechBubble;
+    public TextMeshProUGUI speechBubble;
     public Timer timer;
     private bool done;
     public GameObject nice;
+    private BobaMiniGame mg;
 
     // Start is called before the first frame update
     void Start()
     {
+        mg = GetComponentInParent<BobaMiniGame>();
     }
 
     private void OnEnable()
@@ -23,6 +25,7 @@ public class BathroomCodeMicroGame : MonoBehaviour
         speechBubble.gameObject.SetActive(false);
         speechBubble.gameObject.SetActive(true);
         done = false;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // Update is called once per frame
@@ -35,6 +38,7 @@ public class BathroomCodeMicroGame : MonoBehaviour
             speechBubble.gameObject.SetActive(false);
             speechBubble.gameObject.SetActive(true);
             Debug.Log(bathroomCode.text + " vs " + userInput.text);
+            mg.addTip(5f);
         }
         else if (timer.TimeRemaining() <= 1 && !done)
         {
@@ -43,6 +47,7 @@ public class BathroomCodeMicroGame : MonoBehaviour
             speechBubble.gameObject.SetActive(false);
             speechBubble.gameObject.SetActive(true);
             Debug.Log(bathroomCode.text + " vs " + userInput.text);
+            mg.addTip(-5f);
         }
     }
 }

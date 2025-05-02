@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using TMPro;
 
 public class BobaMiniGame : MiniGame
 {
@@ -36,7 +37,7 @@ public class BobaMiniGame : MiniGame
     private bool isActive;
     private float tipsIncome;
     public GameObject speechBubble;
-    private Text speechText;
+    private TextMeshProUGUI speechText;
     private int currNumMistakes;
     public List<GameObject> customers;
     public string[] goodResponses; // no mistakes
@@ -62,7 +63,7 @@ public class BobaMiniGame : MiniGame
         milks = FindObjectsOfType<Milk>(true);
         toppings = FindObjectsOfType<Topping>(true);
         flavors = FindObjectsOfType<Flavor>(true);
-        speechText = speechBubble.GetComponentInChildren<Text>(true);
+        speechText = speechBubble.GetComponentInChildren<TextMeshProUGUI>(true);
         tipJar = GetComponentInChildren<TipJar>(true);
         StartCoroutine(speechBubble.GetComponent<LerpPosition>().Lerp(speechBubble.transform.localPosition + Vector3.right * 35f, 1f));
         audioSource = GetComponent<AudioSource>();
@@ -104,6 +105,7 @@ public class BobaMiniGame : MiniGame
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
         yield return new WaitForSeconds(0.5f);
         bathroomCodeMicroGame.gameObject.SetActive(false);
+        tipJar.HideTipText();
         yield return null;
     }
 
@@ -115,6 +117,7 @@ public class BobaMiniGame : MiniGame
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
         yield return new WaitForSeconds(0.5f);
         cleanSpillMicroGame.gameObject.SetActive(false);
+        tipJar.HideTipText();
         yield return null;
     }
 
@@ -126,6 +129,7 @@ public class BobaMiniGame : MiniGame
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
         yield return new WaitForSeconds(0.5f);
         sweepUpMicroGame.gameObject.SetActive(false);
+        tipJar.HideTipText();
         yield return null;
     }
 
@@ -233,6 +237,11 @@ public class BobaMiniGame : MiniGame
             flavors[i].ResetPosition();
             toppings[i].ResetPosition();
         }
+    }
+
+    public void addTip(float amt) {
+        tipJar.addTip(amt);
+        tipsIncome += amt;
     }
 
     public override void OpenMiniGame()
