@@ -21,7 +21,7 @@ public class BathroomCodeMicroGame : MonoBehaviour
     private void OnEnable()
     {
         nice.SetActive(false);
-        speechBubble.text = "What's the bathroom code??\nI'm burstin!!!!!";
+        speechBubble.text = "What's the\nbathroom\ncode??\nI'm burstin'!!";
         speechBubble.gameObject.SetActive(false);
         speechBubble.gameObject.SetActive(true);
         done = false;
@@ -43,7 +43,7 @@ public class BathroomCodeMicroGame : MonoBehaviour
         else if (timer.TimeRemaining() <= 1 && !done)
         {
             done = true;
-            speechBubble.text = "Oh no!! These are brand\nnew pants!! T_T";
+            speechBubble.text = "Oh no!!\nThese are\nbrand new\npants!!";
             speechBubble.gameObject.SetActive(false);
             speechBubble.gameObject.SetActive(true);
             Debug.Log(bathroomCode.text + " vs " + userInput.text);
