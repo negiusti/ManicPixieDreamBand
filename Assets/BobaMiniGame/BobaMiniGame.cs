@@ -12,7 +12,8 @@ public class BobaMiniGame : MiniGame
         Flavor,
         Ice,
         Toppings,
-        Done
+        Done,
+        Microgame
     }
     private Camera cam;
     public GameObject cupTemplate;
@@ -54,6 +55,21 @@ public class BobaMiniGame : MiniGame
     private int microgameIdx;
     public bool TESTING_ONLY;
 
+    private static float microgameCameraPos = -72.1f;
+    private static float milkCameraPosX = -32.7f;
+    private static float flavorCameraPosX = 2.3f;
+    private static float iceCameraPosX = 37.4f;
+    private static float toppingsCameraPosX = 72.6f;
+    private static float doneCameraPosX = 109.1f;
+
+    private static Dictionary<Step, float> stepToPos = new Dictionary<Step, float> {
+        {Step.Done, doneCameraPosX},
+        {Step.Flavor, flavorCameraPosX},
+        {Step.Toppings, toppingsCameraPosX},
+        {Step.Milk, milkCameraPosX},
+        {Step.Ice, iceCameraPosX},
+        {Step.Microgame, microgameCameraPos},};
+
     // Use this for initialization
     void Start()
     {
@@ -69,6 +85,7 @@ public class BobaMiniGame : MiniGame
         audioSource = GetComponent<AudioSource>();
         speechBubble.SetActive(false);
         customers.ForEach(c => c.SetActive(true));
+        cam.gameObject.transform.localPosition = new Vector3(stepToPos[Step.Milk], cam.gameObject.transform.localPosition.y, cam.gameObject.transform.localPosition.z);
         DisableAllChildren();
 
         if(TESTING_ONLY)
@@ -160,7 +177,7 @@ public class BobaMiniGame : MiniGame
             yield return new WaitForSeconds(8f);
             cameraUI.SetActive(true);
         }
-        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cam.transform.localPosition + Vector3.right * 35f, 0.5f));
+        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(new Vector3(stepToPos[step], cam.gameObject.transform.localPosition.y, cam.gameObject.transform.localPosition.z), 0.5f));
         StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 0.5f));
         yield return new WaitForSeconds(0.5f);
 
