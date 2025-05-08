@@ -17,7 +17,7 @@ public class Milk : MonoBehaviour, IPointerDownHandler
     void Start()
     {
         origialPos = transform.localPosition;
-        targetPos = new Vector3(11.5f, origialPos.y, origialPos.z);
+        targetPos = new Vector3(10f, origialPos.y, origialPos.z);
         mg = (BobaMiniGame)MiniGameManager.GetMiniGame("Boba");
         animator = GetComponent<Animator>();
         lerp = GetComponent<LerpPosition>();

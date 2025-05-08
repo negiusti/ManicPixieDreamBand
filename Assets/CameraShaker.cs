@@ -29,6 +29,7 @@ public class CameraShaker : MonoBehaviour
 
     public void CameraShake()
     {
+        originalPos = transform.localPosition;  // Get the initial position of the camera
         shakeTimeRemaining = shakeDuration;  // Start shaking for the set duration
     }
 }

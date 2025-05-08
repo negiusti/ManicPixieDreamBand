@@ -60,7 +60,7 @@ public class BobaMiniGame : MiniGame
     private static float flavorCameraPosX = 2.3f;
     private static float iceCameraPosX = 37.4f;
     private static float toppingsCameraPosX = 72.6f;
-    private static float doneCameraPosX = 109.1f;
+    private static float doneCameraPosX = 108.1f;
 
     private static Dictionary<Step, float> stepToPos = new Dictionary<Step, float> {
         {Step.Done, doneCameraPosX},
@@ -114,13 +114,26 @@ public class BobaMiniGame : MiniGame
             StartCoroutine(BathroomCode());
     }
 
+    public void Oops()
+    {
+        audioSource.clip = badJob;
+        audioSource.Play();
+        cam.GetComponent<CameraShaker>().CameraShake();
+    }
+
+    public void Yay() {
+        audioSource.clip = goodJob;
+        audioSource.Play();
+    }
+
     private IEnumerator BathroomCode()
     {
         bathroomCodeMicroGame.gameObject.SetActive(true);
-        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(bathroomCodeMicroGame.transform.localPosition + Vector3.back * 10f, 0.5f));
+        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(new Vector3(stepToPos[Step.Microgame], cam.gameObject.transform.localPosition.y, cam.gameObject.transform.localPosition.z), 0.5f));
         yield return new WaitForSeconds(7.5f);
-        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
-        yield return new WaitForSeconds(0.5f);
+        // StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(new Vector3(stepToPos[step], cam.gameObject.transform.localPosition.y, cam.gameObject.transform.localPosition.z), 0.5f));
+        // StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
+        yield return new WaitForSeconds(1.5f);
         bathroomCodeMicroGame.gameObject.SetActive(false);
         tipJar.HideTipText();
         yield return null;
@@ -129,10 +142,12 @@ public class BobaMiniGame : MiniGame
     private IEnumerator CleanSpill()
     {
         cleanSpillMicroGame.gameObject.SetActive(true);
-        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cleanSpillMicroGame.transform.localPosition + Vector3.back * 10f, 0.5f));
+        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(new Vector3(stepToPos[Step.Microgame], cam.gameObject.transform.localPosition.y, cam.gameObject.transform.localPosition.z), 0.5f));
         yield return new WaitForSeconds(7.5f);
-        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
-        yield return new WaitForSeconds(0.5f);
+        // StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(new Vector3(stepToPos[step], cam.gameObject.transform.localPosition.y, cam.gameObject.transform.localPosition.z), 0.5f));
+        
+        // StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
+        yield return new WaitForSeconds(1.5f);
         cleanSpillMicroGame.gameObject.SetActive(false);
         tipJar.HideTipText();
         yield return null;
@@ -141,10 +156,11 @@ public class BobaMiniGame : MiniGame
     private IEnumerator SweepUp()
     {
         sweepUpMicroGame.gameObject.SetActive(true);
-        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(sweepUpMicroGame.transform.localPosition + Vector3.back * 10f, 0.5f));
+        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(new Vector3(stepToPos[Step.Microgame], cam.gameObject.transform.localPosition.y, cam.gameObject.transform.localPosition.z), 0.5f));
         yield return new WaitForSeconds(7.5f);
-        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
-        yield return new WaitForSeconds(0.5f);
+        // StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(new Vector3(stepToPos[step], cam.gameObject.transform.localPosition.y, cam.gameObject.transform.localPosition.z), 0.5f));
+        // StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(prevCamPos, 0.5f));
+        yield return new WaitForSeconds(1.5f);
         sweepUpMicroGame.gameObject.SetActive(false);
         tipJar.HideTipText();
         yield return null;
@@ -174,11 +190,11 @@ public class BobaMiniGame : MiniGame
         {
             cameraUI.SetActive(false);
             InterruptWithMicroGame();
-            yield return new WaitForSeconds(8f);
+            yield return new WaitForSeconds(8.5f);
             cameraUI.SetActive(true);
         }
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(new Vector3(stepToPos[step], cam.gameObject.transform.localPosition.y, cam.gameObject.transform.localPosition.z), 0.5f));
-        StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(cup.transform.localPosition + Vector3.right * 35f, 0.5f));
+        StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(new Vector3(stepToPos[step], cup.gameObject.transform.localPosition.y, cup.gameObject.transform.localPosition.z), 0.5f));
         yield return new WaitForSeconds(0.5f);
 
         if (step == Step.Done)
@@ -188,8 +204,7 @@ public class BobaMiniGame : MiniGame
             StartCoroutine(speechBubble.GetComponent<LerpPosition>().Lerp(speechBubble.transform.localPosition + Vector3.left * 35f, 1f));
             if (currNumMistakes == 0)
             {
-                audioSource.clip = goodJob;
-                audioSource.Play();
+                Yay();
                 JobSystem.GoodJob();
                 speechText.text = goodResponses[Random.Range(0, goodResponses.Length)];
                 tipJar.addTip(10f);
@@ -202,8 +217,7 @@ public class BobaMiniGame : MiniGame
                 tipsIncome += 5f;
             } else
             {
-                audioSource.clip = badJob;
-                audioSource.Play();
+                Oops();
                 JobSystem.BadJob();
                 speechText.text = badResponses[Random.Range(0, badResponses.Length)];
                 tipJar.addTip(0f);
@@ -221,7 +235,6 @@ public class BobaMiniGame : MiniGame
             {
                 StartCoroutine(speechBubble.GetComponent<LerpPosition>().Lerp(speechBubble.transform.localPosition + Vector3.right * 35f, 1f));
                 speechBubble.SetActive(false);
-                StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(cam.transform.localPosition + Vector3.left * 35f * 4f, 0.5f));
                 NewOrder();
             }
         }
@@ -235,6 +248,7 @@ public class BobaMiniGame : MiniGame
 
     private void NewOrder()
     {
+        StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(new Vector3(stepToPos[Step.Milk], cam.gameObject.transform.localPosition.y, cam.gameObject.transform.localPosition.z), 0.5f));
         if (customers.Exists(c => c.activeSelf))
             customers.Find(c => c.activeSelf).SetActive(false);
         currNumMistakes = 0;
@@ -270,6 +284,7 @@ public class BobaMiniGame : MiniGame
         }
 
         EnableAllChildren();
+        cam.gameObject.transform.localPosition = new Vector3(stepToPos[Step.Milk], cam.gameObject.transform.localPosition.y, cam.gameObject.transform.localPosition.z);
         cleanSpillMicroGame.gameObject.SetActive(false);
         sweepUpMicroGame.gameObject.SetActive(false);
         bathroomCodeMicroGame.gameObject.SetActive(false);

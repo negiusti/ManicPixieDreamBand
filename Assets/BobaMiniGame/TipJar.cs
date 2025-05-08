@@ -33,7 +33,12 @@ public class TipJar : MonoBehaviour
     public void addTip(float amount)
     {
         txt.enabled = true;
-        txt.text = "+$" + amount + " tip";
+        if (amount < 0) {
+            txt.text = "-$" + -1f*amount + " tip";
+        } else {
+            txt.text = "+$" + amount + " tip";
+        }
+        
         if (amount < 1f)
         {
             txt.color = Color.red;
