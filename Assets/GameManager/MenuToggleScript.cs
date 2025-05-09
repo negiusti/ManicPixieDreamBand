@@ -2,6 +2,7 @@ using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using Rewired;
 using UnityEngine.UI;
+using Rewired.UI.ControlMapper;
 
 public class MenuToggleScript : MonoBehaviour
 {
@@ -45,6 +46,8 @@ public class MenuToggleScript : MonoBehaviour
     public void DisableMenu()
     {
         if (!menuToToggle.activeSelf)
+            return;
+        if (ControlMapper.current != null && ControlMapper.current.isOpen)
             return;
         if (Phone.Instance != null && SceneChanger.Instance.GetCurrentScene() != "Character_Editor")
             Phone.Instance.gameObject.SetActive(true);
