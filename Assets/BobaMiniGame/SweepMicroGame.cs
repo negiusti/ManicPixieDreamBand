@@ -36,11 +36,13 @@ public class SweepMicroGame : MonoBehaviour
                 mg.Yay();
                 mg.addTip(3f);
                 nice.SetActive(true);
+                mg.MicrogameDone();
             } else if (timer.TimeRemaining() <= 1 && !done) {
                 done = true;
                 ugh.SetActive(true);
                 mg.addTip(-1f);
                 mg.Oops();
+                mg.MicrogameDone();
             }
             yield return new WaitForSeconds(.3f);
         }

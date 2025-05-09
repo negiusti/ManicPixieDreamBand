@@ -50,11 +50,13 @@ public class CleanSpillMicroGame : MonoBehaviour
                 mg.addTip(3f);
                 mg.Yay();
                 nice.SetActive(true);
+                mg.MicrogameDone();
             } else if (timer.TimeRemaining() <= 1 && !done) {
                 done = true;
                 mg.Oops();
                 mg.addTip(-1f);
                 ugh.SetActive(true);
+                mg.MicrogameDone();
             }
             yield return new WaitForSeconds(.3f);
         }

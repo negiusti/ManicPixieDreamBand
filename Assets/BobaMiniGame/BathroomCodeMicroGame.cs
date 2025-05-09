@@ -42,6 +42,7 @@ public class BathroomCodeMicroGame : MonoBehaviour
             Debug.Log(bathroomCode.text + " vs " + userInput.text);
             mg.addTip(5f);
             mg.Yay();
+            mg.MicrogameDone();
         }
         else if (timer.TimeRemaining() <= 1 && !done)
         {
@@ -52,6 +53,7 @@ public class BathroomCodeMicroGame : MonoBehaviour
             Debug.Log(bathroomCode.text + " vs " + userInput.text);
             mg.addTip(-1f);
             mg.Oops();
+            mg.MicrogameDone();
         }
     }
 }

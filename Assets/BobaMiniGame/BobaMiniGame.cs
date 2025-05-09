@@ -54,6 +54,7 @@ public class BobaMiniGame : MiniGame
     private Vector3 prevCamPos;
     private int microgameIdx;
     public bool TESTING_ONLY;
+    private bool microgameDone;
 
     private static float microgameCameraPos = -72.1f;
     private static float milkCameraPosX = -32.7f;
@@ -100,6 +101,7 @@ public class BobaMiniGame : MiniGame
 
     private void InterruptWithMicroGame()
     {
+        microgameDone = false;
         // Save the current camera position
         prevCamPos = cam.transform.localPosition;
         // Pick a micro game
@@ -124,6 +126,12 @@ public class BobaMiniGame : MiniGame
     public void Yay() {
         audioSource.clip = goodJob;
         audioSource.Play();
+    }
+
+    private void DisableMicroGames() {
+        bathroomCodeMicroGame.gameObject.SetActive(false);
+        cleanSpillMicroGame.gameObject.SetActive(false);
+        sweepUpMicroGame.gameObject.SetActive(false);
     }
 
     private IEnumerator BathroomCode()
@@ -180,6 +188,10 @@ public class BobaMiniGame : MiniGame
         StartCoroutine(NextPhase());
     }
 
+    public void MicrogameDone() {
+        microgameDone = true;
+    }
+
     private IEnumerator NextPhase()
     {
         yield return new WaitForSeconds(1.5f);
@@ -190,12 +202,17 @@ public class BobaMiniGame : MiniGame
         {
             cameraUI.SetActive(false);
             InterruptWithMicroGame();
-            yield return new WaitForSeconds(8.5f);
+            while (!microgameDone) {
+                yield return new WaitForSeconds(0.2f);
+            }
+            yield return new WaitForSeconds(1.5f);
             cameraUI.SetActive(true);
         }
         StartCoroutine(cam.gameObject.GetComponent<LerpPosition>().Lerp(new Vector3(stepToPos[step], cam.gameObject.transform.localPosition.y, cam.gameObject.transform.localPosition.z), 0.5f));
         StartCoroutine(cup.GetComponent<LerpPosition>().Lerp(new Vector3(stepToPos[step], cup.gameObject.transform.localPosition.y, cup.gameObject.transform.localPosition.z), 0.5f));
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.4f);
+        DisableMicroGames();
+        yield return new WaitForSeconds(0.1f);
 
         if (step == Step.Done)
         {
