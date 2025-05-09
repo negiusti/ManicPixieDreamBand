@@ -1394,11 +1394,48 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: e03ff8d6da34e46ce92556342c734c71, type: 3}
+--- !u!1 &445696321 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5175497326745356718, guid: 9d719942f512d4962a34c6a1de9b7ce3, type: 3}
+  m_PrefabInstance: {fileID: 1878159710}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &445696324 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1190250975327412685, guid: 9d719942f512d4962a34c6a1de9b7ce3, type: 3}
   m_PrefabInstance: {fileID: 1878159710}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &445696326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 445696321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ace8ced0e81c847968cdca0aeda757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typewriterStartsAutomatically: 0
+  animationLoop: 0
+  timeScale: 0
+  _text: 
+  useDynamicScaling: 1
+  referenceFontSize: 10
+  isResettingTimeOnNewText: 1
+  useDefaultDatabases: 1
+  databaseBehaviors: {fileID: 11400000, guid: 25835a6cb8d6f46d68a0fb0dd3416450, type: 2}
+  databaseAppearances: {fileID: 11400000, guid: 157a3a3fe9f104c799fabe7a05261320, type: 2}
+  useDefaultStyleSheet: 1
+  styleSheet: {fileID: 0}
+  databaseActions: {fileID: 11400000, guid: b389913db14454a05a132ddcf2910939, type: 2}
+  defaultAppearancesTags:
+  - size
+  defaultDisappearancesTags:
+  - fade
+  defaultBehaviorsTags:
+  - wave a=.01 f=1.5 w=.8
+  defaultTagsMode: 0
 --- !u!4 &449292946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4307144325423755622, guid: 9d719942f512d4962a34c6a1de9b7ce3, type: 3}
@@ -7016,7 +7053,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: ebec9b0ac28f746be9757d24b65e5f9b, type: 2}
     - target: {fileID: 2119760484179702041, guid: 9d719942f512d4962a34c6a1de9b7ce3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.03
+      value: 0.21
       objectReference: {fileID: 0}
     - target: {fileID: 2146089128546275365, guid: 9d719942f512d4962a34c6a1de9b7ce3, type: 3}
       propertyPath: m_LocalScale.x
@@ -7188,15 +7225,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3504020689942595974, guid: 9d719942f512d4962a34c6a1de9b7ce3, type: 3}
       propertyPath: goodResponses.Array.data[0]
-      value: <rainb>Yummy!
+      value: <wave a=.05 f=1.5 w=.8><rainb>Yummy!
       objectReference: {fileID: 0}
     - target: {fileID: 3504020689942595974, guid: 9d719942f512d4962a34c6a1de9b7ce3, type: 3}
       propertyPath: goodResponses.Array.data[1]
-      value: <rainb>Thank ya very much!
+      value: <wave a=.05 f=1.5 w=.8><rainb>Thank ya very much!
       objectReference: {fileID: 0}
     - target: {fileID: 3504020689942595974, guid: 9d719942f512d4962a34c6a1de9b7ce3, type: 3}
       propertyPath: goodResponses.Array.data[2]
-      value: <rainb>You're a natural!
+      value: <wave a=.05 f=1.5 w=.8><rainb>You're a natural!
       objectReference: {fileID: 0}
     - target: {fileID: 3559476405265750717, guid: 9d719942f512d4962a34c6a1de9b7ce3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7916,6 +7953,9 @@ PrefabInstance:
       addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 5175497326745356718, guid: 9d719942f512d4962a34c6a1de9b7ce3, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 445696326}
+    - targetCorrespondingSourceObject: {fileID: 5175497326745356718, guid: 9d719942f512d4962a34c6a1de9b7ce3, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 4041743252443007343, guid: 9d719942f512d4962a34c6a1de9b7ce3, type: 3}
       insertIndex: -1
@@ -8550,7 +8590,7 @@ PrefabInstance:
       objectReference: {fileID: 5849687924197012420, guid: 8278d1a0eefdc468eb237d8625d263c4, type: 3}
     - target: {fileID: 5548922897983167878, guid: e394a066ea554416f874f1453b9f77e5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000030318139
+      value: 0.0001900882
       objectReference: {fileID: 0}
     - target: {fileID: 5559629229745854747, guid: e394a066ea554416f874f1453b9f77e5, type: 3}
       propertyPath: m_AnchoredPosition.y
