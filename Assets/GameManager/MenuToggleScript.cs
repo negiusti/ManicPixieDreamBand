@@ -1,12 +1,16 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using Rewired;
+using UnityEngine.UI;
 
 public class MenuToggleScript : MonoBehaviour
 {
     public GameObject menuToToggle;
     private Camera prevCamera;
     private Player player;
+    public Button SaveAndQuitButton;
+    public Button SaveFilesButton;
+    public GameObject WarningTxt;
     //private SpriteRenderer menuBackground;
 
     private void Start()
@@ -62,6 +66,10 @@ public class MenuToggleScript : MonoBehaviour
             return;
         if (Phone.Instance != null)
             Phone.Instance.gameObject.SetActive(false);
+        
+        SaveAndQuitButton.interactable = !DialogueManager.isConversationActive;
+        SaveFilesButton.interactable = !DialogueManager.isConversationActive;
+        WarningTxt.SetActive(DialogueManager.isConversationActive);
         DialogueManager.Pause();
         prevCamera = Camera.main;
         prevCamera.enabled = false;
