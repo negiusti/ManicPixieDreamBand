@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Calendar", menuName = "Custom/Calendar")]
@@ -233,9 +234,9 @@ public class Calendar : ScriptableObject
         ScheduleNext7Days();
         InventoryManager.SpoilPerishables();
         Phone.Instance.SendNotificationTo("Calendar");
-        if (day == 2)
-            MainCharacterState.UnlockPhoto("PizzaRat");
         MainCharacterState.SetFlagPrefix("Drank", false);
+        if (day == 3)
+            SceneChanger.Instance.ChangeScene("DemoPortrait");
     }
 
     public static int Date()
