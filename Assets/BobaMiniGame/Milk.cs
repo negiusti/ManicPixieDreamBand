@@ -35,6 +35,7 @@ public class Milk : MonoBehaviour, IPointerDownHandler
         if (mg == null)
             Start();
         transform.localPosition = origialPos;
+        animator.Play("Idle");
     }
 
     private void OnMouseDown()

@@ -41,6 +41,7 @@ public class Flavor : MonoBehaviour, IPointerDownHandler
         resolver.SetCategoryAndLabel(resolver.GetCategory(), "Entry");
         resolver.ResolveSpriteToSpriteRenderer();
         sr.sortingOrder = 50;
+        animator.Play("FlavorIdle", -1, 0f);
     }
 
     private void OnMouseDown()
