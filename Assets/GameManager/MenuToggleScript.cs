@@ -67,8 +67,10 @@ public class MenuToggleScript : MonoBehaviour
         if (Phone.Instance != null)
             Phone.Instance.gameObject.SetActive(false);
         
-        SaveAndQuitButton.interactable = !DialogueManager.isConversationActive;
-        SaveFilesButton.interactable = !DialogueManager.isConversationActive;
+        if (SaveAndQuitButton != null)
+            SaveAndQuitButton.interactable = !DialogueManager.isConversationActive;
+        if (SaveFilesButton != null)
+            SaveFilesButton.interactable = !DialogueManager.isConversationActive;
         WarningTxt.SetActive(DialogueManager.isConversationActive);
         DialogueManager.Pause();
         prevCamera = Camera.main;
