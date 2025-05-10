@@ -37,7 +37,7 @@ public class BiggerWhenHovered : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void OnMouseExit()
     {
-        if (DialogueManager.IsConversationActive)
+        if (DialogueManager.IsConversationActive && !MiniGameManager.AnyActiveMiniGames())
             return;
         if (rect == null)
             this.gameObject.transform.localScale = originalScale;
@@ -49,7 +49,7 @@ public class BiggerWhenHovered : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void OnMouseDown()
     {
-        if (DialogueManager.IsConversationActive)
+        if (DialogueManager.IsConversationActive && !MiniGameManager.AnyActiveMiniGames())
             return;
         if (rect == null)
             this.gameObject.transform.localScale = originalScale;
@@ -59,7 +59,7 @@ public class BiggerWhenHovered : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void OnMouseDrag()
     {
-        if (DialogueManager.IsConversationActive)
+        if (DialogueManager.IsConversationActive && !MiniGameManager.AnyActiveMiniGames())
             return;
         if (rect == null)
             this.gameObject.transform.localScale = originalScale;
@@ -69,7 +69,7 @@ public class BiggerWhenHovered : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void OnMouseUp()
     {
-        if (DialogueManager.IsConversationActive)
+        if (DialogueManager.IsConversationActive && !MiniGameManager.AnyActiveMiniGames())
             return;
         if (hovered)
         {
@@ -83,7 +83,7 @@ public class BiggerWhenHovered : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void OnMouseEnter()
     {
-        if (DialogueManager.IsConversationActive)
+        if (DialogueManager.IsConversationActive && !MiniGameManager.AnyActiveMiniGames())
             return;
         Vector3 newScale = originalScale * scaleFactor;
         if (rect == null)
