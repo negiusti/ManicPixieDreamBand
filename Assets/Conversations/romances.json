@@ -533,6 +533,16 @@
                     "participants": []
                 },
                 {
+                    "locations": [ "ThriftStore", "Job1Neighborhood", "Park", "CoffeeShop", "MusicShop", "SmallBar" ],
+                    "trigger": "Start",
+                    "conversation": "TXT/JazzNerds/Gear",
+                    "requirements": {
+                        "trueFlags": [ "Met_Eith" ],
+                        "locations": [ "ThriftStore", "Job1Neighborhood", "Park", "CoffeeShop", "MusicShop", "SmallBar" ]
+                    },
+                    "participants": []
+                },
+                {
                     "locations": [ "BandPracticeRoom" ],
                     "participants": [
                         {
@@ -1156,7 +1166,16 @@
                     "conversation": "TXT/Mom/BoomerMeme",
                     "requirements": {
                         "locations": [ "ShoppingDistrict" ],
-                        "minDay": 5
+                        "minDay": 1
+                    }
+                },
+                {
+                    "locations": [ "DowntownNeighborhood" ],
+                    "trigger": "Start",
+                    "conversation": "TXT/Mom/BoomerMeme2",
+                    "requirements": {
+                        "locations": [ "DowntownNeighborhood" ],
+                        "minDay": 2
                     }
                 },
                 {
