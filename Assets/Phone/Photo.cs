@@ -17,7 +17,22 @@ public class Photo : MonoBehaviour
         { "_Band", "I think I'm in the band??" },
         { "_Party1", "Zombie party at Ricki's!!" },
         { "_Party2", "They want me to join their band??" },
-        { "_RexHospital", "Glad they're better now :)" } };
+        { "_RexHospital", "Glad they're better now :)" },
+        { "_Couch", "i need a tetanus shot..." },
+        { "_Maracas", "eith is so creative!" },
+        { "_MarchingBand", "still the same dorks today" },
+        { "_MaxShirts", "spot the difference" },
+        { "_Pickles", "ew..." },
+        { "_Flyer", "look mom i'm famous!" },
+        { "_Ollie", "bestest buds" },
+        { "_Pedals", "bzzzzzz" },
+        { "_Pixie", "wow!!" },
+        { "_Ube", "omg *drool*" },
+        { "_Hugs", "I really needed this hug!" },
+        { "_Beautiful", "<3 mom" },
+        { "_Daisy", "they're so cute together!" },
+        { "_Melissa", "drawn by @furry_dragon_art999" }
+    };
     // Start is called before the first frame update
     void Start()
     {
