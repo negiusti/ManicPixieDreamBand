@@ -1,0 +1,15 @@
+"AppBuild"
+{
+	"AppID" "3738520" // Your AppID
+	"Desc" "Punk Juice DEMO" // internal description for this build
+	//"Preview" "0" // make this a preview build only, nothing is uploaded
+	"SetLive" "alpha" // set this build live on beta branch AlphaTest
+	"ContentRoot" "..\content\" // content root folder relative to this script file
+	"BuildOutput" ".\build_output\" // put build cache and log files on different drive for better performance
+	"Depots"
+	{
+		// file mapping instructions for each depot are in separate script files
+		"3738521" "depot_build_3738521.vdf"
+		"3738522" "depot_build_3738522.vdf"
+	}
+}
