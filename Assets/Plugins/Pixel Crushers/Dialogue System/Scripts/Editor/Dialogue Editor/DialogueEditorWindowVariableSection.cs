@@ -28,7 +28,6 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         {
             if (database == null) return;
             var originalCount = database.variables.Count;
-            database.variables.ForEach(x => Debug.Log($"[{x.Name}]"));
             database.variables.RemoveAll(x => string.IsNullOrEmpty(x.Name));
             var numRemoved = originalCount - database.variables.Count;
             if (numRemoved > 0)

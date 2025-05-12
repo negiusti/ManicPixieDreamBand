@@ -18,6 +18,8 @@ namespace PixelCrushers.DialogueSystem
 
     public delegate void TransformDelegate(Transform t);
 
+    public delegate void SubtitleDelegate(Subtitle subtitle);
+
     public delegate void AssetLoadedDelegate(UnityEngine.Object asset);
 
     public delegate string GetLocalizedTextDelegate(string s);
@@ -155,6 +157,8 @@ namespace PixelCrushers.DialogueSystem
         /// Raised when a conversation ends. Parameter is primary actor.
         /// </summary>
         public event TransformDelegate conversationEnded = delegate { };
+
+        public event SubtitleDelegate conversationLinePrepared = delegate { };
 
         /// <summary>
         /// Raised when StopAllConversations() is called.
@@ -1607,17 +1611,22 @@ namespace PixelCrushers.DialogueSystem
 
         private void OnConversationStart(Transform actor)
         {
-            conversationStarted(actor);
+            conversationStarted?.Invoke(actor);
         }
 
         private void OnConversationEnd(Transform actor)
         {
-            conversationEnded(actor);
+            conversationEnded?.Invoke(actor);
             int safeguard = 0;
             while (alertsQueuedForConversationEnd.Count > 0 && safeguard++ < 100)
             {
                 ShowAlert(alertsQueuedForConversationEnd.Dequeue());
             }
+        }
+
+        private void OnConversationLine(Subtitle subtitle)
+        {
+            conversationLinePrepared?.Invoke(subtitle);
         }
 
         /// <summary>

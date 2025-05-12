@@ -51,6 +51,7 @@ public class BandNameMiniGame : MiniGame
         rickiSpeechBubble.SetActive(false);
         maxSpeechBubble.SetActive(false);
         StartCoroutine(rickiBark("Go ahead. Pick one."));
+        MainCharacterState.SetFlag("BandName", true);
     }
 
     public override void CloseMiniGame()
