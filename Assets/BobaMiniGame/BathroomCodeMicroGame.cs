@@ -47,7 +47,7 @@ public class BathroomCodeMicroGame : MonoBehaviour
         else if (timer.TimeRemaining() <= 1 && !done)
         {
             done = true;
-            speechBubble.text = "Oh no!!\nThese are\nbrand new\npants!!";
+            speechBubble.text = "Oh no!!";
             speechBubble.gameObject.SetActive(false);
             speechBubble.gameObject.SetActive(true);
             Debug.Log(bathroomCode.text + " vs " + userInput.text);
