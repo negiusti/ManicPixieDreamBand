@@ -31,6 +31,7 @@ public class Topping : MonoBehaviour, IPointerDownHandler
         if (mg == null)
             Start();
         transform.localPosition = origialPos;
+        animator.Play("ToppingsIdle");
     }
 
     private void OnMouseDown()

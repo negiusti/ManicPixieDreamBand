@@ -284,7 +284,6 @@ public class CustomDialogueScript : MonoBehaviour
         else
         {
             PrepSpokenConvo();
-            StartCoroutine(CoolDown());
         }
     }
 
@@ -304,6 +303,7 @@ public class CustomDialogueScript : MonoBehaviour
                 Camera.main.gameObject.AddComponent<CameraLerp>();
             StartCoroutine(Camera.main.gameObject.GetComponent<CameraLerp>().PanCameraTo(orthoCamSizeOutsideConvo, 0.5f));
         }
+        StartCoroutine(CoolDown());
     }
 
     //void OnConversationEnd(Transform actor)

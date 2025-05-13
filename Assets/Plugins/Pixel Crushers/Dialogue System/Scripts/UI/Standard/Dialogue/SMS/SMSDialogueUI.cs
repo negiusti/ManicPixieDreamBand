@@ -241,7 +241,7 @@ namespace PixelCrushers.DialogueSystem
         {
             var panelNumber = (dialogueActor != null) ? dialogueActor.GetSubtitlePanelNumber() : SubtitlePanelNumber.Default;
             return (panelNumber == SubtitlePanelNumber.Default)
-                ? (subtitle.speakerInfo.IsNPC ? conversationUIElements.defaultNPCSubtitlePanel : conversationUIElements.defaultPCSubtitlePanel)
+                ? conversationUIElements.standardSubtitleControls.GetPanel(subtitle, out var dialogueActor2)
                 : conversationUIElements.subtitlePanels[PanelNumberUtility.GetSubtitlePanelIndex(panelNumber)];
         }
 

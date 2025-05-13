@@ -18,7 +18,7 @@ public class Flavor : MonoBehaviour, IPointerDownHandler
     void Start()
     {
         origialPos = transform.localPosition;
-        targetPos = new Vector3(2.92f, 2.38f, origialPos.z);
+        targetPos = new Vector3(2.92f, 1.25f, origialPos.z);
         mg = (BobaMiniGame)MiniGameManager.GetMiniGame("Boba");
         animator = GetComponent<Animator>();
         lerp = GetComponent<LerpPosition>();
@@ -41,6 +41,7 @@ public class Flavor : MonoBehaviour, IPointerDownHandler
         resolver.SetCategoryAndLabel(resolver.GetCategory(), "Entry");
         resolver.ResolveSpriteToSpriteRenderer();
         sr.sortingOrder = 50;
+        animator.Play("FlavorIdle", -1, 0f);
     }
 
     private void OnMouseDown()
@@ -50,7 +51,7 @@ public class Flavor : MonoBehaviour, IPointerDownHandler
         audioSource.Play();
         mg.flavorDone = true;
         GetComponent<Renderer>().sortingOrder = 51;
-        StartCoroutine(lerp.Lerp(targetPos, 0.5f));
+        StartCoroutine(lerp.Lerp(targetPos, 0.2f));
         animator.Play("FlavorPour", -1, 0f);
         StartCoroutine(mg.cup.liquid.GetComponent<LerpPosition>().LerpColor(new Vector3(color.r, color.g, color.b), animator.runtimeAnimatorController.animationClips.First(x => x.name == "FlavorPour").length));
         mg.Next(gameObject.name);

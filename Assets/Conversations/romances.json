@@ -307,7 +307,8 @@
                     "conversation": "Pixie/MeetCute",
                     "requirements": {
                         "locations": [ "CoffeeShop" ],
-                        "minDay": 2,
+                        "falseFlags": [ "Met_Pixie" ],
+                        "trueFlags": [ "BandName" ],
                         "maxDay": 3
                     },
                     "participants": [
@@ -315,6 +316,56 @@
                             "name": "Pixie",
                             "position": {
                                 "x": -11.0,
+                                "y": -2,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": true,
+                            "faceLeftOrRight": "right"
+                        }
+                    ]
+                },
+                {
+                    "locations": [ "ThriftStore" ],
+                    "trigger": "Pixie",
+                    "conversation": "Pixie/MeetCute",
+                    "requirements": {
+                        "locations": [ "ThriftStore" ],
+                        "falseFlags": [ "Met_Pixie" ],
+                        "trueFlags": [ "BandName" ],
+                        "maxDay": 3
+                    },
+                    "participants": [
+                        {
+                            "name": "Pixie",
+                            "position": {
+                                "x": 7.42,
+                                "y": -1.2,
+                                "z": 3.0
+                            },
+                            "layer": "fg_char",
+                            "existAtStart": true,
+                            "isTrigger": true,
+                            "faceLeftOrRight": "left"
+                        }
+                    ]
+                },
+                {
+                    "locations": [ "BobaShop" ],
+                    "trigger": "Pixie",
+                    "conversation": "Pixie/MeetCute",
+                    "requirements": {
+                        "locations": [ "BobaShop" ],
+                        "falseFlags": [ "Met_Pixie" ],
+                        "trueFlags": [ "BandName" ],
+                        "maxDay": 3
+                    },
+                    "participants": [
+                        {
+                            "name": "Pixie",
+                            "position": {
+                                "x": -20.57,
                                 "y": -2,
                                 "z": 3.0
                             },
@@ -529,6 +580,16 @@
                     "requirements": {
                         "trueFlags": [ "Met_JJ" ],
                         "locations": [ "Bedroom" ]
+                    },
+                    "participants": []
+                },
+                {
+                    "locations": [ "ThriftStore", "Job1Neighborhood", "Park", "CoffeeShop", "MusicShop", "SmallBar" ],
+                    "trigger": "Start",
+                    "conversation": "TXT/JazzNerds/Gear",
+                    "requirements": {
+                        "trueFlags": [ "Met_Eith" ],
+                        "locations": [ "ThriftStore", "Job1Neighborhood", "Park", "CoffeeShop", "MusicShop", "SmallBar" ]
                     },
                     "participants": []
                 },
@@ -1156,7 +1217,16 @@
                     "conversation": "TXT/Mom/BoomerMeme",
                     "requirements": {
                         "locations": [ "ShoppingDistrict" ],
-                        "minDay": 5
+                        "minDay": 1
+                    }
+                },
+                {
+                    "locations": [ "DowntownNeighborhood" ],
+                    "trigger": "Start",
+                    "conversation": "TXT/Mom/BoomerMeme2",
+                    "requirements": {
+                        "locations": [ "DowntownNeighborhood" ],
+                        "minDay": 2
                     }
                 },
                 {

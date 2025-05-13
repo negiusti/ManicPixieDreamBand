@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class ParallaxEffect : MonoBehaviour
 {
-    public float parallaxSpeed = 0.5f; // Adjust this value to change the parallax speed
+    public float parallaxSpeed; // Adjust this value to change the parallax speed
 
     private float initialPosition;
 
     void Start()
     {
         initialPosition = transform.position.x; // Save the initial position of the background
+        if (parallaxSpeed == 0f) {
+            parallaxSpeed = 0.5f;
+        }
     }
 
     void Update()

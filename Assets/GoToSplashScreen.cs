@@ -24,7 +24,6 @@ public class GoToSplashScreen : MonoBehaviour
 
     private void OnMouseDown()
     {
-        takeMyPhoto.SaveSpriteAsPNG();
         GoToSplash();
     }
 
@@ -36,7 +35,7 @@ public class GoToSplashScreen : MonoBehaviour
         {
             return;
         }
-        sc.ChangeScene("Splash");
+        SceneChanger.Instance.ChangeScene("Splash");
     }
 
 }

@@ -579,10 +579,10 @@ namespace PixelCrushers.DialogueSystem
                     switch (DialogueTime.mode)
                     {
                         case DialogueTime.TimeMode.Realtime:
-                            m_delayTimeLeft -= Time.unscaledDeltaTime;
+                            if (Time.frameCount > 1) m_delayTimeLeft -= Time.unscaledDeltaTime; // First two frames are inaccurate.
                             break;
                         case DialogueTime.TimeMode.Gameplay:
-                            m_delayTimeLeft -= Time.deltaTime;
+                            if (Time.frameCount > 1) m_delayTimeLeft -= Time.deltaTime;
                             break;
                         default:
                             m_delayTimeLeft -= DialogueTime.deltaTime;

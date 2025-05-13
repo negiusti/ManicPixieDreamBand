@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        saveSlotManager = GetComponentInChildren<ES3SlotManager>();
+        saveSlotManager = GetComponentInChildren<ES3SlotManager>(true);
         saveSlotManager.gameObject.SetActive(false);
         RegisterSOLuaFuncs();
         SubscribeToEvents();
