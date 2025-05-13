@@ -70,14 +70,14 @@ public class BobaOrderItem : MonoBehaviour
     public void Check()
     {
         line.gameObject.SetActive(true);
-        line.color = Color.green;
+        line.color = new Color(24f/255f, 155f/255f, 20f/255f,200f/255f);//Color.green;
         animator.Play("OrderItemCross", -1, 0f);
     }
 
     public void Fail()
     {
         line.gameObject.SetActive(true);
-        line.color = Color.red;
+        line.color = new Color(228f/255f,8f/255f,31f/255f,200f/255f);//Color.red;
         animator.Play("OrderItemCross", -1, 0f);
     }
     
