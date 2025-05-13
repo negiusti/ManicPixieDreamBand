@@ -26179,6 +26179,9 @@ GameObject:
   - component: {fileID: 3632014976435954954}
   - component: {fileID: 3846178271892130938}
   - component: {fileID: 2922324090564590376}
+  - component: {fileID: 1212950708494042497}
+  - component: {fileID: 5832250176120364168}
+  - component: {fileID: 5625931179402076759}
   m_Layer: 3
   m_Name: Open Settings Hint
   m_TagString: Menu
@@ -26202,8 +26205,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 327, y: -209.4}
-  m_SizeDelta: {x: 100, y: 50}
+  m_AnchoredPosition: {x: 319.6, y: -220.4}
+  m_SizeDelta: {x: 150, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7592134107394456343
 CanvasRenderer:
@@ -26233,10 +26236,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Skateboard <sprite name="controller/keyboard/s"> or
-
-    Rollerskate <sprite
-    name="controller/keyboard/r">
+  m_text: 'Open Settings <sprite name="controller/keyboard/s">
 
 '
   m_isRightToLeft: 0
@@ -26323,7 +26323,7 @@ MonoBehaviour:
     actionRange="full">
   _options: {fileID: 0}
   _spriteOptions:
-    _scale: 1
+    _scale: 2
     _offsetSizeMultiplier: {x: 0, y: 0.75}
     _extraOffset: {x: 0, y: 0}
     _xAdvanceWidthMultiplier: 1
@@ -26369,6 +26369,76 @@ MonoBehaviour:
   defaultBehaviorsTags:
   - bounce a=.1 f=0.7 w=0.3
   defaultTagsMode: 0
+--- !u!61 &1212950708494042497
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7598082030801807245}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.6847992, y: 17.50859}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 131.86478, y: 32.67198}
+  m_EdgeRadius: 0
+--- !u!114 &5832250176120364168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7598082030801807245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e50f16215d8d4f6e90770a6c6fedeb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5625931179402076759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7598082030801807245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bbbba966955c48f1a29f8aba1111f01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleFactor: 1.1
 --- !u!1 &7700855630691830870
 GameObject:
   m_ObjectHideFlags: 0
