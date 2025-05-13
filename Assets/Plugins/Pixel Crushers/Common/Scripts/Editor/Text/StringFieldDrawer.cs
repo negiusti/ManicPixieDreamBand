@@ -92,7 +92,7 @@ namespace PixelCrushers
                         var filename = EditorUtility.SaveFilePanelInProject("Create String Asset", ObjectNames.NicifyVariableName(property.name), "asset", "Save new string asset as:");
                         if (!string.IsNullOrEmpty(filename))
                         { 
-                            stringAssetProperty.objectReferenceValue = AssetUtility.CreateAssetWithFilename< PixelCrushers.Wrappers.StringAsset>(filename, false);
+                            stringAssetProperty.objectReferenceValue = AssetUtility.CreateAssetWithFilename<StringAsset>(filename, false);
                         }
                         GUIUtility.ExitGUI();
                     }
