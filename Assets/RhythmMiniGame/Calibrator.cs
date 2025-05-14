@@ -96,6 +96,7 @@ public class Calibrator : MonoBehaviour
         isPlaying = true;
         currentBeatIndex = 0;
         mg.timer.gameObject.SetActive(true);
+        mg.timer.Reset();
         mg.timer.StartTimer();
         metronome.SetBool("InRange", false);
     }
