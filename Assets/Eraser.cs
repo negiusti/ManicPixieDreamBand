@@ -73,14 +73,14 @@ public class Eraser : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButton(0) || player.GetButton("Select Object Under Cursor")) // Check if the left mouse button is pressed
-        {
+        // if (Input.GetMouseButton(0) || player.GetButton("Select Object Under Cursor")) // Check if the left mouse button is pressed
+        // {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 localPoint = transform.InverseTransformPoint(mousePosition);
             Vector2Int pixelPosition = WorldToTextureCoords(localPoint);
 
             EraseAt(pixelPosition);
-        }
+        // }
     }
 
     Vector2Int WorldToTextureCoords(Vector2 localPoint)

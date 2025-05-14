@@ -246,7 +246,7 @@ public abstract class Movement : MonoBehaviour
     {
         if (!lockAnim && AllowedToMoveDuringConvo())
         {
-            //GameManager.miscSoundEffects.Play("Ollie");
+            GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_SkateJump");
             if (character.isMainCharacter())
                 Tutorial.hasOllied = true;
@@ -265,7 +265,7 @@ public abstract class Movement : MonoBehaviour
     {
         if (!lockAnim && (AllowedToMoveDuringConvo() || DialogueManager.LastConversationStarted.Equals("Rex/KickflipDate")))
         {
-            //GameManager.miscSoundEffects.Play("Ollie");
+            GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_SkateboardFlip");
         }
     }
