@@ -35,7 +35,7 @@ public class BobaOrderItem : MonoBehaviour
         switch (step)
         {
             case BobaMiniGame.Step.Milk:
-                tmp.text = iconResolver.GetLabel() + " Milk";
+                tmp.text = iconResolver.GetLabel();
                 break;
             case BobaMiniGame.Step.Flavor:
                 tmp.text = iconResolver.GetLabel();
@@ -44,7 +44,7 @@ public class BobaOrderItem : MonoBehaviour
                 tmp.text = "ICE LVL";
                 break;
             case BobaMiniGame.Step.Toppings:
-                tmp.text = "w/" + iconResolver.GetLabel();
+                tmp.text = iconResolver.GetLabel();
                 break;
             case BobaMiniGame.Step.Done:
                 break;
