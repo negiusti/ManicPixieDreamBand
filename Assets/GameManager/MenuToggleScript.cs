@@ -3,6 +3,7 @@ using UnityEngine;
 using Rewired;
 using UnityEngine.UI;
 using Rewired.UI.ControlMapper;
+using System.Collections.Generic;
 
 public class MenuToggleScript : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class MenuToggleScript : MonoBehaviour
     public Button SaveAndQuitButton;
     public Button SaveFilesButton;
     public GameObject WarningTxt;
+    private HashSet<AudioSource> audioSourcesToUnPause;
     //private SpriteRenderer menuBackground;
 
     private void Start()
@@ -19,6 +21,7 @@ public class MenuToggleScript : MonoBehaviour
         //menuBackground = this.GetComponentInChildren<SpriteRenderer>();
         prevCamera = Camera.main;
         player = ReInput.players.GetPlayer(0);
+        audioSourcesToUnPause = new HashSet<AudioSource>();
         DisableMenu();
     }
     void Update()
@@ -56,8 +59,8 @@ public class MenuToggleScript : MonoBehaviour
         if (prevCamera != null)
             prevCamera.enabled = true;
         Time.timeScale = 1f;
-        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
-        foreach (AudioSource audio in audioSources)
+        // AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource audio in audioSourcesToUnPause)
         {
             audio.UnPause();
         }
@@ -81,9 +84,13 @@ public class MenuToggleScript : MonoBehaviour
         menuToToggle.SetActive(true);
         Time.timeScale = 0f;
         AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        audioSourcesToUnPause.Clear();
         foreach (AudioSource audio in audioSources)
         {
-            audio.Pause();
+            if (audio.isPlaying) {
+                audio.Pause();
+                audioSourcesToUnPause.Add(audio);
+            }
         }
     }
 

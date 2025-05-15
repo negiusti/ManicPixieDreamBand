@@ -28,13 +28,17 @@ public class Calendar : ScriptableObject
 
     public static void RemoveAllJobEvents()
     {
-        for (int i = day; i < day + 7; i++)
+        for (int i = day ; i < day + 7; i++)
         {
             Debug.Log("Unscheduling job for day " + i);
             if (events.ContainsKey(i))
             {
                 Debug.Log("remove job events");
-                events[i].RemoveAll(e => e is JobEvent);
+                if (i > day) { // not today
+                    events[i].RemoveAll(e => e is JobEvent);
+                } else if (events[i].FindIndex(e => e is JobEvent) >= currentEventIdx) {
+                    events[i].RemoveAll(e => e is JobEvent);
+                }
             }
         }
     }
