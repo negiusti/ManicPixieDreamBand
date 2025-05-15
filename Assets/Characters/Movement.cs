@@ -274,7 +274,7 @@ public abstract class Movement : MonoBehaviour
     {
         if (!lockAnim && AllowedToMoveDuringConvo())
         {
-            //GameManager.miscSoundEffects.Play("Ollie");
+            GameManager.miscSoundEffects.Play("Ollie");
             animator.Play("BaseCharacter_RollerskateJump");
             Tutorial.hasOllied = true;
         }

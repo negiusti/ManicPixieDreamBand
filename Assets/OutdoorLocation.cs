@@ -19,7 +19,7 @@ public class OutdoorLocation : MonoBehaviour
     {
         inRange = false;
         location = gameObject.name;
-        Pulsate p = GetComponentInChildren<Pulsate>();
+        Canvas p = GetComponentInChildren<Canvas>();
         if (p != null)
             prompt = p.gameObject;
 
