@@ -33,6 +33,7 @@ public class StarSpawnerScript : MonoBehaviour
     private string[] notes;
     private string[] times;
     private bool ready;
+    private bool ready2;
     public TextMeshPro scoreTxtTop;
     public TextMeshPro scoreTxtBottom;
     private Coroutine spawnStarCoroutine;
@@ -86,6 +87,7 @@ public class StarSpawnerScript : MonoBehaviour
             Debug.LogError("Failed to load file. Error: " + obj.OperationException);
         }
         Addressables.Release(obj);
+        ready2 = true;
     }
 
     private void OnLoadCompleted2(AsyncOperationHandle<TextAsset> obj)
@@ -120,6 +122,7 @@ public class StarSpawnerScript : MonoBehaviour
     {
         i = 0;
         ready = false;
+        ready2 = false;
         hasStarted = false;
         hitNotes = 0;
         totalNotes = 0;
@@ -263,7 +266,7 @@ public class StarSpawnerScript : MonoBehaviour
 
     void Update()
     {
-        if (!hasStarted && ready)
+        if (!hasStarted && ready && ready2)
         {
             //if (starter.hasPassed())
             //{

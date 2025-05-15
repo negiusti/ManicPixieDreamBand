@@ -87,7 +87,7 @@ public class BassMiniGame : MiniGame
     public void StartJJBandMiniGame()
     {
         OpenMiniGame();
-        SelectSong("JJJAZZ");
+        SelectSong("Jazz");
         JamCoordinator.StartJam("JJ BAND");
     }
 
