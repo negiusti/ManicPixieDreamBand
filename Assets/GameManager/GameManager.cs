@@ -1,16 +1,20 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
+using Steamworks;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    private GameManager[] gms;
     public static BGMusicController bgMusic;
     public static ButtonSoundEffects buttonSounds;
     public static MiscSoundEffects miscSoundEffects;
     public float audioLag;
     private ES3SlotManager saveSlotManager;
+    private bool _isInitialized = false;
+
+
+    private const string ACH_WIN_ONE_GAME = "ACH_WIN_ONE_GAME";
 
     // Start is called before the first frame update
     void Start()
@@ -19,22 +23,35 @@ public class GameManager : MonoBehaviour
         saveSlotManager.gameObject.SetActive(false);
         RegisterSOLuaFuncs();
         SubscribeToEvents();
-
-        //try
-        //{
-        //    Steamworks.SteamClient.Init(2772090);
-        //}
-        //catch (System.Exception e)
-        //{
-        //    Debug.LogError("Could not initialize steam client: + " + e.ToString());
-        //    // Something went wrong - it's one of these:
-        //    //
-        //    //     Steam is closed?
-        //    //     Can't find steam_api dll?
-        //    //     Don't have permission to play app?
-        //    //
-        //}
-
+#if !UNITY_EDITOR
+        try
+        {
+            Steamworks.SteamClient.Init(2772090);
+            _isInitialized = true;
+        }
+        catch (System.Exception e)
+        {
+           Debug.LogError("Could not initialize steam client: + " + e.ToString());
+           // Something went wrong - it's one of these:
+           //
+           //     Steam is closed?
+           //     Can't find steam_api dll?
+           //     Don't have permission to play app?
+           //
+        }
+#endif
+    }
+public void UnlockAchievement(string achievementId)
+    {
+        if (_isInitialized)
+        {
+            SteamServerStats.SetAchievement(SteamClient.SteamId,achievementId);
+            SteamServerStats.StoreUserStats(SteamClient.SteamId);
+        }
+        else
+        {
+            Debug.LogWarning("Steam Stats not initialized.");
+        }
     }
 
     public void OpenSaveSlots()
@@ -104,6 +121,7 @@ public class GameManager : MonoBehaviour
         Lua.RegisterFunction(nameof(AudioController.Clap), this, SymbolExtensions.GetMethodInfo(() => AudioController.Clap((double)0)));
         Lua.RegisterFunction(nameof(RefreshGameState), this, SymbolExtensions.GetMethodInfo(() => RefreshGameState()));
         Lua.RegisterFunction(nameof(PhoneIsLocked), this, SymbolExtensions.GetMethodInfo(() => PhoneIsLocked()));
+        Lua.RegisterFunction(nameof(UnlockAchievement), this, SymbolExtensions.GetMethodInfo(() => UnlockAchievement(string.Empty)));
     }
 
     void UnregisterSOLuaFuncs()
@@ -165,6 +183,7 @@ public class GameManager : MonoBehaviour
         Lua.UnregisterFunction(nameof(AudioController.Clap));
         Lua.UnregisterFunction(nameof(RefreshGameState));
         Lua.UnregisterFunction(nameof(PhoneIsLocked));
+        Lua.UnregisterFunction(nameof(UnlockAchievement));
         //}
     }
 
@@ -258,7 +277,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Steamworks.SteamClient.RunCallbacks();
+        #if !UNITY_EDITOR
+        Steamworks.SteamClient.RunCallbacks();
+        #endif
     }
 
     public void Quit()
@@ -277,19 +298,9 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveData();
-    }
-
-    private void OnDestroy()
-    {
-        //SaveData();
-
-        //if (gms.Length == 1)
-        //    Steamworks.SteamClient.Shutdown();
-        // SAVE THE CURRENT STATE OF EVERYTHING
-        // phone: contacts, messages, money
-        // conversations
-        // worn outfits
-        // unlocked objects
+        #if !UNITY_EDITOR
+        Steamworks.SteamClient.Shutdown();
+        #endif
     }
 
     private void Awake()

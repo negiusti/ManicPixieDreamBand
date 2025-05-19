@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Rewired;
 using UnityEngine.UI;
+using TMPro;
+using Febucci.UI.Effects;
 
 public class TattooMiniGame : MiniGame
 {
@@ -68,7 +70,7 @@ public class TattooMiniGame : MiniGame
     [Header("Speech")]
 
     public GameObject speechBubble;
-    private Text speechText;
+    private TextMeshProUGUI speechText;
 
     public float speechBubbleActiveDuration;
 
@@ -117,7 +119,7 @@ public class TattooMiniGame : MiniGame
         Cursor.visible = false;
 
         blackScreen.Unfade();
-        speechText = speechBubble.GetComponentInChildren<Text>();
+        speechText = speechBubble.GetComponentInChildren<TextMeshProUGUI>();
         speechBubble.SetActive(false);
 
         checksOutOfGuideline = 0f;
@@ -306,17 +308,17 @@ public class TattooMiniGame : MiniGame
 
         if (option == "Success")
         {
-            stringToDisplay = successOptions[Random.Range(0, successOptions.Length)];
+            stringToDisplay = "<rainb>" + successOptions[Random.Range(0, successOptions.Length)];
             JobSystem.GoodJob();
         }
         else if (option == "Pass")
         {
-            stringToDisplay = passOptions[Random.Range(0, passOptions.Length)];
+            stringToDisplay = "<wiggle>" + passOptions[Random.Range(0, passOptions.Length)];
         }
         else // Failure
         {
             JobSystem.BadJob();
-            stringToDisplay = failureOptions[Random.Range(0, failureOptions.Length)];
+            stringToDisplay = "<shake a=.05 w=.05>" + failureOptions[Random.Range(0, failureOptions.Length)];
         }
 
         speechBubble.SetActive(true);

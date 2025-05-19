@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Rewired;
+using TMPro;
 
 public class BandNameMiniGame : MiniGame
 {
@@ -10,9 +11,9 @@ public class BandNameMiniGame : MiniGame
     public Character maxCloseup;
     public Character rickiCloseup;
     public GameObject maxSpeechBubble;
-    public Text maxSpeechText;
+    public TextMeshProUGUI maxSpeechText;
     public GameObject rickiSpeechBubble;
-    public Text rickiSpeechText;
+    public TextMeshProUGUI rickiSpeechText;
     public BandNamePatch lbPatch;
     public BandNamePatch pjPatch;
     private BlackScreen blackScreen;

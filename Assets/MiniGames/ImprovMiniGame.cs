@@ -12,7 +12,6 @@ public class ImprovMiniGame : MiniGame
     private bool closingInProgress;
     private AudioSource audioSource;
     public AudioSource jjRiff;
-    public bool TEST_START_ON_ENTER;
     private Player player;
 
     // Use this for initialization

@@ -36,7 +36,7 @@ public class Calendar : ScriptableObject
                 Debug.Log("remove job events");
                 if (i > day) { // not today
                     events[i].RemoveAll(e => e is JobEvent);
-                } else if (events[i].FindIndex(e => e is JobEvent) >= currentEventIdx) {
+                } else if (events[i].FindIndex(e => e is JobEvent) > currentEventIdx) {
                     events[i].RemoveAll(e => e is JobEvent);
                 }
             }

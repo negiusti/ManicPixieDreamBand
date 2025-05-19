@@ -6456,8 +6456,8 @@ GameObject:
   - component: {fileID: 8037444596694769447}
   - component: {fileID: 5871640257672023543}
   - component: {fileID: 5023325382056195751}
-  - component: {fileID: 5758759666640426584}
   - component: {fileID: 414972588768130942}
+  - component: {fileID: 8761064759995609748}
   m_Layer: 8
   m_Name: Score Text Top
   m_TagString: Untagged
@@ -6555,8 +6555,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 3875536895
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.9019608}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6583,7 +6583,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 3.44
+  m_characterSpacing: 5
   m_wordSpacing: 0
   m_lineSpacing: -13.74
   m_lineSpacingMax: 0
@@ -6618,20 +6618,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5871640257672023543}
   m_maskType: 0
---- !u!114 &5758759666640426584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7633578671050999812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e41494279aeba4b7c9a2f056710f7abf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pulseSpeed: 0.2
-  pulseMagnitude: 0.1
 --- !u!95 &414972588768130942
 Animator:
   serializedVersion: 5
@@ -6640,7 +6626,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7633578671050999812}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 5df24251c767e40089be033802853e5a, type: 2}
   m_CullingMode: 0
@@ -6653,6 +6639,38 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8761064759995609748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7633578671050999812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ace8ced0e81c847968cdca0aeda757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typewriterStartsAutomatically: 0
+  animationLoop: 0
+  timeScale: 0
+  _text: 82%
+  useDynamicScaling: 0
+  referenceFontSize: 10
+  isResettingTimeOnNewText: 1
+  useDefaultDatabases: 1
+  databaseBehaviors: {fileID: 11400000, guid: 25835a6cb8d6f46d68a0fb0dd3416450, type: 2}
+  databaseAppearances: {fileID: 11400000, guid: 157a3a3fe9f104c799fabe7a05261320, type: 2}
+  useDefaultStyleSheet: 1
+  styleSheet: {fileID: 0}
+  databaseActions: {fileID: 11400000, guid: b389913db14454a05a132ddcf2910939, type: 2}
+  defaultAppearancesTags:
+  - size
+  defaultDisappearancesTags:
+  - fade
+  defaultBehaviorsTags:
+  - bounce w=.2 f=.6 a=.03
+  defaultTagsMode: 0
 --- !u!1 &7761633984526452309
 GameObject:
   m_ObjectHideFlags: 0
@@ -6664,8 +6682,8 @@ GameObject:
   - component: {fileID: 2722018276688255187}
   - component: {fileID: 4292979175836745433}
   - component: {fileID: 2475663143739252571}
-  - component: {fileID: 2045123451239176850}
   - component: {fileID: 8671979351141906193}
+  - component: {fileID: 1457391844664400755}
   m_Layer: 8
   m_Name: Score Text Bottom
   m_TagString: Untagged
@@ -6763,8 +6781,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 3875536895
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.9019608}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6791,7 +6809,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 3.44
+  m_characterSpacing: 5
   m_wordSpacing: 0
   m_lineSpacing: -20.61
   m_lineSpacingMax: 0
@@ -6826,20 +6844,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 4292979175836745433}
   m_maskType: 0
---- !u!114 &2045123451239176850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7761633984526452309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e41494279aeba4b7c9a2f056710f7abf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pulseSpeed: 0.2
-  pulseMagnitude: 0.1
 --- !u!95 &8671979351141906193
 Animator:
   serializedVersion: 5
@@ -6848,7 +6852,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7761633984526452309}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 5df24251c767e40089be033802853e5a, type: 2}
   m_CullingMode: 0
@@ -6861,6 +6865,38 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1457391844664400755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7761633984526452309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ace8ced0e81c847968cdca0aeda757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typewriterStartsAutomatically: 0
+  animationLoop: 0
+  timeScale: 0
+  _text: NICE JOB, PUNK!
+  useDynamicScaling: 0
+  referenceFontSize: 10
+  isResettingTimeOnNewText: 1
+  useDefaultDatabases: 1
+  databaseBehaviors: {fileID: 11400000, guid: 25835a6cb8d6f46d68a0fb0dd3416450, type: 2}
+  databaseAppearances: {fileID: 11400000, guid: 157a3a3fe9f104c799fabe7a05261320, type: 2}
+  useDefaultStyleSheet: 1
+  styleSheet: {fileID: 0}
+  databaseActions: {fileID: 11400000, guid: b389913db14454a05a132ddcf2910939, type: 2}
+  defaultAppearancesTags:
+  - size
+  defaultDisappearancesTags:
+  - fade
+  defaultBehaviorsTags:
+  - bounce w=.3 f=.6 a=.03
+  defaultTagsMode: 0
 --- !u!1 &8863221080373452055
 GameObject:
   m_ObjectHideFlags: 0
