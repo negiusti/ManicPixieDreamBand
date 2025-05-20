@@ -96,6 +96,8 @@ public class PlayerMovement : Movement
 
     private void MoveLeftRight()
     {
+        if (SceneChanger.Instance.IsLoadingScreenOpen() || MiniGameManager.AnyActiveMiniGames())
+            return;
         if (moveInput != 0) Tutorial.hasWalked = true;
 
         Quaternion currentRotation = transform.rotation;

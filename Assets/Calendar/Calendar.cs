@@ -34,11 +34,18 @@ public class Calendar : ScriptableObject
             if (events.ContainsKey(i))
             {
                 Debug.Log("remove job events");
-                if (i > day) { // not today
-                    events[i].RemoveAll(e => e is JobEvent);
-                } else if (events[i].FindIndex(e => e is JobEvent) > currentEventIdx) {
-                    events[i].RemoveAll(e => e is JobEvent);
+                if (i == day) { // today
+                    int k = 0;
+                    foreach (ICalendarEvent e in events[i]) {
+                        Debug.Log("event: " + e.Name() + "K: " + k + "currentEventIdx" + currentEventIdx);
+                        if (e is JobEvent && k < currentEventIdx) {
+                            currentEventIdx--;
+                            Debug.Log("job event is less than currentEventIdx");
+                        }
+                        k++;
+                    }
                 }
+                events[i].RemoveAll(e => e is JobEvent);
             }
         }
     }
@@ -123,6 +130,17 @@ public class Calendar : ScriptableObject
             }
             if (isWorkScheduled(i) && JobSystem.CurrentJob() == JobSystem.PunkJob.Unemployed)
             {
+                if (i == day) { // today
+                    int k = 0;
+                    foreach (ICalendarEvent e in events[i]) {
+                        Debug.Log("event: " + e.Name() + "K: " + k + "currentEventIdx" + currentEventIdx);
+                        if (e is JobEvent && k < currentEventIdx) {
+                            currentEventIdx--;
+                            Debug.Log("job event is less than currentEventIdx");
+                        }
+                        k++;
+                    }
+                }
                 events[i].RemoveAll(e => e is JobEvent);
                 Debug.Log("remove job events");
             }
