@@ -57,6 +57,9 @@ public class DecoratorApp : PhoneApp
             return;
         if (SceneChanger.Instance.GetCurrentScene().Equals("Bedroom"))
             Phone.Instance.ClearNotificationFor("Decorator");
+        if (furnitureCategoryNotifications == null)
+            return;
+        Refresh();
         ScrollToTopOfScrollView();
     }
 
