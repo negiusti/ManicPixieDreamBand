@@ -236,7 +236,7 @@ public class StarSpawnerScript : MonoBehaviour
             scoreTxtBottom.text += "Not bad, punk!";
         } else if (GetScore() > 50f)
         {
-            scoreTxtBottom.text += "Keep practicing!!";
+            scoreTxtBottom.text += "Keep practicing!";
         } else
         {
             scoreTxtBottom.text += "Be honest, did u even try? :)";
